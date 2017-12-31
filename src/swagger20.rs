@@ -100,6 +100,7 @@ pub struct Schema {
 	pub kind: SchemaKind,
 }
 
+#[cfg_attr(feature = "cargo-clippy", allow(use_self))]
 impl<'de> ::serde::Deserialize<'de> for Schema {
 	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
 		#[derive(Debug, ::serde_derive::Deserialize)]
@@ -111,7 +112,6 @@ impl<'de> ::serde::Deserialize<'de> for Schema {
 
 			format: Option<String>,
 
-			#[serde(default)]
 			items: Option<Box<Schema>>,
 
 			#[serde(default)]
@@ -228,6 +228,7 @@ pub struct Spec {
 	pub definitions: ::std::collections::BTreeMap<DefinitionPath, Schema>,
 }
 
+#[cfg_attr(feature = "cargo-clippy", allow(use_self))]
 impl<'de> ::serde::Deserialize<'de> for Spec {
 	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
 		#[derive(Debug, ::serde_derive::Deserialize)]

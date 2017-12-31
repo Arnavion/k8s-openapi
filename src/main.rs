@@ -1,5 +1,11 @@
 #![feature(catch_expr, conservative_impl_trait, proc_macro)]
 
+#![cfg_attr(feature = "cargo-clippy", deny(clippy, clippy_pedantic))]
+#![cfg_attr(feature = "cargo-clippy", allow(
+	cyclomatic_complexity,
+	missing_docs_in_private_items,
+))]
+
 extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
@@ -54,7 +60,7 @@ fn main() {
 						}
 
 						let field_name = get_rust_ident(&name);
-						if field_name != &*name {
+						if field_name != *name {
 							writeln!(file, r#"    #[serde(rename = "{}")]"#, name)?;
 						}
 
@@ -71,31 +77,26 @@ fn main() {
 						let field_type_name = get_rust_type(&property.kind);
 
 						// Fix cases of infinite recursion
-						let field_type_name = if match (&*definition_path, &*field_name, &*field_type_name) {
+						let field_type_name = match (&*definition_path, &*field_name, &*field_type_name) {
 							(
 								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
 								"schema",
 								"::io::k8s::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps",
-							) => true,
+							) |
 
 							(
 								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool",
 								"schema",
 								"::io::k8s::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps",
-							) => true,
+							) |
 
 							(
 								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
 								"not",
 								"::io::k8s::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps",
-							) => true,
+							) => format!("Box<{}>", field_type_name),
 
-							_ => false,
-						} {
-							format!("Box<{}>", field_type_name)
-						}
-						else {
-							field_type_name
+							_ => field_type_name,
 						};
 
 						write!(file, "{}", field_type_name)?;
@@ -118,6 +119,8 @@ fn main() {
 
 		Ok(())
 	};
+
+	#[cfg_attr(feature = "cargo-clippy", allow(result_unwrap_used))]
 	result.unwrap();
 }
 
@@ -210,7 +213,7 @@ fn get_rust_ident(property_name: &str) -> String {
 	let result = result.replace('-', "_");
 
 	// Fix cases of invalid rust idents
-	let result = match &*result {
+	match &*result {
 		"$ref" => "ref_path".to_string(),
 		"$schema" => "schema".to_string(),
 		"continue" => "continue_".to_string(),
@@ -218,12 +221,11 @@ fn get_rust_ident(property_name: &str) -> String {
 		"external_ip_s" => "external_ips".to_string(),
 		"type" => "type_".to_string(),
 		_ => result,
-	};
-
-	result
+	}
 }
 
 fn get_rust_type(schema_kind: &swagger20::SchemaKind) -> String {
+	#[cfg_attr(feature = "cargo-clippy", allow(unneeded_field_pattern))]
 	match *schema_kind {
 		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
 
