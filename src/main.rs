@@ -94,7 +94,7 @@ fn main() {
 								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
 								"not",
 								"::io::k8s::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps",
-							) => format!("Box<{}>", field_type_name),
+							) => format!("Box<{}>", field_type_name).into(),
 
 							_ => field_type_name,
 						};
@@ -133,7 +133,7 @@ fn create_file_for_type(definition_path: &swagger20::DefinitionPath, out_dir: &s
 	for part in &parts[0..parts.len() - 1] {
 		let mod_name = get_rust_ident(part);
 
-		current.push(&mod_name);
+		current.push(&*mod_name);
 
 		if !current.is_dir() {
 			let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.with_file_name("mod.rs"))?);
@@ -146,7 +146,7 @@ fn create_file_for_type(definition_path: &swagger20::DefinitionPath, out_dir: &s
 
 	let type_name = parts[parts.len() - 1].to_string();
 
-	let mod_name: String = get_rust_ident(&type_name);
+	let mod_name = get_rust_ident(&type_name);
 	{
 		let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.join("mod.rs"))?);
 		writeln!(parent_mod_rs)?;
@@ -154,18 +154,18 @@ fn create_file_for_type(definition_path: &swagger20::DefinitionPath, out_dir: &s
 		writeln!(parent_mod_rs, "pub use self::{}::{};", mod_name, type_name)?;
 	}
 
-	let file_name = current.join(mod_name).with_extension("rs");
+	let file_name = current.join(&*mod_name).with_extension("rs");
 
 	Ok((std::io::BufWriter::new(std::fs::File::create(file_name)?), type_name))
 }
 
-fn get_comment_text<'a>(s: &'a str) -> impl Iterator<Item = String> + 'a {
+fn get_comment_text<'a>(s: &'a str) -> impl Iterator<Item = std::borrow::Cow<'static, str>> + 'a {
 	s.lines().map(|line|
 		if line.is_empty() {
-			"///".to_string()
+			"///".into()
 		}
 		else {
-			format!("/// {}", line)
+			format!("/// {}", line).into()
 		})
 }
 
@@ -185,8 +185,21 @@ fn get_fully_qualified_type_name(ref_path: &swagger20::RefPath) -> String {
 	result
 }
 
-fn get_rust_ident(property_name: &str) -> String {
-	let chars: Vec<_> = property_name.chars().collect();
+fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
+	use std::fmt::Write;
+
+	// Fix cases of invalid rust idents
+	match name {
+		"$ref" => return "ref_path".into(),
+		"$schema" => return "schema".into(),
+		"continue" => return "continue_".into(),
+		"enum" => return "enum_".into(),
+		"external_ip_s" => return "external_ips".into(),
+		"type" => return "type_".into(),
+		_ => (),
+	}
+
+	let chars: Vec<_> = name.chars().collect();
 
 	let mut result = String::new();
 
@@ -201,47 +214,37 @@ fn get_rust_ident(property_name: &str) -> String {
 				_ => (),
 			}
 
-			for c in c.to_lowercase() {
-				result.push(c);
-			}
+			write!(result, "{}", c.to_lowercase()).unwrap();
 		}
 		else {
-			result.push(c);
+			result.push(match c {
+				'-' => '_',
+				c => c,
+			});
 		}
 	}
 
-	let result = result.replace('-', "_");
-
-	// Fix cases of invalid rust idents
-	match &*result {
-		"$ref" => "ref_path".to_string(),
-		"$schema" => "schema".to_string(),
-		"continue" => "continue_".to_string(),
-		"enum" => "enum_".to_string(),
-		"external_ip_s" => "external_ips".to_string(),
-		"type" => "type_".to_string(),
-		_ => result,
-	}
+	result.into()
 }
 
-fn get_rust_type(schema_kind: &swagger20::SchemaKind) -> String {
+fn get_rust_type(schema_kind: &swagger20::SchemaKind) -> std::borrow::Cow<'static, str> {
 	#[cfg_attr(feature = "cargo-clippy", allow(unneeded_field_pattern))]
 	match *schema_kind {
 		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
 
-		swagger20::SchemaKind::Ref(ref ref_path) => get_fully_qualified_type_name(ref_path),
+		swagger20::SchemaKind::Ref(ref ref_path) => get_fully_qualified_type_name(ref_path).into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("Vec<{}>", get_rust_type(&items.kind)),
+		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("Vec<{}>", get_rust_type(&items.kind)).into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => "bool".to_string(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => "bool".into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int32 }) => "i32".to_string(),
-		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int64 }) => "i64".to_string(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int32 }) => "i32".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int64 }) => "i64".into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => "f64".to_string(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => "f64".into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) => format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind)),
+		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) => format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind)).into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: _ }) => "String".to_string(),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: _ }) => "String".into(),
 	}
 }
