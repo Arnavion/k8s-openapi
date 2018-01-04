@@ -47,6 +47,8 @@ fn main() {
 	let mut args = std::env::args_os().skip(1);
 	let input: std::path::PathBuf = args.next().expect("expected input file parameter").into();
 	let out_dir: std::path::PathBuf = args.next().expect("expected output directory parameter").into();
+	let root_namespace = args.next().expect("expected root namespace").into_string().expect("root namespace was not a valid string");
+	let root_namespace: Vec<_> = root_namespace.split("::").collect();
 
 	let result: Result<()> = do catch {
 		use std::io::Write;
@@ -115,29 +117,34 @@ fn main() {
 							write!(file, "Option<")?;
 						}
 
-						let field_type_name = get_rust_type(&property.kind);
+						let field_type_name = get_rust_type(&property.kind, &root_namespace);
 
 						// Fix cases of infinite recursion
-						let field_type_name = match (&*definition_path, &*field_name, &*field_type_name) {
-							(
-								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
-								"schema",
-								"::io::k8s::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps",
-							) |
+						let field_type_name = if let swagger20::SchemaKind::Ref(ref ref_path) = property.kind {
+							match (&*definition_path, &*name, &**ref_path) {
+								(
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
+									"Schema",
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+								) |
 
-							(
-								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool",
-								"schema",
-								"::io::k8s::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps",
-							) |
+								(
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool",
+									"Schema",
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+								) |
 
-							(
-								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-								"not",
-								"::io::k8s::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps",
-							) => format!("Box<{}>", field_type_name).into(),
+								(
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+									"not",
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+								) => format!("Box<{}>", field_type_name).into(),
 
-							_ => field_type_name,
+								_ => field_type_name,
+							}
+						}
+						else {
+							field_type_name
 						};
 
 						write!(file, "{}", field_type_name)?;
@@ -153,7 +160,7 @@ fn main() {
 
 				swagger20::SchemaKind::Ref(_) |
 				swagger20::SchemaKind::Ty(_) => {
-					writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind))?;
+					writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind, &root_namespace))?;
 				},
 			}
 
@@ -232,14 +239,14 @@ fn get_comment_text<'a>(s: &'a str) -> impl Iterator<Item = std::borrow::Cow<'st
 		})
 }
 
-fn get_fully_qualified_type_name(ref_path: &swagger20::RefPath) -> String {
+fn get_fully_qualified_type_name(ref_path: &swagger20::RefPath, root_namespace: &[&str]) -> String {
 	use std::fmt::Write;
 
 	let mut result = String::new();
 
 	let parts: Vec<_> = ref_path.split('.').collect();
 
-	for part in &parts[..parts.len() - 1] {
+	for &part in root_namespace.into_iter().chain(&parts[..parts.len() - 1]) {
 		write!(result, "::{}", get_rust_ident(part)).unwrap();
 	}
 
@@ -290,14 +297,14 @@ fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	result.into()
 }
 
-fn get_rust_type(schema_kind: &swagger20::SchemaKind) -> std::borrow::Cow<'static, str> {
+fn get_rust_type(schema_kind: &swagger20::SchemaKind, root_namespace: &[&str]) -> std::borrow::Cow<'static, str> {
 	#[cfg_attr(feature = "cargo-clippy", allow(unneeded_field_pattern))]
 	match *schema_kind {
 		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
 
-		swagger20::SchemaKind::Ref(ref ref_path) => get_fully_qualified_type_name(ref_path).into(),
+		swagger20::SchemaKind::Ref(ref ref_path) => get_fully_qualified_type_name(ref_path, root_namespace).into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("Vec<{}>", get_rust_type(&items.kind)).into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("Vec<{}>", get_rust_type(&items.kind, root_namespace)).into(),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => "bool".into(),
 
@@ -306,7 +313,7 @@ fn get_rust_type(schema_kind: &swagger20::SchemaKind) -> std::borrow::Cow<'stati
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => "f64".into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) => format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind)).into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) => format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, root_namespace)).into(),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: _ }) => "String".into(),
 	}
