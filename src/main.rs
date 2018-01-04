@@ -6,36 +6,74 @@
 	missing_docs_in_private_items,
 ))]
 
+extern crate backtrace;
+extern crate env_logger;
+#[macro_use]
+extern crate log;
 extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
 
 mod swagger20;
 
+struct Error(Box<std::error::Error>, backtrace::Backtrace);
+
+impl<E> From<E> for Error where Box<std::error::Error>: From<E> {
+	fn from(value: E) -> Self {
+		Error(value.into(), backtrace::Backtrace::new())
+	}
+}
+
+impl std::fmt::Display for Error {
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		writeln!(f, "error: {}", self.0)?;
+		#[cfg_attr(feature = "cargo-clippy", allow(use_debug))]
+		write!(f, "{:?}", self.1)?;
+		Ok(())
+	}
+}
+
+type Result<T> = std::result::Result<T, Error>;
+
 fn main() {
+	{
+		let mut builder = env_logger::LogBuilder::new();
+		builder.format(|record| format!("{} {}:{} {}", record.level(), record.location().file(), record.location().line(), record.args()));
+		let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
+		builder.parse(&rust_log);
+		builder.init().expect("Could not initialize logger");
+	}
+
 	let mut args = std::env::args_os().skip(1);
 	let input: std::path::PathBuf = args.next().expect("expected input file parameter").into();
 	let out_dir: std::path::PathBuf = args.next().expect("expected output directory parameter").into();
 
-	let result: Result<(), Box<std::error::Error>> = do catch {
+	let result: Result<()> = do catch {
 		use std::io::Write;
 
+		info!(target: "", "Parsing spec file at {} ...", input.display());
 		let spec: swagger20::Spec = {
 			let file = std::io::BufReader::new(std::fs::File::open(input)?);
 			serde_json::from_reader(file)?
 		};
+		info!("OK. Spec has {} definitions", spec.definitions.len());
 
-		std::fs::remove_dir_all(&out_dir).or_else(|err|
-			if err.kind() == std::io::ErrorKind::NotFound {
-				Ok(())
-			}
-			else {
-				Err(err)
-			})?;
+		info!("Removing output directory {} ...", out_dir.display());
+		match std::fs::remove_dir_all(&out_dir) {
+			Ok(()) => trace!("OK"),
+			Err(ref err) if err.kind() == std::io::ErrorKind::NotFound => trace!("OK. Directory doesn't exist"),
+			err => err?,
+		}
 
+		info!("Creating output directory {} ...", out_dir.display());
 		std::fs::create_dir(&out_dir)?;
+		trace!("OK");
+
+		info!("Generating types...");
 
 		for (definition_path, definition) in spec.definitions {
+			trace!("Working on {} ...", definition_path);
+
 			let (mut file, type_name) = create_file_for_type(&definition_path, &out_dir)?;
 
 			writeln!(file, "// Generated from definition {}", definition_path)?;
@@ -118,33 +156,55 @@ fn main() {
 					writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind))?;
 				},
 			}
+
+			trace!("OK");
 		}
+
+		info!("OK");
 
 		Ok(())
 	};
 
-	#[cfg_attr(feature = "cargo-clippy", allow(result_unwrap_used))]
-	result.unwrap();
+	#[cfg_attr(feature = "cargo-clippy", allow(print_stdout))]
+	{
+		if let Err(err) = result {
+			println!("{}", err);
+			std::process::exit(1);
+		}
+	}
 }
 
-fn create_file_for_type(definition_path: &swagger20::DefinitionPath, out_dir: &std::path::Path) -> std::io::Result<(std::io::BufWriter<std::fs::File>, String)> {
+fn create_file_for_type(definition_path: &swagger20::DefinitionPath, out_dir: &std::path::Path) -> Result<(std::io::BufWriter<std::fs::File>, String)> {
 	use std::io::Write;
 
 	let parts: Vec<_> = definition_path.split('.').collect();
 
 	let mut current = out_dir.to_owned();
-	for part in &parts[0..parts.len() - 1] {
+
+	for &part in &parts[0..parts.len() - 1] {
+		trace!("Current directory: {}", current.display());
+
 		let mod_name = get_rust_ident(part);
 
 		current.push(&*mod_name);
 
+		trace!("Checking if subdirectory {} exists...", current.display());
+
 		if !current.is_dir() {
+			trace!("    Subdirectory does not exist. Creating mod.rs with a reference to it...");
+
 			let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.with_file_name("mod.rs"))?);
 			writeln!(parent_mod_rs)?;
 			writeln!(parent_mod_rs, "pub mod {};", mod_name)?;
 
+			trace!("    OK");
+			trace!("    Creating subdirectory...");
+
 			std::fs::create_dir(&current)?;
+			trace!("    OK");
 		}
+
+		trace!("OK");
 	}
 
 	let type_name = parts[parts.len() - 1].to_string();
