@@ -38,6 +38,9 @@ fn main() {
 		for (definition_path, definition) in spec.definitions {
 			let (mut file, type_name) = create_file_for_type(&definition_path, &out_dir)?;
 
+			writeln!(file, "// Generated from definition {}", definition_path)?;
+			writeln!(file)?;
+
 			if let Some(description) = definition.description {
 				for line in get_comment_text(&description) {
 					writeln!(file, "{}", line)?;
