@@ -15,12 +15,6 @@ impl ::std::ops::Deref for DefinitionPath {
 	}
 }
 
-#[derive(Debug, ::serde_derive::Deserialize)]
-pub struct Info {
-	pub title: String,
-	pub version: String,
-}
-
 #[derive(Clone, Copy, Debug)]
 pub enum IntegerFormat {
 	Int32,
@@ -131,65 +125,25 @@ impl<'de> ::serde::Deserialize<'de> for Schema {
 
 		let description = value.description;
 
-		let kind = if let Some(ref_path) = value.ref_path {
-			SchemaKind::Ref(ref_path)
-		}
-		else {
-			match value.ty.as_ref().map(|s| s.as_str()) {
-				Some("array") => {
-					SchemaKind::Ty(Type::Array {
-						items: value.items.ok_or_else(|| ::serde::de::Error::missing_field("items"))?,
-					})
-				},
-
-				Some("boolean") => SchemaKind::Ty(Type::Boolean),
-
-				Some("integer") => {
-					let format = value.format.ok_or_else(|| ::serde::de::Error::missing_field("format"))?;
-					let format = match &*format {
-						"int32" => IntegerFormat::Int32,
-						"int64" => IntegerFormat::Int64,
-						format => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(format), &"one of int32, int64")),
-					};
-					SchemaKind::Ty(Type::Integer { format })
-				},
-
-				Some("number") => {
-					let format = value.format.ok_or_else(|| ::serde::de::Error::missing_field("format"))?;
-					let format = match &*format {
-						"double" => NumberFormat::Double,
-						format => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(format), &"one of double")),
-					};
-					SchemaKind::Ty(Type::Number { format })
-				},
-
-				Some("object") => {
-					let additional_properties = value.additional_properties.ok_or_else(|| ::serde::de::Error::missing_field("additionalProperties"))?;
-					SchemaKind::Ty(Type::Object { additional_properties })
-				},
-
-				Some("string") => {
-					let format = match value.format.as_ref().map(|s| s.as_str()) {
-						Some("byte") => Some(StringFormat::Byte),
-						Some("date-time") => Some(StringFormat::DateTime),
-						Some("int-or-string") => Some(StringFormat::IntOrString),
-						Some(format) => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(format), &"one of byte, date-time, int-or-string")),
-						None => None,
-					};
-					SchemaKind::Ty(Type::String { format })
-				},
-
-				Some(s) => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(s), &"one of array, boolean, integer, number, object, string")),
-
-				None => {
-					let required: ::std::collections::HashSet<_> = value.required.into_iter().collect();
-					SchemaKind::Properties(value.properties.into_iter().map(|(name, schema)| {
-						let required = required.contains(&name);
-						(name, (schema, required))
-					}).collect())
-				},
+		let kind =
+			if let Some(ref_path) = value.ref_path {
+				SchemaKind::Ref(ref_path)
 			}
-		};
+			else if let Some(ty) = value.ty {
+				SchemaKind::Ty(Type::parse::<D>(
+					&ty,
+					value.additional_properties,
+					value.format.as_ref().map(String::as_str),
+					value.items,
+				)?)
+			}
+			else {
+				let required: ::std::collections::HashSet<_> = value.required.into_iter().collect();
+				SchemaKind::Properties(value.properties.into_iter().map(|(name, schema)| {
+					let required = required.contains(&name);
+					(name, (schema, required))
+				}).collect())
+			};
 
 		Ok(Schema {
 			description,
@@ -222,31 +176,57 @@ pub enum Type {
 	String { format: Option<StringFormat> },
 }
 
-#[derive(Debug)]
-pub struct Spec {
-	pub info: Info,
-	pub definitions: ::std::collections::BTreeMap<DefinitionPath, Schema>,
-}
+impl Type {
+	pub(crate) fn parse<'de, D>(
+		ty: &str,
+		additional_properties: Option<Box<Schema>>,
+		format: Option<&str>,
+		items: Option<Box<Schema>>,
+	) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+		match ty {
+			"array" => {
+				Ok(Type::Array {
+					items: items.ok_or_else(|| ::serde::de::Error::missing_field("items"))?,
+				})
+			},
 
-#[cfg_attr(feature = "cargo-clippy", allow(use_self))]
-impl<'de> ::serde::Deserialize<'de> for Spec {
-	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
-		#[derive(Debug, ::serde_derive::Deserialize)]
-		pub struct InnerSpec {
-			swagger: String,
-			info: Info,
-			definitions: ::std::collections::BTreeMap<DefinitionPath, Schema>,
+			"boolean" => Ok(Type::Boolean),
+
+			"integer" => {
+				let format = match format {
+					Some("int32") => IntegerFormat::Int32,
+					Some("int64") | None => IntegerFormat::Int64,
+					Some(format) => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(format), &"one of int32, int64")),
+				};
+				Ok(Type::Integer { format })
+			},
+
+			"number" => {
+				let format = format.ok_or_else(|| ::serde::de::Error::missing_field("format"))?;
+				let format = match format {
+					"double" => NumberFormat::Double,
+					format => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(format), &"one of double")),
+				};
+				Ok(Type::Number { format })
+			},
+
+			"object" => {
+				let additional_properties = additional_properties.ok_or_else(|| ::serde::de::Error::missing_field("additionalProperties"))?;
+				Ok(Type::Object { additional_properties })
+			},
+
+			"string" => {
+				let format = match format {
+					Some("byte") => Some(StringFormat::Byte),
+					Some("date-time") => Some(StringFormat::DateTime),
+					Some("int-or-string") => Some(StringFormat::IntOrString),
+					Some(format) => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(format), &"one of byte, date-time, int-or-string")),
+					None => None,
+				};
+				Ok(Type::String { format })
+			},
+
+			s => Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(s), &"one of array, boolean, integer, number, object, string")),
 		}
-
-		let result: InnerSpec = ::serde::Deserialize::deserialize(deserializer)?;
-
-		if result.swagger != "2.0" {
-			return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&result.swagger), &"2.0"));
-		}
-
-		Ok(Spec {
-			info: result.info,
-			definitions: result.definitions,
-		})
 	}
 }

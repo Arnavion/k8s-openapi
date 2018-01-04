@@ -4,6 +4,8 @@
 #![cfg_attr(feature = "cargo-clippy", allow(
 	cyclomatic_complexity,
 	missing_docs_in_private_items,
+	shadow_reuse,
+	shadow_same,
 ))]
 
 extern crate backtrace;
