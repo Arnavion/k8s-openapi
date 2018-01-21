@@ -6,6 +6,8 @@
 	missing_docs_in_private_items,
 	shadow_reuse,
 	shadow_same,
+	unseparated_literal_suffix,
+	use_debug,
 ))]
 
 extern crate backtrace;
@@ -46,14 +48,27 @@ fn main() {
 		builder.init().expect("Could not initialize logger");
 	}
 
-	let mut args = std::env::args_os().skip(1);
-	let input: std::path::PathBuf = args.next().expect("expected input file parameter").into();
-	let out_dir: std::path::PathBuf = args.next().expect("expected output directory parameter").into();
-	let root_namespace = args.next().expect("expected root namespace").into_string().expect("root namespace was not a valid string");
-	let root_namespace: Vec<_> = root_namespace.split("::").collect();
-
 	let result: Result<()> = do catch {
 		use std::io::Write;
+
+		let mut args = std::env::args_os().skip(1);
+		let input: std::path::PathBuf = args.next().ok_or("expected input file parameter")?.into();
+		let out_dir: std::path::PathBuf = args.next().ok_or("expected output directory parameter")?.into();
+
+		// `$ref`s under these namespaces will not be emitted
+		let skip_refs_under_namespaces = vec![
+			// All marked deprecated and point to corresponding definitions under io.k8s.api
+			vec!["io", "k8s", "kubernetes", "pkg"],
+		];
+
+		let replace_namespaces: Vec<(_, Vec<String>)> = vec![
+			// Everything's under io.k8s, so strip it
+			(vec!["io", "k8s"], vec![]),
+		];
+
+		let mut num_generated_structs = 0usize;
+		let mut num_generated_type_aliases = 0usize;
+		let mut num_skipped_refs = 0usize;
 
 		info!(target: "", "Parsing spec file at {} ...", input.display());
 		let spec: swagger20::Spec = {
@@ -78,7 +93,16 @@ fn main() {
 		for (definition_path, definition) in spec.definitions {
 			trace!("Working on {} ...", definition_path);
 
-			let (mut file, type_name) = create_file_for_type(&definition_path, &out_dir)?;
+			if let swagger20::SchemaKind::Ref(_) = definition.kind {
+				let parts: Vec<_> = definition_path.split('.').collect();
+				if skip_refs_under_namespaces.iter().any(|skip_refs_under_namespace| parts.starts_with(skip_refs_under_namespace)) {
+					trace!("Skipping ref {} because its namespace is to be skipped", definition_path);
+					num_skipped_refs += 1;
+					continue;
+				}
+			}
+
+			let (mut file, type_name) = create_file_for_type(&definition_path, &out_dir, &replace_namespaces)?;
 
 			writeln!(file, "// Generated from definition {}", definition_path)?;
 			writeln!(file)?;
@@ -119,7 +143,7 @@ fn main() {
 							write!(file, "Option<")?;
 						}
 
-						let field_type_name = get_rust_type(&property.kind, &root_namespace);
+						let field_type_name = get_rust_type(&property.kind, &replace_namespaces);
 
 						// Fix cases of infinite recursion
 						let field_type_name = if let swagger20::SchemaKind::Ref(ref ref_path) = property.kind {
@@ -158,11 +182,14 @@ fn main() {
 						writeln!(file, ",")?;
 					}
 					writeln!(file, "}}")?;
+
+					num_generated_structs += 1;
 				},
 
 				swagger20::SchemaKind::Ref(_) |
 				swagger20::SchemaKind::Ty(_) => {
-					writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind, &root_namespace))?;
+					writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind, &replace_namespaces))?;
+					num_generated_type_aliases += 1;
 				},
 			}
 
@@ -170,6 +197,9 @@ fn main() {
 		}
 
 		info!("OK");
+		info!("Generated {} structs", num_generated_structs);
+		info!("Generated {} type aliases", num_generated_type_aliases);
+		info!("Skipped generating {} type aliases", num_skipped_refs);
 
 		Ok(())
 	};
@@ -183,14 +213,18 @@ fn main() {
 	}
 }
 
-fn create_file_for_type(definition_path: &swagger20::DefinitionPath, out_dir: &std::path::Path) -> Result<(std::io::BufWriter<std::fs::File>, String)> {
+fn create_file_for_type(
+	definition_path: &swagger20::DefinitionPath,
+	out_dir: &std::path::Path,
+	replace_namespaces: &[(Vec<&str>, Vec<String>)],
+) -> Result<(std::io::BufWriter<std::fs::File>, String)> {
 	use std::io::Write;
 
-	let parts: Vec<_> = definition_path.split('.').collect();
+	let parts = replace_namespace(definition_path.split('.'), replace_namespaces);
 
 	let mut current = out_dir.to_owned();
 
-	for &part in &parts[0..parts.len() - 1] {
+	for part in &parts[0..parts.len() - 1] {
 		trace!("Current directory: {}", current.display());
 
 		let mod_name = get_rust_ident(part);
@@ -241,14 +275,14 @@ fn get_comment_text<'a>(s: &'a str) -> impl Iterator<Item = std::borrow::Cow<'st
 		})
 }
 
-fn get_fully_qualified_type_name(ref_path: &swagger20::RefPath, root_namespace: &[&str]) -> String {
+fn get_fully_qualified_type_name(ref_path: &swagger20::RefPath, replace_namespaces: &[(Vec<&str>, Vec<String>)]) -> String {
 	use std::fmt::Write;
 
 	let mut result = String::new();
 
-	let parts: Vec<_> = ref_path.split('.').collect();
+	let parts = replace_namespace(ref_path.split('.'), replace_namespaces);
 
-	for &part in root_namespace.into_iter().chain(&parts[..parts.len() - 1]) {
+	for part in &parts[..parts.len() - 1] {
 		write!(result, "::{}", get_rust_ident(part)).unwrap();
 	}
 
@@ -299,14 +333,14 @@ fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	result.into()
 }
 
-fn get_rust_type(schema_kind: &swagger20::SchemaKind, root_namespace: &[&str]) -> std::borrow::Cow<'static, str> {
+fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec<&str>, Vec<String>)]) -> std::borrow::Cow<'static, str> {
 	#[cfg_attr(feature = "cargo-clippy", allow(unneeded_field_pattern))]
 	match *schema_kind {
 		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
 
-		swagger20::SchemaKind::Ref(ref ref_path) => get_fully_qualified_type_name(ref_path, root_namespace).into(),
+		swagger20::SchemaKind::Ref(ref ref_path) => get_fully_qualified_type_name(ref_path, replace_namespaces).into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("Vec<{}>", get_rust_type(&items.kind, root_namespace)).into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("Vec<{}>", get_rust_type(&items.kind, replace_namespaces)).into(),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => "bool".into(),
 
@@ -315,8 +349,24 @@ fn get_rust_type(schema_kind: &swagger20::SchemaKind, root_namespace: &[&str]) -
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => "f64".into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) => format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, root_namespace)).into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) => format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces)).into(),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: _ }) => "String".into(),
 	}
+}
+
+fn replace_namespace<'a, I>(parts: I, replace_namespaces: &[(Vec<&str>, Vec<String>)]) -> Vec<String> where I: IntoIterator<Item = &'a str> {
+	let parts: Vec<_> = parts.into_iter().collect();
+
+	trace!("parts = {:?}, replace_namespaces = {:?}", parts, replace_namespaces);
+
+	for &(ref from, ref to) in replace_namespaces {
+		if parts.starts_with(from) {
+			let mut result = to.clone();
+			result.extend(parts[from.len()..].into_iter().map(ToString::to_string));
+			return result;
+		}
+	}
+
+	parts.into_iter().map(ToString::to_string).collect()
 }

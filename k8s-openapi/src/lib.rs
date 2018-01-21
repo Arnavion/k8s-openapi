@@ -1,4 +1,9 @@
-#[macro_use]
-extern crate serde_derive;
+#[macro_use] extern crate serde_derive;
 
-pub mod resources;
+pub mod api;
+
+pub mod apiextensions_apiserver;
+
+pub mod apimachinery;
+
+pub mod kube_aggregator;
