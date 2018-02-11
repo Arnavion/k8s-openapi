@@ -218,6 +218,7 @@ fn main() {
 
 			let mut file = std::io::BufWriter::new(std::fs::File::create(crate_root)?);
 			writeln!(file, "#[macro_use] extern crate serde_derive;")?;
+			writeln!(file)?;
 			file.write_all(&old_crate_root_contents)?;
 
 			info!("OK");
@@ -258,8 +259,12 @@ fn create_file_for_type(
 		if !current.is_dir() {
 			trace!("    Subdirectory does not exist. Creating mod.rs with a reference to it...");
 
-			let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.with_file_name("mod.rs"))?);
-			writeln!(parent_mod_rs)?;
+			let current_mod_rs_path = current.with_file_name("mod.rs");
+			let append_newline = current_mod_rs_path.exists();
+			let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current_mod_rs_path)?);
+			if append_newline {
+				writeln!(parent_mod_rs)?;
+			}
 			writeln!(parent_mod_rs, "pub mod {};", mod_name)?;
 
 			trace!("    OK");
