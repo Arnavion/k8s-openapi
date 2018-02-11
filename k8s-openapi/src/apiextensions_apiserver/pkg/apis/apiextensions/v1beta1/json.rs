@@ -4,5 +4,5 @@
 #[derive(Debug, Default, Deserialize, Serialize)]
 pub struct JSON {
     #[serde(rename = "Raw")]
-    pub raw: String,
+    pub raw: ::ByteString,
 }

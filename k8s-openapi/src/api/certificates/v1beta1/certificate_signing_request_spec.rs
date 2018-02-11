@@ -12,7 +12,7 @@ pub struct CertificateSigningRequestSpec {
     pub groups: Option<Vec<String>>,
 
     /// Base64-encoded PKCS#10 CSR data
-    pub request: String,
+    pub request: ::ByteString,
 
     /// UID information about the requesting user. See user.Info interface for details.
     #[serde(skip_serializing_if = "Option::is_none")]

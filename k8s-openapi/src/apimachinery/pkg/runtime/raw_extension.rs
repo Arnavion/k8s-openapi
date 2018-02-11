@@ -32,5 +32,5 @@
 pub struct RawExtension {
     /// Raw is the underlying serialization of this object.
     #[serde(rename = "Raw")]
-    pub raw: String,
+    pub raw: ::ByteString,
 }

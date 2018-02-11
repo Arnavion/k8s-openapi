@@ -5,7 +5,7 @@
 pub struct APIServiceSpec {
     /// CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving certificate.
     #[serde(rename = "caBundle")]
-    pub ca_bundle: String,
+    pub ca_bundle: ::ByteString,
 
     /// Group is the API group name this server hosts
     #[serde(skip_serializing_if = "Option::is_none")]

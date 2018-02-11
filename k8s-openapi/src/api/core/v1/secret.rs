@@ -10,7 +10,7 @@ pub struct Secret {
 
     /// Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_' or '.'. The serialized form of the secret data is a base64 encoded string, representing the arbitrary (possibly non-string) data value here. Described in https://tools.ietf.org/html/rfc4648#section-4
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub data: Option<::std::collections::BTreeMap<String, String>>,
+    pub data: Option<::std::collections::BTreeMap<String, ::ByteString>>,
 
     /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
     #[serde(skip_serializing_if = "Option::is_none")]

@@ -117,8 +117,33 @@ fn main() {
 
 			match definition.kind {
 				swagger20::SchemaKind::Properties(properties) => {
-					writeln!(file, "#[derive(Debug, Default, Deserialize, Serialize)]")?;
+					let has_non_default_property =
+						properties.values().any(|&(ref property, required)| {
+							if !required {
+								return false;
+							}
+
+							if let swagger20::SchemaKind::Ref(ref ref_path) = property.kind {
+								match &**ref_path {
+									// chrono::DateTime<chrono::Utc> is not Default
+									"io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime" |
+									"io.k8s.apimachinery.pkg.apis.meta.v1.Time" => true,
+									_ => false,
+								}
+							}
+							else {
+								false
+							}
+						});
+					if has_non_default_property {
+						writeln!(file, "#[derive(Debug, Deserialize, Serialize)]")?;
+					}
+					else {
+						writeln!(file, "#[derive(Debug, Default, Deserialize, Serialize)]")?;
+					}
+
 					writeln!(file, "pub struct {} {{", type_name)?;
+
 					for (i, (name, (property, required))) in properties.into_iter().enumerate() {
 						if i > 0 {
 							writeln!(file)?;
@@ -217,9 +242,45 @@ fn main() {
 			crate_root.push("lib.rs");
 
 			let mut file = std::io::BufWriter::new(std::fs::File::create(crate_root)?);
+			writeln!(file, "extern crate base64;")?;
+			writeln!(file, "extern crate chrono;")?;
+			writeln!(file, "extern crate serde;")?;
 			writeln!(file, "#[macro_use] extern crate serde_derive;")?;
 			writeln!(file)?;
 			file.write_all(&old_crate_root_contents)?;
+
+			// ByteString is a wrapper around Vec<u8>, but serialized by base64-encoding to a JSON string
+			writeln!(file)?;
+			writeln!(file, "#[derive(Debug, Default)]")?;
+			writeln!(file, "pub struct ByteString(pub Vec<u8>);")?;
+			writeln!(file)?;
+			writeln!(file, "impl serde::Serialize for ByteString {{")?;
+			writeln!(file, "    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
+			writeln!(file, "        base64::encode_config(&self.0, base64::STANDARD).serialize(serializer)")?;
+			writeln!(file, "    }}")?;
+			writeln!(file, "}}")?;
+			writeln!(file)?;
+			writeln!(file, "impl<'de> serde::Deserialize<'de> for ByteString {{")?;
+			writeln!(file, "    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
+			writeln!(file, "        let s: String = serde::Deserialize::deserialize(deserializer)?;")?;
+			writeln!(file, "        Ok(ByteString(base64::decode_config(&s, base64::STANDARD).map_err(serde::de::Error::custom)?))")?;
+			writeln!(file, "    }}")?;
+			writeln!(file, "}}")?;
+
+			// IntOrString is either an int or a string
+			writeln!(file)?;
+			writeln!(file, "#[derive(Debug, Deserialize, Serialize)]")?;
+			writeln!(file, "#[serde(untagged)]")?;
+			writeln!(file, "pub enum IntOrString {{")?;
+			writeln!(file, "    Int(i32),")?;
+			writeln!(file, "    String(String),")?;
+			writeln!(file, "}}")?;
+			writeln!(file)?;
+			writeln!(file, "impl Default for IntOrString {{")?;
+			writeln!(file, "    fn default() -> Self {{")?;
+			writeln!(file, "        IntOrString::Int(0)")?;
+			writeln!(file, "    }}")?;
+			writeln!(file, "}}")?;
 
 			info!("OK");
 		}
@@ -361,7 +422,6 @@ fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 }
 
 fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec<&str>, Vec<String>)]) -> std::borrow::Cow<'static, str> {
-	#[cfg_attr(feature = "cargo-clippy", allow(unneeded_field_pattern))]
 	match *schema_kind {
 		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
 
@@ -378,7 +438,10 @@ fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) => format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces)).into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: _ }) => "String".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => "::ByteString".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => "::chrono::DateTime<::chrono::Utc>".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::IntOrString) }) => "::IntOrString".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => "String".into(),
 	}
 }
 

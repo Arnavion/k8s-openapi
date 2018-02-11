@@ -5,7 +5,7 @@
 pub struct WebhookClientConfig {
     /// `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. Required.
     #[serde(rename = "caBundle")]
-    pub ca_bundle: String,
+    pub ca_bundle: ::ByteString,
 
     /// `service` is a reference to the service for this webhook. Either `service` or `url` must be specified.
     ///

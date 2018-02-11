@@ -5,5 +5,7 @@ authors = ["Arnavion <arnavion@gmail.com>"]
 publish = false
 
 [dependencies]
+base64 = "0.9.x"
+chrono = { version = "0.4.x", features = ["serde"] }
 serde = "1.0.x"
 serde_derive = "1.0.x"
