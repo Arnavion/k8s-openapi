@@ -21,26 +21,6 @@ This binary generates Rust types for the resource definitions in the Kubernetes 
 		pushd $PWD/k8s-openapi
 		```
 
-	1. Fix up the mod.rs at the root to be the crate's lib.rs
-
-		sh:
-
-		```sh
-		sed -e '1s/^/#[macro_use] extern crate serde_derive;\n/' src/mod.rs > src/lib.rs
-		```
-
-		PS:
-
-		```powershell
-		[System.IO.File]::WriteAllLines("$PWD\src\lib.rs", @('#[macro_use] extern crate serde_derive;') + (cat .\src\mod.rs))
-		```
-
-	1. Remove original `mod.rs`
-
-		```sh
-		rm src/mod.rs
-		```
-
 	1. Build
 
 		```sh

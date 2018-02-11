@@ -203,6 +203,26 @@ fn main() {
 		info!("Generated {} type aliases", num_generated_type_aliases);
 		info!("Skipped generating {} type aliases", num_skipped_refs);
 
+		{
+			info!("Fixing crate root");
+
+			let mut old_crate_root = out_dir.clone();
+			old_crate_root.push("mod.rs");
+
+			let mut old_crate_root_contents = vec![];
+			std::io::Read::read_to_end(&mut std::fs::File::open(&old_crate_root)?, &mut old_crate_root_contents)?;
+			std::fs::remove_file(old_crate_root)?;
+
+			let mut crate_root = out_dir.clone();
+			crate_root.push("lib.rs");
+
+			let mut file = std::io::BufWriter::new(std::fs::File::create(crate_root)?);
+			writeln!(file, "#[macro_use] extern crate serde_derive;")?;
+			file.write_all(&old_crate_root_contents)?;
+
+			info!("OK");
+		}
+
 		Ok(())
 	};
 
