@@ -15,7 +15,7 @@ pub struct MetricSpec {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub resource: Option<::api::autoscaling::v2beta1::ResourceMetricSource>,
 
-    /// type is the type of metric source.  It should be one of "Object", "Pods" or "Resource", each mapping to a matching field in the object.
+    /// type is the type of metric source.  It should match one of the fields below.
     #[serde(rename = "type")]
     pub type_: String,
 }

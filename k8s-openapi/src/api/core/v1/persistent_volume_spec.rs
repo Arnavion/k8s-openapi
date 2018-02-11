@@ -51,7 +51,7 @@ pub struct PersistentVolumeSpec {
     /// FlexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.
     #[serde(rename = "flexVolume")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub flex_volume: Option<::api::core::v1::FlexPersistentVolumeSource>,
+    pub flex_volume: Option<::api::core::v1::FlexVolumeSource>,
 
     /// Flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running
     #[serde(skip_serializing_if = "Option::is_none")]

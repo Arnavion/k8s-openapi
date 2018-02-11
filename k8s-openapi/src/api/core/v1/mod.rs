@@ -146,9 +146,6 @@ pub use self::exec_action::ExecAction;
 mod fc_volume_source;
 pub use self::fc_volume_source::FCVolumeSource;
 
-mod flex_persistent_volume_source;
-pub use self::flex_persistent_volume_source::FlexPersistentVolumeSource;
-
 mod flex_volume_source;
 pub use self::flex_volume_source::FlexVolumeSource;
 
