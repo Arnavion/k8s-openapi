@@ -41,11 +41,13 @@ type Result<T> = std::result::Result<T, Error>;
 
 fn main() {
 	{
-		let mut builder = env_logger::LogBuilder::new();
-		builder.format(|record| format!("{} {}:{} {}", record.level(), record.location().file(), record.location().line(), record.args()));
+		use std::io::Write;
+
+		let mut builder = env_logger::Builder::new();
+		builder.format(|buf, record| writeln!(buf, "{} {}:{} {}", record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args()));
 		let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
 		builder.parse(&rust_log);
-		builder.init().expect("Could not initialize logger");
+		builder.init();
 	}
 
 	let result: Result<()> = do catch {
