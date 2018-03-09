@@ -184,11 +184,9 @@ impl Type {
 		items: Option<Box<Schema>>,
 	) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
 		match ty {
-			"array" => {
-				Ok(Type::Array {
-					items: items.ok_or_else(|| ::serde::de::Error::missing_field("items"))?,
-				})
-			},
+			"array" => Ok(Type::Array {
+				items: items.ok_or_else(|| ::serde::de::Error::missing_field("items"))?,
+			}),
 
 			"boolean" => Ok(Type::Boolean),
 
