@@ -262,8 +262,21 @@ fn main() {
 			writeln!(file)?;
 			writeln!(file, "impl<'de> serde::Deserialize<'de> for ByteString {{")?;
 			writeln!(file, "    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
-			writeln!(file, "        let s: String = serde::Deserialize::deserialize(deserializer)?;")?;
-			writeln!(file, "        Ok(ByteString(base64::decode_config(&s, base64::STANDARD).map_err(serde::de::Error::custom)?))")?;
+			writeln!(file, "        struct Visitor;")?;
+			writeln!(file, "")?;
+			writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
+			writeln!(file, "            type Value = ByteString;")?;
+			writeln!(file, "")?;
+			writeln!(file, "            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
+			writeln!(file, r#"                write!(formatter, "a base64-encoded string")"#)?;
+			writeln!(file, "            }}")?;
+			writeln!(file, "")?;
+			writeln!(file, "            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
+			writeln!(file, "                Ok(ByteString(base64::decode_config(v, base64::STANDARD).map_err(serde::de::Error::custom)?))")?;
+			writeln!(file, "            }}")?;
+			writeln!(file, "        }}")?;
+			writeln!(file, "")?;
+			writeln!(file, "        deserializer.deserialize_str(Visitor)")?;
 			writeln!(file, "    }}")?;
 			writeln!(file, "}}")?;
 

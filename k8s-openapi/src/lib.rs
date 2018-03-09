@@ -22,8 +22,21 @@ impl serde::Serialize for ByteString {
 
 impl<'de> serde::Deserialize<'de> for ByteString {
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error> where D: serde::Deserializer<'de> {
-        let s: String = serde::Deserialize::deserialize(deserializer)?;
-        Ok(ByteString(base64::decode_config(&s, base64::STANDARD).map_err(serde::de::Error::custom)?))
+        struct Visitor;
+
+        impl<'de> serde::de::Visitor<'de> for Visitor {
+            type Value = ByteString;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+                write!(formatter, "a base64-encoded string")
+            }
+
+            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+                Ok(ByteString(base64::decode_config(v, base64::STANDARD).map_err(serde::de::Error::custom)?))
+            }
+        }
+
+        deserializer.deserialize_str(Visitor)
     }
 }
 
