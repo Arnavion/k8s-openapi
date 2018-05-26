@@ -13,7 +13,7 @@ pub struct Spec {
 #[cfg_attr(feature = "cargo-clippy", allow(use_self))]
 impl<'de> ::serde::Deserialize<'de> for Spec {
 	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
-		#[derive(Debug, ::serde_derive::Deserialize)]
+		#[derive(Debug, Deserialize)]
 		pub struct InnerSpec {
 			swagger: String,
 			info: Info,

@@ -1,5 +1,3 @@
-#![feature(catch_expr, conservative_impl_trait, proc_macro)]
-
 #![cfg_attr(feature = "cargo-clippy", deny(clippy, clippy_pedantic))]
 #![cfg_attr(feature = "cargo-clippy", allow(
 	cyclomatic_complexity,
@@ -15,6 +13,7 @@ extern crate env_logger;
 #[macro_use]
 extern crate log;
 extern crate serde;
+#[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
 
@@ -28,21 +27,19 @@ impl<E> From<E> for Error where Box<std::error::Error>: From<E> {
 	}
 }
 
-impl std::fmt::Display for Error {
+impl std::fmt::Debug for Error {
 	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-		writeln!(f, "error: {}", self.0)?;
+		writeln!(f, "{}", self.0)?;
 		#[cfg_attr(feature = "cargo-clippy", allow(use_debug))]
 		write!(f, "{:?}", self.1)?;
 		Ok(())
 	}
 }
 
-type Result<T> = std::result::Result<T, Error>;
+fn main() -> Result<(), Error> {
+	use std::io::Write;
 
-fn main() {
 	{
-		use std::io::Write;
-
 		let mut builder = env_logger::Builder::new();
 		builder.format(|buf, record| writeln!(buf, "{} {}:{} {}", record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args()));
 		let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
@@ -50,271 +47,259 @@ fn main() {
 		builder.init();
 	}
 
-	let result: Result<()> = do catch {
-		use std::io::Write;
+	let mut args = std::env::args_os().skip(1);
+	let input: std::path::PathBuf = args.next().ok_or("expected input file parameter")?.into();
+	let out_dir: std::path::PathBuf = args.next().ok_or("expected output directory parameter")?.into();
 
-		let mut args = std::env::args_os().skip(1);
-		let input: std::path::PathBuf = args.next().ok_or("expected input file parameter")?.into();
-		let out_dir: std::path::PathBuf = args.next().ok_or("expected output directory parameter")?.into();
+	// `$ref`s under these namespaces will not be emitted
+	let skip_refs_under_namespaces = vec![
+		// All marked deprecated and point to corresponding definitions under io.k8s.api
+		vec!["io", "k8s", "kubernetes", "pkg"],
+	];
 
-		// `$ref`s under these namespaces will not be emitted
-		let skip_refs_under_namespaces = vec![
-			// All marked deprecated and point to corresponding definitions under io.k8s.api
-			vec!["io", "k8s", "kubernetes", "pkg"],
-		];
+	let replace_namespaces: Vec<(_, Vec<String>)> = vec![
+		// Everything's under io.k8s, so strip it
+		(vec!["io", "k8s"], vec![]),
+	];
 
-		let replace_namespaces: Vec<(_, Vec<String>)> = vec![
-			// Everything's under io.k8s, so strip it
-			(vec!["io", "k8s"], vec![]),
-		];
+	let mut num_generated_structs = 0usize;
+	let mut num_generated_type_aliases = 0usize;
+	let mut num_skipped_refs = 0usize;
 
-		let mut num_generated_structs = 0usize;
-		let mut num_generated_type_aliases = 0usize;
-		let mut num_skipped_refs = 0usize;
+	info!(target: "", "Parsing spec file at {} ...", input.display());
+	let spec: swagger20::Spec = {
+		let file = std::io::BufReader::new(std::fs::File::open(input)?);
+		serde_json::from_reader(file)?
+	};
+	info!("OK. Spec has {} definitions", spec.definitions.len());
 
-		info!(target: "", "Parsing spec file at {} ...", input.display());
-		let spec: swagger20::Spec = {
-			let file = std::io::BufReader::new(std::fs::File::open(input)?);
-			serde_json::from_reader(file)?
-		};
-		info!("OK. Spec has {} definitions", spec.definitions.len());
+	info!("Removing output directory {} ...", out_dir.display());
+	match std::fs::remove_dir_all(&out_dir) {
+		Ok(()) => trace!("OK"),
+		Err(ref err) if err.kind() == std::io::ErrorKind::NotFound => trace!("OK. Directory doesn't exist"),
+		err => err?,
+	}
 
-		info!("Removing output directory {} ...", out_dir.display());
-		match std::fs::remove_dir_all(&out_dir) {
-			Ok(()) => trace!("OK"),
-			Err(ref err) if err.kind() == std::io::ErrorKind::NotFound => trace!("OK. Directory doesn't exist"),
-			err => err?,
+	info!("Creating output directory {} ...", out_dir.display());
+	std::fs::create_dir(&out_dir)?;
+	trace!("OK");
+
+	info!("Generating types...");
+
+	for (definition_path, definition) in spec.definitions {
+		trace!("Working on {} ...", definition_path);
+
+		if let swagger20::SchemaKind::Ref(_) = definition.kind {
+			let parts: Vec<_> = definition_path.split('.').collect();
+			if skip_refs_under_namespaces.iter().any(|skip_refs_under_namespace| parts.starts_with(skip_refs_under_namespace)) {
+				trace!("Skipping ref {} because its namespace is to be skipped", definition_path);
+				num_skipped_refs += 1;
+				continue;
+			}
 		}
 
-		info!("Creating output directory {} ...", out_dir.display());
-		std::fs::create_dir(&out_dir)?;
-		trace!("OK");
+		let (mut file, type_name) = create_file_for_type(&definition_path, &out_dir, &replace_namespaces)?;
 
-		info!("Generating types...");
+		writeln!(file, "// Generated from definition {}", definition_path)?;
+		writeln!(file)?;
 
-		for (definition_path, definition) in spec.definitions {
-			trace!("Working on {} ...", definition_path);
-
-			if let swagger20::SchemaKind::Ref(_) = definition.kind {
-				let parts: Vec<_> = definition_path.split('.').collect();
-				if skip_refs_under_namespaces.iter().any(|skip_refs_under_namespace| parts.starts_with(skip_refs_under_namespace)) {
-					trace!("Skipping ref {} because its namespace is to be skipped", definition_path);
-					num_skipped_refs += 1;
-					continue;
-				}
+		if let Some(description) = definition.description {
+			for line in get_comment_text(&description) {
+				writeln!(file, "{}", line)?;
 			}
+		}
 
-			let (mut file, type_name) = create_file_for_type(&definition_path, &out_dir, &replace_namespaces)?;
-
-			writeln!(file, "// Generated from definition {}", definition_path)?;
-			writeln!(file)?;
-
-			if let Some(description) = definition.description {
-				for line in get_comment_text(&description) {
-					writeln!(file, "{}", line)?;
-				}
-			}
-
-			match definition.kind {
-				swagger20::SchemaKind::Properties(properties) => {
-					let has_non_default_property =
-						properties.values().any(|&(ref property, required)| {
-							if !required {
-								return false;
-							}
-
-							if let swagger20::SchemaKind::Ref(ref ref_path) = property.kind {
-								match &**ref_path {
-									// chrono::DateTime<chrono::Utc> is not Default
-									"io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime" |
-									"io.k8s.apimachinery.pkg.apis.meta.v1.Time" => true,
-									_ => false,
-								}
-							}
-							else {
-								false
-							}
-						});
-					if has_non_default_property {
-						writeln!(file, "#[derive(Debug, Deserialize, Serialize)]")?;
-					}
-					else {
-						writeln!(file, "#[derive(Debug, Default, Deserialize, Serialize)]")?;
-					}
-
-					writeln!(file, "pub struct {} {{", type_name)?;
-
-					for (i, (name, (property, required))) in properties.into_iter().enumerate() {
-						if i > 0 {
-							writeln!(file)?;
-						}
-
-						if let Some(description) = property.description {
-							for line in get_comment_text(&description) {
-								writeln!(file, "    {}", line)?;
-							}
-						}
-
-						let field_name = get_rust_ident(&name);
-						if field_name != *name {
-							writeln!(file, r#"    #[serde(rename = "{}")]"#, name)?;
-						}
-
+		match definition.kind {
+			swagger20::SchemaKind::Properties(properties) => {
+				let has_non_default_property =
+					properties.values().any(|&(ref property, required)| {
 						if !required {
-							writeln!(file, r#"    #[serde(skip_serializing_if = "Option::is_none")]"#)?;
+							return false;
 						}
 
-						write!(file, "    pub {}: ", field_name)?;
-
-						if !required {
-							write!(file, "Option<")?;
-						}
-
-						let field_type_name = get_rust_type(&property.kind, &replace_namespaces);
-
-						// Fix cases of infinite recursion
-						let field_type_name = if let swagger20::SchemaKind::Ref(ref ref_path) = property.kind {
-							match (&*definition_path, &*name, &**ref_path) {
-								(
-									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
-									"Schema",
-									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-								) |
-
-								(
-									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool",
-									"Schema",
-									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-								) |
-
-								(
-									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-									"not",
-									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-								) => format!("Box<{}>", field_type_name).into(),
-
-								_ => field_type_name,
+						if let swagger20::SchemaKind::Ref(ref ref_path) = property.kind {
+							match &**ref_path {
+								// chrono::DateTime<chrono::Utc> is not Default
+								"io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime" |
+								"io.k8s.apimachinery.pkg.apis.meta.v1.Time" => true,
+								_ => false,
 							}
 						}
 						else {
-							field_type_name
-						};
-
-						write!(file, "{}", field_type_name)?;
-
-						if !required {
-							write!(file, ">")?;
+							false
 						}
+					});
+				if has_non_default_property {
+					writeln!(file, "#[derive(Debug, Deserialize, Serialize)]")?;
+				}
+				else {
+					writeln!(file, "#[derive(Debug, Default, Deserialize, Serialize)]")?;
+				}
 
-						writeln!(file, ",")?;
+				writeln!(file, "pub struct {} {{", type_name)?;
+
+				for (i, (name, (property, required))) in properties.into_iter().enumerate() {
+					if i > 0 {
+						writeln!(file)?;
 					}
-					writeln!(file, "}}")?;
 
-					num_generated_structs += 1;
-				},
+					if let Some(description) = property.description {
+						for line in get_comment_text(&description) {
+							writeln!(file, "    {}", line)?;
+						}
+					}
 
-				swagger20::SchemaKind::Ref(_) |
-				swagger20::SchemaKind::Ty(_) => {
-					writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind, &replace_namespaces))?;
-					num_generated_type_aliases += 1;
-				},
-			}
+					let field_name = get_rust_ident(&name);
+					if field_name != *name {
+						writeln!(file, r#"    #[serde(rename = "{}")]"#, name)?;
+					}
 
-			trace!("OK");
+					if !required {
+						writeln!(file, r#"    #[serde(skip_serializing_if = "Option::is_none")]"#)?;
+					}
+
+					write!(file, "    pub {}: ", field_name)?;
+
+					if !required {
+						write!(file, "Option<")?;
+					}
+
+					let field_type_name = get_rust_type(&property.kind, &replace_namespaces);
+
+					// Fix cases of infinite recursion
+					let field_type_name = if let swagger20::SchemaKind::Ref(ref ref_path) = property.kind {
+						match (&*definition_path, &*name, &**ref_path) {
+							(
+								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
+								"Schema",
+								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+							) |
+
+							(
+								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool",
+								"Schema",
+								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+							) |
+
+							(
+								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+								"not",
+								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+							) => format!("Box<{}>", field_type_name).into(),
+
+							_ => field_type_name,
+						}
+					}
+					else {
+						field_type_name
+					};
+
+					write!(file, "{}", field_type_name)?;
+
+					if !required {
+						write!(file, ">")?;
+					}
+
+					writeln!(file, ",")?;
+				}
+				writeln!(file, "}}")?;
+
+				num_generated_structs += 1;
+			},
+
+			swagger20::SchemaKind::Ref(_) |
+			swagger20::SchemaKind::Ty(_) => {
+				writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind, &replace_namespaces))?;
+				num_generated_type_aliases += 1;
+			},
 		}
+
+		trace!("OK");
+	}
+
+	info!("OK");
+	info!("Generated {} structs", num_generated_structs);
+	info!("Generated {} type aliases", num_generated_type_aliases);
+	info!("Skipped generating {} type aliases", num_skipped_refs);
+
+	{
+		info!("Fixing crate root");
+
+		let mut old_crate_root = out_dir.clone();
+		old_crate_root.push("mod.rs");
+
+		let mut old_crate_root_contents = vec![];
+		std::io::Read::read_to_end(&mut std::fs::File::open(&old_crate_root)?, &mut old_crate_root_contents)?;
+		std::fs::remove_file(old_crate_root)?;
+
+		let mut crate_root = out_dir.clone();
+		crate_root.push("lib.rs");
+
+		let mut file = std::io::BufWriter::new(std::fs::File::create(crate_root)?);
+		writeln!(file, "extern crate base64;")?;
+		writeln!(file, "extern crate chrono;")?;
+		writeln!(file, "extern crate serde;")?;
+		writeln!(file, "#[macro_use] extern crate serde_derive;")?;
+		writeln!(file)?;
+		file.write_all(&old_crate_root_contents)?;
+
+		// ByteString is a wrapper around Vec<u8>, but serialized by base64-encoding to a JSON string
+		writeln!(file)?;
+		writeln!(file, "#[derive(Debug, Default)]")?;
+		writeln!(file, "pub struct ByteString(pub Vec<u8>);")?;
+		writeln!(file)?;
+		writeln!(file, "impl serde::Serialize for ByteString {{")?;
+		writeln!(file, "    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
+		writeln!(file, "        base64::encode_config(&self.0, base64::STANDARD).serialize(serializer)")?;
+		writeln!(file, "    }}")?;
+		writeln!(file, "}}")?;
+		writeln!(file)?;
+		writeln!(file, "impl<'de> serde::Deserialize<'de> for ByteString {{")?;
+		writeln!(file, "    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
+		writeln!(file, "        struct Visitor;")?;
+		writeln!(file, "")?;
+		writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
+		writeln!(file, "            type Value = ByteString;")?;
+		writeln!(file, "")?;
+		writeln!(file, "            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
+		writeln!(file, r#"                write!(formatter, "a base64-encoded string")"#)?;
+		writeln!(file, "            }}")?;
+		writeln!(file, "")?;
+		writeln!(file, "            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
+		writeln!(file, "                Ok(ByteString(base64::decode_config(v, base64::STANDARD).map_err(serde::de::Error::custom)?))")?;
+		writeln!(file, "            }}")?;
+		writeln!(file, "        }}")?;
+		writeln!(file, "")?;
+		writeln!(file, "        deserializer.deserialize_str(Visitor)")?;
+		writeln!(file, "    }}")?;
+		writeln!(file, "}}")?;
+
+		// IntOrString is either an int or a string
+		writeln!(file)?;
+		writeln!(file, "#[derive(Debug, Deserialize, Serialize)]")?;
+		writeln!(file, "#[serde(untagged)]")?;
+		writeln!(file, "pub enum IntOrString {{")?;
+		writeln!(file, "    Int(i32),")?;
+		writeln!(file, "    String(String),")?;
+		writeln!(file, "}}")?;
+		writeln!(file)?;
+		writeln!(file, "impl Default for IntOrString {{")?;
+		writeln!(file, "    fn default() -> Self {{")?;
+		writeln!(file, "        IntOrString::Int(0)")?;
+		writeln!(file, "    }}")?;
+		writeln!(file, "}}")?;
 
 		info!("OK");
-		info!("Generated {} structs", num_generated_structs);
-		info!("Generated {} type aliases", num_generated_type_aliases);
-		info!("Skipped generating {} type aliases", num_skipped_refs);
-
-		{
-			info!("Fixing crate root");
-
-			let mut old_crate_root = out_dir.clone();
-			old_crate_root.push("mod.rs");
-
-			let mut old_crate_root_contents = vec![];
-			std::io::Read::read_to_end(&mut std::fs::File::open(&old_crate_root)?, &mut old_crate_root_contents)?;
-			std::fs::remove_file(old_crate_root)?;
-
-			let mut crate_root = out_dir.clone();
-			crate_root.push("lib.rs");
-
-			let mut file = std::io::BufWriter::new(std::fs::File::create(crate_root)?);
-			writeln!(file, "extern crate base64;")?;
-			writeln!(file, "extern crate chrono;")?;
-			writeln!(file, "extern crate serde;")?;
-			writeln!(file, "#[macro_use] extern crate serde_derive;")?;
-			writeln!(file)?;
-			file.write_all(&old_crate_root_contents)?;
-
-			// ByteString is a wrapper around Vec<u8>, but serialized by base64-encoding to a JSON string
-			writeln!(file)?;
-			writeln!(file, "#[derive(Debug, Default)]")?;
-			writeln!(file, "pub struct ByteString(pub Vec<u8>);")?;
-			writeln!(file)?;
-			writeln!(file, "impl serde::Serialize for ByteString {{")?;
-			writeln!(file, "    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
-			writeln!(file, "        base64::encode_config(&self.0, base64::STANDARD).serialize(serializer)")?;
-			writeln!(file, "    }}")?;
-			writeln!(file, "}}")?;
-			writeln!(file)?;
-			writeln!(file, "impl<'de> serde::Deserialize<'de> for ByteString {{")?;
-			writeln!(file, "    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
-			writeln!(file, "        struct Visitor;")?;
-			writeln!(file, "")?;
-			writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
-			writeln!(file, "            type Value = ByteString;")?;
-			writeln!(file, "")?;
-			writeln!(file, "            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
-			writeln!(file, r#"                write!(formatter, "a base64-encoded string")"#)?;
-			writeln!(file, "            }}")?;
-			writeln!(file, "")?;
-			writeln!(file, "            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
-			writeln!(file, "                Ok(ByteString(base64::decode_config(v, base64::STANDARD).map_err(serde::de::Error::custom)?))")?;
-			writeln!(file, "            }}")?;
-			writeln!(file, "        }}")?;
-			writeln!(file, "")?;
-			writeln!(file, "        deserializer.deserialize_str(Visitor)")?;
-			writeln!(file, "    }}")?;
-			writeln!(file, "}}")?;
-
-			// IntOrString is either an int or a string
-			writeln!(file)?;
-			writeln!(file, "#[derive(Debug, Deserialize, Serialize)]")?;
-			writeln!(file, "#[serde(untagged)]")?;
-			writeln!(file, "pub enum IntOrString {{")?;
-			writeln!(file, "    Int(i32),")?;
-			writeln!(file, "    String(String),")?;
-			writeln!(file, "}}")?;
-			writeln!(file)?;
-			writeln!(file, "impl Default for IntOrString {{")?;
-			writeln!(file, "    fn default() -> Self {{")?;
-			writeln!(file, "        IntOrString::Int(0)")?;
-			writeln!(file, "    }}")?;
-			writeln!(file, "}}")?;
-
-			info!("OK");
-		}
-
-		Ok(())
-	};
-
-	#[cfg_attr(feature = "cargo-clippy", allow(print_stdout))]
-	{
-		if let Err(err) = result {
-			println!("{}", err);
-			std::process::exit(1);
-		}
 	}
+
+	Ok(())
 }
 
 fn create_file_for_type(
 	definition_path: &swagger20::DefinitionPath,
 	out_dir: &std::path::Path,
 	replace_namespaces: &[(Vec<&str>, Vec<String>)],
-) -> Result<(std::io::BufWriter<std::fs::File>, String)> {
+) -> Result<(std::io::BufWriter<std::fs::File>, String), Error> {
 	use std::io::Write;
 
 	let parts = replace_namespace(definition_path.split('.'), replace_namespaces);

@@ -1,4 +1,4 @@
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, ::serde_derive::Deserialize)]
+#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct DefinitionPath(pub String);
 
 impl ::std::fmt::Display for DefinitionPath {
@@ -26,7 +26,7 @@ pub enum NumberFormat {
 	Double,
 }
 
-#[derive(Debug, Eq, Hash, Ord, PartialEq, PartialOrd, ::serde_derive::Deserialize)]
+#[derive(Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct PropertyName(pub String);
 
 impl ::std::ops::Deref for PropertyName {
@@ -97,7 +97,7 @@ pub struct Schema {
 #[cfg_attr(feature = "cargo-clippy", allow(use_self))]
 impl<'de> ::serde::Deserialize<'de> for Schema {
 	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
-		#[derive(Debug, ::serde_derive::Deserialize)]
+		#[derive(Debug, Deserialize)]
 		struct InnerSchema {
 			#[serde(rename = "additionalProperties")]
 			additional_properties: Option<Box<Schema>>,
