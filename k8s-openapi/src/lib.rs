@@ -3,14 +3,6 @@ extern crate chrono;
 extern crate serde;
 #[macro_use] extern crate serde_derive;
 
-pub mod api;
-
-pub mod apiextensions_apiserver;
-
-pub mod apimachinery;
-
-pub mod kube_aggregator;
-
 #[derive(Debug, Default)]
 pub struct ByteString(pub Vec<u8>);
 
@@ -52,3 +44,15 @@ impl Default for IntOrString {
         IntOrString::Int(0)
     }
 }
+
+#[cfg(feature = "v1_7")]
+pub mod v1_7;
+
+#[cfg(feature = "v1_8")]
+pub mod v1_8;
+
+#[cfg(feature = "v1_9")]
+pub mod v1_9;
+
+#[cfg(feature = "v1_10")]
+pub mod v1_10;

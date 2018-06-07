@@ -9,3 +9,9 @@ base64 = "0.9.x"
 chrono = { version = "0.4.x", features = ["serde"] }
 serde = "1.0.x"
 serde_derive = "1.0.x"
+
+[features]
+v1_7 = []
+v1_8 = []
+v1_9 = []
+v1_10 = []

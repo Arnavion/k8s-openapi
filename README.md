@@ -3,15 +3,30 @@ This binary generates Rust types for the resource definitions in the Kubernetes 
 
 # Usage
 
-1. Create a local copy of the [Kubernetes OpenAPI spec](https://github.com/kubernetes/kubernetes/blob/master/api/openapi-spec/swagger.json), say at `~/src/kubernetes/api/openapi-spec/swagger.json`
+```toml
+[dependencies]
+k8s-openapi = { git = "https://github.com/Arnavion/k8s-openapi-codegen", branch = "master", features = ["v1_9"] }
+```
 
-1. Run this binary on the spec file and place the generated code as a submodule of the `k8s-openapi` crate
+```rust
+extern crate k8s_openapi;
+
+fn main() {
+	let pod_spec: k8s_openapi::v1_9::api::core::v1::PodSpec = Default::default();
+	println!("{:#?}", pod_spec);
+}
+```
+
+Each supported version of Kubernetes is represented by one top-level module (like `::v1_9`) and is enabled by a feature flag of the same name (like `v1_9`).
+
+
+# Build
+
+1. Run this binary.
 
 	```sh
-	cargo run -- ~/src/kubernetes/api/openapi-spec/swagger.json $PWD/k8s-openapi/src
+	cargo run
 	```
-
-	For example `io.k8s.api.core.v1.PodSpec` will be emitted at `$PWD/k8s-openapi/src/api/core/v1/pod_spec.rs` and its fully-qualified name will be `::api::core::v1::PodSpec`
 
 1. Build the `k8s-openapi` crate to test that the generated code compiles
 
@@ -24,7 +39,7 @@ This binary generates Rust types for the resource definitions in the Kubernetes 
 	1. Build
 
 		```sh
-		cargo build
+		cargo build --all-features
 		```
 
 	1. Leave directory

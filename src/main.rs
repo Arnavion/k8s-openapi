@@ -1,21 +1,17 @@
 #![cfg_attr(feature = "cargo-clippy", deny(clippy, clippy_pedantic))]
 #![cfg_attr(feature = "cargo-clippy", allow(
 	cyclomatic_complexity,
-	missing_docs_in_private_items,
-	shadow_reuse,
-	shadow_same,
 	unseparated_literal_suffix,
-	use_debug,
 ))]
 
 extern crate backtrace;
 extern crate env_logger;
 #[macro_use]
 extern crate log;
+extern crate reqwest;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
-extern crate serde_json;
 
 mod swagger20;
 
@@ -37,19 +33,34 @@ impl std::fmt::Debug for Error {
 }
 
 fn main() -> Result<(), Error> {
-	use std::io::Write;
-
 	{
 		let mut builder = env_logger::Builder::new();
-		builder.format(|buf, record| writeln!(buf, "{} {}:{} {}", record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args()));
+		builder.format(|buf, record| {
+			use std::io::Write;
+			writeln!(buf, "{} {}:{} {}", record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
+		});
 		let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
 		builder.parse(&rust_log);
 		builder.init();
 	}
 
-	let mut args = std::env::args_os().skip(1);
-	let input: std::path::PathBuf = args.next().ok_or("expected input file parameter")?.into();
-	let out_dir: std::path::PathBuf = args.next().ok_or("expected output directory parameter")?.into();
+	let client = reqwest::Client::new();
+
+	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
+	let out_dir_base = out_dir_base.join("k8s-openapi").join("src");
+
+	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.7.16/api/openapi-spec/swagger.json", &out_dir_base, "v1_7", &client)?;
+	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.8.13/api/openapi-spec/swagger.json", &out_dir_base, "v1_8", &client)?;
+	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.9.8/api/openapi-spec/swagger.json", &out_dir_base, "v1_9", &client)?;
+	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.10.4/api/openapi-spec/swagger.json", &out_dir_base, "v1_10", &client)?;
+
+	Ok(())
+}
+
+fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &reqwest::Client) -> Result<(), Error> {
+	use std::io::Write;
+
+	let out_dir = out_dir_base.join(mod_root);
 
 	// `$ref`s under these namespaces will not be emitted
 	let skip_refs_under_namespaces = vec![
@@ -66,10 +77,14 @@ fn main() -> Result<(), Error> {
 	let mut num_generated_type_aliases = 0usize;
 	let mut num_skipped_refs = 0usize;
 
-	info!(target: "", "Parsing spec file at {} ...", input.display());
+	info!(target: "", "Parsing spec file at {} ...", input);
 	let spec: swagger20::Spec = {
-		let file = std::io::BufReader::new(std::fs::File::open(input)?);
-		serde_json::from_reader(file)?
+		let mut response = client.get(input).send()?;
+		let status = response.status();
+		if status != reqwest::StatusCode::Ok {
+			return Err(status.to_string().into());
+		}
+		response.json()?
 	};
 	info!("OK. Spec has {} definitions", spec.definitions.len());
 
@@ -164,7 +179,7 @@ fn main() -> Result<(), Error> {
 						write!(file, "Option<")?;
 					}
 
-					let field_type_name = get_rust_type(&property.kind, &replace_namespaces);
+					let field_type_name = get_rust_type(&property.kind, &replace_namespaces, mod_root);
 
 					// Fix cases of infinite recursion
 					let field_type_name = if let swagger20::SchemaKind::Ref(ref ref_path) = property.kind {
@@ -209,7 +224,7 @@ fn main() -> Result<(), Error> {
 
 			swagger20::SchemaKind::Ref(_) |
 			swagger20::SchemaKind::Ty(_) => {
-				writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind, &replace_namespaces))?;
+				writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind, &replace_namespaces, mod_root))?;
 				num_generated_type_aliases += 1;
 			},
 		}
@@ -221,76 +236,7 @@ fn main() -> Result<(), Error> {
 	info!("Generated {} structs", num_generated_structs);
 	info!("Generated {} type aliases", num_generated_type_aliases);
 	info!("Skipped generating {} type aliases", num_skipped_refs);
-
-	{
-		info!("Fixing crate root");
-
-		let mut old_crate_root = out_dir.clone();
-		old_crate_root.push("mod.rs");
-
-		let mut old_crate_root_contents = vec![];
-		std::io::Read::read_to_end(&mut std::fs::File::open(&old_crate_root)?, &mut old_crate_root_contents)?;
-		std::fs::remove_file(old_crate_root)?;
-
-		let mut crate_root = out_dir.clone();
-		crate_root.push("lib.rs");
-
-		let mut file = std::io::BufWriter::new(std::fs::File::create(crate_root)?);
-		writeln!(file, "extern crate base64;")?;
-		writeln!(file, "extern crate chrono;")?;
-		writeln!(file, "extern crate serde;")?;
-		writeln!(file, "#[macro_use] extern crate serde_derive;")?;
-		writeln!(file)?;
-		file.write_all(&old_crate_root_contents)?;
-
-		// ByteString is a wrapper around Vec<u8>, but serialized by base64-encoding to a JSON string
-		writeln!(file)?;
-		writeln!(file, "#[derive(Debug, Default)]")?;
-		writeln!(file, "pub struct ByteString(pub Vec<u8>);")?;
-		writeln!(file)?;
-		writeln!(file, "impl serde::Serialize for ByteString {{")?;
-		writeln!(file, "    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
-		writeln!(file, "        base64::encode_config(&self.0, base64::STANDARD).serialize(serializer)")?;
-		writeln!(file, "    }}")?;
-		writeln!(file, "}}")?;
-		writeln!(file)?;
-		writeln!(file, "impl<'de> serde::Deserialize<'de> for ByteString {{")?;
-		writeln!(file, "    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
-		writeln!(file, "        struct Visitor;")?;
-		writeln!(file, "")?;
-		writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
-		writeln!(file, "            type Value = ByteString;")?;
-		writeln!(file, "")?;
-		writeln!(file, "            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
-		writeln!(file, r#"                write!(formatter, "a base64-encoded string")"#)?;
-		writeln!(file, "            }}")?;
-		writeln!(file, "")?;
-		writeln!(file, "            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
-		writeln!(file, "                Ok(ByteString(base64::decode_config(v, base64::STANDARD).map_err(serde::de::Error::custom)?))")?;
-		writeln!(file, "            }}")?;
-		writeln!(file, "        }}")?;
-		writeln!(file, "")?;
-		writeln!(file, "        deserializer.deserialize_str(Visitor)")?;
-		writeln!(file, "    }}")?;
-		writeln!(file, "}}")?;
-
-		// IntOrString is either an int or a string
-		writeln!(file)?;
-		writeln!(file, "#[derive(Debug, Deserialize, Serialize)]")?;
-		writeln!(file, "#[serde(untagged)]")?;
-		writeln!(file, "pub enum IntOrString {{")?;
-		writeln!(file, "    Int(i32),")?;
-		writeln!(file, "    String(String),")?;
-		writeln!(file, "}}")?;
-		writeln!(file)?;
-		writeln!(file, "impl Default for IntOrString {{")?;
-		writeln!(file, "    fn default() -> Self {{")?;
-		writeln!(file, "        IntOrString::Int(0)")?;
-		writeln!(file, "    }}")?;
-		writeln!(file, "}}")?;
-
-		info!("OK");
-	}
+	info!("");
 
 	Ok(())
 }
@@ -361,10 +307,10 @@ fn get_comment_text<'a>(s: &'a str) -> impl Iterator<Item = std::borrow::Cow<'st
 		})
 }
 
-fn get_fully_qualified_type_name(ref_path: &swagger20::RefPath, replace_namespaces: &[(Vec<&str>, Vec<String>)]) -> String {
+fn get_fully_qualified_type_name(ref_path: &swagger20::RefPath, replace_namespaces: &[(Vec<&str>, Vec<String>)], mod_root: &str) -> String {
 	use std::fmt::Write;
 
-	let mut result = String::new();
+	let mut result = format!("::{}", mod_root);
 
 	let parts = replace_namespace(ref_path.split('.'), replace_namespaces);
 
@@ -419,13 +365,13 @@ fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	result.into()
 }
 
-fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec<&str>, Vec<String>)]) -> std::borrow::Cow<'static, str> {
+fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec<&str>, Vec<String>)], mod_root: &str) -> std::borrow::Cow<'static, str> {
 	match *schema_kind {
 		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
 
-		swagger20::SchemaKind::Ref(ref ref_path) => get_fully_qualified_type_name(ref_path, replace_namespaces).into(),
+		swagger20::SchemaKind::Ref(ref ref_path) => get_fully_qualified_type_name(ref_path, replace_namespaces, mod_root).into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("Vec<{}>", get_rust_type(&items.kind, replace_namespaces)).into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("Vec<{}>", get_rust_type(&items.kind, replace_namespaces, mod_root)).into(),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => "bool".into(),
 
@@ -434,7 +380,8 @@ fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => "f64".into(),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) => format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces)).into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) =>
+			format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, mod_root)).into(),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => "::ByteString".into(),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => "::chrono::DateTime<::chrono::Utc>".into(),
