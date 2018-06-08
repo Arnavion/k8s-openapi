@@ -1,25 +1,127 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.EnvVarSource
 
 /// EnvVarSource represents a source for the value of an EnvVar.
-#[derive(Debug, Default, Deserialize, Serialize)]
+#[derive(Debug, Default)]
 pub struct EnvVarSource {
     /// Selects a key of a ConfigMap.
-    #[serde(rename = "configMapKeyRef")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub config_map_key_ref: Option<::v1_7::kubernetes::pkg::api::v1::ConfigMapKeySelector>,
 
     /// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
-    #[serde(rename = "fieldRef")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub field_ref: Option<::v1_7::kubernetes::pkg::api::v1::ObjectFieldSelector>,
 
     /// Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, requests.cpu and requests.memory) are currently supported.
-    #[serde(rename = "resourceFieldRef")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub resource_field_ref: Option<::v1_7::kubernetes::pkg::api::v1::ResourceFieldSelector>,
 
     /// Selects a key of a secret in the pod's namespace
-    #[serde(rename = "secretKeyRef")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub secret_key_ref: Option<::v1_7::kubernetes::pkg::api::v1::SecretKeySelector>,
+}
+
+impl<'de> ::serde::Deserialize<'de> for EnvVarSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_config_map_key_ref,
+            Key_field_ref,
+            Key_resource_field_ref,
+            Key_secret_key_ref,
+            Other,
+        }
+
+        impl<'de> ::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                        write!(f, "field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                        Ok(match v {
+                            "configMapKeyRef" => Field::Key_config_map_key_ref,
+                            "fieldRef" => Field::Key_field_ref,
+                            "resourceFieldRef" => Field::Key_resource_field_ref,
+                            "secretKeyRef" => Field::Key_secret_key_ref,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+            type Value = EnvVarSource;
+
+            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                write!(f, "struct EnvVarSource")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+                let mut value_config_map_key_ref: Option<::v1_7::kubernetes::pkg::api::v1::ConfigMapKeySelector> = None;
+                let mut value_field_ref: Option<::v1_7::kubernetes::pkg::api::v1::ObjectFieldSelector> = None;
+                let mut value_resource_field_ref: Option<::v1_7::kubernetes::pkg::api::v1::ResourceFieldSelector> = None;
+                let mut value_secret_key_ref: Option<::v1_7::kubernetes::pkg::api::v1::SecretKeySelector> = None;
+
+                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_config_map_key_ref => value_config_map_key_ref = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_field_ref => value_field_ref = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_field_ref => value_resource_field_ref = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_key_ref => value_secret_key_ref = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(EnvVarSource {
+                    config_map_key_ref: value_config_map_key_ref,
+                    field_ref: value_field_ref,
+                    resource_field_ref: value_resource_field_ref,
+                    secret_key_ref: value_secret_key_ref,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "EnvVarSource",
+            &[
+                "configMapKeyRef",
+                "fieldRef",
+                "resourceFieldRef",
+                "secretKeyRef",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl ::serde::Serialize for EnvVarSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "EnvVarSource",
+            0 +
+            (if self.config_map_key_ref.is_some() { 1 } else { 0 }) +
+            (if self.field_ref.is_some() { 1 } else { 0 }) +
+            (if self.resource_field_ref.is_some() { 1 } else { 0 }) +
+            (if self.secret_key_ref.is_some() { 1 } else { 0 }),
+        )?;
+        if let Some(value) = &self.config_map_key_ref {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "configMapKeyRef", value)?;
+        }
+        if let Some(value) = &self.field_ref {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "fieldRef", value)?;
+        }
+        if let Some(value) = &self.resource_field_ref {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceFieldRef", value)?;
+        }
+        if let Some(value) = &self.secret_key_ref {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "secretKeyRef", value)?;
+        }
+        ::serde::ser::SerializeStruct::end(state)
+    }
 }

@@ -1,15 +1,12 @@
 // Generated from definition io.k8s.api.admissionregistration.v1beta1.Webhook
 
 /// Webhook describes an admission webhook and the resources and operations it applies to.
-#[derive(Debug, Default, Deserialize, Serialize)]
+#[derive(Debug, Default)]
 pub struct Webhook {
     /// ClientConfig defines how to communicate with the hook. Required
-    #[serde(rename = "clientConfig")]
     pub client_config: ::v1_9::api::admissionregistration::v1beta1::WebhookClientConfig,
 
     /// FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Ignore.
-    #[serde(rename = "failurePolicy")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub failure_policy: Option<String>,
 
     /// The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where "imagepolicy" is the name of the webhook, and kubernetes.io is the name of the organization. Required.
@@ -46,11 +43,124 @@ pub struct Webhook {
     /// See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.
     ///
     /// Default to the empty LabelSelector, which matches everything.
-    #[serde(rename = "namespaceSelector")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub namespace_selector: Option<::v1_9::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// Rules describes what operations on what resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule.
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub rules: Option<Vec<::v1_9::api::admissionregistration::v1beta1::RuleWithOperations>>,
+}
+
+impl<'de> ::serde::Deserialize<'de> for Webhook {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_client_config,
+            Key_failure_policy,
+            Key_name,
+            Key_namespace_selector,
+            Key_rules,
+            Other,
+        }
+
+        impl<'de> ::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                        write!(f, "field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                        Ok(match v {
+                            "clientConfig" => Field::Key_client_config,
+                            "failurePolicy" => Field::Key_failure_policy,
+                            "name" => Field::Key_name,
+                            "namespaceSelector" => Field::Key_namespace_selector,
+                            "rules" => Field::Key_rules,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+            type Value = Webhook;
+
+            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                write!(f, "struct Webhook")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+                let mut value_client_config: Option<::v1_9::api::admissionregistration::v1beta1::WebhookClientConfig> = None;
+                let mut value_failure_policy: Option<String> = None;
+                let mut value_name: Option<String> = None;
+                let mut value_namespace_selector: Option<::v1_9::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_rules: Option<Vec<::v1_9::api::admissionregistration::v1beta1::RuleWithOperations>> = None;
+
+                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_client_config => value_client_config = Some(::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_failure_policy => value_failure_policy = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = Some(::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_namespace_selector => value_namespace_selector = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_rules => value_rules = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(Webhook {
+                    client_config: value_client_config.ok_or_else(|| ::serde::de::Error::missing_field("clientConfig"))?,
+                    failure_policy: value_failure_policy,
+                    name: value_name.ok_or_else(|| ::serde::de::Error::missing_field("name"))?,
+                    namespace_selector: value_namespace_selector,
+                    rules: value_rules,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "Webhook",
+            &[
+                "clientConfig",
+                "failurePolicy",
+                "name",
+                "namespaceSelector",
+                "rules",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl ::serde::Serialize for Webhook {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "Webhook",
+            0 +
+            1 +
+            (if self.failure_policy.is_some() { 1 } else { 0 }) +
+            1 +
+            (if self.namespace_selector.is_some() { 1 } else { 0 }) +
+            (if self.rules.is_some() { 1 } else { 0 }),
+        )?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", &self.client_config)?;
+        if let Some(value) = &self.failure_policy {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "failurePolicy", value)?;
+        }
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        if let Some(value) = &self.namespace_selector {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaceSelector", value)?;
+        }
+        if let Some(value) = &self.rules {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "rules", value)?;
+        }
+        ::serde::ser::SerializeStruct::end(state)
+    }
 }

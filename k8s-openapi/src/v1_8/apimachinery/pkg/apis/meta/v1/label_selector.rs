@@ -1,15 +1,101 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector
 
 /// A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
-#[derive(Debug, Default, Deserialize, Serialize)]
+#[derive(Debug, Default)]
 pub struct LabelSelector {
     /// matchExpressions is a list of label selector requirements. The requirements are ANDed.
-    #[serde(rename = "matchExpressions")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub match_expressions: Option<Vec<::v1_8::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>>,
 
     /// matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
-    #[serde(rename = "matchLabels")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub match_labels: Option<::std::collections::BTreeMap<String, String>>,
+}
+
+impl<'de> ::serde::Deserialize<'de> for LabelSelector {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_match_expressions,
+            Key_match_labels,
+            Other,
+        }
+
+        impl<'de> ::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                        write!(f, "field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                        Ok(match v {
+                            "matchExpressions" => Field::Key_match_expressions,
+                            "matchLabels" => Field::Key_match_labels,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+            type Value = LabelSelector;
+
+            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                write!(f, "struct LabelSelector")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+                let mut value_match_expressions: Option<Vec<::v1_8::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>> = None;
+                let mut value_match_labels: Option<::std::collections::BTreeMap<String, String>> = None;
+
+                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_match_expressions => value_match_expressions = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_match_labels => value_match_labels = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(LabelSelector {
+                    match_expressions: value_match_expressions,
+                    match_labels: value_match_labels,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "LabelSelector",
+            &[
+                "matchExpressions",
+                "matchLabels",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl ::serde::Serialize for LabelSelector {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "LabelSelector",
+            0 +
+            (if self.match_expressions.is_some() { 1 } else { 0 }) +
+            (if self.match_labels.is_some() { 1 } else { 0 }),
+        )?;
+        if let Some(value) = &self.match_expressions {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "matchExpressions", value)?;
+        }
+        if let Some(value) = &self.match_labels {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "matchLabels", value)?;
+        }
+        ::serde::ser::SerializeStruct::end(state)
+    }
 }

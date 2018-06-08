@@ -1,38 +1,166 @@
 // Generated from definition io.k8s.api.core.v1.SecurityContext
 
 /// SecurityContext holds security configuration that will be applied to a container. Some fields are present in both SecurityContext and PodSecurityContext.  When both are set, the values in SecurityContext take precedence.
-#[derive(Debug, Default, Deserialize, Serialize)]
+#[derive(Debug, Default)]
 pub struct SecurityContext {
     /// AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
-    #[serde(rename = "allowPrivilegeEscalation")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub allow_privilege_escalation: Option<bool>,
 
     /// The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub capabilities: Option<::v1_8::api::core::v1::Capabilities>,
 
     /// Run container in privileged mode. Processes in privileged containers are essentially equivalent to root on the host. Defaults to false.
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub privileged: Option<bool>,
 
     /// Whether this container has a read-only root filesystem. Default is false.
-    #[serde(rename = "readOnlyRootFilesystem")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub read_only_root_filesystem: Option<bool>,
 
     /// Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-    #[serde(rename = "runAsNonRoot")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub run_as_non_root: Option<bool>,
 
     /// The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-    #[serde(rename = "runAsUser")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub run_as_user: Option<i64>,
 
     /// The SELinux context to be applied to the container. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-    #[serde(rename = "seLinuxOptions")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub se_linux_options: Option<::v1_8::api::core::v1::SELinuxOptions>,
+}
+
+impl<'de> ::serde::Deserialize<'de> for SecurityContext {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_allow_privilege_escalation,
+            Key_capabilities,
+            Key_privileged,
+            Key_read_only_root_filesystem,
+            Key_run_as_non_root,
+            Key_run_as_user,
+            Key_se_linux_options,
+            Other,
+        }
+
+        impl<'de> ::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                        write!(f, "field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                        Ok(match v {
+                            "allowPrivilegeEscalation" => Field::Key_allow_privilege_escalation,
+                            "capabilities" => Field::Key_capabilities,
+                            "privileged" => Field::Key_privileged,
+                            "readOnlyRootFilesystem" => Field::Key_read_only_root_filesystem,
+                            "runAsNonRoot" => Field::Key_run_as_non_root,
+                            "runAsUser" => Field::Key_run_as_user,
+                            "seLinuxOptions" => Field::Key_se_linux_options,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+            type Value = SecurityContext;
+
+            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                write!(f, "struct SecurityContext")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+                let mut value_allow_privilege_escalation: Option<bool> = None;
+                let mut value_capabilities: Option<::v1_8::api::core::v1::Capabilities> = None;
+                let mut value_privileged: Option<bool> = None;
+                let mut value_read_only_root_filesystem: Option<bool> = None;
+                let mut value_run_as_non_root: Option<bool> = None;
+                let mut value_run_as_user: Option<i64> = None;
+                let mut value_se_linux_options: Option<::v1_8::api::core::v1::SELinuxOptions> = None;
+
+                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_allow_privilege_escalation => value_allow_privilege_escalation = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_capabilities => value_capabilities = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_privileged => value_privileged = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only_root_filesystem => value_read_only_root_filesystem = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_non_root => value_run_as_non_root = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_user => value_run_as_user = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_se_linux_options => value_se_linux_options = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(SecurityContext {
+                    allow_privilege_escalation: value_allow_privilege_escalation,
+                    capabilities: value_capabilities,
+                    privileged: value_privileged,
+                    read_only_root_filesystem: value_read_only_root_filesystem,
+                    run_as_non_root: value_run_as_non_root,
+                    run_as_user: value_run_as_user,
+                    se_linux_options: value_se_linux_options,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "SecurityContext",
+            &[
+                "allowPrivilegeEscalation",
+                "capabilities",
+                "privileged",
+                "readOnlyRootFilesystem",
+                "runAsNonRoot",
+                "runAsUser",
+                "seLinuxOptions",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl ::serde::Serialize for SecurityContext {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "SecurityContext",
+            0 +
+            (if self.allow_privilege_escalation.is_some() { 1 } else { 0 }) +
+            (if self.capabilities.is_some() { 1 } else { 0 }) +
+            (if self.privileged.is_some() { 1 } else { 0 }) +
+            (if self.read_only_root_filesystem.is_some() { 1 } else { 0 }) +
+            (if self.run_as_non_root.is_some() { 1 } else { 0 }) +
+            (if self.run_as_user.is_some() { 1 } else { 0 }) +
+            (if self.se_linux_options.is_some() { 1 } else { 0 }),
+        )?;
+        if let Some(value) = &self.allow_privilege_escalation {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", value)?;
+        }
+        if let Some(value) = &self.capabilities {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "capabilities", value)?;
+        }
+        if let Some(value) = &self.privileged {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "privileged", value)?;
+        }
+        if let Some(value) = &self.read_only_root_filesystem {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnlyRootFilesystem", value)?;
+        }
+        if let Some(value) = &self.run_as_non_root {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", value)?;
+        }
+        if let Some(value) = &self.run_as_user {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", value)?;
+        }
+        if let Some(value) = &self.se_linux_options {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
+        }
+        ::serde::ser::SerializeStruct::end(state)
+    }
 }

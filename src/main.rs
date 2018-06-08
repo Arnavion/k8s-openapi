@@ -125,97 +125,250 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 
 		match definition.kind {
 			swagger20::SchemaKind::Properties(properties) => {
-				let has_non_default_property =
-					properties.values().any(|&(ref property, required)| {
+				struct Property {
+					name: swagger20::PropertyName,
+					schema: swagger20::Schema,
+					required: bool,
+					field_name: std::borrow::Cow<'static, str>,
+					field_type_name: String,
+				}
+
+				let properties = {
+					use std::fmt::Write;
+
+					let mut result = Vec::with_capacity(properties.len());
+
+					for (name, (schema, required)) in properties {
+						let field_name = get_rust_ident(&name);
+
+						let mut field_type_name = String::new();
+
 						if !required {
-							return false;
+							write!(field_type_name, "Option<")?;
 						}
 
-						if let swagger20::SchemaKind::Ref(ref ref_path) = property.kind {
-							match &**ref_path {
-								// chrono::DateTime<chrono::Utc> is not Default
-								"io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime" |
-								"io.k8s.apimachinery.pkg.apis.meta.v1.Time" => true,
-								_ => false,
+						let type_name = get_rust_type(&schema.kind, &replace_namespaces, mod_root);
+
+						// Fix cases of infinite recursion
+						if let swagger20::SchemaKind::Ref(ref ref_path) = schema.kind {
+							match (&*definition_path, &*name, &**ref_path) {
+								(
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
+									"Schema",
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+								) |
+
+								(
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool",
+									"Schema",
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+								) |
+
+								(
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+									"not",
+									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
+								) => write!(field_type_name, "Box<{}>", type_name)?,
+
+								_ => write!(field_type_name, "{}", type_name)?,
 							}
 						}
 						else {
-							false
+							write!(field_type_name, "{}", type_name)?;
+						};
+
+						if !required {
+							write!(field_type_name, ">")?;
+						}
+
+						result.push(Property {
+							name,
+							schema,
+							required,
+							field_name,
+							field_type_name,
+						});
+					}
+
+					result
+				};
+
+				write!(file, "#[derive(Debug")?;
+
+				let all_properties_are_default =
+					properties.iter().all(|Property { schema, required, .. }| {
+						if !required {
+							// Option<T>::default is None regardless of T
+							return true;
+						}
+
+						if let swagger20::SchemaKind::Ref(ref ref_path) = schema.kind {
+							match &**ref_path {
+								// chrono::DateTime<chrono::Utc> is not Default
+								"io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime" |
+								"io.k8s.apimachinery.pkg.apis.meta.v1.Time" => false,
+								_ => true,
+							}
+						}
+						else {
+							true
 						}
 					});
-				if has_non_default_property {
-					writeln!(file, "#[derive(Debug, Deserialize, Serialize)]")?;
+				if all_properties_are_default {
+					write!(file, ", Default")?;
 				}
-				else {
-					writeln!(file, "#[derive(Debug, Default, Deserialize, Serialize)]")?;
-				}
+
+				writeln!(file, ")]")?;
 
 				writeln!(file, "pub struct {} {{", type_name)?;
 
-				for (i, (name, (property, required))) in properties.into_iter().enumerate() {
+				for (i, Property { schema, field_name, field_type_name, .. }) in properties.iter().enumerate() {
 					if i > 0 {
 						writeln!(file)?;
 					}
 
-					if let Some(description) = property.description {
-						for line in get_comment_text(&description) {
+					if let Some(ref description) = schema.description {
+						for line in get_comment_text(description) {
 							writeln!(file, "    {}", line)?;
 						}
 					}
 
-					let field_name = get_rust_ident(&name);
-					if field_name != *name {
-						writeln!(file, r#"    #[serde(rename = "{}")]"#, name)?;
-					}
-
-					if !required {
-						writeln!(file, r#"    #[serde(skip_serializing_if = "Option::is_none")]"#)?;
-					}
-
 					write!(file, "    pub {}: ", field_name)?;
-
-					if !required {
-						write!(file, "Option<")?;
-					}
-
-					let field_type_name = get_rust_type(&property.kind, &replace_namespaces, mod_root);
-
-					// Fix cases of infinite recursion
-					let field_type_name = if let swagger20::SchemaKind::Ref(ref ref_path) = property.kind {
-						match (&*definition_path, &*name, &**ref_path) {
-							(
-								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
-								"Schema",
-								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-							) |
-
-							(
-								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool",
-								"Schema",
-								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-							) |
-
-							(
-								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-								"not",
-								"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-							) => format!("Box<{}>", field_type_name).into(),
-
-							_ => field_type_name,
-						}
-					}
-					else {
-						field_type_name
-					};
 
 					write!(file, "{}", field_type_name)?;
 
-					if !required {
-						write!(file, ">")?;
-					}
-
 					writeln!(file, ",")?;
 				}
+				writeln!(file, "}}")?;
+				writeln!(file)?;
+
+				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
+				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "        #[allow(non_camel_case_types)]")?;
+				writeln!(file, "        enum Field {{")?;
+				for Property { field_name, .. } in &properties {
+					writeln!(file, "            Key_{},", field_name)?;
+				}
+				writeln!(file, "            Other,")?;
+				writeln!(file, "        }}")?;
+				writeln!(file)?;
+				writeln!(file, "        impl<'de> ::serde::Deserialize<'de> for Field {{")?;
+				writeln!(file, "            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "                struct Visitor;")?;
+				writeln!(file)?;
+				writeln!(file, "                impl<'de> ::serde::de::Visitor<'de> for Visitor {{")?;
+				writeln!(file, "                    type Value = Field;")?;
+				writeln!(file)?;
+				writeln!(file, "                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {{")?;
+				writeln!(file, r#"                        write!(f, "field identifier")"#)?;
+				writeln!(file, "                    }}")?;
+				writeln!(file)?;
+				writeln!(file, "                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+				writeln!(file, "                        Ok(match v {{")?;
+				for Property { name, field_name, .. } in &properties {
+					writeln!(file, r#"                            "{}" => Field::Key_{},"#, name, field_name)?;
+				}
+				writeln!(file, "                            _ => Field::Other,")?;
+				writeln!(file, "                        }})")?;
+				writeln!(file, "                    }}")?;
+				writeln!(file, "                }}")?;
+				writeln!(file)?;
+				writeln!(file, "                deserializer.deserialize_identifier(Visitor)")?;
+				writeln!(file, "            }}")?;
+				writeln!(file, "        }}")?;
+				writeln!(file)?;
+				writeln!(file, "        struct Visitor;")?;
+				writeln!(file)?;
+				writeln!(file, "        impl<'de> ::serde::de::Visitor<'de> for Visitor {{")?;
+				writeln!(file, "            type Value = {};", type_name)?;
+				writeln!(file)?;
+				writeln!(file, "            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {{")?;
+				writeln!(file, r#"                write!(f, "struct {}")"#, type_name)?;
+				writeln!(file, "            }}")?;
+				writeln!(file)?;
+				writeln!(file, "            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {{")?;
+				for Property { required, field_name, field_type_name, .. } in &properties {
+					if *required {
+						writeln!(file, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
+					}
+					else {
+						writeln!(file, r#"                let mut value_{}: {} = None;"#, field_name, field_type_name)?;
+					}
+				}
+				writeln!(file)?;
+				writeln!(file, "                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {{")?;
+				writeln!(file, "                    match key {{")?;
+				for Property { required, field_name, .. } in &properties {
+					if *required {
+						writeln!(file, r#"                        Field::Key_{} => value_{} = Some(::serde::de::MapAccess::next_value(&mut map)?),"#, field_name, field_name)?;
+					}
+					else {
+						writeln!(file, r#"                        Field::Key_{} => value_{} = ::serde::de::MapAccess::next_value(&mut map)?,"#, field_name, field_name)?;
+					}
+				}
+				writeln!(file, "                        Field::Other => {{ let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; }},")?;
+				writeln!(file, "                    }}")?;
+				writeln!(file, "                }}")?;
+				writeln!(file)?;
+				writeln!(file, "                Ok({} {{", type_name)?;
+				for Property { name, required, field_name, .. } in &properties {
+					if *required {
+						writeln!(file, r#"                    {}: value_{}.ok_or_else(|| ::serde::de::Error::missing_field("{}"))?,"#, field_name, field_name, name)?;
+					}
+					else {
+						writeln!(file, "                    {}: value_{},", field_name, field_name)?;
+					}
+				}
+				writeln!(file, "                }})")?;
+				writeln!(file, "            }}")?;
+				writeln!(file, "        }}")?;
+				writeln!(file)?;
+				writeln!(file, "        deserializer.deserialize_struct(")?;
+				writeln!(file, r#"            "{}","#, type_name)?;
+				writeln!(file, "            &[")?;
+				for Property { name, .. } in &properties {
+					writeln!(file, r#"                "{}","#, name)?;
+				}
+				writeln!(file, "            ],")?;
+				writeln!(file, "            Visitor,")?;
+				writeln!(file, "        )")?;
+				writeln!(file, "    }}")?;
+				writeln!(file, "}}")?;
+				writeln!(file)?;
+
+				writeln!(file, "impl ::serde::Serialize for {} {{", type_name)?;
+				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {{")?;
+				if properties.is_empty() {
+					writeln!(file, "        let state = serializer.serialize_struct(")?;
+				}
+				else {
+					writeln!(file, "        let mut state = serializer.serialize_struct(")?;
+				}
+				writeln!(file, r#"            "{}","#, type_name)?;
+				write!(file, "            0")?;
+				for Property { required, field_name, .. } in &properties {
+					writeln!(file, " +")?;
+					if *required {
+						write!(file, "            1")?;
+					}
+					else {
+						write!(file, "            (if self.{}.is_some() {{ 1 }} else {{ 0 }})", field_name)?;
+					}
+				}
+				writeln!(file, ",")?;
+				writeln!(file, "        )?;")?;
+				for Property { name, required, field_name, .. } in &properties {
+					if *required {
+						writeln!(file, r#"        ::serde::ser::SerializeStruct::serialize_field(&mut state, "{}", &self.{})?;"#, name, field_name)?;
+					}
+					else {
+						writeln!(file, "        if let Some(value) = &self.{} {{", field_name)?;
+						writeln!(file, r#"            ::serde::ser::SerializeStruct::serialize_field(&mut state, "{}", value)?;"#, name)?;
+						writeln!(file, "        }}")?;
+					}
+				}
+				writeln!(file, "        ::serde::ser::SerializeStruct::end(state)")?;
+				writeln!(file, "    }}")?;
 				writeln!(file, "}}")?;
 
 				num_generated_structs += 1;
@@ -223,6 +376,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 
 			swagger20::SchemaKind::Ref(_) |
 			swagger20::SchemaKind::Ty(_) => {
+				// TODO: Should Ty be newtypes instead of aliases?
 				writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind, &replace_namespaces, mod_root))?;
 				num_generated_type_aliases += 1;
 			},

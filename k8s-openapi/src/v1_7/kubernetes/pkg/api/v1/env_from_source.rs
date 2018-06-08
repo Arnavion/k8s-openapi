@@ -1,19 +1,114 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.EnvFromSource
 
 /// EnvFromSource represents the source of a set of ConfigMaps
-#[derive(Debug, Default, Deserialize, Serialize)]
+#[derive(Debug, Default)]
 pub struct EnvFromSource {
     /// The ConfigMap to select from
-    #[serde(rename = "configMapRef")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub config_map_ref: Option<::v1_7::kubernetes::pkg::api::v1::ConfigMapEnvSource>,
 
     /// An optional identifer to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub prefix: Option<String>,
 
     /// The Secret to select from
-    #[serde(rename = "secretRef")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub secret_ref: Option<::v1_7::kubernetes::pkg::api::v1::SecretEnvSource>,
+}
+
+impl<'de> ::serde::Deserialize<'de> for EnvFromSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_config_map_ref,
+            Key_prefix,
+            Key_secret_ref,
+            Other,
+        }
+
+        impl<'de> ::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                        write!(f, "field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                        Ok(match v {
+                            "configMapRef" => Field::Key_config_map_ref,
+                            "prefix" => Field::Key_prefix,
+                            "secretRef" => Field::Key_secret_ref,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+            type Value = EnvFromSource;
+
+            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                write!(f, "struct EnvFromSource")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+                let mut value_config_map_ref: Option<::v1_7::kubernetes::pkg::api::v1::ConfigMapEnvSource> = None;
+                let mut value_prefix: Option<String> = None;
+                let mut value_secret_ref: Option<::v1_7::kubernetes::pkg::api::v1::SecretEnvSource> = None;
+
+                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_config_map_ref => value_config_map_ref = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_prefix => value_prefix = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_ref => value_secret_ref = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(EnvFromSource {
+                    config_map_ref: value_config_map_ref,
+                    prefix: value_prefix,
+                    secret_ref: value_secret_ref,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "EnvFromSource",
+            &[
+                "configMapRef",
+                "prefix",
+                "secretRef",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl ::serde::Serialize for EnvFromSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "EnvFromSource",
+            0 +
+            (if self.config_map_ref.is_some() { 1 } else { 0 }) +
+            (if self.prefix.is_some() { 1 } else { 0 }) +
+            (if self.secret_ref.is_some() { 1 } else { 0 }),
+        )?;
+        if let Some(value) = &self.config_map_ref {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "configMapRef", value)?;
+        }
+        if let Some(value) = &self.prefix {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "prefix", value)?;
+        }
+        if let Some(value) = &self.secret_ref {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
+        }
+        ::serde::ser::SerializeStruct::end(state)
+    }
 }

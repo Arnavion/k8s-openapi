@@ -1,31 +1,153 @@
 // Generated from definition io.k8s.api.authorization.v1beta1.SubjectAccessReviewSpec
 
 /// SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
-#[derive(Debug, Default, Deserialize, Serialize)]
+#[derive(Debug, Default)]
 pub struct SubjectAccessReviewSpec {
     /// Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub extra: Option<::std::collections::BTreeMap<String, Vec<String>>>,
 
     /// Groups is the groups you're testing for.
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub group: Option<Vec<String>>,
 
     /// NonResourceAttributes describes information for a non-resource access request
-    #[serde(rename = "nonResourceAttributes")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub non_resource_attributes: Option<::v1_9::api::authorization::v1beta1::NonResourceAttributes>,
 
     /// ResourceAuthorizationAttributes describes information for a resource access request
-    #[serde(rename = "resourceAttributes")]
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub resource_attributes: Option<::v1_9::api::authorization::v1beta1::ResourceAttributes>,
 
     /// UID information about the requesting user.
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub uid: Option<String>,
 
     /// User is the user you're testing for. If you specify "User" but not "Group", then is it interpreted as "What if User were not a member of any groups
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub user: Option<String>,
+}
+
+impl<'de> ::serde::Deserialize<'de> for SubjectAccessReviewSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        #[allow(non_camel_case_types)]
+        enum Field {
+            Key_extra,
+            Key_group,
+            Key_non_resource_attributes,
+            Key_resource_attributes,
+            Key_uid,
+            Key_user,
+            Other,
+        }
+
+        impl<'de> ::serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+                struct Visitor;
+
+                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                    type Value = Field;
+
+                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                        write!(f, "field identifier")
+                    }
+
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                        Ok(match v {
+                            "extra" => Field::Key_extra,
+                            "group" => Field::Key_group,
+                            "nonResourceAttributes" => Field::Key_non_resource_attributes,
+                            "resourceAttributes" => Field::Key_resource_attributes,
+                            "uid" => Field::Key_uid,
+                            "user" => Field::Key_user,
+                            _ => Field::Other,
+                        })
+                    }
+                }
+
+                deserializer.deserialize_identifier(Visitor)
+            }
+        }
+
+        struct Visitor;
+
+        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+            type Value = SubjectAccessReviewSpec;
+
+            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                write!(f, "struct SubjectAccessReviewSpec")
+            }
+
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+                let mut value_extra: Option<::std::collections::BTreeMap<String, Vec<String>>> = None;
+                let mut value_group: Option<Vec<String>> = None;
+                let mut value_non_resource_attributes: Option<::v1_9::api::authorization::v1beta1::NonResourceAttributes> = None;
+                let mut value_resource_attributes: Option<::v1_9::api::authorization::v1beta1::ResourceAttributes> = None;
+                let mut value_uid: Option<String> = None;
+                let mut value_user: Option<String> = None;
+
+                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                    match key {
+                        Field::Key_extra => value_extra = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_group => value_group = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_non_resource_attributes => value_non_resource_attributes = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_attributes => value_resource_attributes = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_uid => value_uid = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_user => value_user = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                    }
+                }
+
+                Ok(SubjectAccessReviewSpec {
+                    extra: value_extra,
+                    group: value_group,
+                    non_resource_attributes: value_non_resource_attributes,
+                    resource_attributes: value_resource_attributes,
+                    uid: value_uid,
+                    user: value_user,
+                })
+            }
+        }
+
+        deserializer.deserialize_struct(
+            "SubjectAccessReviewSpec",
+            &[
+                "extra",
+                "group",
+                "nonResourceAttributes",
+                "resourceAttributes",
+                "uid",
+                "user",
+            ],
+            Visitor,
+        )
+    }
+}
+
+impl ::serde::Serialize for SubjectAccessReviewSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+        let mut state = serializer.serialize_struct(
+            "SubjectAccessReviewSpec",
+            0 +
+            (if self.extra.is_some() { 1 } else { 0 }) +
+            (if self.group.is_some() { 1 } else { 0 }) +
+            (if self.non_resource_attributes.is_some() { 1 } else { 0 }) +
+            (if self.resource_attributes.is_some() { 1 } else { 0 }) +
+            (if self.uid.is_some() { 1 } else { 0 }) +
+            (if self.user.is_some() { 1 } else { 0 }),
+        )?;
+        if let Some(value) = &self.extra {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;
+        }
+        if let Some(value) = &self.group {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
+        }
+        if let Some(value) = &self.non_resource_attributes {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceAttributes", value)?;
+        }
+        if let Some(value) = &self.resource_attributes {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceAttributes", value)?;
+        }
+        if let Some(value) = &self.uid {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+        }
+        if let Some(value) = &self.user {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+        }
+        ::serde::ser::SerializeStruct::end(state)
+    }
 }
