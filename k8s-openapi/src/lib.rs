@@ -3,6 +3,9 @@ extern crate chrono;
 extern crate serde;
 #[macro_use] extern crate serde_derive;
 
+/// A wrapper around a list of bytes.
+///
+/// Used in Kubernetes types whose JSON representation uses a base64-encoded string for a list of bytes.
 #[derive(Debug, Default)]
 pub struct ByteString(pub Vec<u8>);
 
@@ -32,6 +35,7 @@ impl<'de> serde::Deserialize<'de> for ByteString {
     }
 }
 
+/// A value that may be an integer or a string.
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(untagged)]
 pub enum IntOrString {
