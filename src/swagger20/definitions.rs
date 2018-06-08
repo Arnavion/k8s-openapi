@@ -1,17 +1,17 @@
 #[derive(Debug, Eq, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct DefinitionPath(pub String);
 
-impl ::std::fmt::Display for DefinitionPath {
-	fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-		self.0.fmt(f)
-	}
-}
-
 impl ::std::ops::Deref for DefinitionPath {
 	type Target = str;
 
 	fn deref(&self) -> &Self::Target {
 		self.0.deref()
+	}
+}
+
+impl ::std::fmt::Display for DefinitionPath {
+	fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+		self.0.fmt(f)
 	}
 }
 

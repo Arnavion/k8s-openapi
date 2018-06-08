@@ -17,7 +17,7 @@ mod swagger20;
 
 struct Error(Box<std::error::Error>, backtrace::Backtrace);
 
-impl<E> From<E> for Error where Box<std::error::Error>: From<E> {
+impl<E> From<E> for Error where E: Into<Box<std::error::Error>> {
 	fn from(value: E) -> Self {
 		Error(value.into(), backtrace::Backtrace::new())
 	}
@@ -26,7 +26,6 @@ impl<E> From<E> for Error where Box<std::error::Error>: From<E> {
 impl std::fmt::Debug for Error {
 	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 		writeln!(f, "{}", self.0)?;
-		#[cfg_attr(feature = "cargo-clippy", allow(use_debug))]
 		write!(f, "{:?}", self.1)?;
 		Ok(())
 	}
