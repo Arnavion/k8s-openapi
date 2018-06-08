@@ -7,7 +7,7 @@ pub struct StatusCause {
     ///
     /// Examples:
     ///   "name" - the field "name" on the current resource
-    ///   "items[0].name" - the field "name" on the first array entry in "items"
+    ///   "items\[0\].name" - the field "name" on the first array entry in "items"
     #[serde(skip_serializing_if = "Option::is_none")]
     pub field: Option<String>,
 

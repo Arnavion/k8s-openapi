@@ -17,7 +17,7 @@ pub struct StatefulSetStatus {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub current_replicas: Option<i32>,
 
-    /// currentRevision, if not empty, indicates the version of the StatefulSet used to generate Pods in the sequence [0,currentReplicas).
+    /// currentRevision, if not empty, indicates the version of the StatefulSet used to generate Pods in the sequence \[0,currentReplicas).
     #[serde(rename = "currentRevision")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub current_revision: Option<String>,
@@ -35,7 +35,7 @@ pub struct StatefulSetStatus {
     /// replicas is the number of Pods created by the StatefulSet controller.
     pub replicas: i32,
 
-    /// updateRevision, if not empty, indicates the version of the StatefulSet used to generate Pods in the sequence [replicas-updatedReplicas,replicas)
+    /// updateRevision, if not empty, indicates the version of the StatefulSet used to generate Pods in the sequence \[replicas-updatedReplicas,replicas)
     #[serde(rename = "updateRevision")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub update_revision: Option<String>,

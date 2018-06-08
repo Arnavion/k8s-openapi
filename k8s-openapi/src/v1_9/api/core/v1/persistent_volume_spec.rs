@@ -79,7 +79,7 @@ pub struct PersistentVolumeSpec {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub local: Option<::v1_9::api::core::v1::LocalVolumeSource>,
 
-    /// A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
+    /// A list of mount options, e.g. \["ro", "soft"\]. Not validated - mount will simply fail if one is invalid. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
     #[serde(rename = "mountOptions")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub mount_options: Option<Vec<String>>,

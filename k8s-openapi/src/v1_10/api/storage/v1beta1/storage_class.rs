@@ -23,7 +23,7 @@ pub struct StorageClass {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
-    /// Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one is invalid.
+    /// Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. \["ro", "soft"\]. Not validated - mount of the PVs will simply fail if one is invalid.
     #[serde(rename = "mountOptions")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub mount_options: Option<Vec<String>>,

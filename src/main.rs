@@ -303,6 +303,8 @@ fn get_comment_text<'a>(s: &'a str) -> impl Iterator<Item = std::borrow::Cow<'st
 			"///".into()
 		}
 		else {
+			let line = line.replace("[", r"\[");
+			let line = line.replace("]", r"\]");
 			format!("/// {}", line).into()
 		})
 }

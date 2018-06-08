@@ -18,29 +18,29 @@ pub struct Webhook {
     /// NamespaceSelector decides whether to run the webhook on an object based on whether the namespace for that object matches the selector. If the object itself is a namespace, the matching is performed on object.metadata.labels. If the object is another cluster scoped resource, it never skips the webhook.
     ///
     /// For example, to run the webhook on any objects whose namespace is not associated with "runlevel" of "0" or "1";  you will set the selector as follows: "namespaceSelector": {
-    ///   "matchExpressions": [
+    ///   "matchExpressions": \[
     ///     {
     ///       "key": "runlevel",
     ///       "operator": "NotIn",
-    ///       "values": [
+    ///       "values": \[
     ///         "0",
     ///         "1"
-    ///       ]
+    ///       \]
     ///     }
-    ///   ]
+    ///   \]
     /// }
     ///
     /// If instead you want to only run the webhook on any objects whose namespace is associated with the "environment" of "prod" or "staging"; you will set the selector as follows: "namespaceSelector": {
-    ///   "matchExpressions": [
+    ///   "matchExpressions": \[
     ///     {
     ///       "key": "environment",
     ///       "operator": "In",
-    ///       "values": [
+    ///       "values": \[
     ///         "prod",
     ///         "staging"
-    ///       ]
+    ///       \]
     ///     }
-    ///   ]
+    ///   \]
     /// }
     ///
     /// See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.
