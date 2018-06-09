@@ -87,16 +87,25 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 	};
 	info!("OK. Spec has {} definitions", spec.definitions.len());
 
-	info!("Removing output directory {} ...", out_dir.display());
-	match std::fs::remove_dir_all(&out_dir) {
-		Ok(()) => trace!("OK"),
-		Err(ref err) if err.kind() == std::io::ErrorKind::NotFound => trace!("OK. Directory doesn't exist"),
-		err => err?,
-	}
+	loop {
+		info!("Removing output directory {} ...", out_dir.display());
+		match std::fs::remove_dir_all(&out_dir) {
+			Ok(()) => trace!("OK"),
+			Err(ref err) if err.kind() == std::io::ErrorKind::NotFound => {
+				trace!("OK. Directory doesn't exist");
 
-	info!("Creating output directory {} ...", out_dir.display());
-	std::fs::create_dir(&out_dir)?;
-	trace!("OK");
+				info!("Creating output directory {} ...", out_dir.display());
+				match std::fs::create_dir(&out_dir) {
+					Ok(()) => {
+						trace!("OK");
+						break;
+					},
+					Err(err) => error!("Error: {}", err),
+				}
+			},
+			Err(err) => error!("Error: {}", err),
+		}
+	}
 
 	info!("Generating types...");
 
