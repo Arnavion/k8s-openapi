@@ -1,0 +1,20 @@
+[package]
+name = "k8s-openapi-tests"
+version = "0.1.0"
+authors = ["Arnavion <arnavion@gmail.com>"]
+publish = false
+
+[dependencies]
+backtrace = "0.3.x"
+k8s-openapi = { path = "../k8s-openapi" }
+reqwest = "0.8.x"
+pem = "0.5.x"
+serde = "1.0.x"
+serde_json = "*"
+serde_yaml = "0.7.x"
+
+[features]
+v1_7 = ["k8s-openapi/v1_7"]
+v1_8 = ["k8s-openapi/v1_8"]
+v1_9 = ["k8s-openapi/v1_9"]
+v1_10 = ["k8s-openapi/v1_10"]

@@ -1,0 +1,16 @@
+language: rust
+rust:
+- stable
+
+env:
+- FEATURE=v1_7
+  K8S_VERSION=v1.7.5
+- FEATURE=v1_8
+  K8S_VERSION=v1.8.0
+- FEATURE=v1_9
+  K8S_VERSION=v1.9.4
+
+script:
+- bash ./ci/travis.sh
+
+sudo: required
