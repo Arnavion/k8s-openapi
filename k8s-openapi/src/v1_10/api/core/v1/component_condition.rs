@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.ComponentCondition
 
 /// Information about the condition of a component.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ComponentCondition {
     /// Condition error code for a component. For example, a health check error code.
     pub error: Option<String>,

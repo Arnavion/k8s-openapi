@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.DaemonSetCondition
 
 /// DaemonSetCondition describes the state of a DaemonSet at a certain point.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct DaemonSetCondition {
     /// Last time the condition transitioned from one status to another.
     pub last_transition_time: Option<::v1_10::apimachinery::pkg::apis::meta::v1::Time>,

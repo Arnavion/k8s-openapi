@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.autoscaling.v2alpha1.PodsMetricSource
 
 /// PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodsMetricSource {
     /// metricName is the name of the metric in question
     pub metric_name: String,

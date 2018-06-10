@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIServiceStatus
 
 /// APIServiceStatus contains derived information about an API server
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIServiceStatus {
     /// Current service state of apiService.
     pub conditions: Option<Vec<::v1_8::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIServiceCondition>>,

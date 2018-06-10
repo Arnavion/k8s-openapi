@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.NodeSystemInfo
 
 /// NodeSystemInfo is a set of ids/uuids to uniquely identify the node.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeSystemInfo {
     /// The Architecture reported by the node
     pub architecture: String,

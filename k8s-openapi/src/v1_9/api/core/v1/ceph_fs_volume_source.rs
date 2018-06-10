@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.CephFSVolumeSource
 
 /// Represents a Ceph Filesystem mount that lasts the lifetime of a pod Cephfs volumes do not support ownership management or SELinux relabeling.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CephFSVolumeSource {
     /// Required: Monitors is a collection of Ceph monitors More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it
     pub monitors: Vec<String>,

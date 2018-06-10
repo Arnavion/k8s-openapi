@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.SecretKeySelector
 
 /// SecretKeySelector selects a key of a Secret.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct SecretKeySelector {
     /// The key of the secret to select from.  Must be a valid secret key.
     pub key: String,

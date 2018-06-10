@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.settings.v1alpha1.PodPreset
 
 /// PodPreset is a policy resource that defines additional runtime requirements for a Pod.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodPreset {
     /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
     pub api_version: Option<String>,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.authorization.v1beta1.ResourceAttributes
 
 /// ResourceAttributes includes the authorization attributes available for resource requests to the Authorizer interface
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceAttributes {
     /// Group is the API Group of the Resource.  "*" means all.
     pub group: Option<String>,

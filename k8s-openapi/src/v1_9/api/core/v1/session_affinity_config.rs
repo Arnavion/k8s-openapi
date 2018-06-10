@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.SessionAffinityConfig
 
 /// SessionAffinityConfig represents the configurations of session affinity.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct SessionAffinityConfig {
     /// clientIP contains the configurations of Client IP based session affinity.
     pub client_ip: Option<::v1_9::api::core::v1::ClientIPConfig>,

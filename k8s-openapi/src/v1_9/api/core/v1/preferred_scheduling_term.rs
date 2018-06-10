@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.PreferredSchedulingTerm
 
 /// An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PreferredSchedulingTerm {
     /// A node selector term, associated with the corresponding weight.
     pub preference: ::v1_9::api::core::v1::NodeSelectorTerm,

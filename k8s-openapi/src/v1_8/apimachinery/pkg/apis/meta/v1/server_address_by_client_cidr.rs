@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.ServerAddressByClientCIDR
 
 /// ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ServerAddressByClientCIDR {
     /// The CIDR with which clients can match their IP to figure out the server address that they should use.
     pub client_cidr: String,

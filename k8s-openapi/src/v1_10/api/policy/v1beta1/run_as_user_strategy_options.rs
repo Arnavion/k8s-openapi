@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.policy.v1beta1.RunAsUserStrategyOptions
 
 /// Run A sUser Strategy Options defines the strategy type and any options used to create the strategy.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct RunAsUserStrategyOptions {
     /// Ranges are the allowed ranges of uids that may be used.
     pub ranges: Option<Vec<::v1_10::api::policy::v1beta1::IDRange>>,

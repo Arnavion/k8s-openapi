@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.NetworkPolicyPort
 
 /// DEPRECATED 1.9 - This group version of NetworkPolicyPort is deprecated by networking/v1/NetworkPolicyPort.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyPort {
     /// If specified, the port on the given protocol.  This can either be a numerical or named port on a pod.  If this field is not provided, this matches all port names and numbers. If present, only traffic on the specified protocol AND port will be matched.
     pub port: Option<::v1_9::apimachinery::pkg::util::intstr::IntOrString>,

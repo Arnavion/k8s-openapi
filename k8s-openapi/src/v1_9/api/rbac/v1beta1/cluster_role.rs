@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.rbac.v1beta1.ClusterRole
 
 /// ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ClusterRole {
     /// AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller.
     pub aggregation_rule: Option<::v1_9::api::rbac::v1beta1::AggregationRule>,

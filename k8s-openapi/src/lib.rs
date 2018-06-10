@@ -5,7 +5,7 @@ extern crate serde;
 /// A wrapper around a list of bytes.
 ///
 /// Used in Kubernetes types whose JSON representation uses a base64-encoded string for a list of bytes.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
 pub struct ByteString(pub Vec<u8>);
 
 impl<'de> serde::Deserialize<'de> for ByteString {
@@ -35,7 +35,7 @@ impl serde::Serialize for ByteString {
 }
 
 /// A value that may be a 32-bit integer or a string.
-#[derive(Debug)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IntOrString {
     Int(i32),
     String(String),

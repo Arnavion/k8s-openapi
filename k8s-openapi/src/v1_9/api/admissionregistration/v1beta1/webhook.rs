@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.admissionregistration.v1beta1.Webhook
 
 /// Webhook describes an admission webhook and the resources and operations it applies to.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Webhook {
     /// ClientConfig defines how to communicate with the hook. Required
     pub client_config: ::v1_9::api::admissionregistration::v1beta1::WebhookClientConfig,

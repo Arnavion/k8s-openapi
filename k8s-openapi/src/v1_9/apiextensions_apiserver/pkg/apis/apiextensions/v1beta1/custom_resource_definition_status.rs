@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionStatus
 
 /// CustomResourceDefinitionStatus indicates the state of the CustomResourceDefinition
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinitionStatus {
     /// AcceptedNames are the names that are actually being used to serve discovery They may be different than the names in spec.
     pub accepted_names: ::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames,

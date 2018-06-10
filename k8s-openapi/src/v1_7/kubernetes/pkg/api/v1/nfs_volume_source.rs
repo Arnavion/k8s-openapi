@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.NFSVolumeSource
 
 /// Represents an NFS mount that lasts the lifetime of a pod. NFS volumes do not support ownership management or SELinux relabeling.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NFSVolumeSource {
     /// Path that is exported by the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
     pub path: String,

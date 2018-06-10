@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.extensions.v1beta1.IngressBackend
 
 /// IngressBackend describes all endpoints for a given service and port.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct IngressBackend {
     /// Specifies the name of the referenced service.
     pub service_name: String,

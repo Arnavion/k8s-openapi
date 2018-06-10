@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.batch.v1beta1.JobTemplateSpec
 
 /// JobTemplateSpec describes the data a Job should have when created from a template
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct JobTemplateSpec {
     /// Standard object's metadata of the jobs created from this template. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: Option<::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,

@@ -1,6 +1,6 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.NetworkPolicyPeer
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyPeer {
     /// IPBlock defines policy on a particular IPBlock
     pub ip_block: Option<::v1_8::api::extensions::v1beta1::IPBlock>,

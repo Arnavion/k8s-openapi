@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.Pod
 
 /// Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Pod {
     /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
     pub api_version: Option<String>,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.PodSpec
 
 /// PodSpec is a description of a pod.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodSpec {
     /// Optional duration in seconds the pod may be active on the node relative to StartTime before the system will actively try to mark it failed and kill associated containers. Value must be a positive integer.
     pub active_deadline_seconds: Option<i64>,

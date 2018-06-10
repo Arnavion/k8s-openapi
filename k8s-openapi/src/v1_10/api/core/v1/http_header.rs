@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.HTTPHeader
 
 /// HTTPHeader describes a custom header to be used in HTTP probes
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct HTTPHeader {
     /// The header field name
     pub name: String,

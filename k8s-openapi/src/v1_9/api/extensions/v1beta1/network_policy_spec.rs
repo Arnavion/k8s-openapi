@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.NetworkPolicySpec
 
 /// DEPRECATED 1.9 - This group version of NetworkPolicySpec is deprecated by networking/v1/NetworkPolicySpec.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicySpec {
     /// List of egress rules to be applied to the selected pods. Outgoing traffic is allowed if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic matches at least one egress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy limits all outgoing traffic (and serves solely to ensure that the pods it selects are isolated by default). This field is beta-level in 1.8
     pub egress: Option<Vec<::v1_9::api::extensions::v1beta1::NetworkPolicyEgressRule>>,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.autoscaling.v2alpha1.MetricStatus
 
 /// MetricStatus describes the last-read state of a single metric.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct MetricStatus {
     /// object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
     pub object: Option<::v1_7::kubernetes::pkg::apis::autoscaling::v2alpha1::ObjectMetricStatus>,

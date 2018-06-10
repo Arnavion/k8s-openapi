@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.Node
 
 /// Node is a worker node in Kubernetes. Each node will have a unique identifier in the cache (i.e. in etcd).
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Node {
     /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
     pub api_version: Option<String>,

@@ -4,7 +4,7 @@
 ///  - Network: A single stable DNS and hostname.
 ///  - Storage: As many VolumeClaims as requested.
 /// The StatefulSet guarantees that a given network identity will always map to the same storage identity.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatefulSet {
     /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
     pub api_version: Option<String>,

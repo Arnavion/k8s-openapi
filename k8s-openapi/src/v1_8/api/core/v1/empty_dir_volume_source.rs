@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.EmptyDirVolumeSource
 
 /// Represents an empty directory for a pod. Empty directory volumes support ownership management and SELinux relabeling.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct EmptyDirVolumeSource {
     /// What type of storage medium should back this directory. The default is "" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
     pub medium: Option<String>,

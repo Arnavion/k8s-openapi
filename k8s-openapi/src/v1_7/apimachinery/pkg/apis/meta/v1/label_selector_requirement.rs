@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelectorRequirement
 
 /// A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct LabelSelectorRequirement {
     /// key is the label key that the selector applies to.
     pub key: String,

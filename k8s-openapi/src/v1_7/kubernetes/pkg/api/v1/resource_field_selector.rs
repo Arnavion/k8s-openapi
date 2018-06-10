@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.ResourceFieldSelector
 
 /// ResourceFieldSelector represents container resources (cpu, memory) and their output format
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceFieldSelector {
     /// Container name: required for volumes, optional for env vars
     pub container_name: Option<String>,

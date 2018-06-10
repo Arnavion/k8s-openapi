@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.EnvFromSource
 
 /// EnvFromSource represents the source of a set of ConfigMaps
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct EnvFromSource {
     /// The ConfigMap to select from
     pub config_map_ref: Option<::v1_10::api::core::v1::ConfigMapEnvSource>,

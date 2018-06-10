@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.HTTPIngressPath
 
 /// HTTPIngressPath associates a path regex with a backend. Incoming urls matching the path are forwarded to the backend.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct HTTPIngressPath {
     /// Backend defines the referenced service endpoint to which the traffic will be forwarded to.
     pub backend: ::v1_8::api::extensions::v1beta1::IngressBackend,

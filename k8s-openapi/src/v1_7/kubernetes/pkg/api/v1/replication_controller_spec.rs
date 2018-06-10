@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.ReplicationControllerSpec
 
 /// ReplicationControllerSpec is the specification of a replication controller.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ReplicationControllerSpec {
     /// Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
     pub min_ready_seconds: Option<i32>,

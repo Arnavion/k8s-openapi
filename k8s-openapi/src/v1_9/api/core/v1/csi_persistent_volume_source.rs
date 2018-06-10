@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.CSIPersistentVolumeSource
 
 /// Represents storage that is managed by an external CSI volume driver
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CSIPersistentVolumeSource {
     /// Driver is the name of the driver to use for this volume. Required.
     pub driver: String,

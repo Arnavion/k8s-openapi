@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.settings.v1alpha1.PodPresetSpec
 
 /// PodPresetSpec is a description of a pod preset.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodPresetSpec {
     /// Env defines the collection of EnvVar to inject into containers.
     pub env: Option<Vec<::v1_7::kubernetes::pkg::api::v1::EnvVar>>,

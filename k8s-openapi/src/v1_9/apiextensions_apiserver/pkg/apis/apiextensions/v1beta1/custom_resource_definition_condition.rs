@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionCondition
 
 /// CustomResourceDefinitionCondition contains details for the current condition of this pod.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinitionCondition {
     /// Last time the condition transitioned from one status to another.
     pub last_transition_time: Option<::v1_9::apimachinery::pkg::apis::meta::v1::Time>,

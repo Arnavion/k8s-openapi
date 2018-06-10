@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta1.HorizontalPodAutoscalerCondition
 
 /// HorizontalPodAutoscalerCondition describes the state of a HorizontalPodAutoscaler at a certain point.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct HorizontalPodAutoscalerCondition {
     /// lastTransitionTime is the last time the condition transitioned from one status to another
     pub last_transition_time: Option<::v1_8::apimachinery::pkg::apis::meta::v1::Time>,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.Affinity
 
 /// Affinity is a group of affinity scheduling rules.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Affinity {
     /// Describes node affinity scheduling rules for the pod.
     pub node_affinity: Option<::v1_8::api::core::v1::NodeAffinity>,

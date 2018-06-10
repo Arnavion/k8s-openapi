@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.apps.v1beta2.DaemonSetStatus
 
 /// DaemonSetStatus represents the current status of a daemon set.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct DaemonSetStatus {
     /// Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     pub collision_count: Option<i32>,

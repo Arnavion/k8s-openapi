@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.apps.v1beta1.DeploymentCondition
 
 /// DeploymentCondition describes the state of a deployment at a certain point.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct DeploymentCondition {
     /// Last time the condition transitioned from one status to another.
     pub last_transition_time: Option<::v1_10::apimachinery::pkg::apis::meta::v1::Time>,

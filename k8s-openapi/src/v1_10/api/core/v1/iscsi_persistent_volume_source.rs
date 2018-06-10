@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.ISCSIPersistentVolumeSource
 
 /// ISCSIPersistentVolumeSource represents an ISCSI disk. ISCSI volumes can only be mounted as read/write once. ISCSI volumes support ownership management and SELinux relabeling.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ISCSIPersistentVolumeSource {
     /// whether support iSCSI Discovery CHAP authentication
     pub chap_auth_discovery: Option<bool>,

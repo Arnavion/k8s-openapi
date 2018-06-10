@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.IngressSpec
 
 /// IngressSpec describes the Ingress the user wishes to exist.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct IngressSpec {
     /// A default backend capable of servicing requests that don't match any rule. At least one of 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer controller or defaulting logic to specify a global default.
     pub backend: Option<::v1_10::api::extensions::v1beta1::IngressBackend>,

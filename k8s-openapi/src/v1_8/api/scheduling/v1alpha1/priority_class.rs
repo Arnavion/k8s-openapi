@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.scheduling.v1alpha1.PriorityClass
 
 /// PriorityClass defines mapping from a priority class name to the priority integer value. The value can be any valid integer.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PriorityClass {
     /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
     pub api_version: Option<String>,

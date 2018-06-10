@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.ConfigMapKeySelector
 
 /// Selects a key from a ConfigMap.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ConfigMapKeySelector {
     /// The key to select.
     pub key: String,

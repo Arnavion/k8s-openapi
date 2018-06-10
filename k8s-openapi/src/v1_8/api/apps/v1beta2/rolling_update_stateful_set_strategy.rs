@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.apps.v1beta2.RollingUpdateStatefulSetStrategy
 
 /// RollingUpdateStatefulSetStrategy is used to communicate parameter for RollingUpdateStatefulSetStrategyType.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct RollingUpdateStatefulSetStrategy {
     /// Partition indicates the ordinal at which the StatefulSet should be partitioned. Default value is 0.
     pub partition: Option<i32>,

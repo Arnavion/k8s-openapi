@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.EnvVar
 
 /// EnvVar represents an environment variable present in a Container.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct EnvVar {
     /// Name of the environment variable. Must be a C_IDENTIFIER.
     pub name: String,

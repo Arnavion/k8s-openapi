@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.authorization.v1.SubjectAccessReviewSpec
 
 /// SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct SubjectAccessReviewSpec {
     /// Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
     pub extra: Option<::std::collections::BTreeMap<String, Vec<String>>>,

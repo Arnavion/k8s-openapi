@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.PodDNSConfigOption
 
 /// PodDNSConfigOption defines DNS resolver options of a pod.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodDNSConfigOption {
     /// Required.
     pub name: Option<String>,

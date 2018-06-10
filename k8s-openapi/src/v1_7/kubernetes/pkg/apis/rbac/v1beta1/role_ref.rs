@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.rbac.v1beta1.RoleRef
 
 /// RoleRef contains information that points to the role being used
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct RoleRef {
     /// APIGroup is the group for the resource being referenced
     pub api_group: String,

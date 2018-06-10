@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.AzureFileVolumeSource
 
 /// AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct AzureFileVolumeSource {
     /// Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
     pub read_only: Option<bool>,

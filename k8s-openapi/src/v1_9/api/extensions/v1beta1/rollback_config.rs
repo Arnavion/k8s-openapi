@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.RollbackConfig
 
 /// DEPRECATED.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct RollbackConfig {
     /// The revision to rollback to. If set to 0, rollback to the last revision.
     pub revision: Option<i64>,

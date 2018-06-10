@@ -1,6 +1,6 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.extensions.v1beta1.RollbackConfig
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct RollbackConfig {
     /// The revision to rollback to. If set to 0, rollback to the last revision.
     pub revision: Option<i64>,

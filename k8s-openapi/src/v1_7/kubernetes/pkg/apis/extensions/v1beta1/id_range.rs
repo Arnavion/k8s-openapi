@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.extensions.v1beta1.IDRange
 
 /// ID Range provides a min/max of an allowed range of IDs.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct IDRange {
     /// Max is the end of the range, inclusive.
     pub max: i64,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionSpec
 
 /// CustomResourceDefinitionSpec describes how a user wants their resource to appear
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinitionSpec {
     /// Group is the group this resource belongs in
     pub group: String,

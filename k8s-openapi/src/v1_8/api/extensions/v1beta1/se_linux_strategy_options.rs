@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.SELinuxStrategyOptions
 
 /// SELinux  Strategy Options defines the strategy type and any options used to create the strategy.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct SELinuxStrategyOptions {
     /// type is the strategy that will dictate the allowable labels that may be set.
     pub rule: String,

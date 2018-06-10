@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.NodeSelectorRequirement
 
 /// A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeSelectorRequirement {
     /// The label key that the selector applies to.
     pub key: String,

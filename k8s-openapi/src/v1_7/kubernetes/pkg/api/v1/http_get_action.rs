@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.HTTPGetAction
 
 /// HTTPGetAction describes an action based on HTTP Get requests.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct HTTPGetAction {
     /// Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
     pub host: Option<String>,

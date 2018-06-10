@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.certificates.v1beta1.CertificateSigningRequestSpec
 
 /// This information is immutable after the request is created. Only the Request and Usages fields can be set on creation, other fields are derived by Kubernetes and cannot be modified by users.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CertificateSigningRequestSpec {
     /// Extra information about the requesting user. See user.Info interface for details.
     pub extra: Option<::std::collections::BTreeMap<String, Vec<String>>>,

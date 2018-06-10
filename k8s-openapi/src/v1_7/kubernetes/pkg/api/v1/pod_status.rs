@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.PodStatus
 
 /// PodStatus represents information about the status of a pod. Status may trail the actual state of a system.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodStatus {
     /// Current service state of pod. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions
     pub conditions: Option<Vec<::v1_7::kubernetes::pkg::api::v1::PodCondition>>,

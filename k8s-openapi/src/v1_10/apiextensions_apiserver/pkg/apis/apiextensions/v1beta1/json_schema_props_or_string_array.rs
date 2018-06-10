@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray
 
 /// JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct JSONSchemaPropsOrStringArray {
     pub property: Vec<String>,
 

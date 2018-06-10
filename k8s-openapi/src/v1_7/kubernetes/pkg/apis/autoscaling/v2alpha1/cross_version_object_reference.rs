@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.autoscaling.v2alpha1.CrossVersionObjectReference
 
 /// CrossVersionObjectReference contains enough information to let you identify the referred resource.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CrossVersionObjectReference {
     /// API version of the referent
     pub api_version: Option<String>,

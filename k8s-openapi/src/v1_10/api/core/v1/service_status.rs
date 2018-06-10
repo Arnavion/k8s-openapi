@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.ServiceStatus
 
 /// ServiceStatus represents the current status of a service.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ServiceStatus {
     /// LoadBalancer contains the current status of the load-balancer, if one is present.
     pub load_balancer: Option<::v1_10::api::core::v1::LoadBalancerStatus>,

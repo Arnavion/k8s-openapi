@@ -8,7 +8,7 @@
 /// The resulting set of endpoints can be viewed as:
 ///     a: \[ 10.10.1.1:8675, 10.10.2.2:8675 \],
 ///     b: \[ 10.10.1.1:309, 10.10.2.2:309 \]
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct EndpointSubset {
     /// IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.
     pub addresses: Option<Vec<::v1_7::kubernetes::pkg::api::v1::EndpointAddress>>,

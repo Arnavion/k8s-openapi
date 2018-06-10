@@ -1,6 +1,6 @@
 // Generated from definition io.k8s.api.certificates.v1beta1.CertificateSigningRequestCondition
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CertificateSigningRequestCondition {
     /// timestamp for the last update to this condition
     pub last_update_time: Option<::v1_9::apimachinery::pkg::apis::meta::v1::Time>,

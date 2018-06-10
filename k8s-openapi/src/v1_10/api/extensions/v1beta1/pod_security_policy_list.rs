@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.PodSecurityPolicyList
 
 /// Pod Security Policy List is a list of PodSecurityPolicy objects.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodSecurityPolicyList {
     /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
     pub api_version: Option<String>,

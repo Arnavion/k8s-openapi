@@ -3,7 +3,7 @@
 /// StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.
 ///
 /// StorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct StorageClass {
     /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
     pub api_version: Option<String>,

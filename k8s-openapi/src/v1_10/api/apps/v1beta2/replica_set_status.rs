@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.apps.v1beta2.ReplicaSetStatus
 
 /// ReplicaSetStatus represents the current status of a ReplicaSet.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ReplicaSetStatus {
     /// The number of available replicas (ready for at least minReadySeconds) for this replica set.
     pub available_replicas: Option<i32>,

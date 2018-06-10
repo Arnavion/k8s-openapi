@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.authentication.v1beta1.TokenReviewSpec
 
 /// TokenReviewSpec is a description of the token authentication request.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct TokenReviewSpec {
     /// Token is the opaque bearer token.
     pub token: Option<String>,

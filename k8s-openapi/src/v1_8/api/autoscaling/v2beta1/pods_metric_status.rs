@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta1.PodsMetricStatus
 
 /// PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodsMetricStatus {
     /// currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)
     pub current_average_value: ::v1_8::apimachinery::pkg::api::resource::Quantity,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.apps.v1beta2.StatefulSetStatus
 
 /// StatefulSetStatus represents the current state of a StatefulSet.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatefulSetStatus {
     /// collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     pub collision_count: Option<i32>,

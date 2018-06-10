@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.apps.v1beta2.StatefulSetSpec
 
 /// A StatefulSetSpec is the specification of a StatefulSet.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatefulSetSpec {
     /// podManagementPolicy controls how pods are created during initial scale up, when replacing pods on nodes, or when scaling down. The default policy is `OrderedReady`, where pods are created in increasing order (pod-0, then pod-1, etc) and the controller will wait until each pod is ready before continuing. When scaling down, the pods are removed in the opposite order. The alternative policy is `Parallel` which will create pods in parallel to match the desired scale without waiting, and on scale down will delete all pods at once.
     pub pod_management_policy: Option<String>,

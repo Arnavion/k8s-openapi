@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.storage.v1alpha1.VolumeAttachmentStatus
 
 /// VolumeAttachmentStatus is the status of a VolumeAttachment request.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeAttachmentStatus {
     /// The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
     pub attach_error: Option<::v1_9::api::storage::v1alpha1::VolumeError>,

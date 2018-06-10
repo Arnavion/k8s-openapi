@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.PersistentVolumeClaimCondition
 
 /// PersistentVolumeClaimCondition contails details about state of pvc
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeClaimCondition {
     /// Last time we probed the condition.
     pub last_probe_time: Option<::v1_9::apimachinery::pkg::apis::meta::v1::Time>,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.DaemonEndpoint
 
 /// DaemonEndpoint contains information about a single Daemon endpoint.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct DaemonEndpoint {
     /// Port number of the given endpoint.
     pub port: i32,

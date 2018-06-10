@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.ResourceQuotaStatus
 
 /// ResourceQuotaStatus defines the enforced hard limits and observed use.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceQuotaStatus {
     /// Hard is the set of enforced hard limits for each named resource. More info: https://git.k8s.io/community/contributors/design-proposals/admission_control_resource_quota.md
     pub hard: Option<::std::collections::BTreeMap<String, ::v1_8::apimachinery::pkg::api::resource::Quantity>>,

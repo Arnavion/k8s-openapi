@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.Handler
 
 /// Handler defines a specific action that should be taken
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Handler {
     /// One and only one of the following should be specified. Exec specifies the action to take.
     pub exec: Option<::v1_10::api::core::v1::ExecAction>,

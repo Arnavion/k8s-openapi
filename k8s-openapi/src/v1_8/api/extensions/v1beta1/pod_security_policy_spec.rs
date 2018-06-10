@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.PodSecurityPolicySpec
 
 /// Pod Security Policy Spec defines the policy enforced.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodSecurityPolicySpec {
     /// AllowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.
     pub allow_privilege_escalation: Option<bool>,

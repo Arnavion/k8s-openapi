@@ -1,6 +1,6 @@
 // Generated from definition io.k8s.api.certificates.v1beta1.CertificateSigningRequestStatus
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CertificateSigningRequestStatus {
     /// If request was approved, the controller will place the issued certificate here.
     pub certificate: Option<::ByteString>,

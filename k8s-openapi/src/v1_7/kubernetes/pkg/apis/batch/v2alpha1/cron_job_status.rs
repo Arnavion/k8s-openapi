@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.batch.v2alpha1.CronJobStatus
 
 /// CronJobStatus represents the current state of a cron job.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CronJobStatus {
     /// A list of pointers to currently running jobs.
     pub active: Option<Vec<::v1_7::kubernetes::pkg::api::v1::ObjectReference>>,

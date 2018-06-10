@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.admissionregistration.v1alpha1.AdmissionHookClientConfig
 
 /// AdmissionHookClientConfig contains the information to make a TLS connection with the webhook
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct AdmissionHookClientConfig {
     /// CABundle is a PEM encoded CA bundle which will be used to validate webhook's server certificate. Required
     pub ca_bundle: ::ByteString,

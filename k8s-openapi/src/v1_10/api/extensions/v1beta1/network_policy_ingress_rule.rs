@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.NetworkPolicyIngressRule
 
 /// DEPRECATED 1.9 - This group version of NetworkPolicyIngressRule is deprecated by networking/v1/NetworkPolicyIngressRule. This NetworkPolicyIngressRule matches traffic if and only if the traffic matches both ports AND from.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyIngressRule {
     /// List of sources which should be able to access the pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all sources (traffic not restricted by source). If this field is present and contains at least on item, this rule allows traffic only if the traffic matches at least one item in the from list.
     pub from: Option<Vec<::v1_10::api::extensions::v1beta1::NetworkPolicyPeer>>,

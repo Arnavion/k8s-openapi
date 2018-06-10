@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.VolumeProjection
 
 /// Projection that may be projected along with other supported volume types
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeProjection {
     /// information about the configMap data to project
     pub config_map: Option<::v1_7::kubernetes::pkg::api::v1::ConfigMapProjection>,

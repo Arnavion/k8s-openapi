@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.VolumeNodeAffinity
 
 /// VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeNodeAffinity {
     /// Required specifies hard node constraints that must be met.
     pub required: Option<::v1_10::api::core::v1::NodeSelector>,

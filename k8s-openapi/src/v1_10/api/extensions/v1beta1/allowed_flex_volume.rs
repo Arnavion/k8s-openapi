@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.AllowedFlexVolume
 
 /// AllowedFlexVolume represents a single Flexvolume that is allowed to be used.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct AllowedFlexVolume {
     /// Driver is the name of the Flexvolume driver.
     pub driver: String,

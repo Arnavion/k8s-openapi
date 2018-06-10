@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.DeploymentStrategy
 
 /// DeploymentStrategy describes how to replace existing pods with new ones.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct DeploymentStrategy {
     /// Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
     pub rolling_update: Option<::v1_10::api::extensions::v1beta1::RollingUpdateDeployment>,

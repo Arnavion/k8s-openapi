@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.extensions.v1beta1.PodSecurityPolicySpec
 
 /// Pod Security Policy Spec defines the policy enforced.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodSecurityPolicySpec {
     /// AllowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both AllowedCapabilities and RequiredDropCapabilities.
     pub allowed_capabilities: Option<Vec<String>>,

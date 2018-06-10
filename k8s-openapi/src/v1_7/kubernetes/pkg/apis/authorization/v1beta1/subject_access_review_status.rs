@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.authorization.v1beta1.SubjectAccessReviewStatus
 
 /// SubjectAccessReviewStatus
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct SubjectAccessReviewStatus {
     /// Allowed is required.  True if the action would be allowed, false otherwise.
     pub allowed: bool,

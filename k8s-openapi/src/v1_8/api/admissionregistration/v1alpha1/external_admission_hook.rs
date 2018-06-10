@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.admissionregistration.v1alpha1.ExternalAdmissionHook
 
 /// ExternalAdmissionHook describes an external admission webhook and the resources and operations it applies to.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ExternalAdmissionHook {
     /// ClientConfig defines how to communicate with the hook. Required
     pub client_config: ::v1_8::api::admissionregistration::v1alpha1::AdmissionHookClientConfig,

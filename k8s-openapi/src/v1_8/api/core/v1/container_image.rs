@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.ContainerImage
 
 /// Describe a container image
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ContainerImage {
     /// Names by which this image is known. e.g. \["gcr.io/google_containers/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"\]
     pub names: Vec<String>,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.batch.v1.JobStatus
 
 /// JobStatus represents the current state of a Job.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct JobStatus {
     /// The number of actively running pods.
     pub active: Option<i32>,

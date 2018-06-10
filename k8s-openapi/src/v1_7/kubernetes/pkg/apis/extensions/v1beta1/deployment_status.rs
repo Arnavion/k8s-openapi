@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.extensions.v1beta1.DeploymentStatus
 
 /// DeploymentStatus is the most recently observed status of the Deployment.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct DeploymentStatus {
     /// Total number of available pods (ready for at least minReadySeconds) targeted by this deployment.
     pub available_replicas: Option<i32>,

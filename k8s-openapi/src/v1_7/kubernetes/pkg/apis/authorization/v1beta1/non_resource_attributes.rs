@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.authorization.v1beta1.NonResourceAttributes
 
 /// NonResourceAttributes includes the authorization attributes available for non-resource requests to the Authorizer interface
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NonResourceAttributes {
     /// Path is the URL path of the request
     pub path: Option<String>,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.EndpointAddress
 
 /// EndpointAddress is a tuple that describes single IP address.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct EndpointAddress {
     /// The Hostname of this endpoint
     pub hostname: Option<String>,

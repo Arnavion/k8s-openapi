@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.Probe
 
 /// Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Probe {
     /// One and only one of the following should be specified. Exec specifies the action to take.
     pub exec: Option<::v1_9::api::core::v1::ExecAction>,

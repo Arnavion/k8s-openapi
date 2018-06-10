@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.NodeStatus
 
 /// NodeStatus is information about the current status of a node.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeStatus {
     /// List of addresses reachable to the node. Queried from cloud provider, if available. More info: https://kubernetes.io/docs/concepts/nodes/node/#addresses
     pub addresses: Option<Vec<::v1_7::kubernetes::pkg::api::v1::NodeAddress>>,

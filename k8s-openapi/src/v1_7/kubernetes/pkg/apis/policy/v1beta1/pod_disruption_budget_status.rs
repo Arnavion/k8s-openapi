@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.policy.v1beta1.PodDisruptionBudgetStatus
 
 /// PodDisruptionBudgetStatus represents information about the status of a PodDisruptionBudget. Status may trail the actual state of a system.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodDisruptionBudgetStatus {
     /// current number of healthy pods
     pub current_healthy: i32,

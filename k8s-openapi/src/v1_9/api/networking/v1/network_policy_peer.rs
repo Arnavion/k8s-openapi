@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.networking.v1.NetworkPolicyPeer
 
 /// NetworkPolicyPeer describes a peer to allow traffic from. Exactly one of its fields must be specified.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyPeer {
     /// IPBlock defines policy on a particular IPBlock
     pub ip_block: Option<::v1_9::api::networking::v1::IPBlock>,

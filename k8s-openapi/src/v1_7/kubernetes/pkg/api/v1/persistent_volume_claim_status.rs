@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.PersistentVolumeClaimStatus
 
 /// PersistentVolumeClaimStatus is the current status of a persistent volume claim.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeClaimStatus {
     /// AccessModes contains the actual access modes the volume backing the PVC has. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
     pub access_modes: Option<Vec<String>>,

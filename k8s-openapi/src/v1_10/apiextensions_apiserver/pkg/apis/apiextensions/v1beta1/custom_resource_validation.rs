@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceValidation
 
 /// CustomResourceValidation is a list of validation methods for CustomResources.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceValidation {
     /// OpenAPIV3Schema is the OpenAPI v3 schema to be validated against.
     pub open_api_v3_schema: Option<::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>,

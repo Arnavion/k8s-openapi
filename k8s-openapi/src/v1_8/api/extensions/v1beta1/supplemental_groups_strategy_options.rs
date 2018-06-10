@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.SupplementalGroupsStrategyOptions
 
 /// SupplementalGroupsStrategyOptions defines the strategy type and options used to create the strategy.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct SupplementalGroupsStrategyOptions {
     /// Ranges are the allowed ranges of supplemental groups.  If you would like to force a single supplemental group then supply a single range with the same start and end.
     pub ranges: Option<Vec<::v1_8::api::extensions::v1beta1::IDRange>>,

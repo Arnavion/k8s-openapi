@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.PersistentVolumeStatus
 
 /// PersistentVolumeStatus is the current status of a persistent volume.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeStatus {
     /// A human-readable message indicating details about why the volume is in this state.
     pub message: Option<String>,

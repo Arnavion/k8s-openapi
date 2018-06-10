@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.storage.v1alpha1.VolumeError
 
 /// VolumeError captures an error encountered during a volume operation.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeError {
     /// String detailing the error encountered during Attach or Detach operation. This string maybe logged, so it should not contain sensitive information.
     pub message: Option<String>,

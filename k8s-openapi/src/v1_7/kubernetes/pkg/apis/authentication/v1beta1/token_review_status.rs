@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.authentication.v1beta1.TokenReviewStatus
 
 /// TokenReviewStatus is the result of the token authentication request.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct TokenReviewStatus {
     /// Authenticated indicates that the token was associated with a known user.
     pub authenticated: Option<bool>,

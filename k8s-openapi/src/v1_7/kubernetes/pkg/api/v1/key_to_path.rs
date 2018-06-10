@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.KeyToPath
 
 /// Maps a string key to a path within a volume.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct KeyToPath {
     /// The key to project.
     pub key: String,

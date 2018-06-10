@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.ReplicationControllerCondition
 
 /// ReplicationControllerCondition describes the state of a replication controller at a certain point.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ReplicationControllerCondition {
     /// The last time the condition transitioned from one status to another.
     pub last_transition_time: Option<::v1_9::apimachinery::pkg::apis::meta::v1::Time>,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.EnvVarSource
 
 /// EnvVarSource represents a source for the value of an EnvVar.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct EnvVarSource {
     /// Selects a key of a ConfigMap.
     pub config_map_key_ref: Option<::v1_7::kubernetes::pkg::api::v1::ConfigMapKeySelector>,

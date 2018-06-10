@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.ContainerStateWaiting
 
 /// ContainerStateWaiting is a waiting state of a container.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ContainerStateWaiting {
     /// Message regarding why the container is not yet running.
     pub message: Option<String>,

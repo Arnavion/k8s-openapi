@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.autoscaling.v1.HorizontalPodAutoscalerSpec
 
 /// specification of a horizontal pod autoscaler.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct HorizontalPodAutoscalerSpec {
     /// upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.
     pub max_replicas: i32,

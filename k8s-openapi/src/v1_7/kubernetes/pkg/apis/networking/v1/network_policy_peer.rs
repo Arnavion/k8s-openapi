@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.networking.v1.NetworkPolicyPeer
 
 /// NetworkPolicyPeer describes a peer to allow traffic from. Exactly one of its fields must be specified.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyPeer {
     /// Selects Namespaces using cluster scoped-labels. This matches all pods in all namespaces selected by this label selector. This field follows standard label selector semantics. If present but empty, this selector selects all namespaces.
     pub namespace_selector: Option<::v1_7::apimachinery::pkg::apis::meta::v1::LabelSelector>,

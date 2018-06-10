@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.APIResource
 
 /// APIResource specifies the name of a resource and whether it is namespaced.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIResource {
     /// categories is a list of the grouped resources this resource belongs to (e.g. 'all')
     pub categories: Option<Vec<String>>,

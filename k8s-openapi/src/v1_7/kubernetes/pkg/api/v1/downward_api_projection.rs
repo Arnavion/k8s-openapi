@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.DownwardAPIProjection
 
 /// Represents downward API info for projecting into a projected volume. Note that this is identical to a downwardAPI volume source without the default mode.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct DownwardAPIProjection {
     /// Items is a list of DownwardAPIVolume file
     pub items: Option<Vec<::v1_7::kubernetes::pkg::api::v1::DownwardAPIVolumeFile>>,

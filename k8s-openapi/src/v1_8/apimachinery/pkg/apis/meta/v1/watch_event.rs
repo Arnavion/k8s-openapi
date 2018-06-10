@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent
 
 /// Event represents a single event to a watched resource.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct WatchEvent {
     /// Object is:
     ///  * If Type is Added or Modified: the new state of the object.

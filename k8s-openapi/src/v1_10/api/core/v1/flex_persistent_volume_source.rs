@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.FlexPersistentVolumeSource
 
 /// FlexPersistentVolumeSource represents a generic persistent volume resource that is provisioned/attached using an exec based plugin.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct FlexPersistentVolumeSource {
     /// Driver is the name of the driver to use for this volume.
     pub driver: String,

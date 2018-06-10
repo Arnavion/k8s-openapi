@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.NodeSpec
 
 /// NodeSpec describes the attributes that a node is created with.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeSpec {
     /// External ID of the node assigned by some machine database (e.g. a cloud provider). Deprecated.
     pub external_id: Option<String>,

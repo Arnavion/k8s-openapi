@@ -202,7 +202,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 					result
 				};
 
-				write!(file, "#[derive(Debug")?;
+				write!(file, "#[derive(Clone, Debug")?;
 
 				let all_properties_are_default =
 					properties.iter().all(|Property { schema, required, .. }| {
@@ -227,7 +227,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 					write!(file, ", Default")?;
 				}
 
-				writeln!(file, ")]")?;
+				writeln!(file, ", PartialEq)]")?;
 
 				writeln!(file, "pub struct {} {{", type_name)?;
 

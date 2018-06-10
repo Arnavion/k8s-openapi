@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.EnvVarSource
 
 /// EnvVarSource represents a source for the value of an EnvVar.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct EnvVarSource {
     /// Selects a key of a ConfigMap.
     pub config_map_key_ref: Option<::v1_8::api::core::v1::ConfigMapKeySelector>,

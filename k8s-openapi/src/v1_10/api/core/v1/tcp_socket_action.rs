@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.TCPSocketAction
 
 /// TCPSocketAction describes an action based on opening a socket
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct TCPSocketAction {
     /// Optional: Host name to connect to, defaults to the pod IP.
     pub host: Option<String>,

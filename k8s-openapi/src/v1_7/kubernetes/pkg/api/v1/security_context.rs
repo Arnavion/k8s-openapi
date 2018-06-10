@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.SecurityContext
 
 /// SecurityContext holds security configuration that will be applied to a container. Some fields are present in both SecurityContext and PodSecurityContext.  When both are set, the values in SecurityContext take precedence.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct SecurityContext {
     /// The capabilities to add/drop when running containers. Defaults to the default set of capabilities granted by the container runtime.
     pub capabilities: Option<::v1_7::kubernetes::pkg::api::v1::Capabilities>,

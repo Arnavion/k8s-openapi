@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionNames
 
 /// CustomResourceDefinitionNames indicates the names to serve this CustomResourceDefinition
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinitionNames {
     /// Kind is the serialized kind of the resource.  It is normally CamelCase and singular.
     pub kind: String,

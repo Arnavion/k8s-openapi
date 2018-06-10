@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.admissionregistration.v1beta1.ServiceReference
 
 /// ServiceReference holds a reference to Service.legacy.k8s.io
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ServiceReference {
     /// `name` is the name of the service. Required
     pub name: String,

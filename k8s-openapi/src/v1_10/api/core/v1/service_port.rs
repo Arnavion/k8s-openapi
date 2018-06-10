@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.ServicePort
 
 /// ServicePort contains information on service's port.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ServicePort {
     /// The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. This maps to the 'Name' field in EndpointPort objects. Optional if only one ServicePort is defined on this service.
     pub name: Option<String>,

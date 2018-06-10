@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.EventSource
 
 /// EventSource contains information for an event.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct EventSource {
     /// Component from which the event is generated.
     pub component: Option<String>,

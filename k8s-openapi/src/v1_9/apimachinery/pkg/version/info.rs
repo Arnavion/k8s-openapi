@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apimachinery.pkg.version.Info
 
 /// Info contains versioning information. how we'll want to distribute that information.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Info {
     pub build_date: String,
 

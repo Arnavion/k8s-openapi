@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.WeightedPodAffinityTerm
 
 /// The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct WeightedPodAffinityTerm {
     /// Required. A pod affinity term, associated with the corresponding weight.
     pub pod_affinity_term: ::v1_8::api::core::v1::PodAffinityTerm,

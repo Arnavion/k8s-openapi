@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.settings.v1alpha1.PodPresetSpec
 
 /// PodPresetSpec is a description of a pod preset.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodPresetSpec {
     /// Env defines the collection of EnvVar to inject into containers.
     pub env: Option<Vec<::v1_8::api::core::v1::EnvVar>>,

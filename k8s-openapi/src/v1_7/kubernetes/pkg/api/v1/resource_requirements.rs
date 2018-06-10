@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.ResourceRequirements
 
 /// ResourceRequirements describes the compute resource requirements.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ResourceRequirements {
     /// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
     pub limits: Option<::std::collections::BTreeMap<String, ::v1_7::apimachinery::pkg::api::resource::Quantity>>,

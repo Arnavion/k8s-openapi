@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta1.ObjectMetricStatus
 
 /// ObjectMetricStatus indicates the current value of a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ObjectMetricStatus {
     /// currentValue is the current value of the metric (as a quantity).
     pub current_value: ::v1_9::apimachinery::pkg::api::resource::Quantity,

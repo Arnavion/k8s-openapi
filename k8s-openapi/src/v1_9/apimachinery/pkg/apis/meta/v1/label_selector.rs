@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector
 
 /// A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct LabelSelector {
     /// matchExpressions is a list of label selector requirements. The requirements are ANDed.
     pub match_expressions: Option<Vec<::v1_9::apimachinery::pkg::apis::meta::v1::LabelSelectorRequirement>>,

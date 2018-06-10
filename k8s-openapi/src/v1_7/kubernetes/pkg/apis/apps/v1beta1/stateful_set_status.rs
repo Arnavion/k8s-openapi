@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.apps.v1beta1.StatefulSetStatus
 
 /// StatefulSetStatus represents the current state of a StatefulSet.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatefulSetStatus {
     /// currentReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by currentRevision.
     pub current_replicas: Option<i32>,

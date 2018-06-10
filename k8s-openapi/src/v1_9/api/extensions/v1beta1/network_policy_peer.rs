@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.NetworkPolicyPeer
 
 /// DEPRECATED 1.9 - This group version of NetworkPolicyPeer is deprecated by networking/v1/NetworkPolicyPeer.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicyPeer {
     /// IPBlock defines policy on a particular IPBlock
     pub ip_block: Option<::v1_9::api::extensions::v1beta1::IPBlock>,

@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.extensions.v1beta1.FSGroupStrategyOptions
 
 /// FSGroupStrategyOptions defines the strategy type and options used to create the strategy.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct FSGroupStrategyOptions {
     /// Ranges are the allowed ranges of fs groups.  If you would like to force a single fs group then supply a single range with the same start and end.
     pub ranges: Option<Vec<::v1_8::api::extensions::v1beta1::IDRange>>,

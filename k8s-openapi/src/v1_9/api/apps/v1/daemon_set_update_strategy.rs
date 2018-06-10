@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.apps.v1.DaemonSetUpdateStrategy
 
 /// DaemonSetUpdateStrategy is a struct used to control the update strategy for a DaemonSet.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct DaemonSetUpdateStrategy {
     /// Rolling update config params. Present only if type = "RollingUpdate".
     pub rolling_update: Option<::v1_9::api::apps::v1::RollingUpdateDaemonSet>,

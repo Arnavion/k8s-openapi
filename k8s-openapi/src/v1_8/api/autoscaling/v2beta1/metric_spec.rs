@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta1.MetricSpec
 
 /// MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct MetricSpec {
     /// object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
     pub object: Option<::v1_8::api::autoscaling::v2beta1::ObjectMetricSource>,

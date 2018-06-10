@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.NodeSpec
 
 /// NodeSpec describes the attributes that a node is created with.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeSpec {
     /// If specified, the source to get node configuration from The DynamicKubeletConfig feature gate must be enabled for the Kubelet to use this field
     pub config_source: Option<::v1_10::api::core::v1::NodeConfigSource>,

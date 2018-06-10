@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.authentication.v1.UserInfo
 
 /// UserInfo holds the information about the user needed to implement the user.Info interface.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct UserInfo {
     /// Any additional information provided by the authenticator.
     pub extra: Option<::std::collections::BTreeMap<String, Vec<String>>>,

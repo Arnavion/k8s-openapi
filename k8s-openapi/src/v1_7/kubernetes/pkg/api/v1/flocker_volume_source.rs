@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.FlockerVolumeSource
 
 /// Represents a Flocker volume mounted by the Flocker agent. One and only one of datasetName and datasetUUID should be set. Flocker volumes do not support ownership management or SELinux relabeling.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct FlockerVolumeSource {
     /// Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated
     pub dataset_name: Option<String>,

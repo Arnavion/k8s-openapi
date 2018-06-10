@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.autoscaling.v2beta1.ExternalMetricStatus
 
 /// ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ExternalMetricStatus {
     /// currentAverageValue is the current value of metric averaged over autoscaled pods.
     pub current_average_value: Option<::v1_10::apimachinery::pkg::api::resource::Quantity>,

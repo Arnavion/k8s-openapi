@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.ObjectReference
 
 /// ObjectReference contains enough information to let you inspect or modify the referred object.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ObjectReference {
     /// API version of the referent.
     pub api_version: Option<String>,

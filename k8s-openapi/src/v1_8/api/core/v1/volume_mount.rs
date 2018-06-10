@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.VolumeMount
 
 /// VolumeMount describes a mounting of a Volume within a container.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeMount {
     /// Path within the container at which the volume should be mounted.  Must not contain ':'.
     pub mount_path: String,

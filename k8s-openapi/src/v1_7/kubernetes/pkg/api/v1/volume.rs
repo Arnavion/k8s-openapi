@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.Volume
 
 /// Volume represents a named volume in a pod that may be accessed by any container in the pod.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Volume {
     /// AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
     pub aws_elastic_block_store: Option<::v1_7::kubernetes::pkg::api::v1::AWSElasticBlockStoreVolumeSource>,

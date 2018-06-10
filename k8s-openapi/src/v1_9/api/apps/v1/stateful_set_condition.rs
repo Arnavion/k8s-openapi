@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.apps.v1.StatefulSetCondition
 
 /// StatefulSetCondition describes the state of a statefulset at a certain point.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatefulSetCondition {
     /// Last time the condition transitioned from one status to another.
     pub last_transition_time: Option<::v1_9::apimachinery::pkg::apis::meta::v1::Time>,

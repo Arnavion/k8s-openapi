@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.SELinuxOptions
 
 /// SELinuxOptions are the labels to be applied to the container
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct SELinuxOptions {
     /// Level is SELinux level label that applies to the container.
     pub level: Option<String>,

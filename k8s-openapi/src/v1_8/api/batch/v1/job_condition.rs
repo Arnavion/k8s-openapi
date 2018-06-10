@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.batch.v1.JobCondition
 
 /// JobCondition describes current state of a job.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct JobCondition {
     /// Last time the condition was checked.
     pub last_probe_time: Option<::v1_8::apimachinery::pkg::apis::meta::v1::Time>,

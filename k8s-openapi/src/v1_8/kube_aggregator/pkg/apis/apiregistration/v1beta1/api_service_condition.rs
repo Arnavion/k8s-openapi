@@ -1,6 +1,6 @@
 // Generated from definition io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIServiceCondition
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIServiceCondition {
     /// Last time the condition transitioned from one status to another.
     pub last_transition_time: Option<::v1_8::apimachinery::pkg::apis::meta::v1::Time>,

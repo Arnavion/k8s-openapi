@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.admissionregistration.v1alpha1.Rule
 
 /// Rule is a tuple of APIGroups, APIVersion, and Resources.It is recommended to make sure that all the tuple expansions are valid.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Rule {
     /// APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present, the length of the slice must be one. Required.
     pub api_groups: Option<Vec<String>>,

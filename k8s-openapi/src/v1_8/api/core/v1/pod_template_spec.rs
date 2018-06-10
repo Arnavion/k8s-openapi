@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.api.core.v1.PodTemplateSpec
 
 /// PodTemplateSpec describes the data a pod should have when created from a template
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodTemplateSpec {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: Option<::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,

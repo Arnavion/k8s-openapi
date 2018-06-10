@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.api.v1.PersistentVolumeClaimSpec
 
 /// PersistentVolumeClaimSpec describes the common attributes of storage devices and allows a Source for provider-specific attributes
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeClaimSpec {
     /// AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
     pub access_modes: Option<Vec<String>>,

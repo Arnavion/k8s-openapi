@@ -1,7 +1,7 @@
 // Generated from definition io.k8s.kubernetes.pkg.apis.batch.v1.JobSpec
 
 /// JobSpec describes how the job execution will look like.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct JobSpec {
     /// Optional duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
     pub active_deadline_seconds: Option<i64>,
