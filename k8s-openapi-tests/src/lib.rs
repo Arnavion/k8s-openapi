@@ -8,6 +8,9 @@ extern crate serde;
 extern crate serde_json;
 extern crate serde_yaml;
 
+#[cfg(windows)] #[path = "client_winapi.rs"] mod client;
+#[cfg(not(windows))] #[path = "client_openssl.rs"] mod client;
+
 struct Error(Box<std::error::Error>, backtrace::Backtrace);
 
 impl<E> From<E> for Error where E: Into<Box<std::error::Error>> {
@@ -141,33 +144,7 @@ impl Client {
 				return Err(format!("malformed kubeconfig client-key {:#?}", client_key).into());
 			};
 
-			let openssl = std::env::var_os("OPENSSL").unwrap_or("openssl".into());
-
-			let output =
-				std::process::Command::new(openssl)
-				.arg("pkcs12")
-				.arg("-export")
-				.arg("-inkey").arg(client_key)
-				.arg("-in").arg(client_certificate)
-				.arg("-passout").arg("pass:")
-				.output()?;
-			if !output.status.success() {
-				eprintln!("stdout:");
-				eprintln!("{}", match std::str::from_utf8(&output.stdout) {
-					Ok(stdout) => stdout,
-					Err(_) => "<binary data>",
-				});
-
-				eprintln!("stderr:");
-				eprintln!("{}", match std::str::from_utf8(&output.stderr) {
-					Ok(stderr) => stderr,
-					Err(_) => "<binary data>",
-				});
-
-				return Err(format!("openssl exited with {}", output.status).into());
-			}
-
-			output.stdout
+			client::pkcs12(client_certificate.as_ref(), client_key.as_ref())?
 		};
 
 		let mut inner = reqwest::Client::builder();

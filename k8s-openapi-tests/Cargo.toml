@@ -13,6 +13,12 @@ serde = "1.0.x"
 serde_json = "*"
 serde_yaml = "0.7.x"
 
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3.x", features = ["errhandlingapi", "minwindef", "wincrypt"] }
+
+[target.'cfg(not(windows))'.dependencies]
+openssl = "0.10.x"
+
 [features]
 v1_7 = ["k8s-openapi/v1_7"]
 v1_8 = ["k8s-openapi/v1_8"]
