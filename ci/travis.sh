@@ -2,7 +2,7 @@ set -euo pipefail
 
 (
 	cd k8s-openapi-tests
-	cargo build --verbose --tests --features "$FEATURE"
+	cargo test --verbose --no-run --features "$FEATURE"
 ) &
 
 (
