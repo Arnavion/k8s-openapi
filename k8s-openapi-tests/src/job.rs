@@ -1,5 +1,9 @@
 #[test]
 fn create() {
+	#[cfg(feature = "v1_7")] use ::k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
+	#[cfg(feature = "v1_7")] use ::k8s_openapi::v1_7::kubernetes::pkg::apis::batch::v1 as batch;
+	#[cfg(feature = "v1_7")] use ::k8s_openapi::v1_7::apimachinery::pkg::apis::meta::v1 as meta;
+
 	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::api::core::v1 as api;
 	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::api::batch::v1 as batch;
 	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::apimachinery::pkg::apis::meta::v1 as meta;
@@ -16,41 +20,51 @@ fn create() {
 
 	let client = ::Client::new().expect("couldn't create client");
 
+	let image = "alpine".to_string();
+	#[cfg(not(feature = "v1_7"))]
+	let image = Some(image);
+
+	let job_spec = batch::JobSpec {
+		template: api::PodTemplateSpec {
+			spec: Some(api::PodSpec {
+				containers: vec![
+					api::Container {
+						name: "k8s-openapi-tests-create-job".to_string(),
+						image,
+						command: Some(vec![
+							"sh".to_string(),
+							"-c".to_string(),
+							"exit $TEST_ARG".to_string(),
+						]),
+						env: Some(vec![
+							api::EnvVar {
+								name: "TEST_ARG".to_string(),
+								value: Some("5".to_string()),
+								..Default::default()
+							},
+						]),
+						..Default::default()
+					},
+				],
+				restart_policy: Some("Never".to_string()),
+				..Default::default()
+			}),
+			..Default::default()
+		},
+		..Default::default()
+	};
+	#[cfg(not(feature = "v1_7"))]
+	let job_spec = batch::JobSpec {
+		backoff_limit: Some(0),
+		..job_spec
+	};
+
 	let job = batch::Job {
 		metadata: Some(meta::ObjectMeta {
 			name: Some("k8s-openapi-tests-create-job".to_string()),
 			..Default::default()
 		}),
-		spec: Some(batch::JobSpec {
-			backoff_limit: Some(1),
-			template: api::PodTemplateSpec {
-				spec: Some(api::PodSpec {
-					containers: vec![
-						api::Container {
-							name: "k8s-openapi-tests-create-job".to_string(),
-							image: Some("alpine".to_string()),
-							command: Some(vec![
-								"sh".to_string(),
-								"-c".to_string(),
-								"exit $TEST_ARG".to_string(),
-							]),
-							env: Some(vec![
-								api::EnvVar {
-									name: "TEST_ARG".to_string(),
-									value: Some("5".to_string()),
-									..Default::default()
-								},
-							]),
-							..Default::default()
-						},
-					],
-					restart_policy: Some("Never".to_string()),
-					..Default::default()
-				}),
-				..Default::default()
-			},
-			..Default::default()
-		}),
+		spec: Some(job_spec),
 		..Default::default()
 	};
 
@@ -63,7 +77,9 @@ fn create() {
 		.template
 		.spec.expect("couldn't get job spec template spec")
 		.containers.into_iter().next().expect("couldn't get job container spec")
-		.image.expect("couldn't get job container image");
+		.image;
+	#[cfg(not(feature = "v1_7"))]
+	let job_image = job_image.expect("couldn't get job container image");
 	assert_eq!(job_image, "alpine");
 
 	let job_uid =

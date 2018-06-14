@@ -217,8 +217,6 @@ impl Client {
 
 mod deployment;
 
-// 1.7 doesn't have backoffLimit, which complicates the test.
-#[cfg(not(feature = "v1_7"))]
 mod job;
 
 mod pod;
