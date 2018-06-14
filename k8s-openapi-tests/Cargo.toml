@@ -14,7 +14,7 @@ serde_json = "*"
 serde_yaml = "0.7.x"
 
 [target.'cfg(windows)'.dependencies]
-winapi = { version = "0.3.x", features = ["errhandlingapi", "minwindef", "wincrypt"] }
+winapi = { version = "0.3.x", features = ["bcrypt", "errhandlingapi", "minwindef", "ncrypt", "wincrypt", "winnt"] }
 
 [target.'cfg(not(windows))'.dependencies]
 openssl = "0.10.x"

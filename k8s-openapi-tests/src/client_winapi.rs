@@ -22,12 +22,12 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 		};
 
 		let public_key_context = {
-			let mut public_key_context: winapi::um::wincrypt::PCCERT_CONTEXT = ::std::ptr::null_mut();
+			let mut public_key_context = ::std::ptr::null();
 			if winapi::um::wincrypt::CertAddEncodedCertificateToStore(
 				cert_store.0,
 				winapi::um::wincrypt::X509_ASN_ENCODING,
 				public_key.as_ptr(),
-				public_key.len() as winapi::shared::minwindef::DWORD,
+				public_key.len() as _,
 				winapi::um::wincrypt::CERT_STORE_ADD_NEW,
 				&mut public_key_context,
 			) != winapi::shared::minwindef::TRUE {
@@ -38,12 +38,12 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 		};
 
 		let private_key_decoded_buf = {
-			let mut private_key_decoded_buf_len: winapi::shared::minwindef::DWORD = 0;
+			let mut private_key_decoded_buf_len = 0;
 			if winapi::um::wincrypt::CryptDecodeObjectEx(
 				winapi::um::wincrypt::X509_ASN_ENCODING,
 				winapi::um::wincrypt::PKCS_RSA_PRIVATE_KEY,
 				private_key.as_ptr(),
-				private_key.len() as winapi::shared::minwindef::DWORD,
+				private_key.len() as _,
 				0,
 				::std::ptr::null_mut(),
 				::std::ptr::null_mut(),
@@ -53,12 +53,12 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 				Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 			}
 
-			let mut private_key_decoded_buf = vec![0u8; private_key_decoded_buf_len as usize];
+			let mut private_key_decoded_buf = vec![0u8; private_key_decoded_buf_len as _];
 			if winapi::um::wincrypt::CryptDecodeObjectEx(
 				winapi::um::wincrypt::X509_ASN_ENCODING,
 				winapi::um::wincrypt::PKCS_RSA_PRIVATE_KEY,
 				private_key.as_ptr(),
-				private_key.len() as winapi::shared::minwindef::DWORD,
+				private_key.len() as _,
 				0,
 				::std::ptr::null_mut(),
 				private_key_decoded_buf.as_mut_ptr() as _,
@@ -72,44 +72,62 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 		};
 
 		let crypto_provider = {
-			let mut crypto_provider: winapi::um::wincrypt::HCRYPTPROV = 0;
-			if winapi::um::wincrypt::CryptAcquireContextA(
+			let mut crypto_provider = 0;
+			let err = winapi2::um::ncrypt::NCryptOpenStorageProvider(
 				&mut crypto_provider,
-				::std::ptr::null_mut(),
-				b"Microsoft Enhanced Cryptographic Provider v1.0\0".as_ptr() as _,
-				winapi::um::wincrypt::PROV_RSA_FULL,
-				winapi::um::wincrypt::CRYPT_VERIFYCONTEXT | winapi::um::wincrypt::CRYPT_SILENT,
-			) != winapi::shared::minwindef::TRUE
+				winapi2::um::ncrypt::MS_KEY_STORAGE_PROVIDER,
+				0,
+			);
+			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err)
 			{
-				Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
+				Err(format!("0x{:08X}", err))?;
 			}
 
-			CryptoProvider(crypto_provider)
+			NCryptObject(crypto_provider)
+		};
+
+		let private_key = {
+			let mut private_key = 0;
+			let err = winapi2::um::ncrypt::NCryptImportKey(
+				crypto_provider.0,
+				0,
+				winapi2::shared::bcrypt::LEGACY_RSAPRIVATE_BLOB,
+				::std::ptr::null(),
+				&mut private_key,
+				private_key_decoded_buf.as_ptr() as _,
+				private_key_decoded_buf.len() as _,
+				winapi2::um::ncrypt::NCRYPT_SILENT_FLAG,
+			);
+			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err)
+			{
+				Err(format!("0x{:08X}", err))?;
+			}
+
+			NCryptObject(private_key)
 		};
 
 		{
-			let mut private_key: winapi::um::wincrypt::HCRYPTKEY = 0;
-			if winapi::um::wincrypt::CryptImportKey(
-				crypto_provider.0,
-				private_key_decoded_buf.as_ptr(),
-				private_key_decoded_buf.len() as winapi::shared::minwindef::DWORD,
+			let export_policy_property_value = winapi2::um::ncrypt::NCRYPT_ALLOW_PLAINTEXT_EXPORT_FLAG;
+			let err = winapi2::um::ncrypt::NCryptSetProperty(
+				private_key.0,
+				winapi2::um::ncrypt::NCRYPT_EXPORT_POLICY_PROPERTY,
+				&export_policy_property_value as *const _ as _,
+				::std::mem::size_of_val(&export_policy_property_value) as _,
 				0,
-				winapi::um::wincrypt::CRYPT_EXPORTABLE,
-				&mut private_key,
-			) != winapi::shared::minwindef::TRUE
+			);
+			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err)
 			{
-				Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
+				Err(format!("0x{:08X}", err))?;
 			}
-
-			winapi::um::wincrypt::CryptDestroyKey(private_key);
 		}
 
 		let mut private_key_context = winapi::um::wincrypt::CERT_KEY_CONTEXT {
-			cbSize: ::std::mem::size_of::<winapi::um::wincrypt::CERT_KEY_CONTEXT>() as winapi::shared::minwindef::DWORD,
+			cbSize: 0,
 			u: ::std::mem::zeroed(),
-			dwKeySpec: winapi::um::wincrypt::AT_KEYEXCHANGE,
+			dwKeySpec: winapi::um::wincrypt::CERT_NCRYPT_KEY_SPEC,
 		};
-		*private_key_context.u.hCryptProv_mut() = crypto_provider.0;
+		private_key_context.cbSize = ::std::mem::size_of_val(&private_key_context) as _;
+		*private_key_context.u.hNCryptKey_mut() = private_key.0;
 
 		if winapi::um::wincrypt::CertSetCertificateContextProperty(
 			public_key_context.0,
@@ -137,7 +155,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 		}
 
-		let mut result = vec![0u8; private_key_data.cbData as usize];
+		let mut result = vec![0u8; private_key_data.cbData as _];
 
 		private_key_data.pbData = result.as_mut_ptr();
 
@@ -153,6 +171,69 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 		}
 
 		Ok(result)
+	}
+}
+
+mod winapi2 {
+	pub mod shared {
+		pub mod bcrypt {
+			use ::client::winapi::um::winnt::{ LPCWSTR };
+
+			pub const LEGACY_RSAPRIVATE_BLOB: LPCWSTR = b"C\0A\0P\0I\0P\0R\0I\0V\0A\0T\0E\0B\0L\0O\0B\0\0\0" as *const _ as _;
+		}
+	}
+
+	pub mod um {
+		// TODO: https://github.com/retep998/winapi-rs/pull/630
+		pub mod ncrypt {
+			#![allow(non_camel_case_types)]
+
+			use ::client::winapi::shared::bcrypt::{ BCryptBufferDesc };
+			use ::client::winapi::shared::minwindef::{ DWORD, PBYTE };
+			use ::client::winapi::um::winnt::{ LONG, LPCWSTR };
+			use ::client::winapi::um::ncrypt::{ NCRYPT_HANDLE, NCRYPT_KEY_HANDLE, NCRYPT_PROV_HANDLE };
+
+			pub type SECURITY_STATUS = LONG;
+
+			pub const MS_KEY_STORAGE_PROVIDER: LPCWSTR = b"M\0i\0c\0r\0o\0s\0o\0f\0t\0 \0S\0o\0f\0t\0w\0a\0r\0e\0 \0K\0e\0y\0 \0S\0t\0o\0r\0a\0g\0e\0 \0P\0r\0o\0v\0i\0d\0e\0r\0\0\0" as *const _ as _;
+
+			pub type NCryptBufferDesc = BCryptBufferDesc;
+
+			pub const NCRYPT_SILENT_FLAG: DWORD = 0x00000040;
+
+			extern "system" {
+				pub fn NCryptOpenStorageProvider(
+					phProvider: *mut NCRYPT_PROV_HANDLE,
+					pszProviderName: LPCWSTR,
+					dwFlags: DWORD,
+				) -> SECURITY_STATUS;
+			}
+
+			pub const NCRYPT_EXPORT_POLICY_PROPERTY: LPCWSTR = b"E\0x\0p\0o\0r\0t\0 \0P\0o\0l\0i\0c\0y\0\0\0" as *const _ as _;
+
+			pub const NCRYPT_ALLOW_PLAINTEXT_EXPORT_FLAG: DWORD = 0x00000002;
+
+			extern "system" {
+				pub fn NCryptSetProperty(
+					hObject: NCRYPT_HANDLE,
+					pszProperty: LPCWSTR,
+					pbInput: PBYTE,
+					cbInput: DWORD,
+					dwFlags: DWORD,
+				) -> SECURITY_STATUS;
+
+				pub fn NCryptImportKey(
+					hProvider: NCRYPT_PROV_HANDLE,
+					hImportKey: NCRYPT_KEY_HANDLE,
+					pszBlobType: LPCWSTR,
+					pParameterList: *const NCryptBufferDesc,
+					phKey: *mut NCRYPT_KEY_HANDLE,
+					pbData: PBYTE,
+					cbData: DWORD,
+					dwFlags: DWORD,
+				) -> SECURITY_STATUS;
+			}
+		}
 	}
 }
 
@@ -176,12 +257,12 @@ impl Drop for CertContext {
 	}
 }
 
-struct CryptoProvider(winapi::um::wincrypt::HCRYPTPROV);
+struct NCryptObject(winapi::um::ncrypt::NCRYPT_HANDLE);
 
-impl Drop for CryptoProvider {
+impl Drop for NCryptObject {
 	fn drop(&mut self) {
 		unsafe {
-			winapi::um::wincrypt::CryptReleaseContext(self.0, 0);
+			winapi::um::ncrypt::NCryptFreeObject(self.0);
 		}
 	}
 }
