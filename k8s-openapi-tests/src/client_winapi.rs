@@ -48,8 +48,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 				::std::ptr::null_mut(),
 				::std::ptr::null_mut(),
 				&mut private_key_decoded_buf_len,
-			) != winapi::shared::minwindef::TRUE
-			{
+			) != winapi::shared::minwindef::TRUE {
 				Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 			}
 
@@ -63,8 +62,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 				::std::ptr::null_mut(),
 				private_key_decoded_buf.as_mut_ptr() as _,
 				&mut private_key_decoded_buf_len,
-			) != winapi::shared::minwindef::TRUE
-			{
+			) != winapi::shared::minwindef::TRUE {
 				Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 			}
 
@@ -78,8 +76,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 				winapi2::um::ncrypt::MS_KEY_STORAGE_PROVIDER,
 				0,
 			);
-			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err)
-			{
+			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err) {
 				Err(format!("0x{:08X}", err))?;
 			}
 
@@ -98,8 +95,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 				private_key_decoded_buf.len() as _,
 				winapi2::um::ncrypt::NCRYPT_SILENT_FLAG,
 			);
-			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err)
-			{
+			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err) {
 				Err(format!("0x{:08X}", err))?;
 			}
 
@@ -115,8 +111,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 				::std::mem::size_of_val(&export_policy_property_value) as _,
 				0,
 			);
-			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err)
-			{
+			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err) {
 				Err(format!("0x{:08X}", err))?;
 			}
 		}
@@ -134,8 +129,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 			winapi::um::wincrypt::CERT_KEY_CONTEXT_PROP_ID,
 			0,
 			&private_key_context as *const _ as _,
-		) != winapi::shared::minwindef::TRUE
-		{
+		) != winapi::shared::minwindef::TRUE {
 			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 		}
 
@@ -150,8 +144,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 			b"\0\0".as_ptr() as _,
 			::std::ptr::null_mut(),
 			winapi::um::wincrypt::EXPORT_PRIVATE_KEYS,
-		) != winapi::shared::minwindef::TRUE
-		{
+		) != winapi::shared::minwindef::TRUE {
 			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 		}
 
@@ -165,8 +158,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 			b"\0\0".as_ptr() as _,
 			::std::ptr::null_mut(),
 			winapi::um::wincrypt::EXPORT_PRIVATE_KEYS,
-		) != winapi::shared::minwindef::TRUE
-		{
+		) != winapi::shared::minwindef::TRUE {
 			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 		}
 
