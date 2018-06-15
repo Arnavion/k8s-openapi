@@ -8,7 +8,6 @@ publish = false
 backtrace = "0.3.x"
 k8s-openapi = { path = "../k8s-openapi" }
 reqwest = "0.8.x"
-pem = "0.5.x"
 serde = "1.0.x"
 serde_json = "*"
 serde_yaml = "0.7.x"

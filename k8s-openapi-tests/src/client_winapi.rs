@@ -2,15 +2,9 @@ extern crate winapi;
 
 pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::Path) -> Result<Vec<u8>, ::Error> {
 	unsafe {
-		let public_key = {
-			let public_key = ::std::fs::read(public_key)?;
-			::pem::parse(public_key)?.contents
-		};
+		let public_key = parse_pem(public_key)?;
 
-		let private_key = {
-			let private_key = ::std::fs::read(private_key)?;
-			::pem::parse(private_key)?.contents
-		};
+		let private_key = parse_pem(private_key)?;
 
 		let cert_store = {
 			let cert_store = winapi::um::wincrypt::CertOpenStore(winapi::um::wincrypt::CERT_STORE_PROV_MEMORY, 0, 0, 0, ::std::ptr::null());
@@ -164,6 +158,44 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 		}
 
 		result.resize(private_key_data.cbData as _, 0);
+
+		Ok(result)
+	}
+}
+
+pub(crate) fn x509_from_pem(path: &::std::path::Path) -> Result<Vec<u8>, ::Error> {
+	parse_pem(path)
+}
+
+fn parse_pem(path: &::std::path::Path) -> Result<Vec<u8>, ::Error> {
+	unsafe {
+		let buf = ::std::fs::read(path)?;
+
+		let mut result_len = 0;
+		if winapi::um::wincrypt::CryptStringToBinaryA(
+			buf.as_ptr() as _,
+			buf.len() as _,
+			winapi::um::wincrypt::CRYPT_STRING_BASE64HEADER,
+			::std::ptr::null_mut(),
+			&mut result_len,
+			::std::ptr::null_mut(),
+			::std::ptr::null_mut(),
+		) != winapi::shared::minwindef::TRUE {
+			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
+		}
+
+		let mut result = vec![0u8; result_len as _];
+		if winapi::um::wincrypt::CryptStringToBinaryA(
+			buf.as_ptr() as _,
+			buf.len() as _,
+			winapi::um::wincrypt::CRYPT_STRING_BASE64HEADER,
+			result.as_mut_ptr(),
+			&mut result_len,
+			::std::ptr::null_mut(),
+			::std::ptr::null_mut(),
+		) != winapi::shared::minwindef::TRUE {
+			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
+		}
 
 		Ok(result)
 	}

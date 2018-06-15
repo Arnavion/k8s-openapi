@@ -9,3 +9,8 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 
 	Ok(openssl::pkcs12::Pkcs12::builder().build("", "admin", &private_key, &public_key)?.to_der()?)
 }
+
+pub(crate) fn x509_from_pem(path: &::std::path::Path) -> Result<Vec<u8>, ::Error> {
+	let buf = ::std::fs::read(path)?;
+	Ok(openssl::x509::X509::from_pem(&buf)?.to_der()?)
+}

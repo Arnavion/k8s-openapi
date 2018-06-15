@@ -2,7 +2,6 @@
 
 extern crate backtrace;
 extern crate k8s_openapi;
-extern crate pem;
 extern crate reqwest;
 extern crate serde;
 extern crate serde_json;
@@ -84,8 +83,7 @@ impl Client {
 				return Err(format!("malformed kubeconfig certificate-authority {:#?}", certificate_authority).into());
 			};
 
-			let certificate_authority = std::fs::read(certificate_authority)?;
-			pem::parse(certificate_authority)?.contents
+			client::x509_from_pem(certificate_authority.as_ref())?
 		};
 
 		let server = {
