@@ -88,11 +88,10 @@ fn create() {
 		.uid.expect("couldn't get job uid");
 
 	// Wait for job to fail
-	let job_get_path = "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job";
+	let job_get_delete_path = "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job";
 
 	loop {
-		let job: batch::Job = client.get(job_get_path).expect("couldn't get job");
-		println!("{:#?}", job);
+		let job: batch::Job = client.get(job_get_delete_path).expect("couldn't get job");
 
 		let job_status =
 			job
@@ -138,4 +137,6 @@ fn create() {
 		.state.expect("couldn't get job pod container state")
 		.terminated.expect("couldn't get job pod container termination info");
 	assert_eq!(job_pod_container_state_terminated.exit_code, 5);
+
+	client.delete(job_get_delete_path).expect("couldn't delete job");
 }

@@ -211,6 +211,33 @@ impl Client {
 
 		Ok(response.json()?)
 	}
+
+	fn delete(&self, path: &str) -> Result<(), Error> {
+		let mut url = self.server.clone();
+		url.push_str(path);
+
+		let mut response =
+			self.inner
+			.delete(&url)
+			.header(reqwest::header::Accept::json())
+			.send()?;
+
+		let status = response.status();
+		if status != reqwest::StatusCode::Ok {
+			Err(format!("{} {}", status.to_string(), response.text()?))?;
+		}
+
+		match response.headers().get() {
+			Some(reqwest::header::ContentType(mime)) if *mime == reqwest::mime::APPLICATION_JSON =>
+				(),
+			Some(reqwest::header::ContentType(mime)) =>
+				Err(format!("Unexpected Content-Type header: {}", mime))?,
+			None =>
+				Err("No Content-Type header")?,
+		}
+
+		Ok(())
+	}
 }
 
 mod deployment;
