@@ -65,6 +65,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 			) != winapi::shared::minwindef::TRUE {
 				Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 			}
+			private_key_decoded_buf.resize(private_key_decoded_buf_len as _, 0);
 
 			private_key_decoded_buf
 		};
@@ -161,6 +162,8 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 		) != winapi::shared::minwindef::TRUE {
 			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 		}
+
+		result.resize(private_key_data.cbData as _, 0);
 
 		Ok(result)
 	}
