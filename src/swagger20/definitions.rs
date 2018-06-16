@@ -168,6 +168,7 @@ pub enum StringFormat {
 
 #[derive(Debug)]
 pub enum Type {
+	Any, // Never parsed from a spec. Used only to support RawExtension.
 	Array { items: Box<Schema> },
 	Boolean,
 	Integer { format: IntegerFormat },

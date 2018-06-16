@@ -184,6 +184,35 @@ impl Client {
 		Ok(response.json()?)
 	}
 
+	fn watch<T>(&self, path: &str) -> Result<impl Iterator<Item = Result<T, Error>>, Error> where for<'de> T: serde::Deserialize<'de> {
+		let mut url = self.server.clone();
+		url.push_str(path);
+
+		let response =
+			self.inner
+			.get(&url)
+			.header(reqwest::header::Accept::json())
+			.send()?;
+
+		let status = response.status();
+		if status != reqwest::StatusCode::Ok {
+			Err(status.to_string())?;
+		}
+
+		match response.headers().get() {
+			Some(reqwest::header::ContentType(mime)) if *mime == reqwest::mime::APPLICATION_JSON =>
+				(),
+			Some(reqwest::header::ContentType(mime)) =>
+				Err(format!("Unexpected Content-Type header: {}", mime))?,
+			None =>
+				Err("No Content-Type header")?,
+		}
+
+		let response = std::io::BufReader::new(response);
+		let lines = std::io::BufRead::lines(response);
+		Ok(lines.map(|line| Ok(serde_json::from_str(&line?)?)))
+	}
+
 	fn post<T>(&self, path: &str, object: &T) -> Result<T, Error> where T: serde::Serialize, for<'de> T: serde::Deserialize<'de> {
 		let mut url = self.server.clone();
 		url.push_str(path);
@@ -247,3 +276,5 @@ mod job;
 mod pod;
 
 mod special_idents;
+
+mod watch_event;

@@ -109,7 +109,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 
 	info!("Generating types...");
 
-	for (definition_path, definition) in spec.definitions {
+	for (definition_path, mut definition) in spec.definitions {
 		trace!("Working on {} ...", definition_path);
 
 		if let swagger20::SchemaKind::Ref(_) = definition.kind {
@@ -130,6 +130,16 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 			for line in get_comment_text(&description) {
 				writeln!(file, "{}", line)?;
 			}
+		}
+
+		if &*definition_path == "io.k8s.apimachinery.pkg.runtime.RawExtension" {
+			// The spec says that `RawExtension` is an object with a property `raw` that's a byte-formatted string.
+			// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
+			// The value of that field is itself a JSON-serialized value. For example, a `WatchEvent` of `Pod`s has the `Pod` object serialized as
+			// the value of the `WatchEvent::object` property.
+			//
+			// Thus `RawExtension` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
+			definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
 		}
 
 		match definition.kind {
@@ -544,6 +554,8 @@ fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec
 		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
 
 		swagger20::SchemaKind::Ref(ref ref_path) => get_fully_qualified_type_name(ref_path, replace_namespaces, mod_root).into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => "::serde_json::Value".into(),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("Vec<{}>", get_rust_type(&items.kind, replace_namespaces, mod_root)).into(),
 

@@ -1,6 +1,7 @@
 extern crate base64;
 extern crate chrono;
 extern crate serde;
+extern crate serde_json;
 
 /// A wrapper around a list of bytes.
 ///
