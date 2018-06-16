@@ -105,10 +105,10 @@ impl ::serde::Serialize for ExternalMetricStatus {
         let mut state = serializer.serialize_struct(
             "ExternalMetricStatus",
             0 +
-            (if self.current_average_value.is_some() { 1 } else { 0 }) +
+            self.current_average_value.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.metric_selector.is_some() { 1 } else { 0 }),
+            self.metric_selector.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.current_average_value {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "currentAverageValue", value)?;

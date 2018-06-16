@@ -87,7 +87,7 @@ impl ::serde::Serialize for TCPSocketAction {
         let mut state = serializer.serialize_struct(
             "TCPSocketAction",
             0 +
-            (if self.host.is_some() { 1 } else { 0 }) +
+            self.host.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.host {

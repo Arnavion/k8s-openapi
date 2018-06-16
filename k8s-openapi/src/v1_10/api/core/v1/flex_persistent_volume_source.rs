@@ -115,10 +115,10 @@ impl ::serde::Serialize for FlexPersistentVolumeSource {
             "FlexPersistentVolumeSource",
             0 +
             1 +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
-            (if self.options.is_some() { 1 } else { 0 }) +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
-            (if self.secret_ref.is_some() { 1 } else { 0 }),
+            self.fs_type.as_ref().map_or(0, |_| 1) +
+            self.options.as_ref().map_or(0, |_| 1) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
+            self.secret_ref.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "driver", &self.driver)?;
         if let Some(value) = &self.fs_type {

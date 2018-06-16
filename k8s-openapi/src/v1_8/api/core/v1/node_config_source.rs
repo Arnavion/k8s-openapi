@@ -95,9 +95,9 @@ impl ::serde::Serialize for NodeConfigSource {
         let mut state = serializer.serialize_struct(
             "NodeConfigSource",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
-            (if self.config_map_ref.is_some() { 1 } else { 0 }) +
-            (if self.kind.is_some() { 1 } else { 0 }),
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.config_map_ref.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;

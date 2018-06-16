@@ -96,9 +96,9 @@ impl ::serde::Serialize for Affinity {
         let mut state = serializer.serialize_struct(
             "Affinity",
             0 +
-            (if self.node_affinity.is_some() { 1 } else { 0 }) +
-            (if self.pod_affinity.is_some() { 1 } else { 0 }) +
-            (if self.pod_anti_affinity.is_some() { 1 } else { 0 }),
+            self.node_affinity.as_ref().map_or(0, |_| 1) +
+            self.pod_affinity.as_ref().map_or(0, |_| 1) +
+            self.pod_anti_affinity.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.node_affinity {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeAffinity", value)?;

@@ -87,8 +87,8 @@ impl ::serde::Serialize for LabelSelector {
         let mut state = serializer.serialize_struct(
             "LabelSelector",
             0 +
-            (if self.match_expressions.is_some() { 1 } else { 0 }) +
-            (if self.match_labels.is_some() { 1 } else { 0 }),
+            self.match_expressions.as_ref().map_or(0, |_| 1) +
+            self.match_labels.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.match_expressions {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "matchExpressions", value)?;

@@ -87,8 +87,8 @@ impl ::serde::Serialize for EventSource {
         let mut state = serializer.serialize_struct(
             "EventSource",
             0 +
-            (if self.component.is_some() { 1 } else { 0 }) +
-            (if self.host.is_some() { 1 } else { 0 }),
+            self.component.as_ref().map_or(0, |_| 1) +
+            self.host.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.component {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "component", value)?;

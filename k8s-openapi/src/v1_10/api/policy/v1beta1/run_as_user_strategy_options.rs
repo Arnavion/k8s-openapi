@@ -87,7 +87,7 @@ impl ::serde::Serialize for RunAsUserStrategyOptions {
         let mut state = serializer.serialize_struct(
             "RunAsUserStrategyOptions",
             0 +
-            (if self.ranges.is_some() { 1 } else { 0 }) +
+            self.ranges.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.ranges {

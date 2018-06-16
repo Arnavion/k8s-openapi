@@ -97,8 +97,8 @@ impl ::serde::Serialize for ResourceMetricSource {
             "ResourceMetricSource",
             0 +
             1 +
-            (if self.target_average_utilization.is_some() { 1 } else { 0 }) +
-            (if self.target_average_value.is_some() { 1 } else { 0 }),
+            self.target_average_utilization.as_ref().map_or(0, |_| 1) +
+            self.target_average_value.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.target_average_utilization {

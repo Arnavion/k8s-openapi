@@ -96,9 +96,9 @@ impl ::serde::Serialize for EnvFromSource {
         let mut state = serializer.serialize_struct(
             "EnvFromSource",
             0 +
-            (if self.config_map_ref.is_some() { 1 } else { 0 }) +
-            (if self.prefix.is_some() { 1 } else { 0 }) +
-            (if self.secret_ref.is_some() { 1 } else { 0 }),
+            self.config_map_ref.as_ref().map_or(0, |_| 1) +
+            self.prefix.as_ref().map_or(0, |_| 1) +
+            self.secret_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.config_map_ref {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "configMapRef", value)?;

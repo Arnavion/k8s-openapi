@@ -86,8 +86,8 @@ impl ::serde::Serialize for NetworkPolicyPort {
         let mut state = serializer.serialize_struct(
             "NetworkPolicyPort",
             0 +
-            (if self.port.is_some() { 1 } else { 0 }) +
-            (if self.protocol.is_some() { 1 } else { 0 }),
+            self.port.as_ref().map_or(0, |_| 1) +
+            self.protocol.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.port {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "port", value)?;

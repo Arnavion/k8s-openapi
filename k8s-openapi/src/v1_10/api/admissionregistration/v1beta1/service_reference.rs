@@ -98,7 +98,7 @@ impl ::serde::Serialize for ServiceReference {
             0 +
             1 +
             1 +
-            (if self.path.is_some() { 1 } else { 0 }),
+            self.path.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", &self.namespace)?;

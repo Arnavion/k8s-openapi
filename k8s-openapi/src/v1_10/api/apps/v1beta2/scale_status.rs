@@ -97,8 +97,8 @@ impl ::serde::Serialize for ScaleStatus {
             "ScaleStatus",
             0 +
             1 +
-            (if self.selector.is_some() { 1 } else { 0 }) +
-            (if self.target_selector.is_some() { 1 } else { 0 }),
+            self.selector.as_ref().map_or(0, |_| 1) +
+            self.target_selector.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &self.replicas)?;
         if let Some(value) = &self.selector {

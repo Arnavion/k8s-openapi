@@ -150,15 +150,15 @@ impl ::serde::Serialize for APIResource {
         let mut state = serializer.serialize_struct(
             "APIResource",
             0 +
-            (if self.categories.is_some() { 1 } else { 0 }) +
-            (if self.group.is_some() { 1 } else { 0 }) +
+            self.categories.as_ref().map_or(0, |_| 1) +
+            self.group.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
             1 +
-            (if self.short_names.is_some() { 1 } else { 0 }) +
+            self.short_names.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.version.is_some() { 1 } else { 0 }),
+            self.version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.categories {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "categories", value)?;

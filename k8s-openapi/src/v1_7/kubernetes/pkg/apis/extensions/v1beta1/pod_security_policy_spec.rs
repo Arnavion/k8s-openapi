@@ -195,20 +195,20 @@ impl ::serde::Serialize for PodSecurityPolicySpec {
         let mut state = serializer.serialize_struct(
             "PodSecurityPolicySpec",
             0 +
-            (if self.allowed_capabilities.is_some() { 1 } else { 0 }) +
-            (if self.default_add_capabilities.is_some() { 1 } else { 0 }) +
+            self.allowed_capabilities.as_ref().map_or(0, |_| 1) +
+            self.default_add_capabilities.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.host_ipc.is_some() { 1 } else { 0 }) +
-            (if self.host_network.is_some() { 1 } else { 0 }) +
-            (if self.host_pid.is_some() { 1 } else { 0 }) +
-            (if self.host_ports.is_some() { 1 } else { 0 }) +
-            (if self.privileged.is_some() { 1 } else { 0 }) +
-            (if self.read_only_root_filesystem.is_some() { 1 } else { 0 }) +
-            (if self.required_drop_capabilities.is_some() { 1 } else { 0 }) +
+            self.host_ipc.as_ref().map_or(0, |_| 1) +
+            self.host_network.as_ref().map_or(0, |_| 1) +
+            self.host_pid.as_ref().map_or(0, |_| 1) +
+            self.host_ports.as_ref().map_or(0, |_| 1) +
+            self.privileged.as_ref().map_or(0, |_| 1) +
+            self.read_only_root_filesystem.as_ref().map_or(0, |_| 1) +
+            self.required_drop_capabilities.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
             1 +
-            (if self.volumes.is_some() { 1 } else { 0 }),
+            self.volumes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.allowed_capabilities {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedCapabilities", value)?;

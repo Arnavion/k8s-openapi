@@ -87,8 +87,8 @@ impl ::serde::Serialize for ResourceQuotaStatus {
         let mut state = serializer.serialize_struct(
             "ResourceQuotaStatus",
             0 +
-            (if self.hard.is_some() { 1 } else { 0 }) +
-            (if self.used.is_some() { 1 } else { 0 }),
+            self.hard.as_ref().map_or(0, |_| 1) +
+            self.used.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hard {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "hard", value)?;

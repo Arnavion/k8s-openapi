@@ -78,7 +78,7 @@ impl ::serde::Serialize for TokenReviewSpec {
         let mut state = serializer.serialize_struct(
             "TokenReviewSpec",
             0 +
-            (if self.token.is_some() { 1 } else { 0 }),
+            self.token.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.token {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "token", value)?;

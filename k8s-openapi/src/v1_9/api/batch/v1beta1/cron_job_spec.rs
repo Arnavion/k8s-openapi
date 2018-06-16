@@ -132,13 +132,13 @@ impl ::serde::Serialize for CronJobSpec {
         let mut state = serializer.serialize_struct(
             "CronJobSpec",
             0 +
-            (if self.concurrency_policy.is_some() { 1 } else { 0 }) +
-            (if self.failed_jobs_history_limit.is_some() { 1 } else { 0 }) +
+            self.concurrency_policy.as_ref().map_or(0, |_| 1) +
+            self.failed_jobs_history_limit.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.starting_deadline_seconds.is_some() { 1 } else { 0 }) +
-            (if self.successful_jobs_history_limit.is_some() { 1 } else { 0 }) +
-            (if self.suspend.is_some() { 1 } else { 0 }),
+            self.starting_deadline_seconds.as_ref().map_or(0, |_| 1) +
+            self.successful_jobs_history_limit.as_ref().map_or(0, |_| 1) +
+            self.suspend.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.concurrency_policy {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "concurrencyPolicy", value)?;

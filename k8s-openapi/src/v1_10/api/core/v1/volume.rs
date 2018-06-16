@@ -321,34 +321,34 @@ impl ::serde::Serialize for Volume {
         let mut state = serializer.serialize_struct(
             "Volume",
             0 +
-            (if self.aws_elastic_block_store.is_some() { 1 } else { 0 }) +
-            (if self.azure_disk.is_some() { 1 } else { 0 }) +
-            (if self.azure_file.is_some() { 1 } else { 0 }) +
-            (if self.cephfs.is_some() { 1 } else { 0 }) +
-            (if self.cinder.is_some() { 1 } else { 0 }) +
-            (if self.config_map.is_some() { 1 } else { 0 }) +
-            (if self.downward_api.is_some() { 1 } else { 0 }) +
-            (if self.empty_dir.is_some() { 1 } else { 0 }) +
-            (if self.fc.is_some() { 1 } else { 0 }) +
-            (if self.flex_volume.is_some() { 1 } else { 0 }) +
-            (if self.flocker.is_some() { 1 } else { 0 }) +
-            (if self.gce_persistent_disk.is_some() { 1 } else { 0 }) +
-            (if self.git_repo.is_some() { 1 } else { 0 }) +
-            (if self.glusterfs.is_some() { 1 } else { 0 }) +
-            (if self.host_path.is_some() { 1 } else { 0 }) +
-            (if self.iscsi.is_some() { 1 } else { 0 }) +
+            self.aws_elastic_block_store.as_ref().map_or(0, |_| 1) +
+            self.azure_disk.as_ref().map_or(0, |_| 1) +
+            self.azure_file.as_ref().map_or(0, |_| 1) +
+            self.cephfs.as_ref().map_or(0, |_| 1) +
+            self.cinder.as_ref().map_or(0, |_| 1) +
+            self.config_map.as_ref().map_or(0, |_| 1) +
+            self.downward_api.as_ref().map_or(0, |_| 1) +
+            self.empty_dir.as_ref().map_or(0, |_| 1) +
+            self.fc.as_ref().map_or(0, |_| 1) +
+            self.flex_volume.as_ref().map_or(0, |_| 1) +
+            self.flocker.as_ref().map_or(0, |_| 1) +
+            self.gce_persistent_disk.as_ref().map_or(0, |_| 1) +
+            self.git_repo.as_ref().map_or(0, |_| 1) +
+            self.glusterfs.as_ref().map_or(0, |_| 1) +
+            self.host_path.as_ref().map_or(0, |_| 1) +
+            self.iscsi.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.nfs.is_some() { 1 } else { 0 }) +
-            (if self.persistent_volume_claim.is_some() { 1 } else { 0 }) +
-            (if self.photon_persistent_disk.is_some() { 1 } else { 0 }) +
-            (if self.portworx_volume.is_some() { 1 } else { 0 }) +
-            (if self.projected.is_some() { 1 } else { 0 }) +
-            (if self.quobyte.is_some() { 1 } else { 0 }) +
-            (if self.rbd.is_some() { 1 } else { 0 }) +
-            (if self.scale_io.is_some() { 1 } else { 0 }) +
-            (if self.secret.is_some() { 1 } else { 0 }) +
-            (if self.storageos.is_some() { 1 } else { 0 }) +
-            (if self.vsphere_volume.is_some() { 1 } else { 0 }),
+            self.nfs.as_ref().map_or(0, |_| 1) +
+            self.persistent_volume_claim.as_ref().map_or(0, |_| 1) +
+            self.photon_persistent_disk.as_ref().map_or(0, |_| 1) +
+            self.portworx_volume.as_ref().map_or(0, |_| 1) +
+            self.projected.as_ref().map_or(0, |_| 1) +
+            self.quobyte.as_ref().map_or(0, |_| 1) +
+            self.rbd.as_ref().map_or(0, |_| 1) +
+            self.scale_io.as_ref().map_or(0, |_| 1) +
+            self.secret.as_ref().map_or(0, |_| 1) +
+            self.storageos.as_ref().map_or(0, |_| 1) +
+            self.vsphere_volume.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.aws_elastic_block_store {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "awsElasticBlockStore", value)?;

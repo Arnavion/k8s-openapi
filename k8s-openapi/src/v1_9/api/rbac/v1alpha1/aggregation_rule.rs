@@ -78,7 +78,7 @@ impl ::serde::Serialize for AggregationRule {
         let mut state = serializer.serialize_struct(
             "AggregationRule",
             0 +
-            (if self.cluster_role_selectors.is_some() { 1 } else { 0 }),
+            self.cluster_role_selectors.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.cluster_role_selectors {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterRoleSelectors", value)?;

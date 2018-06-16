@@ -123,11 +123,11 @@ impl ::serde::Serialize for PriorityClass {
         let mut state = serializer.serialize_struct(
             "PriorityClass",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
-            (if self.description.is_some() { 1 } else { 0 }) +
-            (if self.global_default.is_some() { 1 } else { 0 }) +
-            (if self.kind.is_some() { 1 } else { 0 }) +
-            (if self.metadata.is_some() { 1 } else { 0 }) +
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.description.as_ref().map_or(0, |_| 1) +
+            self.global_default.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.metadata.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.api_version {

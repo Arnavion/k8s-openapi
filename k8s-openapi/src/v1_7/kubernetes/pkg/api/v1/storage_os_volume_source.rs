@@ -114,11 +114,11 @@ impl ::serde::Serialize for StorageOSVolumeSource {
         let mut state = serializer.serialize_struct(
             "StorageOSVolumeSource",
             0 +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
-            (if self.secret_ref.is_some() { 1 } else { 0 }) +
-            (if self.volume_name.is_some() { 1 } else { 0 }) +
-            (if self.volume_namespace.is_some() { 1 } else { 0 }),
+            self.fs_type.as_ref().map_or(0, |_| 1) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
+            self.secret_ref.as_ref().map_or(0, |_| 1) +
+            self.volume_name.as_ref().map_or(0, |_| 1) +
+            self.volume_namespace.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;

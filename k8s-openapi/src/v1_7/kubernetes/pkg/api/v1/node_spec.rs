@@ -114,11 +114,11 @@ impl ::serde::Serialize for NodeSpec {
         let mut state = serializer.serialize_struct(
             "NodeSpec",
             0 +
-            (if self.external_id.is_some() { 1 } else { 0 }) +
-            (if self.pod_cidr.is_some() { 1 } else { 0 }) +
-            (if self.provider_id.is_some() { 1 } else { 0 }) +
-            (if self.taints.is_some() { 1 } else { 0 }) +
-            (if self.unschedulable.is_some() { 1 } else { 0 }),
+            self.external_id.as_ref().map_or(0, |_| 1) +
+            self.pod_cidr.as_ref().map_or(0, |_| 1) +
+            self.provider_id.as_ref().map_or(0, |_| 1) +
+            self.taints.as_ref().map_or(0, |_| 1) +
+            self.unschedulable.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.external_id {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "externalID", value)?;

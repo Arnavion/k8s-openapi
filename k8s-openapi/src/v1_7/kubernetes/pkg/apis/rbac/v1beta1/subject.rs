@@ -105,10 +105,10 @@ impl ::serde::Serialize for Subject {
         let mut state = serializer.serialize_struct(
             "Subject",
             0 +
-            (if self.api_group.is_some() { 1 } else { 0 }) +
+            self.api_group.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.namespace.is_some() { 1 } else { 0 }),
+            self.namespace.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_group {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroup", value)?;

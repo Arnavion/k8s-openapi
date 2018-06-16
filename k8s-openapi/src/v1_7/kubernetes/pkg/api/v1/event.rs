@@ -168,17 +168,17 @@ impl ::serde::Serialize for Event {
         let mut state = serializer.serialize_struct(
             "Event",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
-            (if self.count.is_some() { 1 } else { 0 }) +
-            (if self.first_timestamp.is_some() { 1 } else { 0 }) +
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.count.as_ref().map_or(0, |_| 1) +
+            self.first_timestamp.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.kind.is_some() { 1 } else { 0 }) +
-            (if self.last_timestamp.is_some() { 1 } else { 0 }) +
-            (if self.message.is_some() { 1 } else { 0 }) +
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.last_timestamp.as_ref().map_or(0, |_| 1) +
+            self.message.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.reason.is_some() { 1 } else { 0 }) +
-            (if self.source.is_some() { 1 } else { 0 }) +
-            (if self.type_.is_some() { 1 } else { 0 }),
+            self.reason.as_ref().map_or(0, |_| 1) +
+            self.source.as_ref().map_or(0, |_| 1) +
+            self.type_.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;

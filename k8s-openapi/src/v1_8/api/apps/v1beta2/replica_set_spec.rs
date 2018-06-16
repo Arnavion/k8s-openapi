@@ -105,10 +105,10 @@ impl ::serde::Serialize for ReplicaSetSpec {
         let mut state = serializer.serialize_struct(
             "ReplicaSetSpec",
             0 +
-            (if self.min_ready_seconds.is_some() { 1 } else { 0 }) +
-            (if self.replicas.is_some() { 1 } else { 0 }) +
+            self.min_ready_seconds.as_ref().map_or(0, |_| 1) +
+            self.replicas.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.template.is_some() { 1 } else { 0 }),
+            self.template.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.min_ready_seconds {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", value)?;

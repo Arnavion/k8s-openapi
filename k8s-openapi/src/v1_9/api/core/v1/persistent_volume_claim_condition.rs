@@ -121,10 +121,10 @@ impl ::serde::Serialize for PersistentVolumeClaimCondition {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeClaimCondition",
             0 +
-            (if self.last_probe_time.is_some() { 1 } else { 0 }) +
-            (if self.last_transition_time.is_some() { 1 } else { 0 }) +
-            (if self.message.is_some() { 1 } else { 0 }) +
-            (if self.reason.is_some() { 1 } else { 0 }) +
+            self.last_probe_time.as_ref().map_or(0, |_| 1) +
+            self.last_transition_time.as_ref().map_or(0, |_| 1) +
+            self.message.as_ref().map_or(0, |_| 1) +
+            self.reason.as_ref().map_or(0, |_| 1) +
             1 +
             1,
         )?;

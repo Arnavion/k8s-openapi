@@ -141,13 +141,13 @@ impl ::serde::Serialize for CSIPersistentVolumeSource {
         let mut state = serializer.serialize_struct(
             "CSIPersistentVolumeSource",
             0 +
-            (if self.controller_publish_secret_ref.is_some() { 1 } else { 0 }) +
+            self.controller_publish_secret_ref.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
-            (if self.node_publish_secret_ref.is_some() { 1 } else { 0 }) +
-            (if self.node_stage_secret_ref.is_some() { 1 } else { 0 }) +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
-            (if self.volume_attributes.is_some() { 1 } else { 0 }) +
+            self.fs_type.as_ref().map_or(0, |_| 1) +
+            self.node_publish_secret_ref.as_ref().map_or(0, |_| 1) +
+            self.node_stage_secret_ref.as_ref().map_or(0, |_| 1) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
+            self.volume_attributes.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.controller_publish_secret_ref {

@@ -87,8 +87,8 @@ impl ::serde::Serialize for SupplementalGroupsStrategyOptions {
         let mut state = serializer.serialize_struct(
             "SupplementalGroupsStrategyOptions",
             0 +
-            (if self.ranges.is_some() { 1 } else { 0 }) +
-            (if self.rule.is_some() { 1 } else { 0 }),
+            self.ranges.as_ref().map_or(0, |_| 1) +
+            self.rule.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ranges {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", value)?;

@@ -141,14 +141,14 @@ impl ::serde::Serialize for RBDPersistentVolumeSource {
         let mut state = serializer.serialize_struct(
             "RBDPersistentVolumeSource",
             0 +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
+            self.fs_type.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.keyring.is_some() { 1 } else { 0 }) +
+            self.keyring.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.pool.is_some() { 1 } else { 0 }) +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
-            (if self.secret_ref.is_some() { 1 } else { 0 }) +
-            (if self.user.is_some() { 1 } else { 0 }),
+            self.pool.as_ref().map_or(0, |_| 1) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
+            self.secret_ref.as_ref().map_or(0, |_| 1) +
+            self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;

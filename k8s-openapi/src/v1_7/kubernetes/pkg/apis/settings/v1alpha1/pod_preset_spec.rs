@@ -114,11 +114,11 @@ impl ::serde::Serialize for PodPresetSpec {
         let mut state = serializer.serialize_struct(
             "PodPresetSpec",
             0 +
-            (if self.env.is_some() { 1 } else { 0 }) +
-            (if self.env_from.is_some() { 1 } else { 0 }) +
-            (if self.selector.is_some() { 1 } else { 0 }) +
-            (if self.volume_mounts.is_some() { 1 } else { 0 }) +
-            (if self.volumes.is_some() { 1 } else { 0 }),
+            self.env.as_ref().map_or(0, |_| 1) +
+            self.env_from.as_ref().map_or(0, |_| 1) +
+            self.selector.as_ref().map_or(0, |_| 1) +
+            self.volume_mounts.as_ref().map_or(0, |_| 1) +
+            self.volumes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.env {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "env", value)?;

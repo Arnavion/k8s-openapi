@@ -96,7 +96,7 @@ impl ::serde::Serialize for CustomResourceSubresourceScale {
         let mut state = serializer.serialize_struct(
             "CustomResourceSubresourceScale",
             0 +
-            (if self.label_selector_path.is_some() { 1 } else { 0 }) +
+            self.label_selector_path.as_ref().map_or(0, |_| 1) +
             1 +
             1,
         )?;

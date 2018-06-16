@@ -132,13 +132,13 @@ impl ::serde::Serialize for StatefulSetStatus {
         let mut state = serializer.serialize_struct(
             "StatefulSetStatus",
             0 +
-            (if self.current_replicas.is_some() { 1 } else { 0 }) +
-            (if self.current_revision.is_some() { 1 } else { 0 }) +
-            (if self.observed_generation.is_some() { 1 } else { 0 }) +
-            (if self.ready_replicas.is_some() { 1 } else { 0 }) +
+            self.current_replicas.as_ref().map_or(0, |_| 1) +
+            self.current_revision.as_ref().map_or(0, |_| 1) +
+            self.observed_generation.as_ref().map_or(0, |_| 1) +
+            self.ready_replicas.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.update_revision.is_some() { 1 } else { 0 }) +
-            (if self.updated_replicas.is_some() { 1 } else { 0 }),
+            self.update_revision.as_ref().map_or(0, |_| 1) +
+            self.updated_replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.current_replicas {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "currentReplicas", value)?;

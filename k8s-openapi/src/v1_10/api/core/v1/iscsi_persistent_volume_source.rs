@@ -168,16 +168,16 @@ impl ::serde::Serialize for ISCSIPersistentVolumeSource {
         let mut state = serializer.serialize_struct(
             "ISCSIPersistentVolumeSource",
             0 +
-            (if self.chap_auth_discovery.is_some() { 1 } else { 0 }) +
-            (if self.chap_auth_session.is_some() { 1 } else { 0 }) +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
-            (if self.initiator_name.is_some() { 1 } else { 0 }) +
+            self.chap_auth_discovery.as_ref().map_or(0, |_| 1) +
+            self.chap_auth_session.as_ref().map_or(0, |_| 1) +
+            self.fs_type.as_ref().map_or(0, |_| 1) +
+            self.initiator_name.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.iscsi_interface.is_some() { 1 } else { 0 }) +
+            self.iscsi_interface.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.portals.is_some() { 1 } else { 0 }) +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
-            (if self.secret_ref.is_some() { 1 } else { 0 }) +
+            self.portals.as_ref().map_or(0, |_| 1) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
+            self.secret_ref.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.chap_auth_discovery {

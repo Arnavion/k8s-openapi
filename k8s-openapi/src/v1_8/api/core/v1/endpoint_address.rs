@@ -105,10 +105,10 @@ impl ::serde::Serialize for EndpointAddress {
         let mut state = serializer.serialize_struct(
             "EndpointAddress",
             0 +
-            (if self.hostname.is_some() { 1 } else { 0 }) +
+            self.hostname.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.node_name.is_some() { 1 } else { 0 }) +
-            (if self.target_ref.is_some() { 1 } else { 0 }),
+            self.node_name.as_ref().map_or(0, |_| 1) +
+            self.target_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hostname {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;

@@ -111,10 +111,10 @@ impl ::serde::Serialize for RuleWithOperations {
         let mut state = serializer.serialize_struct(
             "RuleWithOperations",
             0 +
-            (if self.api_groups.is_some() { 1 } else { 0 }) +
-            (if self.api_versions.is_some() { 1 } else { 0 }) +
-            (if self.operations.is_some() { 1 } else { 0 }) +
-            (if self.resources.is_some() { 1 } else { 0 }),
+            self.api_groups.as_ref().map_or(0, |_| 1) +
+            self.api_versions.as_ref().map_or(0, |_| 1) +
+            self.operations.as_ref().map_or(0, |_| 1) +
+            self.resources.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_groups {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", value)?;

@@ -78,7 +78,7 @@ impl ::serde::Serialize for VolumeNodeAffinity {
         let mut state = serializer.serialize_struct(
             "VolumeNodeAffinity",
             0 +
-            (if self.required.is_some() { 1 } else { 0 }),
+            self.required.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.required {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "required", value)?;

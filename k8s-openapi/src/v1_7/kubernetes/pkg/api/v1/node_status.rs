@@ -159,16 +159,16 @@ impl ::serde::Serialize for NodeStatus {
         let mut state = serializer.serialize_struct(
             "NodeStatus",
             0 +
-            (if self.addresses.is_some() { 1 } else { 0 }) +
-            (if self.allocatable.is_some() { 1 } else { 0 }) +
-            (if self.capacity.is_some() { 1 } else { 0 }) +
-            (if self.conditions.is_some() { 1 } else { 0 }) +
-            (if self.daemon_endpoints.is_some() { 1 } else { 0 }) +
-            (if self.images.is_some() { 1 } else { 0 }) +
-            (if self.node_info.is_some() { 1 } else { 0 }) +
-            (if self.phase.is_some() { 1 } else { 0 }) +
-            (if self.volumes_attached.is_some() { 1 } else { 0 }) +
-            (if self.volumes_in_use.is_some() { 1 } else { 0 }),
+            self.addresses.as_ref().map_or(0, |_| 1) +
+            self.allocatable.as_ref().map_or(0, |_| 1) +
+            self.capacity.as_ref().map_or(0, |_| 1) +
+            self.conditions.as_ref().map_or(0, |_| 1) +
+            self.daemon_endpoints.as_ref().map_or(0, |_| 1) +
+            self.images.as_ref().map_or(0, |_| 1) +
+            self.node_info.as_ref().map_or(0, |_| 1) +
+            self.phase.as_ref().map_or(0, |_| 1) +
+            self.volumes_attached.as_ref().map_or(0, |_| 1) +
+            self.volumes_in_use.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.addresses {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", value)?;

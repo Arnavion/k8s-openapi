@@ -141,14 +141,14 @@ impl ::serde::Serialize for DeploymentStatus {
         let mut state = serializer.serialize_struct(
             "DeploymentStatus",
             0 +
-            (if self.available_replicas.is_some() { 1 } else { 0 }) +
-            (if self.collision_count.is_some() { 1 } else { 0 }) +
-            (if self.conditions.is_some() { 1 } else { 0 }) +
-            (if self.observed_generation.is_some() { 1 } else { 0 }) +
-            (if self.ready_replicas.is_some() { 1 } else { 0 }) +
-            (if self.replicas.is_some() { 1 } else { 0 }) +
-            (if self.unavailable_replicas.is_some() { 1 } else { 0 }) +
-            (if self.updated_replicas.is_some() { 1 } else { 0 }),
+            self.available_replicas.as_ref().map_or(0, |_| 1) +
+            self.collision_count.as_ref().map_or(0, |_| 1) +
+            self.conditions.as_ref().map_or(0, |_| 1) +
+            self.observed_generation.as_ref().map_or(0, |_| 1) +
+            self.ready_replicas.as_ref().map_or(0, |_| 1) +
+            self.replicas.as_ref().map_or(0, |_| 1) +
+            self.unavailable_replicas.as_ref().map_or(0, |_| 1) +
+            self.updated_replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.available_replicas {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", value)?;

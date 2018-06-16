@@ -96,9 +96,9 @@ impl ::serde::Serialize for VolumeProjection {
         let mut state = serializer.serialize_struct(
             "VolumeProjection",
             0 +
-            (if self.config_map.is_some() { 1 } else { 0 }) +
-            (if self.downward_api.is_some() { 1 } else { 0 }) +
-            (if self.secret.is_some() { 1 } else { 0 }),
+            self.config_map.as_ref().map_or(0, |_| 1) +
+            self.downward_api.as_ref().map_or(0, |_| 1) +
+            self.secret.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.config_map {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "configMap", value)?;

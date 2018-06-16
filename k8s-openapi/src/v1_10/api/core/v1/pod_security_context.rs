@@ -127,12 +127,12 @@ impl ::serde::Serialize for PodSecurityContext {
         let mut state = serializer.serialize_struct(
             "PodSecurityContext",
             0 +
-            (if self.fs_group.is_some() { 1 } else { 0 }) +
-            (if self.run_as_group.is_some() { 1 } else { 0 }) +
-            (if self.run_as_non_root.is_some() { 1 } else { 0 }) +
-            (if self.run_as_user.is_some() { 1 } else { 0 }) +
-            (if self.se_linux_options.is_some() { 1 } else { 0 }) +
-            (if self.supplemental_groups.is_some() { 1 } else { 0 }),
+            self.fs_group.as_ref().map_or(0, |_| 1) +
+            self.run_as_group.as_ref().map_or(0, |_| 1) +
+            self.run_as_non_root.as_ref().map_or(0, |_| 1) +
+            self.run_as_user.as_ref().map_or(0, |_| 1) +
+            self.se_linux_options.as_ref().map_or(0, |_| 1) +
+            self.supplemental_groups.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_group {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", value)?;

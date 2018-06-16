@@ -116,10 +116,10 @@ impl ::serde::Serialize for Endpoints {
         let mut state = serializer.serialize_struct(
             "Endpoints",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
-            (if self.kind.is_some() { 1 } else { 0 }) +
-            (if self.metadata.is_some() { 1 } else { 0 }) +
-            (if self.subsets.is_some() { 1 } else { 0 }),
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.metadata.as_ref().map_or(0, |_| 1) +
+            self.subsets.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;

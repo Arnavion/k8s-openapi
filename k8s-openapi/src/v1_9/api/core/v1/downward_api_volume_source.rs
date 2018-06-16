@@ -87,8 +87,8 @@ impl ::serde::Serialize for DownwardAPIVolumeSource {
         let mut state = serializer.serialize_struct(
             "DownwardAPIVolumeSource",
             0 +
-            (if self.default_mode.is_some() { 1 } else { 0 }) +
-            (if self.items.is_some() { 1 } else { 0 }),
+            self.default_mode.as_ref().map_or(0, |_| 1) +
+            self.items.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.default_mode {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", value)?;

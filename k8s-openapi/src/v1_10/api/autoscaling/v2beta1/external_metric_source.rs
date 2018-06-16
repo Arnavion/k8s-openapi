@@ -106,9 +106,9 @@ impl ::serde::Serialize for ExternalMetricSource {
             "ExternalMetricSource",
             0 +
             1 +
-            (if self.metric_selector.is_some() { 1 } else { 0 }) +
-            (if self.target_average_value.is_some() { 1 } else { 0 }) +
-            (if self.target_value.is_some() { 1 } else { 0 }),
+            self.metric_selector.as_ref().map_or(0, |_| 1) +
+            self.target_average_value.as_ref().map_or(0, |_| 1) +
+            self.target_value.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "metricName", &self.metric_name)?;
         if let Some(value) = &self.metric_selector {

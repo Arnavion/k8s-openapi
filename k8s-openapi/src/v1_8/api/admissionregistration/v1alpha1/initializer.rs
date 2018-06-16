@@ -88,7 +88,7 @@ impl ::serde::Serialize for Initializer {
             "Initializer",
             0 +
             1 +
-            (if self.rules.is_some() { 1 } else { 0 }),
+            self.rules.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.rules {

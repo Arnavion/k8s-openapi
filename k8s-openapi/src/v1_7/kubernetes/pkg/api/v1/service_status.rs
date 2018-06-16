@@ -78,7 +78,7 @@ impl ::serde::Serialize for ServiceStatus {
         let mut state = serializer.serialize_struct(
             "ServiceStatus",
             0 +
-            (if self.load_balancer.is_some() { 1 } else { 0 }),
+            self.load_balancer.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.load_balancer {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancer", value)?;

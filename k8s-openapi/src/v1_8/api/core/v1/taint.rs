@@ -107,8 +107,8 @@ impl ::serde::Serialize for Taint {
             0 +
             1 +
             1 +
-            (if self.time_added.is_some() { 1 } else { 0 }) +
-            (if self.value.is_some() { 1 } else { 0 }),
+            self.time_added.as_ref().map_or(0, |_| 1) +
+            self.value.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "effect", &self.effect)?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;

@@ -87,8 +87,8 @@ impl ::serde::Serialize for SelfSubjectAccessReviewSpec {
         let mut state = serializer.serialize_struct(
             "SelfSubjectAccessReviewSpec",
             0 +
-            (if self.non_resource_attributes.is_some() { 1 } else { 0 }) +
-            (if self.resource_attributes.is_some() { 1 } else { 0 }),
+            self.non_resource_attributes.as_ref().map_or(0, |_| 1) +
+            self.resource_attributes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.non_resource_attributes {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceAttributes", value)?;

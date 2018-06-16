@@ -105,7 +105,7 @@ impl ::serde::Serialize for SubjectRulesReviewStatus {
         let mut state = serializer.serialize_struct(
             "SubjectRulesReviewStatus",
             0 +
-            (if self.evaluation_error.is_some() { 1 } else { 0 }) +
+            self.evaluation_error.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
             1,

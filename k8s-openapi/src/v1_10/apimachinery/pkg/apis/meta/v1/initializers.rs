@@ -88,7 +88,7 @@ impl ::serde::Serialize for Initializers {
             "Initializers",
             0 +
             1 +
-            (if self.result.is_some() { 1 } else { 0 }),
+            self.result.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "pending", &self.pending)?;
         if let Some(value) = &self.result {

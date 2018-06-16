@@ -105,10 +105,10 @@ impl ::serde::Serialize for DownwardAPIVolumeFile {
         let mut state = serializer.serialize_struct(
             "DownwardAPIVolumeFile",
             0 +
-            (if self.field_ref.is_some() { 1 } else { 0 }) +
-            (if self.mode.is_some() { 1 } else { 0 }) +
+            self.field_ref.as_ref().map_or(0, |_| 1) +
+            self.mode.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.resource_field_ref.is_some() { 1 } else { 0 }),
+            self.resource_field_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.field_ref {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "fieldRef", value)?;

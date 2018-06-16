@@ -87,8 +87,8 @@ impl ::serde::Serialize for EmptyDirVolumeSource {
         let mut state = serializer.serialize_struct(
             "EmptyDirVolumeSource",
             0 +
-            (if self.medium.is_some() { 1 } else { 0 }) +
-            (if self.size_limit.is_some() { 1 } else { 0 }),
+            self.medium.as_ref().map_or(0, |_| 1) +
+            self.size_limit.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.medium {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "medium", value)?;

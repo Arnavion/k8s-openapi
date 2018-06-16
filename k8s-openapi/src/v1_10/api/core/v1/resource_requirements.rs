@@ -87,8 +87,8 @@ impl ::serde::Serialize for ResourceRequirements {
         let mut state = serializer.serialize_struct(
             "ResourceRequirements",
             0 +
-            (if self.limits.is_some() { 1 } else { 0 }) +
-            (if self.requests.is_some() { 1 } else { 0 }),
+            self.limits.as_ref().map_or(0, |_| 1) +
+            self.requests.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.limits {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "limits", value)?;

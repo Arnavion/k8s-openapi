@@ -88,7 +88,7 @@ impl ::serde::Serialize for IPBlock {
             "IPBlock",
             0 +
             1 +
-            (if self.except.is_some() { 1 } else { 0 }),
+            self.except.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "cidr", &self.cidr)?;
         if let Some(value) = &self.except {

@@ -96,8 +96,8 @@ impl ::serde::Serialize for PortworxVolumeSource {
         let mut state = serializer.serialize_struct(
             "PortworxVolumeSource",
             0 +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
+            self.fs_type.as_ref().map_or(0, |_| 1) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.fs_type {

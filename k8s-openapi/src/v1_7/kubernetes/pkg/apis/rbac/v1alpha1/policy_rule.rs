@@ -114,10 +114,10 @@ impl ::serde::Serialize for PolicyRule {
         let mut state = serializer.serialize_struct(
             "PolicyRule",
             0 +
-            (if self.api_groups.is_some() { 1 } else { 0 }) +
-            (if self.non_resource_ur_ls.is_some() { 1 } else { 0 }) +
-            (if self.resource_names.is_some() { 1 } else { 0 }) +
-            (if self.resources.is_some() { 1 } else { 0 }) +
+            self.api_groups.as_ref().map_or(0, |_| 1) +
+            self.non_resource_ur_ls.as_ref().map_or(0, |_| 1) +
+            self.resource_names.as_ref().map_or(0, |_| 1) +
+            self.resources.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.api_groups {

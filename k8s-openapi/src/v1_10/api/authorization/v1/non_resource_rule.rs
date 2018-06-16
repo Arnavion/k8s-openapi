@@ -87,7 +87,7 @@ impl ::serde::Serialize for NonResourceRule {
         let mut state = serializer.serialize_struct(
             "NonResourceRule",
             0 +
-            (if self.non_resource_ur_ls.is_some() { 1 } else { 0 }) +
+            self.non_resource_ur_ls.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.non_resource_ur_ls {

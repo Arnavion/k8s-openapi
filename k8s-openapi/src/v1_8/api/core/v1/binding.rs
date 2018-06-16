@@ -105,9 +105,9 @@ impl ::serde::Serialize for Binding {
         let mut state = serializer.serialize_struct(
             "Binding",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
-            (if self.kind.is_some() { 1 } else { 0 }) +
-            (if self.metadata.is_some() { 1 } else { 0 }) +
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.metadata.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.api_version {

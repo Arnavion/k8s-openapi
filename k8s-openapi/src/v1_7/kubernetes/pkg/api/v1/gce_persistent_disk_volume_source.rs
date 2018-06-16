@@ -107,10 +107,10 @@ impl ::serde::Serialize for GCEPersistentDiskVolumeSource {
         let mut state = serializer.serialize_struct(
             "GCEPersistentDiskVolumeSource",
             0 +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
-            (if self.partition.is_some() { 1 } else { 0 }) +
+            self.fs_type.as_ref().map_or(0, |_| 1) +
+            self.partition.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.read_only.is_some() { 1 } else { 0 }),
+            self.read_only.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;

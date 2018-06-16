@@ -96,9 +96,9 @@ impl ::serde::Serialize for PodDNSConfig {
         let mut state = serializer.serialize_struct(
             "PodDNSConfig",
             0 +
-            (if self.nameservers.is_some() { 1 } else { 0 }) +
-            (if self.options.is_some() { 1 } else { 0 }) +
-            (if self.searches.is_some() { 1 } else { 0 }),
+            self.nameservers.as_ref().map_or(0, |_| 1) +
+            self.options.as_ref().map_or(0, |_| 1) +
+            self.searches.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.nameservers {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "nameservers", value)?;

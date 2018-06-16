@@ -96,9 +96,9 @@ impl ::serde::Serialize for NetworkPolicyPeer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicyPeer",
             0 +
-            (if self.ip_block.is_some() { 1 } else { 0 }) +
-            (if self.namespace_selector.is_some() { 1 } else { 0 }) +
-            (if self.pod_selector.is_some() { 1 } else { 0 }),
+            self.ip_block.as_ref().map_or(0, |_| 1) +
+            self.namespace_selector.as_ref().map_or(0, |_| 1) +
+            self.pod_selector.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ip_block {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "ipBlock", value)?;

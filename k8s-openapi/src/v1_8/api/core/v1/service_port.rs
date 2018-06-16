@@ -114,11 +114,11 @@ impl ::serde::Serialize for ServicePort {
         let mut state = serializer.serialize_struct(
             "ServicePort",
             0 +
-            (if self.name.is_some() { 1 } else { 0 }) +
-            (if self.node_port.is_some() { 1 } else { 0 }) +
+            self.name.as_ref().map_or(0, |_| 1) +
+            self.node_port.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.protocol.is_some() { 1 } else { 0 }) +
-            (if self.target_port.is_some() { 1 } else { 0 }),
+            self.protocol.as_ref().map_or(0, |_| 1) +
+            self.target_port.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.name {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;

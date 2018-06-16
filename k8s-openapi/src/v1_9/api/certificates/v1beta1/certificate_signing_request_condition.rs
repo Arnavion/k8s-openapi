@@ -104,9 +104,9 @@ impl ::serde::Serialize for CertificateSigningRequestCondition {
         let mut state = serializer.serialize_struct(
             "CertificateSigningRequestCondition",
             0 +
-            (if self.last_update_time.is_some() { 1 } else { 0 }) +
-            (if self.message.is_some() { 1 } else { 0 }) +
-            (if self.reason.is_some() { 1 } else { 0 }) +
+            self.last_update_time.as_ref().map_or(0, |_| 1) +
+            self.message.as_ref().map_or(0, |_| 1) +
+            self.reason.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.last_update_time {

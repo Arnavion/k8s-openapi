@@ -141,13 +141,13 @@ impl ::serde::Serialize for DeploymentSpec {
         let mut state = serializer.serialize_struct(
             "DeploymentSpec",
             0 +
-            (if self.min_ready_seconds.is_some() { 1 } else { 0 }) +
-            (if self.paused.is_some() { 1 } else { 0 }) +
-            (if self.progress_deadline_seconds.is_some() { 1 } else { 0 }) +
-            (if self.replicas.is_some() { 1 } else { 0 }) +
-            (if self.revision_history_limit.is_some() { 1 } else { 0 }) +
+            self.min_ready_seconds.as_ref().map_or(0, |_| 1) +
+            self.paused.as_ref().map_or(0, |_| 1) +
+            self.progress_deadline_seconds.as_ref().map_or(0, |_| 1) +
+            self.replicas.as_ref().map_or(0, |_| 1) +
+            self.revision_history_limit.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.strategy.is_some() { 1 } else { 0 }) +
+            self.strategy.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.min_ready_seconds {

@@ -127,8 +127,8 @@ impl ::serde::Serialize for HorizontalPodAutoscalerStatus {
             1 +
             1 +
             1 +
-            (if self.last_scale_time.is_some() { 1 } else { 0 }) +
-            (if self.observed_generation.is_some() { 1 } else { 0 }),
+            self.last_scale_time.as_ref().map_or(0, |_| 1) +
+            self.observed_generation.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "currentMetrics", &self.current_metrics)?;

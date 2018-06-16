@@ -103,9 +103,9 @@ impl ::serde::Serialize for EndpointSubset {
         let mut state = serializer.serialize_struct(
             "EndpointSubset",
             0 +
-            (if self.addresses.is_some() { 1 } else { 0 }) +
-            (if self.not_ready_addresses.is_some() { 1 } else { 0 }) +
-            (if self.ports.is_some() { 1 } else { 0 }),
+            self.addresses.as_ref().map_or(0, |_| 1) +
+            self.not_ready_addresses.as_ref().map_or(0, |_| 1) +
+            self.ports.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.addresses {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "addresses", value)?;

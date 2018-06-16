@@ -78,7 +78,7 @@ impl ::serde::Serialize for ScaleSpec {
         let mut state = serializer.serialize_struct(
             "ScaleSpec",
             0 +
-            (if self.replicas.is_some() { 1 } else { 0 }),
+            self.replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.replicas {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;

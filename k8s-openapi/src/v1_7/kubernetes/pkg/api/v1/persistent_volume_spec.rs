@@ -303,32 +303,32 @@ impl ::serde::Serialize for PersistentVolumeSpec {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeSpec",
             0 +
-            (if self.access_modes.is_some() { 1 } else { 0 }) +
-            (if self.aws_elastic_block_store.is_some() { 1 } else { 0 }) +
-            (if self.azure_disk.is_some() { 1 } else { 0 }) +
-            (if self.azure_file.is_some() { 1 } else { 0 }) +
-            (if self.capacity.is_some() { 1 } else { 0 }) +
-            (if self.cephfs.is_some() { 1 } else { 0 }) +
-            (if self.cinder.is_some() { 1 } else { 0 }) +
-            (if self.claim_ref.is_some() { 1 } else { 0 }) +
-            (if self.fc.is_some() { 1 } else { 0 }) +
-            (if self.flex_volume.is_some() { 1 } else { 0 }) +
-            (if self.flocker.is_some() { 1 } else { 0 }) +
-            (if self.gce_persistent_disk.is_some() { 1 } else { 0 }) +
-            (if self.glusterfs.is_some() { 1 } else { 0 }) +
-            (if self.host_path.is_some() { 1 } else { 0 }) +
-            (if self.iscsi.is_some() { 1 } else { 0 }) +
-            (if self.local.is_some() { 1 } else { 0 }) +
-            (if self.nfs.is_some() { 1 } else { 0 }) +
-            (if self.persistent_volume_reclaim_policy.is_some() { 1 } else { 0 }) +
-            (if self.photon_persistent_disk.is_some() { 1 } else { 0 }) +
-            (if self.portworx_volume.is_some() { 1 } else { 0 }) +
-            (if self.quobyte.is_some() { 1 } else { 0 }) +
-            (if self.rbd.is_some() { 1 } else { 0 }) +
-            (if self.scale_io.is_some() { 1 } else { 0 }) +
-            (if self.storage_class_name.is_some() { 1 } else { 0 }) +
-            (if self.storageos.is_some() { 1 } else { 0 }) +
-            (if self.vsphere_volume.is_some() { 1 } else { 0 }),
+            self.access_modes.as_ref().map_or(0, |_| 1) +
+            self.aws_elastic_block_store.as_ref().map_or(0, |_| 1) +
+            self.azure_disk.as_ref().map_or(0, |_| 1) +
+            self.azure_file.as_ref().map_or(0, |_| 1) +
+            self.capacity.as_ref().map_or(0, |_| 1) +
+            self.cephfs.as_ref().map_or(0, |_| 1) +
+            self.cinder.as_ref().map_or(0, |_| 1) +
+            self.claim_ref.as_ref().map_or(0, |_| 1) +
+            self.fc.as_ref().map_or(0, |_| 1) +
+            self.flex_volume.as_ref().map_or(0, |_| 1) +
+            self.flocker.as_ref().map_or(0, |_| 1) +
+            self.gce_persistent_disk.as_ref().map_or(0, |_| 1) +
+            self.glusterfs.as_ref().map_or(0, |_| 1) +
+            self.host_path.as_ref().map_or(0, |_| 1) +
+            self.iscsi.as_ref().map_or(0, |_| 1) +
+            self.local.as_ref().map_or(0, |_| 1) +
+            self.nfs.as_ref().map_or(0, |_| 1) +
+            self.persistent_volume_reclaim_policy.as_ref().map_or(0, |_| 1) +
+            self.photon_persistent_disk.as_ref().map_or(0, |_| 1) +
+            self.portworx_volume.as_ref().map_or(0, |_| 1) +
+            self.quobyte.as_ref().map_or(0, |_| 1) +
+            self.rbd.as_ref().map_or(0, |_| 1) +
+            self.scale_io.as_ref().map_or(0, |_| 1) +
+            self.storage_class_name.as_ref().map_or(0, |_| 1) +
+            self.storageos.as_ref().map_or(0, |_| 1) +
+            self.vsphere_volume.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.access_modes {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;

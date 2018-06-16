@@ -87,8 +87,8 @@ impl ::serde::Serialize for PodAntiAffinity {
         let mut state = serializer.serialize_struct(
             "PodAntiAffinity",
             0 +
-            (if self.preferred_during_scheduling_ignored_during_execution.is_some() { 1 } else { 0 }) +
-            (if self.required_during_scheduling_ignored_during_execution.is_some() { 1 } else { 0 }),
+            self.preferred_during_scheduling_ignored_during_execution.as_ref().map_or(0, |_| 1) +
+            self.required_during_scheduling_ignored_during_execution.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.preferred_during_scheduling_ignored_during_execution {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "preferredDuringSchedulingIgnoredDuringExecution", value)?;

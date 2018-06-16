@@ -96,9 +96,9 @@ impl ::serde::Serialize for PersistentVolumeStatus {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeStatus",
             0 +
-            (if self.message.is_some() { 1 } else { 0 }) +
-            (if self.phase.is_some() { 1 } else { 0 }) +
-            (if self.reason.is_some() { 1 } else { 0 }),
+            self.message.as_ref().map_or(0, |_| 1) +
+            self.phase.as_ref().map_or(0, |_| 1) +
+            self.reason.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.message {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;

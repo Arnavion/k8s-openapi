@@ -78,7 +78,7 @@ impl ::serde::Serialize for LoadBalancerStatus {
         let mut state = serializer.serialize_struct(
             "LoadBalancerStatus",
             0 +
-            (if self.ingress.is_some() { 1 } else { 0 }),
+            self.ingress.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ingress {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "ingress", value)?;

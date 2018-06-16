@@ -105,10 +105,10 @@ impl ::serde::Serialize for UserInfo {
         let mut state = serializer.serialize_struct(
             "UserInfo",
             0 +
-            (if self.extra.is_some() { 1 } else { 0 }) +
-            (if self.groups.is_some() { 1 } else { 0 }) +
-            (if self.uid.is_some() { 1 } else { 0 }) +
-            (if self.username.is_some() { 1 } else { 0 }),
+            self.extra.as_ref().map_or(0, |_| 1) +
+            self.groups.as_ref().map_or(0, |_| 1) +
+            self.uid.as_ref().map_or(0, |_| 1) +
+            self.username.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.extra {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;

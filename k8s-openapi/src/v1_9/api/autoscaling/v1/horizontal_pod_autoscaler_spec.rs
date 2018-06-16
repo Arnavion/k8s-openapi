@@ -106,9 +106,9 @@ impl ::serde::Serialize for HorizontalPodAutoscalerSpec {
             "HorizontalPodAutoscalerSpec",
             0 +
             1 +
-            (if self.min_replicas.is_some() { 1 } else { 0 }) +
+            self.min_replicas.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.target_cpu_utilization_percentage.is_some() { 1 } else { 0 }),
+            self.target_cpu_utilization_percentage.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "maxReplicas", &self.max_replicas)?;
         if let Some(value) = &self.min_replicas {

@@ -126,8 +126,8 @@ impl ::serde::Serialize for CustomResourceDefinitionSpec {
             1 +
             1 +
             1 +
-            (if self.subresources.is_some() { 1 } else { 0 }) +
-            (if self.validation.is_some() { 1 } else { 0 }) +
+            self.subresources.as_ref().map_or(0, |_| 1) +
+            self.validation.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "group", &self.group)?;

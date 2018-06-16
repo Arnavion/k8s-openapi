@@ -88,7 +88,7 @@ impl ::serde::Serialize for PersistentVolumeClaimVolumeSource {
             "PersistentVolumeClaimVolumeSource",
             0 +
             1 +
-            (if self.read_only.is_some() { 1 } else { 0 }),
+            self.read_only.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "claimName", &self.claim_name)?;
         if let Some(value) = &self.read_only {

@@ -114,11 +114,11 @@ impl ::serde::Serialize for DaemonSetSpec {
         let mut state = serializer.serialize_struct(
             "DaemonSetSpec",
             0 +
-            (if self.min_ready_seconds.is_some() { 1 } else { 0 }) +
-            (if self.revision_history_limit.is_some() { 1 } else { 0 }) +
+            self.min_ready_seconds.as_ref().map_or(0, |_| 1) +
+            self.revision_history_limit.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.update_strategy.is_some() { 1 } else { 0 }),
+            self.update_strategy.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.min_ready_seconds {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", value)?;

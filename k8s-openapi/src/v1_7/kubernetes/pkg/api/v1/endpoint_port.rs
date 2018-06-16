@@ -96,9 +96,9 @@ impl ::serde::Serialize for EndpointPort {
         let mut state = serializer.serialize_struct(
             "EndpointPort",
             0 +
-            (if self.name.is_some() { 1 } else { 0 }) +
+            self.name.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.protocol.is_some() { 1 } else { 0 }),
+            self.protocol.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.name {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;

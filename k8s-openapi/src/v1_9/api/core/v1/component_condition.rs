@@ -105,8 +105,8 @@ impl ::serde::Serialize for ComponentCondition {
         let mut state = serializer.serialize_struct(
             "ComponentCondition",
             0 +
-            (if self.error.is_some() { 1 } else { 0 }) +
-            (if self.message.is_some() { 1 } else { 0 }) +
+            self.error.as_ref().map_or(0, |_| 1) +
+            self.message.as_ref().map_or(0, |_| 1) +
             1 +
             1,
         )?;

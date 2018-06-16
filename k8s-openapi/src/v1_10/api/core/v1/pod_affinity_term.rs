@@ -96,8 +96,8 @@ impl ::serde::Serialize for PodAffinityTerm {
         let mut state = serializer.serialize_struct(
             "PodAffinityTerm",
             0 +
-            (if self.label_selector.is_some() { 1 } else { 0 }) +
-            (if self.namespaces.is_some() { 1 } else { 0 }) +
+            self.label_selector.as_ref().map_or(0, |_| 1) +
+            self.namespaces.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.label_selector {

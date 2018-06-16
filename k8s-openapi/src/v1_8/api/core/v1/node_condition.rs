@@ -123,10 +123,10 @@ impl ::serde::Serialize for NodeCondition {
         let mut state = serializer.serialize_struct(
             "NodeCondition",
             0 +
-            (if self.last_heartbeat_time.is_some() { 1 } else { 0 }) +
-            (if self.last_transition_time.is_some() { 1 } else { 0 }) +
-            (if self.message.is_some() { 1 } else { 0 }) +
-            (if self.reason.is_some() { 1 } else { 0 }) +
+            self.last_heartbeat_time.as_ref().map_or(0, |_| 1) +
+            self.last_transition_time.as_ref().map_or(0, |_| 1) +
+            self.message.as_ref().map_or(0, |_| 1) +
+            self.reason.as_ref().map_or(0, |_| 1) +
             1 +
             1,
         )?;

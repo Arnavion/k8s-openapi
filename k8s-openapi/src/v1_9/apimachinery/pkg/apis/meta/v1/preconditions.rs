@@ -78,7 +78,7 @@ impl ::serde::Serialize for Preconditions {
         let mut state = serializer.serialize_struct(
             "Preconditions",
             0 +
-            (if self.uid.is_some() { 1 } else { 0 }),
+            self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.uid {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;

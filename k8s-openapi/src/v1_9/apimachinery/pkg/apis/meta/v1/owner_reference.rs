@@ -124,8 +124,8 @@ impl ::serde::Serialize for OwnerReference {
             "OwnerReference",
             0 +
             1 +
-            (if self.block_owner_deletion.is_some() { 1 } else { 0 }) +
-            (if self.controller.is_some() { 1 } else { 0 }) +
+            self.block_owner_deletion.as_ref().map_or(0, |_| 1) +
+            self.controller.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
             1,

@@ -87,8 +87,8 @@ impl ::serde::Serialize for CronJobStatus {
         let mut state = serializer.serialize_struct(
             "CronJobStatus",
             0 +
-            (if self.active.is_some() { 1 } else { 0 }) +
-            (if self.last_schedule_time.is_some() { 1 } else { 0 }),
+            self.active.as_ref().map_or(0, |_| 1) +
+            self.last_schedule_time.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "active", value)?;

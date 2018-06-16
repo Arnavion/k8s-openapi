@@ -96,9 +96,9 @@ impl ::serde::Serialize for EventSeries {
         let mut state = serializer.serialize_struct(
             "EventSeries",
             0 +
-            (if self.count.is_some() { 1 } else { 0 }) +
-            (if self.last_observed_time.is_some() { 1 } else { 0 }) +
-            (if self.state.is_some() { 1 } else { 0 }),
+            self.count.as_ref().map_or(0, |_| 1) +
+            self.last_observed_time.as_ref().map_or(0, |_| 1) +
+            self.state.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.count {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "count", value)?;

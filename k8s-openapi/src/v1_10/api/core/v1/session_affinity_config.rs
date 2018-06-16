@@ -78,7 +78,7 @@ impl ::serde::Serialize for SessionAffinityConfig {
         let mut state = serializer.serialize_struct(
             "SessionAffinityConfig",
             0 +
-            (if self.client_ip.is_some() { 1 } else { 0 }),
+            self.client_ip.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.client_ip {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "clientIP", value)?;

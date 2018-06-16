@@ -86,8 +86,8 @@ impl ::serde::Serialize for CertificateSigningRequestStatus {
         let mut state = serializer.serialize_struct(
             "CertificateSigningRequestStatus",
             0 +
-            (if self.certificate.is_some() { 1 } else { 0 }) +
-            (if self.conditions.is_some() { 1 } else { 0 }),
+            self.certificate.as_ref().map_or(0, |_| 1) +
+            self.conditions.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.certificate {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "certificate", value)?;

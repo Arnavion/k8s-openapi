@@ -78,7 +78,7 @@ impl ::serde::Serialize for ContainerStateRunning {
         let mut state = serializer.serialize_struct(
             "ContainerStateRunning",
             0 +
-            (if self.started_at.is_some() { 1 } else { 0 }),
+            self.started_at.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.started_at {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "startedAt", value)?;

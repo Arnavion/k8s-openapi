@@ -87,7 +87,7 @@ impl ::serde::Serialize for ProjectedVolumeSource {
         let mut state = serializer.serialize_struct(
             "ProjectedVolumeSource",
             0 +
-            (if self.default_mode.is_some() { 1 } else { 0 }) +
+            self.default_mode.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.default_mode {

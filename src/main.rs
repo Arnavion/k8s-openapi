@@ -361,7 +361,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 						write!(file, "            1")?;
 					}
 					else {
-						write!(file, "            (if self.{}.is_some() {{ 1 }} else {{ 0 }})", field_name)?;
+						write!(file, "            self.{}.as_ref().map_or(0, |_| 1)", field_name)?;
 					}
 				}
 				writeln!(file, ",")?;

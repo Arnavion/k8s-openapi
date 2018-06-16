@@ -87,8 +87,8 @@ impl ::serde::Serialize for DaemonSetUpdateStrategy {
         let mut state = serializer.serialize_struct(
             "DaemonSetUpdateStrategy",
             0 +
-            (if self.rolling_update.is_some() { 1 } else { 0 }) +
-            (if self.type_.is_some() { 1 } else { 0 }),
+            self.rolling_update.as_ref().map_or(0, |_| 1) +
+            self.type_.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.rolling_update {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "rollingUpdate", value)?;

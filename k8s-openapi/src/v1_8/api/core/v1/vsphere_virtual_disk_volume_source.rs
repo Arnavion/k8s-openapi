@@ -105,9 +105,9 @@ impl ::serde::Serialize for VsphereVirtualDiskVolumeSource {
         let mut state = serializer.serialize_struct(
             "VsphereVirtualDiskVolumeSource",
             0 +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
-            (if self.storage_policy_id.is_some() { 1 } else { 0 }) +
-            (if self.storage_policy_name.is_some() { 1 } else { 0 }) +
+            self.fs_type.as_ref().map_or(0, |_| 1) +
+            self.storage_policy_id.as_ref().map_or(0, |_| 1) +
+            self.storage_policy_name.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.fs_type {

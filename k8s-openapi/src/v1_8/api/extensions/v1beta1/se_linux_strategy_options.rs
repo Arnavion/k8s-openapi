@@ -88,7 +88,7 @@ impl ::serde::Serialize for SELinuxStrategyOptions {
             "SELinuxStrategyOptions",
             0 +
             1 +
-            (if self.se_linux_options.is_some() { 1 } else { 0 }),
+            self.se_linux_options.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "rule", &self.rule)?;
         if let Some(value) = &self.se_linux_options {

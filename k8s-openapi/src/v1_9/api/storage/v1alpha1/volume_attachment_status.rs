@@ -105,10 +105,10 @@ impl ::serde::Serialize for VolumeAttachmentStatus {
         let mut state = serializer.serialize_struct(
             "VolumeAttachmentStatus",
             0 +
-            (if self.attach_error.is_some() { 1 } else { 0 }) +
+            self.attach_error.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.attachment_metadata.is_some() { 1 } else { 0 }) +
-            (if self.detach_error.is_some() { 1 } else { 0 }),
+            self.attachment_metadata.as_ref().map_or(0, |_| 1) +
+            self.detach_error.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.attach_error {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "attachError", value)?;

@@ -159,16 +159,16 @@ impl ::serde::Serialize for ScaleIOPersistentVolumeSource {
         let mut state = serializer.serialize_struct(
             "ScaleIOPersistentVolumeSource",
             0 +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
+            self.fs_type.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.protection_domain.is_some() { 1 } else { 0 }) +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
+            self.protection_domain.as_ref().map_or(0, |_| 1) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.ssl_enabled.is_some() { 1 } else { 0 }) +
-            (if self.storage_mode.is_some() { 1 } else { 0 }) +
-            (if self.storage_pool.is_some() { 1 } else { 0 }) +
+            self.ssl_enabled.as_ref().map_or(0, |_| 1) +
+            self.storage_mode.as_ref().map_or(0, |_| 1) +
+            self.storage_pool.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.volume_name.is_some() { 1 } else { 0 }),
+            self.volume_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;

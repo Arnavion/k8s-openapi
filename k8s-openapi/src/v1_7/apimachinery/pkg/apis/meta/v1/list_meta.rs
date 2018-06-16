@@ -87,8 +87,8 @@ impl ::serde::Serialize for ListMeta {
         let mut state = serializer.serialize_struct(
             "ListMeta",
             0 +
-            (if self.resource_version.is_some() { 1 } else { 0 }) +
-            (if self.self_link.is_some() { 1 } else { 0 }),
+            self.resource_version.as_ref().map_or(0, |_| 1) +
+            self.self_link.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.resource_version {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;

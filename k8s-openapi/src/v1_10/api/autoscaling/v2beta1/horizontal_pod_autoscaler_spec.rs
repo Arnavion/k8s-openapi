@@ -106,8 +106,8 @@ impl ::serde::Serialize for HorizontalPodAutoscalerSpec {
             "HorizontalPodAutoscalerSpec",
             0 +
             1 +
-            (if self.metrics.is_some() { 1 } else { 0 }) +
-            (if self.min_replicas.is_some() { 1 } else { 0 }) +
+            self.metrics.as_ref().map_or(0, |_| 1) +
+            self.min_replicas.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "maxReplicas", &self.max_replicas)?;

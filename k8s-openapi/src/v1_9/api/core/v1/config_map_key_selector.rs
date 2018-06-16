@@ -97,8 +97,8 @@ impl ::serde::Serialize for ConfigMapKeySelector {
             "ConfigMapKeySelector",
             0 +
             1 +
-            (if self.name.is_some() { 1 } else { 0 }) +
-            (if self.optional.is_some() { 1 } else { 0 }),
+            self.name.as_ref().map_or(0, |_| 1) +
+            self.optional.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
         if let Some(value) = &self.name {

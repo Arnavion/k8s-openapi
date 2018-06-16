@@ -78,7 +78,7 @@ impl ::serde::Serialize for RollingUpdateStatefulSetStrategy {
         let mut state = serializer.serialize_struct(
             "RollingUpdateStatefulSetStrategy",
             0 +
-            (if self.partition.is_some() { 1 } else { 0 }),
+            self.partition.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.partition {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "partition", value)?;

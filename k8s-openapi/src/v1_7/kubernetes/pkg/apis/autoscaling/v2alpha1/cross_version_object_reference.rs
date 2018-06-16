@@ -96,7 +96,7 @@ impl ::serde::Serialize for CrossVersionObjectReference {
         let mut state = serializer.serialize_struct(
             "CrossVersionObjectReference",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
+            self.api_version.as_ref().map_or(0, |_| 1) +
             1 +
             1,
         )?;

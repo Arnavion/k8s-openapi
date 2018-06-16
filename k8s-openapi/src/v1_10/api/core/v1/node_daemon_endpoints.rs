@@ -78,7 +78,7 @@ impl ::serde::Serialize for NodeDaemonEndpoints {
         let mut state = serializer.serialize_struct(
             "NodeDaemonEndpoints",
             0 +
-            (if self.kubelet_endpoint.is_some() { 1 } else { 0 }),
+            self.kubelet_endpoint.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.kubelet_endpoint {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "kubeletEndpoint", value)?;

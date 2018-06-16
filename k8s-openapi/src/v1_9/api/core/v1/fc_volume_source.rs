@@ -114,11 +114,11 @@ impl ::serde::Serialize for FCVolumeSource {
         let mut state = serializer.serialize_struct(
             "FCVolumeSource",
             0 +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
-            (if self.lun.is_some() { 1 } else { 0 }) +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
-            (if self.target_ww_ns.is_some() { 1 } else { 0 }) +
-            (if self.wwids.is_some() { 1 } else { 0 }),
+            self.fs_type.as_ref().map_or(0, |_| 1) +
+            self.lun.as_ref().map_or(0, |_| 1) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
+            self.target_ww_ns.as_ref().map_or(0, |_| 1) +
+            self.wwids.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;

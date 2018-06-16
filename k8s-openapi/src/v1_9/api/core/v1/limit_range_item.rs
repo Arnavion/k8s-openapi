@@ -123,12 +123,12 @@ impl ::serde::Serialize for LimitRangeItem {
         let mut state = serializer.serialize_struct(
             "LimitRangeItem",
             0 +
-            (if self.default.is_some() { 1 } else { 0 }) +
-            (if self.default_request.is_some() { 1 } else { 0 }) +
-            (if self.max.is_some() { 1 } else { 0 }) +
-            (if self.max_limit_request_ratio.is_some() { 1 } else { 0 }) +
-            (if self.min.is_some() { 1 } else { 0 }) +
-            (if self.type_.is_some() { 1 } else { 0 }),
+            self.default.as_ref().map_or(0, |_| 1) +
+            self.default_request.as_ref().map_or(0, |_| 1) +
+            self.max.as_ref().map_or(0, |_| 1) +
+            self.max_limit_request_ratio.as_ref().map_or(0, |_| 1) +
+            self.min.as_ref().map_or(0, |_| 1) +
+            self.type_.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.default {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "default", value)?;

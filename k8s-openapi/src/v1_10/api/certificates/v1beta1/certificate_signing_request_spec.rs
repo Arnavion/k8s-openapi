@@ -124,12 +124,12 @@ impl ::serde::Serialize for CertificateSigningRequestSpec {
         let mut state = serializer.serialize_struct(
             "CertificateSigningRequestSpec",
             0 +
-            (if self.extra.is_some() { 1 } else { 0 }) +
-            (if self.groups.is_some() { 1 } else { 0 }) +
+            self.extra.as_ref().map_or(0, |_| 1) +
+            self.groups.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.uid.is_some() { 1 } else { 0 }) +
-            (if self.usages.is_some() { 1 } else { 0 }) +
-            (if self.username.is_some() { 1 } else { 0 }),
+            self.uid.as_ref().map_or(0, |_| 1) +
+            self.usages.as_ref().map_or(0, |_| 1) +
+            self.username.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.extra {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;

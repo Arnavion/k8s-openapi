@@ -249,26 +249,26 @@ impl ::serde::Serialize for Container {
         let mut state = serializer.serialize_struct(
             "Container",
             0 +
-            (if self.args.is_some() { 1 } else { 0 }) +
-            (if self.command.is_some() { 1 } else { 0 }) +
-            (if self.env.is_some() { 1 } else { 0 }) +
-            (if self.env_from.is_some() { 1 } else { 0 }) +
+            self.args.as_ref().map_or(0, |_| 1) +
+            self.command.as_ref().map_or(0, |_| 1) +
+            self.env.as_ref().map_or(0, |_| 1) +
+            self.env_from.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.image_pull_policy.is_some() { 1 } else { 0 }) +
-            (if self.lifecycle.is_some() { 1 } else { 0 }) +
-            (if self.liveness_probe.is_some() { 1 } else { 0 }) +
+            self.image_pull_policy.as_ref().map_or(0, |_| 1) +
+            self.lifecycle.as_ref().map_or(0, |_| 1) +
+            self.liveness_probe.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.ports.is_some() { 1 } else { 0 }) +
-            (if self.readiness_probe.is_some() { 1 } else { 0 }) +
-            (if self.resources.is_some() { 1 } else { 0 }) +
-            (if self.security_context.is_some() { 1 } else { 0 }) +
-            (if self.stdin.is_some() { 1 } else { 0 }) +
-            (if self.stdin_once.is_some() { 1 } else { 0 }) +
-            (if self.termination_message_path.is_some() { 1 } else { 0 }) +
-            (if self.termination_message_policy.is_some() { 1 } else { 0 }) +
-            (if self.tty.is_some() { 1 } else { 0 }) +
-            (if self.volume_mounts.is_some() { 1 } else { 0 }) +
-            (if self.working_dir.is_some() { 1 } else { 0 }),
+            self.ports.as_ref().map_or(0, |_| 1) +
+            self.readiness_probe.as_ref().map_or(0, |_| 1) +
+            self.resources.as_ref().map_or(0, |_| 1) +
+            self.security_context.as_ref().map_or(0, |_| 1) +
+            self.stdin.as_ref().map_or(0, |_| 1) +
+            self.stdin_once.as_ref().map_or(0, |_| 1) +
+            self.termination_message_path.as_ref().map_or(0, |_| 1) +
+            self.termination_message_policy.as_ref().map_or(0, |_| 1) +
+            self.tty.as_ref().map_or(0, |_| 1) +
+            self.volume_mounts.as_ref().map_or(0, |_| 1) +
+            self.working_dir.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.args {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "args", value)?;

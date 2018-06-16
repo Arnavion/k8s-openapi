@@ -80,7 +80,7 @@ impl ::serde::Serialize for AllowedHostPath {
         let mut state = serializer.serialize_struct(
             "AllowedHostPath",
             0 +
-            (if self.path_prefix.is_some() { 1 } else { 0 }),
+            self.path_prefix.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.path_prefix {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "pathPrefix", value)?;

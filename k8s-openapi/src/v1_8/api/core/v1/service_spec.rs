@@ -186,19 +186,19 @@ impl ::serde::Serialize for ServiceSpec {
         let mut state = serializer.serialize_struct(
             "ServiceSpec",
             0 +
-            (if self.cluster_ip.is_some() { 1 } else { 0 }) +
-            (if self.external_i_ps.is_some() { 1 } else { 0 }) +
-            (if self.external_name.is_some() { 1 } else { 0 }) +
-            (if self.external_traffic_policy.is_some() { 1 } else { 0 }) +
-            (if self.health_check_node_port.is_some() { 1 } else { 0 }) +
-            (if self.load_balancer_ip.is_some() { 1 } else { 0 }) +
-            (if self.load_balancer_source_ranges.is_some() { 1 } else { 0 }) +
-            (if self.ports.is_some() { 1 } else { 0 }) +
-            (if self.publish_not_ready_addresses.is_some() { 1 } else { 0 }) +
-            (if self.selector.is_some() { 1 } else { 0 }) +
-            (if self.session_affinity.is_some() { 1 } else { 0 }) +
-            (if self.session_affinity_config.is_some() { 1 } else { 0 }) +
-            (if self.type_.is_some() { 1 } else { 0 }),
+            self.cluster_ip.as_ref().map_or(0, |_| 1) +
+            self.external_i_ps.as_ref().map_or(0, |_| 1) +
+            self.external_name.as_ref().map_or(0, |_| 1) +
+            self.external_traffic_policy.as_ref().map_or(0, |_| 1) +
+            self.health_check_node_port.as_ref().map_or(0, |_| 1) +
+            self.load_balancer_ip.as_ref().map_or(0, |_| 1) +
+            self.load_balancer_source_ranges.as_ref().map_or(0, |_| 1) +
+            self.ports.as_ref().map_or(0, |_| 1) +
+            self.publish_not_ready_addresses.as_ref().map_or(0, |_| 1) +
+            self.selector.as_ref().map_or(0, |_| 1) +
+            self.session_affinity.as_ref().map_or(0, |_| 1) +
+            self.session_affinity_config.as_ref().map_or(0, |_| 1) +
+            self.type_.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.cluster_ip {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIP", value)?;

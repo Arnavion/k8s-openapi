@@ -141,14 +141,14 @@ impl ::serde::Serialize for ContainerStatus {
         let mut state = serializer.serialize_struct(
             "ContainerStatus",
             0 +
-            (if self.container_id.is_some() { 1 } else { 0 }) +
+            self.container_id.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.last_state.is_some() { 1 } else { 0 }) +
+            self.last_state.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
             1 +
-            (if self.state.is_some() { 1 } else { 0 }),
+            self.state.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.container_id {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "containerID", value)?;

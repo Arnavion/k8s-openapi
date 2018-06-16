@@ -128,7 +128,7 @@ impl ::serde::Serialize for PodDisruptionBudgetStatus {
             1 +
             1 +
             1 +
-            (if self.observed_generation.is_some() { 1 } else { 0 }),
+            self.observed_generation.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "currentHealthy", &self.current_healthy)?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "desiredHealthy", &self.desired_healthy)?;

@@ -86,7 +86,7 @@ impl ::serde::Serialize for NetworkPolicySpec {
         let mut state = serializer.serialize_struct(
             "NetworkPolicySpec",
             0 +
-            (if self.ingress.is_some() { 1 } else { 0 }) +
+            self.ingress.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.ingress {

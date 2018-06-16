@@ -105,10 +105,10 @@ impl ::serde::Serialize for Subject {
         let mut state = serializer.serialize_struct(
             "Subject",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
+            self.api_version.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.namespace.is_some() { 1 } else { 0 }),
+            self.namespace.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;

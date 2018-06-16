@@ -145,10 +145,10 @@ impl ::serde::Serialize for Webhook {
             "Webhook",
             0 +
             1 +
-            (if self.failure_policy.is_some() { 1 } else { 0 }) +
+            self.failure_policy.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.namespace_selector.is_some() { 1 } else { 0 }) +
-            (if self.rules.is_some() { 1 } else { 0 }),
+            self.namespace_selector.as_ref().map_or(0, |_| 1) +
+            self.rules.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "clientConfig", &self.client_config)?;
         if let Some(value) = &self.failure_policy {

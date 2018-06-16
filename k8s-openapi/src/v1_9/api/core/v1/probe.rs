@@ -141,14 +141,14 @@ impl ::serde::Serialize for Probe {
         let mut state = serializer.serialize_struct(
             "Probe",
             0 +
-            (if self.exec.is_some() { 1 } else { 0 }) +
-            (if self.failure_threshold.is_some() { 1 } else { 0 }) +
-            (if self.http_get.is_some() { 1 } else { 0 }) +
-            (if self.initial_delay_seconds.is_some() { 1 } else { 0 }) +
-            (if self.period_seconds.is_some() { 1 } else { 0 }) +
-            (if self.success_threshold.is_some() { 1 } else { 0 }) +
-            (if self.tcp_socket.is_some() { 1 } else { 0 }) +
-            (if self.timeout_seconds.is_some() { 1 } else { 0 }),
+            self.exec.as_ref().map_or(0, |_| 1) +
+            self.failure_threshold.as_ref().map_or(0, |_| 1) +
+            self.http_get.as_ref().map_or(0, |_| 1) +
+            self.initial_delay_seconds.as_ref().map_or(0, |_| 1) +
+            self.period_seconds.as_ref().map_or(0, |_| 1) +
+            self.success_threshold.as_ref().map_or(0, |_| 1) +
+            self.tcp_socket.as_ref().map_or(0, |_| 1) +
+            self.timeout_seconds.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.exec {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "exec", value)?;

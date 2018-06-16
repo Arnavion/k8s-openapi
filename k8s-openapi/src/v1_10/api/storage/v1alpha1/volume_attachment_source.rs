@@ -78,7 +78,7 @@ impl ::serde::Serialize for VolumeAttachmentSource {
         let mut state = serializer.serialize_struct(
             "VolumeAttachmentSource",
             0 +
-            (if self.persistent_volume_name.is_some() { 1 } else { 0 }),
+            self.persistent_volume_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.persistent_volume_name {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "persistentVolumeName", value)?;

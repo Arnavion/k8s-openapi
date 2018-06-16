@@ -100,9 +100,9 @@ impl ::serde::Serialize for StatusCause {
         let mut state = serializer.serialize_struct(
             "StatusCause",
             0 +
-            (if self.field.is_some() { 1 } else { 0 }) +
-            (if self.message.is_some() { 1 } else { 0 }) +
-            (if self.reason.is_some() { 1 } else { 0 }),
+            self.field.as_ref().map_or(0, |_| 1) +
+            self.message.as_ref().map_or(0, |_| 1) +
+            self.reason.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.field {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "field", value)?;

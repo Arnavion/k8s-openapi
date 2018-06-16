@@ -87,8 +87,8 @@ impl ::serde::Serialize for CustomResourceSubresources {
         let mut state = serializer.serialize_struct(
             "CustomResourceSubresources",
             0 +
-            (if self.scale.is_some() { 1 } else { 0 }) +
-            (if self.status.is_some() { 1 } else { 0 }),
+            self.scale.as_ref().map_or(0, |_| 1) +
+            self.status.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.scale {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "scale", value)?;

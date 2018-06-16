@@ -96,7 +96,7 @@ impl ::serde::Serialize for AzureFileVolumeSource {
         let mut state = serializer.serialize_struct(
             "AzureFileVolumeSource",
             0 +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
             1 +
             1,
         )?;

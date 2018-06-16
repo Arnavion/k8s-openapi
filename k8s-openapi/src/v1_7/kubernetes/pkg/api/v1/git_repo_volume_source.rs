@@ -96,9 +96,9 @@ impl ::serde::Serialize for GitRepoVolumeSource {
         let mut state = serializer.serialize_struct(
             "GitRepoVolumeSource",
             0 +
-            (if self.directory.is_some() { 1 } else { 0 }) +
+            self.directory.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.revision.is_some() { 1 } else { 0 }),
+            self.revision.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.directory {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "directory", value)?;

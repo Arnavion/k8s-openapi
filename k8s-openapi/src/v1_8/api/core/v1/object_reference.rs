@@ -132,13 +132,13 @@ impl ::serde::Serialize for ObjectReference {
         let mut state = serializer.serialize_struct(
             "ObjectReference",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
-            (if self.field_path.is_some() { 1 } else { 0 }) +
-            (if self.kind.is_some() { 1 } else { 0 }) +
-            (if self.name.is_some() { 1 } else { 0 }) +
-            (if self.namespace.is_some() { 1 } else { 0 }) +
-            (if self.resource_version.is_some() { 1 } else { 0 }) +
-            (if self.uid.is_some() { 1 } else { 0 }),
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.field_path.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.name.as_ref().map_or(0, |_| 1) +
+            self.namespace.as_ref().map_or(0, |_| 1) +
+            self.resource_version.as_ref().map_or(0, |_| 1) +
+            self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;

@@ -115,10 +115,10 @@ impl ::serde::Serialize for CustomResourceDefinitionNames {
             "CustomResourceDefinitionNames",
             0 +
             1 +
-            (if self.list_kind.is_some() { 1 } else { 0 }) +
+            self.list_kind.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.short_names.is_some() { 1 } else { 0 }) +
-            (if self.singular.is_some() { 1 } else { 0 }),
+            self.short_names.as_ref().map_or(0, |_| 1) +
+            self.singular.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
         if let Some(value) = &self.list_kind {

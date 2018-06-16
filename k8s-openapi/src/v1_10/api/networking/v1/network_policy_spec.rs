@@ -105,10 +105,10 @@ impl ::serde::Serialize for NetworkPolicySpec {
         let mut state = serializer.serialize_struct(
             "NetworkPolicySpec",
             0 +
-            (if self.egress.is_some() { 1 } else { 0 }) +
-            (if self.ingress.is_some() { 1 } else { 0 }) +
+            self.egress.as_ref().map_or(0, |_| 1) +
+            self.ingress.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.policy_types.is_some() { 1 } else { 0 }),
+            self.policy_types.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.egress {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "egress", value)?;

@@ -96,9 +96,9 @@ impl ::serde::Serialize for Initializer {
         let mut state = serializer.serialize_struct(
             "Initializer",
             0 +
-            (if self.failure_policy.is_some() { 1 } else { 0 }) +
+            self.failure_policy.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.rules.is_some() { 1 } else { 0 }),
+            self.rules.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.failure_policy {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "failurePolicy", value)?;

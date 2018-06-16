@@ -88,7 +88,7 @@ impl ::serde::Serialize for HTTPIngressPath {
             "HTTPIngressPath",
             0 +
             1 +
-            (if self.path.is_some() { 1 } else { 0 }),
+            self.path.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "backend", &self.backend)?;
         if let Some(value) = &self.path {

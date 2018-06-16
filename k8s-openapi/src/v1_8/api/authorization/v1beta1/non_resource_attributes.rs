@@ -87,8 +87,8 @@ impl ::serde::Serialize for NonResourceAttributes {
         let mut state = serializer.serialize_struct(
             "NonResourceAttributes",
             0 +
-            (if self.path.is_some() { 1 } else { 0 }) +
-            (if self.verb.is_some() { 1 } else { 0 }),
+            self.path.as_ref().map_or(0, |_| 1) +
+            self.verb.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.path {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "path", value)?;

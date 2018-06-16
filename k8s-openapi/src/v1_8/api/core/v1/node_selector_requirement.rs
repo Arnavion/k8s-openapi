@@ -98,7 +98,7 @@ impl ::serde::Serialize for NodeSelectorRequirement {
             0 +
             1 +
             1 +
-            (if self.values.is_some() { 1 } else { 0 }),
+            self.values.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "operator", &self.operator)?;

@@ -87,8 +87,8 @@ impl ::serde::Serialize for FlockerVolumeSource {
         let mut state = serializer.serialize_struct(
             "FlockerVolumeSource",
             0 +
-            (if self.dataset_name.is_some() { 1 } else { 0 }) +
-            (if self.dataset_uuid.is_some() { 1 } else { 0 }),
+            self.dataset_name.as_ref().map_or(0, |_| 1) +
+            self.dataset_uuid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.dataset_name {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "datasetName", value)?;

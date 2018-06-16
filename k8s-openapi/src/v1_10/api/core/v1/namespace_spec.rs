@@ -78,7 +78,7 @@ impl ::serde::Serialize for NamespaceSpec {
         let mut state = serializer.serialize_struct(
             "NamespaceSpec",
             0 +
-            (if self.finalizers.is_some() { 1 } else { 0 }),
+            self.finalizers.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.finalizers {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", value)?;

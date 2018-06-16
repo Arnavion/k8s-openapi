@@ -87,8 +87,8 @@ impl ::serde::Serialize for RollingUpdateDeployment {
         let mut state = serializer.serialize_struct(
             "RollingUpdateDeployment",
             0 +
-            (if self.max_surge.is_some() { 1 } else { 0 }) +
-            (if self.max_unavailable.is_some() { 1 } else { 0 }),
+            self.max_surge.as_ref().map_or(0, |_| 1) +
+            self.max_unavailable.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.max_surge {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "maxSurge", value)?;

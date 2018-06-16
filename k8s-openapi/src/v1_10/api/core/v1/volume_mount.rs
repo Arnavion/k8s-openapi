@@ -115,10 +115,10 @@ impl ::serde::Serialize for VolumeMount {
             "VolumeMount",
             0 +
             1 +
-            (if self.mount_propagation.is_some() { 1 } else { 0 }) +
+            self.mount_propagation.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
-            (if self.sub_path.is_some() { 1 } else { 0 }),
+            self.read_only.as_ref().map_or(0, |_| 1) +
+            self.sub_path.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "mountPath", &self.mount_path)?;
         if let Some(value) = &self.mount_propagation {

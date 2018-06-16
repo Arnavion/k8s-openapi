@@ -96,7 +96,7 @@ impl ::serde::Serialize for ResourceMetricStatus {
         let mut state = serializer.serialize_struct(
             "ResourceMetricStatus",
             0 +
-            (if self.current_average_utilization.is_some() { 1 } else { 0 }) +
+            self.current_average_utilization.as_ref().map_or(0, |_| 1) +
             1 +
             1,
         )?;

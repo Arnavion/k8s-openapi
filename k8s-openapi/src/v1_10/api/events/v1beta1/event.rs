@@ -221,23 +221,23 @@ impl ::serde::Serialize for Event {
         let mut state = serializer.serialize_struct(
             "Event",
             0 +
-            (if self.action.is_some() { 1 } else { 0 }) +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
-            (if self.deprecated_count.is_some() { 1 } else { 0 }) +
-            (if self.deprecated_first_timestamp.is_some() { 1 } else { 0 }) +
-            (if self.deprecated_last_timestamp.is_some() { 1 } else { 0 }) +
-            (if self.deprecated_source.is_some() { 1 } else { 0 }) +
+            self.action.as_ref().map_or(0, |_| 1) +
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.deprecated_count.as_ref().map_or(0, |_| 1) +
+            self.deprecated_first_timestamp.as_ref().map_or(0, |_| 1) +
+            self.deprecated_last_timestamp.as_ref().map_or(0, |_| 1) +
+            self.deprecated_source.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.kind.is_some() { 1 } else { 0 }) +
-            (if self.metadata.is_some() { 1 } else { 0 }) +
-            (if self.note.is_some() { 1 } else { 0 }) +
-            (if self.reason.is_some() { 1 } else { 0 }) +
-            (if self.regarding.is_some() { 1 } else { 0 }) +
-            (if self.related.is_some() { 1 } else { 0 }) +
-            (if self.reporting_controller.is_some() { 1 } else { 0 }) +
-            (if self.reporting_instance.is_some() { 1 } else { 0 }) +
-            (if self.series.is_some() { 1 } else { 0 }) +
-            (if self.type_.is_some() { 1 } else { 0 }),
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.metadata.as_ref().map_or(0, |_| 1) +
+            self.note.as_ref().map_or(0, |_| 1) +
+            self.reason.as_ref().map_or(0, |_| 1) +
+            self.regarding.as_ref().map_or(0, |_| 1) +
+            self.related.as_ref().map_or(0, |_| 1) +
+            self.reporting_controller.as_ref().map_or(0, |_| 1) +
+            self.reporting_instance.as_ref().map_or(0, |_| 1) +
+            self.series.as_ref().map_or(0, |_| 1) +
+            self.type_.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.action {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "action", value)?;

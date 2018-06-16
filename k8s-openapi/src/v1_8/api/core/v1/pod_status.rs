@@ -159,16 +159,16 @@ impl ::serde::Serialize for PodStatus {
         let mut state = serializer.serialize_struct(
             "PodStatus",
             0 +
-            (if self.conditions.is_some() { 1 } else { 0 }) +
-            (if self.container_statuses.is_some() { 1 } else { 0 }) +
-            (if self.host_ip.is_some() { 1 } else { 0 }) +
-            (if self.init_container_statuses.is_some() { 1 } else { 0 }) +
-            (if self.message.is_some() { 1 } else { 0 }) +
-            (if self.phase.is_some() { 1 } else { 0 }) +
-            (if self.pod_ip.is_some() { 1 } else { 0 }) +
-            (if self.qos_class.is_some() { 1 } else { 0 }) +
-            (if self.reason.is_some() { 1 } else { 0 }) +
-            (if self.start_time.is_some() { 1 } else { 0 }),
+            self.conditions.as_ref().map_or(0, |_| 1) +
+            self.container_statuses.as_ref().map_or(0, |_| 1) +
+            self.host_ip.as_ref().map_or(0, |_| 1) +
+            self.init_container_statuses.as_ref().map_or(0, |_| 1) +
+            self.message.as_ref().map_or(0, |_| 1) +
+            self.phase.as_ref().map_or(0, |_| 1) +
+            self.pod_ip.as_ref().map_or(0, |_| 1) +
+            self.qos_class.as_ref().map_or(0, |_| 1) +
+            self.reason.as_ref().map_or(0, |_| 1) +
+            self.start_time.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.conditions {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;

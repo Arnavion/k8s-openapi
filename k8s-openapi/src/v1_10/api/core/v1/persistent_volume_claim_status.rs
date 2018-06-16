@@ -105,10 +105,10 @@ impl ::serde::Serialize for PersistentVolumeClaimStatus {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeClaimStatus",
             0 +
-            (if self.access_modes.is_some() { 1 } else { 0 }) +
-            (if self.capacity.is_some() { 1 } else { 0 }) +
-            (if self.conditions.is_some() { 1 } else { 0 }) +
-            (if self.phase.is_some() { 1 } else { 0 }),
+            self.access_modes.as_ref().map_or(0, |_| 1) +
+            self.capacity.as_ref().map_or(0, |_| 1) +
+            self.conditions.as_ref().map_or(0, |_| 1) +
+            self.phase.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.access_modes {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;

@@ -96,9 +96,9 @@ impl ::serde::Serialize for Handler {
         let mut state = serializer.serialize_struct(
             "Handler",
             0 +
-            (if self.exec.is_some() { 1 } else { 0 }) +
-            (if self.http_get.is_some() { 1 } else { 0 }) +
-            (if self.tcp_socket.is_some() { 1 } else { 0 }),
+            self.exec.as_ref().map_or(0, |_| 1) +
+            self.http_get.as_ref().map_or(0, |_| 1) +
+            self.tcp_socket.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.exec {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "exec", value)?;

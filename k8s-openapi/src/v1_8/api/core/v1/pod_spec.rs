@@ -294,31 +294,31 @@ impl ::serde::Serialize for PodSpec {
         let mut state = serializer.serialize_struct(
             "PodSpec",
             0 +
-            (if self.active_deadline_seconds.is_some() { 1 } else { 0 }) +
-            (if self.affinity.is_some() { 1 } else { 0 }) +
-            (if self.automount_service_account_token.is_some() { 1 } else { 0 }) +
+            self.active_deadline_seconds.as_ref().map_or(0, |_| 1) +
+            self.affinity.as_ref().map_or(0, |_| 1) +
+            self.automount_service_account_token.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.dns_policy.is_some() { 1 } else { 0 }) +
-            (if self.host_aliases.is_some() { 1 } else { 0 }) +
-            (if self.host_ipc.is_some() { 1 } else { 0 }) +
-            (if self.host_network.is_some() { 1 } else { 0 }) +
-            (if self.host_pid.is_some() { 1 } else { 0 }) +
-            (if self.hostname.is_some() { 1 } else { 0 }) +
-            (if self.image_pull_secrets.is_some() { 1 } else { 0 }) +
-            (if self.init_containers.is_some() { 1 } else { 0 }) +
-            (if self.node_name.is_some() { 1 } else { 0 }) +
-            (if self.node_selector.is_some() { 1 } else { 0 }) +
-            (if self.priority.is_some() { 1 } else { 0 }) +
-            (if self.priority_class_name.is_some() { 1 } else { 0 }) +
-            (if self.restart_policy.is_some() { 1 } else { 0 }) +
-            (if self.scheduler_name.is_some() { 1 } else { 0 }) +
-            (if self.security_context.is_some() { 1 } else { 0 }) +
-            (if self.service_account.is_some() { 1 } else { 0 }) +
-            (if self.service_account_name.is_some() { 1 } else { 0 }) +
-            (if self.subdomain.is_some() { 1 } else { 0 }) +
-            (if self.termination_grace_period_seconds.is_some() { 1 } else { 0 }) +
-            (if self.tolerations.is_some() { 1 } else { 0 }) +
-            (if self.volumes.is_some() { 1 } else { 0 }),
+            self.dns_policy.as_ref().map_or(0, |_| 1) +
+            self.host_aliases.as_ref().map_or(0, |_| 1) +
+            self.host_ipc.as_ref().map_or(0, |_| 1) +
+            self.host_network.as_ref().map_or(0, |_| 1) +
+            self.host_pid.as_ref().map_or(0, |_| 1) +
+            self.hostname.as_ref().map_or(0, |_| 1) +
+            self.image_pull_secrets.as_ref().map_or(0, |_| 1) +
+            self.init_containers.as_ref().map_or(0, |_| 1) +
+            self.node_name.as_ref().map_or(0, |_| 1) +
+            self.node_selector.as_ref().map_or(0, |_| 1) +
+            self.priority.as_ref().map_or(0, |_| 1) +
+            self.priority_class_name.as_ref().map_or(0, |_| 1) +
+            self.restart_policy.as_ref().map_or(0, |_| 1) +
+            self.scheduler_name.as_ref().map_or(0, |_| 1) +
+            self.security_context.as_ref().map_or(0, |_| 1) +
+            self.service_account.as_ref().map_or(0, |_| 1) +
+            self.service_account_name.as_ref().map_or(0, |_| 1) +
+            self.subdomain.as_ref().map_or(0, |_| 1) +
+            self.termination_grace_period_seconds.as_ref().map_or(0, |_| 1) +
+            self.tolerations.as_ref().map_or(0, |_| 1) +
+            self.volumes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active_deadline_seconds {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;

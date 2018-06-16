@@ -141,14 +141,14 @@ impl ::serde::Serialize for StatefulSetSpec {
         let mut state = serializer.serialize_struct(
             "StatefulSetSpec",
             0 +
-            (if self.pod_management_policy.is_some() { 1 } else { 0 }) +
-            (if self.replicas.is_some() { 1 } else { 0 }) +
-            (if self.revision_history_limit.is_some() { 1 } else { 0 }) +
+            self.pod_management_policy.as_ref().map_or(0, |_| 1) +
+            self.replicas.as_ref().map_or(0, |_| 1) +
+            self.revision_history_limit.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
             1 +
-            (if self.update_strategy.is_some() { 1 } else { 0 }) +
-            (if self.volume_claim_templates.is_some() { 1 } else { 0 }),
+            self.update_strategy.as_ref().map_or(0, |_| 1) +
+            self.volume_claim_templates.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.pod_management_policy {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "podManagementPolicy", value)?;

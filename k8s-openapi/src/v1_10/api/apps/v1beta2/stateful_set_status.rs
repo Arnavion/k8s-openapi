@@ -150,15 +150,15 @@ impl ::serde::Serialize for StatefulSetStatus {
         let mut state = serializer.serialize_struct(
             "StatefulSetStatus",
             0 +
-            (if self.collision_count.is_some() { 1 } else { 0 }) +
-            (if self.conditions.is_some() { 1 } else { 0 }) +
-            (if self.current_replicas.is_some() { 1 } else { 0 }) +
-            (if self.current_revision.is_some() { 1 } else { 0 }) +
-            (if self.observed_generation.is_some() { 1 } else { 0 }) +
-            (if self.ready_replicas.is_some() { 1 } else { 0 }) +
+            self.collision_count.as_ref().map_or(0, |_| 1) +
+            self.conditions.as_ref().map_or(0, |_| 1) +
+            self.current_replicas.as_ref().map_or(0, |_| 1) +
+            self.current_revision.as_ref().map_or(0, |_| 1) +
+            self.observed_generation.as_ref().map_or(0, |_| 1) +
+            self.ready_replicas.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.update_revision.is_some() { 1 } else { 0 }) +
-            (if self.updated_replicas.is_some() { 1 } else { 0 }),
+            self.update_revision.as_ref().map_or(0, |_| 1) +
+            self.updated_replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.collision_count {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;

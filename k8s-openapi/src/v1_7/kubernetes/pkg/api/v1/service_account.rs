@@ -123,12 +123,12 @@ impl ::serde::Serialize for ServiceAccount {
         let mut state = serializer.serialize_struct(
             "ServiceAccount",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
-            (if self.automount_service_account_token.is_some() { 1 } else { 0 }) +
-            (if self.image_pull_secrets.is_some() { 1 } else { 0 }) +
-            (if self.kind.is_some() { 1 } else { 0 }) +
-            (if self.metadata.is_some() { 1 } else { 0 }) +
-            (if self.secrets.is_some() { 1 } else { 0 }),
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.automount_service_account_token.as_ref().map_or(0, |_| 1) +
+            self.image_pull_secrets.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.metadata.as_ref().map_or(0, |_| 1) +
+            self.secrets.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;

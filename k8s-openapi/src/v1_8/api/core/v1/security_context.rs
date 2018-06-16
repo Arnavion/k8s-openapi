@@ -132,13 +132,13 @@ impl ::serde::Serialize for SecurityContext {
         let mut state = serializer.serialize_struct(
             "SecurityContext",
             0 +
-            (if self.allow_privilege_escalation.is_some() { 1 } else { 0 }) +
-            (if self.capabilities.is_some() { 1 } else { 0 }) +
-            (if self.privileged.is_some() { 1 } else { 0 }) +
-            (if self.read_only_root_filesystem.is_some() { 1 } else { 0 }) +
-            (if self.run_as_non_root.is_some() { 1 } else { 0 }) +
-            (if self.run_as_user.is_some() { 1 } else { 0 }) +
-            (if self.se_linux_options.is_some() { 1 } else { 0 }),
+            self.allow_privilege_escalation.as_ref().map_or(0, |_| 1) +
+            self.capabilities.as_ref().map_or(0, |_| 1) +
+            self.privileged.as_ref().map_or(0, |_| 1) +
+            self.read_only_root_filesystem.as_ref().map_or(0, |_| 1) +
+            self.run_as_non_root.as_ref().map_or(0, |_| 1) +
+            self.run_as_user.as_ref().map_or(0, |_| 1) +
+            self.se_linux_options.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.allow_privilege_escalation {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", value)?;

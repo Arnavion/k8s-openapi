@@ -123,12 +123,12 @@ impl ::serde::Serialize for DeleteOptions {
         let mut state = serializer.serialize_struct(
             "DeleteOptions",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
-            (if self.grace_period_seconds.is_some() { 1 } else { 0 }) +
-            (if self.kind.is_some() { 1 } else { 0 }) +
-            (if self.orphan_dependents.is_some() { 1 } else { 0 }) +
-            (if self.preconditions.is_some() { 1 } else { 0 }) +
-            (if self.propagation_policy.is_some() { 1 } else { 0 }),
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.grace_period_seconds.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.orphan_dependents.as_ref().map_or(0, |_| 1) +
+            self.preconditions.as_ref().map_or(0, |_| 1) +
+            self.propagation_policy.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;

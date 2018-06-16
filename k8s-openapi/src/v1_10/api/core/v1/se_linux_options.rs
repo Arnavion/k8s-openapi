@@ -105,10 +105,10 @@ impl ::serde::Serialize for SELinuxOptions {
         let mut state = serializer.serialize_struct(
             "SELinuxOptions",
             0 +
-            (if self.level.is_some() { 1 } else { 0 }) +
-            (if self.role.is_some() { 1 } else { 0 }) +
-            (if self.type_.is_some() { 1 } else { 0 }) +
-            (if self.user.is_some() { 1 } else { 0 }),
+            self.level.as_ref().map_or(0, |_| 1) +
+            self.role.as_ref().map_or(0, |_| 1) +
+            self.type_.as_ref().map_or(0, |_| 1) +
+            self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.level {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "level", value)?;

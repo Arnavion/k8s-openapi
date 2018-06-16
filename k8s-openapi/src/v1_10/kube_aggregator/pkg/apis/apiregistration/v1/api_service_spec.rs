@@ -133,11 +133,11 @@ impl ::serde::Serialize for APIServiceSpec {
             "APIServiceSpec",
             0 +
             1 +
-            (if self.group.is_some() { 1 } else { 0 }) +
+            self.group.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.insecure_skip_tls_verify.is_some() { 1 } else { 0 }) +
+            self.insecure_skip_tls_verify.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.version.is_some() { 1 } else { 0 }) +
+            self.version.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", &self.ca_bundle)?;

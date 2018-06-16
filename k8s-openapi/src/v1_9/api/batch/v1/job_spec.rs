@@ -132,12 +132,12 @@ impl ::serde::Serialize for JobSpec {
         let mut state = serializer.serialize_struct(
             "JobSpec",
             0 +
-            (if self.active_deadline_seconds.is_some() { 1 } else { 0 }) +
-            (if self.backoff_limit.is_some() { 1 } else { 0 }) +
-            (if self.completions.is_some() { 1 } else { 0 }) +
-            (if self.manual_selector.is_some() { 1 } else { 0 }) +
-            (if self.parallelism.is_some() { 1 } else { 0 }) +
-            (if self.selector.is_some() { 1 } else { 0 }) +
+            self.active_deadline_seconds.as_ref().map_or(0, |_| 1) +
+            self.backoff_limit.as_ref().map_or(0, |_| 1) +
+            self.completions.as_ref().map_or(0, |_| 1) +
+            self.manual_selector.as_ref().map_or(0, |_| 1) +
+            self.parallelism.as_ref().map_or(0, |_| 1) +
+            self.selector.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.active_deadline_seconds {

@@ -229,22 +229,22 @@ impl ::serde::Serialize for ObjectMeta {
         let mut state = serializer.serialize_struct(
             "ObjectMeta",
             0 +
-            (if self.annotations.is_some() { 1 } else { 0 }) +
-            (if self.cluster_name.is_some() { 1 } else { 0 }) +
-            (if self.creation_timestamp.is_some() { 1 } else { 0 }) +
-            (if self.deletion_grace_period_seconds.is_some() { 1 } else { 0 }) +
-            (if self.deletion_timestamp.is_some() { 1 } else { 0 }) +
-            (if self.finalizers.is_some() { 1 } else { 0 }) +
-            (if self.generate_name.is_some() { 1 } else { 0 }) +
-            (if self.generation.is_some() { 1 } else { 0 }) +
-            (if self.initializers.is_some() { 1 } else { 0 }) +
-            (if self.labels.is_some() { 1 } else { 0 }) +
-            (if self.name.is_some() { 1 } else { 0 }) +
-            (if self.namespace.is_some() { 1 } else { 0 }) +
-            (if self.owner_references.is_some() { 1 } else { 0 }) +
-            (if self.resource_version.is_some() { 1 } else { 0 }) +
-            (if self.self_link.is_some() { 1 } else { 0 }) +
-            (if self.uid.is_some() { 1 } else { 0 }),
+            self.annotations.as_ref().map_or(0, |_| 1) +
+            self.cluster_name.as_ref().map_or(0, |_| 1) +
+            self.creation_timestamp.as_ref().map_or(0, |_| 1) +
+            self.deletion_grace_period_seconds.as_ref().map_or(0, |_| 1) +
+            self.deletion_timestamp.as_ref().map_or(0, |_| 1) +
+            self.finalizers.as_ref().map_or(0, |_| 1) +
+            self.generate_name.as_ref().map_or(0, |_| 1) +
+            self.generation.as_ref().map_or(0, |_| 1) +
+            self.initializers.as_ref().map_or(0, |_| 1) +
+            self.labels.as_ref().map_or(0, |_| 1) +
+            self.name.as_ref().map_or(0, |_| 1) +
+            self.namespace.as_ref().map_or(0, |_| 1) +
+            self.owner_references.as_ref().map_or(0, |_| 1) +
+            self.resource_version.as_ref().map_or(0, |_| 1) +
+            self.self_link.as_ref().map_or(0, |_| 1) +
+            self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.annotations {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", value)?;

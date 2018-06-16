@@ -105,9 +105,9 @@ impl ::serde::Serialize for AzureFilePersistentVolumeSource {
         let mut state = serializer.serialize_struct(
             "AzureFilePersistentVolumeSource",
             0 +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.secret_namespace.is_some() { 1 } else { 0 }) +
+            self.secret_namespace.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.read_only {

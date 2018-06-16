@@ -123,12 +123,12 @@ impl ::serde::Serialize for AzureDiskVolumeSource {
         let mut state = serializer.serialize_struct(
             "AzureDiskVolumeSource",
             0 +
-            (if self.caching_mode.is_some() { 1 } else { 0 }) +
+            self.caching_mode.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.fs_type.is_some() { 1 } else { 0 }) +
-            (if self.kind.is_some() { 1 } else { 0 }) +
-            (if self.read_only.is_some() { 1 } else { 0 }),
+            self.fs_type.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.read_only.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.caching_mode {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "cachingMode", value)?;

@@ -87,8 +87,8 @@ impl ::serde::Serialize for PodTemplateSpec {
         let mut state = serializer.serialize_struct(
             "PodTemplateSpec",
             0 +
-            (if self.metadata.is_some() { 1 } else { 0 }) +
-            (if self.spec.is_some() { 1 } else { 0 }),
+            self.metadata.as_ref().map_or(0, |_| 1) +
+            self.spec.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.metadata {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;

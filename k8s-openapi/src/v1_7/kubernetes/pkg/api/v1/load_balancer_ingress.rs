@@ -87,8 +87,8 @@ impl ::serde::Serialize for LoadBalancerIngress {
         let mut state = serializer.serialize_struct(
             "LoadBalancerIngress",
             0 +
-            (if self.hostname.is_some() { 1 } else { 0 }) +
-            (if self.ip.is_some() { 1 } else { 0 }),
+            self.hostname.as_ref().map_or(0, |_| 1) +
+            self.ip.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hostname {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;

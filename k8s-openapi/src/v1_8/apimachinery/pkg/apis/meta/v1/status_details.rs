@@ -123,12 +123,12 @@ impl ::serde::Serialize for StatusDetails {
         let mut state = serializer.serialize_struct(
             "StatusDetails",
             0 +
-            (if self.causes.is_some() { 1 } else { 0 }) +
-            (if self.group.is_some() { 1 } else { 0 }) +
-            (if self.kind.is_some() { 1 } else { 0 }) +
-            (if self.name.is_some() { 1 } else { 0 }) +
-            (if self.retry_after_seconds.is_some() { 1 } else { 0 }) +
-            (if self.uid.is_some() { 1 } else { 0 }),
+            self.causes.as_ref().map_or(0, |_| 1) +
+            self.group.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1) +
+            self.name.as_ref().map_or(0, |_| 1) +
+            self.retry_after_seconds.as_ref().map_or(0, |_| 1) +
+            self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.causes {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "causes", value)?;

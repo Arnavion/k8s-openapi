@@ -132,13 +132,13 @@ impl ::serde::Serialize for ResourceAttributes {
         let mut state = serializer.serialize_struct(
             "ResourceAttributes",
             0 +
-            (if self.group.is_some() { 1 } else { 0 }) +
-            (if self.name.is_some() { 1 } else { 0 }) +
-            (if self.namespace.is_some() { 1 } else { 0 }) +
-            (if self.resource.is_some() { 1 } else { 0 }) +
-            (if self.subresource.is_some() { 1 } else { 0 }) +
-            (if self.verb.is_some() { 1 } else { 0 }) +
-            (if self.version.is_some() { 1 } else { 0 }),
+            self.group.as_ref().map_or(0, |_| 1) +
+            self.name.as_ref().map_or(0, |_| 1) +
+            self.namespace.as_ref().map_or(0, |_| 1) +
+            self.resource.as_ref().map_or(0, |_| 1) +
+            self.subresource.as_ref().map_or(0, |_| 1) +
+            self.verb.as_ref().map_or(0, |_| 1) +
+            self.version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.group {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;

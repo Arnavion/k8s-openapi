@@ -150,15 +150,15 @@ impl ::serde::Serialize for DaemonSetStatus {
         let mut state = serializer.serialize_struct(
             "DaemonSetStatus",
             0 +
-            (if self.collision_count.is_some() { 1 } else { 0 }) +
+            self.collision_count.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.number_available.is_some() { 1 } else { 0 }) +
+            self.number_available.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.number_unavailable.is_some() { 1 } else { 0 }) +
-            (if self.observed_generation.is_some() { 1 } else { 0 }) +
-            (if self.updated_number_scheduled.is_some() { 1 } else { 0 }),
+            self.number_unavailable.as_ref().map_or(0, |_| 1) +
+            self.observed_generation.as_ref().map_or(0, |_| 1) +
+            self.updated_number_scheduled.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.collision_count {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;

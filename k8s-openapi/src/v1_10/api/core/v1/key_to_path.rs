@@ -97,7 +97,7 @@ impl ::serde::Serialize for KeyToPath {
             "KeyToPath",
             0 +
             1 +
-            (if self.mode.is_some() { 1 } else { 0 }) +
+            self.mode.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;

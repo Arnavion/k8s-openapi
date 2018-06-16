@@ -105,9 +105,9 @@ impl ::serde::Serialize for MetricStatus {
         let mut state = serializer.serialize_struct(
             "MetricStatus",
             0 +
-            (if self.object.is_some() { 1 } else { 0 }) +
-            (if self.pods.is_some() { 1 } else { 0 }) +
-            (if self.resource.is_some() { 1 } else { 0 }) +
+            self.object.as_ref().map_or(0, |_| 1) +
+            self.pods.as_ref().map_or(0, |_| 1) +
+            self.resource.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.object {

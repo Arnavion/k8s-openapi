@@ -114,10 +114,10 @@ impl ::serde::Serialize for MetricSpec {
         let mut state = serializer.serialize_struct(
             "MetricSpec",
             0 +
-            (if self.external.is_some() { 1 } else { 0 }) +
-            (if self.object.is_some() { 1 } else { 0 }) +
-            (if self.pods.is_some() { 1 } else { 0 }) +
-            (if self.resource.is_some() { 1 } else { 0 }) +
+            self.external.as_ref().map_or(0, |_| 1) +
+            self.object.as_ref().map_or(0, |_| 1) +
+            self.pods.as_ref().map_or(0, |_| 1) +
+            self.resource.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.external {

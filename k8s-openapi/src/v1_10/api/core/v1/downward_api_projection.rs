@@ -78,7 +78,7 @@ impl ::serde::Serialize for DownwardAPIProjection {
         let mut state = serializer.serialize_struct(
             "DownwardAPIProjection",
             0 +
-            (if self.items.is_some() { 1 } else { 0 }),
+            self.items.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.items {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;

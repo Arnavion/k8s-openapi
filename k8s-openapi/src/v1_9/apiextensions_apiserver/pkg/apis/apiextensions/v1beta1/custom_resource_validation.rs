@@ -78,7 +78,7 @@ impl ::serde::Serialize for CustomResourceValidation {
         let mut state = serializer.serialize_struct(
             "CustomResourceValidation",
             0 +
-            (if self.open_api_v3_schema.is_some() { 1 } else { 0 }),
+            self.open_api_v3_schema.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.open_api_v3_schema {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "openAPIV3Schema", value)?;

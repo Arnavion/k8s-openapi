@@ -78,7 +78,7 @@ impl ::serde::Serialize for RollbackConfig {
         let mut state = serializer.serialize_struct(
             "RollbackConfig",
             0 +
-            (if self.revision.is_some() { 1 } else { 0 }),
+            self.revision.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.revision {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "revision", value)?;

@@ -87,8 +87,8 @@ impl ::serde::Serialize for Lifecycle {
         let mut state = serializer.serialize_struct(
             "Lifecycle",
             0 +
-            (if self.post_start.is_some() { 1 } else { 0 }) +
-            (if self.pre_stop.is_some() { 1 } else { 0 }),
+            self.post_start.as_ref().map_or(0, |_| 1) +
+            self.pre_stop.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.post_start {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "postStart", value)?;

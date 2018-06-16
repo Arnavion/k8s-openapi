@@ -132,13 +132,13 @@ impl ::serde::Serialize for ContainerStateTerminated {
         let mut state = serializer.serialize_struct(
             "ContainerStateTerminated",
             0 +
-            (if self.container_id.is_some() { 1 } else { 0 }) +
+            self.container_id.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.finished_at.is_some() { 1 } else { 0 }) +
-            (if self.message.is_some() { 1 } else { 0 }) +
-            (if self.reason.is_some() { 1 } else { 0 }) +
-            (if self.signal.is_some() { 1 } else { 0 }) +
-            (if self.started_at.is_some() { 1 } else { 0 }),
+            self.finished_at.as_ref().map_or(0, |_| 1) +
+            self.message.as_ref().map_or(0, |_| 1) +
+            self.reason.as_ref().map_or(0, |_| 1) +
+            self.signal.as_ref().map_or(0, |_| 1) +
+            self.started_at.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.container_id {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "containerID", value)?;

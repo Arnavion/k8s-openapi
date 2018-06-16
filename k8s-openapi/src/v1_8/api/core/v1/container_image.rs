@@ -88,7 +88,7 @@ impl ::serde::Serialize for ContainerImage {
             "ContainerImage",
             0 +
             1 +
-            (if self.size_bytes.is_some() { 1 } else { 0 }),
+            self.size_bytes.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "names", &self.names)?;
         if let Some(value) = &self.size_bytes {

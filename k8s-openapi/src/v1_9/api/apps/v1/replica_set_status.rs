@@ -123,11 +123,11 @@ impl ::serde::Serialize for ReplicaSetStatus {
         let mut state = serializer.serialize_struct(
             "ReplicaSetStatus",
             0 +
-            (if self.available_replicas.is_some() { 1 } else { 0 }) +
-            (if self.conditions.is_some() { 1 } else { 0 }) +
-            (if self.fully_labeled_replicas.is_some() { 1 } else { 0 }) +
-            (if self.observed_generation.is_some() { 1 } else { 0 }) +
-            (if self.ready_replicas.is_some() { 1 } else { 0 }) +
+            self.available_replicas.as_ref().map_or(0, |_| 1) +
+            self.conditions.as_ref().map_or(0, |_| 1) +
+            self.fully_labeled_replicas.as_ref().map_or(0, |_| 1) +
+            self.observed_generation.as_ref().map_or(0, |_| 1) +
+            self.ready_replicas.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.available_replicas {

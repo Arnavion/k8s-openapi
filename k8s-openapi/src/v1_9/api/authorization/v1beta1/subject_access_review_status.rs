@@ -106,9 +106,9 @@ impl ::serde::Serialize for SubjectAccessReviewStatus {
             "SubjectAccessReviewStatus",
             0 +
             1 +
-            (if self.denied.is_some() { 1 } else { 0 }) +
-            (if self.evaluation_error.is_some() { 1 } else { 0 }) +
-            (if self.reason.is_some() { 1 } else { 0 }),
+            self.denied.as_ref().map_or(0, |_| 1) +
+            self.evaluation_error.as_ref().map_or(0, |_| 1) +
+            self.reason.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowed", &self.allowed)?;
         if let Some(value) = &self.denied {

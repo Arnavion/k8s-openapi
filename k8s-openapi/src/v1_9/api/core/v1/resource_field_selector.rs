@@ -96,8 +96,8 @@ impl ::serde::Serialize for ResourceFieldSelector {
         let mut state = serializer.serialize_struct(
             "ResourceFieldSelector",
             0 +
-            (if self.container_name.is_some() { 1 } else { 0 }) +
-            (if self.divisor.is_some() { 1 } else { 0 }) +
+            self.container_name.as_ref().map_or(0, |_| 1) +
+            self.divisor.as_ref().map_or(0, |_| 1) +
             1,
         )?;
         if let Some(value) = &self.container_name {

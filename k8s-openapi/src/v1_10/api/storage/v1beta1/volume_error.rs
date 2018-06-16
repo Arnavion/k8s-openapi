@@ -87,8 +87,8 @@ impl ::serde::Serialize for VolumeError {
         let mut state = serializer.serialize_struct(
             "VolumeError",
             0 +
-            (if self.message.is_some() { 1 } else { 0 }) +
-            (if self.time.is_some() { 1 } else { 0 }),
+            self.message.as_ref().map_or(0, |_| 1) +
+            self.time.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.message {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;

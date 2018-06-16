@@ -87,8 +87,8 @@ impl ::serde::Serialize for HostAlias {
         let mut state = serializer.serialize_struct(
             "HostAlias",
             0 +
-            (if self.hostnames.is_some() { 1 } else { 0 }) +
-            (if self.ip.is_some() { 1 } else { 0 }),
+            self.hostnames.as_ref().map_or(0, |_| 1) +
+            self.ip.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.hostnames {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostnames", value)?;

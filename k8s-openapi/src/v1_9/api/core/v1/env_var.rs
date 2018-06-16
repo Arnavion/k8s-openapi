@@ -97,8 +97,8 @@ impl ::serde::Serialize for EnvVar {
             "EnvVar",
             0 +
             1 +
-            (if self.value.is_some() { 1 } else { 0 }) +
-            (if self.value_from.is_some() { 1 } else { 0 }),
+            self.value.as_ref().map_or(0, |_| 1) +
+            self.value_from.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.value {

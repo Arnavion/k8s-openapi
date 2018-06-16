@@ -124,11 +124,11 @@ impl ::serde::Serialize for CephFSPersistentVolumeSource {
             "CephFSPersistentVolumeSource",
             0 +
             1 +
-            (if self.path.is_some() { 1 } else { 0 }) +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
-            (if self.secret_file.is_some() { 1 } else { 0 }) +
-            (if self.secret_ref.is_some() { 1 } else { 0 }) +
-            (if self.user.is_some() { 1 } else { 0 }),
+            self.path.as_ref().map_or(0, |_| 1) +
+            self.read_only.as_ref().map_or(0, |_| 1) +
+            self.secret_file.as_ref().map_or(0, |_| 1) +
+            self.secret_ref.as_ref().map_or(0, |_| 1) +
+            self.user.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "monitors", &self.monitors)?;
         if let Some(value) = &self.path {

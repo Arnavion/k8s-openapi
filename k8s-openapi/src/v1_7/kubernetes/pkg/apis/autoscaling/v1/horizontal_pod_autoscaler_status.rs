@@ -114,11 +114,11 @@ impl ::serde::Serialize for HorizontalPodAutoscalerStatus {
         let mut state = serializer.serialize_struct(
             "HorizontalPodAutoscalerStatus",
             0 +
-            (if self.current_cpu_utilization_percentage.is_some() { 1 } else { 0 }) +
+            self.current_cpu_utilization_percentage.as_ref().map_or(0, |_| 1) +
             1 +
             1 +
-            (if self.last_scale_time.is_some() { 1 } else { 0 }) +
-            (if self.observed_generation.is_some() { 1 } else { 0 }),
+            self.last_scale_time.as_ref().map_or(0, |_| 1) +
+            self.observed_generation.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.current_cpu_utilization_percentage {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "currentCPUUtilizationPercentage", value)?;

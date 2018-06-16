@@ -123,10 +123,10 @@ impl ::serde::Serialize for APIGroup {
         let mut state = serializer.serialize_struct(
             "APIGroup",
             0 +
-            (if self.api_version.is_some() { 1 } else { 0 }) +
-            (if self.kind.is_some() { 1 } else { 0 }) +
+            self.api_version.as_ref().map_or(0, |_| 1) +
+            self.kind.as_ref().map_or(0, |_| 1) +
             1 +
-            (if self.preferred_version.is_some() { 1 } else { 0 }) +
+            self.preferred_version.as_ref().map_or(0, |_| 1) +
             1 +
             1,
         )?;

@@ -107,10 +107,10 @@ impl ::serde::Serialize for ConfigMapVolumeSource {
         let mut state = serializer.serialize_struct(
             "ConfigMapVolumeSource",
             0 +
-            (if self.default_mode.is_some() { 1 } else { 0 }) +
-            (if self.items.is_some() { 1 } else { 0 }) +
-            (if self.name.is_some() { 1 } else { 0 }) +
-            (if self.optional.is_some() { 1 } else { 0 }),
+            self.default_mode.as_ref().map_or(0, |_| 1) +
+            self.items.as_ref().map_or(0, |_| 1) +
+            self.name.as_ref().map_or(0, |_| 1) +
+            self.optional.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.default_mode {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", value)?;

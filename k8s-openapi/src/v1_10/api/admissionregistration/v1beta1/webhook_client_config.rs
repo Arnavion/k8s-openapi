@@ -111,8 +111,8 @@ impl ::serde::Serialize for WebhookClientConfig {
             "WebhookClientConfig",
             0 +
             1 +
-            (if self.service.is_some() { 1 } else { 0 }) +
-            (if self.url.is_some() { 1 } else { 0 }),
+            self.service.as_ref().map_or(0, |_| 1) +
+            self.url.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", &self.ca_bundle)?;
         if let Some(value) = &self.service {

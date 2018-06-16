@@ -87,8 +87,8 @@ impl ::serde::Serialize for Capabilities {
         let mut state = serializer.serialize_struct(
             "Capabilities",
             0 +
-            (if self.add.is_some() { 1 } else { 0 }) +
-            (if self.drop.is_some() { 1 } else { 0 }),
+            self.add.as_ref().map_or(0, |_| 1) +
+            self.drop.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.add {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "add", value)?;

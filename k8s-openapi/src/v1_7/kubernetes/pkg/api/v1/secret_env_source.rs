@@ -89,8 +89,8 @@ impl ::serde::Serialize for SecretEnvSource {
         let mut state = serializer.serialize_struct(
             "SecretEnvSource",
             0 +
-            (if self.name.is_some() { 1 } else { 0 }) +
-            (if self.optional.is_some() { 1 } else { 0 }),
+            self.name.as_ref().map_or(0, |_| 1) +
+            self.optional.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.name {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;

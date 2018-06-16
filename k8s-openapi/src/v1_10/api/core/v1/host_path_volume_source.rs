@@ -88,7 +88,7 @@ impl ::serde::Serialize for HostPathVolumeSource {
             "HostPathVolumeSource",
             0 +
             1 +
-            (if self.type_.is_some() { 1 } else { 0 }),
+            self.type_.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
         if let Some(value) = &self.type_ {

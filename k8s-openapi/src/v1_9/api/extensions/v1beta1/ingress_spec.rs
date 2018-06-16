@@ -96,9 +96,9 @@ impl ::serde::Serialize for IngressSpec {
         let mut state = serializer.serialize_struct(
             "IngressSpec",
             0 +
-            (if self.backend.is_some() { 1 } else { 0 }) +
-            (if self.rules.is_some() { 1 } else { 0 }) +
-            (if self.tls.is_some() { 1 } else { 0 }),
+            self.backend.as_ref().map_or(0, |_| 1) +
+            self.rules.as_ref().map_or(0, |_| 1) +
+            self.tls.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.backend {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "backend", value)?;

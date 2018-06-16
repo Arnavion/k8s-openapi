@@ -114,11 +114,11 @@ impl ::serde::Serialize for Toleration {
         let mut state = serializer.serialize_struct(
             "Toleration",
             0 +
-            (if self.effect.is_some() { 1 } else { 0 }) +
-            (if self.key.is_some() { 1 } else { 0 }) +
-            (if self.operator.is_some() { 1 } else { 0 }) +
-            (if self.toleration_seconds.is_some() { 1 } else { 0 }) +
-            (if self.value.is_some() { 1 } else { 0 }),
+            self.effect.as_ref().map_or(0, |_| 1) +
+            self.key.as_ref().map_or(0, |_| 1) +
+            self.operator.as_ref().map_or(0, |_| 1) +
+            self.toleration_seconds.as_ref().map_or(0, |_| 1) +
+            self.value.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.effect {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "effect", value)?;

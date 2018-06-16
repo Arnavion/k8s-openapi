@@ -96,9 +96,9 @@ impl ::serde::Serialize for TokenReviewStatus {
         let mut state = serializer.serialize_struct(
             "TokenReviewStatus",
             0 +
-            (if self.authenticated.is_some() { 1 } else { 0 }) +
-            (if self.error.is_some() { 1 } else { 0 }) +
-            (if self.user.is_some() { 1 } else { 0 }),
+            self.authenticated.as_ref().map_or(0, |_| 1) +
+            self.error.as_ref().map_or(0, |_| 1) +
+            self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.authenticated {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "authenticated", value)?;

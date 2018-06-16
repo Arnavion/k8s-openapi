@@ -115,10 +115,10 @@ impl ::serde::Serialize for ContainerPort {
             "ContainerPort",
             0 +
             1 +
-            (if self.host_ip.is_some() { 1 } else { 0 }) +
-            (if self.host_port.is_some() { 1 } else { 0 }) +
-            (if self.name.is_some() { 1 } else { 0 }) +
-            (if self.protocol.is_some() { 1 } else { 0 }),
+            self.host_ip.as_ref().map_or(0, |_| 1) +
+            self.host_port.as_ref().map_or(0, |_| 1) +
+            self.name.as_ref().map_or(0, |_| 1) +
+            self.protocol.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "containerPort", &self.container_port)?;
         if let Some(value) = &self.host_ip {

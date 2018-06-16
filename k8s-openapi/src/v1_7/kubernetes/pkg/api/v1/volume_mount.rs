@@ -107,8 +107,8 @@ impl ::serde::Serialize for VolumeMount {
             0 +
             1 +
             1 +
-            (if self.read_only.is_some() { 1 } else { 0 }) +
-            (if self.sub_path.is_some() { 1 } else { 0 }),
+            self.read_only.as_ref().map_or(0, |_| 1) +
+            self.sub_path.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "mountPath", &self.mount_path)?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;

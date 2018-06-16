@@ -357,42 +357,42 @@ impl ::serde::Serialize for JSONSchemaProps {
         let mut state = serializer.serialize_struct(
             "JSONSchemaProps",
             0 +
-            (if self.ref_path.is_some() { 1 } else { 0 }) +
-            (if self.schema.is_some() { 1 } else { 0 }) +
-            (if self.additional_items.is_some() { 1 } else { 0 }) +
-            (if self.additional_properties.is_some() { 1 } else { 0 }) +
-            (if self.all_of.is_some() { 1 } else { 0 }) +
-            (if self.any_of.is_some() { 1 } else { 0 }) +
-            (if self.default.is_some() { 1 } else { 0 }) +
-            (if self.definitions.is_some() { 1 } else { 0 }) +
-            (if self.dependencies.is_some() { 1 } else { 0 }) +
-            (if self.description.is_some() { 1 } else { 0 }) +
-            (if self.enum_.is_some() { 1 } else { 0 }) +
-            (if self.example.is_some() { 1 } else { 0 }) +
-            (if self.exclusive_maximum.is_some() { 1 } else { 0 }) +
-            (if self.exclusive_minimum.is_some() { 1 } else { 0 }) +
-            (if self.external_docs.is_some() { 1 } else { 0 }) +
-            (if self.format.is_some() { 1 } else { 0 }) +
-            (if self.id.is_some() { 1 } else { 0 }) +
-            (if self.items.is_some() { 1 } else { 0 }) +
-            (if self.max_items.is_some() { 1 } else { 0 }) +
-            (if self.max_length.is_some() { 1 } else { 0 }) +
-            (if self.max_properties.is_some() { 1 } else { 0 }) +
-            (if self.maximum.is_some() { 1 } else { 0 }) +
-            (if self.min_items.is_some() { 1 } else { 0 }) +
-            (if self.min_length.is_some() { 1 } else { 0 }) +
-            (if self.min_properties.is_some() { 1 } else { 0 }) +
-            (if self.minimum.is_some() { 1 } else { 0 }) +
-            (if self.multiple_of.is_some() { 1 } else { 0 }) +
-            (if self.not.is_some() { 1 } else { 0 }) +
-            (if self.one_of.is_some() { 1 } else { 0 }) +
-            (if self.pattern.is_some() { 1 } else { 0 }) +
-            (if self.pattern_properties.is_some() { 1 } else { 0 }) +
-            (if self.properties.is_some() { 1 } else { 0 }) +
-            (if self.required.is_some() { 1 } else { 0 }) +
-            (if self.title.is_some() { 1 } else { 0 }) +
-            (if self.type_.is_some() { 1 } else { 0 }) +
-            (if self.unique_items.is_some() { 1 } else { 0 }),
+            self.ref_path.as_ref().map_or(0, |_| 1) +
+            self.schema.as_ref().map_or(0, |_| 1) +
+            self.additional_items.as_ref().map_or(0, |_| 1) +
+            self.additional_properties.as_ref().map_or(0, |_| 1) +
+            self.all_of.as_ref().map_or(0, |_| 1) +
+            self.any_of.as_ref().map_or(0, |_| 1) +
+            self.default.as_ref().map_or(0, |_| 1) +
+            self.definitions.as_ref().map_or(0, |_| 1) +
+            self.dependencies.as_ref().map_or(0, |_| 1) +
+            self.description.as_ref().map_or(0, |_| 1) +
+            self.enum_.as_ref().map_or(0, |_| 1) +
+            self.example.as_ref().map_or(0, |_| 1) +
+            self.exclusive_maximum.as_ref().map_or(0, |_| 1) +
+            self.exclusive_minimum.as_ref().map_or(0, |_| 1) +
+            self.external_docs.as_ref().map_or(0, |_| 1) +
+            self.format.as_ref().map_or(0, |_| 1) +
+            self.id.as_ref().map_or(0, |_| 1) +
+            self.items.as_ref().map_or(0, |_| 1) +
+            self.max_items.as_ref().map_or(0, |_| 1) +
+            self.max_length.as_ref().map_or(0, |_| 1) +
+            self.max_properties.as_ref().map_or(0, |_| 1) +
+            self.maximum.as_ref().map_or(0, |_| 1) +
+            self.min_items.as_ref().map_or(0, |_| 1) +
+            self.min_length.as_ref().map_or(0, |_| 1) +
+            self.min_properties.as_ref().map_or(0, |_| 1) +
+            self.minimum.as_ref().map_or(0, |_| 1) +
+            self.multiple_of.as_ref().map_or(0, |_| 1) +
+            self.not.as_ref().map_or(0, |_| 1) +
+            self.one_of.as_ref().map_or(0, |_| 1) +
+            self.pattern.as_ref().map_or(0, |_| 1) +
+            self.pattern_properties.as_ref().map_or(0, |_| 1) +
+            self.properties.as_ref().map_or(0, |_| 1) +
+            self.required.as_ref().map_or(0, |_| 1) +
+            self.title.as_ref().map_or(0, |_| 1) +
+            self.type_.as_ref().map_or(0, |_| 1) +
+            self.unique_items.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ref_path {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "$ref", value)?;
