@@ -13,7 +13,7 @@ pub struct FCVolumeSource {
     pub read_only: Option<bool>,
 
     /// Optional: FC target worldwide names (WWNs)
-    pub target_ww_ns: Option<Vec<String>>,
+    pub target_wwns: Option<Vec<String>>,
 
     /// Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.
     pub wwids: Option<Vec<String>>,
@@ -26,7 +26,7 @@ impl<'de> ::serde::Deserialize<'de> for FCVolumeSource {
             Key_fs_type,
             Key_lun,
             Key_read_only,
-            Key_target_ww_ns,
+            Key_target_wwns,
             Key_wwids,
             Other,
         }
@@ -47,7 +47,7 @@ impl<'de> ::serde::Deserialize<'de> for FCVolumeSource {
                             "fsType" => Field::Key_fs_type,
                             "lun" => Field::Key_lun,
                             "readOnly" => Field::Key_read_only,
-                            "targetWWNs" => Field::Key_target_ww_ns,
+                            "targetWWNs" => Field::Key_target_wwns,
                             "wwids" => Field::Key_wwids,
                             _ => Field::Other,
                         })
@@ -71,7 +71,7 @@ impl<'de> ::serde::Deserialize<'de> for FCVolumeSource {
                 let mut value_fs_type: Option<String> = None;
                 let mut value_lun: Option<i32> = None;
                 let mut value_read_only: Option<bool> = None;
-                let mut value_target_ww_ns: Option<Vec<String>> = None;
+                let mut value_target_wwns: Option<Vec<String>> = None;
                 let mut value_wwids: Option<Vec<String>> = None;
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
@@ -79,7 +79,7 @@ impl<'de> ::serde::Deserialize<'de> for FCVolumeSource {
                         Field::Key_fs_type => value_fs_type = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_lun => value_lun = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_read_only => value_read_only = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_target_ww_ns => value_target_ww_ns = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_target_wwns => value_target_wwns = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_wwids => value_wwids = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -89,7 +89,7 @@ impl<'de> ::serde::Deserialize<'de> for FCVolumeSource {
                     fs_type: value_fs_type,
                     lun: value_lun,
                     read_only: value_read_only,
-                    target_ww_ns: value_target_ww_ns,
+                    target_wwns: value_target_wwns,
                     wwids: value_wwids,
                 })
             }
@@ -117,7 +117,7 @@ impl ::serde::Serialize for FCVolumeSource {
             self.fs_type.as_ref().map_or(0, |_| 1) +
             self.lun.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +
-            self.target_ww_ns.as_ref().map_or(0, |_| 1) +
+            self.target_wwns.as_ref().map_or(0, |_| 1) +
             self.wwids.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
@@ -129,7 +129,7 @@ impl ::serde::Serialize for FCVolumeSource {
         if let Some(value) = &self.read_only {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
-        if let Some(value) = &self.target_ww_ns {
+        if let Some(value) = &self.target_wwns {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "targetWWNs", value)?;
         }
         if let Some(value) = &self.wwids {

@@ -7,7 +7,7 @@ pub struct ServiceSpec {
     pub cluster_ip: Option<String>,
 
     /// externalIPs is a list of IP addresses for which nodes in the cluster will also accept traffic for this service.  These IPs are not managed by Kubernetes.  The user is responsible for ensuring that traffic arrives at a node with this IP.  A common example is external load-balancers that are not part of the Kubernetes system.
-    pub external_i_ps: Option<Vec<String>>,
+    pub external_ips: Option<Vec<String>>,
 
     /// externalName is the external reference that kubedns or equivalent will return as a CNAME record for this service. No proxying will be involved. Must be a valid RFC-1123 hostname (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
     pub external_name: Option<String>,
@@ -48,7 +48,7 @@ impl<'de> ::serde::Deserialize<'de> for ServiceSpec {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_cluster_ip,
-            Key_external_i_ps,
+            Key_external_ips,
             Key_external_name,
             Key_external_traffic_policy,
             Key_health_check_node_port,
@@ -77,7 +77,7 @@ impl<'de> ::serde::Deserialize<'de> for ServiceSpec {
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
                         Ok(match v {
                             "clusterIP" => Field::Key_cluster_ip,
-                            "externalIPs" => Field::Key_external_i_ps,
+                            "externalIPs" => Field::Key_external_ips,
                             "externalName" => Field::Key_external_name,
                             "externalTrafficPolicy" => Field::Key_external_traffic_policy,
                             "healthCheckNodePort" => Field::Key_health_check_node_port,
@@ -109,7 +109,7 @@ impl<'de> ::serde::Deserialize<'de> for ServiceSpec {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
                 let mut value_cluster_ip: Option<String> = None;
-                let mut value_external_i_ps: Option<Vec<String>> = None;
+                let mut value_external_ips: Option<Vec<String>> = None;
                 let mut value_external_name: Option<String> = None;
                 let mut value_external_traffic_policy: Option<String> = None;
                 let mut value_health_check_node_port: Option<i32> = None;
@@ -125,7 +125,7 @@ impl<'de> ::serde::Deserialize<'de> for ServiceSpec {
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_cluster_ip => value_cluster_ip = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_external_i_ps => value_external_i_ps = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_external_ips => value_external_ips = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_external_name => value_external_name = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_external_traffic_policy => value_external_traffic_policy = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_health_check_node_port => value_health_check_node_port = ::serde::de::MapAccess::next_value(&mut map)?,
@@ -143,7 +143,7 @@ impl<'de> ::serde::Deserialize<'de> for ServiceSpec {
 
                 Ok(ServiceSpec {
                     cluster_ip: value_cluster_ip,
-                    external_i_ps: value_external_i_ps,
+                    external_ips: value_external_ips,
                     external_name: value_external_name,
                     external_traffic_policy: value_external_traffic_policy,
                     health_check_node_port: value_health_check_node_port,
@@ -187,7 +187,7 @@ impl ::serde::Serialize for ServiceSpec {
             "ServiceSpec",
             0 +
             self.cluster_ip.as_ref().map_or(0, |_| 1) +
-            self.external_i_ps.as_ref().map_or(0, |_| 1) +
+            self.external_ips.as_ref().map_or(0, |_| 1) +
             self.external_name.as_ref().map_or(0, |_| 1) +
             self.external_traffic_policy.as_ref().map_or(0, |_| 1) +
             self.health_check_node_port.as_ref().map_or(0, |_| 1) +
@@ -203,7 +203,7 @@ impl ::serde::Serialize for ServiceSpec {
         if let Some(value) = &self.cluster_ip {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIP", value)?;
         }
-        if let Some(value) = &self.external_i_ps {
+        if let Some(value) = &self.external_ips {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "externalIPs", value)?;
         }
         if let Some(value) = &self.external_name {

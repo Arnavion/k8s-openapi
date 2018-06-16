@@ -245,3 +245,5 @@ mod deployment;
 mod job;
 
 mod pod;
+
+mod special_idents;

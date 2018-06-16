@@ -7,7 +7,7 @@ pub struct PolicyRule {
     pub api_groups: Option<Vec<String>>,
 
     /// NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply to API resources (such as "pods" or "secrets") or non-resource URL paths (such as "/api"),  but not both.
-    pub non_resource_ur_ls: Option<Vec<String>>,
+    pub non_resource_urls: Option<Vec<String>>,
 
     /// ResourceNames is an optional white list of names that the rule applies to.  An empty set means that everything is allowed.
     pub resource_names: Option<Vec<String>>,
@@ -24,7 +24,7 @@ impl<'de> ::serde::Deserialize<'de> for PolicyRule {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_groups,
-            Key_non_resource_ur_ls,
+            Key_non_resource_urls,
             Key_resource_names,
             Key_resources,
             Key_verbs,
@@ -45,7 +45,7 @@ impl<'de> ::serde::Deserialize<'de> for PolicyRule {
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
                         Ok(match v {
                             "apiGroups" => Field::Key_api_groups,
-                            "nonResourceURLs" => Field::Key_non_resource_ur_ls,
+                            "nonResourceURLs" => Field::Key_non_resource_urls,
                             "resourceNames" => Field::Key_resource_names,
                             "resources" => Field::Key_resources,
                             "verbs" => Field::Key_verbs,
@@ -69,7 +69,7 @@ impl<'de> ::serde::Deserialize<'de> for PolicyRule {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
                 let mut value_api_groups: Option<Vec<String>> = None;
-                let mut value_non_resource_ur_ls: Option<Vec<String>> = None;
+                let mut value_non_resource_urls: Option<Vec<String>> = None;
                 let mut value_resource_names: Option<Vec<String>> = None;
                 let mut value_resources: Option<Vec<String>> = None;
                 let mut value_verbs: Option<Vec<String>> = None;
@@ -77,7 +77,7 @@ impl<'de> ::serde::Deserialize<'de> for PolicyRule {
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_groups => value_api_groups = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_non_resource_ur_ls => value_non_resource_ur_ls = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_non_resource_urls => value_non_resource_urls = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_resource_names => value_resource_names = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_resources => value_resources = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_verbs => value_verbs = Some(::serde::de::MapAccess::next_value(&mut map)?),
@@ -87,7 +87,7 @@ impl<'de> ::serde::Deserialize<'de> for PolicyRule {
 
                 Ok(PolicyRule {
                     api_groups: value_api_groups,
-                    non_resource_ur_ls: value_non_resource_ur_ls,
+                    non_resource_urls: value_non_resource_urls,
                     resource_names: value_resource_names,
                     resources: value_resources,
                     verbs: value_verbs.ok_or_else(|| ::serde::de::Error::missing_field("verbs"))?,
@@ -115,7 +115,7 @@ impl ::serde::Serialize for PolicyRule {
             "PolicyRule",
             0 +
             self.api_groups.as_ref().map_or(0, |_| 1) +
-            self.non_resource_ur_ls.as_ref().map_or(0, |_| 1) +
+            self.non_resource_urls.as_ref().map_or(0, |_| 1) +
             self.resource_names.as_ref().map_or(0, |_| 1) +
             self.resources.as_ref().map_or(0, |_| 1) +
             1,
@@ -123,7 +123,7 @@ impl ::serde::Serialize for PolicyRule {
         if let Some(value) = &self.api_groups {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", value)?;
         }
-        if let Some(value) = &self.non_resource_ur_ls {
+        if let Some(value) = &self.non_resource_urls {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceURLs", value)?;
         }
         if let Some(value) = &self.resource_names {

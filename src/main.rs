@@ -496,8 +496,18 @@ fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 		"$schema" => return "schema".into(),
 		"continue" => return "continue_".into(),
 		"enum" => return "enum_".into(),
-		"external_ip_s" => return "external_ips".into(),
 		"type" => return "type_".into(),
+		_ => (),
+	}
+
+	// Some cases of "ABc" should be converted to "abc" instead of "a_bc".
+	// Eg "JSONSchemas" => "json_schemas", but "externalIPs" => "external_ips" instead of "external_i_ps".
+	// Mostly happens with plurals of abbreviations.
+	match name {
+		"externalIPs" => return "external_ips".into(),
+		"nonResourceURLs" => return "non_resource_urls".into(),
+		"serverAddressByClientCIDRs" => return "server_address_by_client_cidrs".into(),
+		"targetWWNs" => return "target_wwns".into(),
 		_ => (),
 	}
 

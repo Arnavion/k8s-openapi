@@ -10,7 +10,7 @@ pub struct APIVersions {
     pub kind: Option<String>,
 
     /// a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.
-    pub server_address_by_client_cid_rs: Vec<::v1_10::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>,
+    pub server_address_by_client_cidrs: Vec<::v1_10::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>,
 
     /// versions are the api versions that are available.
     pub versions: Vec<String>,
@@ -22,7 +22,7 @@ impl<'de> ::serde::Deserialize<'de> for APIVersions {
         enum Field {
             Key_api_version,
             Key_kind,
-            Key_server_address_by_client_cid_rs,
+            Key_server_address_by_client_cidrs,
             Key_versions,
             Other,
         }
@@ -42,7 +42,7 @@ impl<'de> ::serde::Deserialize<'de> for APIVersions {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
-                            "serverAddressByClientCIDRs" => Field::Key_server_address_by_client_cid_rs,
+                            "serverAddressByClientCIDRs" => Field::Key_server_address_by_client_cidrs,
                             "versions" => Field::Key_versions,
                             _ => Field::Other,
                         })
@@ -65,14 +65,14 @@ impl<'de> ::serde::Deserialize<'de> for APIVersions {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
                 let mut value_api_version: Option<String> = None;
                 let mut value_kind: Option<String> = None;
-                let mut value_server_address_by_client_cid_rs: Option<Vec<::v1_10::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>> = None;
+                let mut value_server_address_by_client_cidrs: Option<Vec<::v1_10::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>> = None;
                 let mut value_versions: Option<Vec<String>> = None;
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_server_address_by_client_cid_rs => value_server_address_by_client_cid_rs = Some(::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_server_address_by_client_cidrs => value_server_address_by_client_cidrs = Some(::serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_versions => value_versions = Some(::serde::de::MapAccess::next_value(&mut map)?),
                         Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
                     }
@@ -81,7 +81,7 @@ impl<'de> ::serde::Deserialize<'de> for APIVersions {
                 Ok(APIVersions {
                     api_version: value_api_version,
                     kind: value_kind,
-                    server_address_by_client_cid_rs: value_server_address_by_client_cid_rs.ok_or_else(|| ::serde::de::Error::missing_field("serverAddressByClientCIDRs"))?,
+                    server_address_by_client_cidrs: value_server_address_by_client_cidrs.ok_or_else(|| ::serde::de::Error::missing_field("serverAddressByClientCIDRs"))?,
                     versions: value_versions.ok_or_else(|| ::serde::de::Error::missing_field("versions"))?,
                 })
             }
@@ -116,7 +116,7 @@ impl ::serde::Serialize for APIVersions {
         if let Some(value) = &self.kind {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "serverAddressByClientCIDRs", &self.server_address_by_client_cid_rs)?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "serverAddressByClientCIDRs", &self.server_address_by_client_cidrs)?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "versions", &self.versions)?;
         ::serde::ser::SerializeStruct::end(state)
     }
