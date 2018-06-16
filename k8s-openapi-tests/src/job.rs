@@ -78,16 +78,14 @@ fn create() {
 	let job_image = job_image.expect("couldn't get job container image");
 	assert_eq!(job_image, "alpine");
 
-	let job_uid =
-		job
-		.metadata.expect("couldn't get job metadata")
-		.uid.expect("couldn't get job uid");
+	let (job_self_link, job_uid) = {
+		let metadata = job.metadata.expect("couldn't get job metadata");
+		(metadata.self_link.expect("couldn't get job self link"), metadata.uid.expect("couldn't get job uid"))
+	};
 
 	// Wait for job to fail
-	let job_get_delete_path = "/apis/batch/v1/namespaces/default/jobs/k8s-openapi-tests-create-job";
-
 	loop {
-		let job: batch::Job = client.get(job_get_delete_path).expect("couldn't get job");
+		let job: batch::Job = client.get(&job_self_link).expect("couldn't get job");
 
 		let job_status =
 			job
@@ -134,7 +132,7 @@ fn create() {
 		.terminated.expect("couldn't get job pod container termination info");
 	assert_eq!(job_pod_container_state_terminated.exit_code, 5);
 
-	client.delete(job_get_delete_path).expect("couldn't delete job");
+	client.delete(&job_self_link).expect("couldn't delete job");
 
 	// Delete all pods of the job using label selector
 	let pod_list_path = "/api/v1/namespaces/default/pods/?labelSelector=job-name=k8s-openapi-tests-create-job";
