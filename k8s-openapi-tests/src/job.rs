@@ -100,7 +100,7 @@ fn create() {
 		::std::thread::sleep(::std::time::Duration::from_secs(1));
 	}
 
-	// Find pod of failed job
+	// Find a pod of the failed job using owner reference
 	let job_pod_status = loop {
 		let pod_list_path = "/api/v1/namespaces/default/pods";
 
@@ -135,4 +135,15 @@ fn create() {
 	assert_eq!(job_pod_container_state_terminated.exit_code, 5);
 
 	client.delete(job_get_delete_path).expect("couldn't delete job");
+
+	// Delete all pods of the job using label selector
+	let pod_list_path = "/api/v1/namespaces/default/pods/?labelSelector=job-name=k8s-openapi-tests-create-job";
+	let pod_list: api::PodList = client.get(pod_list_path).expect("couldn't get pod list");
+
+	for pod in pod_list.items {
+		let self_link =
+			pod.metadata.expect("couldn't get job pod metadata")
+			.self_link.expect("couldn't get job pod self link");
+		client.delete(&self_link).expect("couldn't delete job pod");
+	}
 }
