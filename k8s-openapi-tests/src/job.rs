@@ -20,17 +20,13 @@ fn create() {
 
 	let client = ::Client::new().expect("couldn't create client");
 
-	let image = "alpine".to_string();
-	#[cfg(not(feature = "v1_7"))]
-	let image = Some(image);
-
 	let job_spec = batch::JobSpec {
 		template: api::PodTemplateSpec {
 			spec: Some(api::PodSpec {
 				containers: vec![
 					api::Container {
 						name: "k8s-openapi-tests-create-job".to_string(),
-						image,
+						image: "alpine".to_string().into(),
 						command: Some(vec![
 							"sh".to_string(),
 							"-c".to_string(),
