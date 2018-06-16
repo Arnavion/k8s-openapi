@@ -208,9 +208,7 @@ impl Client {
 				Err("No Content-Type header")?,
 		}
 
-		let response = std::io::BufReader::new(response);
-		let lines = std::io::BufRead::lines(response);
-		Ok(lines.map(|line| Ok(serde_json::from_str(&line?)?)))
+		Ok(serde_json::Deserializer::from_reader(response).into_iter().map(|value| Ok(value?)))
 	}
 
 	fn post<T>(&self, path: &str, object: &T) -> Result<T, Error> where T: serde::Serialize, for<'de> T: serde::Deserialize<'de> {
