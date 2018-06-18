@@ -1,48 +1,48 @@
 
 mod custom_resource_definition;
-pub use self::custom_resource_definition::CustomResourceDefinition;
+pub use self::custom_resource_definition::*;
 
 mod custom_resource_definition_condition;
-pub use self::custom_resource_definition_condition::CustomResourceDefinitionCondition;
+pub use self::custom_resource_definition_condition::*;
 
 mod custom_resource_definition_list;
-pub use self::custom_resource_definition_list::CustomResourceDefinitionList;
+pub use self::custom_resource_definition_list::*;
 
 mod custom_resource_definition_names;
-pub use self::custom_resource_definition_names::CustomResourceDefinitionNames;
+pub use self::custom_resource_definition_names::*;
 
 mod custom_resource_definition_spec;
-pub use self::custom_resource_definition_spec::CustomResourceDefinitionSpec;
+pub use self::custom_resource_definition_spec::*;
 
 mod custom_resource_definition_status;
-pub use self::custom_resource_definition_status::CustomResourceDefinitionStatus;
+pub use self::custom_resource_definition_status::*;
 
 mod custom_resource_subresource_scale;
-pub use self::custom_resource_subresource_scale::CustomResourceSubresourceScale;
+pub use self::custom_resource_subresource_scale::*;
 
 mod custom_resource_subresource_status;
-pub use self::custom_resource_subresource_status::CustomResourceSubresourceStatus;
+pub use self::custom_resource_subresource_status::*;
 
 mod custom_resource_subresources;
-pub use self::custom_resource_subresources::CustomResourceSubresources;
+pub use self::custom_resource_subresources::*;
 
 mod custom_resource_validation;
-pub use self::custom_resource_validation::CustomResourceValidation;
+pub use self::custom_resource_validation::*;
 
 mod external_documentation;
-pub use self::external_documentation::ExternalDocumentation;
+pub use self::external_documentation::*;
 
 mod json;
-pub use self::json::JSON;
+pub use self::json::*;
 
 mod json_schema_props;
-pub use self::json_schema_props::JSONSchemaProps;
+pub use self::json_schema_props::*;
 
 mod json_schema_props_or_array;
-pub use self::json_schema_props_or_array::JSONSchemaPropsOrArray;
+pub use self::json_schema_props_or_array::*;
 
 mod json_schema_props_or_bool;
-pub use self::json_schema_props_or_bool::JSONSchemaPropsOrBool;
+pub use self::json_schema_props_or_bool::*;
 
 mod json_schema_props_or_string_array;
-pub use self::json_schema_props_or_string_array::JSONSchemaPropsOrStringArray;
+pub use self::json_schema_props_or_string_array::*;

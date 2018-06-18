@@ -19,6 +19,719 @@ pub struct RoleBinding {
     pub subjects: Vec<::v1_8::api::rbac::v1alpha1::Subject>,
 }
 
+// Generated from operation createRbacAuthorizationV1alpha1NamespacedRoleBinding
+
+#[derive(Debug)]
+pub enum CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::api::rbac::v1alpha1::RoleBinding),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// create a RoleBinding
+    pub fn create_rbac_authorization_v1alpha1_namespaced_role_binding<C>(
+        __client: &C,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_8::api::rbac::v1alpha1::RoleBinding,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings", namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized(response),
+            other => CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation deleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBinding
+
+#[derive(Debug)]
+pub enum DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// delete collection of RoleBinding
+    pub fn delete_rbac_authorization_v1alpha1_collection_namespaced_role_binding<C>(
+        __client: &C,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+        continue_: Option<&str>,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+        //
+        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+        limit: Option<i64>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings", namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(continue_) = continue_ {
+                __query_pairs.append_pair("continue", &continue_);
+            }
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(limit) = limit {
+                __query_pairs.append_pair("limit", &limit.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.delete(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::Unauthorized(response),
+            other => DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation deleteRbacAuthorizationV1alpha1NamespacedRoleBinding
+
+#[derive(Debug)]
+pub enum DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// delete a RoleBinding
+    pub fn delete_rbac_authorization_v1alpha1_namespaced_role_binding<C>(
+        __client: &C,
+        // name of the RoleBinding
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+        grace_period_seconds: Option<i64>,
+        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+        orphan_dependents: Option<bool>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+        propagation_policy: Option<&str>,
+    ) -> Result<DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(grace_period_seconds) = grace_period_seconds {
+                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
+            }
+            if let Some(orphan_dependents) = orphan_dependents {
+                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(propagation_policy) = propagation_policy {
+                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+            }
+        }
+
+        let response = __client.delete(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized(response),
+            other => DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation listRbacAuthorizationV1alpha1NamespacedRoleBinding
+
+#[derive(Debug)]
+pub enum ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::api::rbac::v1alpha1::RoleBindingList),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// list or watch objects of kind RoleBinding
+    pub fn list_rbac_authorization_v1alpha1_namespaced_role_binding<C>(
+        __client: &C,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+        continue_: Option<&str>,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+        //
+        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+        limit: Option<i64>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings", namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(continue_) = continue_ {
+                __query_pairs.append_pair("continue", &continue_);
+            }
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(limit) = limit {
+                __query_pairs.append_pair("limit", &limit.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized(response),
+            other => ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation listRbacAuthorizationV1alpha1RoleBindingForAllNamespaces
+
+#[derive(Debug)]
+pub enum ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::api::rbac::v1alpha1::RoleBindingList),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// list or watch objects of kind RoleBinding
+    pub fn list_rbac_authorization_v1alpha1_role_binding_for_all_namespaces<C>(
+        __client: &C,
+        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+        continue_: Option<&str>,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+        //
+        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+        limit: Option<i64>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/rolebindings")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(continue_) = continue_ {
+                __query_pairs.append_pair("continue", &continue_);
+            }
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(limit) = limit {
+                __query_pairs.append_pair("limit", &limit.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse::Unauthorized(response),
+            other => ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation patchRbacAuthorizationV1alpha1NamespacedRoleBinding
+
+#[derive(Debug)]
+pub enum PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::api::rbac::v1alpha1::RoleBinding),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// partially update the specified RoleBinding
+    pub fn patch_rbac_authorization_v1alpha1_namespaced_role_binding<C>(
+        __client: &C,
+        // name of the RoleBinding
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized(response),
+            other => PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation readRbacAuthorizationV1alpha1NamespacedRoleBinding
+
+#[derive(Debug)]
+pub enum ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::api::rbac::v1alpha1::RoleBinding),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// read the specified RoleBinding
+    pub fn read_rbac_authorization_v1alpha1_namespaced_role_binding<C>(
+        __client: &C,
+        // name of the RoleBinding
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized(response),
+            other => ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation replaceRbacAuthorizationV1alpha1NamespacedRoleBinding
+
+#[derive(Debug)]
+pub enum ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::api::rbac::v1alpha1::RoleBinding),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// replace the specified RoleBinding
+    pub fn replace_rbac_authorization_v1alpha1_namespaced_role_binding<C>(
+        __client: &C,
+        // name of the RoleBinding
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_8::api::rbac::v1alpha1::RoleBinding,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized(response),
+            other => ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation watchRbacAuthorizationV1alpha1NamespacedRoleBinding
+
+pub enum WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<R> where R: ::std::io::Read {
+    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent>),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// watch changes to an object of kind RoleBinding
+    pub fn watch_rbac_authorization_v1alpha1_namespaced_role_binding<C>(
+        __client: &C,
+        // name of the RoleBinding
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+        continue_: Option<&str>,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+        //
+        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+        limit: Option<i64>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/watch/namespaces/{namespace}/rolebindings/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(continue_) = continue_ {
+                __query_pairs.append_pair("continue", &continue_);
+            }
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(limit) = limit {
+                __query_pairs.append_pair("limit", &limit.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
+                WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized(response),
+            other => WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation watchRbacAuthorizationV1alpha1NamespacedRoleBindingList
+
+pub enum WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse<R> where R: ::std::io::Read {
+    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent>),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// watch individual changes to a list of RoleBinding
+    pub fn watch_rbac_authorization_v1alpha1_namespaced_role_binding_list<C>(
+        __client: &C,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+        continue_: Option<&str>,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+        //
+        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+        limit: Option<i64>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/watch/namespaces/{namespace}/rolebindings", namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(continue_) = continue_ {
+                __query_pairs.append_pair("continue", &continue_);
+            }
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(limit) = limit {
+                __query_pairs.append_pair("limit", &limit.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
+                WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse::Unauthorized(response),
+            other => WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation watchRbacAuthorizationV1alpha1RoleBindingListForAllNamespaces
+
+pub enum WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse<R> where R: ::std::io::Read {
+    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent>),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl RoleBinding {
+    /// watch individual changes to a list of RoleBinding
+    pub fn watch_rbac_authorization_v1alpha1_role_binding_list_for_all_namespaces<C>(
+        __client: &C,
+        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+        continue_: Option<&str>,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+        //
+        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+        limit: Option<i64>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/rbac.authorization.k8s.io/v1alpha1/watch/rolebindings")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(continue_) = continue_ {
+                __query_pairs.append_pair("continue", &continue_);
+            }
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(limit) = limit {
+                __query_pairs.append_pair("limit", &limit.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
+                WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse::Unauthorized(response),
+            other => WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for RoleBinding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

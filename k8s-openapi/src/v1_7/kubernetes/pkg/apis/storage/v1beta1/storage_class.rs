@@ -21,6 +21,504 @@ pub struct StorageClass {
     pub provisioner: String,
 }
 
+// Generated from operation createStorageV1beta1StorageClass
+
+#[derive(Debug)]
+pub enum CreateStorageV1beta1StorageClassResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl StorageClass {
+    /// create a StorageClass
+    pub fn create_storage_v1beta1_storage_class<C>(
+        __client: &C,
+        body: &::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<CreateStorageV1beta1StorageClassResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/storage.k8s.io/v1beta1/storageclasses")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateStorageV1beta1StorageClassResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => CreateStorageV1beta1StorageClassResponse::Unauthorized(response),
+            other => CreateStorageV1beta1StorageClassResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation deleteStorageV1beta1CollectionStorageClass
+
+#[derive(Debug)]
+pub enum DeleteStorageV1beta1CollectionStorageClassResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl StorageClass {
+    /// delete collection of StorageClass
+    pub fn delete_storage_v1beta1_collection_storage_class<C>(
+        __client: &C,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<DeleteStorageV1beta1CollectionStorageClassResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/storage.k8s.io/v1beta1/storageclasses")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.delete(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                DeleteStorageV1beta1CollectionStorageClassResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => DeleteStorageV1beta1CollectionStorageClassResponse::Unauthorized(response),
+            other => DeleteStorageV1beta1CollectionStorageClassResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation deleteStorageV1beta1StorageClass
+
+#[derive(Debug)]
+pub enum DeleteStorageV1beta1StorageClassResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl StorageClass {
+    /// delete a StorageClass
+    pub fn delete_storage_v1beta1_storage_class<C>(
+        __client: &C,
+        // name of the StorageClass
+        name: &str,
+        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+        grace_period_seconds: Option<i64>,
+        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+        orphan_dependents: Option<bool>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+        propagation_policy: Option<&str>,
+    ) -> Result<DeleteStorageV1beta1StorageClassResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/storage.k8s.io/v1beta1/storageclasses/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(grace_period_seconds) = grace_period_seconds {
+                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
+            }
+            if let Some(orphan_dependents) = orphan_dependents {
+                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(propagation_policy) = propagation_policy {
+                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+            }
+        }
+
+        let response = __client.delete(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                DeleteStorageV1beta1StorageClassResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => DeleteStorageV1beta1StorageClassResponse::Unauthorized(response),
+            other => DeleteStorageV1beta1StorageClassResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation listStorageV1beta1StorageClass
+
+#[derive(Debug)]
+pub enum ListStorageV1beta1StorageClassResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClassList),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl StorageClass {
+    /// list or watch objects of kind StorageClass
+    pub fn list_storage_v1beta1_storage_class<C>(
+        __client: &C,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<ListStorageV1beta1StorageClassResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/storage.k8s.io/v1beta1/storageclasses")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ListStorageV1beta1StorageClassResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ListStorageV1beta1StorageClassResponse::Unauthorized(response),
+            other => ListStorageV1beta1StorageClassResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation patchStorageV1beta1StorageClass
+
+#[derive(Debug)]
+pub enum PatchStorageV1beta1StorageClassResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl StorageClass {
+    /// partially update the specified StorageClass
+    pub fn patch_storage_v1beta1_storage_class<C>(
+        __client: &C,
+        // name of the StorageClass
+        name: &str,
+        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<PatchStorageV1beta1StorageClassResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/storage.k8s.io/v1beta1/storageclasses/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                PatchStorageV1beta1StorageClassResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => PatchStorageV1beta1StorageClassResponse::Unauthorized(response),
+            other => PatchStorageV1beta1StorageClassResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation readStorageV1beta1StorageClass
+
+#[derive(Debug)]
+pub enum ReadStorageV1beta1StorageClassResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl StorageClass {
+    /// read the specified StorageClass
+    pub fn read_storage_v1beta1_storage_class<C>(
+        __client: &C,
+        // name of the StorageClass
+        name: &str,
+        // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+        exact: Option<bool>,
+        // Should this value be exported.  Export strips fields that a user can not specify.
+        export: Option<bool>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReadStorageV1beta1StorageClassResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/storage.k8s.io/v1beta1/storageclasses/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(exact) = exact {
+                __query_pairs.append_pair("exact", &exact.to_string());
+            }
+            if let Some(export) = export {
+                __query_pairs.append_pair("export", &export.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReadStorageV1beta1StorageClassResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReadStorageV1beta1StorageClassResponse::Unauthorized(response),
+            other => ReadStorageV1beta1StorageClassResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation replaceStorageV1beta1StorageClass
+
+#[derive(Debug)]
+pub enum ReplaceStorageV1beta1StorageClassResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl StorageClass {
+    /// replace the specified StorageClass
+    pub fn replace_storage_v1beta1_storage_class<C>(
+        __client: &C,
+        // name of the StorageClass
+        name: &str,
+        body: &::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReplaceStorageV1beta1StorageClassResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/storage.k8s.io/v1beta1/storageclasses/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReplaceStorageV1beta1StorageClassResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReplaceStorageV1beta1StorageClassResponse::Unauthorized(response),
+            other => ReplaceStorageV1beta1StorageClassResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation watchStorageV1beta1StorageClass
+
+pub enum WatchStorageV1beta1StorageClassResponse<R> where R: ::std::io::Read {
+    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl StorageClass {
+    /// watch changes to an object of kind StorageClass
+    pub fn watch_storage_v1beta1_storage_class<C>(
+        __client: &C,
+        // name of the StorageClass
+        name: &str,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<WatchStorageV1beta1StorageClassResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/storage.k8s.io/v1beta1/watch/storageclasses/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
+                WatchStorageV1beta1StorageClassResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => WatchStorageV1beta1StorageClassResponse::Unauthorized(response),
+            other => WatchStorageV1beta1StorageClassResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation watchStorageV1beta1StorageClassList
+
+pub enum WatchStorageV1beta1StorageClassListResponse<R> where R: ::std::io::Read {
+    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl StorageClass {
+    /// watch individual changes to a list of StorageClass
+    pub fn watch_storage_v1beta1_storage_class_list<C>(
+        __client: &C,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<WatchStorageV1beta1StorageClassListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/storage.k8s.io/v1beta1/watch/storageclasses")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
+                WatchStorageV1beta1StorageClassListResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => WatchStorageV1beta1StorageClassListResponse::Unauthorized(response),
+            other => WatchStorageV1beta1StorageClassListResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for StorageClass {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

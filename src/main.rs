@@ -75,6 +75,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 	let mut num_generated_structs = 0usize;
 	let mut num_generated_type_aliases = 0usize;
 	let mut num_skipped_refs = 0usize;
+	let mut num_generated_apis = 0usize;
 
 	info!(target: "", "Parsing spec file at {} ...", input);
 	let spec: swagger20::Spec = {
@@ -85,7 +86,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 		}
 		response.json()?
 	};
-	info!("OK. Spec has {} definitions", spec.definitions.len());
+	info!("OK. Spec has {} definitions and {} paths", spec.definitions.len(), spec.paths.len());
 
 	loop {
 		info!("Removing output directory {} ...", out_dir.display());
@@ -128,7 +129,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 
 		if let Some(description) = definition.description {
 			for line in get_comment_text(&description) {
-				writeln!(file, "{}", line)?;
+				writeln!(file, "/{}", line)?;
 			}
 		}
 
@@ -248,7 +249,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 
 					if let Some(ref description) = schema.description {
 						for line in get_comment_text(description) {
-							writeln!(file, "    {}", line)?;
+							writeln!(file, "    /{}", line)?;
 						}
 					}
 
@@ -259,8 +260,28 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 					writeln!(file, ",")?;
 				}
 				writeln!(file, "}}")?;
-				writeln!(file)?;
 
+				let mut operations = vec![];
+				if let Some(kubernetes_group_kind_versions) = &definition.kubernetes_group_kind_versions {
+					for kubernetes_group_kind_version in kubernetes_group_kind_versions {
+						for (path, path_item) in &spec.paths {
+							for operation in &path_item.operations {
+								if operation.kubernetes_group_kind_version.as_ref() == Some(kubernetes_group_kind_version) {
+									operations.push((path, path_item, operation));
+								}
+							}
+						}
+					}
+				}
+				operations.sort_by_key(|(_, _, operation)| &operation.id);
+				let operations = operations;
+
+				for (path, path_item, operation) in operations {
+					write_operation(&mut file, operation, &replace_namespaces, mod_root, Some(&type_name), path, path_item)?;
+					num_generated_apis += 1;
+				}
+
+				writeln!(file)?;
 				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
 				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
 				writeln!(file, "        #[allow(non_camel_case_types)]")?;
@@ -404,10 +425,31 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 		trace!("OK");
 	}
 
+	{
+		let mut mod_root_file = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).open(out_dir.join("mod.rs"))?);
+
+		let mut operations = vec![];
+		for (path, path_item) in &spec.paths {
+			for operation in &path_item.operations {
+				if operation.kubernetes_group_kind_version.is_none() {
+					operations.push((path, path_item, operation));
+				}
+			}
+		}
+		operations.sort_by_key(|(_, _, operation)| &operation.id);
+		let operations = operations;
+
+		for (path, path_item, operation) in operations {
+			write_operation(&mut mod_root_file, operation, &replace_namespaces, mod_root, None, path, path_item)?;
+			num_generated_apis += 1;
+		}
+	}
+
 	info!("OK");
 	info!("Generated {} structs", num_generated_structs);
 	info!("Generated {} type aliases", num_generated_type_aliases);
 	info!("Skipped generating {} type aliases", num_skipped_refs);
+	info!("Generated {} API functions", num_generated_apis);
 	info!("");
 
 	Ok(())
@@ -461,7 +503,7 @@ fn create_file_for_type(
 		let mut parent_mod_rs = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).create(true).open(current.join("mod.rs"))?);
 		writeln!(parent_mod_rs)?;
 		writeln!(parent_mod_rs, "mod {};", mod_name)?;
-		writeln!(parent_mod_rs, "pub use self::{}::{};", mod_name, type_name)?;
+		writeln!(parent_mod_rs, "pub use self::{}::*;", mod_name)?;
 	}
 
 	let file_name = current.join(&*mod_name).with_extension("rs");
@@ -472,12 +514,12 @@ fn create_file_for_type(
 fn get_comment_text<'a>(s: &'a str) -> impl Iterator<Item = std::borrow::Cow<'static, str>> + 'a {
 	s.lines().map(|line|
 		if line.is_empty() {
-			"///".into()
+			"//".into()
 		}
 		else {
 			let line = line.replace("[", r"\[");
 			let line = line.replace("]", r"\]");
-			format!("/// {}", line).into()
+			format!("// {}", line).into()
 		})
 }
 
@@ -549,6 +591,33 @@ fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	result.into()
 }
 
+fn get_rust_borrow_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec<&str>, Vec<String>)], mod_root: &str) -> std::borrow::Cow<'static, str> {
+	match *schema_kind {
+		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
+
+		swagger20::SchemaKind::Ref(ref ref_path) => format!("&{}", get_fully_qualified_type_name(ref_path, replace_namespaces, mod_root)).into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => "&::serde_json::Value".into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("&[{}]", get_rust_type(&items.kind, replace_namespaces, mod_root)).into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => "bool".into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int32 }) => "i32".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int64 }) => "i64".into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => "f64".into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) =>
+			format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, mod_root)).into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => "&::ByteString".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => "&::chrono::DateTime<::chrono::Utc>".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::IntOrString) }) => "&::IntOrString".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => "&str".into(),
+	}
+}
+
 fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec<&str>, Vec<String>)], mod_root: &str) -> std::borrow::Cow<'static, str> {
 	match *schema_kind {
 		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
@@ -590,4 +659,291 @@ fn replace_namespace<'a, I>(parts: I, replace_namespaces: &[(Vec<&str>, Vec<Stri
 	}
 
 	parts.into_iter().map(ToString::to_string).collect()
+}
+
+fn write_operation(
+	file: &mut std::io::BufWriter<std::fs::File>,
+	operation: &swagger20::Operation,
+	replace_namespaces: &[(Vec<&str>, Vec<String>)],
+	mod_root: &str,
+	type_name: Option<&str>,
+	path: &str,
+	path_item: &swagger20::PathItem,
+) -> Result<(), Error> {
+	use std::io::Write;
+
+	let is_watch = match operation.kubernetes_action {
+		Some(swagger20::KubernetesAction::Watch) | Some(swagger20::KubernetesAction::WatchList) => true,
+		_ => false,
+	};
+
+	writeln!(file)?;
+
+	writeln!(file, "// Generated from operation {}", operation.id)?;
+	writeln!(file)?;
+
+	let operation_result_name = format!("{}{}Response", operation.id[0..1].to_uppercase(), &operation.id[1..]);
+
+	let operation_responses: Result<Vec<_>, _> =
+		operation.responses.iter()
+		.map(|(status_code, schema)| {
+			let http_status_code = match status_code {
+				reqwest::StatusCode::Accepted => "ACCEPTED",
+				reqwest::StatusCode::Created => "CREATED",
+				reqwest::StatusCode::Ok => "OK",
+				reqwest::StatusCode::Unauthorized => "UNAUTHORIZED",
+				_ => return Err(format!("unrecognized status code {}", status_code)),
+			};
+
+			let variant_name = match status_code {
+				reqwest::StatusCode::Accepted => "Accepted",
+				reqwest::StatusCode::Created => "Created",
+				reqwest::StatusCode::Ok => "Ok",
+				reqwest::StatusCode::Unauthorized => "Unauthorized",
+				_ => return Err(format!("unrecognized status code {}", status_code)),
+			};
+
+			Ok((http_status_code, variant_name, schema))
+		})
+		.collect();
+	let operation_responses = operation_responses?;
+
+	if !is_watch {
+		// serde_json::StreamDeserializer isn't Debug
+		writeln!(file, "#[derive(Debug)]")?;
+	}
+	writeln!(file, "pub enum {}<R> where R: ::std::io::Read {{", operation_result_name)?;
+	for (_, variant_name, schema) in &operation_responses {
+		if let Some(schema) = schema {
+			if is_watch {
+				writeln!(
+					file,
+					"    {}(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, {}>),",
+					variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
+			}
+			else {
+				writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
+			}
+		}
+		else {
+			writeln!(file, "    {}(R),", variant_name)?;
+		}
+	}
+	writeln!(file, "    Other(::http::StatusCode, R),")?;
+	writeln!(file, "}}")?;
+	writeln!(file)?;
+
+	let indent = if type_name.is_some() { "    " } else { "" };
+
+	if let Some(type_name) = type_name {
+		writeln!(file, "impl {} {{", type_name)?;
+	}
+
+	let operation_fn_name = get_rust_ident(&operation.id);
+
+	let mut parameters: Vec<_> = path_item.parameters.iter().collect();
+	for parameter in &operation.parameters {
+		if let Some(p) = parameters.iter_mut().find(|p| p.name == parameter.name) {
+			std::mem::replace(p, parameter);
+			continue;
+		}
+
+		parameters.push(parameter);
+	}
+	let mut previous_parameters: std::collections::HashSet<_> = Default::default();
+	let mut parameters: Vec<_> =
+		parameters.into_iter()
+		.map(|parameter| {
+			let mut parameter_name = get_rust_ident(&parameter.name);
+			while previous_parameters.contains(&parameter_name) {
+				parameter_name = format!("{}_", parameter_name).into();
+			}
+			previous_parameters.insert(parameter_name.clone());
+
+			let parameter_type = get_rust_borrow_type(&parameter.schema.kind, replace_namespaces, mod_root);
+
+			(parameter_name, parameter_type, parameter)
+		})
+		.collect();
+	parameters.sort_by(|(_, _, parameter1), (_, _, parameter2)| {
+		(match (parameter1.location, parameter2.location) {
+			(location1, location2) if location1 == location2 => std::cmp::Ordering::Equal,
+			(swagger20::ParameterLocation::Path, _) |
+			(swagger20::ParameterLocation::Body, swagger20::ParameterLocation::Query) => std::cmp::Ordering::Less,
+			_ => std::cmp::Ordering::Greater,
+		})
+		.then_with(|| parameter1.name.cmp(&parameter2.name))
+	});
+	let parameters = parameters;
+
+	if let Some(description) = operation.description.as_ref() {
+		for line in get_comment_text(description) {
+			writeln!(file, "{}/{}", indent, line)?;
+		}
+	}
+
+	writeln!(file, "{}pub fn {}<C>(", indent, operation_fn_name)?;
+	writeln!(file, "{}    __client: &C,", indent)?;
+	for (parameter_name, parameter_type, parameter) in &parameters {
+		match (operation.method, parameter.location) {
+			(swagger20::Method::Delete, swagger20::ParameterLocation::Body) |
+			(swagger20::Method::Get, swagger20::ParameterLocation::Body) => continue,
+
+			_ => (),
+		}
+
+		if let Some(description) = parameter.schema.description.as_ref() {
+			for line in get_comment_text(description) {
+				writeln!(file, "{}    {}", indent, line)?;
+			}
+		}
+
+		if parameter.required {
+			writeln!(file, "{}    {}: {},", indent, parameter_name, parameter_type)?;
+		}
+		else {
+			writeln!(file, "{}    {}: Option<{}>,", indent, parameter_name, parameter_type)?;
+		}
+	}
+	writeln!(file, "{}) -> Result<{}<C::Response>, ::Error<C::Error>> where C: ::Client {{", indent, operation_result_name)?;
+
+	let have_query_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Query);
+
+	if have_query_parameters {
+		write!(file, r#"{}    let mut __url = __client.base_url().join(&format!("{}""#, indent, path)?;
+	}
+	else {
+		write!(file, r#"{}    let __url = __client.base_url().join(&format!("{}""#, indent, path)?;
+	}
+	for (parameter_name, _, parameter) in &parameters {
+		if parameter.location == swagger20::ParameterLocation::Path {
+			write!(file, ", {} = {}", parameter_name, parameter_name)?;
+		}
+	}
+	writeln!(file, r")).map_err(::Error::URL)?;")?;
+
+	if have_query_parameters {
+		writeln!(file, "{}    {{", indent)?;
+		writeln!(file, "{}        let mut __query_pairs = __url.query_pairs_mut();", indent)?;
+		for (parameter_name, parameter_type, parameter) in &parameters {
+			if parameter.location == swagger20::ParameterLocation::Query {
+				if parameter.required {
+					match parameter.schema.kind {
+						swagger20::SchemaKind::Ty(swagger20::Type::Boolean) |
+						swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
+						swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) =>
+							writeln!(file, r#"{}        __query_pairs.append_pair("{}", &{}.to_string());"#, indent, parameter.name, parameter_name)?,
+
+						swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
+							writeln!(file, r#"{}        __query_pairs.append_pair("{}", &{});"#, indent, parameter.name, parameter_name)?,
+
+						_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter_name, parameter_type).into()),
+					}
+				}
+				else {
+					writeln!(file, "{}        if let Some({}) = {} {{", indent, parameter_name, parameter_name)?;
+					match parameter.schema.kind {
+						swagger20::SchemaKind::Ty(swagger20::Type::Boolean) |
+						swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
+						swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) =>
+							writeln!(file, r#"{}            __query_pairs.append_pair("{}", &{}.to_string());"#, indent, parameter.name, parameter_name)?,
+
+						swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
+							writeln!(file, r#"{}            __query_pairs.append_pair("{}", &{});"#, indent, parameter.name, parameter_name)?,
+
+						_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter_name, parameter_type).into()),
+					}
+					writeln!(file, "{}        }}", indent)?;
+				}
+			}
+		}
+		writeln!(file, "{}    }}", indent)?;
+	}
+	writeln!(file)?;
+
+	let method = match operation.method {
+		swagger20::Method::Delete => "delete",
+		swagger20::Method::Get => "get",
+		swagger20::Method::Patch => "patch",
+		swagger20::Method::Post => "post",
+		swagger20::Method::Put => "put",
+	};
+
+	write!(file, "{}    let response =", indent)?;
+	match operation.method {
+		swagger20::Method::Delete | swagger20::Method::Get =>
+			writeln!(file, " __client.{}(__url).map_err(::Error::Client)?;", method)?,
+
+		swagger20::Method::Patch | swagger20::Method::Post | swagger20::Method::Put =>
+			if let Some((parameter_name, _, parameter)) =
+				parameters.iter()
+				.find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body)
+			{
+				if parameter.required {
+					writeln!(file, " __client.{}(__url, &{}).map_err(::Error::Client)?;", method, parameter_name)?;
+				}
+				else {
+					writeln!(file)?;
+					writeln!(file, "{}        if let Some(value) = {} {{", indent, parameter_name)?;
+					writeln!(file, "{}            __client.{}(__url, &{}).map_err(::Error::Client)?;", indent, method, parameter_name)?;
+					writeln!(file, "{}        }}", indent)?;
+					writeln!(file, "{}        else {{", indent)?;
+					writeln!(file, "{}            __client.{}(__url, &()).map_err(::Error::Client)?;", indent, method)?;
+					writeln!(file, "{}        }};", indent)?;
+				}
+			}
+			else {
+				writeln!(file, " __client.{}(__url, &()).map_err(::Error::Client)?;", method)?;
+			},
+	}
+	writeln!(file)?;
+
+	writeln!(file, "{}    Ok(match ::Response::status_code(&response) {{", indent)?;
+	for (http_status_code, variant_name, schema) in &operation_responses {
+		write!(file, "{}        ::http::StatusCode::{} => ", indent, http_status_code)?;
+		if let Some(schema) = schema {
+			writeln!(file, "{{")?;
+
+			match &schema.kind {
+				swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
+					writeln!(file, "{}            let mut response = response;", indent)?;
+					writeln!(file, "{}            let mut result = String::new();", indent)?;
+					// TODO: Better to return a Read rather than buffer up a whole String? `pods/{}/log` can get quite large...
+					writeln!(file, "{}            ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;", indent)?;
+				},
+
+				swagger20::SchemaKind::Ty(swagger20::Type::Boolean { .. }) |
+				swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
+				swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) => {
+					return Err(format!("unsupported response type {:?}", schema.kind).into());
+				},
+
+				_ => if is_watch {
+					writeln!(file, "{}            let result = ::serde_json::Deserializer::from_reader(response).into_iter();", indent)?;
+				}
+				else {
+					writeln!(file, "{}            let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;", indent)?;
+				},
+			}
+
+			writeln!(file, "                {}::{}(result)", operation_result_name, variant_name)?;
+			writeln!(file, "            }},")?;
+		}
+		else {
+			writeln!(file, "{}::{}(response),", operation_result_name, variant_name)?;
+		}
+	}
+	writeln!(file, "{}        other => {}::Other(other, response),", indent, operation_result_name)?;
+	writeln!(file, "{}    }})", indent)?;
+
+	writeln!(file, "{}}}", indent)?;
+	writeln!(file)?;
+
+	// TODO: Async
+
+	if type_name.is_some() {
+		writeln!(file, "}}")?;
+	}
+
+	Ok(())
 }

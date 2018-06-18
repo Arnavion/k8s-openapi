@@ -2,6 +2,7 @@
 
 extern crate backtrace;
 extern crate k8s_openapi;
+extern crate http;
 extern crate reqwest;
 extern crate serde;
 extern crate serde_json;
@@ -29,7 +30,7 @@ impl std::fmt::Debug for Error {
 #[derive(Debug)]
 struct Client {
 	inner: reqwest::Client,
-	server: String,
+	server: reqwest::Url,
 }
 
 impl Client {
@@ -88,12 +89,13 @@ impl Client {
 
 		let server = {
 			let server = cluster.remove(&serde_yaml::Value::String("server".to_string())).ok_or_else(|| format!("malformed kubeconfig cluster {:#?}", cluster))?;
-			if let serde_yaml::Value::String(string) = server {
+			let server = if let serde_yaml::Value::String(string) = server {
 				string
 			}
 			else {
 				return Err(format!("malformed kubeconfig server {:#?}", server).into());
-			}
+			};
+			server.parse().map_err(|err| format!("couldn't parse server URL: {}", err))?
 		};
 
 		let mut users = {
@@ -158,73 +160,17 @@ impl Client {
 	}
 
 	fn get<T>(&self, path: &str) -> Result<T, Error> where for<'de> T: serde::Deserialize<'de> {
-		let mut url = self.server.clone();
-		url.push_str(path);
+		let url = self.server.join(path)?;
 
 		let mut response =
 			self.inner
-			.get(&url)
+			.get(url)
 			.header(reqwest::header::Accept::json())
 			.send()?;
 
 		let status = response.status();
 		if status != reqwest::StatusCode::Ok {
 			Err(status.to_string())?;
-		}
-
-		match response.headers().get() {
-			Some(reqwest::header::ContentType(mime)) if *mime == reqwest::mime::APPLICATION_JSON =>
-				(),
-			Some(reqwest::header::ContentType(mime)) =>
-				Err(format!("Unexpected Content-Type header: {}", mime))?,
-			None =>
-				Err("No Content-Type header")?,
-		}
-
-		Ok(response.json()?)
-	}
-
-	fn watch<T>(&self, path: &str) -> Result<impl Iterator<Item = Result<T, Error>>, Error> where for<'de> T: serde::Deserialize<'de> {
-		let mut url = self.server.clone();
-		url.push_str(path);
-
-		let response =
-			self.inner
-			.get(&url)
-			.header(reqwest::header::Accept::json())
-			.send()?;
-
-		let status = response.status();
-		if status != reqwest::StatusCode::Ok {
-			Err(status.to_string())?;
-		}
-
-		match response.headers().get() {
-			Some(reqwest::header::ContentType(mime)) if *mime == reqwest::mime::APPLICATION_JSON =>
-				(),
-			Some(reqwest::header::ContentType(mime)) =>
-				Err(format!("Unexpected Content-Type header: {}", mime))?,
-			None =>
-				Err("No Content-Type header")?,
-		}
-
-		Ok(serde_json::Deserializer::from_reader(response).into_iter().map(|value| Ok(value?)))
-	}
-
-	fn post<T>(&self, path: &str, object: &T) -> Result<T, Error> where T: serde::Serialize, for<'de> T: serde::Deserialize<'de> {
-		let mut url = self.server.clone();
-		url.push_str(path);
-
-		let mut response =
-			self.inner
-			.post(&url)
-			.header(reqwest::header::Accept::json())
-			.json(object)
-			.send()?;
-
-		let status = response.status();
-		if status != reqwest::StatusCode::Created {
-			Err(format!("{} {}", status.to_string(), response.text()?))?;
 		}
 
 		match response.headers().get() {
@@ -240,12 +186,11 @@ impl Client {
 	}
 
 	fn delete(&self, path: &str) -> Result<(), Error> {
-		let mut url = self.server.clone();
-		url.push_str(path);
+		let url = self.server.join(path)?;
 
 		let mut response =
 			self.inner
-			.delete(&url)
+			.delete(url)
 			.header(reqwest::header::Accept::json())
 			.send()?;
 
@@ -267,9 +212,63 @@ impl Client {
 	}
 }
 
+impl k8s_openapi::Client for Client {
+	type Response = reqwest::Response;
+	type Error = reqwest::Error;
+
+	fn base_url(&self) -> &reqwest::Url {
+		&self.server
+	}
+
+	fn delete(&self, url: reqwest::Url) -> Result<Self::Response, Self::Error> {
+		let response =
+			self.inner
+			.delete(url)
+			.send()?;
+		Ok(response)
+	}
+
+	fn get(&self, url: reqwest::Url) -> Result<Self::Response, Self::Error> {
+		let response =
+			self.inner
+			.get(url)
+			.send()?;
+		Ok(response)
+	}
+
+	fn patch<B>(&self, url: reqwest::Url, body: &B) -> Result<Self::Response, Self::Error> where B: serde::Serialize {
+		let response =
+			self.inner
+			.patch(url)
+			.json(body)
+			.send()?;
+		Ok(response)
+	}
+
+	fn post<B>(&self, url: reqwest::Url, body: &B) -> Result<Self::Response, Self::Error> where B: serde::Serialize {
+		let response =
+			self.inner
+			.post(url)
+			.json(body)
+			.send()?;
+		Ok(response)
+	}
+
+	fn put<B>(&self, url: reqwest::Url, body: &B) -> Result<Self::Response, Self::Error> where B: serde::Serialize {
+		let response =
+			self.inner
+			.put(url)
+			.json(body)
+			.send()?;
+		Ok(response)
+	}
+}
+
 mod deployment;
 
 mod job;
+
+mod logs;
 
 mod pod;
 

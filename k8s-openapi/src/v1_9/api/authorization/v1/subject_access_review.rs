@@ -18,6 +18,55 @@ pub struct SubjectAccessReview {
     pub status: Option<::v1_9::api::authorization::v1::SubjectAccessReviewStatus>,
 }
 
+// Generated from operation createAuthorizationV1SubjectAccessReview
+
+#[derive(Debug)]
+pub enum CreateAuthorizationV1SubjectAccessReviewResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::api::authorization::v1::SubjectAccessReview),
+    Created(::v1_9::api::authorization::v1::SubjectAccessReview),
+    Accepted(::v1_9::api::authorization::v1::SubjectAccessReview),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl SubjectAccessReview {
+    /// create a SubjectAccessReview
+    pub fn create_authorization_v1_subject_access_review<C>(
+        __client: &C,
+        body: &::v1_9::api::authorization::v1::SubjectAccessReview,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<CreateAuthorizationV1SubjectAccessReviewResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/authorization.k8s.io/v1/subjectaccessreviews")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateAuthorizationV1SubjectAccessReviewResponse::Ok(result)
+            },
+            ::http::StatusCode::CREATED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateAuthorizationV1SubjectAccessReviewResponse::Created(result)
+            },
+            ::http::StatusCode::ACCEPTED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateAuthorizationV1SubjectAccessReviewResponse::Accepted(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => CreateAuthorizationV1SubjectAccessReviewResponse::Unauthorized(response),
+            other => CreateAuthorizationV1SubjectAccessReviewResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for SubjectAccessReview {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

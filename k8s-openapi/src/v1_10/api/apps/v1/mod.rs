@@ -1,84 +1,84 @@
 
 mod controller_revision;
-pub use self::controller_revision::ControllerRevision;
+pub use self::controller_revision::*;
 
 mod controller_revision_list;
-pub use self::controller_revision_list::ControllerRevisionList;
+pub use self::controller_revision_list::*;
 
 mod daemon_set;
-pub use self::daemon_set::DaemonSet;
+pub use self::daemon_set::*;
 
 mod daemon_set_condition;
-pub use self::daemon_set_condition::DaemonSetCondition;
+pub use self::daemon_set_condition::*;
 
 mod daemon_set_list;
-pub use self::daemon_set_list::DaemonSetList;
+pub use self::daemon_set_list::*;
 
 mod daemon_set_spec;
-pub use self::daemon_set_spec::DaemonSetSpec;
+pub use self::daemon_set_spec::*;
 
 mod daemon_set_status;
-pub use self::daemon_set_status::DaemonSetStatus;
+pub use self::daemon_set_status::*;
 
 mod daemon_set_update_strategy;
-pub use self::daemon_set_update_strategy::DaemonSetUpdateStrategy;
+pub use self::daemon_set_update_strategy::*;
 
 mod deployment;
-pub use self::deployment::Deployment;
+pub use self::deployment::*;
 
 mod deployment_condition;
-pub use self::deployment_condition::DeploymentCondition;
+pub use self::deployment_condition::*;
 
 mod deployment_list;
-pub use self::deployment_list::DeploymentList;
+pub use self::deployment_list::*;
 
 mod deployment_spec;
-pub use self::deployment_spec::DeploymentSpec;
+pub use self::deployment_spec::*;
 
 mod deployment_status;
-pub use self::deployment_status::DeploymentStatus;
+pub use self::deployment_status::*;
 
 mod deployment_strategy;
-pub use self::deployment_strategy::DeploymentStrategy;
+pub use self::deployment_strategy::*;
 
 mod replica_set;
-pub use self::replica_set::ReplicaSet;
+pub use self::replica_set::*;
 
 mod replica_set_condition;
-pub use self::replica_set_condition::ReplicaSetCondition;
+pub use self::replica_set_condition::*;
 
 mod replica_set_list;
-pub use self::replica_set_list::ReplicaSetList;
+pub use self::replica_set_list::*;
 
 mod replica_set_spec;
-pub use self::replica_set_spec::ReplicaSetSpec;
+pub use self::replica_set_spec::*;
 
 mod replica_set_status;
-pub use self::replica_set_status::ReplicaSetStatus;
+pub use self::replica_set_status::*;
 
 mod rolling_update_daemon_set;
-pub use self::rolling_update_daemon_set::RollingUpdateDaemonSet;
+pub use self::rolling_update_daemon_set::*;
 
 mod rolling_update_deployment;
-pub use self::rolling_update_deployment::RollingUpdateDeployment;
+pub use self::rolling_update_deployment::*;
 
 mod rolling_update_stateful_set_strategy;
-pub use self::rolling_update_stateful_set_strategy::RollingUpdateStatefulSetStrategy;
+pub use self::rolling_update_stateful_set_strategy::*;
 
 mod stateful_set;
-pub use self::stateful_set::StatefulSet;
+pub use self::stateful_set::*;
 
 mod stateful_set_condition;
-pub use self::stateful_set_condition::StatefulSetCondition;
+pub use self::stateful_set_condition::*;
 
 mod stateful_set_list;
-pub use self::stateful_set_list::StatefulSetList;
+pub use self::stateful_set_list::*;
 
 mod stateful_set_spec;
-pub use self::stateful_set_spec::StatefulSetSpec;
+pub use self::stateful_set_spec::*;
 
 mod stateful_set_status;
-pub use self::stateful_set_status::StatefulSetStatus;
+pub use self::stateful_set_status::*;
 
 mod stateful_set_update_strategy;
-pub use self::stateful_set_update_strategy::StatefulSetUpdateStrategy;
+pub use self::stateful_set_update_strategy::*;

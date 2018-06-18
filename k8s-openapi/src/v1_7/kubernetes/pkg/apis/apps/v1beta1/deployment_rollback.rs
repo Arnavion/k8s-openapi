@@ -19,6 +19,49 @@ pub struct DeploymentRollback {
     pub updated_annotations: Option<::std::collections::BTreeMap<String, String>>,
 }
 
+// Generated from operation createAppsV1beta1NamespacedDeploymentRollback
+
+#[derive(Debug)]
+pub enum CreateAppsV1beta1NamespacedDeploymentRollbackResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::apis::apps::v1beta1::DeploymentRollback),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl DeploymentRollback {
+    /// create rollback of a Deployment
+    pub fn create_apps_v1beta1_namespaced_deployment_rollback<C>(
+        __client: &C,
+        // name of the DeploymentRollback
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_7::kubernetes::pkg::apis::apps::v1beta1::DeploymentRollback,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<CreateAppsV1beta1NamespacedDeploymentRollbackResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/rollback", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateAppsV1beta1NamespacedDeploymentRollbackResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => CreateAppsV1beta1NamespacedDeploymentRollbackResponse::Unauthorized(response),
+            other => CreateAppsV1beta1NamespacedDeploymentRollbackResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for DeploymentRollback {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

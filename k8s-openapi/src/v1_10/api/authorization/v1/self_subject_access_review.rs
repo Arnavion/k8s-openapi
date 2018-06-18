@@ -18,6 +18,55 @@ pub struct SelfSubjectAccessReview {
     pub status: Option<::v1_10::api::authorization::v1::SubjectAccessReviewStatus>,
 }
 
+// Generated from operation createAuthorizationV1SelfSubjectAccessReview
+
+#[derive(Debug)]
+pub enum CreateAuthorizationV1SelfSubjectAccessReviewResponse<R> where R: ::std::io::Read {
+    Ok(::v1_10::api::authorization::v1::SelfSubjectAccessReview),
+    Created(::v1_10::api::authorization::v1::SelfSubjectAccessReview),
+    Accepted(::v1_10::api::authorization::v1::SelfSubjectAccessReview),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl SelfSubjectAccessReview {
+    /// create a SelfSubjectAccessReview
+    pub fn create_authorization_v1_self_subject_access_review<C>(
+        __client: &C,
+        body: &::v1_10::api::authorization::v1::SelfSubjectAccessReview,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<CreateAuthorizationV1SelfSubjectAccessReviewResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/authorization.k8s.io/v1/selfsubjectaccessreviews")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateAuthorizationV1SelfSubjectAccessReviewResponse::Ok(result)
+            },
+            ::http::StatusCode::CREATED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateAuthorizationV1SelfSubjectAccessReviewResponse::Created(result)
+            },
+            ::http::StatusCode::ACCEPTED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateAuthorizationV1SelfSubjectAccessReviewResponse::Accepted(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => CreateAuthorizationV1SelfSubjectAccessReviewResponse::Unauthorized(response),
+            other => CreateAuthorizationV1SelfSubjectAccessReviewResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for SelfSubjectAccessReview {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

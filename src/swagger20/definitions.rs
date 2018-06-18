@@ -92,6 +92,7 @@ impl<'de> ::serde::Deserialize<'de> for RefPath {
 pub struct Schema {
 	pub description: Option<String>,
 	pub kind: SchemaKind,
+	pub kubernetes_group_kind_versions: Option<Vec<super::KubernetesGroupKindVersion>>,
 }
 
 #[cfg_attr(feature = "cargo-clippy", allow(use_self))]
@@ -108,6 +109,9 @@ impl<'de> ::serde::Deserialize<'de> for Schema {
 
 			items: Option<Box<Schema>>,
 
+			#[serde(rename = "x-kubernetes-group-version-kind")]
+			kubernetes_group_kind_versions: Option<Vec<super::KubernetesGroupKindVersion>>,
+
 			#[serde(default)]
 			properties: ::std::collections::BTreeMap<PropertyName, Schema>,
 
@@ -122,8 +126,6 @@ impl<'de> ::serde::Deserialize<'de> for Schema {
 		}
 
 		let value: InnerSchema = ::serde::Deserialize::deserialize(deserializer)?;
-
-		let description = value.description;
 
 		let kind =
 			if let Some(ref_path) = value.ref_path {
@@ -146,8 +148,9 @@ impl<'de> ::serde::Deserialize<'de> for Schema {
 			};
 
 		Ok(Schema {
-			description,
+			description: value.description,
 			kind,
+			kubernetes_group_kind_versions: value.kubernetes_group_kind_versions,
 		})
 	}
 }

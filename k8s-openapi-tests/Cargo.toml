@@ -6,7 +6,8 @@ publish = false
 
 [dependencies]
 backtrace = "0.3.x"
-k8s-openapi = { path = "../k8s-openapi" }
+k8s-openapi = { path = "../k8s-openapi" , features = ["reqwest"]}
+http = "0.1.x"
 reqwest = "0.8.x"
 serde = "1.0.x"
 serde_json = "*"

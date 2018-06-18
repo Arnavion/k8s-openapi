@@ -1,60 +1,60 @@
 
 mod controller_revision;
-pub use self::controller_revision::ControllerRevision;
+pub use self::controller_revision::*;
 
 mod controller_revision_list;
-pub use self::controller_revision_list::ControllerRevisionList;
+pub use self::controller_revision_list::*;
 
 mod deployment;
-pub use self::deployment::Deployment;
+pub use self::deployment::*;
 
 mod deployment_condition;
-pub use self::deployment_condition::DeploymentCondition;
+pub use self::deployment_condition::*;
 
 mod deployment_list;
-pub use self::deployment_list::DeploymentList;
+pub use self::deployment_list::*;
 
 mod deployment_rollback;
-pub use self::deployment_rollback::DeploymentRollback;
+pub use self::deployment_rollback::*;
 
 mod deployment_spec;
-pub use self::deployment_spec::DeploymentSpec;
+pub use self::deployment_spec::*;
 
 mod deployment_status;
-pub use self::deployment_status::DeploymentStatus;
+pub use self::deployment_status::*;
 
 mod deployment_strategy;
-pub use self::deployment_strategy::DeploymentStrategy;
+pub use self::deployment_strategy::*;
 
 mod rollback_config;
-pub use self::rollback_config::RollbackConfig;
+pub use self::rollback_config::*;
 
 mod rolling_update_deployment;
-pub use self::rolling_update_deployment::RollingUpdateDeployment;
+pub use self::rolling_update_deployment::*;
 
 mod rolling_update_stateful_set_strategy;
-pub use self::rolling_update_stateful_set_strategy::RollingUpdateStatefulSetStrategy;
+pub use self::rolling_update_stateful_set_strategy::*;
 
 mod scale;
-pub use self::scale::Scale;
+pub use self::scale::*;
 
 mod scale_spec;
-pub use self::scale_spec::ScaleSpec;
+pub use self::scale_spec::*;
 
 mod scale_status;
-pub use self::scale_status::ScaleStatus;
+pub use self::scale_status::*;
 
 mod stateful_set;
-pub use self::stateful_set::StatefulSet;
+pub use self::stateful_set::*;
 
 mod stateful_set_list;
-pub use self::stateful_set_list::StatefulSetList;
+pub use self::stateful_set_list::*;
 
 mod stateful_set_spec;
-pub use self::stateful_set_spec::StatefulSetSpec;
+pub use self::stateful_set_spec::*;
 
 mod stateful_set_status;
-pub use self::stateful_set_status::StatefulSetStatus;
+pub use self::stateful_set_status::*;
 
 mod stateful_set_update_strategy;
-pub use self::stateful_set_update_strategy::StatefulSetUpdateStrategy;
+pub use self::stateful_set_update_strategy::*;

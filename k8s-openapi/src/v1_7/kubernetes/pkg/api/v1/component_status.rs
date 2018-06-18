@@ -16,6 +16,114 @@ pub struct ComponentStatus {
     pub metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
+// Generated from operation listCoreV1ComponentStatus
+
+#[derive(Debug)]
+pub enum ListCoreV1ComponentStatusResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ComponentStatusList),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ComponentStatus {
+    /// list objects of kind ComponentStatus
+    pub fn list_core_v1_component_status<C>(
+        __client: &C,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<ListCoreV1ComponentStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/componentstatuses")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ListCoreV1ComponentStatusResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ListCoreV1ComponentStatusResponse::Unauthorized(response),
+            other => ListCoreV1ComponentStatusResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation readCoreV1ComponentStatus
+
+#[derive(Debug)]
+pub enum ReadCoreV1ComponentStatusResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ComponentStatus),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ComponentStatus {
+    /// read the specified ComponentStatus
+    pub fn read_core_v1_component_status<C>(
+        __client: &C,
+        // name of the ComponentStatus
+        name: &str,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReadCoreV1ComponentStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/componentstatuses/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReadCoreV1ComponentStatusResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1ComponentStatusResponse::Unauthorized(response),
+            other => ReadCoreV1ComponentStatusResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for ComponentStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

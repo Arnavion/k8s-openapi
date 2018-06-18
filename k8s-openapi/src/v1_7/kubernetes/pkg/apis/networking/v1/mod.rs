@@ -1,18 +1,18 @@
 
 mod network_policy;
-pub use self::network_policy::NetworkPolicy;
+pub use self::network_policy::*;
 
 mod network_policy_ingress_rule;
-pub use self::network_policy_ingress_rule::NetworkPolicyIngressRule;
+pub use self::network_policy_ingress_rule::*;
 
 mod network_policy_list;
-pub use self::network_policy_list::NetworkPolicyList;
+pub use self::network_policy_list::*;
 
 mod network_policy_peer;
-pub use self::network_policy_peer::NetworkPolicyPeer;
+pub use self::network_policy_peer::*;
 
 mod network_policy_port;
-pub use self::network_policy_port::NetworkPolicyPort;
+pub use self::network_policy_port::*;
 
 mod network_policy_spec;
-pub use self::network_policy_spec::NetworkPolicySpec;
+pub use self::network_policy_spec::*;

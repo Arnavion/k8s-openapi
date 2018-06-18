@@ -1,150 +1,150 @@
 
 mod allowed_host_path;
-pub use self::allowed_host_path::AllowedHostPath;
+pub use self::allowed_host_path::*;
 
 mod daemon_set;
-pub use self::daemon_set::DaemonSet;
+pub use self::daemon_set::*;
 
 mod daemon_set_list;
-pub use self::daemon_set_list::DaemonSetList;
+pub use self::daemon_set_list::*;
 
 mod daemon_set_spec;
-pub use self::daemon_set_spec::DaemonSetSpec;
+pub use self::daemon_set_spec::*;
 
 mod daemon_set_status;
-pub use self::daemon_set_status::DaemonSetStatus;
+pub use self::daemon_set_status::*;
 
 mod daemon_set_update_strategy;
-pub use self::daemon_set_update_strategy::DaemonSetUpdateStrategy;
+pub use self::daemon_set_update_strategy::*;
 
 mod deployment;
-pub use self::deployment::Deployment;
+pub use self::deployment::*;
 
 mod deployment_condition;
-pub use self::deployment_condition::DeploymentCondition;
+pub use self::deployment_condition::*;
 
 mod deployment_list;
-pub use self::deployment_list::DeploymentList;
+pub use self::deployment_list::*;
 
 mod deployment_rollback;
-pub use self::deployment_rollback::DeploymentRollback;
+pub use self::deployment_rollback::*;
 
 mod deployment_spec;
-pub use self::deployment_spec::DeploymentSpec;
+pub use self::deployment_spec::*;
 
 mod deployment_status;
-pub use self::deployment_status::DeploymentStatus;
+pub use self::deployment_status::*;
 
 mod deployment_strategy;
-pub use self::deployment_strategy::DeploymentStrategy;
+pub use self::deployment_strategy::*;
 
 mod fs_group_strategy_options;
-pub use self::fs_group_strategy_options::FSGroupStrategyOptions;
+pub use self::fs_group_strategy_options::*;
 
 mod http_ingress_path;
-pub use self::http_ingress_path::HTTPIngressPath;
+pub use self::http_ingress_path::*;
 
 mod http_ingress_rule_value;
-pub use self::http_ingress_rule_value::HTTPIngressRuleValue;
+pub use self::http_ingress_rule_value::*;
 
 mod host_port_range;
-pub use self::host_port_range::HostPortRange;
+pub use self::host_port_range::*;
 
 mod id_range;
-pub use self::id_range::IDRange;
+pub use self::id_range::*;
 
 mod ip_block;
-pub use self::ip_block::IPBlock;
+pub use self::ip_block::*;
 
 mod ingress;
-pub use self::ingress::Ingress;
+pub use self::ingress::*;
 
 mod ingress_backend;
-pub use self::ingress_backend::IngressBackend;
+pub use self::ingress_backend::*;
 
 mod ingress_list;
-pub use self::ingress_list::IngressList;
+pub use self::ingress_list::*;
 
 mod ingress_rule;
-pub use self::ingress_rule::IngressRule;
+pub use self::ingress_rule::*;
 
 mod ingress_spec;
-pub use self::ingress_spec::IngressSpec;
+pub use self::ingress_spec::*;
 
 mod ingress_status;
-pub use self::ingress_status::IngressStatus;
+pub use self::ingress_status::*;
 
 mod ingress_tls;
-pub use self::ingress_tls::IngressTLS;
+pub use self::ingress_tls::*;
 
 mod network_policy;
-pub use self::network_policy::NetworkPolicy;
+pub use self::network_policy::*;
 
 mod network_policy_egress_rule;
-pub use self::network_policy_egress_rule::NetworkPolicyEgressRule;
+pub use self::network_policy_egress_rule::*;
 
 mod network_policy_ingress_rule;
-pub use self::network_policy_ingress_rule::NetworkPolicyIngressRule;
+pub use self::network_policy_ingress_rule::*;
 
 mod network_policy_list;
-pub use self::network_policy_list::NetworkPolicyList;
+pub use self::network_policy_list::*;
 
 mod network_policy_peer;
-pub use self::network_policy_peer::NetworkPolicyPeer;
+pub use self::network_policy_peer::*;
 
 mod network_policy_port;
-pub use self::network_policy_port::NetworkPolicyPort;
+pub use self::network_policy_port::*;
 
 mod network_policy_spec;
-pub use self::network_policy_spec::NetworkPolicySpec;
+pub use self::network_policy_spec::*;
 
 mod pod_security_policy;
-pub use self::pod_security_policy::PodSecurityPolicy;
+pub use self::pod_security_policy::*;
 
 mod pod_security_policy_list;
-pub use self::pod_security_policy_list::PodSecurityPolicyList;
+pub use self::pod_security_policy_list::*;
 
 mod pod_security_policy_spec;
-pub use self::pod_security_policy_spec::PodSecurityPolicySpec;
+pub use self::pod_security_policy_spec::*;
 
 mod replica_set;
-pub use self::replica_set::ReplicaSet;
+pub use self::replica_set::*;
 
 mod replica_set_condition;
-pub use self::replica_set_condition::ReplicaSetCondition;
+pub use self::replica_set_condition::*;
 
 mod replica_set_list;
-pub use self::replica_set_list::ReplicaSetList;
+pub use self::replica_set_list::*;
 
 mod replica_set_spec;
-pub use self::replica_set_spec::ReplicaSetSpec;
+pub use self::replica_set_spec::*;
 
 mod replica_set_status;
-pub use self::replica_set_status::ReplicaSetStatus;
+pub use self::replica_set_status::*;
 
 mod rollback_config;
-pub use self::rollback_config::RollbackConfig;
+pub use self::rollback_config::*;
 
 mod rolling_update_daemon_set;
-pub use self::rolling_update_daemon_set::RollingUpdateDaemonSet;
+pub use self::rolling_update_daemon_set::*;
 
 mod rolling_update_deployment;
-pub use self::rolling_update_deployment::RollingUpdateDeployment;
+pub use self::rolling_update_deployment::*;
 
 mod run_as_user_strategy_options;
-pub use self::run_as_user_strategy_options::RunAsUserStrategyOptions;
+pub use self::run_as_user_strategy_options::*;
 
 mod se_linux_strategy_options;
-pub use self::se_linux_strategy_options::SELinuxStrategyOptions;
+pub use self::se_linux_strategy_options::*;
 
 mod scale;
-pub use self::scale::Scale;
+pub use self::scale::*;
 
 mod scale_spec;
-pub use self::scale_spec::ScaleSpec;
+pub use self::scale_spec::*;
 
 mod scale_status;
-pub use self::scale_status::ScaleStatus;
+pub use self::scale_status::*;
 
 mod supplemental_groups_strategy_options;
-pub use self::supplemental_groups_strategy_options::SupplementalGroupsStrategyOptions;
+pub use self::supplemental_groups_strategy_options::*;

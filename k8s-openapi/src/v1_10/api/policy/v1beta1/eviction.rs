@@ -16,6 +16,59 @@ pub struct Eviction {
     pub metadata: Option<::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
+// Generated from operation createCoreV1NamespacedPodEviction
+
+#[derive(Debug)]
+pub enum CreateCoreV1NamespacedPodEvictionResponse<R> where R: ::std::io::Read {
+    Ok(::v1_10::api::policy::v1beta1::Eviction),
+    Created(::v1_10::api::policy::v1beta1::Eviction),
+    Accepted(::v1_10::api::policy::v1beta1::Eviction),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl Eviction {
+    /// create eviction of a Pod
+    pub fn create_core_v1_namespaced_pod_eviction<C>(
+        __client: &C,
+        // name of the Eviction
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_10::api::policy::v1beta1::Eviction,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<CreateCoreV1NamespacedPodEvictionResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/pods/{name}/eviction", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateCoreV1NamespacedPodEvictionResponse::Ok(result)
+            },
+            ::http::StatusCode::CREATED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateCoreV1NamespacedPodEvictionResponse::Created(result)
+            },
+            ::http::StatusCode::ACCEPTED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateCoreV1NamespacedPodEvictionResponse::Accepted(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => CreateCoreV1NamespacedPodEvictionResponse::Unauthorized(response),
+            other => CreateCoreV1NamespacedPodEvictionResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for Eviction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

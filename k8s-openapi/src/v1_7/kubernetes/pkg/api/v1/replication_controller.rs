@@ -19,6 +19,785 @@ pub struct ReplicationController {
     pub status: Option<::v1_7::kubernetes::pkg::api::v1::ReplicationControllerStatus>,
 }
 
+// Generated from operation createCoreV1NamespacedReplicationController
+
+#[derive(Debug)]
+pub enum CreateCoreV1NamespacedReplicationControllerResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ReplicationController),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// create a ReplicationController
+    pub fn create_core_v1_namespaced_replication_controller<C>(
+        __client: &C,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_7::kubernetes::pkg::api::v1::ReplicationController,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<CreateCoreV1NamespacedReplicationControllerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers", namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateCoreV1NamespacedReplicationControllerResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => CreateCoreV1NamespacedReplicationControllerResponse::Unauthorized(response),
+            other => CreateCoreV1NamespacedReplicationControllerResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation deleteCoreV1CollectionNamespacedReplicationController
+
+#[derive(Debug)]
+pub enum DeleteCoreV1CollectionNamespacedReplicationControllerResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// delete collection of ReplicationController
+    pub fn delete_core_v1_collection_namespaced_replication_controller<C>(
+        __client: &C,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<DeleteCoreV1CollectionNamespacedReplicationControllerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers", namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.delete(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                DeleteCoreV1CollectionNamespacedReplicationControllerResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => DeleteCoreV1CollectionNamespacedReplicationControllerResponse::Unauthorized(response),
+            other => DeleteCoreV1CollectionNamespacedReplicationControllerResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation deleteCoreV1NamespacedReplicationController
+
+#[derive(Debug)]
+pub enum DeleteCoreV1NamespacedReplicationControllerResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// delete a ReplicationController
+    pub fn delete_core_v1_namespaced_replication_controller<C>(
+        __client: &C,
+        // name of the ReplicationController
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+        grace_period_seconds: Option<i64>,
+        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+        orphan_dependents: Option<bool>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+        propagation_policy: Option<&str>,
+    ) -> Result<DeleteCoreV1NamespacedReplicationControllerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(grace_period_seconds) = grace_period_seconds {
+                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
+            }
+            if let Some(orphan_dependents) = orphan_dependents {
+                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(propagation_policy) = propagation_policy {
+                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+            }
+        }
+
+        let response = __client.delete(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                DeleteCoreV1NamespacedReplicationControllerResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => DeleteCoreV1NamespacedReplicationControllerResponse::Unauthorized(response),
+            other => DeleteCoreV1NamespacedReplicationControllerResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation listCoreV1NamespacedReplicationController
+
+#[derive(Debug)]
+pub enum ListCoreV1NamespacedReplicationControllerResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ReplicationControllerList),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// list or watch objects of kind ReplicationController
+    pub fn list_core_v1_namespaced_replication_controller<C>(
+        __client: &C,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<ListCoreV1NamespacedReplicationControllerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers", namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ListCoreV1NamespacedReplicationControllerResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ListCoreV1NamespacedReplicationControllerResponse::Unauthorized(response),
+            other => ListCoreV1NamespacedReplicationControllerResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation listCoreV1ReplicationControllerForAllNamespaces
+
+#[derive(Debug)]
+pub enum ListCoreV1ReplicationControllerForAllNamespacesResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ReplicationControllerList),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// list or watch objects of kind ReplicationController
+    pub fn list_core_v1_replication_controller_for_all_namespaces<C>(
+        __client: &C,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<ListCoreV1ReplicationControllerForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/replicationcontrollers")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ListCoreV1ReplicationControllerForAllNamespacesResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ListCoreV1ReplicationControllerForAllNamespacesResponse::Unauthorized(response),
+            other => ListCoreV1ReplicationControllerForAllNamespacesResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation patchCoreV1NamespacedReplicationController
+
+#[derive(Debug)]
+pub enum PatchCoreV1NamespacedReplicationControllerResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ReplicationController),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// partially update the specified ReplicationController
+    pub fn patch_core_v1_namespaced_replication_controller<C>(
+        __client: &C,
+        // name of the ReplicationController
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<PatchCoreV1NamespacedReplicationControllerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                PatchCoreV1NamespacedReplicationControllerResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => PatchCoreV1NamespacedReplicationControllerResponse::Unauthorized(response),
+            other => PatchCoreV1NamespacedReplicationControllerResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation patchCoreV1NamespacedReplicationControllerStatus
+
+#[derive(Debug)]
+pub enum PatchCoreV1NamespacedReplicationControllerStatusResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ReplicationController),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// partially update status of the specified ReplicationController
+    pub fn patch_core_v1_namespaced_replication_controller_status<C>(
+        __client: &C,
+        // name of the ReplicationController
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<PatchCoreV1NamespacedReplicationControllerStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                PatchCoreV1NamespacedReplicationControllerStatusResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => PatchCoreV1NamespacedReplicationControllerStatusResponse::Unauthorized(response),
+            other => PatchCoreV1NamespacedReplicationControllerStatusResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation readCoreV1NamespacedReplicationController
+
+#[derive(Debug)]
+pub enum ReadCoreV1NamespacedReplicationControllerResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ReplicationController),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// read the specified ReplicationController
+    pub fn read_core_v1_namespaced_replication_controller<C>(
+        __client: &C,
+        // name of the ReplicationController
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+        exact: Option<bool>,
+        // Should this value be exported.  Export strips fields that a user can not specify.
+        export: Option<bool>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReadCoreV1NamespacedReplicationControllerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(exact) = exact {
+                __query_pairs.append_pair("exact", &exact.to_string());
+            }
+            if let Some(export) = export {
+                __query_pairs.append_pair("export", &export.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReadCoreV1NamespacedReplicationControllerResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1NamespacedReplicationControllerResponse::Unauthorized(response),
+            other => ReadCoreV1NamespacedReplicationControllerResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation readCoreV1NamespacedReplicationControllerStatus
+
+#[derive(Debug)]
+pub enum ReadCoreV1NamespacedReplicationControllerStatusResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ReplicationController),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// read status of the specified ReplicationController
+    pub fn read_core_v1_namespaced_replication_controller_status<C>(
+        __client: &C,
+        // name of the ReplicationController
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReadCoreV1NamespacedReplicationControllerStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReadCoreV1NamespacedReplicationControllerStatusResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1NamespacedReplicationControllerStatusResponse::Unauthorized(response),
+            other => ReadCoreV1NamespacedReplicationControllerStatusResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation replaceCoreV1NamespacedReplicationController
+
+#[derive(Debug)]
+pub enum ReplaceCoreV1NamespacedReplicationControllerResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ReplicationController),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// replace the specified ReplicationController
+    pub fn replace_core_v1_namespaced_replication_controller<C>(
+        __client: &C,
+        // name of the ReplicationController
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_7::kubernetes::pkg::api::v1::ReplicationController,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReplaceCoreV1NamespacedReplicationControllerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReplaceCoreV1NamespacedReplicationControllerResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReplaceCoreV1NamespacedReplicationControllerResponse::Unauthorized(response),
+            other => ReplaceCoreV1NamespacedReplicationControllerResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation replaceCoreV1NamespacedReplicationControllerStatus
+
+#[derive(Debug)]
+pub enum ReplaceCoreV1NamespacedReplicationControllerStatusResponse<R> where R: ::std::io::Read {
+    Ok(::v1_7::kubernetes::pkg::api::v1::ReplicationController),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// replace status of the specified ReplicationController
+    pub fn replace_core_v1_namespaced_replication_controller_status<C>(
+        __client: &C,
+        // name of the ReplicationController
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_7::kubernetes::pkg::api::v1::ReplicationController,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReplaceCoreV1NamespacedReplicationControllerStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReplaceCoreV1NamespacedReplicationControllerStatusResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReplaceCoreV1NamespacedReplicationControllerStatusResponse::Unauthorized(response),
+            other => ReplaceCoreV1NamespacedReplicationControllerStatusResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation watchCoreV1NamespacedReplicationController
+
+pub enum WatchCoreV1NamespacedReplicationControllerResponse<R> where R: ::std::io::Read {
+    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// watch changes to an object of kind ReplicationController
+    pub fn watch_core_v1_namespaced_replication_controller<C>(
+        __client: &C,
+        // name of the ReplicationController
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<WatchCoreV1NamespacedReplicationControllerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/watch/namespaces/{namespace}/replicationcontrollers/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
+                WatchCoreV1NamespacedReplicationControllerResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => WatchCoreV1NamespacedReplicationControllerResponse::Unauthorized(response),
+            other => WatchCoreV1NamespacedReplicationControllerResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation watchCoreV1NamespacedReplicationControllerList
+
+pub enum WatchCoreV1NamespacedReplicationControllerListResponse<R> where R: ::std::io::Read {
+    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// watch individual changes to a list of ReplicationController
+    pub fn watch_core_v1_namespaced_replication_controller_list<C>(
+        __client: &C,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<WatchCoreV1NamespacedReplicationControllerListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/watch/namespaces/{namespace}/replicationcontrollers", namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
+                WatchCoreV1NamespacedReplicationControllerListResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => WatchCoreV1NamespacedReplicationControllerListResponse::Unauthorized(response),
+            other => WatchCoreV1NamespacedReplicationControllerListResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation watchCoreV1ReplicationControllerListForAllNamespaces
+
+pub enum WatchCoreV1ReplicationControllerListForAllNamespacesResponse<R> where R: ::std::io::Read {
+    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl ReplicationController {
+    /// watch individual changes to a list of ReplicationController
+    pub fn watch_core_v1_replication_controller_list_for_all_namespaces<C>(
+        __client: &C,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<WatchCoreV1ReplicationControllerListForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/watch/replicationcontrollers")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
+                WatchCoreV1ReplicationControllerListForAllNamespacesResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => WatchCoreV1ReplicationControllerListForAllNamespacesResponse::Unauthorized(response),
+            other => WatchCoreV1ReplicationControllerListForAllNamespacesResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for ReplicationController {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

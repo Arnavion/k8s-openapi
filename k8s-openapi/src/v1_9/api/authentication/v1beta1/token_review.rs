@@ -18,6 +18,55 @@ pub struct TokenReview {
     pub status: Option<::v1_9::api::authentication::v1beta1::TokenReviewStatus>,
 }
 
+// Generated from operation createAuthenticationV1beta1TokenReview
+
+#[derive(Debug)]
+pub enum CreateAuthenticationV1beta1TokenReviewResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::api::authentication::v1beta1::TokenReview),
+    Created(::v1_9::api::authentication::v1beta1::TokenReview),
+    Accepted(::v1_9::api::authentication::v1beta1::TokenReview),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl TokenReview {
+    /// create a TokenReview
+    pub fn create_authentication_v1beta1_token_review<C>(
+        __client: &C,
+        body: &::v1_9::api::authentication::v1beta1::TokenReview,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<CreateAuthenticationV1beta1TokenReviewResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/apis/authentication.k8s.io/v1beta1/tokenreviews")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateAuthenticationV1beta1TokenReviewResponse::Ok(result)
+            },
+            ::http::StatusCode::CREATED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateAuthenticationV1beta1TokenReviewResponse::Created(result)
+            },
+            ::http::StatusCode::ACCEPTED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateAuthenticationV1beta1TokenReviewResponse::Accepted(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => CreateAuthenticationV1beta1TokenReviewResponse::Unauthorized(response),
+            other => CreateAuthenticationV1beta1TokenReviewResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for TokenReview {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

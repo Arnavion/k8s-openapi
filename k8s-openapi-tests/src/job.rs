@@ -16,8 +16,6 @@ fn create() {
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::api::batch::v1 as batch;
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
 
-	let job_post_path = "/apis/batch/v1/namespaces/default/jobs";
-
 	let client = ::Client::new().expect("couldn't create client");
 
 	let job_spec = batch::JobSpec {
@@ -64,9 +62,14 @@ fn create() {
 		..Default::default()
 	};
 
-	println!("{}", ::serde_json::to_string_pretty(&job).unwrap());
+	let job = batch::Job::create_batch_v1_namespaced_job(&client, "default", &job, None).expect("couldn't create job");
+	let job: batch::Job = match job {
+		#[cfg(any(feature = "v1_7", feature = "v1_8"))] batch::CreateBatchV1NamespacedJobResponse::Other(::http::StatusCode::CREATED, mut response) =>
+			response.json().expect("couldn't create job"),
+		#[cfg(any(feature = "v1_9", feature = "v1_10"))] batch::CreateBatchV1NamespacedJobResponse::Created(job) => job,
+		other => panic!("couldn't create job: {:?}", other),
+	};
 
-	let job = client.post(job_post_path, &job).expect("couldn't create job");
 	let job_image =
 		job
 		.spec.expect("couldn't get job spec")
@@ -100,19 +103,30 @@ fn create() {
 
 	// Find a pod of the failed job using owner reference
 	let job_pod_status = loop {
-		let pod_list_path = "/api/v1/namespaces/default/pods";
-
-		let pod_list: api::PodList = client.get(pod_list_path).expect("couldn't get pod list");
+		#[cfg(feature = "v1_7")] let pod_list =
+			api::Pod::list_core_v1_namespaced_pod(
+				&client, "default",
+				None, None, None, None, None, None, None)
+			.expect("couldn't list pods");
+		#[cfg(not(feature = "v1_7"))] let pod_list =
+			api::Pod::list_core_v1_namespaced_pod(
+				&client, "default",
+				None, None, None, None, None, None, None, None, None)
+			.expect("couldn't list pods");
+		let pod_list = match pod_list {
+			#[cfg(feature = "v1_7")] api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => pod_list,
+			#[cfg(not(feature = "v1_7"))] api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => pod_list,
+			other => panic!("couldn't list pods: {:?}", other),
+		};
 
 		let job_pod_status =
 			pod_list
 			.items.into_iter()
-			.filter(|pod|
+			.find(|pod|
 				pod.metadata.as_ref()
 				.and_then(|metadata| metadata.owner_references.as_ref())
 				.and_then(|owner_references| owner_references.first())
 				.map(|owner_reference| owner_reference.uid.as_ref()) == Some(&*job_uid))
-			.next()
 			.and_then(|job_pod| job_pod.status);
 
 		if let Some(job_pod_status) = job_pod_status {
@@ -135,8 +149,17 @@ fn create() {
 	client.delete(&job_self_link).expect("couldn't delete job");
 
 	// Delete all pods of the job using label selector
-	let pod_list_path = "/api/v1/namespaces/default/pods/?labelSelector=job-name=k8s-openapi-tests-create-job";
-	let pod_list: api::PodList = client.get(pod_list_path).expect("couldn't get pod list");
+	#[cfg(feature = "v1_7")] let pod_list =
+		api::Pod::list_core_v1_namespaced_pod(&client, "default", None, None, Some("job-name=k8s-openapi-tests-create-job"), None, None, None, None)
+		.expect("couldn't list pods");
+	#[cfg(not(feature = "v1_7"))] let pod_list =
+		api::Pod::list_core_v1_namespaced_pod(&client, "default", None, None, None, Some("job-name=k8s-openapi-tests-create-job"), None, None, None, None, None)
+		.expect("couldn't list pods");
+	let pod_list = match pod_list {
+		#[cfg(feature = "v1_7")] api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => pod_list,
+		#[cfg(not(feature = "v1_7"))] api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => pod_list,
+		other => panic!("couldn't list pods: {:?}", other),
+	};
 
 	for pod in pod_list.items {
 		let self_link =

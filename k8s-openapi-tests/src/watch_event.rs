@@ -1,22 +1,30 @@
 #[test]
 fn watch_pods() {
 	#[cfg(feature = "v1_7")] use ::k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
-	#[cfg(feature = "v1_7")] use ::k8s_openapi::v1_7::apimachinery::pkg::apis::meta::v1 as meta;
 
 	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::api::core::v1 as api;
-	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::apimachinery::pkg::apis::meta::v1 as meta;
 
 	#[cfg(feature = "v1_9")] use ::k8s_openapi::v1_9::api::core::v1 as api;
-	#[cfg(feature = "v1_9")] use ::k8s_openapi::v1_9::apimachinery::pkg::apis::meta::v1 as meta;
 
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::api::core::v1 as api;
-	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
-
-	let path = "/api/v1/watch/namespaces/kube-system/pods";
 
 	let client = ::Client::new().expect("couldn't create client");
 
-	let pod_watch_events = client.watch::<meta::WatchEvent>(path).expect("couldn't watch pods");
+	#[cfg(feature = "v1_7")] let pod_watch_events =
+		api::Pod::watch_core_v1_namespaced_pod_list(
+			&client,
+			"kube-system", None, None, None, None, None, None, None)
+		.expect("couldn't watch pods");
+	#[cfg(not(feature = "v1_7"))] let pod_watch_events =
+		api::Pod::watch_core_v1_namespaced_pod_list(
+			&client,
+			"kube-system", None, None, None, None, None, None, None, None, None)
+		.expect("couldn't watch pods");
+	let pod_watch_events = match pod_watch_events {
+		#[cfg(feature = "v1_7")] api::WatchCoreV1NamespacedPodListResponse::Ok(pod_watch_events) => pod_watch_events,
+		#[cfg(not(feature = "v1_7"))] api::WatchCoreV1NamespacedPodListResponse::Ok(pod_watch_events) => pod_watch_events,
+		_ => panic!("couldn't watch pods"),
+	};
 
 	let addon_manager_pod =
 		pod_watch_events

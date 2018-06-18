@@ -4,10 +4,21 @@ pub use self::definitions::*;
 mod info;
 pub use self::info::*;
 
+mod paths;
+pub use self::paths::*;
+
+#[derive(Debug, Deserialize, Eq, Ord, PartialEq, PartialOrd)]
+pub struct KubernetesGroupKindVersion {
+	pub group: String,
+	pub kind: String,
+	pub version: String,
+}
+
 #[derive(Debug)]
 pub struct Spec {
 	pub info: Info,
 	pub definitions: ::std::collections::BTreeMap<DefinitionPath, Schema>,
+	pub paths: ::std::collections::BTreeMap<Path, PathItem>,
 }
 
 #[cfg_attr(feature = "cargo-clippy", allow(use_self))]
@@ -18,6 +29,7 @@ impl<'de> ::serde::Deserialize<'de> for Spec {
 			swagger: String,
 			info: Info,
 			definitions: ::std::collections::BTreeMap<DefinitionPath, Schema>,
+			paths: ::std::collections::BTreeMap<Path, PathItem>,
 		}
 
 		let result: InnerSpec = ::serde::Deserialize::deserialize(deserializer)?;
@@ -29,6 +41,7 @@ impl<'de> ::serde::Deserialize<'de> for Spec {
 		Ok(Spec {
 			info: result.info,
 			definitions: result.definitions,
+			paths: result.paths,
 		})
 	}
 }

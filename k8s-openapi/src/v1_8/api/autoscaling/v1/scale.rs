@@ -19,6 +19,134 @@ pub struct Scale {
     pub status: Option<::v1_8::api::autoscaling::v1::ScaleStatus>,
 }
 
+// Generated from operation patchCoreV1NamespacedReplicationControllerScale
+
+#[derive(Debug)]
+pub enum PatchCoreV1NamespacedReplicationControllerScaleResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::api::autoscaling::v1::Scale),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl Scale {
+    /// partially update scale of the specified ReplicationController
+    pub fn patch_core_v1_namespaced_replication_controller_scale<C>(
+        __client: &C,
+        // name of the Scale
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<PatchCoreV1NamespacedReplicationControllerScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                PatchCoreV1NamespacedReplicationControllerScaleResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => PatchCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized(response),
+            other => PatchCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation readCoreV1NamespacedReplicationControllerScale
+
+#[derive(Debug)]
+pub enum ReadCoreV1NamespacedReplicationControllerScaleResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::api::autoscaling::v1::Scale),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl Scale {
+    /// read scale of the specified ReplicationController
+    pub fn read_core_v1_namespaced_replication_controller_scale<C>(
+        __client: &C,
+        // name of the Scale
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReadCoreV1NamespacedReplicationControllerScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReadCoreV1NamespacedReplicationControllerScaleResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized(response),
+            other => ReadCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation replaceCoreV1NamespacedReplicationControllerScale
+
+#[derive(Debug)]
+pub enum ReplaceCoreV1NamespacedReplicationControllerScaleResponse<R> where R: ::std::io::Read {
+    Ok(::v1_8::api::autoscaling::v1::Scale),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl Scale {
+    /// replace scale of the specified ReplicationController
+    pub fn replace_core_v1_namespaced_replication_controller_scale<C>(
+        __client: &C,
+        // name of the Scale
+        name: &str,
+        // object name and auth scope, such as for teams and projects
+        namespace: &str,
+        body: &::v1_8::api::autoscaling::v1::Scale,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReplaceCoreV1NamespacedReplicationControllerScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized(response),
+            other => ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for Scale {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -19,6 +19,694 @@ pub struct PersistentVolume {
     pub status: Option<::v1_9::api::core::v1::PersistentVolumeStatus>,
 }
 
+// Generated from operation createCoreV1PersistentVolume
+
+#[derive(Debug)]
+pub enum CreateCoreV1PersistentVolumeResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::api::core::v1::PersistentVolume),
+    Created(::v1_9::api::core::v1::PersistentVolume),
+    Accepted(::v1_9::api::core::v1::PersistentVolume),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// create a PersistentVolume
+    pub fn create_core_v1_persistent_volume<C>(
+        __client: &C,
+        body: &::v1_9::api::core::v1::PersistentVolume,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<CreateCoreV1PersistentVolumeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/persistentvolumes")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateCoreV1PersistentVolumeResponse::Ok(result)
+            },
+            ::http::StatusCode::CREATED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateCoreV1PersistentVolumeResponse::Created(result)
+            },
+            ::http::StatusCode::ACCEPTED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                CreateCoreV1PersistentVolumeResponse::Accepted(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => CreateCoreV1PersistentVolumeResponse::Unauthorized(response),
+            other => CreateCoreV1PersistentVolumeResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation deleteCoreV1CollectionPersistentVolume
+
+#[derive(Debug)]
+pub enum DeleteCoreV1CollectionPersistentVolumeResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// delete collection of PersistentVolume
+    pub fn delete_core_v1_collection_persistent_volume<C>(
+        __client: &C,
+        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+        continue_: Option<&str>,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+        //
+        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+        limit: Option<i64>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<DeleteCoreV1CollectionPersistentVolumeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/persistentvolumes")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(continue_) = continue_ {
+                __query_pairs.append_pair("continue", &continue_);
+            }
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(limit) = limit {
+                __query_pairs.append_pair("limit", &limit.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.delete(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                DeleteCoreV1CollectionPersistentVolumeResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => DeleteCoreV1CollectionPersistentVolumeResponse::Unauthorized(response),
+            other => DeleteCoreV1CollectionPersistentVolumeResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation deleteCoreV1PersistentVolume
+
+#[derive(Debug)]
+pub enum DeleteCoreV1PersistentVolumeResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// delete a PersistentVolume
+    pub fn delete_core_v1_persistent_volume<C>(
+        __client: &C,
+        // name of the PersistentVolume
+        name: &str,
+        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+        grace_period_seconds: Option<i64>,
+        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+        orphan_dependents: Option<bool>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
+        propagation_policy: Option<&str>,
+    ) -> Result<DeleteCoreV1PersistentVolumeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/persistentvolumes/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(grace_period_seconds) = grace_period_seconds {
+                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
+            }
+            if let Some(orphan_dependents) = orphan_dependents {
+                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(propagation_policy) = propagation_policy {
+                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+            }
+        }
+
+        let response = __client.delete(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                DeleteCoreV1PersistentVolumeResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => DeleteCoreV1PersistentVolumeResponse::Unauthorized(response),
+            other => DeleteCoreV1PersistentVolumeResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation listCoreV1PersistentVolume
+
+#[derive(Debug)]
+pub enum ListCoreV1PersistentVolumeResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::api::core::v1::PersistentVolumeList),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// list or watch objects of kind PersistentVolume
+    pub fn list_core_v1_persistent_volume<C>(
+        __client: &C,
+        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+        continue_: Option<&str>,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+        //
+        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+        limit: Option<i64>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<ListCoreV1PersistentVolumeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/persistentvolumes")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(continue_) = continue_ {
+                __query_pairs.append_pair("continue", &continue_);
+            }
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(limit) = limit {
+                __query_pairs.append_pair("limit", &limit.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ListCoreV1PersistentVolumeResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ListCoreV1PersistentVolumeResponse::Unauthorized(response),
+            other => ListCoreV1PersistentVolumeResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation patchCoreV1PersistentVolume
+
+#[derive(Debug)]
+pub enum PatchCoreV1PersistentVolumeResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::api::core::v1::PersistentVolume),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// partially update the specified PersistentVolume
+    pub fn patch_core_v1_persistent_volume<C>(
+        __client: &C,
+        // name of the PersistentVolume
+        name: &str,
+        body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<PatchCoreV1PersistentVolumeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/persistentvolumes/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                PatchCoreV1PersistentVolumeResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => PatchCoreV1PersistentVolumeResponse::Unauthorized(response),
+            other => PatchCoreV1PersistentVolumeResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation patchCoreV1PersistentVolumeStatus
+
+#[derive(Debug)]
+pub enum PatchCoreV1PersistentVolumeStatusResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::api::core::v1::PersistentVolume),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// partially update status of the specified PersistentVolume
+    pub fn patch_core_v1_persistent_volume_status<C>(
+        __client: &C,
+        // name of the PersistentVolume
+        name: &str,
+        body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<PatchCoreV1PersistentVolumeStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/persistentvolumes/{name}/status", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                PatchCoreV1PersistentVolumeStatusResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => PatchCoreV1PersistentVolumeStatusResponse::Unauthorized(response),
+            other => PatchCoreV1PersistentVolumeStatusResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation readCoreV1PersistentVolume
+
+#[derive(Debug)]
+pub enum ReadCoreV1PersistentVolumeResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::api::core::v1::PersistentVolume),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// read the specified PersistentVolume
+    pub fn read_core_v1_persistent_volume<C>(
+        __client: &C,
+        // name of the PersistentVolume
+        name: &str,
+        // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+        exact: Option<bool>,
+        // Should this value be exported.  Export strips fields that a user can not specify.
+        export: Option<bool>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReadCoreV1PersistentVolumeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/persistentvolumes/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(exact) = exact {
+                __query_pairs.append_pair("exact", &exact.to_string());
+            }
+            if let Some(export) = export {
+                __query_pairs.append_pair("export", &export.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReadCoreV1PersistentVolumeResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1PersistentVolumeResponse::Unauthorized(response),
+            other => ReadCoreV1PersistentVolumeResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation readCoreV1PersistentVolumeStatus
+
+#[derive(Debug)]
+pub enum ReadCoreV1PersistentVolumeStatusResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::api::core::v1::PersistentVolume),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// read status of the specified PersistentVolume
+    pub fn read_core_v1_persistent_volume_status<C>(
+        __client: &C,
+        // name of the PersistentVolume
+        name: &str,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReadCoreV1PersistentVolumeStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/persistentvolumes/{name}/status", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReadCoreV1PersistentVolumeStatusResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1PersistentVolumeStatusResponse::Unauthorized(response),
+            other => ReadCoreV1PersistentVolumeStatusResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation replaceCoreV1PersistentVolume
+
+#[derive(Debug)]
+pub enum ReplaceCoreV1PersistentVolumeResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::api::core::v1::PersistentVolume),
+    Created(::v1_9::api::core::v1::PersistentVolume),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// replace the specified PersistentVolume
+    pub fn replace_core_v1_persistent_volume<C>(
+        __client: &C,
+        // name of the PersistentVolume
+        name: &str,
+        body: &::v1_9::api::core::v1::PersistentVolume,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReplaceCoreV1PersistentVolumeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/persistentvolumes/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReplaceCoreV1PersistentVolumeResponse::Ok(result)
+            },
+            ::http::StatusCode::CREATED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReplaceCoreV1PersistentVolumeResponse::Created(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReplaceCoreV1PersistentVolumeResponse::Unauthorized(response),
+            other => ReplaceCoreV1PersistentVolumeResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation replaceCoreV1PersistentVolumeStatus
+
+#[derive(Debug)]
+pub enum ReplaceCoreV1PersistentVolumeStatusResponse<R> where R: ::std::io::Read {
+    Ok(::v1_9::api::core::v1::PersistentVolume),
+    Created(::v1_9::api::core::v1::PersistentVolume),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// replace status of the specified PersistentVolume
+    pub fn replace_core_v1_persistent_volume_status<C>(
+        __client: &C,
+        // name of the PersistentVolume
+        name: &str,
+        body: &::v1_9::api::core::v1::PersistentVolume,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+    ) -> Result<ReplaceCoreV1PersistentVolumeStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/persistentvolumes/{name}/status", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+        }
+
+        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReplaceCoreV1PersistentVolumeStatusResponse::Ok(result)
+            },
+            ::http::StatusCode::CREATED => {
+                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
+                ReplaceCoreV1PersistentVolumeStatusResponse::Created(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => ReplaceCoreV1PersistentVolumeStatusResponse::Unauthorized(response),
+            other => ReplaceCoreV1PersistentVolumeStatusResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation watchCoreV1PersistentVolume
+
+pub enum WatchCoreV1PersistentVolumeResponse<R> where R: ::std::io::Read {
+    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// watch changes to an object of kind PersistentVolume
+    pub fn watch_core_v1_persistent_volume<C>(
+        __client: &C,
+        // name of the PersistentVolume
+        name: &str,
+        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+        continue_: Option<&str>,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+        //
+        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+        limit: Option<i64>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<WatchCoreV1PersistentVolumeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/watch/persistentvolumes/{name}", name = name)).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(continue_) = continue_ {
+                __query_pairs.append_pair("continue", &continue_);
+            }
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(limit) = limit {
+                __query_pairs.append_pair("limit", &limit.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
+                WatchCoreV1PersistentVolumeResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => WatchCoreV1PersistentVolumeResponse::Unauthorized(response),
+            other => WatchCoreV1PersistentVolumeResponse::Other(other, response),
+        })
+    }
+
+}
+
+// Generated from operation watchCoreV1PersistentVolumeList
+
+pub enum WatchCoreV1PersistentVolumeListResponse<R> where R: ::std::io::Read {
+    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
+    Unauthorized(R),
+    Other(::http::StatusCode, R),
+}
+
+impl PersistentVolume {
+    /// watch individual changes to a list of PersistentVolume
+    pub fn watch_core_v1_persistent_volume_list<C>(
+        __client: &C,
+        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+        continue_: Option<&str>,
+        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
+        field_selector: Option<&str>,
+        // If true, partially initialized resources are included in the response.
+        include_uninitialized: Option<bool>,
+        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
+        label_selector: Option<&str>,
+        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+        //
+        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+        limit: Option<i64>,
+        // If 'true', then the output is pretty printed.
+        pretty: Option<&str>,
+        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+        resource_version: Option<&str>,
+        // Timeout for the list/watch call.
+        timeout_seconds: Option<i64>,
+        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+        watch: Option<bool>,
+    ) -> Result<WatchCoreV1PersistentVolumeListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
+        let mut __url = __client.base_url().join(&format!("/api/v1/watch/persistentvolumes")).map_err(::Error::URL)?;
+        {
+            let mut __query_pairs = __url.query_pairs_mut();
+            if let Some(continue_) = continue_ {
+                __query_pairs.append_pair("continue", &continue_);
+            }
+            if let Some(field_selector) = field_selector {
+                __query_pairs.append_pair("fieldSelector", &field_selector);
+            }
+            if let Some(include_uninitialized) = include_uninitialized {
+                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+            }
+            if let Some(label_selector) = label_selector {
+                __query_pairs.append_pair("labelSelector", &label_selector);
+            }
+            if let Some(limit) = limit {
+                __query_pairs.append_pair("limit", &limit.to_string());
+            }
+            if let Some(pretty) = pretty {
+                __query_pairs.append_pair("pretty", &pretty);
+            }
+            if let Some(resource_version) = resource_version {
+                __query_pairs.append_pair("resourceVersion", &resource_version);
+            }
+            if let Some(timeout_seconds) = timeout_seconds {
+                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+            }
+            if let Some(watch) = watch {
+                __query_pairs.append_pair("watch", &watch.to_string());
+            }
+        }
+
+        let response = __client.get(__url).map_err(::Error::Client)?;
+
+        Ok(match ::Response::status_code(&response) {
+            ::http::StatusCode::OK => {
+                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
+                WatchCoreV1PersistentVolumeListResponse::Ok(result)
+            },
+            ::http::StatusCode::UNAUTHORIZED => WatchCoreV1PersistentVolumeListResponse::Unauthorized(response),
+            other => WatchCoreV1PersistentVolumeListResponse::Other(other, response),
+        })
+    }
+
+}
+
 impl<'de> ::serde::Deserialize<'de> for PersistentVolume {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
