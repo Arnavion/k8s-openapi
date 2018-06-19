@@ -5,6 +5,7 @@ extern crate k8s_openapi;
 extern crate http;
 extern crate reqwest;
 extern crate serde;
+#[macro_use] extern crate serde_derive;
 extern crate serde_json;
 extern crate serde_yaml;
 
@@ -35,117 +36,35 @@ struct Client {
 
 impl Client {
 	fn new() -> Result<Self, Error> {
-		let kubeconfig = {
+		let kubeconfig: KubeConfig = {
 			let mut kubeconfig_path = std::env::home_dir().ok_or("can't find home directory")?;
 			kubeconfig_path.push(".kube");
 			kubeconfig_path.push("config");
 			serde_yaml::from_reader(std::io::BufReader::new(std::fs::File::open(kubeconfig_path)?))?
 		};
-		let mut kubeconfig = if let serde_yaml::Value::Mapping(mapping) = kubeconfig {
-			mapping
-		}
-		else {
-			return Err(format!("malformed kubeconfig {:#?}", kubeconfig).into());
-		};
 
-		let mut clusters = {
-			let clusters = kubeconfig.remove(&serde_yaml::Value::String("clusters".to_string())).ok_or_else(|| format!("malformed kubeconfig {:#?}", kubeconfig))?;
-			if let serde_yaml::Value::Sequence(sequence) = clusters {
-				sequence
-			}
-			else {
-				return Err(format!("malformed kubeconfig clusters {:#?}", clusters).into());
-			}
-		};
+		let context = std::env::var("K8S_CONTEXT").unwrap_or(kubeconfig.current_context);
 
-		let mut cluster = {
-			let cluster = clusters.pop().ok_or_else(|| format!("malformed kubeconfig clusters {:#?}", clusters))?;
-			let mut cluster = if let serde_yaml::Value::Mapping(mapping) = cluster {
-				mapping
-			}
-			else {
-				return Err(format!("malformed kubeconfig cluster {:#?}", cluster).into());
-			};
-			let cluster = cluster.remove(&serde_yaml::Value::String("cluster".to_string())).ok_or_else(|| format!("malformed kubeconfig cluster {:#?}", cluster))?;
-			if let serde_yaml::Value::Mapping(mapping) = cluster {
-				mapping
-			}
-			else {
-				return Err(format!("malformed kubeconfig cluster {:#?}", cluster).into());
-			}
-		};
+		let KubeConfigContext { cluster, user } =
+			kubeconfig.contexts.into_iter()
+			.find(|c| c.name == context).unwrap_or_else(|| panic!("couldn't find context named {}", context))
+			.context;
 
-		let certificate_authority = {
-			let certificate_authority = cluster.remove(&serde_yaml::Value::String("certificate-authority".to_string())).ok_or_else(|| format!("malformed kubeconfig cluster {:#?}", cluster))?;
-			let certificate_authority = if let serde_yaml::Value::String(string) = certificate_authority {
-				string
-			}
-			else {
-				return Err(format!("malformed kubeconfig certificate-authority {:#?}", certificate_authority).into());
-			};
+		let KubeConfigCluster { certificate_authority, server } =
+			kubeconfig.clusters.into_iter()
+			.find(|c| c.name == cluster).unwrap_or_else(|| panic!("couldn't find cluster named {}", cluster))
+			.cluster;
 
-			client::x509_from_pem(certificate_authority.as_ref())?
-		};
+		let certificate_authority = client::x509_from_pem(&certificate_authority)?;
 
-		let server = {
-			let server = cluster.remove(&serde_yaml::Value::String("server".to_string())).ok_or_else(|| format!("malformed kubeconfig cluster {:#?}", cluster))?;
-			let server = if let serde_yaml::Value::String(string) = server {
-				string
-			}
-			else {
-				return Err(format!("malformed kubeconfig server {:#?}", server).into());
-			};
-			server.parse().map_err(|err| format!("couldn't parse server URL: {}", err))?
-		};
+		let server = server.parse().map_err(|err| format!("couldn't parse server URL: {}", err))?;
 
-		let mut users = {
-			let users = kubeconfig.remove(&serde_yaml::Value::String("users".to_string())).ok_or_else(|| format!("malformed kubeconfig {:#?}", kubeconfig))?;
-			if let serde_yaml::Value::Sequence(sequence) = users {
-				sequence
-			}
-			else {
-				return Err(format!("malformed kubeconfig users {:#?}", users).into());
-			}
-		};
+		let KubeConfigUser { client_certificate, client_key } =
+			kubeconfig.users.into_iter()
+			.find(|u| u.name == user).unwrap_or_else(|| panic!("couldn't find user named {}", user))
+			.user;
 
-		let mut user = {
-			let user = users.pop().ok_or_else(|| format!("malformed kubeconfig users {:#?}", users))?;
-			let mut user = if let serde_yaml::Value::Mapping(mapping) = user {
-				mapping
-			}
-			else {
-				return Err(format!("malformed kubeconfig user {:#?}", user).into());
-			};
-			let user = user.remove(&serde_yaml::Value::String("user".to_string())).ok_or_else(|| format!("malformed kubeconfig user {:#?}", user))?;
-			if let serde_yaml::Value::Mapping(mapping) = user {
-				mapping
-			}
-			else {
-				return Err(format!("malformed kubeconfig user {:#?}", user).into());
-			}
-		};
-
-		let client_certificate = {
-			let client_certificate = user.remove(&serde_yaml::Value::String("client-certificate".to_string())).ok_or_else(|| format!("malformed kubeconfig user {:#?}", user))?;
-			if let serde_yaml::Value::String(string) = client_certificate {
-				string
-			}
-			else {
-				return Err(format!("malformed kubeconfig client-certificate {:#?}", client_certificate).into());
-			}
-		};
-
-		let client_key = {
-			let client_key = user.remove(&serde_yaml::Value::String("client-key".to_string())).ok_or_else(|| format!("malformed kubeconfig user {:#?}", user))?;
-			let client_key = if let serde_yaml::Value::String(string) = client_key {
-				string
-			}
-			else {
-				return Err(format!("malformed kubeconfig client-key {:#?}", client_key).into());
-			};
-
-			client::pkcs12(client_certificate.as_ref(), client_key.as_ref())?
-		};
+		let client_key = client::pkcs12(&client_certificate, &client_key)?;
 
 		let mut inner = reqwest::Client::builder();
 		inner.danger_disable_hostname_verification();
@@ -262,6 +181,54 @@ impl k8s_openapi::Client for Client {
 			.send()?;
 		Ok(response)
 	}
+}
+
+#[derive(Deserialize)]
+struct KubeConfig {
+	clusters: Vec<KubeConfigClusterEntry>,
+	contexts: Vec<KubeConfigContextEntry>,
+	#[serde(rename = "current-context")]
+	current_context: String,
+	users: Vec<KubeConfigUserEntry>,
+}
+
+#[derive(Deserialize)]
+struct KubeConfigClusterEntry {
+	cluster: KubeConfigCluster,
+	name: String,
+}
+
+#[derive(Deserialize)]
+struct KubeConfigCluster {
+	#[serde(rename = "certificate-authority")]
+	certificate_authority: std::path::PathBuf,
+	server: String,
+}
+
+#[derive(Deserialize)]
+struct KubeConfigContextEntry {
+	context: KubeConfigContext,
+	name: String,
+}
+
+#[derive(Deserialize)]
+struct KubeConfigContext {
+	cluster: String,
+	user: String,
+}
+
+#[derive(Deserialize)]
+struct KubeConfigUserEntry {
+	name: String,
+	user: KubeConfigUser,
+}
+
+#[derive(Deserialize)]
+struct KubeConfigUser {
+	#[serde(rename = "client-certificate")]
+	client_certificate: std::path::PathBuf,
+	#[serde(rename = "client-key")]
+	client_key: std::path::PathBuf,
 }
 
 mod deployment;
