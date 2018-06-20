@@ -140,6 +140,11 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 			// the value of the `WatchEvent::object` property.
 			//
 			// Thus `RawExtension` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
+			//
+			// Ref: https://github.com/kubernetes/kubernetes/issues/55890
+			//
+			// https://github.com/kubernetes/kubernetes/pull/56434 will remove RawExtension and replace it with `{ type: "object" }`,
+			// which would've already been mapped to `Ty(Any)` by `Ty::parse`, so just replicate that for `RawExtension` here.
 			definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
 		}
 

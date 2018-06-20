@@ -171,7 +171,7 @@ pub enum StringFormat {
 
 #[derive(Debug)]
 pub enum Type {
-	Any, // Never parsed from a spec. Used only to support RawExtension.
+	Any,
 	Array { items: Box<Schema> },
 	Boolean,
 	Integer { format: IntegerFormat },
@@ -212,9 +212,9 @@ impl Type {
 				Ok(Type::Number { format })
 			},
 
-			"object" => {
-				let additional_properties = additional_properties.ok_or_else(|| ::serde::de::Error::missing_field("additionalProperties"))?;
-				Ok(Type::Object { additional_properties })
+			"object" => match additional_properties {
+				Some(additional_properties) => Ok(Type::Object { additional_properties }),
+				None => Ok(Type::Any),
 			},
 
 			"string" => {
