@@ -49,7 +49,7 @@ fn main() -> Result<(), Error> {
 	let out_dir_base = out_dir_base.join("k8s-openapi").join("src");
 
 	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.7.16/api/openapi-spec/swagger.json", &out_dir_base, "v1_7", &client)?;
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.8.13/api/openapi-spec/swagger.json", &out_dir_base, "v1_8", &client)?;
+	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.8.14/api/openapi-spec/swagger.json", &out_dir_base, "v1_8", &client)?;
 	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.9.8/api/openapi-spec/swagger.json", &out_dir_base, "v1_9", &client)?;
 	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.10.4/api/openapi-spec/swagger.json", &out_dir_base, "v1_10", &client)?;
 
