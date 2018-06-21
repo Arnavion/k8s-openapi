@@ -19,6 +19,8 @@ pub struct ReplicaSet {
     pub status: Option<::v1_9::api::apps::v1::ReplicaSetStatus>,
 }
 
+// Begin apps/v1/ReplicaSet
+
 // Generated from operation createAppsV1NamespacedReplicaSet
 
 #[derive(Debug)]
@@ -67,7 +69,6 @@ impl ReplicaSet {
             other => CreateAppsV1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAppsV1CollectionNamespacedReplicaSet
@@ -149,7 +150,6 @@ impl ReplicaSet {
             other => DeleteAppsV1CollectionNamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAppsV1NamespacedReplicaSet
@@ -206,7 +206,6 @@ impl ReplicaSet {
             other => DeleteAppsV1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAppsV1NamespacedReplicaSet
@@ -288,7 +287,6 @@ impl ReplicaSet {
             other => ListAppsV1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAppsV1ReplicaSetForAllNamespaces
@@ -368,7 +366,6 @@ impl ReplicaSet {
             other => ListAppsV1ReplicaSetForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1NamespacedReplicaSet
@@ -411,7 +408,6 @@ impl ReplicaSet {
             other => PatchAppsV1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1NamespacedReplicaSetStatus
@@ -454,7 +450,6 @@ impl ReplicaSet {
             other => PatchAppsV1NamespacedReplicaSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1NamespacedReplicaSet
@@ -506,7 +501,6 @@ impl ReplicaSet {
             other => ReadAppsV1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1NamespacedReplicaSetStatus
@@ -548,7 +542,6 @@ impl ReplicaSet {
             other => ReadAppsV1NamespacedReplicaSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1NamespacedReplicaSet
@@ -596,7 +589,6 @@ impl ReplicaSet {
             other => ReplaceAppsV1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1NamespacedReplicaSetStatus
@@ -644,7 +636,6 @@ impl ReplicaSet {
             other => ReplaceAppsV1NamespacedReplicaSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1NamespacedReplicaSet
@@ -727,7 +718,6 @@ impl ReplicaSet {
             other => WatchAppsV1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1NamespacedReplicaSetList
@@ -808,7 +798,6 @@ impl ReplicaSet {
             other => WatchAppsV1NamespacedReplicaSetListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1ReplicaSetListForAllNamespaces
@@ -887,8 +876,9 @@ impl ReplicaSet {
             other => WatchAppsV1ReplicaSetListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End apps/v1/ReplicaSet
 
 impl<'de> ::serde::Deserialize<'de> for ReplicaSet {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

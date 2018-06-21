@@ -19,6 +19,8 @@ pub struct Scale {
     pub status: Option<::v1_9::api::autoscaling::v1::ScaleStatus>,
 }
 
+// Begin autoscaling/v1/Scale
+
 // Generated from operation patchAppsV1NamespacedDeploymentScale
 
 #[derive(Debug)]
@@ -59,7 +61,6 @@ impl Scale {
             other => PatchAppsV1NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1NamespacedReplicaSetScale
@@ -102,7 +103,6 @@ impl Scale {
             other => PatchAppsV1NamespacedReplicaSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1NamespacedStatefulSetScale
@@ -145,7 +145,6 @@ impl Scale {
             other => PatchAppsV1NamespacedStatefulSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedReplicationControllerScale
@@ -188,7 +187,6 @@ impl Scale {
             other => PatchCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1NamespacedDeploymentScale
@@ -230,7 +228,6 @@ impl Scale {
             other => ReadAppsV1NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1NamespacedReplicaSetScale
@@ -272,7 +269,6 @@ impl Scale {
             other => ReadAppsV1NamespacedReplicaSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1NamespacedStatefulSetScale
@@ -314,7 +310,6 @@ impl Scale {
             other => ReadAppsV1NamespacedStatefulSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedReplicationControllerScale
@@ -356,7 +351,6 @@ impl Scale {
             other => ReadCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1NamespacedDeploymentScale
@@ -404,7 +398,6 @@ impl Scale {
             other => ReplaceAppsV1NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1NamespacedReplicaSetScale
@@ -452,7 +445,6 @@ impl Scale {
             other => ReplaceAppsV1NamespacedReplicaSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1NamespacedStatefulSetScale
@@ -500,7 +492,6 @@ impl Scale {
             other => ReplaceAppsV1NamespacedStatefulSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedReplicationControllerScale
@@ -548,8 +539,9 @@ impl Scale {
             other => ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
         })
     }
-
 }
+
+// End autoscaling/v1/Scale
 
 impl<'de> ::serde::Deserialize<'de> for Scale {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

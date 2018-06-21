@@ -16,6 +16,8 @@ pub struct PodSecurityPolicy {
     pub spec: Option<::v1_8::api::extensions::v1beta1::PodSecurityPolicySpec>,
 }
 
+// Begin extensions/v1beta1/PodSecurityPolicy
+
 // Generated from operation createExtensionsV1beta1PodSecurityPolicy
 
 #[derive(Debug)]
@@ -52,7 +54,6 @@ impl PodSecurityPolicy {
             other => CreateExtensionsV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1CollectionPodSecurityPolicy
@@ -132,7 +133,6 @@ impl PodSecurityPolicy {
             other => DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1PodSecurityPolicy
@@ -187,7 +187,6 @@ impl PodSecurityPolicy {
             other => DeleteExtensionsV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1PodSecurityPolicy
@@ -267,7 +266,6 @@ impl PodSecurityPolicy {
             other => ListExtensionsV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1PodSecurityPolicy
@@ -308,7 +306,6 @@ impl PodSecurityPolicy {
             other => PatchExtensionsV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1PodSecurityPolicy
@@ -358,7 +355,6 @@ impl PodSecurityPolicy {
             other => ReadExtensionsV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1PodSecurityPolicy
@@ -399,7 +395,6 @@ impl PodSecurityPolicy {
             other => ReplaceExtensionsV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1PodSecurityPolicy
@@ -480,7 +475,6 @@ impl PodSecurityPolicy {
             other => WatchExtensionsV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1PodSecurityPolicyList
@@ -559,8 +553,9 @@ impl PodSecurityPolicy {
             other => WatchExtensionsV1beta1PodSecurityPolicyListResponse::Other(other, response),
         })
     }
-
 }
+
+// End extensions/v1beta1/PodSecurityPolicy
 
 impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

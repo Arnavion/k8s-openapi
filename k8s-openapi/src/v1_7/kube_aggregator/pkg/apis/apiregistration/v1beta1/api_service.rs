@@ -18,6 +18,8 @@ pub struct APIService {
     pub status: Option<::v1_7::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIServiceStatus>,
 }
 
+// Begin apiregistration.k8s.io/v1beta1/APIService
+
 // Generated from operation createApiregistrationV1beta1APIService
 
 #[derive(Debug)]
@@ -54,7 +56,6 @@ impl APIService {
             other => CreateApiregistrationV1beta1APIServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteApiregistrationV1beta1APIService
@@ -109,7 +110,6 @@ impl APIService {
             other => DeleteApiregistrationV1beta1APIServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteApiregistrationV1beta1CollectionAPIService
@@ -177,7 +177,6 @@ impl APIService {
             other => DeleteApiregistrationV1beta1CollectionAPIServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listApiregistrationV1beta1APIService
@@ -245,7 +244,6 @@ impl APIService {
             other => ListApiregistrationV1beta1APIServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchApiregistrationV1beta1APIService
@@ -286,7 +284,6 @@ impl APIService {
             other => PatchApiregistrationV1beta1APIServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readApiregistrationV1beta1APIService
@@ -336,7 +333,6 @@ impl APIService {
             other => ReadApiregistrationV1beta1APIServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceApiregistrationV1beta1APIService
@@ -377,7 +373,6 @@ impl APIService {
             other => ReplaceApiregistrationV1beta1APIServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceApiregistrationV1beta1APIServiceStatus
@@ -418,7 +413,6 @@ impl APIService {
             other => ReplaceApiregistrationV1beta1APIServiceStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchApiregistrationV1beta1APIService
@@ -487,7 +481,6 @@ impl APIService {
             other => WatchApiregistrationV1beta1APIServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchApiregistrationV1beta1APIServiceList
@@ -554,8 +547,9 @@ impl APIService {
             other => WatchApiregistrationV1beta1APIServiceListResponse::Other(other, response),
         })
     }
-
 }
+
+// End apiregistration.k8s.io/v1beta1/APIService
 
 impl<'de> ::serde::Deserialize<'de> for APIService {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

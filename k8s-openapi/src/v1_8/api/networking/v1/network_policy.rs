@@ -16,6 +16,8 @@ pub struct NetworkPolicy {
     pub spec: Option<::v1_8::api::networking::v1::NetworkPolicySpec>,
 }
 
+// Begin networking.k8s.io/v1/NetworkPolicy
+
 // Generated from operation createNetworkingV1NamespacedNetworkPolicy
 
 #[derive(Debug)]
@@ -54,7 +56,6 @@ impl NetworkPolicy {
             other => CreateNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteNetworkingV1CollectionNamespacedNetworkPolicy
@@ -136,7 +137,6 @@ impl NetworkPolicy {
             other => DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteNetworkingV1NamespacedNetworkPolicy
@@ -193,7 +193,6 @@ impl NetworkPolicy {
             other => DeleteNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listNetworkingV1NamespacedNetworkPolicy
@@ -275,7 +274,6 @@ impl NetworkPolicy {
             other => ListNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listNetworkingV1NetworkPolicyForAllNamespaces
@@ -355,7 +353,6 @@ impl NetworkPolicy {
             other => ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchNetworkingV1NamespacedNetworkPolicy
@@ -398,7 +395,6 @@ impl NetworkPolicy {
             other => PatchNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readNetworkingV1NamespacedNetworkPolicy
@@ -450,7 +446,6 @@ impl NetworkPolicy {
             other => ReadNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceNetworkingV1NamespacedNetworkPolicy
@@ -493,7 +488,6 @@ impl NetworkPolicy {
             other => ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchNetworkingV1NamespacedNetworkPolicy
@@ -576,7 +570,6 @@ impl NetworkPolicy {
             other => WatchNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchNetworkingV1NamespacedNetworkPolicyList
@@ -657,7 +650,6 @@ impl NetworkPolicy {
             other => WatchNetworkingV1NamespacedNetworkPolicyListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchNetworkingV1NetworkPolicyListForAllNamespaces
@@ -736,8 +728,9 @@ impl NetworkPolicy {
             other => WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End networking.k8s.io/v1/NetworkPolicy
 
 impl<'de> ::serde::Deserialize<'de> for NetworkPolicy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

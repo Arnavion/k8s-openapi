@@ -21,6 +21,8 @@ pub struct VolumeAttachment {
     pub status: Option<::v1_9::api::storage::v1alpha1::VolumeAttachmentStatus>,
 }
 
+// Begin storage.k8s.io/v1alpha1/VolumeAttachment
+
 // Generated from operation createStorageV1alpha1VolumeAttachment
 
 #[derive(Debug)]
@@ -67,7 +69,6 @@ impl VolumeAttachment {
             other => CreateStorageV1alpha1VolumeAttachmentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteStorageV1alpha1CollectionVolumeAttachment
@@ -147,7 +148,6 @@ impl VolumeAttachment {
             other => DeleteStorageV1alpha1CollectionVolumeAttachmentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteStorageV1alpha1VolumeAttachment
@@ -202,7 +202,6 @@ impl VolumeAttachment {
             other => DeleteStorageV1alpha1VolumeAttachmentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listStorageV1alpha1VolumeAttachment
@@ -282,7 +281,6 @@ impl VolumeAttachment {
             other => ListStorageV1alpha1VolumeAttachmentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchStorageV1alpha1VolumeAttachment
@@ -323,7 +321,6 @@ impl VolumeAttachment {
             other => PatchStorageV1alpha1VolumeAttachmentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readStorageV1alpha1VolumeAttachment
@@ -373,7 +370,6 @@ impl VolumeAttachment {
             other => ReadStorageV1alpha1VolumeAttachmentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceStorageV1alpha1VolumeAttachment
@@ -419,7 +415,6 @@ impl VolumeAttachment {
             other => ReplaceStorageV1alpha1VolumeAttachmentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchStorageV1alpha1VolumeAttachment
@@ -500,7 +495,6 @@ impl VolumeAttachment {
             other => WatchStorageV1alpha1VolumeAttachmentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchStorageV1alpha1VolumeAttachmentList
@@ -579,8 +573,9 @@ impl VolumeAttachment {
             other => WatchStorageV1alpha1VolumeAttachmentListResponse::Other(other, response),
         })
     }
-
 }
+
+// End storage.k8s.io/v1alpha1/VolumeAttachment
 
 impl<'de> ::serde::Deserialize<'de> for VolumeAttachment {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

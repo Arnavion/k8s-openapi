@@ -19,6 +19,8 @@ pub struct HorizontalPodAutoscaler {
     pub status: Option<::v1_7::kubernetes::pkg::apis::autoscaling::v2alpha1::HorizontalPodAutoscalerStatus>,
 }
 
+// Begin autoscaling/v2alpha1/HorizontalPodAutoscaler
+
 // Generated from operation createAutoscalingV2alpha1NamespacedHorizontalPodAutoscaler
 
 #[derive(Debug)]
@@ -57,7 +59,6 @@ impl HorizontalPodAutoscaler {
             other => CreateAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAutoscalingV2alpha1CollectionNamespacedHorizontalPodAutoscaler
@@ -127,7 +128,6 @@ impl HorizontalPodAutoscaler {
             other => DeleteAutoscalingV2alpha1CollectionNamespacedHorizontalPodAutoscalerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAutoscalingV2alpha1NamespacedHorizontalPodAutoscaler
@@ -184,7 +184,6 @@ impl HorizontalPodAutoscaler {
             other => DeleteAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAutoscalingV2alpha1HorizontalPodAutoscalerForAllNamespaces
@@ -252,7 +251,6 @@ impl HorizontalPodAutoscaler {
             other => ListAutoscalingV2alpha1HorizontalPodAutoscalerForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAutoscalingV2alpha1NamespacedHorizontalPodAutoscaler
@@ -322,7 +320,6 @@ impl HorizontalPodAutoscaler {
             other => ListAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAutoscalingV2alpha1NamespacedHorizontalPodAutoscaler
@@ -365,7 +362,6 @@ impl HorizontalPodAutoscaler {
             other => PatchAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerStatus
@@ -408,7 +404,6 @@ impl HorizontalPodAutoscaler {
             other => PatchAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAutoscalingV2alpha1NamespacedHorizontalPodAutoscaler
@@ -460,7 +455,6 @@ impl HorizontalPodAutoscaler {
             other => ReadAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerStatus
@@ -502,7 +496,6 @@ impl HorizontalPodAutoscaler {
             other => ReadAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAutoscalingV2alpha1NamespacedHorizontalPodAutoscaler
@@ -545,7 +538,6 @@ impl HorizontalPodAutoscaler {
             other => ReplaceAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerStatus
@@ -588,7 +580,6 @@ impl HorizontalPodAutoscaler {
             other => ReplaceAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAutoscalingV2alpha1HorizontalPodAutoscalerListForAllNamespaces
@@ -655,7 +646,6 @@ impl HorizontalPodAutoscaler {
             other => WatchAutoscalingV2alpha1HorizontalPodAutoscalerListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAutoscalingV2alpha1NamespacedHorizontalPodAutoscaler
@@ -726,7 +716,6 @@ impl HorizontalPodAutoscaler {
             other => WatchAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerList
@@ -795,8 +784,9 @@ impl HorizontalPodAutoscaler {
             other => WatchAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerListResponse::Other(other, response),
         })
     }
-
 }
+
+// End autoscaling/v2alpha1/HorizontalPodAutoscaler
 
 impl<'de> ::serde::Deserialize<'de> for HorizontalPodAutoscaler {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

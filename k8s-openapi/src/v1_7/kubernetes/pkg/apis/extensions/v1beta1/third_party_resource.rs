@@ -19,6 +19,8 @@ pub struct ThirdPartyResource {
     pub versions: Option<Vec<::v1_7::kubernetes::pkg::apis::extensions::v1beta1::APIVersion>>,
 }
 
+// Begin extensions/v1beta1/ThirdPartyResource
+
 // Generated from operation createExtensionsV1beta1ThirdPartyResource
 
 #[derive(Debug)]
@@ -55,7 +57,6 @@ impl ThirdPartyResource {
             other => CreateExtensionsV1beta1ThirdPartyResourceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1CollectionThirdPartyResource
@@ -123,7 +124,6 @@ impl ThirdPartyResource {
             other => DeleteExtensionsV1beta1CollectionThirdPartyResourceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1ThirdPartyResource
@@ -178,7 +178,6 @@ impl ThirdPartyResource {
             other => DeleteExtensionsV1beta1ThirdPartyResourceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1ThirdPartyResource
@@ -246,7 +245,6 @@ impl ThirdPartyResource {
             other => ListExtensionsV1beta1ThirdPartyResourceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1ThirdPartyResource
@@ -287,7 +285,6 @@ impl ThirdPartyResource {
             other => PatchExtensionsV1beta1ThirdPartyResourceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1ThirdPartyResource
@@ -337,7 +334,6 @@ impl ThirdPartyResource {
             other => ReadExtensionsV1beta1ThirdPartyResourceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1ThirdPartyResource
@@ -378,7 +374,6 @@ impl ThirdPartyResource {
             other => ReplaceExtensionsV1beta1ThirdPartyResourceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1ThirdPartyResource
@@ -447,7 +442,6 @@ impl ThirdPartyResource {
             other => WatchExtensionsV1beta1ThirdPartyResourceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1ThirdPartyResourceList
@@ -514,8 +508,9 @@ impl ThirdPartyResource {
             other => WatchExtensionsV1beta1ThirdPartyResourceListResponse::Other(other, response),
         })
     }
-
 }
+
+// End extensions/v1beta1/ThirdPartyResource
 
 impl<'de> ::serde::Deserialize<'de> for ThirdPartyResource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

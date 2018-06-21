@@ -18,6 +18,8 @@ pub struct SubjectAccessReview {
     pub status: Option<::v1_7::kubernetes::pkg::apis::authorization::v1beta1::SubjectAccessReviewStatus>,
 }
 
+// Begin authorization.k8s.io/v1beta1/SubjectAccessReview
+
 // Generated from operation createAuthorizationV1beta1SubjectAccessReview
 
 #[derive(Debug)]
@@ -54,8 +56,9 @@ impl SubjectAccessReview {
             other => CreateAuthorizationV1beta1SubjectAccessReviewResponse::Other(other, response),
         })
     }
-
 }
+
+// End authorization.k8s.io/v1beta1/SubjectAccessReview
 
 impl<'de> ::serde::Deserialize<'de> for SubjectAccessReview {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

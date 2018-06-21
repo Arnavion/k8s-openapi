@@ -19,6 +19,8 @@ pub struct Scale {
     pub status: Option<::v1_7::kubernetes::pkg::apis::apps::v1beta1::ScaleStatus>,
 }
 
+// Begin apps/v1beta1/Scale
+
 // Generated from operation patchAppsV1beta1NamespacedDeploymentScale
 
 #[derive(Debug)]
@@ -59,7 +61,6 @@ impl Scale {
             other => PatchAppsV1beta1NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1beta1NamespacedDeploymentScale
@@ -101,7 +102,6 @@ impl Scale {
             other => ReadAppsV1beta1NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1beta1NamespacedDeploymentScale
@@ -144,8 +144,9 @@ impl Scale {
             other => ReplaceAppsV1beta1NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
+
+// End apps/v1beta1/Scale
 
 impl<'de> ::serde::Deserialize<'de> for Scale {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

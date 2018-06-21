@@ -16,6 +16,8 @@ pub struct PodSecurityPolicy {
     pub spec: Option<::v1_10::api::policy::v1beta1::PodSecurityPolicySpec>,
 }
 
+// Begin policy/v1beta1/PodSecurityPolicy
+
 // Generated from operation createPolicyV1beta1PodSecurityPolicy
 
 #[derive(Debug)]
@@ -62,7 +64,6 @@ impl PodSecurityPolicy {
             other => CreatePolicyV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deletePolicyV1beta1CollectionPodSecurityPolicy
@@ -142,7 +143,6 @@ impl PodSecurityPolicy {
             other => DeletePolicyV1beta1CollectionPodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deletePolicyV1beta1PodSecurityPolicy
@@ -197,7 +197,6 @@ impl PodSecurityPolicy {
             other => DeletePolicyV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listPolicyV1beta1PodSecurityPolicy
@@ -277,7 +276,6 @@ impl PodSecurityPolicy {
             other => ListPolicyV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchPolicyV1beta1PodSecurityPolicy
@@ -318,7 +316,6 @@ impl PodSecurityPolicy {
             other => PatchPolicyV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readPolicyV1beta1PodSecurityPolicy
@@ -368,7 +365,6 @@ impl PodSecurityPolicy {
             other => ReadPolicyV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replacePolicyV1beta1PodSecurityPolicy
@@ -414,7 +410,6 @@ impl PodSecurityPolicy {
             other => ReplacePolicyV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchPolicyV1beta1PodSecurityPolicy
@@ -495,7 +490,6 @@ impl PodSecurityPolicy {
             other => WatchPolicyV1beta1PodSecurityPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchPolicyV1beta1PodSecurityPolicyList
@@ -574,8 +568,9 @@ impl PodSecurityPolicy {
             other => WatchPolicyV1beta1PodSecurityPolicyListResponse::Other(other, response),
         })
     }
-
 }
+
+// End policy/v1beta1/PodSecurityPolicy
 
 impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

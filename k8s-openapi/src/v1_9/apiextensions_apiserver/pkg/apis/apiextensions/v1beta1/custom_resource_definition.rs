@@ -18,6 +18,8 @@ pub struct CustomResourceDefinition {
     pub status: Option<::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus>,
 }
 
+// Begin apiextensions.k8s.io/v1beta1/CustomResourceDefinition
+
 // Generated from operation createApiextensionsV1beta1CustomResourceDefinition
 
 #[derive(Debug)]
@@ -64,7 +66,6 @@ impl CustomResourceDefinition {
             other => CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteApiextensionsV1beta1CollectionCustomResourceDefinition
@@ -144,7 +145,6 @@ impl CustomResourceDefinition {
             other => DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteApiextensionsV1beta1CustomResourceDefinition
@@ -199,7 +199,6 @@ impl CustomResourceDefinition {
             other => DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listApiextensionsV1beta1CustomResourceDefinition
@@ -279,7 +278,6 @@ impl CustomResourceDefinition {
             other => ListApiextensionsV1beta1CustomResourceDefinitionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchApiextensionsV1beta1CustomResourceDefinition
@@ -320,7 +318,6 @@ impl CustomResourceDefinition {
             other => PatchApiextensionsV1beta1CustomResourceDefinitionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readApiextensionsV1beta1CustomResourceDefinition
@@ -370,7 +367,6 @@ impl CustomResourceDefinition {
             other => ReadApiextensionsV1beta1CustomResourceDefinitionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceApiextensionsV1beta1CustomResourceDefinition
@@ -416,7 +412,6 @@ impl CustomResourceDefinition {
             other => ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceApiextensionsV1beta1CustomResourceDefinitionStatus
@@ -462,7 +457,6 @@ impl CustomResourceDefinition {
             other => ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchApiextensionsV1beta1CustomResourceDefinition
@@ -543,7 +537,6 @@ impl CustomResourceDefinition {
             other => WatchApiextensionsV1beta1CustomResourceDefinitionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchApiextensionsV1beta1CustomResourceDefinitionList
@@ -622,8 +615,9 @@ impl CustomResourceDefinition {
             other => WatchApiextensionsV1beta1CustomResourceDefinitionListResponse::Other(other, response),
         })
     }
-
 }
+
+// End apiextensions.k8s.io/v1beta1/CustomResourceDefinition
 
 impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

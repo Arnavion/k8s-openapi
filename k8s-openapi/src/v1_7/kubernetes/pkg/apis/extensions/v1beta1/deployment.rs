@@ -19,6 +19,8 @@ pub struct Deployment {
     pub status: Option<::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentStatus>,
 }
 
+// Begin extensions/v1beta1/Deployment
+
 // Generated from operation createExtensionsV1beta1NamespacedDeployment
 
 #[derive(Debug)]
@@ -57,7 +59,6 @@ impl Deployment {
             other => CreateExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1CollectionNamespacedDeployment
@@ -127,7 +128,6 @@ impl Deployment {
             other => DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1NamespacedDeployment
@@ -184,7 +184,6 @@ impl Deployment {
             other => DeleteExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1DeploymentForAllNamespaces
@@ -252,7 +251,6 @@ impl Deployment {
             other => ListExtensionsV1beta1DeploymentForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1NamespacedDeployment
@@ -322,7 +320,6 @@ impl Deployment {
             other => ListExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedDeployment
@@ -365,7 +362,6 @@ impl Deployment {
             other => PatchExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedDeploymentStatus
@@ -408,7 +404,6 @@ impl Deployment {
             other => PatchExtensionsV1beta1NamespacedDeploymentStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedDeployment
@@ -460,7 +455,6 @@ impl Deployment {
             other => ReadExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedDeploymentStatus
@@ -502,7 +496,6 @@ impl Deployment {
             other => ReadExtensionsV1beta1NamespacedDeploymentStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedDeployment
@@ -545,7 +538,6 @@ impl Deployment {
             other => ReplaceExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedDeploymentStatus
@@ -588,7 +580,6 @@ impl Deployment {
             other => ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1DeploymentListForAllNamespaces
@@ -655,7 +646,6 @@ impl Deployment {
             other => WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedDeployment
@@ -726,7 +716,6 @@ impl Deployment {
             other => WatchExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedDeploymentList
@@ -795,8 +784,9 @@ impl Deployment {
             other => WatchExtensionsV1beta1NamespacedDeploymentListResponse::Other(other, response),
         })
     }
-
 }
+
+// End extensions/v1beta1/Deployment
 
 impl<'de> ::serde::Deserialize<'de> for Deployment {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

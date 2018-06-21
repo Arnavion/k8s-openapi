@@ -19,6 +19,8 @@ pub struct Scale {
     pub status: Option<::v1_8::api::extensions::v1beta1::ScaleStatus>,
 }
 
+// Begin extensions/v1beta1/Scale
+
 // Generated from operation patchExtensionsV1beta1NamespacedDeploymentScale
 
 #[derive(Debug)]
@@ -59,7 +61,6 @@ impl Scale {
             other => PatchExtensionsV1beta1NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedReplicaSetScale
@@ -102,7 +103,6 @@ impl Scale {
             other => PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedReplicationControllerDummyScale
@@ -145,7 +145,6 @@ impl Scale {
             other => PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedDeploymentScale
@@ -187,7 +186,6 @@ impl Scale {
             other => ReadExtensionsV1beta1NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedReplicaSetScale
@@ -229,7 +227,6 @@ impl Scale {
             other => ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedReplicationControllerDummyScale
@@ -271,7 +268,6 @@ impl Scale {
             other => ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedDeploymentScale
@@ -314,7 +310,6 @@ impl Scale {
             other => ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedReplicaSetScale
@@ -357,7 +352,6 @@ impl Scale {
             other => ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedReplicationControllerDummyScale
@@ -400,8 +394,9 @@ impl Scale {
             other => ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Other(other, response),
         })
     }
-
 }
+
+// End extensions/v1beta1/Scale
 
 impl<'de> ::serde::Deserialize<'de> for Scale {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

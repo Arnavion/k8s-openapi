@@ -37,6 +37,8 @@ pub struct Event {
     pub type_: Option<String>,
 }
 
+// Begin /v1/Event
+
 // Generated from operation createCoreV1NamespacedEvent
 
 #[derive(Debug)]
@@ -75,7 +77,6 @@ impl Event {
             other => CreateCoreV1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedEvent
@@ -157,7 +158,6 @@ impl Event {
             other => DeleteCoreV1CollectionNamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedEvent
@@ -214,7 +214,6 @@ impl Event {
             other => DeleteCoreV1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1EventForAllNamespaces
@@ -294,7 +293,6 @@ impl Event {
             other => ListCoreV1EventForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedEvent
@@ -376,7 +374,6 @@ impl Event {
             other => ListCoreV1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedEvent
@@ -419,7 +416,6 @@ impl Event {
             other => PatchCoreV1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedEvent
@@ -471,7 +467,6 @@ impl Event {
             other => ReadCoreV1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedEvent
@@ -514,7 +509,6 @@ impl Event {
             other => ReplaceCoreV1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1EventListForAllNamespaces
@@ -593,7 +587,6 @@ impl Event {
             other => WatchCoreV1EventListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedEvent
@@ -676,7 +669,6 @@ impl Event {
             other => WatchCoreV1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedEventList
@@ -757,8 +749,9 @@ impl Event {
             other => WatchCoreV1NamespacedEventListResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/Event
 
 impl<'de> ::serde::Deserialize<'de> for Event {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

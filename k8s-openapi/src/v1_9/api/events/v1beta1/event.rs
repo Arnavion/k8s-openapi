@@ -54,6 +54,8 @@ pub struct Event {
     pub type_: Option<String>,
 }
 
+// Begin events.k8s.io/v1beta1/Event
+
 // Generated from operation createEventsV1beta1NamespacedEvent
 
 #[derive(Debug)]
@@ -102,7 +104,6 @@ impl Event {
             other => CreateEventsV1beta1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteEventsV1beta1CollectionNamespacedEvent
@@ -184,7 +185,6 @@ impl Event {
             other => DeleteEventsV1beta1CollectionNamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteEventsV1beta1NamespacedEvent
@@ -241,7 +241,6 @@ impl Event {
             other => DeleteEventsV1beta1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listEventsV1beta1EventForAllNamespaces
@@ -321,7 +320,6 @@ impl Event {
             other => ListEventsV1beta1EventForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listEventsV1beta1NamespacedEvent
@@ -403,7 +401,6 @@ impl Event {
             other => ListEventsV1beta1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchEventsV1beta1NamespacedEvent
@@ -446,7 +443,6 @@ impl Event {
             other => PatchEventsV1beta1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readEventsV1beta1NamespacedEvent
@@ -498,7 +494,6 @@ impl Event {
             other => ReadEventsV1beta1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceEventsV1beta1NamespacedEvent
@@ -546,7 +541,6 @@ impl Event {
             other => ReplaceEventsV1beta1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchEventsV1beta1EventListForAllNamespaces
@@ -625,7 +619,6 @@ impl Event {
             other => WatchEventsV1beta1EventListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchEventsV1beta1NamespacedEvent
@@ -708,7 +701,6 @@ impl Event {
             other => WatchEventsV1beta1NamespacedEventResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchEventsV1beta1NamespacedEventList
@@ -789,8 +781,9 @@ impl Event {
             other => WatchEventsV1beta1NamespacedEventListResponse::Other(other, response),
         })
     }
-
 }
+
+// End events.k8s.io/v1beta1/Event
 
 impl<'de> ::serde::Deserialize<'de> for Event {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

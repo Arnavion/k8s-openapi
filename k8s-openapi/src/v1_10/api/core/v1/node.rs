@@ -19,6 +19,8 @@ pub struct Node {
     pub status: Option<::v1_10::api::core::v1::NodeStatus>,
 }
 
+// Begin /v1/Node
+
 // Generated from operation connectCoreV1DeleteNodeProxy
 
 #[derive(Debug)]
@@ -58,7 +60,6 @@ impl Node {
             other => ConnectCoreV1DeleteNodeProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1DeleteNodeProxyWithPath
@@ -102,7 +103,6 @@ impl Node {
             other => ConnectCoreV1DeleteNodeProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1GetNodeProxy
@@ -144,7 +144,6 @@ impl Node {
             other => ConnectCoreV1GetNodeProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1GetNodeProxyWithPath
@@ -188,7 +187,6 @@ impl Node {
             other => ConnectCoreV1GetNodeProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PatchNodeProxy
@@ -230,7 +228,6 @@ impl Node {
             other => ConnectCoreV1PatchNodeProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PatchNodeProxyWithPath
@@ -274,7 +271,6 @@ impl Node {
             other => ConnectCoreV1PatchNodeProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PostNodeProxy
@@ -316,7 +312,6 @@ impl Node {
             other => ConnectCoreV1PostNodeProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PostNodeProxyWithPath
@@ -360,7 +355,6 @@ impl Node {
             other => ConnectCoreV1PostNodeProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PutNodeProxy
@@ -402,7 +396,6 @@ impl Node {
             other => ConnectCoreV1PutNodeProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PutNodeProxyWithPath
@@ -446,7 +439,6 @@ impl Node {
             other => ConnectCoreV1PutNodeProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation createCoreV1Node
@@ -495,7 +487,6 @@ impl Node {
             other => CreateCoreV1NodeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNode
@@ -575,7 +566,6 @@ impl Node {
             other => DeleteCoreV1CollectionNodeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1Node
@@ -630,7 +620,6 @@ impl Node {
             other => DeleteCoreV1NodeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1Node
@@ -710,7 +699,6 @@ impl Node {
             other => ListCoreV1NodeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1Node
@@ -751,7 +739,6 @@ impl Node {
             other => PatchCoreV1NodeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NodeStatus
@@ -792,7 +779,6 @@ impl Node {
             other => PatchCoreV1NodeStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1Node
@@ -842,7 +828,6 @@ impl Node {
             other => ReadCoreV1NodeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NodeStatus
@@ -882,7 +867,6 @@ impl Node {
             other => ReadCoreV1NodeStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1Node
@@ -928,7 +912,6 @@ impl Node {
             other => ReplaceCoreV1NodeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NodeStatus
@@ -974,7 +957,6 @@ impl Node {
             other => ReplaceCoreV1NodeStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1Node
@@ -1055,7 +1037,6 @@ impl Node {
             other => WatchCoreV1NodeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NodeList
@@ -1134,8 +1115,9 @@ impl Node {
             other => WatchCoreV1NodeListResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/Node
 
 impl<'de> ::serde::Deserialize<'de> for Node {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

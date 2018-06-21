@@ -19,6 +19,8 @@ pub struct ControllerRevision {
     pub revision: i64,
 }
 
+// Begin apps/v1beta2/ControllerRevision
+
 // Generated from operation createAppsV1beta2NamespacedControllerRevision
 
 #[derive(Debug)]
@@ -67,7 +69,6 @@ impl ControllerRevision {
             other => CreateAppsV1beta2NamespacedControllerRevisionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAppsV1beta2CollectionNamespacedControllerRevision
@@ -149,7 +150,6 @@ impl ControllerRevision {
             other => DeleteAppsV1beta2CollectionNamespacedControllerRevisionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAppsV1beta2NamespacedControllerRevision
@@ -206,7 +206,6 @@ impl ControllerRevision {
             other => DeleteAppsV1beta2NamespacedControllerRevisionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAppsV1beta2ControllerRevisionForAllNamespaces
@@ -286,7 +285,6 @@ impl ControllerRevision {
             other => ListAppsV1beta2ControllerRevisionForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAppsV1beta2NamespacedControllerRevision
@@ -368,7 +366,6 @@ impl ControllerRevision {
             other => ListAppsV1beta2NamespacedControllerRevisionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1beta2NamespacedControllerRevision
@@ -411,7 +408,6 @@ impl ControllerRevision {
             other => PatchAppsV1beta2NamespacedControllerRevisionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1beta2NamespacedControllerRevision
@@ -463,7 +459,6 @@ impl ControllerRevision {
             other => ReadAppsV1beta2NamespacedControllerRevisionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1beta2NamespacedControllerRevision
@@ -511,7 +506,6 @@ impl ControllerRevision {
             other => ReplaceAppsV1beta2NamespacedControllerRevisionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1beta2ControllerRevisionListForAllNamespaces
@@ -590,7 +584,6 @@ impl ControllerRevision {
             other => WatchAppsV1beta2ControllerRevisionListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1beta2NamespacedControllerRevision
@@ -673,7 +666,6 @@ impl ControllerRevision {
             other => WatchAppsV1beta2NamespacedControllerRevisionResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1beta2NamespacedControllerRevisionList
@@ -754,8 +746,9 @@ impl ControllerRevision {
             other => WatchAppsV1beta2NamespacedControllerRevisionListResponse::Other(other, response),
         })
     }
-
 }
+
+// End apps/v1beta2/ControllerRevision
 
 impl<'de> ::serde::Deserialize<'de> for ControllerRevision {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

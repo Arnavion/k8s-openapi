@@ -21,6 +21,8 @@ pub struct StatefulSet {
     pub status: Option<::v1_10::api::apps::v1::StatefulSetStatus>,
 }
 
+// Begin apps/v1/StatefulSet
+
 // Generated from operation createAppsV1NamespacedStatefulSet
 
 #[derive(Debug)]
@@ -69,7 +71,6 @@ impl StatefulSet {
             other => CreateAppsV1NamespacedStatefulSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAppsV1CollectionNamespacedStatefulSet
@@ -151,7 +152,6 @@ impl StatefulSet {
             other => DeleteAppsV1CollectionNamespacedStatefulSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAppsV1NamespacedStatefulSet
@@ -208,7 +208,6 @@ impl StatefulSet {
             other => DeleteAppsV1NamespacedStatefulSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAppsV1NamespacedStatefulSet
@@ -290,7 +289,6 @@ impl StatefulSet {
             other => ListAppsV1NamespacedStatefulSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAppsV1StatefulSetForAllNamespaces
@@ -370,7 +368,6 @@ impl StatefulSet {
             other => ListAppsV1StatefulSetForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1NamespacedStatefulSet
@@ -413,7 +410,6 @@ impl StatefulSet {
             other => PatchAppsV1NamespacedStatefulSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1NamespacedStatefulSetStatus
@@ -456,7 +452,6 @@ impl StatefulSet {
             other => PatchAppsV1NamespacedStatefulSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1NamespacedStatefulSet
@@ -508,7 +503,6 @@ impl StatefulSet {
             other => ReadAppsV1NamespacedStatefulSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1NamespacedStatefulSetStatus
@@ -550,7 +544,6 @@ impl StatefulSet {
             other => ReadAppsV1NamespacedStatefulSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1NamespacedStatefulSet
@@ -598,7 +591,6 @@ impl StatefulSet {
             other => ReplaceAppsV1NamespacedStatefulSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1NamespacedStatefulSetStatus
@@ -646,7 +638,6 @@ impl StatefulSet {
             other => ReplaceAppsV1NamespacedStatefulSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1NamespacedStatefulSet
@@ -729,7 +720,6 @@ impl StatefulSet {
             other => WatchAppsV1NamespacedStatefulSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1NamespacedStatefulSetList
@@ -810,7 +800,6 @@ impl StatefulSet {
             other => WatchAppsV1NamespacedStatefulSetListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1StatefulSetListForAllNamespaces
@@ -889,8 +878,9 @@ impl StatefulSet {
             other => WatchAppsV1StatefulSetListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End apps/v1/StatefulSet
 
 impl<'de> ::serde::Deserialize<'de> for StatefulSet {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

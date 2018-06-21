@@ -16,6 +16,8 @@ pub struct MutatingWebhookConfiguration {
     pub webhooks: Option<Vec<::v1_9::api::admissionregistration::v1beta1::Webhook>>,
 }
 
+// Begin admissionregistration.k8s.io/v1beta1/MutatingWebhookConfiguration
+
 // Generated from operation createAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
 #[derive(Debug)]
@@ -62,7 +64,6 @@ impl MutatingWebhookConfiguration {
             other => CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfiguration
@@ -142,7 +143,6 @@ impl MutatingWebhookConfiguration {
             other => DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAdmissionregistrationV1beta1MutatingWebhookConfiguration
@@ -197,7 +197,6 @@ impl MutatingWebhookConfiguration {
             other => DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAdmissionregistrationV1beta1MutatingWebhookConfiguration
@@ -277,7 +276,6 @@ impl MutatingWebhookConfiguration {
             other => ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAdmissionregistrationV1beta1MutatingWebhookConfiguration
@@ -318,7 +316,6 @@ impl MutatingWebhookConfiguration {
             other => PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAdmissionregistrationV1beta1MutatingWebhookConfiguration
@@ -368,7 +365,6 @@ impl MutatingWebhookConfiguration {
             other => ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAdmissionregistrationV1beta1MutatingWebhookConfiguration
@@ -414,7 +410,6 @@ impl MutatingWebhookConfiguration {
             other => ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAdmissionregistrationV1beta1MutatingWebhookConfiguration
@@ -495,7 +490,6 @@ impl MutatingWebhookConfiguration {
             other => WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAdmissionregistrationV1beta1MutatingWebhookConfigurationList
@@ -574,8 +568,9 @@ impl MutatingWebhookConfiguration {
             other => WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse::Other(other, response),
         })
     }
-
 }
+
+// End admissionregistration.k8s.io/v1beta1/MutatingWebhookConfiguration
 
 impl<'de> ::serde::Deserialize<'de> for MutatingWebhookConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

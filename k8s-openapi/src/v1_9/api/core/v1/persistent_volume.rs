@@ -19,6 +19,8 @@ pub struct PersistentVolume {
     pub status: Option<::v1_9::api::core::v1::PersistentVolumeStatus>,
 }
 
+// Begin /v1/PersistentVolume
+
 // Generated from operation createCoreV1PersistentVolume
 
 #[derive(Debug)]
@@ -65,7 +67,6 @@ impl PersistentVolume {
             other => CreateCoreV1PersistentVolumeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionPersistentVolume
@@ -145,7 +146,6 @@ impl PersistentVolume {
             other => DeleteCoreV1CollectionPersistentVolumeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1PersistentVolume
@@ -200,7 +200,6 @@ impl PersistentVolume {
             other => DeleteCoreV1PersistentVolumeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1PersistentVolume
@@ -280,7 +279,6 @@ impl PersistentVolume {
             other => ListCoreV1PersistentVolumeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1PersistentVolume
@@ -321,7 +319,6 @@ impl PersistentVolume {
             other => PatchCoreV1PersistentVolumeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1PersistentVolumeStatus
@@ -362,7 +359,6 @@ impl PersistentVolume {
             other => PatchCoreV1PersistentVolumeStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1PersistentVolume
@@ -412,7 +408,6 @@ impl PersistentVolume {
             other => ReadCoreV1PersistentVolumeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1PersistentVolumeStatus
@@ -452,7 +447,6 @@ impl PersistentVolume {
             other => ReadCoreV1PersistentVolumeStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1PersistentVolume
@@ -498,7 +492,6 @@ impl PersistentVolume {
             other => ReplaceCoreV1PersistentVolumeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1PersistentVolumeStatus
@@ -544,7 +537,6 @@ impl PersistentVolume {
             other => ReplaceCoreV1PersistentVolumeStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1PersistentVolume
@@ -625,7 +617,6 @@ impl PersistentVolume {
             other => WatchCoreV1PersistentVolumeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1PersistentVolumeList
@@ -704,8 +695,9 @@ impl PersistentVolume {
             other => WatchCoreV1PersistentVolumeListResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/PersistentVolume
 
 impl<'de> ::serde::Deserialize<'de> for PersistentVolume {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

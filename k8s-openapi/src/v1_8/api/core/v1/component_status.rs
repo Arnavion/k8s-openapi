@@ -16,6 +16,8 @@ pub struct ComponentStatus {
     pub metadata: Option<::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
+// Begin /v1/ComponentStatus
+
 // Generated from operation listCoreV1ComponentStatus
 
 #[derive(Debug)]
@@ -93,7 +95,6 @@ impl ComponentStatus {
             other => ListCoreV1ComponentStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1ComponentStatus
@@ -133,8 +134,9 @@ impl ComponentStatus {
             other => ReadCoreV1ComponentStatusResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/ComponentStatus
 
 impl<'de> ::serde::Deserialize<'de> for ComponentStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

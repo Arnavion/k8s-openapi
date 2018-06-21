@@ -19,6 +19,8 @@ pub struct PersistentVolumeClaim {
     pub status: Option<::v1_7::kubernetes::pkg::api::v1::PersistentVolumeClaimStatus>,
 }
 
+// Begin /v1/PersistentVolumeClaim
+
 // Generated from operation createCoreV1NamespacedPersistentVolumeClaim
 
 #[derive(Debug)]
@@ -57,7 +59,6 @@ impl PersistentVolumeClaim {
             other => CreateCoreV1NamespacedPersistentVolumeClaimResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedPersistentVolumeClaim
@@ -127,7 +128,6 @@ impl PersistentVolumeClaim {
             other => DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedPersistentVolumeClaim
@@ -184,7 +184,6 @@ impl PersistentVolumeClaim {
             other => DeleteCoreV1NamespacedPersistentVolumeClaimResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedPersistentVolumeClaim
@@ -254,7 +253,6 @@ impl PersistentVolumeClaim {
             other => ListCoreV1NamespacedPersistentVolumeClaimResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1PersistentVolumeClaimForAllNamespaces
@@ -322,7 +320,6 @@ impl PersistentVolumeClaim {
             other => ListCoreV1PersistentVolumeClaimForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedPersistentVolumeClaim
@@ -365,7 +362,6 @@ impl PersistentVolumeClaim {
             other => PatchCoreV1NamespacedPersistentVolumeClaimResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedPersistentVolumeClaimStatus
@@ -408,7 +404,6 @@ impl PersistentVolumeClaim {
             other => PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedPersistentVolumeClaim
@@ -460,7 +455,6 @@ impl PersistentVolumeClaim {
             other => ReadCoreV1NamespacedPersistentVolumeClaimResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedPersistentVolumeClaimStatus
@@ -502,7 +496,6 @@ impl PersistentVolumeClaim {
             other => ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedPersistentVolumeClaim
@@ -545,7 +538,6 @@ impl PersistentVolumeClaim {
             other => ReplaceCoreV1NamespacedPersistentVolumeClaimResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedPersistentVolumeClaimStatus
@@ -588,7 +580,6 @@ impl PersistentVolumeClaim {
             other => ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedPersistentVolumeClaim
@@ -659,7 +650,6 @@ impl PersistentVolumeClaim {
             other => WatchCoreV1NamespacedPersistentVolumeClaimResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedPersistentVolumeClaimList
@@ -728,7 +718,6 @@ impl PersistentVolumeClaim {
             other => WatchCoreV1NamespacedPersistentVolumeClaimListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1PersistentVolumeClaimListForAllNamespaces
@@ -795,8 +784,9 @@ impl PersistentVolumeClaim {
             other => WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/PersistentVolumeClaim
 
 impl<'de> ::serde::Deserialize<'de> for PersistentVolumeClaim {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

@@ -19,6 +19,8 @@ pub struct RoleBinding {
     pub subjects: Vec<::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::Subject>,
 }
 
+// Begin rbac.authorization.k8s.io/v1alpha1/RoleBinding
+
 // Generated from operation createRbacAuthorizationV1alpha1NamespacedRoleBinding
 
 #[derive(Debug)]
@@ -57,7 +59,6 @@ impl RoleBinding {
             other => CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBinding
@@ -127,7 +128,6 @@ impl RoleBinding {
             other => DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteRbacAuthorizationV1alpha1NamespacedRoleBinding
@@ -184,7 +184,6 @@ impl RoleBinding {
             other => DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listRbacAuthorizationV1alpha1NamespacedRoleBinding
@@ -254,7 +253,6 @@ impl RoleBinding {
             other => ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listRbacAuthorizationV1alpha1RoleBindingForAllNamespaces
@@ -322,7 +320,6 @@ impl RoleBinding {
             other => ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchRbacAuthorizationV1alpha1NamespacedRoleBinding
@@ -365,7 +362,6 @@ impl RoleBinding {
             other => PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readRbacAuthorizationV1alpha1NamespacedRoleBinding
@@ -407,7 +403,6 @@ impl RoleBinding {
             other => ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceRbacAuthorizationV1alpha1NamespacedRoleBinding
@@ -450,7 +445,6 @@ impl RoleBinding {
             other => ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1alpha1NamespacedRoleBinding
@@ -521,7 +515,6 @@ impl RoleBinding {
             other => WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1alpha1NamespacedRoleBindingList
@@ -590,7 +583,6 @@ impl RoleBinding {
             other => WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1alpha1RoleBindingListForAllNamespaces
@@ -657,8 +649,9 @@ impl RoleBinding {
             other => WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End rbac.authorization.k8s.io/v1alpha1/RoleBinding
 
 impl<'de> ::serde::Deserialize<'de> for RoleBinding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

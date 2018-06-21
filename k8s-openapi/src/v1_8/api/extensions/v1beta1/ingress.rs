@@ -19,6 +19,8 @@ pub struct Ingress {
     pub status: Option<::v1_8::api::extensions::v1beta1::IngressStatus>,
 }
 
+// Begin extensions/v1beta1/Ingress
+
 // Generated from operation createExtensionsV1beta1NamespacedIngress
 
 #[derive(Debug)]
@@ -57,7 +59,6 @@ impl Ingress {
             other => CreateExtensionsV1beta1NamespacedIngressResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1CollectionNamespacedIngress
@@ -139,7 +140,6 @@ impl Ingress {
             other => DeleteExtensionsV1beta1CollectionNamespacedIngressResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1NamespacedIngress
@@ -196,7 +196,6 @@ impl Ingress {
             other => DeleteExtensionsV1beta1NamespacedIngressResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1IngressForAllNamespaces
@@ -276,7 +275,6 @@ impl Ingress {
             other => ListExtensionsV1beta1IngressForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1NamespacedIngress
@@ -358,7 +356,6 @@ impl Ingress {
             other => ListExtensionsV1beta1NamespacedIngressResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedIngress
@@ -401,7 +398,6 @@ impl Ingress {
             other => PatchExtensionsV1beta1NamespacedIngressResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedIngressStatus
@@ -444,7 +440,6 @@ impl Ingress {
             other => PatchExtensionsV1beta1NamespacedIngressStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedIngress
@@ -496,7 +491,6 @@ impl Ingress {
             other => ReadExtensionsV1beta1NamespacedIngressResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedIngressStatus
@@ -538,7 +532,6 @@ impl Ingress {
             other => ReadExtensionsV1beta1NamespacedIngressStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedIngress
@@ -581,7 +574,6 @@ impl Ingress {
             other => ReplaceExtensionsV1beta1NamespacedIngressResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedIngressStatus
@@ -624,7 +616,6 @@ impl Ingress {
             other => ReplaceExtensionsV1beta1NamespacedIngressStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1IngressListForAllNamespaces
@@ -703,7 +694,6 @@ impl Ingress {
             other => WatchExtensionsV1beta1IngressListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedIngress
@@ -786,7 +776,6 @@ impl Ingress {
             other => WatchExtensionsV1beta1NamespacedIngressResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedIngressList
@@ -867,8 +856,9 @@ impl Ingress {
             other => WatchExtensionsV1beta1NamespacedIngressListResponse::Other(other, response),
         })
     }
-
 }
+
+// End extensions/v1beta1/Ingress
 
 impl<'de> ::serde::Deserialize<'de> for Ingress {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

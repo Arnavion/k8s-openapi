@@ -19,6 +19,8 @@ pub struct Service {
     pub status: Option<::v1_9::api::core::v1::ServiceStatus>,
 }
 
+// Begin /v1/Service
+
 // Generated from operation connectCoreV1DeleteNamespacedServiceProxy
 
 #[derive(Debug)]
@@ -60,7 +62,6 @@ impl Service {
             other => ConnectCoreV1DeleteNamespacedServiceProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1DeleteNamespacedServiceProxyWithPath
@@ -106,7 +107,6 @@ impl Service {
             other => ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1GetNamespacedServiceProxy
@@ -150,7 +150,6 @@ impl Service {
             other => ConnectCoreV1GetNamespacedServiceProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1GetNamespacedServiceProxyWithPath
@@ -196,7 +195,6 @@ impl Service {
             other => ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PatchNamespacedServiceProxy
@@ -240,7 +238,6 @@ impl Service {
             other => ConnectCoreV1PatchNamespacedServiceProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PatchNamespacedServiceProxyWithPath
@@ -286,7 +283,6 @@ impl Service {
             other => ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PostNamespacedServiceProxy
@@ -330,7 +326,6 @@ impl Service {
             other => ConnectCoreV1PostNamespacedServiceProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PostNamespacedServiceProxyWithPath
@@ -376,7 +371,6 @@ impl Service {
             other => ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PutNamespacedServiceProxy
@@ -420,7 +414,6 @@ impl Service {
             other => ConnectCoreV1PutNamespacedServiceProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PutNamespacedServiceProxyWithPath
@@ -466,7 +459,6 @@ impl Service {
             other => ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation createCoreV1NamespacedService
@@ -517,7 +509,6 @@ impl Service {
             other => CreateCoreV1NamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedService
@@ -559,7 +550,6 @@ impl Service {
             other => DeleteCoreV1NamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedService
@@ -641,7 +631,6 @@ impl Service {
             other => ListCoreV1NamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1ServiceForAllNamespaces
@@ -721,7 +710,6 @@ impl Service {
             other => ListCoreV1ServiceForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedService
@@ -764,7 +752,6 @@ impl Service {
             other => PatchCoreV1NamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedServiceStatus
@@ -807,7 +794,6 @@ impl Service {
             other => PatchCoreV1NamespacedServiceStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1DELETENamespacedService
@@ -843,7 +829,6 @@ impl Service {
             other => ProxyCoreV1DELETENamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1DELETENamespacedServiceWithPath
@@ -881,7 +866,6 @@ impl Service {
             other => ProxyCoreV1DELETENamespacedServiceWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1GETNamespacedService
@@ -917,7 +901,6 @@ impl Service {
             other => ProxyCoreV1GETNamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1GETNamespacedServiceWithPath
@@ -955,7 +938,6 @@ impl Service {
             other => ProxyCoreV1GETNamespacedServiceWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1PATCHNamespacedService
@@ -991,7 +973,6 @@ impl Service {
             other => ProxyCoreV1PATCHNamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1PATCHNamespacedServiceWithPath
@@ -1029,7 +1010,6 @@ impl Service {
             other => ProxyCoreV1PATCHNamespacedServiceWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1POSTNamespacedService
@@ -1065,7 +1045,6 @@ impl Service {
             other => ProxyCoreV1POSTNamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1POSTNamespacedServiceWithPath
@@ -1103,7 +1082,6 @@ impl Service {
             other => ProxyCoreV1POSTNamespacedServiceWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1PUTNamespacedService
@@ -1139,7 +1117,6 @@ impl Service {
             other => ProxyCoreV1PUTNamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1PUTNamespacedServiceWithPath
@@ -1177,7 +1154,6 @@ impl Service {
             other => ProxyCoreV1PUTNamespacedServiceWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedService
@@ -1229,7 +1205,6 @@ impl Service {
             other => ReadCoreV1NamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedServiceStatus
@@ -1271,7 +1246,6 @@ impl Service {
             other => ReadCoreV1NamespacedServiceStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedService
@@ -1319,7 +1293,6 @@ impl Service {
             other => ReplaceCoreV1NamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedServiceStatus
@@ -1367,7 +1340,6 @@ impl Service {
             other => ReplaceCoreV1NamespacedServiceStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedService
@@ -1450,7 +1422,6 @@ impl Service {
             other => WatchCoreV1NamespacedServiceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedServiceList
@@ -1531,7 +1502,6 @@ impl Service {
             other => WatchCoreV1NamespacedServiceListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1ServiceListForAllNamespaces
@@ -1610,8 +1580,9 @@ impl Service {
             other => WatchCoreV1ServiceListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/Service
 
 impl<'de> ::serde::Deserialize<'de> for Service {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

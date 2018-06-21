@@ -33,6 +33,8 @@ pub struct StorageClass {
     pub volume_binding_mode: Option<String>,
 }
 
+// Begin storage.k8s.io/v1beta1/StorageClass
+
 // Generated from operation createStorageV1beta1StorageClass
 
 #[derive(Debug)]
@@ -79,7 +81,6 @@ impl StorageClass {
             other => CreateStorageV1beta1StorageClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteStorageV1beta1CollectionStorageClass
@@ -159,7 +160,6 @@ impl StorageClass {
             other => DeleteStorageV1beta1CollectionStorageClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteStorageV1beta1StorageClass
@@ -214,7 +214,6 @@ impl StorageClass {
             other => DeleteStorageV1beta1StorageClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listStorageV1beta1StorageClass
@@ -294,7 +293,6 @@ impl StorageClass {
             other => ListStorageV1beta1StorageClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchStorageV1beta1StorageClass
@@ -335,7 +333,6 @@ impl StorageClass {
             other => PatchStorageV1beta1StorageClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readStorageV1beta1StorageClass
@@ -385,7 +382,6 @@ impl StorageClass {
             other => ReadStorageV1beta1StorageClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceStorageV1beta1StorageClass
@@ -431,7 +427,6 @@ impl StorageClass {
             other => ReplaceStorageV1beta1StorageClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchStorageV1beta1StorageClass
@@ -512,7 +507,6 @@ impl StorageClass {
             other => WatchStorageV1beta1StorageClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchStorageV1beta1StorageClassList
@@ -591,8 +585,9 @@ impl StorageClass {
             other => WatchStorageV1beta1StorageClassListResponse::Other(other, response),
         })
     }
-
 }
+
+// End storage.k8s.io/v1beta1/StorageClass
 
 impl<'de> ::serde::Deserialize<'de> for StorageClass {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

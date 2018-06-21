@@ -14,6 +14,8 @@ pub struct PodPreset {
     pub spec: Option<::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPresetSpec>,
 }
 
+// Begin settings.k8s.io/v1alpha1/PodPreset
+
 // Generated from operation createSettingsV1alpha1NamespacedPodPreset
 
 #[derive(Debug)]
@@ -52,7 +54,6 @@ impl PodPreset {
             other => CreateSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteSettingsV1alpha1CollectionNamespacedPodPreset
@@ -122,7 +123,6 @@ impl PodPreset {
             other => DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteSettingsV1alpha1NamespacedPodPreset
@@ -179,7 +179,6 @@ impl PodPreset {
             other => DeleteSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listSettingsV1alpha1NamespacedPodPreset
@@ -249,7 +248,6 @@ impl PodPreset {
             other => ListSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listSettingsV1alpha1PodPresetForAllNamespaces
@@ -317,7 +315,6 @@ impl PodPreset {
             other => ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchSettingsV1alpha1NamespacedPodPreset
@@ -360,7 +357,6 @@ impl PodPreset {
             other => PatchSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readSettingsV1alpha1NamespacedPodPreset
@@ -412,7 +408,6 @@ impl PodPreset {
             other => ReadSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceSettingsV1alpha1NamespacedPodPreset
@@ -455,7 +450,6 @@ impl PodPreset {
             other => ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchSettingsV1alpha1NamespacedPodPreset
@@ -526,7 +520,6 @@ impl PodPreset {
             other => WatchSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchSettingsV1alpha1NamespacedPodPresetList
@@ -595,7 +588,6 @@ impl PodPreset {
             other => WatchSettingsV1alpha1NamespacedPodPresetListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchSettingsV1alpha1PodPresetListForAllNamespaces
@@ -662,8 +654,9 @@ impl PodPreset {
             other => WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End settings.k8s.io/v1alpha1/PodPreset
 
 impl<'de> ::serde::Deserialize<'de> for PodPreset {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

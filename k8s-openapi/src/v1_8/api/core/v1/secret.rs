@@ -22,6 +22,8 @@ pub struct Secret {
     pub type_: Option<String>,
 }
 
+// Begin /v1/Secret
+
 // Generated from operation createCoreV1NamespacedSecret
 
 #[derive(Debug)]
@@ -60,7 +62,6 @@ impl Secret {
             other => CreateCoreV1NamespacedSecretResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedSecret
@@ -142,7 +143,6 @@ impl Secret {
             other => DeleteCoreV1CollectionNamespacedSecretResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedSecret
@@ -199,7 +199,6 @@ impl Secret {
             other => DeleteCoreV1NamespacedSecretResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedSecret
@@ -281,7 +280,6 @@ impl Secret {
             other => ListCoreV1NamespacedSecretResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1SecretForAllNamespaces
@@ -361,7 +359,6 @@ impl Secret {
             other => ListCoreV1SecretForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedSecret
@@ -404,7 +401,6 @@ impl Secret {
             other => PatchCoreV1NamespacedSecretResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedSecret
@@ -456,7 +452,6 @@ impl Secret {
             other => ReadCoreV1NamespacedSecretResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedSecret
@@ -499,7 +494,6 @@ impl Secret {
             other => ReplaceCoreV1NamespacedSecretResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedSecret
@@ -582,7 +576,6 @@ impl Secret {
             other => WatchCoreV1NamespacedSecretResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedSecretList
@@ -663,7 +656,6 @@ impl Secret {
             other => WatchCoreV1NamespacedSecretListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1SecretListForAllNamespaces
@@ -742,8 +734,9 @@ impl Secret {
             other => WatchCoreV1SecretListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/Secret
 
 impl<'de> ::serde::Deserialize<'de> for Secret {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

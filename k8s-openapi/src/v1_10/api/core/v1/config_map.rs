@@ -19,6 +19,8 @@ pub struct ConfigMap {
     pub metadata: Option<::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
+// Begin /v1/ConfigMap
+
 // Generated from operation createCoreV1NamespacedConfigMap
 
 #[derive(Debug)]
@@ -67,7 +69,6 @@ impl ConfigMap {
             other => CreateCoreV1NamespacedConfigMapResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedConfigMap
@@ -149,7 +150,6 @@ impl ConfigMap {
             other => DeleteCoreV1CollectionNamespacedConfigMapResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedConfigMap
@@ -206,7 +206,6 @@ impl ConfigMap {
             other => DeleteCoreV1NamespacedConfigMapResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1ConfigMapForAllNamespaces
@@ -286,7 +285,6 @@ impl ConfigMap {
             other => ListCoreV1ConfigMapForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedConfigMap
@@ -368,7 +366,6 @@ impl ConfigMap {
             other => ListCoreV1NamespacedConfigMapResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedConfigMap
@@ -411,7 +408,6 @@ impl ConfigMap {
             other => PatchCoreV1NamespacedConfigMapResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedConfigMap
@@ -463,7 +459,6 @@ impl ConfigMap {
             other => ReadCoreV1NamespacedConfigMapResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedConfigMap
@@ -511,7 +506,6 @@ impl ConfigMap {
             other => ReplaceCoreV1NamespacedConfigMapResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1ConfigMapListForAllNamespaces
@@ -590,7 +584,6 @@ impl ConfigMap {
             other => WatchCoreV1ConfigMapListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedConfigMap
@@ -673,7 +666,6 @@ impl ConfigMap {
             other => WatchCoreV1NamespacedConfigMapResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedConfigMapList
@@ -754,8 +746,9 @@ impl ConfigMap {
             other => WatchCoreV1NamespacedConfigMapListResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/ConfigMap
 
 impl<'de> ::serde::Deserialize<'de> for ConfigMap {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

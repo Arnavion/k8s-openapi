@@ -27,6 +27,8 @@ pub struct Endpoints {
     pub subsets: Vec<::v1_7::kubernetes::pkg::api::v1::EndpointSubset>,
 }
 
+// Begin /v1/Endpoints
+
 // Generated from operation createCoreV1NamespacedEndpoints
 
 #[derive(Debug)]
@@ -65,7 +67,6 @@ impl Endpoints {
             other => CreateCoreV1NamespacedEndpointsResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedEndpoints
@@ -135,7 +136,6 @@ impl Endpoints {
             other => DeleteCoreV1CollectionNamespacedEndpointsResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedEndpoints
@@ -192,7 +192,6 @@ impl Endpoints {
             other => DeleteCoreV1NamespacedEndpointsResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1EndpointsForAllNamespaces
@@ -260,7 +259,6 @@ impl Endpoints {
             other => ListCoreV1EndpointsForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedEndpoints
@@ -330,7 +328,6 @@ impl Endpoints {
             other => ListCoreV1NamespacedEndpointsResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedEndpoints
@@ -373,7 +370,6 @@ impl Endpoints {
             other => PatchCoreV1NamespacedEndpointsResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedEndpoints
@@ -425,7 +421,6 @@ impl Endpoints {
             other => ReadCoreV1NamespacedEndpointsResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedEndpoints
@@ -468,7 +463,6 @@ impl Endpoints {
             other => ReplaceCoreV1NamespacedEndpointsResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1EndpointsListForAllNamespaces
@@ -535,7 +529,6 @@ impl Endpoints {
             other => WatchCoreV1EndpointsListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedEndpoints
@@ -606,7 +599,6 @@ impl Endpoints {
             other => WatchCoreV1NamespacedEndpointsResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedEndpointsList
@@ -675,8 +667,9 @@ impl Endpoints {
             other => WatchCoreV1NamespacedEndpointsListResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/Endpoints
 
 impl<'de> ::serde::Deserialize<'de> for Endpoints {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

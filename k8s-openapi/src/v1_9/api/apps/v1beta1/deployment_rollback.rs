@@ -19,6 +19,8 @@ pub struct DeploymentRollback {
     pub updated_annotations: Option<::std::collections::BTreeMap<String, String>>,
 }
 
+// Begin apps/v1beta1/DeploymentRollback
+
 // Generated from operation createAppsV1beta1NamespacedDeploymentRollback
 
 #[derive(Debug)]
@@ -69,8 +71,9 @@ impl DeploymentRollback {
             other => CreateAppsV1beta1NamespacedDeploymentRollbackResponse::Other(other, response),
         })
     }
-
 }
+
+// End apps/v1beta1/DeploymentRollback
 
 impl<'de> ::serde::Deserialize<'de> for DeploymentRollback {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

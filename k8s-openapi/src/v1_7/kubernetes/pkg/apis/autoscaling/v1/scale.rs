@@ -19,6 +19,8 @@ pub struct Scale {
     pub status: Option<::v1_7::kubernetes::pkg::apis::autoscaling::v1::ScaleStatus>,
 }
 
+// Begin autoscaling/v1/Scale
+
 // Generated from operation patchCoreV1NamespacedReplicationControllerScale
 
 #[derive(Debug)]
@@ -59,7 +61,6 @@ impl Scale {
             other => PatchCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedReplicationControllerScale
@@ -101,7 +102,6 @@ impl Scale {
             other => ReadCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedReplicationControllerScale
@@ -144,8 +144,9 @@ impl Scale {
             other => ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
         })
     }
-
 }
+
+// End autoscaling/v1/Scale
 
 impl<'de> ::serde::Deserialize<'de> for Scale {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

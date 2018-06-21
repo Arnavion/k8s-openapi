@@ -16,6 +16,8 @@ pub struct ValidatingWebhookConfiguration {
     pub webhooks: Option<Vec<::v1_10::api::admissionregistration::v1beta1::Webhook>>,
 }
 
+// Begin admissionregistration.k8s.io/v1beta1/ValidatingWebhookConfiguration
+
 // Generated from operation createAdmissionregistrationV1beta1ValidatingWebhookConfiguration
 
 #[derive(Debug)]
@@ -62,7 +64,6 @@ impl ValidatingWebhookConfiguration {
             other => CreateAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAdmissionregistrationV1beta1CollectionValidatingWebhookConfiguration
@@ -142,7 +143,6 @@ impl ValidatingWebhookConfiguration {
             other => DeleteAdmissionregistrationV1beta1CollectionValidatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAdmissionregistrationV1beta1ValidatingWebhookConfiguration
@@ -197,7 +197,6 @@ impl ValidatingWebhookConfiguration {
             other => DeleteAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAdmissionregistrationV1beta1ValidatingWebhookConfiguration
@@ -277,7 +276,6 @@ impl ValidatingWebhookConfiguration {
             other => ListAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAdmissionregistrationV1beta1ValidatingWebhookConfiguration
@@ -318,7 +316,6 @@ impl ValidatingWebhookConfiguration {
             other => PatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAdmissionregistrationV1beta1ValidatingWebhookConfiguration
@@ -368,7 +365,6 @@ impl ValidatingWebhookConfiguration {
             other => ReadAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAdmissionregistrationV1beta1ValidatingWebhookConfiguration
@@ -414,7 +410,6 @@ impl ValidatingWebhookConfiguration {
             other => ReplaceAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAdmissionregistrationV1beta1ValidatingWebhookConfiguration
@@ -495,7 +490,6 @@ impl ValidatingWebhookConfiguration {
             other => WatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAdmissionregistrationV1beta1ValidatingWebhookConfigurationList
@@ -574,8 +568,9 @@ impl ValidatingWebhookConfiguration {
             other => WatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationListResponse::Other(other, response),
         })
     }
-
 }
+
+// End admissionregistration.k8s.io/v1beta1/ValidatingWebhookConfiguration
 
 impl<'de> ::serde::Deserialize<'de> for ValidatingWebhookConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

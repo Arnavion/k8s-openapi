@@ -18,6 +18,8 @@ pub struct PodDisruptionBudget {
     pub status: Option<::v1_10::api::policy::v1beta1::PodDisruptionBudgetStatus>,
 }
 
+// Begin policy/v1beta1/PodDisruptionBudget
+
 // Generated from operation createPolicyV1beta1NamespacedPodDisruptionBudget
 
 #[derive(Debug)]
@@ -66,7 +68,6 @@ impl PodDisruptionBudget {
             other => CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deletePolicyV1beta1CollectionNamespacedPodDisruptionBudget
@@ -148,7 +149,6 @@ impl PodDisruptionBudget {
             other => DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deletePolicyV1beta1NamespacedPodDisruptionBudget
@@ -205,7 +205,6 @@ impl PodDisruptionBudget {
             other => DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listPolicyV1beta1NamespacedPodDisruptionBudget
@@ -287,7 +286,6 @@ impl PodDisruptionBudget {
             other => ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listPolicyV1beta1PodDisruptionBudgetForAllNamespaces
@@ -367,7 +365,6 @@ impl PodDisruptionBudget {
             other => ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchPolicyV1beta1NamespacedPodDisruptionBudget
@@ -410,7 +407,6 @@ impl PodDisruptionBudget {
             other => PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchPolicyV1beta1NamespacedPodDisruptionBudgetStatus
@@ -453,7 +449,6 @@ impl PodDisruptionBudget {
             other => PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readPolicyV1beta1NamespacedPodDisruptionBudget
@@ -505,7 +500,6 @@ impl PodDisruptionBudget {
             other => ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readPolicyV1beta1NamespacedPodDisruptionBudgetStatus
@@ -547,7 +541,6 @@ impl PodDisruptionBudget {
             other => ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replacePolicyV1beta1NamespacedPodDisruptionBudget
@@ -595,7 +588,6 @@ impl PodDisruptionBudget {
             other => ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replacePolicyV1beta1NamespacedPodDisruptionBudgetStatus
@@ -643,7 +635,6 @@ impl PodDisruptionBudget {
             other => ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchPolicyV1beta1NamespacedPodDisruptionBudget
@@ -726,7 +717,6 @@ impl PodDisruptionBudget {
             other => WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchPolicyV1beta1NamespacedPodDisruptionBudgetList
@@ -807,7 +797,6 @@ impl PodDisruptionBudget {
             other => WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchPolicyV1beta1PodDisruptionBudgetListForAllNamespaces
@@ -886,8 +875,9 @@ impl PodDisruptionBudget {
             other => WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End policy/v1beta1/PodDisruptionBudget
 
 impl<'de> ::serde::Deserialize<'de> for PodDisruptionBudget {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

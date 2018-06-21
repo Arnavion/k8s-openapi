@@ -33,7 +33,6 @@ pub fn get_api_versions<C>(
     })
 }
 
-
 // Generated from operation getAdmissionregistrationAPIGroup
 
 #[derive(Debug)]
@@ -60,7 +59,6 @@ pub fn get_admissionregistration_api_group<C>(
         other => GetAdmissionregistrationAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getAdmissionregistrationV1alpha1APIResources
 
@@ -89,7 +87,6 @@ pub fn get_admissionregistration_v1alpha1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getAdmissionregistrationV1beta1APIResources
 
 #[derive(Debug)]
@@ -116,7 +113,6 @@ pub fn get_admissionregistration_v1beta1_api_resources<C>(
         other => GetAdmissionregistrationV1beta1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getApiextensionsAPIGroup
 
@@ -145,7 +141,6 @@ pub fn get_apiextensions_api_group<C>(
     })
 }
 
-
 // Generated from operation getApiextensionsV1beta1APIResources
 
 #[derive(Debug)]
@@ -172,7 +167,6 @@ pub fn get_apiextensions_v1beta1_api_resources<C>(
         other => GetApiextensionsV1beta1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getApiregistrationAPIGroup
 
@@ -201,7 +195,6 @@ pub fn get_apiregistration_api_group<C>(
     })
 }
 
-
 // Generated from operation getApiregistrationV1APIResources
 
 #[derive(Debug)]
@@ -228,7 +221,6 @@ pub fn get_apiregistration_v1_api_resources<C>(
         other => GetApiregistrationV1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getApiregistrationV1beta1APIResources
 
@@ -257,7 +249,6 @@ pub fn get_apiregistration_v1beta1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getAppsAPIGroup
 
 #[derive(Debug)]
@@ -284,7 +275,6 @@ pub fn get_apps_api_group<C>(
         other => GetAppsAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getAppsV1APIResources
 
@@ -313,7 +303,6 @@ pub fn get_apps_v1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getAppsV1beta1APIResources
 
 #[derive(Debug)]
@@ -340,7 +329,6 @@ pub fn get_apps_v1beta1_api_resources<C>(
         other => GetAppsV1beta1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getAppsV1beta2APIResources
 
@@ -369,7 +357,6 @@ pub fn get_apps_v1beta2_api_resources<C>(
     })
 }
 
-
 // Generated from operation getAuthenticationAPIGroup
 
 #[derive(Debug)]
@@ -396,7 +383,6 @@ pub fn get_authentication_api_group<C>(
         other => GetAuthenticationAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getAuthenticationV1APIResources
 
@@ -425,7 +411,6 @@ pub fn get_authentication_v1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getAuthenticationV1beta1APIResources
 
 #[derive(Debug)]
@@ -452,7 +437,6 @@ pub fn get_authentication_v1beta1_api_resources<C>(
         other => GetAuthenticationV1beta1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getAuthorizationAPIGroup
 
@@ -481,7 +465,6 @@ pub fn get_authorization_api_group<C>(
     })
 }
 
-
 // Generated from operation getAuthorizationV1APIResources
 
 #[derive(Debug)]
@@ -508,7 +491,6 @@ pub fn get_authorization_v1_api_resources<C>(
         other => GetAuthorizationV1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getAuthorizationV1beta1APIResources
 
@@ -537,7 +519,6 @@ pub fn get_authorization_v1beta1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getAutoscalingAPIGroup
 
 #[derive(Debug)]
@@ -564,7 +545,6 @@ pub fn get_autoscaling_api_group<C>(
         other => GetAutoscalingAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getAutoscalingV1APIResources
 
@@ -593,7 +573,6 @@ pub fn get_autoscaling_v1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getAutoscalingV2beta1APIResources
 
 #[derive(Debug)]
@@ -620,7 +599,6 @@ pub fn get_autoscaling_v2beta1_api_resources<C>(
         other => GetAutoscalingV2beta1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getBatchAPIGroup
 
@@ -649,7 +627,6 @@ pub fn get_batch_api_group<C>(
     })
 }
 
-
 // Generated from operation getBatchV1APIResources
 
 #[derive(Debug)]
@@ -676,7 +653,6 @@ pub fn get_batch_v1_api_resources<C>(
         other => GetBatchV1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getBatchV1beta1APIResources
 
@@ -705,7 +681,6 @@ pub fn get_batch_v1beta1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getBatchV2alpha1APIResources
 
 #[derive(Debug)]
@@ -732,7 +707,6 @@ pub fn get_batch_v2alpha1_api_resources<C>(
         other => GetBatchV2alpha1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getCertificatesAPIGroup
 
@@ -761,7 +735,6 @@ pub fn get_certificates_api_group<C>(
     })
 }
 
-
 // Generated from operation getCertificatesV1beta1APIResources
 
 #[derive(Debug)]
@@ -788,7 +761,6 @@ pub fn get_certificates_v1beta1_api_resources<C>(
         other => GetCertificatesV1beta1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getCodeVersion
 
@@ -817,7 +789,6 @@ pub fn get_code_version<C>(
     })
 }
 
-
 // Generated from operation getCoreAPIVersions
 
 #[derive(Debug)]
@@ -844,7 +815,6 @@ pub fn get_core_api_versions<C>(
         other => GetCoreAPIVersionsResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getCoreV1APIResources
 
@@ -873,7 +843,6 @@ pub fn get_core_v1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getEventsAPIGroup
 
 #[derive(Debug)]
@@ -900,7 +869,6 @@ pub fn get_events_api_group<C>(
         other => GetEventsAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getEventsV1beta1APIResources
 
@@ -929,7 +897,6 @@ pub fn get_events_v1beta1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getExtensionsAPIGroup
 
 #[derive(Debug)]
@@ -956,7 +923,6 @@ pub fn get_extensions_api_group<C>(
         other => GetExtensionsAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getExtensionsV1beta1APIResources
 
@@ -985,7 +951,6 @@ pub fn get_extensions_v1beta1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getNetworkingAPIGroup
 
 #[derive(Debug)]
@@ -1012,7 +977,6 @@ pub fn get_networking_api_group<C>(
         other => GetNetworkingAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getNetworkingV1APIResources
 
@@ -1041,7 +1005,6 @@ pub fn get_networking_v1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getPolicyAPIGroup
 
 #[derive(Debug)]
@@ -1068,7 +1031,6 @@ pub fn get_policy_api_group<C>(
         other => GetPolicyAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getPolicyV1beta1APIResources
 
@@ -1097,7 +1059,6 @@ pub fn get_policy_v1beta1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getRbacAuthorizationAPIGroup
 
 #[derive(Debug)]
@@ -1124,7 +1085,6 @@ pub fn get_rbac_authorization_api_group<C>(
         other => GetRbacAuthorizationAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getRbacAuthorizationV1APIResources
 
@@ -1153,7 +1113,6 @@ pub fn get_rbac_authorization_v1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getRbacAuthorizationV1alpha1APIResources
 
 #[derive(Debug)]
@@ -1180,7 +1139,6 @@ pub fn get_rbac_authorization_v1alpha1_api_resources<C>(
         other => GetRbacAuthorizationV1alpha1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getRbacAuthorizationV1beta1APIResources
 
@@ -1209,7 +1167,6 @@ pub fn get_rbac_authorization_v1beta1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getSchedulingAPIGroup
 
 #[derive(Debug)]
@@ -1236,7 +1193,6 @@ pub fn get_scheduling_api_group<C>(
         other => GetSchedulingAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getSchedulingV1alpha1APIResources
 
@@ -1265,7 +1221,6 @@ pub fn get_scheduling_v1alpha1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getSettingsAPIGroup
 
 #[derive(Debug)]
@@ -1292,7 +1247,6 @@ pub fn get_settings_api_group<C>(
         other => GetSettingsAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getSettingsV1alpha1APIResources
 
@@ -1321,7 +1275,6 @@ pub fn get_settings_v1alpha1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getStorageAPIGroup
 
 #[derive(Debug)]
@@ -1348,7 +1301,6 @@ pub fn get_storage_api_group<C>(
         other => GetStorageAPIGroupResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getStorageV1APIResources
 
@@ -1377,7 +1329,6 @@ pub fn get_storage_v1_api_resources<C>(
     })
 }
 
-
 // Generated from operation getStorageV1alpha1APIResources
 
 #[derive(Debug)]
@@ -1404,7 +1355,6 @@ pub fn get_storage_v1alpha1_api_resources<C>(
         other => GetStorageV1alpha1APIResourcesResponse::Other(other, response),
     })
 }
-
 
 // Generated from operation getStorageV1beta1APIResources
 
@@ -1433,7 +1383,6 @@ pub fn get_storage_v1beta1_api_resources<C>(
     })
 }
 
-
 // Generated from operation logFileHandler
 
 #[derive(Debug)]
@@ -1457,7 +1406,6 @@ pub fn log_file_handler<C>(
     })
 }
 
-
 // Generated from operation logFileListHandler
 
 #[derive(Debug)]
@@ -1478,4 +1426,3 @@ pub fn log_file_list_handler<C>(
         other => LogFileListHandlerResponse::Other(other, response),
     })
 }
-

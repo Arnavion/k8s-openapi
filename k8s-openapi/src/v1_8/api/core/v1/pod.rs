@@ -19,6 +19,8 @@ pub struct Pod {
     pub status: Option<::v1_8::api::core::v1::PodStatus>,
 }
 
+// Begin /v1/Pod
+
 // Generated from operation connectCoreV1DeleteNamespacedPodProxy
 
 #[derive(Debug)]
@@ -60,7 +62,6 @@ impl Pod {
             other => ConnectCoreV1DeleteNamespacedPodProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1DeleteNamespacedPodProxyWithPath
@@ -106,7 +107,6 @@ impl Pod {
             other => ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1GetNamespacedPodAttach
@@ -170,7 +170,6 @@ impl Pod {
             other => ConnectCoreV1GetNamespacedPodAttachResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1GetNamespacedPodExec
@@ -239,7 +238,6 @@ impl Pod {
             other => ConnectCoreV1GetNamespacedPodExecResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1GetNamespacedPodPortforward
@@ -283,7 +281,6 @@ impl Pod {
             other => ConnectCoreV1GetNamespacedPodPortforwardResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1GetNamespacedPodProxy
@@ -327,7 +324,6 @@ impl Pod {
             other => ConnectCoreV1GetNamespacedPodProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1GetNamespacedPodProxyWithPath
@@ -373,7 +369,6 @@ impl Pod {
             other => ConnectCoreV1GetNamespacedPodProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PatchNamespacedPodProxy
@@ -417,7 +412,6 @@ impl Pod {
             other => ConnectCoreV1PatchNamespacedPodProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PatchNamespacedPodProxyWithPath
@@ -463,7 +457,6 @@ impl Pod {
             other => ConnectCoreV1PatchNamespacedPodProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PostNamespacedPodAttach
@@ -527,7 +520,6 @@ impl Pod {
             other => ConnectCoreV1PostNamespacedPodAttachResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PostNamespacedPodExec
@@ -596,7 +588,6 @@ impl Pod {
             other => ConnectCoreV1PostNamespacedPodExecResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PostNamespacedPodPortforward
@@ -640,7 +631,6 @@ impl Pod {
             other => ConnectCoreV1PostNamespacedPodPortforwardResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PostNamespacedPodProxy
@@ -684,7 +674,6 @@ impl Pod {
             other => ConnectCoreV1PostNamespacedPodProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PostNamespacedPodProxyWithPath
@@ -730,7 +719,6 @@ impl Pod {
             other => ConnectCoreV1PostNamespacedPodProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PutNamespacedPodProxy
@@ -774,7 +762,6 @@ impl Pod {
             other => ConnectCoreV1PutNamespacedPodProxyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation connectCoreV1PutNamespacedPodProxyWithPath
@@ -820,7 +807,6 @@ impl Pod {
             other => ConnectCoreV1PutNamespacedPodProxyWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation createCoreV1NamespacedPod
@@ -861,7 +847,6 @@ impl Pod {
             other => CreateCoreV1NamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedPod
@@ -943,7 +928,6 @@ impl Pod {
             other => DeleteCoreV1CollectionNamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedPod
@@ -1000,7 +984,6 @@ impl Pod {
             other => DeleteCoreV1NamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedPod
@@ -1082,7 +1065,6 @@ impl Pod {
             other => ListCoreV1NamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1PodForAllNamespaces
@@ -1162,7 +1144,6 @@ impl Pod {
             other => ListCoreV1PodForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedPod
@@ -1205,7 +1186,6 @@ impl Pod {
             other => PatchCoreV1NamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedPodStatus
@@ -1248,7 +1228,6 @@ impl Pod {
             other => PatchCoreV1NamespacedPodStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1DELETENamespacedPod
@@ -1284,7 +1263,6 @@ impl Pod {
             other => ProxyCoreV1DELETENamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1DELETENamespacedPodWithPath
@@ -1322,7 +1300,6 @@ impl Pod {
             other => ProxyCoreV1DELETENamespacedPodWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1GETNamespacedPod
@@ -1358,7 +1335,6 @@ impl Pod {
             other => ProxyCoreV1GETNamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1GETNamespacedPodWithPath
@@ -1396,7 +1372,6 @@ impl Pod {
             other => ProxyCoreV1GETNamespacedPodWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1PATCHNamespacedPod
@@ -1432,7 +1407,6 @@ impl Pod {
             other => ProxyCoreV1PATCHNamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1PATCHNamespacedPodWithPath
@@ -1470,7 +1444,6 @@ impl Pod {
             other => ProxyCoreV1PATCHNamespacedPodWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1POSTNamespacedPod
@@ -1506,7 +1479,6 @@ impl Pod {
             other => ProxyCoreV1POSTNamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1POSTNamespacedPodWithPath
@@ -1544,7 +1516,6 @@ impl Pod {
             other => ProxyCoreV1POSTNamespacedPodWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1PUTNamespacedPod
@@ -1580,7 +1551,6 @@ impl Pod {
             other => ProxyCoreV1PUTNamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation proxyCoreV1PUTNamespacedPodWithPath
@@ -1618,7 +1588,6 @@ impl Pod {
             other => ProxyCoreV1PUTNamespacedPodWithPathResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedPod
@@ -1670,7 +1639,6 @@ impl Pod {
             other => ReadCoreV1NamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedPodLog
@@ -1749,7 +1717,6 @@ impl Pod {
             other => ReadCoreV1NamespacedPodLogResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedPodStatus
@@ -1791,7 +1758,6 @@ impl Pod {
             other => ReadCoreV1NamespacedPodStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedPod
@@ -1834,7 +1800,6 @@ impl Pod {
             other => ReplaceCoreV1NamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedPodStatus
@@ -1877,7 +1842,6 @@ impl Pod {
             other => ReplaceCoreV1NamespacedPodStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedPod
@@ -1960,7 +1924,6 @@ impl Pod {
             other => WatchCoreV1NamespacedPodResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedPodList
@@ -2041,7 +2004,6 @@ impl Pod {
             other => WatchCoreV1NamespacedPodListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1PodListForAllNamespaces
@@ -2120,8 +2082,9 @@ impl Pod {
             other => WatchCoreV1PodListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/Pod
 
 impl<'de> ::serde::Deserialize<'de> for Pod {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

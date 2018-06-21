@@ -329,10 +329,18 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 					kubernetes_group_kind_versions.sort();
 					for kubernetes_group_kind_version in kubernetes_group_kind_versions {
 						if let Some(operations) = operations.remove(&Some(kubernetes_group_kind_version)) {
+							writeln!(file)?;
+							writeln!(file, "// Begin {}/{}/{}",
+								kubernetes_group_kind_version.group, kubernetes_group_kind_version.version, kubernetes_group_kind_version.kind)?;
+
 							for (path, path_item, operation) in operations {
 								write_operation(&mut file, operation, &replace_namespaces, mod_root, Some(&type_name), path, path_item)?;
 								num_generated_apis += 1;
 							}
+
+							writeln!(file)?;
+							writeln!(file, "// End {}/{}/{}",
+								kubernetes_group_kind_version.group, kubernetes_group_kind_version.version, kubernetes_group_kind_version.kind)?;
 						}
 					}
 				}
@@ -995,7 +1003,6 @@ fn write_operation(
 	writeln!(file, "{}    }})", indent)?;
 
 	writeln!(file, "{}}}", indent)?;
-	writeln!(file)?;
 
 	// TODO: Async
 

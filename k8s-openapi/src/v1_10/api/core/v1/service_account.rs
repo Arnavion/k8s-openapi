@@ -22,6 +22,8 @@ pub struct ServiceAccount {
     pub secrets: Option<Vec<::v1_10::api::core::v1::ObjectReference>>,
 }
 
+// Begin /v1/ServiceAccount
+
 // Generated from operation createCoreV1NamespacedServiceAccount
 
 #[derive(Debug)]
@@ -70,7 +72,6 @@ impl ServiceAccount {
             other => CreateCoreV1NamespacedServiceAccountResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedServiceAccount
@@ -152,7 +153,6 @@ impl ServiceAccount {
             other => DeleteCoreV1CollectionNamespacedServiceAccountResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedServiceAccount
@@ -209,7 +209,6 @@ impl ServiceAccount {
             other => DeleteCoreV1NamespacedServiceAccountResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedServiceAccount
@@ -291,7 +290,6 @@ impl ServiceAccount {
             other => ListCoreV1NamespacedServiceAccountResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1ServiceAccountForAllNamespaces
@@ -371,7 +369,6 @@ impl ServiceAccount {
             other => ListCoreV1ServiceAccountForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedServiceAccount
@@ -414,7 +411,6 @@ impl ServiceAccount {
             other => PatchCoreV1NamespacedServiceAccountResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedServiceAccount
@@ -466,7 +462,6 @@ impl ServiceAccount {
             other => ReadCoreV1NamespacedServiceAccountResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedServiceAccount
@@ -514,7 +509,6 @@ impl ServiceAccount {
             other => ReplaceCoreV1NamespacedServiceAccountResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedServiceAccount
@@ -597,7 +591,6 @@ impl ServiceAccount {
             other => WatchCoreV1NamespacedServiceAccountResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedServiceAccountList
@@ -678,7 +671,6 @@ impl ServiceAccount {
             other => WatchCoreV1NamespacedServiceAccountListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1ServiceAccountListForAllNamespaces
@@ -757,8 +749,9 @@ impl ServiceAccount {
             other => WatchCoreV1ServiceAccountListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/ServiceAccount
 
 impl<'de> ::serde::Deserialize<'de> for ServiceAccount {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

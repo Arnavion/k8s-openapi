@@ -19,6 +19,8 @@ pub struct Job {
     pub status: Option<::v1_7::kubernetes::pkg::apis::batch::v1::JobStatus>,
 }
 
+// Begin batch/v1/Job
+
 // Generated from operation createBatchV1NamespacedJob
 
 #[derive(Debug)]
@@ -57,7 +59,6 @@ impl Job {
             other => CreateBatchV1NamespacedJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteBatchV1CollectionNamespacedJob
@@ -127,7 +128,6 @@ impl Job {
             other => DeleteBatchV1CollectionNamespacedJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteBatchV1NamespacedJob
@@ -184,7 +184,6 @@ impl Job {
             other => DeleteBatchV1NamespacedJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listBatchV1JobForAllNamespaces
@@ -252,7 +251,6 @@ impl Job {
             other => ListBatchV1JobForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listBatchV1NamespacedJob
@@ -322,7 +320,6 @@ impl Job {
             other => ListBatchV1NamespacedJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchBatchV1NamespacedJob
@@ -365,7 +362,6 @@ impl Job {
             other => PatchBatchV1NamespacedJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchBatchV1NamespacedJobStatus
@@ -408,7 +404,6 @@ impl Job {
             other => PatchBatchV1NamespacedJobStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readBatchV1NamespacedJob
@@ -460,7 +455,6 @@ impl Job {
             other => ReadBatchV1NamespacedJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readBatchV1NamespacedJobStatus
@@ -502,7 +496,6 @@ impl Job {
             other => ReadBatchV1NamespacedJobStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceBatchV1NamespacedJob
@@ -545,7 +538,6 @@ impl Job {
             other => ReplaceBatchV1NamespacedJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceBatchV1NamespacedJobStatus
@@ -588,7 +580,6 @@ impl Job {
             other => ReplaceBatchV1NamespacedJobStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchBatchV1JobListForAllNamespaces
@@ -655,7 +646,6 @@ impl Job {
             other => WatchBatchV1JobListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchBatchV1NamespacedJob
@@ -726,7 +716,6 @@ impl Job {
             other => WatchBatchV1NamespacedJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchBatchV1NamespacedJobList
@@ -795,8 +784,9 @@ impl Job {
             other => WatchBatchV1NamespacedJobListResponse::Other(other, response),
         })
     }
-
 }
+
+// End batch/v1/Job
 
 impl<'de> ::serde::Deserialize<'de> for Job {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

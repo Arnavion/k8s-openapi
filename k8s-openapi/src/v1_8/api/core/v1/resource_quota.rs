@@ -19,6 +19,8 @@ pub struct ResourceQuota {
     pub status: Option<::v1_8::api::core::v1::ResourceQuotaStatus>,
 }
 
+// Begin /v1/ResourceQuota
+
 // Generated from operation createCoreV1NamespacedResourceQuota
 
 #[derive(Debug)]
@@ -57,7 +59,6 @@ impl ResourceQuota {
             other => CreateCoreV1NamespacedResourceQuotaResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedResourceQuota
@@ -139,7 +140,6 @@ impl ResourceQuota {
             other => DeleteCoreV1CollectionNamespacedResourceQuotaResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedResourceQuota
@@ -196,7 +196,6 @@ impl ResourceQuota {
             other => DeleteCoreV1NamespacedResourceQuotaResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedResourceQuota
@@ -278,7 +277,6 @@ impl ResourceQuota {
             other => ListCoreV1NamespacedResourceQuotaResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1ResourceQuotaForAllNamespaces
@@ -358,7 +356,6 @@ impl ResourceQuota {
             other => ListCoreV1ResourceQuotaForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedResourceQuota
@@ -401,7 +398,6 @@ impl ResourceQuota {
             other => PatchCoreV1NamespacedResourceQuotaResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedResourceQuotaStatus
@@ -444,7 +440,6 @@ impl ResourceQuota {
             other => PatchCoreV1NamespacedResourceQuotaStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedResourceQuota
@@ -496,7 +491,6 @@ impl ResourceQuota {
             other => ReadCoreV1NamespacedResourceQuotaResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedResourceQuotaStatus
@@ -538,7 +532,6 @@ impl ResourceQuota {
             other => ReadCoreV1NamespacedResourceQuotaStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedResourceQuota
@@ -581,7 +574,6 @@ impl ResourceQuota {
             other => ReplaceCoreV1NamespacedResourceQuotaResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedResourceQuotaStatus
@@ -624,7 +616,6 @@ impl ResourceQuota {
             other => ReplaceCoreV1NamespacedResourceQuotaStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedResourceQuota
@@ -707,7 +698,6 @@ impl ResourceQuota {
             other => WatchCoreV1NamespacedResourceQuotaResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedResourceQuotaList
@@ -788,7 +778,6 @@ impl ResourceQuota {
             other => WatchCoreV1NamespacedResourceQuotaListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1ResourceQuotaListForAllNamespaces
@@ -867,8 +856,9 @@ impl ResourceQuota {
             other => WatchCoreV1ResourceQuotaListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/ResourceQuota
 
 impl<'de> ::serde::Deserialize<'de> for ResourceQuota {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

@@ -18,6 +18,8 @@ pub struct CertificateSigningRequest {
     pub status: Option<::v1_8::api::certificates::v1beta1::CertificateSigningRequestStatus>,
 }
 
+// Begin certificates.k8s.io/v1beta1/CertificateSigningRequest
+
 // Generated from operation createCertificatesV1beta1CertificateSigningRequest
 
 #[derive(Debug)]
@@ -54,7 +56,6 @@ impl CertificateSigningRequest {
             other => CreateCertificatesV1beta1CertificateSigningRequestResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCertificatesV1beta1CertificateSigningRequest
@@ -109,7 +110,6 @@ impl CertificateSigningRequest {
             other => DeleteCertificatesV1beta1CertificateSigningRequestResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCertificatesV1beta1CollectionCertificateSigningRequest
@@ -189,7 +189,6 @@ impl CertificateSigningRequest {
             other => DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCertificatesV1beta1CertificateSigningRequest
@@ -269,7 +268,6 @@ impl CertificateSigningRequest {
             other => ListCertificatesV1beta1CertificateSigningRequestResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCertificatesV1beta1CertificateSigningRequest
@@ -310,7 +308,6 @@ impl CertificateSigningRequest {
             other => PatchCertificatesV1beta1CertificateSigningRequestResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCertificatesV1beta1CertificateSigningRequest
@@ -360,7 +357,6 @@ impl CertificateSigningRequest {
             other => ReadCertificatesV1beta1CertificateSigningRequestResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCertificatesV1beta1CertificateSigningRequest
@@ -401,7 +397,6 @@ impl CertificateSigningRequest {
             other => ReplaceCertificatesV1beta1CertificateSigningRequestResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCertificatesV1beta1CertificateSigningRequestApproval
@@ -442,7 +437,6 @@ impl CertificateSigningRequest {
             other => ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCertificatesV1beta1CertificateSigningRequestStatus
@@ -483,7 +477,6 @@ impl CertificateSigningRequest {
             other => ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCertificatesV1beta1CertificateSigningRequest
@@ -564,7 +557,6 @@ impl CertificateSigningRequest {
             other => WatchCertificatesV1beta1CertificateSigningRequestResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCertificatesV1beta1CertificateSigningRequestList
@@ -643,8 +635,9 @@ impl CertificateSigningRequest {
             other => WatchCertificatesV1beta1CertificateSigningRequestListResponse::Other(other, response),
         })
     }
-
 }
+
+// End certificates.k8s.io/v1beta1/CertificateSigningRequest
 
 impl<'de> ::serde::Deserialize<'de> for CertificateSigningRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

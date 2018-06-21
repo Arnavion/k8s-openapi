@@ -16,6 +16,8 @@ pub struct PodTemplate {
     pub template: Option<::v1_7::kubernetes::pkg::api::v1::PodTemplateSpec>,
 }
 
+// Begin /v1/PodTemplate
+
 // Generated from operation createCoreV1NamespacedPodTemplate
 
 #[derive(Debug)]
@@ -54,7 +56,6 @@ impl PodTemplate {
             other => CreateCoreV1NamespacedPodTemplateResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedPodTemplate
@@ -124,7 +125,6 @@ impl PodTemplate {
             other => DeleteCoreV1CollectionNamespacedPodTemplateResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedPodTemplate
@@ -181,7 +181,6 @@ impl PodTemplate {
             other => DeleteCoreV1NamespacedPodTemplateResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedPodTemplate
@@ -251,7 +250,6 @@ impl PodTemplate {
             other => ListCoreV1NamespacedPodTemplateResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1PodTemplateForAllNamespaces
@@ -319,7 +317,6 @@ impl PodTemplate {
             other => ListCoreV1PodTemplateForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedPodTemplate
@@ -362,7 +359,6 @@ impl PodTemplate {
             other => PatchCoreV1NamespacedPodTemplateResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedPodTemplate
@@ -414,7 +410,6 @@ impl PodTemplate {
             other => ReadCoreV1NamespacedPodTemplateResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedPodTemplate
@@ -457,7 +452,6 @@ impl PodTemplate {
             other => ReplaceCoreV1NamespacedPodTemplateResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedPodTemplate
@@ -528,7 +522,6 @@ impl PodTemplate {
             other => WatchCoreV1NamespacedPodTemplateResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedPodTemplateList
@@ -597,7 +590,6 @@ impl PodTemplate {
             other => WatchCoreV1NamespacedPodTemplateListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1PodTemplateListForAllNamespaces
@@ -664,8 +656,9 @@ impl PodTemplate {
             other => WatchCoreV1PodTemplateListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/PodTemplate
 
 impl<'de> ::serde::Deserialize<'de> for PodTemplate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

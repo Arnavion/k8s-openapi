@@ -18,6 +18,8 @@ pub struct TokenReview {
     pub status: Option<::v1_9::api::authentication::v1::TokenReviewStatus>,
 }
 
+// Begin authentication.k8s.io/v1/TokenReview
+
 // Generated from operation createAuthenticationV1TokenReview
 
 #[derive(Debug)]
@@ -64,8 +66,9 @@ impl TokenReview {
             other => CreateAuthenticationV1TokenReviewResponse::Other(other, response),
         })
     }
-
 }
+
+// End authentication.k8s.io/v1/TokenReview
 
 impl<'de> ::serde::Deserialize<'de> for TokenReview {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

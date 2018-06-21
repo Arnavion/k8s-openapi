@@ -19,6 +19,8 @@ pub struct DaemonSet {
     pub status: Option<::v1_10::api::apps::v1beta2::DaemonSetStatus>,
 }
 
+// Begin apps/v1beta2/DaemonSet
+
 // Generated from operation createAppsV1beta2NamespacedDaemonSet
 
 #[derive(Debug)]
@@ -67,7 +69,6 @@ impl DaemonSet {
             other => CreateAppsV1beta2NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAppsV1beta2CollectionNamespacedDaemonSet
@@ -149,7 +150,6 @@ impl DaemonSet {
             other => DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAppsV1beta2NamespacedDaemonSet
@@ -206,7 +206,6 @@ impl DaemonSet {
             other => DeleteAppsV1beta2NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAppsV1beta2DaemonSetForAllNamespaces
@@ -286,7 +285,6 @@ impl DaemonSet {
             other => ListAppsV1beta2DaemonSetForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAppsV1beta2NamespacedDaemonSet
@@ -368,7 +366,6 @@ impl DaemonSet {
             other => ListAppsV1beta2NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1beta2NamespacedDaemonSet
@@ -411,7 +408,6 @@ impl DaemonSet {
             other => PatchAppsV1beta2NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1beta2NamespacedDaemonSetStatus
@@ -454,7 +450,6 @@ impl DaemonSet {
             other => PatchAppsV1beta2NamespacedDaemonSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1beta2NamespacedDaemonSet
@@ -506,7 +501,6 @@ impl DaemonSet {
             other => ReadAppsV1beta2NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1beta2NamespacedDaemonSetStatus
@@ -548,7 +542,6 @@ impl DaemonSet {
             other => ReadAppsV1beta2NamespacedDaemonSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1beta2NamespacedDaemonSet
@@ -596,7 +589,6 @@ impl DaemonSet {
             other => ReplaceAppsV1beta2NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1beta2NamespacedDaemonSetStatus
@@ -644,7 +636,6 @@ impl DaemonSet {
             other => ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1beta2DaemonSetListForAllNamespaces
@@ -723,7 +714,6 @@ impl DaemonSet {
             other => WatchAppsV1beta2DaemonSetListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1beta2NamespacedDaemonSet
@@ -806,7 +796,6 @@ impl DaemonSet {
             other => WatchAppsV1beta2NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1beta2NamespacedDaemonSetList
@@ -887,8 +876,9 @@ impl DaemonSet {
             other => WatchAppsV1beta2NamespacedDaemonSetListResponse::Other(other, response),
         })
     }
-
 }
+
+// End apps/v1beta2/DaemonSet
 
 impl<'de> ::serde::Deserialize<'de> for DaemonSet {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

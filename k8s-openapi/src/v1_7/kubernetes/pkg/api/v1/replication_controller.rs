@@ -19,6 +19,8 @@ pub struct ReplicationController {
     pub status: Option<::v1_7::kubernetes::pkg::api::v1::ReplicationControllerStatus>,
 }
 
+// Begin /v1/ReplicationController
+
 // Generated from operation createCoreV1NamespacedReplicationController
 
 #[derive(Debug)]
@@ -57,7 +59,6 @@ impl ReplicationController {
             other => CreateCoreV1NamespacedReplicationControllerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedReplicationController
@@ -127,7 +128,6 @@ impl ReplicationController {
             other => DeleteCoreV1CollectionNamespacedReplicationControllerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedReplicationController
@@ -184,7 +184,6 @@ impl ReplicationController {
             other => DeleteCoreV1NamespacedReplicationControllerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedReplicationController
@@ -254,7 +253,6 @@ impl ReplicationController {
             other => ListCoreV1NamespacedReplicationControllerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1ReplicationControllerForAllNamespaces
@@ -322,7 +320,6 @@ impl ReplicationController {
             other => ListCoreV1ReplicationControllerForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedReplicationController
@@ -365,7 +362,6 @@ impl ReplicationController {
             other => PatchCoreV1NamespacedReplicationControllerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedReplicationControllerStatus
@@ -408,7 +404,6 @@ impl ReplicationController {
             other => PatchCoreV1NamespacedReplicationControllerStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedReplicationController
@@ -460,7 +455,6 @@ impl ReplicationController {
             other => ReadCoreV1NamespacedReplicationControllerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedReplicationControllerStatus
@@ -502,7 +496,6 @@ impl ReplicationController {
             other => ReadCoreV1NamespacedReplicationControllerStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedReplicationController
@@ -545,7 +538,6 @@ impl ReplicationController {
             other => ReplaceCoreV1NamespacedReplicationControllerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedReplicationControllerStatus
@@ -588,7 +580,6 @@ impl ReplicationController {
             other => ReplaceCoreV1NamespacedReplicationControllerStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedReplicationController
@@ -659,7 +650,6 @@ impl ReplicationController {
             other => WatchCoreV1NamespacedReplicationControllerResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedReplicationControllerList
@@ -728,7 +718,6 @@ impl ReplicationController {
             other => WatchCoreV1NamespacedReplicationControllerListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1ReplicationControllerListForAllNamespaces
@@ -795,8 +784,9 @@ impl ReplicationController {
             other => WatchCoreV1ReplicationControllerListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/ReplicationController
 
 impl<'de> ::serde::Deserialize<'de> for ReplicationController {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

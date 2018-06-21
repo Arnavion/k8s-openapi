@@ -18,6 +18,8 @@ pub struct SelfSubjectRulesReview {
     pub status: Option<::v1_9::api::authorization::v1beta1::SubjectRulesReviewStatus>,
 }
 
+// Begin authorization.k8s.io/v1beta1/SelfSubjectRulesReview
+
 // Generated from operation createAuthorizationV1beta1SelfSubjectRulesReview
 
 #[derive(Debug)]
@@ -64,8 +66,9 @@ impl SelfSubjectRulesReview {
             other => CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse::Other(other, response),
         })
     }
-
 }
+
+// End authorization.k8s.io/v1beta1/SelfSubjectRulesReview
 
 impl<'de> ::serde::Deserialize<'de> for SelfSubjectRulesReview {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

@@ -16,6 +16,8 @@ pub struct ClusterRole {
     pub rules: Vec<::v1_8::api::rbac::v1alpha1::PolicyRule>,
 }
 
+// Begin rbac.authorization.k8s.io/v1alpha1/ClusterRole
+
 // Generated from operation createRbacAuthorizationV1alpha1ClusterRole
 
 #[derive(Debug)]
@@ -52,7 +54,6 @@ impl ClusterRole {
             other => CreateRbacAuthorizationV1alpha1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteRbacAuthorizationV1alpha1ClusterRole
@@ -107,7 +108,6 @@ impl ClusterRole {
             other => DeleteRbacAuthorizationV1alpha1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteRbacAuthorizationV1alpha1CollectionClusterRole
@@ -187,7 +187,6 @@ impl ClusterRole {
             other => DeleteRbacAuthorizationV1alpha1CollectionClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listRbacAuthorizationV1alpha1ClusterRole
@@ -267,7 +266,6 @@ impl ClusterRole {
             other => ListRbacAuthorizationV1alpha1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchRbacAuthorizationV1alpha1ClusterRole
@@ -308,7 +306,6 @@ impl ClusterRole {
             other => PatchRbacAuthorizationV1alpha1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readRbacAuthorizationV1alpha1ClusterRole
@@ -348,7 +345,6 @@ impl ClusterRole {
             other => ReadRbacAuthorizationV1alpha1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceRbacAuthorizationV1alpha1ClusterRole
@@ -389,7 +385,6 @@ impl ClusterRole {
             other => ReplaceRbacAuthorizationV1alpha1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1alpha1ClusterRole
@@ -470,7 +465,6 @@ impl ClusterRole {
             other => WatchRbacAuthorizationV1alpha1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1alpha1ClusterRoleList
@@ -549,8 +543,9 @@ impl ClusterRole {
             other => WatchRbacAuthorizationV1alpha1ClusterRoleListResponse::Other(other, response),
         })
     }
-
 }
+
+// End rbac.authorization.k8s.io/v1alpha1/ClusterRole
 
 impl<'de> ::serde::Deserialize<'de> for ClusterRole {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

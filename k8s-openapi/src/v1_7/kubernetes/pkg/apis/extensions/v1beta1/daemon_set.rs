@@ -19,6 +19,8 @@ pub struct DaemonSet {
     pub status: Option<::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetStatus>,
 }
 
+// Begin extensions/v1beta1/DaemonSet
+
 // Generated from operation createExtensionsV1beta1NamespacedDaemonSet
 
 #[derive(Debug)]
@@ -57,7 +59,6 @@ impl DaemonSet {
             other => CreateExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1CollectionNamespacedDaemonSet
@@ -127,7 +128,6 @@ impl DaemonSet {
             other => DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1NamespacedDaemonSet
@@ -184,7 +184,6 @@ impl DaemonSet {
             other => DeleteExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1DaemonSetForAllNamespaces
@@ -252,7 +251,6 @@ impl DaemonSet {
             other => ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1NamespacedDaemonSet
@@ -322,7 +320,6 @@ impl DaemonSet {
             other => ListExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedDaemonSet
@@ -365,7 +362,6 @@ impl DaemonSet {
             other => PatchExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedDaemonSetStatus
@@ -408,7 +404,6 @@ impl DaemonSet {
             other => PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedDaemonSet
@@ -460,7 +455,6 @@ impl DaemonSet {
             other => ReadExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedDaemonSetStatus
@@ -502,7 +496,6 @@ impl DaemonSet {
             other => ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedDaemonSet
@@ -545,7 +538,6 @@ impl DaemonSet {
             other => ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedDaemonSetStatus
@@ -588,7 +580,6 @@ impl DaemonSet {
             other => ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1DaemonSetListForAllNamespaces
@@ -655,7 +646,6 @@ impl DaemonSet {
             other => WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedDaemonSet
@@ -726,7 +716,6 @@ impl DaemonSet {
             other => WatchExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedDaemonSetList
@@ -795,8 +784,9 @@ impl DaemonSet {
             other => WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Other(other, response),
         })
     }
-
 }
+
+// End extensions/v1beta1/DaemonSet
 
 impl<'de> ::serde::Deserialize<'de> for DaemonSet {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

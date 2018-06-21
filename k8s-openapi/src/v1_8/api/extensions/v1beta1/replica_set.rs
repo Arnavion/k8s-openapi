@@ -19,6 +19,8 @@ pub struct ReplicaSet {
     pub status: Option<::v1_8::api::extensions::v1beta1::ReplicaSetStatus>,
 }
 
+// Begin extensions/v1beta1/ReplicaSet
+
 // Generated from operation createExtensionsV1beta1NamespacedReplicaSet
 
 #[derive(Debug)]
@@ -57,7 +59,6 @@ impl ReplicaSet {
             other => CreateExtensionsV1beta1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1CollectionNamespacedReplicaSet
@@ -139,7 +140,6 @@ impl ReplicaSet {
             other => DeleteExtensionsV1beta1CollectionNamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1NamespacedReplicaSet
@@ -196,7 +196,6 @@ impl ReplicaSet {
             other => DeleteExtensionsV1beta1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1NamespacedReplicaSet
@@ -278,7 +277,6 @@ impl ReplicaSet {
             other => ListExtensionsV1beta1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1ReplicaSetForAllNamespaces
@@ -358,7 +356,6 @@ impl ReplicaSet {
             other => ListExtensionsV1beta1ReplicaSetForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedReplicaSet
@@ -401,7 +398,6 @@ impl ReplicaSet {
             other => PatchExtensionsV1beta1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedReplicaSetStatus
@@ -444,7 +440,6 @@ impl ReplicaSet {
             other => PatchExtensionsV1beta1NamespacedReplicaSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedReplicaSet
@@ -496,7 +491,6 @@ impl ReplicaSet {
             other => ReadExtensionsV1beta1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedReplicaSetStatus
@@ -538,7 +532,6 @@ impl ReplicaSet {
             other => ReadExtensionsV1beta1NamespacedReplicaSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedReplicaSet
@@ -581,7 +574,6 @@ impl ReplicaSet {
             other => ReplaceExtensionsV1beta1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedReplicaSetStatus
@@ -624,7 +616,6 @@ impl ReplicaSet {
             other => ReplaceExtensionsV1beta1NamespacedReplicaSetStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedReplicaSet
@@ -707,7 +698,6 @@ impl ReplicaSet {
             other => WatchExtensionsV1beta1NamespacedReplicaSetResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedReplicaSetList
@@ -788,7 +778,6 @@ impl ReplicaSet {
             other => WatchExtensionsV1beta1NamespacedReplicaSetListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1ReplicaSetListForAllNamespaces
@@ -867,8 +856,9 @@ impl ReplicaSet {
             other => WatchExtensionsV1beta1ReplicaSetListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End extensions/v1beta1/ReplicaSet
 
 impl<'de> ::serde::Deserialize<'de> for ReplicaSet {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

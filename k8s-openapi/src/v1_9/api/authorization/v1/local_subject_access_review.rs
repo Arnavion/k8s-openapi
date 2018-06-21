@@ -18,6 +18,8 @@ pub struct LocalSubjectAccessReview {
     pub status: Option<::v1_9::api::authorization::v1::SubjectAccessReviewStatus>,
 }
 
+// Begin authorization.k8s.io/v1/LocalSubjectAccessReview
+
 // Generated from operation createAuthorizationV1NamespacedLocalSubjectAccessReview
 
 #[derive(Debug)]
@@ -66,8 +68,9 @@ impl LocalSubjectAccessReview {
             other => CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Other(other, response),
         })
     }
-
 }
+
+// End authorization.k8s.io/v1/LocalSubjectAccessReview
 
 impl<'de> ::serde::Deserialize<'de> for LocalSubjectAccessReview {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

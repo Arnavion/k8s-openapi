@@ -19,6 +19,8 @@ pub struct CronJob {
     pub status: Option<::v1_10::api::batch::v1beta1::CronJobStatus>,
 }
 
+// Begin batch/v1beta1/CronJob
+
 // Generated from operation createBatchV1beta1NamespacedCronJob
 
 #[derive(Debug)]
@@ -67,7 +69,6 @@ impl CronJob {
             other => CreateBatchV1beta1NamespacedCronJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteBatchV1beta1CollectionNamespacedCronJob
@@ -149,7 +150,6 @@ impl CronJob {
             other => DeleteBatchV1beta1CollectionNamespacedCronJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteBatchV1beta1NamespacedCronJob
@@ -206,7 +206,6 @@ impl CronJob {
             other => DeleteBatchV1beta1NamespacedCronJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listBatchV1beta1CronJobForAllNamespaces
@@ -286,7 +285,6 @@ impl CronJob {
             other => ListBatchV1beta1CronJobForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listBatchV1beta1NamespacedCronJob
@@ -368,7 +366,6 @@ impl CronJob {
             other => ListBatchV1beta1NamespacedCronJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchBatchV1beta1NamespacedCronJob
@@ -411,7 +408,6 @@ impl CronJob {
             other => PatchBatchV1beta1NamespacedCronJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchBatchV1beta1NamespacedCronJobStatus
@@ -454,7 +450,6 @@ impl CronJob {
             other => PatchBatchV1beta1NamespacedCronJobStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readBatchV1beta1NamespacedCronJob
@@ -506,7 +501,6 @@ impl CronJob {
             other => ReadBatchV1beta1NamespacedCronJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readBatchV1beta1NamespacedCronJobStatus
@@ -548,7 +542,6 @@ impl CronJob {
             other => ReadBatchV1beta1NamespacedCronJobStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceBatchV1beta1NamespacedCronJob
@@ -596,7 +589,6 @@ impl CronJob {
             other => ReplaceBatchV1beta1NamespacedCronJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceBatchV1beta1NamespacedCronJobStatus
@@ -644,7 +636,6 @@ impl CronJob {
             other => ReplaceBatchV1beta1NamespacedCronJobStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchBatchV1beta1CronJobListForAllNamespaces
@@ -723,7 +714,6 @@ impl CronJob {
             other => WatchBatchV1beta1CronJobListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchBatchV1beta1NamespacedCronJob
@@ -806,7 +796,6 @@ impl CronJob {
             other => WatchBatchV1beta1NamespacedCronJobResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchBatchV1beta1NamespacedCronJobList
@@ -887,8 +876,9 @@ impl CronJob {
             other => WatchBatchV1beta1NamespacedCronJobListResponse::Other(other, response),
         })
     }
-
 }
+
+// End batch/v1beta1/CronJob
 
 impl<'de> ::serde::Deserialize<'de> for CronJob {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

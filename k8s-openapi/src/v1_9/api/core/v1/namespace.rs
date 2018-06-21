@@ -19,6 +19,8 @@ pub struct Namespace {
     pub status: Option<::v1_9::api::core::v1::NamespaceStatus>,
 }
 
+// Begin /v1/Namespace
+
 // Generated from operation createCoreV1Namespace
 
 #[derive(Debug)]
@@ -65,7 +67,6 @@ impl Namespace {
             other => CreateCoreV1NamespaceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1Namespace
@@ -120,7 +121,6 @@ impl Namespace {
             other => DeleteCoreV1NamespaceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1Namespace
@@ -200,7 +200,6 @@ impl Namespace {
             other => ListCoreV1NamespaceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1Namespace
@@ -241,7 +240,6 @@ impl Namespace {
             other => PatchCoreV1NamespaceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespaceStatus
@@ -282,7 +280,6 @@ impl Namespace {
             other => PatchCoreV1NamespaceStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1Namespace
@@ -332,7 +329,6 @@ impl Namespace {
             other => ReadCoreV1NamespaceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespaceStatus
@@ -372,7 +368,6 @@ impl Namespace {
             other => ReadCoreV1NamespaceStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1Namespace
@@ -418,7 +413,6 @@ impl Namespace {
             other => ReplaceCoreV1NamespaceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespaceFinalize
@@ -464,7 +458,6 @@ impl Namespace {
             other => ReplaceCoreV1NamespaceFinalizeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespaceStatus
@@ -510,7 +503,6 @@ impl Namespace {
             other => ReplaceCoreV1NamespaceStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1Namespace
@@ -591,7 +583,6 @@ impl Namespace {
             other => WatchCoreV1NamespaceResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespaceList
@@ -670,8 +661,9 @@ impl Namespace {
             other => WatchCoreV1NamespaceListResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/Namespace
 
 impl<'de> ::serde::Deserialize<'de> for Namespace {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

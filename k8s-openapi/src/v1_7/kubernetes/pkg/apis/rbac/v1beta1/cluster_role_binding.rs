@@ -19,6 +19,8 @@ pub struct ClusterRoleBinding {
     pub subjects: Vec<::v1_7::kubernetes::pkg::apis::rbac::v1beta1::Subject>,
 }
 
+// Begin rbac.authorization.k8s.io/v1beta1/ClusterRoleBinding
+
 // Generated from operation createRbacAuthorizationV1beta1ClusterRoleBinding
 
 #[derive(Debug)]
@@ -55,7 +57,6 @@ impl ClusterRoleBinding {
             other => CreateRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteRbacAuthorizationV1beta1ClusterRoleBinding
@@ -110,7 +111,6 @@ impl ClusterRoleBinding {
             other => DeleteRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteRbacAuthorizationV1beta1CollectionClusterRoleBinding
@@ -178,7 +178,6 @@ impl ClusterRoleBinding {
             other => DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listRbacAuthorizationV1beta1ClusterRoleBinding
@@ -246,7 +245,6 @@ impl ClusterRoleBinding {
             other => ListRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchRbacAuthorizationV1beta1ClusterRoleBinding
@@ -287,7 +285,6 @@ impl ClusterRoleBinding {
             other => PatchRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readRbacAuthorizationV1beta1ClusterRoleBinding
@@ -327,7 +324,6 @@ impl ClusterRoleBinding {
             other => ReadRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceRbacAuthorizationV1beta1ClusterRoleBinding
@@ -368,7 +364,6 @@ impl ClusterRoleBinding {
             other => ReplaceRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1beta1ClusterRoleBinding
@@ -437,7 +432,6 @@ impl ClusterRoleBinding {
             other => WatchRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1beta1ClusterRoleBindingList
@@ -504,8 +498,9 @@ impl ClusterRoleBinding {
             other => WatchRbacAuthorizationV1beta1ClusterRoleBindingListResponse::Other(other, response),
         })
     }
-
 }
+
+// End rbac.authorization.k8s.io/v1beta1/ClusterRoleBinding
 
 impl<'de> ::serde::Deserialize<'de> for ClusterRoleBinding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

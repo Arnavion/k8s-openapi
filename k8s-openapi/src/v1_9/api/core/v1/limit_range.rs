@@ -16,6 +16,8 @@ pub struct LimitRange {
     pub spec: Option<::v1_9::api::core::v1::LimitRangeSpec>,
 }
 
+// Begin /v1/LimitRange
+
 // Generated from operation createCoreV1NamespacedLimitRange
 
 #[derive(Debug)]
@@ -64,7 +66,6 @@ impl LimitRange {
             other => CreateCoreV1NamespacedLimitRangeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1CollectionNamespacedLimitRange
@@ -146,7 +147,6 @@ impl LimitRange {
             other => DeleteCoreV1CollectionNamespacedLimitRangeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteCoreV1NamespacedLimitRange
@@ -203,7 +203,6 @@ impl LimitRange {
             other => DeleteCoreV1NamespacedLimitRangeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1LimitRangeForAllNamespaces
@@ -283,7 +282,6 @@ impl LimitRange {
             other => ListCoreV1LimitRangeForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listCoreV1NamespacedLimitRange
@@ -365,7 +363,6 @@ impl LimitRange {
             other => ListCoreV1NamespacedLimitRangeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchCoreV1NamespacedLimitRange
@@ -408,7 +405,6 @@ impl LimitRange {
             other => PatchCoreV1NamespacedLimitRangeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readCoreV1NamespacedLimitRange
@@ -460,7 +456,6 @@ impl LimitRange {
             other => ReadCoreV1NamespacedLimitRangeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceCoreV1NamespacedLimitRange
@@ -508,7 +503,6 @@ impl LimitRange {
             other => ReplaceCoreV1NamespacedLimitRangeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1LimitRangeListForAllNamespaces
@@ -587,7 +581,6 @@ impl LimitRange {
             other => WatchCoreV1LimitRangeListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedLimitRange
@@ -670,7 +663,6 @@ impl LimitRange {
             other => WatchCoreV1NamespacedLimitRangeResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchCoreV1NamespacedLimitRangeList
@@ -751,8 +743,9 @@ impl LimitRange {
             other => WatchCoreV1NamespacedLimitRangeListResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/LimitRange
 
 impl<'de> ::serde::Deserialize<'de> for LimitRange {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

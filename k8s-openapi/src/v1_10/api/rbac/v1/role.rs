@@ -16,6 +16,8 @@ pub struct Role {
     pub rules: Vec<::v1_10::api::rbac::v1::PolicyRule>,
 }
 
+// Begin rbac.authorization.k8s.io/v1/Role
+
 // Generated from operation createRbacAuthorizationV1NamespacedRole
 
 #[derive(Debug)]
@@ -64,7 +66,6 @@ impl Role {
             other => CreateRbacAuthorizationV1NamespacedRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteRbacAuthorizationV1CollectionNamespacedRole
@@ -146,7 +147,6 @@ impl Role {
             other => DeleteRbacAuthorizationV1CollectionNamespacedRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteRbacAuthorizationV1NamespacedRole
@@ -203,7 +203,6 @@ impl Role {
             other => DeleteRbacAuthorizationV1NamespacedRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listRbacAuthorizationV1NamespacedRole
@@ -285,7 +284,6 @@ impl Role {
             other => ListRbacAuthorizationV1NamespacedRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listRbacAuthorizationV1RoleForAllNamespaces
@@ -365,7 +363,6 @@ impl Role {
             other => ListRbacAuthorizationV1RoleForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchRbacAuthorizationV1NamespacedRole
@@ -408,7 +405,6 @@ impl Role {
             other => PatchRbacAuthorizationV1NamespacedRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readRbacAuthorizationV1NamespacedRole
@@ -450,7 +446,6 @@ impl Role {
             other => ReadRbacAuthorizationV1NamespacedRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceRbacAuthorizationV1NamespacedRole
@@ -498,7 +493,6 @@ impl Role {
             other => ReplaceRbacAuthorizationV1NamespacedRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1NamespacedRole
@@ -581,7 +575,6 @@ impl Role {
             other => WatchRbacAuthorizationV1NamespacedRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1NamespacedRoleList
@@ -662,7 +655,6 @@ impl Role {
             other => WatchRbacAuthorizationV1NamespacedRoleListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1RoleListForAllNamespaces
@@ -741,8 +733,9 @@ impl Role {
             other => WatchRbacAuthorizationV1RoleListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End rbac.authorization.k8s.io/v1/Role
 
 impl<'de> ::serde::Deserialize<'de> for Role {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

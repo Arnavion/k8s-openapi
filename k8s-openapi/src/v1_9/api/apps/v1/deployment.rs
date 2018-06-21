@@ -19,6 +19,8 @@ pub struct Deployment {
     pub status: Option<::v1_9::api::apps::v1::DeploymentStatus>,
 }
 
+// Begin apps/v1/Deployment
+
 // Generated from operation createAppsV1NamespacedDeployment
 
 #[derive(Debug)]
@@ -67,7 +69,6 @@ impl Deployment {
             other => CreateAppsV1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAppsV1CollectionNamespacedDeployment
@@ -149,7 +150,6 @@ impl Deployment {
             other => DeleteAppsV1CollectionNamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAppsV1NamespacedDeployment
@@ -206,7 +206,6 @@ impl Deployment {
             other => DeleteAppsV1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAppsV1DeploymentForAllNamespaces
@@ -286,7 +285,6 @@ impl Deployment {
             other => ListAppsV1DeploymentForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAppsV1NamespacedDeployment
@@ -368,7 +366,6 @@ impl Deployment {
             other => ListAppsV1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1NamespacedDeployment
@@ -411,7 +408,6 @@ impl Deployment {
             other => PatchAppsV1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1NamespacedDeploymentStatus
@@ -454,7 +450,6 @@ impl Deployment {
             other => PatchAppsV1NamespacedDeploymentStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1NamespacedDeployment
@@ -506,7 +501,6 @@ impl Deployment {
             other => ReadAppsV1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1NamespacedDeploymentStatus
@@ -548,7 +542,6 @@ impl Deployment {
             other => ReadAppsV1NamespacedDeploymentStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1NamespacedDeployment
@@ -596,7 +589,6 @@ impl Deployment {
             other => ReplaceAppsV1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1NamespacedDeploymentStatus
@@ -644,7 +636,6 @@ impl Deployment {
             other => ReplaceAppsV1NamespacedDeploymentStatusResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1DeploymentListForAllNamespaces
@@ -723,7 +714,6 @@ impl Deployment {
             other => WatchAppsV1DeploymentListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1NamespacedDeployment
@@ -806,7 +796,6 @@ impl Deployment {
             other => WatchAppsV1NamespacedDeploymentResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAppsV1NamespacedDeploymentList
@@ -887,8 +876,9 @@ impl Deployment {
             other => WatchAppsV1NamespacedDeploymentListResponse::Other(other, response),
         })
     }
-
 }
+
+// End apps/v1/Deployment
 
 impl<'de> ::serde::Deserialize<'de> for Deployment {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

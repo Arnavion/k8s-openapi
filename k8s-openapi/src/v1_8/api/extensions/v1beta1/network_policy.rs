@@ -16,6 +16,8 @@ pub struct NetworkPolicy {
     pub spec: Option<::v1_8::api::extensions::v1beta1::NetworkPolicySpec>,
 }
 
+// Begin extensions/v1beta1/NetworkPolicy
+
 // Generated from operation createExtensionsV1beta1NamespacedNetworkPolicy
 
 #[derive(Debug)]
@@ -54,7 +56,6 @@ impl NetworkPolicy {
             other => CreateExtensionsV1beta1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1CollectionNamespacedNetworkPolicy
@@ -136,7 +137,6 @@ impl NetworkPolicy {
             other => DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteExtensionsV1beta1NamespacedNetworkPolicy
@@ -193,7 +193,6 @@ impl NetworkPolicy {
             other => DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1NamespacedNetworkPolicy
@@ -275,7 +274,6 @@ impl NetworkPolicy {
             other => ListExtensionsV1beta1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listExtensionsV1beta1NetworkPolicyForAllNamespaces
@@ -355,7 +353,6 @@ impl NetworkPolicy {
             other => ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedNetworkPolicy
@@ -398,7 +395,6 @@ impl NetworkPolicy {
             other => PatchExtensionsV1beta1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedNetworkPolicy
@@ -450,7 +446,6 @@ impl NetworkPolicy {
             other => ReadExtensionsV1beta1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedNetworkPolicy
@@ -493,7 +488,6 @@ impl NetworkPolicy {
             other => ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedNetworkPolicy
@@ -576,7 +570,6 @@ impl NetworkPolicy {
             other => WatchExtensionsV1beta1NamespacedNetworkPolicyResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedNetworkPolicyList
@@ -657,7 +650,6 @@ impl NetworkPolicy {
             other => WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchExtensionsV1beta1NetworkPolicyListForAllNamespaces
@@ -736,8 +728,9 @@ impl NetworkPolicy {
             other => WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse::Other(other, response),
         })
     }
-
 }
+
+// End extensions/v1beta1/NetworkPolicy
 
 impl<'de> ::serde::Deserialize<'de> for NetworkPolicy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

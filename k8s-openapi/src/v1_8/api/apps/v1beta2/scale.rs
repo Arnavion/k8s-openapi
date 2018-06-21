@@ -19,6 +19,8 @@ pub struct Scale {
     pub status: Option<::v1_8::api::apps::v1beta2::ScaleStatus>,
 }
 
+// Begin apps/v1beta2/Scale
+
 // Generated from operation patchAppsV1beta2NamespacedDeploymentScale
 
 #[derive(Debug)]
@@ -59,7 +61,6 @@ impl Scale {
             other => PatchAppsV1beta2NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1beta2NamespacedReplicaSetScale
@@ -102,7 +103,6 @@ impl Scale {
             other => PatchAppsV1beta2NamespacedReplicaSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAppsV1beta2NamespacedStatefulSetScale
@@ -145,7 +145,6 @@ impl Scale {
             other => PatchAppsV1beta2NamespacedStatefulSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1beta2NamespacedDeploymentScale
@@ -187,7 +186,6 @@ impl Scale {
             other => ReadAppsV1beta2NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1beta2NamespacedReplicaSetScale
@@ -229,7 +227,6 @@ impl Scale {
             other => ReadAppsV1beta2NamespacedReplicaSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAppsV1beta2NamespacedStatefulSetScale
@@ -271,7 +268,6 @@ impl Scale {
             other => ReadAppsV1beta2NamespacedStatefulSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1beta2NamespacedDeploymentScale
@@ -314,7 +310,6 @@ impl Scale {
             other => ReplaceAppsV1beta2NamespacedDeploymentScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1beta2NamespacedReplicaSetScale
@@ -357,7 +352,6 @@ impl Scale {
             other => ReplaceAppsV1beta2NamespacedReplicaSetScaleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAppsV1beta2NamespacedStatefulSetScale
@@ -400,8 +394,9 @@ impl Scale {
             other => ReplaceAppsV1beta2NamespacedStatefulSetScaleResponse::Other(other, response),
         })
     }
-
 }
+
+// End apps/v1beta2/Scale
 
 impl<'de> ::serde::Deserialize<'de> for Scale {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

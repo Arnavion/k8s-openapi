@@ -16,6 +16,8 @@ pub struct InitializerConfiguration {
     pub metadata: Option<::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
+// Begin admissionregistration.k8s.io/v1alpha1/InitializerConfiguration
+
 // Generated from operation createAdmissionregistrationV1alpha1InitializerConfiguration
 
 #[derive(Debug)]
@@ -52,7 +54,6 @@ impl InitializerConfiguration {
             other => CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAdmissionregistrationV1alpha1CollectionInitializerConfiguration
@@ -132,7 +133,6 @@ impl InitializerConfiguration {
             other => DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAdmissionregistrationV1alpha1InitializerConfiguration
@@ -187,7 +187,6 @@ impl InitializerConfiguration {
             other => DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAdmissionregistrationV1alpha1InitializerConfiguration
@@ -267,7 +266,6 @@ impl InitializerConfiguration {
             other => ListAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAdmissionregistrationV1alpha1InitializerConfiguration
@@ -308,7 +306,6 @@ impl InitializerConfiguration {
             other => PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAdmissionregistrationV1alpha1InitializerConfiguration
@@ -358,7 +355,6 @@ impl InitializerConfiguration {
             other => ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAdmissionregistrationV1alpha1InitializerConfiguration
@@ -399,7 +395,6 @@ impl InitializerConfiguration {
             other => ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAdmissionregistrationV1alpha1InitializerConfiguration
@@ -480,7 +475,6 @@ impl InitializerConfiguration {
             other => WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAdmissionregistrationV1alpha1InitializerConfigurationList
@@ -559,8 +553,9 @@ impl InitializerConfiguration {
             other => WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse::Other(other, response),
         })
     }
-
 }
+
+// End admissionregistration.k8s.io/v1alpha1/InitializerConfiguration
 
 impl<'de> ::serde::Deserialize<'de> for InitializerConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

@@ -22,6 +22,8 @@ pub struct PriorityClass {
     pub value: i32,
 }
 
+// Begin scheduling.k8s.io/v1alpha1/PriorityClass
+
 // Generated from operation createSchedulingV1alpha1PriorityClass
 
 #[derive(Debug)]
@@ -68,7 +70,6 @@ impl PriorityClass {
             other => CreateSchedulingV1alpha1PriorityClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteSchedulingV1alpha1CollectionPriorityClass
@@ -148,7 +149,6 @@ impl PriorityClass {
             other => DeleteSchedulingV1alpha1CollectionPriorityClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteSchedulingV1alpha1PriorityClass
@@ -203,7 +203,6 @@ impl PriorityClass {
             other => DeleteSchedulingV1alpha1PriorityClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listSchedulingV1alpha1PriorityClass
@@ -283,7 +282,6 @@ impl PriorityClass {
             other => ListSchedulingV1alpha1PriorityClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchSchedulingV1alpha1PriorityClass
@@ -324,7 +322,6 @@ impl PriorityClass {
             other => PatchSchedulingV1alpha1PriorityClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readSchedulingV1alpha1PriorityClass
@@ -374,7 +371,6 @@ impl PriorityClass {
             other => ReadSchedulingV1alpha1PriorityClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceSchedulingV1alpha1PriorityClass
@@ -420,7 +416,6 @@ impl PriorityClass {
             other => ReplaceSchedulingV1alpha1PriorityClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchSchedulingV1alpha1PriorityClass
@@ -501,7 +496,6 @@ impl PriorityClass {
             other => WatchSchedulingV1alpha1PriorityClassResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchSchedulingV1alpha1PriorityClassList
@@ -580,8 +574,9 @@ impl PriorityClass {
             other => WatchSchedulingV1alpha1PriorityClassListResponse::Other(other, response),
         })
     }
-
 }
+
+// End scheduling.k8s.io/v1alpha1/PriorityClass
 
 impl<'de> ::serde::Deserialize<'de> for PriorityClass {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

@@ -16,6 +16,8 @@ pub struct Binding {
     pub target: ::v1_9::api::core::v1::ObjectReference,
 }
 
+// Begin /v1/Binding
+
 // Generated from operation createCoreV1NamespacedBinding
 
 #[derive(Debug)]
@@ -64,7 +66,6 @@ impl Binding {
             other => CreateCoreV1NamespacedBindingResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation createCoreV1NamespacedPodBinding
@@ -117,8 +118,9 @@ impl Binding {
             other => CreateCoreV1NamespacedPodBindingResponse::Other(other, response),
         })
     }
-
 }
+
+// End /v1/Binding
 
 impl<'de> ::serde::Deserialize<'de> for Binding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

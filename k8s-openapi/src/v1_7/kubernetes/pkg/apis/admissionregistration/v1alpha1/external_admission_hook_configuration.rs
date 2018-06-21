@@ -16,6 +16,8 @@ pub struct ExternalAdmissionHookConfiguration {
     pub metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
+// Begin admissionregistration.k8s.io/v1alpha1/ExternalAdmissionHookConfiguration
+
 // Generated from operation createAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
 
 #[derive(Debug)]
@@ -52,7 +54,6 @@ impl ExternalAdmissionHookConfiguration {
             other => CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfiguration
@@ -120,7 +121,6 @@ impl ExternalAdmissionHookConfiguration {
             other => DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
@@ -175,7 +175,6 @@ impl ExternalAdmissionHookConfiguration {
             other => DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
@@ -243,7 +242,6 @@ impl ExternalAdmissionHookConfiguration {
             other => ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
@@ -284,7 +282,6 @@ impl ExternalAdmissionHookConfiguration {
             other => PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
@@ -334,7 +331,6 @@ impl ExternalAdmissionHookConfiguration {
             other => ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
@@ -375,7 +371,6 @@ impl ExternalAdmissionHookConfiguration {
             other => ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
@@ -444,7 +439,6 @@ impl ExternalAdmissionHookConfiguration {
             other => WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationList
@@ -511,8 +505,9 @@ impl ExternalAdmissionHookConfiguration {
             other => WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Other(other, response),
         })
     }
-
 }
+
+// End admissionregistration.k8s.io/v1alpha1/ExternalAdmissionHookConfiguration
 
 impl<'de> ::serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

@@ -16,6 +16,8 @@ pub struct Eviction {
     pub metadata: Option<::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
+// Begin policy/v1beta1/Eviction
+
 // Generated from operation createCoreV1NamespacedPodEviction
 
 #[derive(Debug)]
@@ -66,8 +68,9 @@ impl Eviction {
             other => CreateCoreV1NamespacedPodEvictionResponse::Other(other, response),
         })
     }
-
 }
+
+// End policy/v1beta1/Eviction
 
 impl<'de> ::serde::Deserialize<'de> for Eviction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {

@@ -19,6 +19,8 @@ pub struct ClusterRole {
     pub rules: Vec<::v1_9::api::rbac::v1::PolicyRule>,
 }
 
+// Begin rbac.authorization.k8s.io/v1/ClusterRole
+
 // Generated from operation createRbacAuthorizationV1ClusterRole
 
 #[derive(Debug)]
@@ -65,7 +67,6 @@ impl ClusterRole {
             other => CreateRbacAuthorizationV1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteRbacAuthorizationV1ClusterRole
@@ -120,7 +121,6 @@ impl ClusterRole {
             other => DeleteRbacAuthorizationV1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation deleteRbacAuthorizationV1CollectionClusterRole
@@ -200,7 +200,6 @@ impl ClusterRole {
             other => DeleteRbacAuthorizationV1CollectionClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation listRbacAuthorizationV1ClusterRole
@@ -280,7 +279,6 @@ impl ClusterRole {
             other => ListRbacAuthorizationV1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation patchRbacAuthorizationV1ClusterRole
@@ -321,7 +319,6 @@ impl ClusterRole {
             other => PatchRbacAuthorizationV1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation readRbacAuthorizationV1ClusterRole
@@ -361,7 +358,6 @@ impl ClusterRole {
             other => ReadRbacAuthorizationV1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation replaceRbacAuthorizationV1ClusterRole
@@ -407,7 +403,6 @@ impl ClusterRole {
             other => ReplaceRbacAuthorizationV1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1ClusterRole
@@ -488,7 +483,6 @@ impl ClusterRole {
             other => WatchRbacAuthorizationV1ClusterRoleResponse::Other(other, response),
         })
     }
-
 }
 
 // Generated from operation watchRbacAuthorizationV1ClusterRoleList
@@ -567,8 +561,9 @@ impl ClusterRole {
             other => WatchRbacAuthorizationV1ClusterRoleListResponse::Other(other, response),
         })
     }
-
 }
+
+// End rbac.authorization.k8s.io/v1/ClusterRole
 
 impl<'de> ::serde::Deserialize<'de> for ClusterRole {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
