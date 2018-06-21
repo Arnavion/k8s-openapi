@@ -7,11 +7,25 @@ pub use self::info::*;
 mod paths;
 pub use self::paths::*;
 
-#[derive(Debug, Deserialize, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Debug, Deserialize, Eq, PartialEq)]
 pub struct KubernetesGroupKindVersion {
 	pub group: String,
 	pub kind: String,
 	pub version: String,
+}
+
+impl ::std::cmp::Ord for KubernetesGroupKindVersion {
+	fn cmp(&self, other: &Self) -> ::std::cmp::Ordering {
+		self.group.cmp(&other.group)
+		.then_with(|| self.version.cmp(&other.version))
+		.then_with(|| self.kind.cmp(&other.kind))
+	}
+}
+
+impl ::std::cmp::PartialOrd for KubernetesGroupKindVersion {
+	fn partial_cmp(&self, other: &Self) -> Option<::std::cmp::Ordering> {
+		Some(self.cmp(other))
+	}
 }
 
 #[derive(Debug)]

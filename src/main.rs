@@ -78,7 +78,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 	let mut num_generated_apis = 0usize;
 
 	info!(target: "", "Parsing spec file at {} ...", input);
-	let spec: swagger20::Spec = {
+	let mut spec: swagger20::Spec = {
 		let mut response = client.get(input).send()?;
 		let status = response.status();
 		if status != reqwest::StatusCode::Ok {
@@ -86,7 +86,25 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 		}
 		response.json()?
 	};
-	info!("OK. Spec has {} definitions and {} paths", spec.definitions.len(), spec.paths.len());
+	let expected_num_generated_apis: usize = spec.paths.iter().map(|(_, path_item)| path_item.operations.len()).sum();
+	info!(
+		"OK. Spec has {} definitions and {} paths containing {} operations",
+		spec.definitions.len(),
+		spec.paths.len(),
+		expected_num_generated_apis);
+
+	let mut operations: std::collections::BTreeMap<_, Vec<_>> = Default::default();
+	for (path, path_item) in &spec.paths {
+		for operation in &path_item.operations {
+			operations
+			.entry(operation.kubernetes_group_kind_version.as_ref())
+			.or_insert_with(Default::default)
+			.push((path, path_item, operation));
+		}
+	}
+	for operations in operations.values_mut() {
+		operations.sort_by_key(|(_, _, operation)| &operation.id);
+	}
 
 	loop {
 		info!("Removing output directory {} ...", out_dir.display());
@@ -110,7 +128,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 
 	info!("Generating types...");
 
-	for (definition_path, mut definition) in spec.definitions {
+	for (definition_path, definition) in &mut spec.definitions {
 		trace!("Working on {} ...", definition_path);
 
 		if let swagger20::SchemaKind::Ref(_) = definition.kind {
@@ -127,13 +145,15 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 		writeln!(file, "// Generated from definition {}", definition_path)?;
 		writeln!(file)?;
 
-		if let Some(description) = definition.description {
-			for line in get_comment_text(&description) {
+		if let Some(description) = &definition.description {
+			for line in get_comment_text(description) {
 				writeln!(file, "/{}", line)?;
 			}
 		}
 
-		if &*definition_path == "io.k8s.apimachinery.pkg.runtime.RawExtension" {
+		// Fixups
+
+		if &**definition_path == "io.k8s.apimachinery.pkg.runtime.RawExtension" {
 			// The spec says that `RawExtension` is an object with a property `raw` that's a byte-formatted string.
 			// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
 			// The value of that field is itself a JSON-serialized value. For example, a `WatchEvent` of `Pod`s has the `Pod` object serialized as
@@ -148,11 +168,49 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 			definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
 		}
 
-		match definition.kind {
+		if definition.kubernetes_group_kind_versions.is_none() {
+			// Various types not annotated with "x-kubernetes-group-kind-versions", which would make their associated functions end up in the mod root
+			//
+			// Ref: https://github.com/kubernetes/kubernetes/issues/49465
+			// Ref: https://github.com/kubernetes/kubernetes/pull/64174
+			match &**definition_path {
+				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinition" =>
+					definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
+						group: "apiextensions.k8s.io".to_string(),
+						kind: "CustomResourceDefinition".to_string(),
+						version: "v1beta1".to_string(),
+					}]),
+
+				"io.k8s.apimachinery.pkg.apis.meta.v1.APIResource" =>
+					definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
+						group: "".to_string(),
+						kind: "APIResource".to_string(),
+						version: "v1".to_string(),
+					}]),
+
+				"io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService" =>
+					definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
+						group: "apiregistration.k8s.io".to_string(),
+						kind: "APIService".to_string(),
+						version: "v1".to_string(),
+					}]),
+
+				"io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIService" =>
+					definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
+						group: "apiregistration.k8s.io".to_string(),
+						kind: "APIService".to_string(),
+						version: "v1beta1".to_string(),
+					}]),
+
+				_ => (),
+			}
+		}
+
+		match &definition.kind {
 			swagger20::SchemaKind::Properties(properties) => {
-				struct Property {
-					name: swagger20::PropertyName,
-					schema: swagger20::Schema,
+				struct Property<'a> {
+					name: &'a swagger20::PropertyName,
+					schema: &'a swagger20::Schema,
 					required: bool,
 					field_name: std::borrow::Cow<'static, str>,
 					field_type_name: String,
@@ -176,7 +234,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 
 						// Fix cases of infinite recursion
 						if let swagger20::SchemaKind::Ref(ref ref_path) = schema.kind {
-							match (&*definition_path, &*name, &**ref_path) {
+							match (&**definition_path, &**name, &**ref_path) {
 								(
 									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
 									"Schema",
@@ -209,7 +267,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 						result.push(Property {
 							name,
 							schema,
-							required,
+							required: *required,
 							field_name,
 							field_type_name,
 						});
@@ -266,24 +324,17 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 				}
 				writeln!(file, "}}")?;
 
-				let mut operations = vec![];
 				if let Some(kubernetes_group_kind_versions) = &definition.kubernetes_group_kind_versions {
+					let mut kubernetes_group_kind_versions: Vec<_> = kubernetes_group_kind_versions.into_iter().collect();
+					kubernetes_group_kind_versions.sort();
 					for kubernetes_group_kind_version in kubernetes_group_kind_versions {
-						for (path, path_item) in &spec.paths {
-							for operation in &path_item.operations {
-								if operation.kubernetes_group_kind_version.as_ref() == Some(kubernetes_group_kind_version) {
-									operations.push((path, path_item, operation));
-								}
+						if let Some(operations) = operations.remove(&Some(kubernetes_group_kind_version)) {
+							for (path, path_item, operation) in operations {
+								write_operation(&mut file, operation, &replace_namespaces, mod_root, Some(&type_name), path, path_item)?;
+								num_generated_apis += 1;
 							}
 						}
 					}
-				}
-				operations.sort_by_key(|(_, _, operation)| &operation.id);
-				let operations = operations;
-
-				for (path, path_item, operation) in operations {
-					write_operation(&mut file, operation, &replace_namespaces, mod_root, Some(&type_name), path, path_item)?;
-					num_generated_apis += 1;
 				}
 
 				writeln!(file)?;
@@ -433,20 +484,17 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 	{
 		let mut mod_root_file = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).open(out_dir.join("mod.rs"))?);
 
-		let mut operations = vec![];
-		for (path, path_item) in &spec.paths {
-			for operation in &path_item.operations {
-				if operation.kubernetes_group_kind_version.is_none() {
-					operations.push((path, path_item, operation));
+		for (kubernetes_group_kind_version, operations) in operations {
+			for (path, path_item, operation) in operations {
+				if let Some(swagger20::KubernetesGroupKindVersion { group, kind, version }) = kubernetes_group_kind_version {
+					return Err(format!(
+						"Operation {} is associated with {}/{}/{} but did not get emitted with that definition",
+						operation.id, group, version, kind).into());
 				}
-			}
-		}
-		operations.sort_by_key(|(_, _, operation)| &operation.id);
-		let operations = operations;
 
-		for (path, path_item, operation) in operations {
-			write_operation(&mut mod_root_file, operation, &replace_namespaces, mod_root, None, path, path_item)?;
-			num_generated_apis += 1;
+				write_operation(&mut mod_root_file, operation, &replace_namespaces, mod_root, None, path, path_item)?;
+				num_generated_apis += 1;
+			}
 		}
 	}
 
@@ -455,6 +503,11 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 	info!("Generated {} type aliases", num_generated_type_aliases);
 	info!("Skipped generating {} type aliases", num_skipped_refs);
 	info!("Generated {} API functions", num_generated_apis);
+
+	if num_generated_apis != expected_num_generated_apis {
+		return Err("Did not generate expected number of API functions".into());
+	}
+
 	info!("");
 
 	Ok(())
