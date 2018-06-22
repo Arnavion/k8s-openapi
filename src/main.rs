@@ -51,7 +51,7 @@ fn main() -> Result<(), Error> {
 	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.7.16/api/openapi-spec/swagger.json", &out_dir_base, "v1_7", &client)?;
 	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.8.14/api/openapi-spec/swagger.json", &out_dir_base, "v1_8", &client)?;
 	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.9.8/api/openapi-spec/swagger.json", &out_dir_base, "v1_9", &client)?;
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.10.4/api/openapi-spec/swagger.json", &out_dir_base, "v1_10", &client)?;
+	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.10.5/api/openapi-spec/swagger.json", &out_dir_base, "v1_10", &client)?;
 
 	Ok(())
 }
