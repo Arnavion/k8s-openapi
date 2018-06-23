@@ -94,6 +94,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 
 	fixups.apply(&mut spec);
 
+	let expected_num_generated_or_skipped_types: usize = spec.definitions.len();
 	let expected_num_generated_apis: usize = spec.paths.iter().map(|(_, path_item)| path_item.operations.len()).sum();
 
 	info!(
@@ -465,6 +466,10 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 	info!("Generated {} type aliases", num_generated_type_aliases);
 	info!("Skipped generating {} type aliases", num_skipped_refs);
 	info!("Generated {} API functions", num_generated_apis);
+
+	if num_generated_structs + num_generated_type_aliases + num_skipped_refs != expected_num_generated_or_skipped_types {
+		return Err("Did not generate or skip expected number of types".into());
+	}
 
 	if num_generated_apis != expected_num_generated_apis {
 		return Err("Did not generate expected number of API functions".into());
