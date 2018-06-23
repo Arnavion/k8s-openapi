@@ -48,15 +48,19 @@ fn main() -> Result<(), Error> {
 	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
 	let out_dir_base = out_dir_base.join("k8s-openapi").join("src");
 
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.7.16/api/openapi-spec/swagger.json", &out_dir_base, "v1_7", &client)?;
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.8.14/api/openapi-spec/swagger.json", &out_dir_base, "v1_8", &client)?;
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.9.8/api/openapi-spec/swagger.json", &out_dir_base, "v1_9", &client)?;
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.10.5/api/openapi-spec/swagger.json", &out_dir_base, "v1_10", &client)?;
+	let mut fixups: Fixups = Default::default();
+
+	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.7.16/api/openapi-spec/swagger.json", &out_dir_base, "v1_7", &client, &mut fixups)?;
+	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.8.14/api/openapi-spec/swagger.json", &out_dir_base, "v1_8", &client, &mut fixups)?;
+	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.9.8/api/openapi-spec/swagger.json", &out_dir_base, "v1_9", &client, &mut fixups)?;
+	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.10.5/api/openapi-spec/swagger.json", &out_dir_base, "v1_10", &client, &mut fixups)?;
+
+	fixups.verify()?;
 
 	Ok(())
 }
 
-fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &reqwest::Client) -> Result<(), Error> {
+fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &reqwest::Client, fixups: &mut Fixups) -> Result<(), Error> {
 	use std::io::Write;
 
 	let out_dir = out_dir_base.join(mod_root);
@@ -78,6 +82,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 	let mut num_generated_apis = 0usize;
 
 	info!(target: "", "Parsing spec file at {} ...", input);
+
 	let mut spec: swagger20::Spec = {
 		let mut response = client.get(input).send()?;
 		let status = response.status();
@@ -86,7 +91,11 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 		}
 		response.json()?
 	};
+
+	fixups.apply(&mut spec);
+
 	let expected_num_generated_apis: usize = spec.paths.iter().map(|(_, path_item)| path_item.operations.len()).sum();
+
 	info!(
 		"OK. Spec has {} definitions and {} paths containing {} operations",
 		spec.definitions.len(),
@@ -148,61 +157,6 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 		if let Some(description) = &definition.description {
 			for line in get_comment_text(description) {
 				writeln!(file, "/{}", line)?;
-			}
-		}
-
-		// Fixups
-
-		if &**definition_path == "io.k8s.apimachinery.pkg.runtime.RawExtension" {
-			// The spec says that `RawExtension` is an object with a property `raw` that's a byte-formatted string.
-			// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
-			// The value of that field is itself a JSON-serialized value. For example, a `WatchEvent` of `Pod`s has the `Pod` object serialized as
-			// the value of the `WatchEvent::object` property.
-			//
-			// Thus `RawExtension` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
-			//
-			// Ref: https://github.com/kubernetes/kubernetes/issues/55890
-			//
-			// https://github.com/kubernetes/kubernetes/pull/56434 will remove RawExtension and replace it with `{ type: "object" }`,
-			// which would've already been mapped to `Ty(Any)` by `Ty::parse`, so just replicate that for `RawExtension` here.
-			definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
-		}
-
-		if definition.kubernetes_group_kind_versions.is_none() {
-			// Various types not annotated with "x-kubernetes-group-kind-versions", which would make their associated functions end up in the mod root
-			//
-			// Ref: https://github.com/kubernetes/kubernetes/issues/49465
-			// Ref: https://github.com/kubernetes/kubernetes/pull/64174
-			match &**definition_path {
-				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinition" =>
-					definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
-						group: "apiextensions.k8s.io".to_string(),
-						kind: "CustomResourceDefinition".to_string(),
-						version: "v1beta1".to_string(),
-					}]),
-
-				"io.k8s.apimachinery.pkg.apis.meta.v1.APIResource" =>
-					definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
-						group: "".to_string(),
-						kind: "APIResource".to_string(),
-						version: "v1".to_string(),
-					}]),
-
-				"io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService" =>
-					definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
-						group: "apiregistration.k8s.io".to_string(),
-						kind: "APIService".to_string(),
-						version: "v1".to_string(),
-					}]),
-
-				"io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIService" =>
-					definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
-						group: "apiregistration.k8s.io".to_string(),
-						kind: "APIService".to_string(),
-						version: "v1beta1".to_string(),
-					}]),
-
-				_ => (),
 			}
 		}
 
@@ -519,6 +473,106 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 	info!("");
 
 	Ok(())
+}
+
+#[derive(Debug, Default)]
+struct Fixups {
+	apiresource_gkv: bool,
+	apiservicev1_gkv: bool,
+	apiservicev1beta1_gkv: bool,
+	crd_gkv: bool,
+	raw_extension_ty: bool,
+}
+
+impl Fixups {
+	fn apply(&mut self, spec: &mut swagger20::Spec) {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.apimachinery.pkg.runtime.RawExtension" {
+				// The spec says that `RawExtension` is an object with a property `raw` that's a byte-formatted string.
+				// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
+				// The value of that field is itself a JSON-serialized value. For example, a `WatchEvent` of `Pod`s has the `Pod` object serialized as
+				// the value of the `WatchEvent::object` property.
+				//
+				// Thus `RawExtension` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
+				//
+				// Ref: https://github.com/kubernetes/kubernetes/issues/55890
+				//
+				// https://github.com/kubernetes/kubernetes/pull/56434 will remove RawExtension and replace it with `{ type: "object" }`,
+				// which would've already been mapped to `Ty(Any)` by `Ty::parse`, so just replicate that for `RawExtension` here.
+				definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
+				self.raw_extension_ty = true;
+			}
+
+			if definition.kubernetes_group_kind_versions.is_none() {
+				// Various types not annotated with "x-kubernetes-group-kind-versions", which would make their associated functions end up in the mod root
+				//
+				// Ref: https://github.com/kubernetes/kubernetes/issues/49465
+				// Ref: https://github.com/kubernetes/kubernetes/pull/64174
+				match &**definition_path {
+					"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinition" => {
+						definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
+							group: "apiextensions.k8s.io".to_string(),
+							kind: "CustomResourceDefinition".to_string(),
+							version: "v1beta1".to_string(),
+						}]);
+						self.crd_gkv = true;
+					},
+
+					"io.k8s.apimachinery.pkg.apis.meta.v1.APIResource" => {
+						definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
+							group: "".to_string(),
+							kind: "APIResource".to_string(),
+							version: "v1".to_string(),
+						}]);
+						self.apiresource_gkv = true;
+					},
+
+					"io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService" => {
+						definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
+							group: "apiregistration.k8s.io".to_string(),
+							kind: "APIService".to_string(),
+							version: "v1".to_string(),
+						}]);
+						self.apiservicev1_gkv = true;
+					},
+
+					"io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIService" => {
+						definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
+							group: "apiregistration.k8s.io".to_string(),
+							kind: "APIService".to_string(),
+							version: "v1beta1".to_string(),
+						}]);
+						self.apiservicev1beta1_gkv = true;
+					},
+
+					_ => (),
+				}
+			}
+		}
+	}
+
+	fn verify(&self) -> Result<(), Error> {
+		if !self.apiresource_gkv {
+			return Err("never applied APIResource kubernetes_group_kind_version override".into());
+		}
+		if !self.apiservicev1_gkv {
+			return Err("never applied APIService v1 kubernetes_group_kind_version override".into());
+		}
+
+		if !self.apiservicev1beta1_gkv {
+			return Err("never applied APIService v1beta1 kubernetes_group_kind_version override".into());
+		}
+
+		if !self.crd_gkv {
+			return Err("never applied CustomResourceDefinition kubernetes_group_kind_version override".into());
+		}
+
+		if !self.raw_extension_ty {
+			return Err("never applied RawExtension override".into());
+		}
+
+		Ok(())
+	}
 }
 
 fn create_file_for_type(
