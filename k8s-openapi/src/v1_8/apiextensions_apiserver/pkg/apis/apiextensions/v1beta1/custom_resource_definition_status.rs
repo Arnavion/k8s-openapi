@@ -7,7 +7,7 @@ pub struct CustomResourceDefinitionStatus {
     pub accepted_names: ::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionNames,
 
     /// Conditions indicate state for particular aspects of a CustomResourceDefinition
-    pub conditions: Vec<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionCondition>,
+    pub conditions: Option<Vec<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionCondition>>,
 }
 
 impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinitionStatus {
@@ -59,14 +59,14 @@ impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinitionStatus {
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_accepted_names => value_accepted_names = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_conditions => value_conditions = Some(::serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_conditions => value_conditions = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CustomResourceDefinitionStatus {
                     accepted_names: value_accepted_names.ok_or_else(|| ::serde::de::Error::missing_field("acceptedNames"))?,
-                    conditions: value_conditions.ok_or_else(|| ::serde::de::Error::missing_field("conditions"))?,
+                    conditions: value_conditions,
                 })
             }
         }
@@ -88,10 +88,12 @@ impl ::serde::Serialize for CustomResourceDefinitionStatus {
             "CustomResourceDefinitionStatus",
             0 +
             1 +
-            1,
+            self.conditions.as_ref().map_or(0, |_| 1),
         )?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "acceptedNames", &self.accepted_names)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", &self.conditions)?;
+        if let Some(value) = &self.conditions {
+            ::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+        }
         ::serde::ser::SerializeStruct::end(state)
     }
 }

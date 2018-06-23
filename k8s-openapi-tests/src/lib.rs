@@ -231,6 +231,11 @@ struct KubeConfigUser {
 	client_key: std::path::PathBuf,
 }
 
+mod api_versions;
+
+#[cfg(not(feature = "v1_7"))] // CRDs not supported in v1.7
+mod custom_resource_definition;
+
 mod deployment;
 
 mod job;

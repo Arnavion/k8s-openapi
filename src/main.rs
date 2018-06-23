@@ -477,30 +477,82 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 
 #[derive(Debug, Default)]
 struct Fixups {
+	apigroup_optional_properties: bool,
 	apiresource_gkv: bool,
 	apiservicev1_gkv: bool,
 	apiservicev1beta1_gkv: bool,
 	crd_gkv: bool,
+	crdstatus_optional_properties: bool,
+	poddisruptionbudgetstatus_optional_properties: bool,
 	raw_extension_ty: bool,
 }
 
 impl Fixups {
 	fn apply(&mut self, spec: &mut swagger20::Spec) {
 		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.apimachinery.pkg.runtime.RawExtension" {
-				// The spec says that `RawExtension` is an object with a property `raw` that's a byte-formatted string.
-				// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
-				// The value of that field is itself a JSON-serialized value. For example, a `WatchEvent` of `Pod`s has the `Pod` object serialized as
-				// the value of the `WatchEvent::object` property.
-				//
-				// Thus `RawExtension` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
-				//
-				// Ref: https://github.com/kubernetes/kubernetes/issues/55890
-				//
-				// https://github.com/kubernetes/kubernetes/pull/56434 will remove RawExtension and replace it with `{ type: "object" }`,
-				// which would've already been mapped to `Ty(Any)` by `Ty::parse`, so just replicate that for `RawExtension` here.
-				definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
-				self.raw_extension_ty = true;
+			match &**definition_path {
+				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionStatus" =>
+					// The spec says that `CustomResourceDefinitionStatus::conditions` is an array, but it can be null.
+					//
+					// Override it to be optional to achieve the same effect.
+					//
+					// Ref: https://github.com/kubernetes/kubernetes/pull/64996
+					if let swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+						if let Some(property) = properties.get_mut(&swagger20::PropertyName("conditions".to_string())) {
+							if property.1 {
+								property.1 = false;
+								self.crdstatus_optional_properties = true;
+							}
+						}
+					},
+
+				"io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup" =>
+					// The spec says that `APIGroup::serverAddressByClientCIDRs` is an array, but it can be null.
+					//
+					// Override it to be optional to achieve the same effect.
+					//
+					// Ref: https://github.com/kubernetes/kubernetes/pull/61963
+					if let swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+						if let Some(property) = properties.get_mut(&swagger20::PropertyName("serverAddressByClientCIDRs".to_string())) {
+							if property.1 {
+								property.1 = false;
+								self.apigroup_optional_properties = true;
+							}
+						}
+					},
+
+				"io.k8s.apimachinery.pkg.runtime.RawExtension" => {
+					// The spec says that `RawExtension` is an object with a property `raw` that's a byte-formatted string.
+					// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
+					// The value of that field is itself a JSON-serialized value. For example, a `WatchEvent` of `Pod`s has the `Pod` object serialized as
+					// the value of the `WatchEvent::object` property.
+					//
+					// Thus `RawExtension` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
+					//
+					// Ref: https://github.com/kubernetes/kubernetes/issues/55890
+					//
+					// https://github.com/kubernetes/kubernetes/pull/56434 will remove RawExtension and replace it with `{ type: "object" }`,
+					// which would've already been mapped to `Ty(Any)` by `Ty::parse`, so just replicate that for `RawExtension` here.
+					definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
+					self.raw_extension_ty = true;
+				},
+
+				"io.k8s.api.policy.v1beta1.PodDisruptionBudgetStatus" =>
+					// The spec says that `APIGroup::serverAddressByClientCIDRs` is an array, but it can be null.
+					//
+					// Override it to be optional to achieve the same effect.
+					//
+					// Ref: https://github.com/kubernetes/kubernetes/pull/65041
+					if let swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+						if let Some(property) = properties.get_mut(&swagger20::PropertyName("disruptedPods".to_string())) {
+							if property.1 {
+								property.1 = false;
+								self.poddisruptionbudgetstatus_optional_properties = true;
+							}
+						}
+					},
+
+				_ => (),
 			}
 
 			if definition.kubernetes_group_kind_versions.is_none() {
@@ -552,9 +604,14 @@ impl Fixups {
 	}
 
 	fn verify(&self) -> Result<(), Error> {
+		if !self.apigroup_optional_properties {
+			return Err("never applied APIGroups optional properties override".into());
+		}
+
 		if !self.apiresource_gkv {
 			return Err("never applied APIResource kubernetes_group_kind_version override".into());
 		}
+
 		if !self.apiservicev1_gkv {
 			return Err("never applied APIService v1 kubernetes_group_kind_version override".into());
 		}
@@ -565,6 +622,14 @@ impl Fixups {
 
 		if !self.crd_gkv {
 			return Err("never applied CustomResourceDefinition kubernetes_group_kind_version override".into());
+		}
+
+		if !self.crdstatus_optional_properties {
+			return Err("never applied CustomResourceDefinitionStatus optional properties override".into());
+		}
+
+		if !self.poddisruptionbudgetstatus_optional_properties {
+			return Err("never applied PodDisruptionBudgetStatus optional properties override".into());
 		}
 
 		if !self.raw_extension_ty {
