@@ -765,6 +765,24 @@ fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec
 	}
 }
 
+fn is_read_pod_log_operation_ok_response(
+	operation: &swagger20::Operation,
+	status_code: reqwest::StatusCode,
+	schema: &swagger20::Schema,
+) -> Result<bool, Error> {
+	if operation.id == "readCoreV1NamespacedPodLog" && status_code == reqwest::StatusCode::Ok {
+		if let swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) = schema.kind {
+			Ok(true)
+		}
+		else {
+			Err(format!("expected operation {} to have String type for status code 200", operation.id).into())
+		}
+	}
+	else {
+		Ok(false)
+	}
+}
+
 fn replace_namespace<'a, I>(parts: I, replace_namespaces: &[(Vec<&str>, Vec<String>)]) -> Vec<String> where I: IntoIterator<Item = &'a str> {
 	let parts: Vec<_> = parts.into_iter().collect();
 
@@ -806,7 +824,7 @@ fn write_operation(
 
 	let operation_responses: Result<Vec<_>, _> =
 		operation.responses.iter()
-		.map(|(status_code, schema)| {
+		.map(|(&status_code, schema)| {
 			let http_status_code = match status_code {
 				reqwest::StatusCode::Accepted => "ACCEPTED",
 				reqwest::StatusCode::Created => "CREATED",
@@ -823,7 +841,7 @@ fn write_operation(
 				_ => return Err(format!("unrecognized status code {}", status_code)),
 			};
 
-			Ok((http_status_code, variant_name, schema))
+			Ok((status_code, http_status_code, variant_name, schema))
 		})
 		.collect();
 	let operation_responses = operation_responses?;
@@ -833,13 +851,16 @@ fn write_operation(
 		writeln!(file, "#[derive(Debug)]")?;
 	}
 	writeln!(file, "pub enum {}<R> where R: ::std::io::Read {{", operation_result_name)?;
-	for (_, variant_name, schema) in &operation_responses {
+	for &(status_code, _, variant_name, schema) in &operation_responses {
 		if let Some(schema) = schema {
 			if is_watch {
 				writeln!(
 					file,
 					"    {}(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, {}>),",
 					variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
+			}
+			else if is_read_pod_log_operation_ok_response(operation, status_code, schema)? {
+				writeln!(file, "    {}(::std::io::Lines<::std::io::BufReader<R>>),", variant_name)?;
 			}
 			else {
 				writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
@@ -1019,31 +1040,35 @@ fn write_operation(
 	writeln!(file)?;
 
 	writeln!(file, "{}    Ok(match ::Response::status_code(&response) {{", indent)?;
-	for (http_status_code, variant_name, schema) in &operation_responses {
+	for &(status_code, http_status_code, variant_name, schema) in &operation_responses {
 		write!(file, "{}        ::http::StatusCode::{} => ", indent, http_status_code)?;
 		if let Some(schema) = schema {
 			writeln!(file, "{{")?;
 
-			match &schema.kind {
-				swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
-					writeln!(file, "{}            let mut response = response;", indent)?;
-					writeln!(file, "{}            let mut result = String::new();", indent)?;
-					// TODO: Better to return a Read rather than buffer up a whole String? `pods/{}/log` can get quite large...
-					writeln!(file, "{}            ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;", indent)?;
-				},
+			if is_read_pod_log_operation_ok_response(operation, status_code, schema)? {
+				writeln!(file, "{}            let result = ::std::io::BufRead::lines(::std::io::BufReader::new(response));", indent)?;
+			}
+			else {
+				match &schema.kind {
+					swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
+						writeln!(file, "{}            let mut response = response;", indent)?;
+						writeln!(file, "{}            let mut result = String::new();", indent)?;
+						writeln!(file, "{}            ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;", indent)?;
+					},
 
-				swagger20::SchemaKind::Ty(swagger20::Type::Boolean { .. }) |
-				swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
-				swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) => {
-					return Err(format!("unsupported response type {:?}", schema.kind).into());
-				},
+					swagger20::SchemaKind::Ty(swagger20::Type::Boolean { .. }) |
+					swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
+					swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) => {
+						return Err(format!("unsupported response type {:?}", schema.kind).into());
+					},
 
-				_ => if is_watch {
-					writeln!(file, "{}            let result = ::serde_json::Deserializer::from_reader(response).into_iter();", indent)?;
+					_ => if is_watch {
+						writeln!(file, "{}            let result = ::serde_json::Deserializer::from_reader(response).into_iter();", indent)?;
+					}
+					else {
+						writeln!(file, "{}            let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;", indent)?;
+					},
 				}
-				else {
-					writeln!(file, "{}            let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;", indent)?;
-				},
 			}
 
 			writeln!(file, "                {}::{}(result)", operation_result_name, variant_name)?;

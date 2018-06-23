@@ -42,9 +42,13 @@ fn get() {
 			&client,
 			addon_manager_pod_name, "kube-system", Some("kube-addon-manager"), None, Some(4096), None, None, None, None, None)
 		.expect("couldn't get addon-manager pod logs");
-	let addon_manager_logs = match addon_manager_logs {
+	let mut addon_manager_logs = match addon_manager_logs {
 		api::ReadCoreV1NamespacedPodLogResponse::Ok(logs) => logs,
 		other => panic!("couldn't get addon-manager pod logs: {:?}", other),
 	};
-	assert!(addon_manager_logs.contains("INFO: == Kubernetes addon manager started at"));
+	let addon_manager_logs_first_line =
+		addon_manager_logs
+		.next().expect("addon-manager pod has no logs")
+		.expect("couldn't get first line of addon-manager pod logs");
+	assert!(addon_manager_logs_first_line.contains("INFO: == Kubernetes addon manager started at"), "{}", addon_manager_logs_first_line);
 }

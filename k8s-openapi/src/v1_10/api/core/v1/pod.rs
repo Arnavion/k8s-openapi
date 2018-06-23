@@ -1295,7 +1295,7 @@ impl Pod {
 
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPodLogResponse<R> where R: ::std::io::Read {
-    Ok(String),
+    Ok(::std::io::Lines<::std::io::BufReader<R>>),
     Unauthorized(R),
     Other(::http::StatusCode, R),
 }
@@ -1358,9 +1358,7 @@ impl Pod {
 
         Ok(match ::Response::status_code(&response) {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
+                let result = ::std::io::BufRead::lines(::std::io::BufReader::new(response));
                 ReadCoreV1NamespacedPodLogResponse::Ok(result)
             },
             ::http::StatusCode::UNAUTHORIZED => ReadCoreV1NamespacedPodLogResponse::Unauthorized(response),
