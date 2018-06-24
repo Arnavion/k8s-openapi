@@ -23,67 +23,75 @@ pub struct DaemonSet {
 
 // Generated from operation createExtensionsV1beta1NamespacedDaemonSet
 
-#[derive(Debug)]
-pub enum CreateExtensionsV1beta1NamespacedDaemonSetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Created(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Accepted(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// create a DaemonSet
-    pub fn create_extensions_v1beta1_namespaced_daemon_set<C>(
-        __client: &C,
+    pub fn create_extensions_v1beta1_namespaced_daemon_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_9::api::extensions::v1beta1::DaemonSet,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateExtensionsV1beta1NamespacedDaemonSetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateExtensionsV1beta1NamespacedDaemonSetResponse {
+    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Created(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Accepted(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateExtensionsV1beta1NamespacedDaemonSetResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateExtensionsV1beta1NamespacedDaemonSetResponse::Created(result), buf.len()))
             },
             ::http::StatusCode::ACCEPTED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateExtensionsV1beta1NamespacedDaemonSetResponse::Accepted(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateExtensionsV1beta1NamespacedDaemonSetResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized(response),
-            other => CreateExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((CreateExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteExtensionsV1beta1CollectionNamespacedDaemonSet
 
-#[derive(Debug)]
-pub enum DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// delete collection of DaemonSet
-    pub fn delete_extensions_v1beta1_collection_namespaced_daemon_set<C>(
-        __client: &C,
+    pub fn delete_extensions_v1beta1_collection_namespaced_daemon_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -106,65 +114,73 @@ impl DaemonSet {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::Unauthorized(response),
-            other => DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteExtensionsV1beta1NamespacedDaemonSet
 
-#[derive(Debug)]
-pub enum DeleteExtensionsV1beta1NamespacedDaemonSetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// delete a DaemonSet
-    pub fn delete_extensions_v1beta1_namespaced_daemon_set<C>(
-        __client: &C,
+    pub fn delete_extensions_v1beta1_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -177,50 +193,58 @@ impl DaemonSet {
         pretty: Option<&str>,
         // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
         propagation_policy: Option<&str>,
-    ) -> Result<DeleteExtensionsV1beta1NamespacedDaemonSetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(grace_period_seconds) = grace_period_seconds {
-                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-            }
-            if let Some(orphan_dependents) = orphan_dependents {
-                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(propagation_policy) = propagation_policy {
-                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteExtensionsV1beta1NamespacedDaemonSetResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized(response),
-            other => DeleteExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listExtensionsV1beta1DaemonSetForAllNamespaces
 
-#[derive(Debug)]
-pub enum ListExtensionsV1beta1DaemonSetForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::DaemonSetList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// list or watch objects of kind DaemonSet
-    pub fn list_extensions_v1beta1_daemon_set_for_all_namespaces<C>(
-        __client: &C,
+    pub fn list_extensions_v1beta1_daemon_set_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -241,65 +265,73 @@ impl DaemonSet {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListExtensionsV1beta1DaemonSetForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/daemonsets")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/daemonsets?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListExtensionsV1beta1DaemonSetForAllNamespacesResponse {
+    Ok(::v1_9::api::extensions::v1beta1::DaemonSetList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListExtensionsV1beta1DaemonSetForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Unauthorized(response),
-            other => ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listExtensionsV1beta1NamespacedDaemonSet
 
-#[derive(Debug)]
-pub enum ListExtensionsV1beta1NamespacedDaemonSetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::DaemonSetList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// list or watch objects of kind DaemonSet
-    pub fn list_extensions_v1beta1_namespaced_daemon_set<C>(
-        __client: &C,
+    pub fn list_extensions_v1beta1_namespaced_daemon_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -322,65 +354,73 @@ impl DaemonSet {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListExtensionsV1beta1NamespacedDaemonSetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListExtensionsV1beta1NamespacedDaemonSetResponse {
+    Ok(::v1_9::api::extensions::v1beta1::DaemonSetList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized(response),
-            other => ListExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((ListExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedDaemonSet
 
-#[derive(Debug)]
-pub enum PatchExtensionsV1beta1NamespacedDaemonSetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// partially update the specified DaemonSet
-    pub fn patch_extensions_v1beta1_namespaced_daemon_set<C>(
-        __client: &C,
+    pub fn patch_extensions_v1beta1_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -388,41 +428,49 @@ impl DaemonSet {
         body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchExtensionsV1beta1NamespacedDaemonSetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchExtensionsV1beta1NamespacedDaemonSetResponse {
+    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized(response),
-            other => PatchExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((PatchExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedDaemonSetStatus
 
-#[derive(Debug)]
-pub enum PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// partially update status of the specified DaemonSet
-    pub fn patch_extensions_v1beta1_namespaced_daemon_set_status<C>(
-        __client: &C,
+    pub fn patch_extensions_v1beta1_namespaced_daemon_set_status(
         // name of the DaemonSet
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -430,41 +478,49 @@ impl DaemonSet {
         body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse {
+    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized(response),
-            other => PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedDaemonSet
 
-#[derive(Debug)]
-pub enum ReadExtensionsV1beta1NamespacedDaemonSetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// read the specified DaemonSet
-    pub fn read_extensions_v1beta1_namespaced_daemon_set<C>(
-        __client: &C,
+    pub fn read_extensions_v1beta1_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -475,89 +531,104 @@ impl DaemonSet {
         export: Option<bool>,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadExtensionsV1beta1NamespacedDaemonSetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(exact) = exact {
-                __query_pairs.append_pair("exact", &exact.to_string());
-            }
-            if let Some(export) = export {
-                __query_pairs.append_pair("export", &export.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
         }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadExtensionsV1beta1NamespacedDaemonSetResponse {
+    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized(response),
-            other => ReadExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((ReadExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedDaemonSetStatus
 
-#[derive(Debug)]
-pub enum ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// read status of the specified DaemonSet
-    pub fn read_extensions_v1beta1_namespaced_daemon_set_status<C>(
-        __client: &C,
+    pub fn read_extensions_v1beta1_namespaced_daemon_set_status(
         // name of the DaemonSet
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse {
+    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized(response),
-            other => ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedDaemonSet
 
-#[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1NamespacedDaemonSetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Created(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// replace the specified DaemonSet
-    pub fn replace_extensions_v1beta1_namespaced_daemon_set<C>(
-        __client: &C,
+    pub fn replace_extensions_v1beta1_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -565,46 +636,58 @@ impl DaemonSet {
         body: &::v1_9::api::extensions::v1beta1::DaemonSet,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceExtensionsV1beta1NamespacedDaemonSetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceExtensionsV1beta1NamespacedDaemonSetResponse {
+    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Created(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized(response),
-            other => ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedDaemonSetStatus
 
-#[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Created(::v1_9::api::extensions::v1beta1::DaemonSet),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// replace status of the specified DaemonSet
-    pub fn replace_extensions_v1beta1_namespaced_daemon_set_status<C>(
-        __client: &C,
+    pub fn replace_extensions_v1beta1_namespaced_daemon_set_status(
         // name of the DaemonSet
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -612,44 +695,58 @@ impl DaemonSet {
         body: &::v1_9::api::extensions::v1beta1::DaemonSet,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse {
+    Ok(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Created(::v1_9::api::extensions::v1beta1::DaemonSet),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized(response),
-            other => ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchExtensionsV1beta1DaemonSetListForAllNamespaces
 
-pub enum WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// watch individual changes to a list of DaemonSet
-    pub fn watch_extensions_v1beta1_daemon_set_list_for_all_namespaces<C>(
-        __client: &C,
+    pub fn watch_extensions_v1beta1_daemon_set_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -670,64 +767,75 @@ impl DaemonSet {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/watch/daemonsets")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/watch/daemonsets?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Unauthorized(response),
-            other => WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedDaemonSet
 
-pub enum WatchExtensionsV1beta1NamespacedDaemonSetResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// watch changes to an object of kind DaemonSet
-    pub fn watch_extensions_v1beta1_namespaced_daemon_set<C>(
-        __client: &C,
+    pub fn watch_extensions_v1beta1_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -752,64 +860,75 @@ impl DaemonSet {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchExtensionsV1beta1NamespacedDaemonSetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/daemonsets/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchExtensionsV1beta1NamespacedDaemonSetResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized(response),
-            other => WatchExtensionsV1beta1NamespacedDaemonSetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((WatchExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedDaemonSetList
 
-pub enum WatchExtensionsV1beta1NamespacedDaemonSetListResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DaemonSet {
     /// watch individual changes to a list of DaemonSet
-    pub fn watch_extensions_v1beta1_namespaced_daemon_set_list<C>(
-        __client: &C,
+    pub fn watch_extensions_v1beta1_namespaced_daemon_set_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -832,49 +951,67 @@ impl DaemonSet {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchExtensionsV1beta1NamespacedDaemonSetListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/daemonsets", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/daemonsets?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchExtensionsV1beta1NamespacedDaemonSetListResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchExtensionsV1beta1NamespacedDaemonSetListResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Unauthorized(response),
-            other => WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Unauthorized, 0)),
+            _ => Ok((WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Other, 0)),
+        }
     }
 }
 

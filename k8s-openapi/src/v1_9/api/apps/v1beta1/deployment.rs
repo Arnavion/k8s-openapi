@@ -23,67 +23,75 @@ pub struct Deployment {
 
 // Generated from operation createAppsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum CreateAppsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::apps::v1beta1::Deployment),
-    Created(::v1_9::api::apps::v1beta1::Deployment),
-    Accepted(::v1_9::api::apps::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// create a Deployment
-    pub fn create_apps_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn create_apps_v1beta1_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_9::api::apps::v1beta1::Deployment,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateAppsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateAppsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_9::api::apps::v1beta1::Deployment),
+    Created(::v1_9::api::apps::v1beta1::Deployment),
+    Accepted(::v1_9::api::apps::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateAppsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAppsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAppsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAppsV1beta1NamespacedDeploymentResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAppsV1beta1NamespacedDeploymentResponse::Created(result), buf.len()))
             },
             ::http::StatusCode::ACCEPTED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAppsV1beta1NamespacedDeploymentResponse::Accepted(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAppsV1beta1NamespacedDeploymentResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateAppsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => CreateAppsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((CreateAppsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteAppsV1beta1CollectionNamespacedDeployment
 
-#[derive(Debug)]
-pub enum DeleteAppsV1beta1CollectionNamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// delete collection of Deployment
-    pub fn delete_apps_v1beta1_collection_namespaced_deployment<C>(
-        __client: &C,
+    pub fn delete_apps_v1beta1_collection_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -106,65 +114,73 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<DeleteAppsV1beta1CollectionNamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteAppsV1beta1CollectionNamespacedDeploymentResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteAppsV1beta1CollectionNamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteAppsV1beta1CollectionNamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteAppsV1beta1CollectionNamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteAppsV1beta1CollectionNamespacedDeploymentResponse::Unauthorized(response),
-            other => DeleteAppsV1beta1CollectionNamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta1CollectionNamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((DeleteAppsV1beta1CollectionNamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteAppsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum DeleteAppsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// delete a Deployment
-    pub fn delete_apps_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn delete_apps_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -177,50 +193,58 @@ impl Deployment {
         pretty: Option<&str>,
         // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
         propagation_policy: Option<&str>,
-    ) -> Result<DeleteAppsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(grace_period_seconds) = grace_period_seconds {
-                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-            }
-            if let Some(orphan_dependents) = orphan_dependents {
-                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(propagation_policy) = propagation_policy {
-                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteAppsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteAppsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteAppsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteAppsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteAppsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => DeleteAppsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((DeleteAppsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listAppsV1beta1DeploymentForAllNamespaces
 
-#[derive(Debug)]
-pub enum ListAppsV1beta1DeploymentForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::apps::v1beta1::DeploymentList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// list or watch objects of kind Deployment
-    pub fn list_apps_v1beta1_deployment_for_all_namespaces<C>(
-        __client: &C,
+    pub fn list_apps_v1beta1_deployment_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -241,65 +265,73 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListAppsV1beta1DeploymentForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/deployments")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/deployments?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListAppsV1beta1DeploymentForAllNamespacesResponse {
+    Ok(::v1_9::api::apps::v1beta1::DeploymentList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListAppsV1beta1DeploymentForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListAppsV1beta1DeploymentForAllNamespacesResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListAppsV1beta1DeploymentForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListAppsV1beta1DeploymentForAllNamespacesResponse::Unauthorized(response),
-            other => ListAppsV1beta1DeploymentForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta1DeploymentForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListAppsV1beta1DeploymentForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listAppsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum ListAppsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::apps::v1beta1::DeploymentList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// list or watch objects of kind Deployment
-    pub fn list_apps_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn list_apps_v1beta1_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -322,65 +354,73 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListAppsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListAppsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_9::api::apps::v1beta1::DeploymentList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListAppsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListAppsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListAppsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListAppsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => ListAppsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((ListAppsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchAppsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum PatchAppsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::apps::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// partially update the specified Deployment
-    pub fn patch_apps_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn patch_apps_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -388,41 +428,49 @@ impl Deployment {
         body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchAppsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchAppsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_9::api::apps::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchAppsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchAppsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchAppsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchAppsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => PatchAppsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((PatchAppsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchAppsV1beta1NamespacedDeploymentStatus
 
-#[derive(Debug)]
-pub enum PatchAppsV1beta1NamespacedDeploymentStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::apps::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// partially update status of the specified Deployment
-    pub fn patch_apps_v1beta1_namespaced_deployment_status<C>(
-        __client: &C,
+    pub fn patch_apps_v1beta1_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -430,41 +478,49 @@ impl Deployment {
         body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchAppsV1beta1NamespacedDeploymentStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchAppsV1beta1NamespacedDeploymentStatusResponse {
+    Ok(::v1_9::api::apps::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchAppsV1beta1NamespacedDeploymentStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchAppsV1beta1NamespacedDeploymentStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchAppsV1beta1NamespacedDeploymentStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchAppsV1beta1NamespacedDeploymentStatusResponse::Unauthorized(response),
-            other => PatchAppsV1beta1NamespacedDeploymentStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta1NamespacedDeploymentStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchAppsV1beta1NamespacedDeploymentStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readAppsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum ReadAppsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::apps::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// read the specified Deployment
-    pub fn read_apps_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn read_apps_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -475,89 +531,104 @@ impl Deployment {
         export: Option<bool>,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadAppsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(exact) = exact {
-                __query_pairs.append_pair("exact", &exact.to_string());
-            }
-            if let Some(export) = export {
-                __query_pairs.append_pair("export", &export.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
         }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadAppsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_9::api::apps::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadAppsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadAppsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadAppsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadAppsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => ReadAppsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((ReadAppsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readAppsV1beta1NamespacedDeploymentStatus
 
-#[derive(Debug)]
-pub enum ReadAppsV1beta1NamespacedDeploymentStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::apps::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// read status of the specified Deployment
-    pub fn read_apps_v1beta1_namespaced_deployment_status<C>(
-        __client: &C,
+    pub fn read_apps_v1beta1_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadAppsV1beta1NamespacedDeploymentStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadAppsV1beta1NamespacedDeploymentStatusResponse {
+    Ok(::v1_9::api::apps::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadAppsV1beta1NamespacedDeploymentStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadAppsV1beta1NamespacedDeploymentStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadAppsV1beta1NamespacedDeploymentStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadAppsV1beta1NamespacedDeploymentStatusResponse::Unauthorized(response),
-            other => ReadAppsV1beta1NamespacedDeploymentStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta1NamespacedDeploymentStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadAppsV1beta1NamespacedDeploymentStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceAppsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum ReplaceAppsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::apps::v1beta1::Deployment),
-    Created(::v1_9::api::apps::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// replace the specified Deployment
-    pub fn replace_apps_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn replace_apps_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -565,46 +636,58 @@ impl Deployment {
         body: &::v1_9::api::apps::v1beta1::Deployment,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceAppsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceAppsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_9::api::apps::v1beta1::Deployment),
+    Created(::v1_9::api::apps::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceAppsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAppsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAppsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAppsV1beta1NamespacedDeploymentResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAppsV1beta1NamespacedDeploymentResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceAppsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => ReplaceAppsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceAppsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceAppsV1beta1NamespacedDeploymentStatus
 
-#[derive(Debug)]
-pub enum ReplaceAppsV1beta1NamespacedDeploymentStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::apps::v1beta1::Deployment),
-    Created(::v1_9::api::apps::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// replace status of the specified Deployment
-    pub fn replace_apps_v1beta1_namespaced_deployment_status<C>(
-        __client: &C,
+    pub fn replace_apps_v1beta1_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -612,44 +695,58 @@ impl Deployment {
         body: &::v1_9::api::apps::v1beta1::Deployment,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceAppsV1beta1NamespacedDeploymentStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceAppsV1beta1NamespacedDeploymentStatusResponse {
+    Ok(::v1_9::api::apps::v1beta1::Deployment),
+    Created(::v1_9::api::apps::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceAppsV1beta1NamespacedDeploymentStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAppsV1beta1NamespacedDeploymentStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAppsV1beta1NamespacedDeploymentStatusResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAppsV1beta1NamespacedDeploymentStatusResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAppsV1beta1NamespacedDeploymentStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceAppsV1beta1NamespacedDeploymentStatusResponse::Unauthorized(response),
-            other => ReplaceAppsV1beta1NamespacedDeploymentStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta1NamespacedDeploymentStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceAppsV1beta1NamespacedDeploymentStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchAppsV1beta1DeploymentListForAllNamespaces
 
-pub enum WatchAppsV1beta1DeploymentListForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// watch individual changes to a list of Deployment
-    pub fn watch_apps_v1beta1_deployment_list_for_all_namespaces<C>(
-        __client: &C,
+    pub fn watch_apps_v1beta1_deployment_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -670,64 +767,75 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchAppsV1beta1DeploymentListForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/watch/deployments")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/watch/deployments?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchAppsV1beta1DeploymentListForAllNamespacesResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchAppsV1beta1DeploymentListForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchAppsV1beta1DeploymentListForAllNamespacesResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchAppsV1beta1DeploymentListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchAppsV1beta1DeploymentListForAllNamespacesResponse::Unauthorized(response),
-            other => WatchAppsV1beta1DeploymentListForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta1DeploymentListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchAppsV1beta1DeploymentListForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchAppsV1beta1NamespacedDeployment
 
-pub enum WatchAppsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// watch changes to an object of kind Deployment
-    pub fn watch_apps_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn watch_apps_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -752,64 +860,75 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchAppsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/watch/namespaces/{namespace}/deployments/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/watch/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchAppsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchAppsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchAppsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchAppsV1beta1NamespacedDeploymentResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchAppsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => WatchAppsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((WatchAppsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchAppsV1beta1NamespacedDeploymentList
 
-pub enum WatchAppsV1beta1NamespacedDeploymentListResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// watch individual changes to a list of Deployment
-    pub fn watch_apps_v1beta1_namespaced_deployment_list<C>(
-        __client: &C,
+    pub fn watch_apps_v1beta1_namespaced_deployment_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -832,49 +951,67 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchAppsV1beta1NamespacedDeploymentListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/apps/v1beta1/watch/namespaces/{namespace}/deployments", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/apps/v1beta1/watch/namespaces/{namespace}/deployments?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchAppsV1beta1NamespacedDeploymentListResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchAppsV1beta1NamespacedDeploymentListResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchAppsV1beta1NamespacedDeploymentListResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchAppsV1beta1NamespacedDeploymentListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchAppsV1beta1NamespacedDeploymentListResponse::Unauthorized(response),
-            other => WatchAppsV1beta1NamespacedDeploymentListResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta1NamespacedDeploymentListResponse::Unauthorized, 0)),
+            _ => Ok((WatchAppsV1beta1NamespacedDeploymentListResponse::Other, 0)),
+        }
     }
 }
 

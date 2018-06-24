@@ -23,67 +23,75 @@ pub struct HorizontalPodAutoscaler {
 
 // Generated from operation createAutoscalingV1NamespacedHorizontalPodAutoscaler
 
-#[derive(Debug)]
-pub enum CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Created(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Accepted(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// create a HorizontalPodAutoscaler
-    pub fn create_autoscaling_v1_namespaced_horizontal_pod_autoscaler<C>(
-        __client: &C,
+    pub fn create_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Created(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Accepted(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Created(result), buf.len()))
             },
             ::http::StatusCode::ACCEPTED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Accepted(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized(response),
-            other => CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscaler
 
-#[derive(Debug)]
-pub enum DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// delete collection of HorizontalPodAutoscaler
-    pub fn delete_autoscaling_v1_collection_namespaced_horizontal_pod_autoscaler<C>(
-        __client: &C,
+    pub fn delete_autoscaling_v1_collection_namespaced_horizontal_pod_autoscaler(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -106,65 +114,73 @@ impl HorizontalPodAutoscaler {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse::Unauthorized(response),
-            other => DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteAutoscalingV1NamespacedHorizontalPodAutoscaler
 
-#[derive(Debug)]
-pub enum DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// delete a HorizontalPodAutoscaler
-    pub fn delete_autoscaling_v1_namespaced_horizontal_pod_autoscaler<C>(
-        __client: &C,
+    pub fn delete_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // name of the HorizontalPodAutoscaler
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -177,50 +193,58 @@ impl HorizontalPodAutoscaler {
         pretty: Option<&str>,
         // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
         propagation_policy: Option<&str>,
-    ) -> Result<DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(grace_period_seconds) = grace_period_seconds {
-                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-            }
-            if let Some(orphan_dependents) = orphan_dependents {
-                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(propagation_policy) = propagation_policy {
-                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized(response),
-            other => DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listAutoscalingV1HorizontalPodAutoscalerForAllNamespaces
 
-#[derive(Debug)]
-pub enum ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscalerList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// list or watch objects of kind HorizontalPodAutoscaler
-    pub fn list_autoscaling_v1_horizontal_pod_autoscaler_for_all_namespaces<C>(
-        __client: &C,
+    pub fn list_autoscaling_v1_horizontal_pod_autoscaler_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -241,65 +265,73 @@ impl HorizontalPodAutoscaler {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/horizontalpodautoscalers")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/horizontalpodautoscalers?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse {
+    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscalerList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse::Unauthorized(response),
-            other => ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listAutoscalingV1NamespacedHorizontalPodAutoscaler
 
-#[derive(Debug)]
-pub enum ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscalerList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// list or watch objects of kind HorizontalPodAutoscaler
-    pub fn list_autoscaling_v1_namespaced_horizontal_pod_autoscaler<C>(
-        __client: &C,
+    pub fn list_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -322,65 +354,73 @@ impl HorizontalPodAutoscaler {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscalerList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized(response),
-            other => ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchAutoscalingV1NamespacedHorizontalPodAutoscaler
 
-#[derive(Debug)]
-pub enum PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// partially update the specified HorizontalPodAutoscaler
-    pub fn patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler<C>(
-        __client: &C,
+    pub fn patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // name of the HorizontalPodAutoscaler
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -388,41 +428,49 @@ impl HorizontalPodAutoscaler {
         body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized(response),
-            other => PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchAutoscalingV1NamespacedHorizontalPodAutoscalerStatus
 
-#[derive(Debug)]
-pub enum PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// partially update status of the specified HorizontalPodAutoscaler
-    pub fn patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status<C>(
-        __client: &C,
+    pub fn patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status(
         // name of the HorizontalPodAutoscaler
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -430,41 +478,49 @@ impl HorizontalPodAutoscaler {
         body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized(response),
-            other => PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readAutoscalingV1NamespacedHorizontalPodAutoscaler
 
-#[derive(Debug)]
-pub enum ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// read the specified HorizontalPodAutoscaler
-    pub fn read_autoscaling_v1_namespaced_horizontal_pod_autoscaler<C>(
-        __client: &C,
+    pub fn read_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // name of the HorizontalPodAutoscaler
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -475,89 +531,104 @@ impl HorizontalPodAutoscaler {
         export: Option<bool>,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(exact) = exact {
-                __query_pairs.append_pair("exact", &exact.to_string());
-            }
-            if let Some(export) = export {
-                __query_pairs.append_pair("export", &export.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
         }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized(response),
-            other => ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readAutoscalingV1NamespacedHorizontalPodAutoscalerStatus
 
-#[derive(Debug)]
-pub enum ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// read status of the specified HorizontalPodAutoscaler
-    pub fn read_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status<C>(
-        __client: &C,
+    pub fn read_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status(
         // name of the HorizontalPodAutoscaler
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized(response),
-            other => ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceAutoscalingV1NamespacedHorizontalPodAutoscaler
 
-#[derive(Debug)]
-pub enum ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Created(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// replace the specified HorizontalPodAutoscaler
-    pub fn replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler<C>(
-        __client: &C,
+    pub fn replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // name of the HorizontalPodAutoscaler
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -565,46 +636,58 @@ impl HorizontalPodAutoscaler {
         body: &::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Created(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized(response),
-            other => ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatus
 
-#[derive(Debug)]
-pub enum ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Created(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// replace status of the specified HorizontalPodAutoscaler
-    pub fn replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status<C>(
-        __client: &C,
+    pub fn replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status(
         // name of the HorizontalPodAutoscaler
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -612,44 +695,58 @@ impl HorizontalPodAutoscaler {
         body: &::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+    Ok(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Created(::v1_9::api::autoscaling::v1::HorizontalPodAutoscaler),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized(response),
-            other => ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchAutoscalingV1HorizontalPodAutoscalerListForAllNamespaces
 
-pub enum WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// watch individual changes to a list of HorizontalPodAutoscaler
-    pub fn watch_autoscaling_v1_horizontal_pod_autoscaler_list_for_all_namespaces<C>(
-        __client: &C,
+    pub fn watch_autoscaling_v1_horizontal_pod_autoscaler_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -670,64 +767,75 @@ impl HorizontalPodAutoscaler {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/watch/horizontalpodautoscalers")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/watch/horizontalpodautoscalers?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse::Unauthorized(response),
-            other => WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchAutoscalingV1NamespacedHorizontalPodAutoscaler
 
-pub enum WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// watch changes to an object of kind HorizontalPodAutoscaler
-    pub fn watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler<C>(
-        __client: &C,
+    pub fn watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // name of the HorizontalPodAutoscaler
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -752,64 +860,75 @@ impl HorizontalPodAutoscaler {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/watch/namespaces/{namespace}/horizontalpodautoscalers/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/watch/namespaces/{namespace}/horizontalpodautoscalers/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized(response),
-            other => WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchAutoscalingV1NamespacedHorizontalPodAutoscalerList
 
-pub enum WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl HorizontalPodAutoscaler {
     /// watch individual changes to a list of HorizontalPodAutoscaler
-    pub fn watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_list<C>(
-        __client: &C,
+    pub fn watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -832,49 +951,67 @@ impl HorizontalPodAutoscaler {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/autoscaling/v1/watch/namespaces/{namespace}/horizontalpodautoscalers", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/autoscaling/v1/watch/namespaces/{namespace}/horizontalpodautoscalers?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse {
+    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse::Unauthorized(response),
-            other => WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse::Unauthorized, 0)),
+            _ => Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse::Other, 0)),
+        }
     }
 }
 

@@ -6,12 +6,11 @@ publish = false
 
 [dependencies]
 backtrace = "0.3.x"
-k8s-openapi = { path = "../k8s-openapi" , features = ["reqwest"]}
-http = "0.1.x"
+bytes = "0.4.x"
+k8s-openapi = { path = "../k8s-openapi" }
 reqwest = "0.8.x"
 serde = "1.0.x"
 serde_derive = "1.0.x"
-serde_json = "*"
 serde_yaml = "0.7.x"
 
 [target.'cfg(windows)'.dependencies]

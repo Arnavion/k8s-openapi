@@ -20,67 +20,75 @@ pub struct NetworkPolicy {
 
 // Generated from operation createNetworkingV1NamespacedNetworkPolicy
 
-#[derive(Debug)]
-pub enum CreateNetworkingV1NamespacedNetworkPolicyResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::networking::v1::NetworkPolicy),
-    Created(::v1_10::api::networking::v1::NetworkPolicy),
-    Accepted(::v1_10::api::networking::v1::NetworkPolicy),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// create a NetworkPolicy
-    pub fn create_networking_v1_namespaced_network_policy<C>(
-        __client: &C,
+    pub fn create_networking_v1_namespaced_network_policy(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_10::api::networking::v1::NetworkPolicy,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateNetworkingV1NamespacedNetworkPolicyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateNetworkingV1NamespacedNetworkPolicyResponse {
+    Ok(::v1_10::api::networking::v1::NetworkPolicy),
+    Created(::v1_10::api::networking::v1::NetworkPolicy),
+    Accepted(::v1_10::api::networking::v1::NetworkPolicy),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateNetworkingV1NamespacedNetworkPolicyResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateNetworkingV1NamespacedNetworkPolicyResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Created(result), buf.len()))
             },
             ::http::StatusCode::ACCEPTED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateNetworkingV1NamespacedNetworkPolicyResponse::Accepted(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized(response),
-            other => CreateNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteNetworkingV1CollectionNamespacedNetworkPolicy
 
-#[derive(Debug)]
-pub enum DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// delete collection of NetworkPolicy
-    pub fn delete_networking_v1_collection_namespaced_network_policy<C>(
-        __client: &C,
+    pub fn delete_networking_v1_collection_namespaced_network_policy(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -103,65 +111,73 @@ impl NetworkPolicy {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::Unauthorized(response),
-            other => DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteNetworkingV1NamespacedNetworkPolicy
 
-#[derive(Debug)]
-pub enum DeleteNetworkingV1NamespacedNetworkPolicyResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// delete a NetworkPolicy
-    pub fn delete_networking_v1_namespaced_network_policy<C>(
-        __client: &C,
+    pub fn delete_networking_v1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -174,50 +190,58 @@ impl NetworkPolicy {
         pretty: Option<&str>,
         // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
         propagation_policy: Option<&str>,
-    ) -> Result<DeleteNetworkingV1NamespacedNetworkPolicyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(grace_period_seconds) = grace_period_seconds {
-                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-            }
-            if let Some(orphan_dependents) = orphan_dependents {
-                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(propagation_policy) = propagation_policy {
-                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteNetworkingV1NamespacedNetworkPolicyResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteNetworkingV1NamespacedNetworkPolicyResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized(response),
-            other => DeleteNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listNetworkingV1NamespacedNetworkPolicy
 
-#[derive(Debug)]
-pub enum ListNetworkingV1NamespacedNetworkPolicyResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::networking::v1::NetworkPolicyList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
-    pub fn list_networking_v1_namespaced_network_policy<C>(
-        __client: &C,
+    pub fn list_networking_v1_namespaced_network_policy(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -240,65 +264,73 @@ impl NetworkPolicy {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListNetworkingV1NamespacedNetworkPolicyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListNetworkingV1NamespacedNetworkPolicyResponse {
+    Ok(::v1_10::api::networking::v1::NetworkPolicyList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListNetworkingV1NamespacedNetworkPolicyResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized(response),
-            other => ListNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((ListNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listNetworkingV1NetworkPolicyForAllNamespaces
 
-#[derive(Debug)]
-pub enum ListNetworkingV1NetworkPolicyForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::networking::v1::NetworkPolicyList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
-    pub fn list_networking_v1_network_policy_for_all_namespaces<C>(
-        __client: &C,
+    pub fn list_networking_v1_network_policy_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -319,65 +351,73 @@ impl NetworkPolicy {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListNetworkingV1NetworkPolicyForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/networkpolicies")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/networkpolicies?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListNetworkingV1NetworkPolicyForAllNamespacesResponse {
+    Ok(::v1_10::api::networking::v1::NetworkPolicyList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListNetworkingV1NetworkPolicyForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Unauthorized(response),
-            other => ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchNetworkingV1NamespacedNetworkPolicy
 
-#[derive(Debug)]
-pub enum PatchNetworkingV1NamespacedNetworkPolicyResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::networking::v1::NetworkPolicy),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// partially update the specified NetworkPolicy
-    pub fn patch_networking_v1_namespaced_network_policy<C>(
-        __client: &C,
+    pub fn patch_networking_v1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -385,41 +425,49 @@ impl NetworkPolicy {
         body: &::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchNetworkingV1NamespacedNetworkPolicyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchNetworkingV1NamespacedNetworkPolicyResponse {
+    Ok(::v1_10::api::networking::v1::NetworkPolicy),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchNetworkingV1NamespacedNetworkPolicyResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized(response),
-            other => PatchNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((PatchNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readNetworkingV1NamespacedNetworkPolicy
 
-#[derive(Debug)]
-pub enum ReadNetworkingV1NamespacedNetworkPolicyResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::networking::v1::NetworkPolicy),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// read the specified NetworkPolicy
-    pub fn read_networking_v1_namespaced_network_policy<C>(
-        __client: &C,
+    pub fn read_networking_v1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -430,48 +478,55 @@ impl NetworkPolicy {
         export: Option<bool>,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadNetworkingV1NamespacedNetworkPolicyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(exact) = exact {
-                __query_pairs.append_pair("exact", &exact.to_string());
-            }
-            if let Some(export) = export {
-                __query_pairs.append_pair("export", &export.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
         }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadNetworkingV1NamespacedNetworkPolicyResponse {
+    Ok(::v1_10::api::networking::v1::NetworkPolicy),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadNetworkingV1NamespacedNetworkPolicyResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized(response),
-            other => ReadNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((ReadNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceNetworkingV1NamespacedNetworkPolicy
 
-#[derive(Debug)]
-pub enum ReplaceNetworkingV1NamespacedNetworkPolicyResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::networking::v1::NetworkPolicy),
-    Created(::v1_10::api::networking::v1::NetworkPolicy),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// replace the specified NetworkPolicy
-    pub fn replace_networking_v1_namespaced_network_policy<C>(
-        __client: &C,
+    pub fn replace_networking_v1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -479,44 +534,58 @@ impl NetworkPolicy {
         body: &::v1_10::api::networking::v1::NetworkPolicy,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceNetworkingV1NamespacedNetworkPolicyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceNetworkingV1NamespacedNetworkPolicyResponse {
+    Ok(::v1_10::api::networking::v1::NetworkPolicy),
+    Created(::v1_10::api::networking::v1::NetworkPolicy),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized(response),
-            other => ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchNetworkingV1NamespacedNetworkPolicy
 
-pub enum WatchNetworkingV1NamespacedNetworkPolicyResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// watch changes to an object of kind NetworkPolicy
-    pub fn watch_networking_v1_namespaced_network_policy<C>(
-        __client: &C,
+    pub fn watch_networking_v1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -541,64 +610,75 @@ impl NetworkPolicy {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchNetworkingV1NamespacedNetworkPolicyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/watch/namespaces/{namespace}/networkpolicies/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/watch/namespaces/{namespace}/networkpolicies/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchNetworkingV1NamespacedNetworkPolicyResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchNetworkingV1NamespacedNetworkPolicyResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized(response),
-            other => WatchNetworkingV1NamespacedNetworkPolicyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((WatchNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchNetworkingV1NamespacedNetworkPolicyList
 
-pub enum WatchNetworkingV1NamespacedNetworkPolicyListResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// watch individual changes to a list of NetworkPolicy
-    pub fn watch_networking_v1_namespaced_network_policy_list<C>(
-        __client: &C,
+    pub fn watch_networking_v1_namespaced_network_policy_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -621,64 +701,75 @@ impl NetworkPolicy {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchNetworkingV1NamespacedNetworkPolicyListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/watch/namespaces/{namespace}/networkpolicies", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/watch/namespaces/{namespace}/networkpolicies?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchNetworkingV1NamespacedNetworkPolicyListResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchNetworkingV1NamespacedNetworkPolicyListResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchNetworkingV1NamespacedNetworkPolicyListResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchNetworkingV1NamespacedNetworkPolicyListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchNetworkingV1NamespacedNetworkPolicyListResponse::Unauthorized(response),
-            other => WatchNetworkingV1NamespacedNetworkPolicyListResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkingV1NamespacedNetworkPolicyListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNetworkingV1NamespacedNetworkPolicyListResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchNetworkingV1NetworkPolicyListForAllNamespaces
 
-pub enum WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl NetworkPolicy {
     /// watch individual changes to a list of NetworkPolicy
-    pub fn watch_networking_v1_network_policy_list_for_all_namespaces<C>(
-        __client: &C,
+    pub fn watch_networking_v1_network_policy_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -699,49 +790,67 @@ impl NetworkPolicy {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/networking.k8s.io/v1/watch/networkpolicies")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/networking.k8s.io/v1/watch/networkpolicies?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Unauthorized(response),
-            other => WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 

@@ -10,21 +10,18 @@ fn watch_pods() {
 
 	let client = ::Client::new().expect("couldn't create client");
 
-	#[cfg(feature = "v1_7")] let pod_watch_events =
-		api::Pod::watch_core_v1_namespaced_pod_list(
-			&client,
-			"kube-system", None, None, None, None, None, None, None)
-		.expect("couldn't watch pods");
-	#[cfg(not(feature = "v1_7"))] let pod_watch_events =
-		api::Pod::watch_core_v1_namespaced_pod_list(
-			&client,
-			"kube-system", None, None, None, None, None, None, None, None, None)
-		.expect("couldn't watch pods");
-	let pod_watch_events = match pod_watch_events {
-		#[cfg(feature = "v1_7")] api::WatchCoreV1NamespacedPodListResponse::Ok(pod_watch_events) => pod_watch_events,
-		#[cfg(not(feature = "v1_7"))] api::WatchCoreV1NamespacedPodListResponse::Ok(pod_watch_events) => pod_watch_events,
-		_ => panic!("couldn't watch pods"),
-	};
+	#[cfg(feature = "v1_7")] let request =
+		api::Pod::watch_core_v1_namespaced_pod_list("kube-system", None, None, None, None, None, None, None);
+	#[cfg(not(feature = "v1_7"))] let request =
+		api::Pod::watch_core_v1_namespaced_pod_list("kube-system", None, None, None, None, None, None, None, None, None);
+	let request = request.expect("couldn't watch pods");
+	let response = client.execute(request).expect("couldn't watch pods");
+	let pod_watch_events =
+		::get_multiple_values(response, |response, status_code, _| match response {
+			api::WatchCoreV1NamespacedPodListResponse::Ok(pod_watch_event) =>
+				Ok(::ValueResult::GotValue(pod_watch_event)),
+			other => Err(format!("{:?} {}", other, status_code).into()),
+		}).expect("couldn't watch pods");
 
 	let addon_manager_pod =
 		pod_watch_events

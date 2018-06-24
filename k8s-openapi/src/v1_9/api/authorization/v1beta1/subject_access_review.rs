@@ -22,49 +22,65 @@ pub struct SubjectAccessReview {
 
 // Generated from operation createAuthorizationV1beta1SubjectAccessReview
 
-#[derive(Debug)]
-pub enum CreateAuthorizationV1beta1SubjectAccessReviewResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::authorization::v1beta1::SubjectAccessReview),
-    Created(::v1_9::api::authorization::v1beta1::SubjectAccessReview),
-    Accepted(::v1_9::api::authorization::v1beta1::SubjectAccessReview),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl SubjectAccessReview {
     /// create a SubjectAccessReview
-    pub fn create_authorization_v1beta1_subject_access_review<C>(
-        __client: &C,
+    pub fn create_authorization_v1beta1_subject_access_review(
         body: &::v1_9::api::authorization::v1beta1::SubjectAccessReview,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateAuthorizationV1beta1SubjectAccessReviewResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/authorization.k8s.io/v1beta1/subjectaccessreviews")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/authorization.k8s.io/v1beta1/subjectaccessreviews?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateAuthorizationV1beta1SubjectAccessReviewResponse {
+    Ok(::v1_9::api::authorization::v1beta1::SubjectAccessReview),
+    Created(::v1_9::api::authorization::v1beta1::SubjectAccessReview),
+    Accepted(::v1_9::api::authorization::v1beta1::SubjectAccessReview),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateAuthorizationV1beta1SubjectAccessReviewResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAuthorizationV1beta1SubjectAccessReviewResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAuthorizationV1beta1SubjectAccessReviewResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAuthorizationV1beta1SubjectAccessReviewResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAuthorizationV1beta1SubjectAccessReviewResponse::Created(result), buf.len()))
             },
             ::http::StatusCode::ACCEPTED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAuthorizationV1beta1SubjectAccessReviewResponse::Accepted(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAuthorizationV1beta1SubjectAccessReviewResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateAuthorizationV1beta1SubjectAccessReviewResponse::Unauthorized(response),
-            other => CreateAuthorizationV1beta1SubjectAccessReviewResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateAuthorizationV1beta1SubjectAccessReviewResponse::Unauthorized, 0)),
+            _ => Ok((CreateAuthorizationV1beta1SubjectAccessReviewResponse::Other, 0)),
+        }
     }
 }
 

@@ -10,21 +10,17 @@ fn get() {
 
 	let client = ::Client::new().expect("couldn't create client");
 
-	#[cfg(feature = "v1_7")] let pod_list =
-		api::Pod::list_core_v1_namespaced_pod(
-			&client, "kube-system",
-			None, None, None, None, None, None, None)
-		.expect("couldn't list pods");
-	#[cfg(not(feature = "v1_7"))] let pod_list =
-		api::Pod::list_core_v1_namespaced_pod(
-			&client, "kube-system",
-			None, None, None, None, None, None, None, None, None)
-		.expect("couldn't list pods");
-	let pod_list = match pod_list {
-		#[cfg(feature = "v1_7")] api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => pod_list,
-		#[cfg(not(feature = "v1_7"))] api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => pod_list,
-		other => panic!("couldn't list pods: {:?}", other),
-	};
+	#[cfg(feature = "v1_7")] let request =
+		api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None);
+	#[cfg(not(feature = "v1_7"))] let request =
+		api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None, None, None);
+	let request = request.expect("couldn't list pods");
+	let response = client.execute(request).expect("couldn't list pods");;
+	let pod_list =
+		::get_single_value(response, |response, status_code, _| match response {
+			api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(::ValueResult::GotValue(pod_list)),
+			other => Err(format!("{:?} {}", other, status_code).into()),
+		}).expect("couldn't list pods");
 
 	let addon_manager_pod =
 		pod_list
@@ -37,18 +33,27 @@ fn get() {
 		.metadata.as_ref().expect("couldn't get addon-manager pod metadata")
 		.name.as_ref().expect("couldn't get addon-manager pod name");
 
-	let addon_manager_logs =
+	let request =
 		api::Pod::read_core_v1_namespaced_pod_log(
-			&client,
-			addon_manager_pod_name, "kube-system", Some("kube-addon-manager"), None, Some(4096), None, None, None, None, None)
+			addon_manager_pod_name, "kube-system", Some("kube-addon-manager"), None, None, None, None, None, None, None)
 		.expect("couldn't get addon-manager pod logs");
-	let mut addon_manager_logs = match addon_manager_logs {
-		api::ReadCoreV1NamespacedPodLogResponse::Ok(logs) => logs,
-		other => panic!("couldn't get addon-manager pod logs: {:?}", other),
-	};
-	let addon_manager_logs_first_line =
-		addon_manager_logs
-		.next().expect("addon-manager pod has no logs")
-		.expect("couldn't get first line of addon-manager pod logs");
-	assert!(addon_manager_logs_first_line.contains("INFO: == Kubernetes addon manager started at"), "{}", addon_manager_logs_first_line);
+	let response = client.execute(request).expect("couldn't get addon-manager pod logs");
+	let mut addon_manager_logs = String::new();
+	let strings = ::get_multiple_values(response, |response, status_code, _| match response {
+		api::ReadCoreV1NamespacedPodLogResponse::Ok(s) => Ok(::ValueResult::GotValue(s)),
+		other => Err(format!("{:?} {}", other, status_code).into()),
+	}).expect("couldn't get addon-manager pod logs");
+	for s in strings {
+		let s = s.expect("couldn't get addon-manager pod logs");
+
+		addon_manager_logs.push_str(&s);
+
+		if addon_manager_logs.contains("INFO: == Kubernetes addon manager started at") {
+			break;
+		}
+
+		if addon_manager_logs.len() > 4096 {
+			panic!("did not find expected text in addon-manager pod logs: {}", addon_manager_logs);
+		}
+	}
 }

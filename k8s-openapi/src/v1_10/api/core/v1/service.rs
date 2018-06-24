@@ -23,60 +23,63 @@ pub struct Service {
 
 // Generated from operation connectCoreV1DeleteNamespacedServiceProxy
 
-#[derive(Debug)]
-pub enum ConnectCoreV1DeleteNamespacedServiceProxyResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// connect DELETE requests to proxy of Service
-    pub fn connect_core_v1_delete_namespaced_service_proxy<C>(
-        __client: &C,
+    pub fn connect_core_v1_delete_namespaced_service_proxy(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
         path: Option<&str>,
-    ) -> Result<ConnectCoreV1DeleteNamespacedServiceProxyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/proxy", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path) = path {
-                __query_pairs.append_pair("path", &path);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path) = path {
+            __query_pairs.append_pair("path", &path);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1DeleteNamespacedServiceProxyResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1DeleteNamespacedServiceProxyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1DeleteNamespacedServiceProxyResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1DeleteNamespacedServiceProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1DeleteNamespacedServiceProxyResponse::Unauthorized(response),
-            other => ConnectCoreV1DeleteNamespacedServiceProxyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedServiceProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1DeleteNamespacedServiceProxyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1DeleteNamespacedServiceProxyWithPath
 
-#[derive(Debug)]
-pub enum ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// connect DELETE requests to proxy of Service
-    pub fn connect_core_v1_delete_namespaced_service_proxy_with_path<C>(
-        __client: &C,
+    pub fn connect_core_v1_delete_namespaced_service_proxy_with_path(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -85,86 +88,108 @@ impl Service {
         path: &str,
         // Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
         path_: Option<&str>,
-    ) -> Result<ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}", name = name, namespace = namespace, path = path)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path_) = path_ {
-                __query_pairs.append_pair("path", &path_);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path_) = path_ {
+            __query_pairs.append_pair("path", &path_);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Unauthorized(response),
-            other => ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1GetNamespacedServiceProxy
 
-#[derive(Debug)]
-pub enum ConnectCoreV1GetNamespacedServiceProxyResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// connect GET requests to proxy of Service
-    pub fn connect_core_v1_get_namespaced_service_proxy<C>(
-        __client: &C,
+    pub fn connect_core_v1_get_namespaced_service_proxy(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
         path: Option<&str>,
-    ) -> Result<ConnectCoreV1GetNamespacedServiceProxyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/proxy", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path) = path {
-                __query_pairs.append_pair("path", &path);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path) = path {
+            __query_pairs.append_pair("path", &path);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1GetNamespacedServiceProxyResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1GetNamespacedServiceProxyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1GetNamespacedServiceProxyResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1GetNamespacedServiceProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1GetNamespacedServiceProxyResponse::Unauthorized(response),
-            other => ConnectCoreV1GetNamespacedServiceProxyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedServiceProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1GetNamespacedServiceProxyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1GetNamespacedServiceProxyWithPath
 
-#[derive(Debug)]
-pub enum ConnectCoreV1GetNamespacedServiceProxyWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// connect GET requests to proxy of Service
-    pub fn connect_core_v1_get_namespaced_service_proxy_with_path<C>(
-        __client: &C,
+    pub fn connect_core_v1_get_namespaced_service_proxy_with_path(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -173,86 +198,108 @@ impl Service {
         path: &str,
         // Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
         path_: Option<&str>,
-    ) -> Result<ConnectCoreV1GetNamespacedServiceProxyWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}", name = name, namespace = namespace, path = path)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path_) = path_ {
-                __query_pairs.append_pair("path", &path_);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path_) = path_ {
+            __query_pairs.append_pair("path", &path_);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1GetNamespacedServiceProxyWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1GetNamespacedServiceProxyWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Unauthorized(response),
-            other => ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PatchNamespacedServiceProxy
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PatchNamespacedServiceProxyResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// connect PATCH requests to proxy of Service
-    pub fn connect_core_v1_patch_namespaced_service_proxy<C>(
-        __client: &C,
+    pub fn connect_core_v1_patch_namespaced_service_proxy(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
         path: Option<&str>,
-    ) -> Result<ConnectCoreV1PatchNamespacedServiceProxyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/proxy", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path) = path {
-                __query_pairs.append_pair("path", &path);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path) = path {
+            __query_pairs.append_pair("path", &path);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PatchNamespacedServiceProxyResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PatchNamespacedServiceProxyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PatchNamespacedServiceProxyResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PatchNamespacedServiceProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PatchNamespacedServiceProxyResponse::Unauthorized(response),
-            other => ConnectCoreV1PatchNamespacedServiceProxyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedServiceProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PatchNamespacedServiceProxyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PatchNamespacedServiceProxyWithPath
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// connect PATCH requests to proxy of Service
-    pub fn connect_core_v1_patch_namespaced_service_proxy_with_path<C>(
-        __client: &C,
+    pub fn connect_core_v1_patch_namespaced_service_proxy_with_path(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -261,86 +308,108 @@ impl Service {
         path: &str,
         // Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
         path_: Option<&str>,
-    ) -> Result<ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}", name = name, namespace = namespace, path = path)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path_) = path_ {
-                __query_pairs.append_pair("path", &path_);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path_) = path_ {
+            __query_pairs.append_pair("path", &path_);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Unauthorized(response),
-            other => ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PostNamespacedServiceProxy
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PostNamespacedServiceProxyResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// connect POST requests to proxy of Service
-    pub fn connect_core_v1_post_namespaced_service_proxy<C>(
-        __client: &C,
+    pub fn connect_core_v1_post_namespaced_service_proxy(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
         path: Option<&str>,
-    ) -> Result<ConnectCoreV1PostNamespacedServiceProxyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/proxy", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path) = path {
-                __query_pairs.append_pair("path", &path);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path) = path {
+            __query_pairs.append_pair("path", &path);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PostNamespacedServiceProxyResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PostNamespacedServiceProxyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PostNamespacedServiceProxyResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PostNamespacedServiceProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PostNamespacedServiceProxyResponse::Unauthorized(response),
-            other => ConnectCoreV1PostNamespacedServiceProxyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedServiceProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PostNamespacedServiceProxyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PostNamespacedServiceProxyWithPath
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PostNamespacedServiceProxyWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// connect POST requests to proxy of Service
-    pub fn connect_core_v1_post_namespaced_service_proxy_with_path<C>(
-        __client: &C,
+    pub fn connect_core_v1_post_namespaced_service_proxy_with_path(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -349,86 +418,108 @@ impl Service {
         path: &str,
         // Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
         path_: Option<&str>,
-    ) -> Result<ConnectCoreV1PostNamespacedServiceProxyWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}", name = name, namespace = namespace, path = path)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path_) = path_ {
-                __query_pairs.append_pair("path", &path_);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path_) = path_ {
+            __query_pairs.append_pair("path", &path_);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PostNamespacedServiceProxyWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PostNamespacedServiceProxyWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Unauthorized(response),
-            other => ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PutNamespacedServiceProxy
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PutNamespacedServiceProxyResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// connect PUT requests to proxy of Service
-    pub fn connect_core_v1_put_namespaced_service_proxy<C>(
-        __client: &C,
+    pub fn connect_core_v1_put_namespaced_service_proxy(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
         path: Option<&str>,
-    ) -> Result<ConnectCoreV1PutNamespacedServiceProxyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/proxy", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path) = path {
-                __query_pairs.append_pair("path", &path);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path) = path {
+            __query_pairs.append_pair("path", &path);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PutNamespacedServiceProxyResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PutNamespacedServiceProxyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PutNamespacedServiceProxyResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PutNamespacedServiceProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PutNamespacedServiceProxyResponse::Unauthorized(response),
-            other => ConnectCoreV1PutNamespacedServiceProxyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedServiceProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PutNamespacedServiceProxyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PutNamespacedServiceProxyWithPath
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PutNamespacedServiceProxyWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// connect PUT requests to proxy of Service
-    pub fn connect_core_v1_put_namespaced_service_proxy_with_path<C>(
-        __client: &C,
+    pub fn connect_core_v1_put_namespaced_service_proxy_with_path(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -437,93 +528,120 @@ impl Service {
         path: &str,
         // Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
         path_: Option<&str>,
-    ) -> Result<ConnectCoreV1PutNamespacedServiceProxyWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}", name = name, namespace = namespace, path = path)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path_) = path_ {
-                __query_pairs.append_pair("path", &path_);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path_) = path_ {
+            __query_pairs.append_pair("path", &path_);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PutNamespacedServiceProxyWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PutNamespacedServiceProxyWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Unauthorized(response),
-            other => ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation createCoreV1NamespacedService
 
-#[derive(Debug)]
-pub enum CreateCoreV1NamespacedServiceResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::Service),
-    Created(::v1_10::api::core::v1::Service),
-    Accepted(::v1_10::api::core::v1::Service),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// create a Service
-    pub fn create_core_v1_namespaced_service<C>(
-        __client: &C,
+    pub fn create_core_v1_namespaced_service(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_10::api::core::v1::Service,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateCoreV1NamespacedServiceResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateCoreV1NamespacedServiceResponse {
+    Ok(::v1_10::api::core::v1::Service),
+    Created(::v1_10::api::core::v1::Service),
+    Accepted(::v1_10::api::core::v1::Service),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedServiceResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedServiceResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedServiceResponse::Created(result), buf.len()))
             },
             ::http::StatusCode::ACCEPTED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedServiceResponse::Accepted(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedServiceResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateCoreV1NamespacedServiceResponse::Unauthorized(response),
-            other => CreateCoreV1NamespacedServiceResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((CreateCoreV1NamespacedServiceResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteCoreV1NamespacedService
 
-#[derive(Debug)]
-pub enum DeleteCoreV1NamespacedServiceResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// delete a Service
-    pub fn delete_core_v1_namespaced_service<C>(
-        __client: &C,
+    pub fn delete_core_v1_namespaced_service(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -536,50 +654,58 @@ impl Service {
         pretty: Option<&str>,
         // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
         propagation_policy: Option<&str>,
-    ) -> Result<DeleteCoreV1NamespacedServiceResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(grace_period_seconds) = grace_period_seconds {
-                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-            }
-            if let Some(orphan_dependents) = orphan_dependents {
-                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(propagation_policy) = propagation_policy {
-                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteCoreV1NamespacedServiceResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteCoreV1NamespacedServiceResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteCoreV1NamespacedServiceResponse::Unauthorized(response),
-            other => DeleteCoreV1NamespacedServiceResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCoreV1NamespacedServiceResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listCoreV1NamespacedService
 
-#[derive(Debug)]
-pub enum ListCoreV1NamespacedServiceResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::ServiceList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// list or watch objects of kind Service
-    pub fn list_core_v1_namespaced_service<C>(
-        __client: &C,
+    pub fn list_core_v1_namespaced_service(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -602,65 +728,73 @@ impl Service {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListCoreV1NamespacedServiceResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListCoreV1NamespacedServiceResponse {
+    Ok(::v1_10::api::core::v1::ServiceList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListCoreV1NamespacedServiceResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListCoreV1NamespacedServiceResponse::Unauthorized(response),
-            other => ListCoreV1NamespacedServiceResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ListCoreV1NamespacedServiceResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listCoreV1ServiceForAllNamespaces
 
-#[derive(Debug)]
-pub enum ListCoreV1ServiceForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::ServiceList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// list or watch objects of kind Service
-    pub fn list_core_v1_service_for_all_namespaces<C>(
-        __client: &C,
+    pub fn list_core_v1_service_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -681,65 +815,73 @@ impl Service {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListCoreV1ServiceForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/services")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/services?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListCoreV1ServiceForAllNamespacesResponse {
+    Ok(::v1_10::api::core::v1::ServiceList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListCoreV1ServiceForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListCoreV1ServiceForAllNamespacesResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListCoreV1ServiceForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListCoreV1ServiceForAllNamespacesResponse::Unauthorized(response),
-            other => ListCoreV1ServiceForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ServiceForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListCoreV1ServiceForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchCoreV1NamespacedService
 
-#[derive(Debug)]
-pub enum PatchCoreV1NamespacedServiceResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::Service),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// partially update the specified Service
-    pub fn patch_core_v1_namespaced_service<C>(
-        __client: &C,
+    pub fn patch_core_v1_namespaced_service(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -747,41 +889,49 @@ impl Service {
         body: &::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchCoreV1NamespacedServiceResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchCoreV1NamespacedServiceResponse {
+    Ok(::v1_10::api::core::v1::Service),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchCoreV1NamespacedServiceResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchCoreV1NamespacedServiceResponse::Unauthorized(response),
-            other => PatchCoreV1NamespacedServiceResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((PatchCoreV1NamespacedServiceResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchCoreV1NamespacedServiceStatus
 
-#[derive(Debug)]
-pub enum PatchCoreV1NamespacedServiceStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::Service),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// partially update status of the specified Service
-    pub fn patch_core_v1_namespaced_service_status<C>(
-        __client: &C,
+    pub fn patch_core_v1_namespaced_service_status(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -789,41 +939,49 @@ impl Service {
         body: &::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchCoreV1NamespacedServiceStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchCoreV1NamespacedServiceStatusResponse {
+    Ok(::v1_10::api::core::v1::Service),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchCoreV1NamespacedServiceStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchCoreV1NamespacedServiceStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchCoreV1NamespacedServiceStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchCoreV1NamespacedServiceStatusResponse::Unauthorized(response),
-            other => PatchCoreV1NamespacedServiceStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchCoreV1NamespacedServiceStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readCoreV1NamespacedService
 
-#[derive(Debug)]
-pub enum ReadCoreV1NamespacedServiceResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::Service),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// read the specified Service
-    pub fn read_core_v1_namespaced_service<C>(
-        __client: &C,
+    pub fn read_core_v1_namespaced_service(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -834,89 +992,104 @@ impl Service {
         export: Option<bool>,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadCoreV1NamespacedServiceResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(exact) = exact {
-                __query_pairs.append_pair("exact", &exact.to_string());
-            }
-            if let Some(export) = export {
-                __query_pairs.append_pair("export", &export.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
         }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadCoreV1NamespacedServiceResponse {
+    Ok(::v1_10::api::core::v1::Service),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadCoreV1NamespacedServiceResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1NamespacedServiceResponse::Unauthorized(response),
-            other => ReadCoreV1NamespacedServiceResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ReadCoreV1NamespacedServiceResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readCoreV1NamespacedServiceStatus
 
-#[derive(Debug)]
-pub enum ReadCoreV1NamespacedServiceStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::Service),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// read status of the specified Service
-    pub fn read_core_v1_namespaced_service_status<C>(
-        __client: &C,
+    pub fn read_core_v1_namespaced_service_status(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadCoreV1NamespacedServiceStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadCoreV1NamespacedServiceStatusResponse {
+    Ok(::v1_10::api::core::v1::Service),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadCoreV1NamespacedServiceStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadCoreV1NamespacedServiceStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadCoreV1NamespacedServiceStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1NamespacedServiceStatusResponse::Unauthorized(response),
-            other => ReadCoreV1NamespacedServiceStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadCoreV1NamespacedServiceStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceCoreV1NamespacedService
 
-#[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedServiceResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::Service),
-    Created(::v1_10::api::core::v1::Service),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// replace the specified Service
-    pub fn replace_core_v1_namespaced_service<C>(
-        __client: &C,
+    pub fn replace_core_v1_namespaced_service(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -924,46 +1097,58 @@ impl Service {
         body: &::v1_10::api::core::v1::Service,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceCoreV1NamespacedServiceResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceCoreV1NamespacedServiceResponse {
+    Ok(::v1_10::api::core::v1::Service),
+    Created(::v1_10::api::core::v1::Service),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceCoreV1NamespacedServiceResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceCoreV1NamespacedServiceResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceCoreV1NamespacedServiceResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceCoreV1NamespacedServiceResponse::Unauthorized(response),
-            other => ReplaceCoreV1NamespacedServiceResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceCoreV1NamespacedServiceResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceCoreV1NamespacedServiceStatus
 
-#[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedServiceStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::Service),
-    Created(::v1_10::api::core::v1::Service),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// replace status of the specified Service
-    pub fn replace_core_v1_namespaced_service_status<C>(
-        __client: &C,
+    pub fn replace_core_v1_namespaced_service_status(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -971,44 +1156,58 @@ impl Service {
         body: &::v1_10::api::core::v1::Service,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceCoreV1NamespacedServiceStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/services/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceCoreV1NamespacedServiceStatusResponse {
+    Ok(::v1_10::api::core::v1::Service),
+    Created(::v1_10::api::core::v1::Service),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceCoreV1NamespacedServiceStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceCoreV1NamespacedServiceStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceCoreV1NamespacedServiceStatusResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceCoreV1NamespacedServiceStatusResponse::Unauthorized(response),
-            other => ReplaceCoreV1NamespacedServiceStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchCoreV1NamespacedService
 
-pub enum WatchCoreV1NamespacedServiceResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// watch changes to an object of kind Service
-    pub fn watch_core_v1_namespaced_service<C>(
-        __client: &C,
+    pub fn watch_core_v1_namespaced_service(
         // name of the Service
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -1033,64 +1232,75 @@ impl Service {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchCoreV1NamespacedServiceResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/watch/namespaces/{namespace}/services/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/watch/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchCoreV1NamespacedServiceResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchCoreV1NamespacedServiceResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchCoreV1NamespacedServiceResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchCoreV1NamespacedServiceResponse::Unauthorized(response),
-            other => WatchCoreV1NamespacedServiceResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((WatchCoreV1NamespacedServiceResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchCoreV1NamespacedServiceList
 
-pub enum WatchCoreV1NamespacedServiceListResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// watch individual changes to a list of Service
-    pub fn watch_core_v1_namespaced_service_list<C>(
-        __client: &C,
+    pub fn watch_core_v1_namespaced_service_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1113,64 +1323,75 @@ impl Service {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchCoreV1NamespacedServiceListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/watch/namespaces/{namespace}/services", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/watch/namespaces/{namespace}/services?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchCoreV1NamespacedServiceListResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchCoreV1NamespacedServiceListResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchCoreV1NamespacedServiceListResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchCoreV1NamespacedServiceListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchCoreV1NamespacedServiceListResponse::Unauthorized(response),
-            other => WatchCoreV1NamespacedServiceListResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceListResponse::Unauthorized, 0)),
+            _ => Ok((WatchCoreV1NamespacedServiceListResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchCoreV1ServiceListForAllNamespaces
 
-pub enum WatchCoreV1ServiceListForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Service {
     /// watch individual changes to a list of Service
-    pub fn watch_core_v1_service_list_for_all_namespaces<C>(
-        __client: &C,
+    pub fn watch_core_v1_service_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1191,49 +1412,67 @@ impl Service {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchCoreV1ServiceListForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/watch/services")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/watch/services?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchCoreV1ServiceListForAllNamespacesResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchCoreV1ServiceListForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchCoreV1ServiceListForAllNamespacesResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchCoreV1ServiceListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchCoreV1ServiceListForAllNamespacesResponse::Unauthorized(response),
-            other => WatchCoreV1ServiceListForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1ServiceListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchCoreV1ServiceListForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 

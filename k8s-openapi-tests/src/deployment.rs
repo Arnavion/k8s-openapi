@@ -10,24 +10,25 @@ fn list() {
 
 	let client = ::Client::new().expect("couldn't create client");
 
-	#[cfg(feature = "v1_7")] let deployment_list =
-		apps::Deployment::list_apps_v1beta1_namespaced_deployment(
-			&client, "kube-system",
-			None, None, None, None, None, None, None).expect("couldn't list deployments");
-	#[cfg(feature = "v1_8")] let deployment_list =
-		apps::Deployment::list_apps_v1beta2_namespaced_deployment(
-			&client, "kube-system",
-			None, None, None, None, None, None, None, None, None).expect("couldn't list deployments");
-	#[cfg(any(feature = "v1_9", feature = "v1_10"))] let deployment_list =
-		apps::Deployment::list_apps_v1_namespaced_deployment(
-			&client, "kube-system",
-			None, None, None, None, None, None, None, None, None).expect("couldn't list deployments");
-	let deployment_list = match deployment_list {
-		#[cfg(feature = "v1_7")] apps::ListAppsV1beta1NamespacedDeploymentResponse::Ok(deployment_list) => deployment_list,
-		#[cfg(feature = "v1_8")] apps::ListAppsV1beta2NamespacedDeploymentResponse::Ok(deployment_list) => deployment_list,
-		#[cfg(any(feature = "v1_9", feature = "v1_10"))] apps::ListAppsV1NamespacedDeploymentResponse::Ok(deployment_list) => deployment_list,
-		other => panic!("couldn't list deployments: {:?}", other),
-	};
+	#[cfg(feature = "v1_7")] let request =
+		apps::Deployment::list_apps_v1beta1_namespaced_deployment("kube-system", None, None, None, None, None, None, None);
+	#[cfg(feature = "v1_8")] let request =
+		apps::Deployment::list_apps_v1beta2_namespaced_deployment("kube-system", None, None, None, None, None, None, None, None, None);
+	#[cfg(not(any(feature = "v1_7", feature = "v1_8")))] let request =
+		apps::Deployment::list_apps_v1_namespaced_deployment("kube-system", None, None, None, None, None, None, None, None, None);
+	let request = request.expect("couldn't list deployments");
+	let response = client.execute(request).expect("couldn't list deployments");;
+	let deployment_list =
+		::get_single_value(response, |response, status_code, _| match response {
+			#[cfg(feature = "v1_7")] apps::ListAppsV1beta1NamespacedDeploymentResponse::Ok(deployment_list) =>
+				Ok(::ValueResult::GotValue(deployment_list)),
+			#[cfg(feature = "v1_8")] apps::ListAppsV1beta2NamespacedDeploymentResponse::Ok(deployment_list) =>
+				Ok(::ValueResult::GotValue(deployment_list)),
+			#[cfg(not(any(feature = "v1_7", feature = "v1_8")))] apps::ListAppsV1NamespacedDeploymentResponse::Ok(deployment_list) =>
+				Ok(::ValueResult::GotValue(deployment_list)),
+			other => Err(format!("{:?} {}", other, status_code).into()),
+		}).expect("couldn't list deployments");
+
 	assert_eq!(deployment_list.kind, Some("DeploymentList".to_string()));
 
 	let kube_dns_deployment =

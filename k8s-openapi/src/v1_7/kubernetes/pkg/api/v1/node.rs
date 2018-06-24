@@ -23,475 +23,585 @@ pub struct Node {
 
 // Generated from operation connectCoreV1DeleteNodeProxy
 
-#[derive(Debug)]
-pub enum ConnectCoreV1DeleteNodeProxyResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// connect DELETE requests to proxy of Node
-    pub fn connect_core_v1_delete_node_proxy<C>(
-        __client: &C,
+    pub fn connect_core_v1_delete_node_proxy(
         // name of the Node
         name: &str,
         // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
-    ) -> Result<ConnectCoreV1DeleteNodeProxyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/proxy", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path) = path {
-                __query_pairs.append_pair("path", &path);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path) = path {
+            __query_pairs.append_pair("path", &path);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1DeleteNodeProxyResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1DeleteNodeProxyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1DeleteNodeProxyResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1DeleteNodeProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1DeleteNodeProxyResponse::Unauthorized(response),
-            other => ConnectCoreV1DeleteNodeProxyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNodeProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1DeleteNodeProxyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1DeleteNodeProxyWithPath
 
-#[derive(Debug)]
-pub enum ConnectCoreV1DeleteNodeProxyWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// connect DELETE requests to proxy of Node
-    pub fn connect_core_v1_delete_node_proxy_with_path<C>(
-        __client: &C,
+    pub fn connect_core_v1_delete_node_proxy_with_path(
         // name of the Node
         name: &str,
         // path to the resource
         path: &str,
         // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
-    ) -> Result<ConnectCoreV1DeleteNodeProxyWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/proxy/{path}", name = name, path = path)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path_) = path_ {
-                __query_pairs.append_pair("path", &path_);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path_) = path_ {
+            __query_pairs.append_pair("path", &path_);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1DeleteNodeProxyWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1DeleteNodeProxyWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1DeleteNodeProxyWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1DeleteNodeProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1DeleteNodeProxyWithPathResponse::Unauthorized(response),
-            other => ConnectCoreV1DeleteNodeProxyWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNodeProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1DeleteNodeProxyWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1GetNodeProxy
 
-#[derive(Debug)]
-pub enum ConnectCoreV1GetNodeProxyResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// connect GET requests to proxy of Node
-    pub fn connect_core_v1_get_node_proxy<C>(
-        __client: &C,
+    pub fn connect_core_v1_get_node_proxy(
         // name of the Node
         name: &str,
         // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
-    ) -> Result<ConnectCoreV1GetNodeProxyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/proxy", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path) = path {
-                __query_pairs.append_pair("path", &path);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path) = path {
+            __query_pairs.append_pair("path", &path);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1GetNodeProxyResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1GetNodeProxyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1GetNodeProxyResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1GetNodeProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1GetNodeProxyResponse::Unauthorized(response),
-            other => ConnectCoreV1GetNodeProxyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNodeProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1GetNodeProxyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1GetNodeProxyWithPath
 
-#[derive(Debug)]
-pub enum ConnectCoreV1GetNodeProxyWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// connect GET requests to proxy of Node
-    pub fn connect_core_v1_get_node_proxy_with_path<C>(
-        __client: &C,
+    pub fn connect_core_v1_get_node_proxy_with_path(
         // name of the Node
         name: &str,
         // path to the resource
         path: &str,
         // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
-    ) -> Result<ConnectCoreV1GetNodeProxyWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/proxy/{path}", name = name, path = path)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path_) = path_ {
-                __query_pairs.append_pair("path", &path_);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path_) = path_ {
+            __query_pairs.append_pair("path", &path_);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1GetNodeProxyWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1GetNodeProxyWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1GetNodeProxyWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1GetNodeProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1GetNodeProxyWithPathResponse::Unauthorized(response),
-            other => ConnectCoreV1GetNodeProxyWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNodeProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1GetNodeProxyWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PatchNodeProxy
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PatchNodeProxyResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// connect PATCH requests to proxy of Node
-    pub fn connect_core_v1_patch_node_proxy<C>(
-        __client: &C,
+    pub fn connect_core_v1_patch_node_proxy(
         // name of the Node
         name: &str,
         // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
-    ) -> Result<ConnectCoreV1PatchNodeProxyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/proxy", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path) = path {
-                __query_pairs.append_pair("path", &path);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path) = path {
+            __query_pairs.append_pair("path", &path);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PatchNodeProxyResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PatchNodeProxyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PatchNodeProxyResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PatchNodeProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PatchNodeProxyResponse::Unauthorized(response),
-            other => ConnectCoreV1PatchNodeProxyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNodeProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PatchNodeProxyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PatchNodeProxyWithPath
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PatchNodeProxyWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// connect PATCH requests to proxy of Node
-    pub fn connect_core_v1_patch_node_proxy_with_path<C>(
-        __client: &C,
+    pub fn connect_core_v1_patch_node_proxy_with_path(
         // name of the Node
         name: &str,
         // path to the resource
         path: &str,
         // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
-    ) -> Result<ConnectCoreV1PatchNodeProxyWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/proxy/{path}", name = name, path = path)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path_) = path_ {
-                __query_pairs.append_pair("path", &path_);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path_) = path_ {
+            __query_pairs.append_pair("path", &path_);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PatchNodeProxyWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PatchNodeProxyWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PatchNodeProxyWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PatchNodeProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PatchNodeProxyWithPathResponse::Unauthorized(response),
-            other => ConnectCoreV1PatchNodeProxyWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNodeProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PatchNodeProxyWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PostNodeProxy
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PostNodeProxyResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// connect POST requests to proxy of Node
-    pub fn connect_core_v1_post_node_proxy<C>(
-        __client: &C,
+    pub fn connect_core_v1_post_node_proxy(
         // name of the Node
         name: &str,
         // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
-    ) -> Result<ConnectCoreV1PostNodeProxyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/proxy", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path) = path {
-                __query_pairs.append_pair("path", &path);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path) = path {
+            __query_pairs.append_pair("path", &path);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PostNodeProxyResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PostNodeProxyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PostNodeProxyResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PostNodeProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PostNodeProxyResponse::Unauthorized(response),
-            other => ConnectCoreV1PostNodeProxyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNodeProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PostNodeProxyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PostNodeProxyWithPath
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PostNodeProxyWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// connect POST requests to proxy of Node
-    pub fn connect_core_v1_post_node_proxy_with_path<C>(
-        __client: &C,
+    pub fn connect_core_v1_post_node_proxy_with_path(
         // name of the Node
         name: &str,
         // path to the resource
         path: &str,
         // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
-    ) -> Result<ConnectCoreV1PostNodeProxyWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/proxy/{path}", name = name, path = path)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path_) = path_ {
-                __query_pairs.append_pair("path", &path_);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path_) = path_ {
+            __query_pairs.append_pair("path", &path_);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PostNodeProxyWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PostNodeProxyWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PostNodeProxyWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PostNodeProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PostNodeProxyWithPathResponse::Unauthorized(response),
-            other => ConnectCoreV1PostNodeProxyWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNodeProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PostNodeProxyWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PutNodeProxy
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PutNodeProxyResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// connect PUT requests to proxy of Node
-    pub fn connect_core_v1_put_node_proxy<C>(
-        __client: &C,
+    pub fn connect_core_v1_put_node_proxy(
         // name of the Node
         name: &str,
         // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
-    ) -> Result<ConnectCoreV1PutNodeProxyResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/proxy", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path) = path {
-                __query_pairs.append_pair("path", &path);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path) = path {
+            __query_pairs.append_pair("path", &path);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PutNodeProxyResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PutNodeProxyResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PutNodeProxyResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PutNodeProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PutNodeProxyResponse::Unauthorized(response),
-            other => ConnectCoreV1PutNodeProxyResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNodeProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PutNodeProxyResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation connectCoreV1PutNodeProxyWithPath
 
-#[derive(Debug)]
-pub enum ConnectCoreV1PutNodeProxyWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// connect PUT requests to proxy of Node
-    pub fn connect_core_v1_put_node_proxy_with_path<C>(
-        __client: &C,
+    pub fn connect_core_v1_put_node_proxy_with_path(
         // name of the Node
         name: &str,
         // path to the resource
         path: &str,
         // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
-    ) -> Result<ConnectCoreV1PutNodeProxyWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/proxy/{path}", name = name, path = path)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(path_) = path_ {
-                __query_pairs.append_pair("path", &path_);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(path_) = path_ {
+            __query_pairs.append_pair("path", &path_);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ConnectCoreV1PutNodeProxyWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ConnectCoreV1PutNodeProxyWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ConnectCoreV1PutNodeProxyWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ConnectCoreV1PutNodeProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ConnectCoreV1PutNodeProxyWithPathResponse::Unauthorized(response),
-            other => ConnectCoreV1PutNodeProxyWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNodeProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectCoreV1PutNodeProxyWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation createCoreV1Node
 
-#[derive(Debug)]
-pub enum CreateCoreV1NodeResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// create a Node
-    pub fn create_core_v1_node<C>(
-        __client: &C,
+    pub fn create_core_v1_node(
         body: &::v1_7::kubernetes::pkg::api::v1::Node,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateCoreV1NodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateCoreV1NodeResponse {
+    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateCoreV1NodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NodeResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateCoreV1NodeResponse::Unauthorized(response),
-            other => CreateCoreV1NodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NodeResponse::Unauthorized, 0)),
+            _ => Ok((CreateCoreV1NodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteCoreV1CollectionNode
 
-#[derive(Debug)]
-pub enum DeleteCoreV1CollectionNodeResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// delete collection of Node
-    pub fn delete_core_v1_collection_node<C>(
-        __client: &C,
+    pub fn delete_core_v1_collection_node(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
         // If true, partially initialized resources are included in the response.
@@ -506,59 +616,67 @@ impl Node {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<DeleteCoreV1CollectionNodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteCoreV1CollectionNodeResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteCoreV1CollectionNodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteCoreV1CollectionNodeResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteCoreV1CollectionNodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteCoreV1CollectionNodeResponse::Unauthorized(response),
-            other => DeleteCoreV1CollectionNodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNodeResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCoreV1CollectionNodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteCoreV1Node
 
-#[derive(Debug)]
-pub enum DeleteCoreV1NodeResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// delete a Node
-    pub fn delete_core_v1_node<C>(
-        __client: &C,
+    pub fn delete_core_v1_node(
         // name of the Node
         name: &str,
         // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -569,50 +687,58 @@ impl Node {
         pretty: Option<&str>,
         // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
         propagation_policy: Option<&str>,
-    ) -> Result<DeleteCoreV1NodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(grace_period_seconds) = grace_period_seconds {
-                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-            }
-            if let Some(orphan_dependents) = orphan_dependents {
-                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(propagation_policy) = propagation_policy {
-                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteCoreV1NodeResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteCoreV1NodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteCoreV1NodeResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteCoreV1NodeResponse::Unauthorized(response),
-            other => DeleteCoreV1NodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NodeResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCoreV1NodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listCoreV1Node
 
-#[derive(Debug)]
-pub enum ListCoreV1NodeResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::api::v1::NodeList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// list or watch objects of kind Node
-    pub fn list_core_v1_node<C>(
-        __client: &C,
+    pub fn list_core_v1_node(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
         // If true, partially initialized resources are included in the response.
@@ -627,479 +753,623 @@ impl Node {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListCoreV1NodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListCoreV1NodeResponse {
+    Ok(::v1_7::kubernetes::pkg::api::v1::NodeList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListCoreV1NodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListCoreV1NodeResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListCoreV1NodeResponse::Unauthorized(response),
-            other => ListCoreV1NodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NodeResponse::Unauthorized, 0)),
+            _ => Ok((ListCoreV1NodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchCoreV1Node
 
-#[derive(Debug)]
-pub enum PatchCoreV1NodeResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// partially update the specified Node
-    pub fn patch_core_v1_node<C>(
-        __client: &C,
+    pub fn patch_core_v1_node(
         // name of the Node
         name: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchCoreV1NodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchCoreV1NodeResponse {
+    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchCoreV1NodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchCoreV1NodeResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchCoreV1NodeResponse::Unauthorized(response),
-            other => PatchCoreV1NodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NodeResponse::Unauthorized, 0)),
+            _ => Ok((PatchCoreV1NodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchCoreV1NodeStatus
 
-#[derive(Debug)]
-pub enum PatchCoreV1NodeStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// partially update status of the specified Node
-    pub fn patch_core_v1_node_status<C>(
-        __client: &C,
+    pub fn patch_core_v1_node_status(
         // name of the Node
         name: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchCoreV1NodeStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/status", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/status?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchCoreV1NodeStatusResponse {
+    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchCoreV1NodeStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchCoreV1NodeStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchCoreV1NodeStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchCoreV1NodeStatusResponse::Unauthorized(response),
-            other => PatchCoreV1NodeStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NodeStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchCoreV1NodeStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation proxyCoreV1DELETENode
 
-#[derive(Debug)]
-pub enum ProxyCoreV1DELETENodeResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// proxy DELETE requests to Node
-    pub fn proxy_core_v1_delete_node<C>(
-        __client: &C,
+    pub fn proxy_core_v1_delete_node(
         // name of the Node
         name: &str,
-    ) -> Result<ProxyCoreV1DELETENodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let __url = __client.base_url().join(&format!("/api/v1/proxy/nodes/{name}", name = name)).map_err(::Error::URL)?;
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/proxy/nodes/{name}", name = name);
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ProxyCoreV1DELETENodeResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ProxyCoreV1DELETENodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ProxyCoreV1DELETENodeResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ProxyCoreV1DELETENodeResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ProxyCoreV1DELETENodeResponse::Unauthorized(response),
-            other => ProxyCoreV1DELETENodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1DELETENodeResponse::Unauthorized, 0)),
+            _ => Ok((ProxyCoreV1DELETENodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation proxyCoreV1DELETENodeWithPath
 
-#[derive(Debug)]
-pub enum ProxyCoreV1DELETENodeWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// proxy DELETE requests to Node
-    pub fn proxy_core_v1_delete_node_with_path<C>(
-        __client: &C,
+    pub fn proxy_core_v1_delete_node_with_path(
         // name of the Node
         name: &str,
         // path to the resource
         path: &str,
-    ) -> Result<ProxyCoreV1DELETENodeWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let __url = __client.base_url().join(&format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path)).map_err(::Error::URL)?;
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path);
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ProxyCoreV1DELETENodeWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ProxyCoreV1DELETENodeWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ProxyCoreV1DELETENodeWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ProxyCoreV1DELETENodeWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ProxyCoreV1DELETENodeWithPathResponse::Unauthorized(response),
-            other => ProxyCoreV1DELETENodeWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1DELETENodeWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ProxyCoreV1DELETENodeWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation proxyCoreV1GETNode
 
-#[derive(Debug)]
-pub enum ProxyCoreV1GETNodeResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// proxy GET requests to Node
-    pub fn proxy_core_v1_get_node<C>(
-        __client: &C,
+    pub fn proxy_core_v1_get_node(
         // name of the Node
         name: &str,
-    ) -> Result<ProxyCoreV1GETNodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let __url = __client.base_url().join(&format!("/api/v1/proxy/nodes/{name}", name = name)).map_err(::Error::URL)?;
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/proxy/nodes/{name}", name = name);
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ProxyCoreV1GETNodeResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ProxyCoreV1GETNodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ProxyCoreV1GETNodeResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ProxyCoreV1GETNodeResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ProxyCoreV1GETNodeResponse::Unauthorized(response),
-            other => ProxyCoreV1GETNodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1GETNodeResponse::Unauthorized, 0)),
+            _ => Ok((ProxyCoreV1GETNodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation proxyCoreV1GETNodeWithPath
 
-#[derive(Debug)]
-pub enum ProxyCoreV1GETNodeWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// proxy GET requests to Node
-    pub fn proxy_core_v1_get_node_with_path<C>(
-        __client: &C,
+    pub fn proxy_core_v1_get_node_with_path(
         // name of the Node
         name: &str,
         // path to the resource
         path: &str,
-    ) -> Result<ProxyCoreV1GETNodeWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let __url = __client.base_url().join(&format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path)).map_err(::Error::URL)?;
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path);
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ProxyCoreV1GETNodeWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ProxyCoreV1GETNodeWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ProxyCoreV1GETNodeWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ProxyCoreV1GETNodeWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ProxyCoreV1GETNodeWithPathResponse::Unauthorized(response),
-            other => ProxyCoreV1GETNodeWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1GETNodeWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ProxyCoreV1GETNodeWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation proxyCoreV1PATCHNode
 
-#[derive(Debug)]
-pub enum ProxyCoreV1PATCHNodeResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// proxy PATCH requests to Node
-    pub fn proxy_core_v1_patch_node<C>(
-        __client: &C,
+    pub fn proxy_core_v1_patch_node(
         // name of the Node
         name: &str,
-    ) -> Result<ProxyCoreV1PATCHNodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let __url = __client.base_url().join(&format!("/api/v1/proxy/nodes/{name}", name = name)).map_err(::Error::URL)?;
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/proxy/nodes/{name}", name = name);
 
-        let response = __client.patch(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ProxyCoreV1PATCHNodeResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ProxyCoreV1PATCHNodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ProxyCoreV1PATCHNodeResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ProxyCoreV1PATCHNodeResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ProxyCoreV1PATCHNodeResponse::Unauthorized(response),
-            other => ProxyCoreV1PATCHNodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PATCHNodeResponse::Unauthorized, 0)),
+            _ => Ok((ProxyCoreV1PATCHNodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation proxyCoreV1PATCHNodeWithPath
 
-#[derive(Debug)]
-pub enum ProxyCoreV1PATCHNodeWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// proxy PATCH requests to Node
-    pub fn proxy_core_v1_patch_node_with_path<C>(
-        __client: &C,
+    pub fn proxy_core_v1_patch_node_with_path(
         // name of the Node
         name: &str,
         // path to the resource
         path: &str,
-    ) -> Result<ProxyCoreV1PATCHNodeWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let __url = __client.base_url().join(&format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path)).map_err(::Error::URL)?;
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path);
 
-        let response = __client.patch(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ProxyCoreV1PATCHNodeWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ProxyCoreV1PATCHNodeWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ProxyCoreV1PATCHNodeWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ProxyCoreV1PATCHNodeWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ProxyCoreV1PATCHNodeWithPathResponse::Unauthorized(response),
-            other => ProxyCoreV1PATCHNodeWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PATCHNodeWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ProxyCoreV1PATCHNodeWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation proxyCoreV1POSTNode
 
-#[derive(Debug)]
-pub enum ProxyCoreV1POSTNodeResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// proxy POST requests to Node
-    pub fn proxy_core_v1_post_node<C>(
-        __client: &C,
+    pub fn proxy_core_v1_post_node(
         // name of the Node
         name: &str,
-    ) -> Result<ProxyCoreV1POSTNodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let __url = __client.base_url().join(&format!("/api/v1/proxy/nodes/{name}", name = name)).map_err(::Error::URL)?;
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/proxy/nodes/{name}", name = name);
 
-        let response = __client.post(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ProxyCoreV1POSTNodeResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ProxyCoreV1POSTNodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ProxyCoreV1POSTNodeResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ProxyCoreV1POSTNodeResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ProxyCoreV1POSTNodeResponse::Unauthorized(response),
-            other => ProxyCoreV1POSTNodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1POSTNodeResponse::Unauthorized, 0)),
+            _ => Ok((ProxyCoreV1POSTNodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation proxyCoreV1POSTNodeWithPath
 
-#[derive(Debug)]
-pub enum ProxyCoreV1POSTNodeWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// proxy POST requests to Node
-    pub fn proxy_core_v1_post_node_with_path<C>(
-        __client: &C,
+    pub fn proxy_core_v1_post_node_with_path(
         // name of the Node
         name: &str,
         // path to the resource
         path: &str,
-    ) -> Result<ProxyCoreV1POSTNodeWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let __url = __client.base_url().join(&format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path)).map_err(::Error::URL)?;
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path);
 
-        let response = __client.post(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ProxyCoreV1POSTNodeWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ProxyCoreV1POSTNodeWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ProxyCoreV1POSTNodeWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ProxyCoreV1POSTNodeWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ProxyCoreV1POSTNodeWithPathResponse::Unauthorized(response),
-            other => ProxyCoreV1POSTNodeWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1POSTNodeWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ProxyCoreV1POSTNodeWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation proxyCoreV1PUTNode
 
-#[derive(Debug)]
-pub enum ProxyCoreV1PUTNodeResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// proxy PUT requests to Node
-    pub fn proxy_core_v1_put_node<C>(
-        __client: &C,
+    pub fn proxy_core_v1_put_node(
         // name of the Node
         name: &str,
-    ) -> Result<ProxyCoreV1PUTNodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let __url = __client.base_url().join(&format!("/api/v1/proxy/nodes/{name}", name = name)).map_err(::Error::URL)?;
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/proxy/nodes/{name}", name = name);
 
-        let response = __client.put(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ProxyCoreV1PUTNodeResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ProxyCoreV1PUTNodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ProxyCoreV1PUTNodeResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ProxyCoreV1PUTNodeResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ProxyCoreV1PUTNodeResponse::Unauthorized(response),
-            other => ProxyCoreV1PUTNodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PUTNodeResponse::Unauthorized, 0)),
+            _ => Ok((ProxyCoreV1PUTNodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation proxyCoreV1PUTNodeWithPath
 
-#[derive(Debug)]
-pub enum ProxyCoreV1PUTNodeWithPathResponse<R> where R: ::std::io::Read {
-    Ok(String),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// proxy PUT requests to Node
-    pub fn proxy_core_v1_put_node_with_path<C>(
-        __client: &C,
+    pub fn proxy_core_v1_put_node_with_path(
         // name of the Node
         name: &str,
         // path to the resource
         path: &str,
-    ) -> Result<ProxyCoreV1PUTNodeWithPathResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let __url = __client.base_url().join(&format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path)).map_err(::Error::URL)?;
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path);
 
-        let response = __client.put(__url, &()).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ProxyCoreV1PUTNodeWithPathResponse {
+    Ok(String),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ProxyCoreV1PUTNodeWithPathResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let mut response = response;
-                let mut result = String::new();
-                ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;
-                ProxyCoreV1PUTNodeWithPathResponse::Ok(result)
+                let result = match ::std::str::from_utf8(buf) {
+                    Ok(s) => s,
+                    Err(err) if err.error_len().is_none() => {
+                        let valid_up_to = err.valid_up_to();
+                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                    },
+                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                };
+                let result = result.to_string();
+                let len = result.len();
+                Ok((ProxyCoreV1PUTNodeWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => ProxyCoreV1PUTNodeWithPathResponse::Unauthorized(response),
-            other => ProxyCoreV1PUTNodeWithPathResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PUTNodeWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ProxyCoreV1PUTNodeWithPathResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readCoreV1Node
 
-#[derive(Debug)]
-pub enum ReadCoreV1NodeResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// read the specified Node
-    pub fn read_core_v1_node<C>(
-        __client: &C,
+    pub fn read_core_v1_node(
         // name of the Node
         name: &str,
         // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -1108,165 +1378,198 @@ impl Node {
         export: Option<bool>,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadCoreV1NodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(exact) = exact {
-                __query_pairs.append_pair("exact", &exact.to_string());
-            }
-            if let Some(export) = export {
-                __query_pairs.append_pair("export", &export.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
         }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadCoreV1NodeResponse {
+    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadCoreV1NodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadCoreV1NodeResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1NodeResponse::Unauthorized(response),
-            other => ReadCoreV1NodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NodeResponse::Unauthorized, 0)),
+            _ => Ok((ReadCoreV1NodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readCoreV1NodeStatus
 
-#[derive(Debug)]
-pub enum ReadCoreV1NodeStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// read status of the specified Node
-    pub fn read_core_v1_node_status<C>(
-        __client: &C,
+    pub fn read_core_v1_node_status(
         // name of the Node
         name: &str,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadCoreV1NodeStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/status", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/status?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadCoreV1NodeStatusResponse {
+    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadCoreV1NodeStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadCoreV1NodeStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadCoreV1NodeStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1NodeStatusResponse::Unauthorized(response),
-            other => ReadCoreV1NodeStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NodeStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadCoreV1NodeStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceCoreV1Node
 
-#[derive(Debug)]
-pub enum ReplaceCoreV1NodeResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// replace the specified Node
-    pub fn replace_core_v1_node<C>(
-        __client: &C,
+    pub fn replace_core_v1_node(
         // name of the Node
         name: &str,
         body: &::v1_7::kubernetes::pkg::api::v1::Node,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceCoreV1NodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceCoreV1NodeResponse {
+    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceCoreV1NodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceCoreV1NodeResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceCoreV1NodeResponse::Unauthorized(response),
-            other => ReplaceCoreV1NodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NodeResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceCoreV1NodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceCoreV1NodeStatus
 
-#[derive(Debug)]
-pub enum ReplaceCoreV1NodeStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// replace status of the specified Node
-    pub fn replace_core_v1_node_status<C>(
-        __client: &C,
+    pub fn replace_core_v1_node_status(
         // name of the Node
         name: &str,
         body: &::v1_7::kubernetes::pkg::api::v1::Node,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceCoreV1NodeStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/nodes/{name}/status", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/nodes/{name}/status?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceCoreV1NodeStatusResponse {
+    Ok(::v1_7::kubernetes::pkg::api::v1::Node),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceCoreV1NodeStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceCoreV1NodeStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceCoreV1NodeStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceCoreV1NodeStatusResponse::Unauthorized(response),
-            other => ReplaceCoreV1NodeStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NodeStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceCoreV1NodeStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchCoreV1Node
 
-pub enum WatchCoreV1NodeResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// watch changes to an object of kind Node
-    pub fn watch_core_v1_node<C>(
-        __client: &C,
+    pub fn watch_core_v1_node(
         // name of the Node
         name: &str,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1283,58 +1586,69 @@ impl Node {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchCoreV1NodeResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/watch/nodes/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/watch/nodes/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchCoreV1NodeResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchCoreV1NodeResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchCoreV1NodeResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchCoreV1NodeResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchCoreV1NodeResponse::Unauthorized(response),
-            other => WatchCoreV1NodeResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NodeResponse::Unauthorized, 0)),
+            _ => Ok((WatchCoreV1NodeResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchCoreV1NodeList
 
-pub enum WatchCoreV1NodeListResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Node {
     /// watch individual changes to a list of Node
-    pub fn watch_core_v1_node_list<C>(
-        __client: &C,
+    pub fn watch_core_v1_node_list(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
         // If true, partially initialized resources are included in the response.
@@ -1349,43 +1663,61 @@ impl Node {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchCoreV1NodeListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/watch/nodes")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/watch/nodes?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchCoreV1NodeListResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchCoreV1NodeListResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchCoreV1NodeListResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchCoreV1NodeListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchCoreV1NodeListResponse::Unauthorized(response),
-            other => WatchCoreV1NodeListResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NodeListResponse::Unauthorized, 0)),
+            _ => Ok((WatchCoreV1NodeListResponse::Other, 0)),
+        }
     }
 }
 

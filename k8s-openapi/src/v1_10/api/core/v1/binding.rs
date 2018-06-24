@@ -20,69 +20,75 @@ pub struct Binding {
 
 // Generated from operation createCoreV1NamespacedBinding
 
-#[derive(Debug)]
-pub enum CreateCoreV1NamespacedBindingResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::Binding),
-    Created(::v1_10::api::core::v1::Binding),
-    Accepted(::v1_10::api::core::v1::Binding),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Binding {
     /// create a Binding
-    pub fn create_core_v1_namespaced_binding<C>(
-        __client: &C,
+    pub fn create_core_v1_namespaced_binding(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_10::api::core::v1::Binding,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateCoreV1NamespacedBindingResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/bindings", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/bindings?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateCoreV1NamespacedBindingResponse {
+    Ok(::v1_10::api::core::v1::Binding),
+    Created(::v1_10::api::core::v1::Binding),
+    Accepted(::v1_10::api::core::v1::Binding),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateCoreV1NamespacedBindingResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedBindingResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedBindingResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedBindingResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedBindingResponse::Created(result), buf.len()))
             },
             ::http::StatusCode::ACCEPTED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedBindingResponse::Accepted(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedBindingResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateCoreV1NamespacedBindingResponse::Unauthorized(response),
-            other => CreateCoreV1NamespacedBindingResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedBindingResponse::Unauthorized, 0)),
+            _ => Ok((CreateCoreV1NamespacedBindingResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation createCoreV1NamespacedPodBinding
 
-#[derive(Debug)]
-pub enum CreateCoreV1NamespacedPodBindingResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::core::v1::Binding),
-    Created(::v1_10::api::core::v1::Binding),
-    Accepted(::v1_10::api::core::v1::Binding),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Binding {
     /// create binding of a Pod
-    pub fn create_core_v1_namespaced_pod_binding<C>(
-        __client: &C,
+    pub fn create_core_v1_namespaced_pod_binding(
         // name of the Binding
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -90,33 +96,59 @@ impl Binding {
         body: &::v1_10::api::core::v1::Binding,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateCoreV1NamespacedPodBindingResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/pods/{name}/binding", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/binding?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateCoreV1NamespacedPodBindingResponse {
+    Ok(::v1_10::api::core::v1::Binding),
+    Created(::v1_10::api::core::v1::Binding),
+    Accepted(::v1_10::api::core::v1::Binding),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateCoreV1NamespacedPodBindingResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedPodBindingResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedPodBindingResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedPodBindingResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedPodBindingResponse::Created(result), buf.len()))
             },
             ::http::StatusCode::ACCEPTED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedPodBindingResponse::Accepted(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedPodBindingResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateCoreV1NamespacedPodBindingResponse::Unauthorized(response),
-            other => CreateCoreV1NamespacedPodBindingResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedPodBindingResponse::Unauthorized, 0)),
+            _ => Ok((CreateCoreV1NamespacedPodBindingResponse::Other, 0)),
+        }
     }
 }
 

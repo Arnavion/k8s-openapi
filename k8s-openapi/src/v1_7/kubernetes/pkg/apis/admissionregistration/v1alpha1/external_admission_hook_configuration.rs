@@ -20,55 +20,55 @@ pub struct ExternalAdmissionHookConfiguration {
 
 // Generated from operation createAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
 
-#[derive(Debug)]
-pub enum CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl ExternalAdmissionHookConfiguration {
     /// create an ExternalAdmissionHookConfiguration
-    pub fn create_admissionregistration_v1alpha1_external_admission_hook_configuration<C>(
-        __client: &C,
+    pub fn create_admissionregistration_v1alpha1_external_admission_hook_configuration(
         body: &::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized(response),
-            other => CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfiguration
 
-#[derive(Debug)]
-pub enum DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl ExternalAdmissionHookConfiguration {
     /// delete collection of ExternalAdmissionHookConfiguration
-    pub fn delete_admissionregistration_v1alpha1_collection_external_admission_hook_configuration<C>(
-        __client: &C,
+    pub fn delete_admissionregistration_v1alpha1_collection_external_admission_hook_configuration(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
         // If true, partially initialized resources are included in the response.
@@ -83,59 +83,67 @@ impl ExternalAdmissionHookConfiguration {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::Unauthorized(response),
-            other => DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
 
-#[derive(Debug)]
-pub enum DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl ExternalAdmissionHookConfiguration {
     /// delete an ExternalAdmissionHookConfiguration
-    pub fn delete_admissionregistration_v1alpha1_external_admission_hook_configuration<C>(
-        __client: &C,
+    pub fn delete_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // name of the ExternalAdmissionHookConfiguration
         name: &str,
         // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -146,50 +154,58 @@ impl ExternalAdmissionHookConfiguration {
         pretty: Option<&str>,
         // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
         propagation_policy: Option<&str>,
-    ) -> Result<DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(grace_period_seconds) = grace_period_seconds {
-                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-            }
-            if let Some(orphan_dependents) = orphan_dependents {
-                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(propagation_policy) = propagation_policy {
-                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized(response),
-            other => DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
 
-#[derive(Debug)]
-pub enum ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl ExternalAdmissionHookConfiguration {
     /// list or watch objects of kind ExternalAdmissionHookConfiguration
-    pub fn list_admissionregistration_v1alpha1_external_admission_hook_configuration<C>(
-        __client: &C,
+    pub fn list_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
         // If true, partially initialized resources are included in the response.
@@ -204,99 +220,115 @@ impl ExternalAdmissionHookConfiguration {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized(response),
-            other => ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
 
-#[derive(Debug)]
-pub enum PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl ExternalAdmissionHookConfiguration {
     /// partially update the specified ExternalAdmissionHookConfiguration
-    pub fn patch_admissionregistration_v1alpha1_external_admission_hook_configuration<C>(
-        __client: &C,
+    pub fn patch_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // name of the ExternalAdmissionHookConfiguration
         name: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized(response),
-            other => PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
 
-#[derive(Debug)]
-pub enum ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl ExternalAdmissionHookConfiguration {
     /// read the specified ExternalAdmissionHookConfiguration
-    pub fn read_admissionregistration_v1alpha1_external_admission_hook_configuration<C>(
-        __client: &C,
+    pub fn read_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // name of the ExternalAdmissionHookConfiguration
         name: &str,
         // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -305,86 +337,103 @@ impl ExternalAdmissionHookConfiguration {
         export: Option<bool>,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(exact) = exact {
-                __query_pairs.append_pair("exact", &exact.to_string());
-            }
-            if let Some(export) = export {
-                __query_pairs.append_pair("export", &export.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
         }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized(response),
-            other => ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
 
-#[derive(Debug)]
-pub enum ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl ExternalAdmissionHookConfiguration {
     /// replace the specified ExternalAdmissionHookConfiguration
-    pub fn replace_admissionregistration_v1alpha1_external_admission_hook_configuration<C>(
-        __client: &C,
+    pub fn replace_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // name of the ExternalAdmissionHookConfiguration
         name: &str,
         body: &::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized(response),
-            other => ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchAdmissionregistrationV1alpha1ExternalAdmissionHookConfiguration
 
-pub enum WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl ExternalAdmissionHookConfiguration {
     /// watch changes to an object of kind ExternalAdmissionHookConfiguration
-    pub fn watch_admissionregistration_v1alpha1_external_admission_hook_configuration<C>(
-        __client: &C,
+    pub fn watch_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // name of the ExternalAdmissionHookConfiguration
         name: &str,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -401,58 +450,69 @@ impl ExternalAdmissionHookConfiguration {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1alpha1/watch/externaladmissionhookconfigurations/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/watch/externaladmissionhookconfigurations/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized(response),
-            other => WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationList
 
-pub enum WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl ExternalAdmissionHookConfiguration {
     /// watch individual changes to a list of ExternalAdmissionHookConfiguration
-    pub fn watch_admissionregistration_v1alpha1_external_admission_hook_configuration_list<C>(
-        __client: &C,
+    pub fn watch_admissionregistration_v1alpha1_external_admission_hook_configuration_list(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
         // If true, partially initialized resources are included in the response.
@@ -467,43 +527,61 @@ impl ExternalAdmissionHookConfiguration {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1alpha1/watch/externaladmissionhookconfigurations")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/watch/externaladmissionhookconfigurations?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Unauthorized(response),
-            other => WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Unauthorized, 0)),
+            _ => Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Other, 0)),
+        }
     }
 }
 

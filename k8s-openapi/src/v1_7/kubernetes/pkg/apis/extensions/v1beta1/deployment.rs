@@ -23,57 +23,57 @@ pub struct Deployment {
 
 // Generated from operation createExtensionsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum CreateExtensionsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// create a Deployment
-    pub fn create_extensions_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn create_extensions_v1beta1_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateExtensionsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateExtensionsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateExtensionsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateExtensionsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateExtensionsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => CreateExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((CreateExtensionsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteExtensionsV1beta1CollectionNamespacedDeployment
 
-#[derive(Debug)]
-pub enum DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// delete collection of Deployment
-    pub fn delete_extensions_v1beta1_collection_namespaced_deployment<C>(
-        __client: &C,
+    pub fn delete_extensions_v1beta1_collection_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -90,59 +90,67 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse::Unauthorized(response),
-            other => DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteExtensionsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum DeleteExtensionsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// delete a Deployment
-    pub fn delete_extensions_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn delete_extensions_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -155,50 +163,58 @@ impl Deployment {
         pretty: Option<&str>,
         // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
         propagation_policy: Option<&str>,
-    ) -> Result<DeleteExtensionsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(grace_period_seconds) = grace_period_seconds {
-                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-            }
-            if let Some(orphan_dependents) = orphan_dependents {
-                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(propagation_policy) = propagation_policy {
-                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteExtensionsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteExtensionsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteExtensionsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteExtensionsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => DeleteExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((DeleteExtensionsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listExtensionsV1beta1DeploymentForAllNamespaces
 
-#[derive(Debug)]
-pub enum ListExtensionsV1beta1DeploymentForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// list or watch objects of kind Deployment
-    pub fn list_extensions_v1beta1_deployment_for_all_namespaces<C>(
-        __client: &C,
+    pub fn list_extensions_v1beta1_deployment_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
         // If true, partially initialized resources are included in the response.
@@ -213,59 +229,67 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListExtensionsV1beta1DeploymentForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/deployments")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/deployments?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListExtensionsV1beta1DeploymentForAllNamespacesResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListExtensionsV1beta1DeploymentForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListExtensionsV1beta1DeploymentForAllNamespacesResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListExtensionsV1beta1DeploymentForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListExtensionsV1beta1DeploymentForAllNamespacesResponse::Unauthorized(response),
-            other => ListExtensionsV1beta1DeploymentForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1DeploymentForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListExtensionsV1beta1DeploymentForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listExtensionsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum ListExtensionsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// list or watch objects of kind Deployment
-    pub fn list_extensions_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn list_extensions_v1beta1_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -282,59 +306,67 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListExtensionsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListExtensionsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListExtensionsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListExtensionsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListExtensionsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => ListExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((ListExtensionsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum PatchExtensionsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// partially update the specified Deployment
-    pub fn patch_extensions_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn patch_extensions_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -342,41 +374,49 @@ impl Deployment {
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchExtensionsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchExtensionsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchExtensionsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchExtensionsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchExtensionsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => PatchExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((PatchExtensionsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedDeploymentStatus
 
-#[derive(Debug)]
-pub enum PatchExtensionsV1beta1NamespacedDeploymentStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// partially update status of the specified Deployment
-    pub fn patch_extensions_v1beta1_namespaced_deployment_status<C>(
-        __client: &C,
+    pub fn patch_extensions_v1beta1_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -384,41 +424,49 @@ impl Deployment {
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchExtensionsV1beta1NamespacedDeploymentStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchExtensionsV1beta1NamespacedDeploymentStatusResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchExtensionsV1beta1NamespacedDeploymentStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchExtensionsV1beta1NamespacedDeploymentStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchExtensionsV1beta1NamespacedDeploymentStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchExtensionsV1beta1NamespacedDeploymentStatusResponse::Unauthorized(response),
-            other => PatchExtensionsV1beta1NamespacedDeploymentStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedDeploymentStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchExtensionsV1beta1NamespacedDeploymentStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum ReadExtensionsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// read the specified Deployment
-    pub fn read_extensions_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn read_extensions_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -429,88 +477,104 @@ impl Deployment {
         export: Option<bool>,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadExtensionsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(exact) = exact {
-                __query_pairs.append_pair("exact", &exact.to_string());
-            }
-            if let Some(export) = export {
-                __query_pairs.append_pair("export", &export.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
         }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadExtensionsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadExtensionsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadExtensionsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadExtensionsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => ReadExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((ReadExtensionsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedDeploymentStatus
 
-#[derive(Debug)]
-pub enum ReadExtensionsV1beta1NamespacedDeploymentStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// read status of the specified Deployment
-    pub fn read_extensions_v1beta1_namespaced_deployment_status<C>(
-        __client: &C,
+    pub fn read_extensions_v1beta1_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadExtensionsV1beta1NamespacedDeploymentStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadExtensionsV1beta1NamespacedDeploymentStatusResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadExtensionsV1beta1NamespacedDeploymentStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadExtensionsV1beta1NamespacedDeploymentStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadExtensionsV1beta1NamespacedDeploymentStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadExtensionsV1beta1NamespacedDeploymentStatusResponse::Unauthorized(response),
-            other => ReadExtensionsV1beta1NamespacedDeploymentStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedDeploymentStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadExtensionsV1beta1NamespacedDeploymentStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedDeployment
 
-#[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// replace the specified Deployment
-    pub fn replace_extensions_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn replace_extensions_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -518,41 +582,49 @@ impl Deployment {
         body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceExtensionsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceExtensionsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceExtensionsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => ReplaceExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceExtensionsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedDeploymentStatus
 
-#[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// replace status of the specified Deployment
-    pub fn replace_extensions_v1beta1_namespaced_deployment_status<C>(
-        __client: &C,
+    pub fn replace_extensions_v1beta1_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -560,40 +632,49 @@ impl Deployment {
         body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse::Unauthorized(response),
-            other => ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchExtensionsV1beta1DeploymentListForAllNamespaces
 
-pub enum WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// watch individual changes to a list of Deployment
-    pub fn watch_extensions_v1beta1_deployment_list_for_all_namespaces<C>(
-        __client: &C,
+    pub fn watch_extensions_v1beta1_deployment_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
         // If true, partially initialized resources are included in the response.
@@ -608,58 +689,69 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/watch/deployments")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/watch/deployments?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse::Unauthorized(response),
-            other => WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedDeployment
 
-pub enum WatchExtensionsV1beta1NamespacedDeploymentResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// watch changes to an object of kind Deployment
-    pub fn watch_extensions_v1beta1_namespaced_deployment<C>(
-        __client: &C,
+    pub fn watch_extensions_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -678,58 +770,69 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchExtensionsV1beta1NamespacedDeploymentResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/deployments/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchExtensionsV1beta1NamespacedDeploymentResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchExtensionsV1beta1NamespacedDeploymentResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchExtensionsV1beta1NamespacedDeploymentResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchExtensionsV1beta1NamespacedDeploymentResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized(response),
-            other => WatchExtensionsV1beta1NamespacedDeploymentResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((WatchExtensionsV1beta1NamespacedDeploymentResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchExtensionsV1beta1NamespacedDeploymentList
 
-pub enum WatchExtensionsV1beta1NamespacedDeploymentListResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Deployment {
     /// watch individual changes to a list of Deployment
-    pub fn watch_extensions_v1beta1_namespaced_deployment_list<C>(
-        __client: &C,
+    pub fn watch_extensions_v1beta1_namespaced_deployment_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -746,43 +849,61 @@ impl Deployment {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchExtensionsV1beta1NamespacedDeploymentListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/deployments", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/deployments?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchExtensionsV1beta1NamespacedDeploymentListResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchExtensionsV1beta1NamespacedDeploymentListResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchExtensionsV1beta1NamespacedDeploymentListResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchExtensionsV1beta1NamespacedDeploymentListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchExtensionsV1beta1NamespacedDeploymentListResponse::Unauthorized(response),
-            other => WatchExtensionsV1beta1NamespacedDeploymentListResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedDeploymentListResponse::Unauthorized, 0)),
+            _ => Ok((WatchExtensionsV1beta1NamespacedDeploymentListResponse::Other, 0)),
+        }
     }
 }
 

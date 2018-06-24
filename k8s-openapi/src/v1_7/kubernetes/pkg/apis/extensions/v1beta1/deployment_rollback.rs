@@ -23,17 +23,9 @@ pub struct DeploymentRollback {
 
 // Generated from operation createExtensionsV1beta1NamespacedDeploymentRollback
 
-#[derive(Debug)]
-pub enum CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentRollback),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl DeploymentRollback {
     /// create rollback of a Deployment
-    pub fn create_extensions_v1beta1_namespaced_deployment_rollback<C>(
-        __client: &C,
+    pub fn create_extensions_v1beta1_namespaced_deployment_rollback(
         // name of the DeploymentRollback
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -41,25 +33,41 @@ impl DeploymentRollback {
         body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentRollback,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/rollback", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/rollback?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentRollback),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse::Unauthorized(response),
-            other => CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse::Unauthorized, 0)),
+            _ => Ok((CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse::Other, 0)),
+        }
     }
 }
 

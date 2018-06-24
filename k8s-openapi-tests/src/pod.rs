@@ -10,21 +10,18 @@ fn list() {
 
 	let client = ::Client::new().expect("couldn't create client");
 
-	#[cfg(feature = "v1_7")] let pod_list =
-		api::Pod::list_core_v1_namespaced_pod(
-			&client, "kube-system",
-			None, None, None, None, None, None, None)
-		.expect("couldn't list pods");
-	#[cfg(not(feature = "v1_7"))] let pod_list =
-		api::Pod::list_core_v1_namespaced_pod(
-			&client, "kube-system",
-			None, None, None, None, None, None, None, None, None)
-		.expect("couldn't list pods");
-	let pod_list = match pod_list {
-		#[cfg(feature = "v1_7")] api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => pod_list,
-		#[cfg(not(feature = "v1_7"))] api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => pod_list,
-		other => panic!("couldn't list pods: {:?}", other),
-	};
+	#[cfg(feature = "v1_7")] let request =
+		api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None);
+	#[cfg(not(feature = "v1_7"))] let request =
+		api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None, None, None);
+	let request = request.expect("couldn't list pods");
+	let response = client.execute(request).expect("couldn't list pods");;
+	let pod_list =
+		::get_single_value(response, |response, status_code, _| match response {
+			api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(::ValueResult::GotValue(pod_list)),
+			other => Err(format!("{:?} {}", other, status_code).into()),
+		}).expect("couldn't list pods");
+
 	assert_eq!(pod_list.kind, Some("PodList".to_string()));
 
 	let addon_manager_pod =

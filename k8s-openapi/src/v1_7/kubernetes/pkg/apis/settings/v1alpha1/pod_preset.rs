@@ -18,57 +18,57 @@ pub struct PodPreset {
 
 // Generated from operation createSettingsV1alpha1NamespacedPodPreset
 
-#[derive(Debug)]
-pub enum CreateSettingsV1alpha1NamespacedPodPresetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPreset),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// create a PodPreset
-    pub fn create_settings_v1alpha1_namespaced_pod_preset<C>(
-        __client: &C,
+    pub fn create_settings_v1alpha1_namespaced_pod_preset(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPreset,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateSettingsV1alpha1NamespacedPodPresetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateSettingsV1alpha1NamespacedPodPresetResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPreset),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateSettingsV1alpha1NamespacedPodPresetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized(response),
-            other => CreateSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteSettingsV1alpha1CollectionNamespacedPodPreset
 
-#[derive(Debug)]
-pub enum DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// delete collection of PodPreset
-    pub fn delete_settings_v1alpha1_collection_namespaced_pod_preset<C>(
-        __client: &C,
+    pub fn delete_settings_v1alpha1_collection_namespaced_pod_preset(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -85,59 +85,67 @@ impl PodPreset {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Unauthorized(response),
-            other => DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteSettingsV1alpha1NamespacedPodPreset
 
-#[derive(Debug)]
-pub enum DeleteSettingsV1alpha1NamespacedPodPresetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// delete a PodPreset
-    pub fn delete_settings_v1alpha1_namespaced_pod_preset<C>(
-        __client: &C,
+    pub fn delete_settings_v1alpha1_namespaced_pod_preset(
         // name of the PodPreset
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -150,50 +158,58 @@ impl PodPreset {
         pretty: Option<&str>,
         // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
         propagation_policy: Option<&str>,
-    ) -> Result<DeleteSettingsV1alpha1NamespacedPodPresetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(grace_period_seconds) = grace_period_seconds {
-                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-            }
-            if let Some(orphan_dependents) = orphan_dependents {
-                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(propagation_policy) = propagation_policy {
-                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteSettingsV1alpha1NamespacedPodPresetResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteSettingsV1alpha1NamespacedPodPresetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized(response),
-            other => DeleteSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listSettingsV1alpha1NamespacedPodPreset
 
-#[derive(Debug)]
-pub enum ListSettingsV1alpha1NamespacedPodPresetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPresetList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// list or watch objects of kind PodPreset
-    pub fn list_settings_v1alpha1_namespaced_pod_preset<C>(
-        __client: &C,
+    pub fn list_settings_v1alpha1_namespaced_pod_preset(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -210,59 +226,67 @@ impl PodPreset {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListSettingsV1alpha1NamespacedPodPresetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListSettingsV1alpha1NamespacedPodPresetResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPresetList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListSettingsV1alpha1NamespacedPodPresetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized(response),
-            other => ListSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((ListSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listSettingsV1alpha1PodPresetForAllNamespaces
 
-#[derive(Debug)]
-pub enum ListSettingsV1alpha1PodPresetForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPresetList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// list or watch objects of kind PodPreset
-    pub fn list_settings_v1alpha1_pod_preset_for_all_namespaces<C>(
-        __client: &C,
+    pub fn list_settings_v1alpha1_pod_preset_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
         // If true, partially initialized resources are included in the response.
@@ -277,59 +301,67 @@ impl PodPreset {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListSettingsV1alpha1PodPresetForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/podpresets")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/podpresets?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPresetList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Unauthorized(response),
-            other => ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchSettingsV1alpha1NamespacedPodPreset
 
-#[derive(Debug)]
-pub enum PatchSettingsV1alpha1NamespacedPodPresetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPreset),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// partially update the specified PodPreset
-    pub fn patch_settings_v1alpha1_namespaced_pod_preset<C>(
-        __client: &C,
+    pub fn patch_settings_v1alpha1_namespaced_pod_preset(
         // name of the PodPreset
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -337,41 +369,49 @@ impl PodPreset {
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchSettingsV1alpha1NamespacedPodPresetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchSettingsV1alpha1NamespacedPodPresetResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPreset),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchSettingsV1alpha1NamespacedPodPresetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized(response),
-            other => PatchSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((PatchSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readSettingsV1alpha1NamespacedPodPreset
 
-#[derive(Debug)]
-pub enum ReadSettingsV1alpha1NamespacedPodPresetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPreset),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// read the specified PodPreset
-    pub fn read_settings_v1alpha1_namespaced_pod_preset<C>(
-        __client: &C,
+    pub fn read_settings_v1alpha1_namespaced_pod_preset(
         // name of the PodPreset
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -382,47 +422,55 @@ impl PodPreset {
         export: Option<bool>,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadSettingsV1alpha1NamespacedPodPresetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(exact) = exact {
-                __query_pairs.append_pair("exact", &exact.to_string());
-            }
-            if let Some(export) = export {
-                __query_pairs.append_pair("export", &export.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
         }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadSettingsV1alpha1NamespacedPodPresetResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPreset),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadSettingsV1alpha1NamespacedPodPresetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized(response),
-            other => ReadSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((ReadSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceSettingsV1alpha1NamespacedPodPreset
 
-#[derive(Debug)]
-pub enum ReplaceSettingsV1alpha1NamespacedPodPresetResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPreset),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// replace the specified PodPreset
-    pub fn replace_settings_v1alpha1_namespaced_pod_preset<C>(
-        __client: &C,
+    pub fn replace_settings_v1alpha1_namespaced_pod_preset(
         // name of the PodPreset
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -430,40 +478,49 @@ impl PodPreset {
         body: &::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPreset,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceSettingsV1alpha1NamespacedPodPresetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::settings::v1alpha1::PodPreset),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized(response),
-            other => ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchSettingsV1alpha1NamespacedPodPreset
 
-pub enum WatchSettingsV1alpha1NamespacedPodPresetResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// watch changes to an object of kind PodPreset
-    pub fn watch_settings_v1alpha1_namespaced_pod_preset<C>(
-        __client: &C,
+    pub fn watch_settings_v1alpha1_namespaced_pod_preset(
         // name of the PodPreset
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -482,58 +539,69 @@ impl PodPreset {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchSettingsV1alpha1NamespacedPodPresetResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/watch/namespaces/{namespace}/podpresets/{name}", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/watch/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchSettingsV1alpha1NamespacedPodPresetResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchSettingsV1alpha1NamespacedPodPresetResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized(response),
-            other => WatchSettingsV1alpha1NamespacedPodPresetResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((WatchSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchSettingsV1alpha1NamespacedPodPresetList
 
-pub enum WatchSettingsV1alpha1NamespacedPodPresetListResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// watch individual changes to a list of PodPreset
-    pub fn watch_settings_v1alpha1_namespaced_pod_preset_list<C>(
-        __client: &C,
+    pub fn watch_settings_v1alpha1_namespaced_pod_preset_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -550,58 +618,69 @@ impl PodPreset {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchSettingsV1alpha1NamespacedPodPresetListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/watch/namespaces/{namespace}/podpresets", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/watch/namespaces/{namespace}/podpresets?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchSettingsV1alpha1NamespacedPodPresetListResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchSettingsV1alpha1NamespacedPodPresetListResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchSettingsV1alpha1NamespacedPodPresetListResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchSettingsV1alpha1NamespacedPodPresetListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchSettingsV1alpha1NamespacedPodPresetListResponse::Unauthorized(response),
-            other => WatchSettingsV1alpha1NamespacedPodPresetListResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1NamespacedPodPresetListResponse::Unauthorized, 0)),
+            _ => Ok((WatchSettingsV1alpha1NamespacedPodPresetListResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchSettingsV1alpha1PodPresetListForAllNamespaces
 
-pub enum WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl PodPreset {
     /// watch individual changes to a list of PodPreset
-    pub fn watch_settings_v1alpha1_pod_preset_list_for_all_namespaces<C>(
-        __client: &C,
+    pub fn watch_settings_v1alpha1_pod_preset_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
         // If true, partially initialized resources are included in the response.
@@ -616,43 +695,61 @@ impl PodPreset {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/settings.k8s.io/v1alpha1/watch/podpresets")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/settings.k8s.io/v1alpha1/watch/podpresets?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
         }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse {
+    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Unauthorized(response),
-            other => WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Other, 0)),
+        }
     }
 }
 

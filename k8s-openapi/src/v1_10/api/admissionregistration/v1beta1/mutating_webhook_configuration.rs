@@ -20,65 +20,73 @@ pub struct MutatingWebhookConfiguration {
 
 // Generated from operation createAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
-#[derive(Debug)]
-pub enum CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Created(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Accepted(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl MutatingWebhookConfiguration {
     /// create a MutatingWebhookConfiguration
-    pub fn create_admissionregistration_v1beta1_mutating_webhook_configuration<C>(
-        __client: &C,
+    pub fn create_admissionregistration_v1beta1_mutating_webhook_configuration(
         body: &::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    Ok(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
+    Created(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
+    Accepted(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Created(result), buf.len()))
             },
             ::http::StatusCode::ACCEPTED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Accepted(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized(response),
-            other => CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfiguration
 
-#[derive(Debug)]
-pub enum DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl MutatingWebhookConfiguration {
     /// delete collection of MutatingWebhookConfiguration
-    pub fn delete_admissionregistration_v1beta1_collection_mutating_webhook_configuration<C>(
-        __client: &C,
+    pub fn delete_admissionregistration_v1beta1_collection_mutating_webhook_configuration(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -99,65 +107,73 @@ impl MutatingWebhookConfiguration {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::Unauthorized(response),
-            other => DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation deleteAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
-#[derive(Debug)]
-pub enum DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl MutatingWebhookConfiguration {
     /// delete a MutatingWebhookConfiguration
-    pub fn delete_admissionregistration_v1beta1_mutating_webhook_configuration<C>(
-        __client: &C,
+    pub fn delete_admissionregistration_v1beta1_mutating_webhook_configuration(
         // name of the MutatingWebhookConfiguration
         name: &str,
         // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -168,50 +184,58 @@ impl MutatingWebhookConfiguration {
         pretty: Option<&str>,
         // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
         propagation_policy: Option<&str>,
-    ) -> Result<DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(grace_period_seconds) = grace_period_seconds {
-                __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
-            }
-            if let Some(orphan_dependents) = orphan_dependents {
-                __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(propagation_policy) = propagation_policy {
-                __query_pairs.append_pair("propagationPolicy", &propagation_policy);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(grace_period_seconds) = grace_period_seconds {
+            __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
+        if let Some(orphan_dependents) = orphan_dependents {
+            __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(propagation_policy) = propagation_policy {
+            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.delete(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::delete(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized(response),
-            other => DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation listAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
-#[derive(Debug)]
-pub enum ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfigurationList),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl MutatingWebhookConfiguration {
     /// list or watch objects of kind MutatingWebhookConfiguration
-    pub fn list_admissionregistration_v1beta1_mutating_webhook_configuration<C>(
-        __client: &C,
+    pub fn list_admissionregistration_v1beta1_mutating_webhook_configuration(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -232,105 +256,121 @@ impl MutatingWebhookConfiguration {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    Ok(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfigurationList),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized(response),
-            other => ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
-#[derive(Debug)]
-pub enum PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl MutatingWebhookConfiguration {
     /// partially update the specified MutatingWebhookConfiguration
-    pub fn patch_admissionregistration_v1beta1_mutating_webhook_configuration<C>(
-        __client: &C,
+    pub fn patch_admissionregistration_v1beta1_mutating_webhook_configuration(
         // name of the MutatingWebhookConfiguration
         name: &str,
         body: &::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    Ok(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized(response),
-            other => PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
-#[derive(Debug)]
-pub enum ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl MutatingWebhookConfiguration {
     /// read the specified MutatingWebhookConfiguration
-    pub fn read_admissionregistration_v1beta1_mutating_webhook_configuration<C>(
-        __client: &C,
+    pub fn read_admissionregistration_v1beta1_mutating_webhook_configuration(
         // name of the MutatingWebhookConfiguration
         name: &str,
         // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -339,91 +379,112 @@ impl MutatingWebhookConfiguration {
         export: Option<bool>,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(exact) = exact {
-                __query_pairs.append_pair("exact", &exact.to_string());
-            }
-            if let Some(export) = export {
-                __query_pairs.append_pair("export", &export.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(exact) = exact {
+            __query_pairs.append_pair("exact", &exact.to_string());
         }
+        if let Some(export) = export {
+            __query_pairs.append_pair("export", &export.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    Ok(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized(response),
-            other => ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
-#[derive(Debug)]
-pub enum ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Created(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl MutatingWebhookConfiguration {
     /// replace the specified MutatingWebhookConfiguration
-    pub fn replace_admissionregistration_v1beta1_mutating_webhook_configuration<C>(
-        __client: &C,
+    pub fn replace_admissionregistration_v1beta1_mutating_webhook_configuration(
         // name of the MutatingWebhookConfiguration
         name: &str,
         body: &::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    Ok(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
+    Created(::v1_10::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized(response),
-            other => ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
-pub enum WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl MutatingWebhookConfiguration {
     /// watch changes to an object of kind MutatingWebhookConfiguration
-    pub fn watch_admissionregistration_v1beta1_mutating_webhook_configuration<C>(
-        __client: &C,
+    pub fn watch_admissionregistration_v1beta1_mutating_webhook_configuration(
         // name of the MutatingWebhookConfiguration
         name: &str,
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -446,64 +507,75 @@ impl MutatingWebhookConfiguration {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1beta1/watch/mutatingwebhookconfigurations/{name}", name = name)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/watch/mutatingwebhookconfigurations/{name}?", name = name);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized(response),
-            other => WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation watchAdmissionregistrationV1beta1MutatingWebhookConfigurationList
 
-pub enum WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse<R> where R: ::std::io::Read {
-    Ok(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, ::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent>),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl MutatingWebhookConfiguration {
     /// watch individual changes to a list of MutatingWebhookConfiguration
-    pub fn watch_admissionregistration_v1beta1_mutating_webhook_configuration_list<C>(
-        __client: &C,
+    pub fn watch_admissionregistration_v1beta1_mutating_webhook_configuration_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -524,49 +596,67 @@ impl MutatingWebhookConfiguration {
         timeout_seconds: Option<i64>,
         // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
-    ) -> Result<WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/admissionregistration.k8s.io/v1beta1/watch/mutatingwebhookconfigurations")).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(continue_) = continue_ {
-                __query_pairs.append_pair("continue", &continue_);
-            }
-            if let Some(field_selector) = field_selector {
-                __query_pairs.append_pair("fieldSelector", &field_selector);
-            }
-            if let Some(include_uninitialized) = include_uninitialized {
-                __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-            }
-            if let Some(label_selector) = label_selector {
-                __query_pairs.append_pair("labelSelector", &label_selector);
-            }
-            if let Some(limit) = limit {
-                __query_pairs.append_pair("limit", &limit.to_string());
-            }
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
-            if let Some(resource_version) = resource_version {
-                __query_pairs.append_pair("resourceVersion", &resource_version);
-            }
-            if let Some(timeout_seconds) = timeout_seconds {
-                __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-            }
-            if let Some(watch) = watch {
-                __query_pairs.append_pair("watch", &watch.to_string());
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/watch/mutatingwebhookconfigurations?");
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", &continue_);
         }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", &field_selector);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", &label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", &resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        if let Some(watch) = watch {
+            __query_pairs.append_pair("watch", &watch.to_string());
+        }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse {
+    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::Deserializer::from_reader(response).into_iter();
-                WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse::Ok(result)
+                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
+                    None => return Err(::ResponseError::NeedMoreData),
+                };
+                Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse::Unauthorized(response),
-            other => WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse::Unauthorized, 0)),
+            _ => Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse::Other, 0)),
+        }
     }
 }
 

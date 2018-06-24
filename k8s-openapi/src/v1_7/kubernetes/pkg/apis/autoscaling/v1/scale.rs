@@ -23,17 +23,9 @@ pub struct Scale {
 
 // Generated from operation patchCoreV1NamespacedReplicationControllerScale
 
-#[derive(Debug)]
-pub enum PatchCoreV1NamespacedReplicationControllerScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::autoscaling::v1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// partially update scale of the specified ReplicationController
-    pub fn patch_core_v1_namespaced_replication_controller_scale<C>(
-        __client: &C,
+    pub fn patch_core_v1_namespaced_replication_controller_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -41,82 +33,98 @@ impl Scale {
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchCoreV1NamespacedReplicationControllerScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchCoreV1NamespacedReplicationControllerScaleResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::autoscaling::v1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchCoreV1NamespacedReplicationControllerScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchCoreV1NamespacedReplicationControllerScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchCoreV1NamespacedReplicationControllerScaleResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized(response),
-            other => PatchCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized, 0)),
+            _ => Ok((PatchCoreV1NamespacedReplicationControllerScaleResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readCoreV1NamespacedReplicationControllerScale
 
-#[derive(Debug)]
-pub enum ReadCoreV1NamespacedReplicationControllerScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::autoscaling::v1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// read scale of the specified ReplicationController
-    pub fn read_core_v1_namespaced_replication_controller_scale<C>(
-        __client: &C,
+    pub fn read_core_v1_namespaced_replication_controller_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadCoreV1NamespacedReplicationControllerScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadCoreV1NamespacedReplicationControllerScaleResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::autoscaling::v1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadCoreV1NamespacedReplicationControllerScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadCoreV1NamespacedReplicationControllerScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadCoreV1NamespacedReplicationControllerScaleResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized(response),
-            other => ReadCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized, 0)),
+            _ => Ok((ReadCoreV1NamespacedReplicationControllerScaleResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceCoreV1NamespacedReplicationControllerScale
 
-#[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedReplicationControllerScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::autoscaling::v1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// replace scale of the specified ReplicationController
-    pub fn replace_core_v1_namespaced_replication_controller_scale<C>(
-        __client: &C,
+    pub fn replace_core_v1_namespaced_replication_controller_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -124,25 +132,41 @@ impl Scale {
         body: &::v1_7::kubernetes::pkg::apis::autoscaling::v1::Scale,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceCoreV1NamespacedReplicationControllerScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceCoreV1NamespacedReplicationControllerScaleResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::autoscaling::v1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceCoreV1NamespacedReplicationControllerScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized(response),
-            other => ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Other, 0)),
+        }
     }
 }
 

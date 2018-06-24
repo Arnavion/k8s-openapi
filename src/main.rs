@@ -835,24 +835,6 @@ fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec
 	}
 }
 
-fn is_read_pod_log_operation_ok_response(
-	operation: &swagger20::Operation,
-	status_code: reqwest::StatusCode,
-	schema: &swagger20::Schema,
-) -> Result<bool, Error> {
-	if operation.id == "readCoreV1NamespacedPodLog" && status_code == reqwest::StatusCode::Ok {
-		if let swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) = schema.kind {
-			Ok(true)
-		}
-		else {
-			Err(format!("expected operation {} to have String type for status code 200", operation.id).into())
-		}
-	}
-	else {
-		Ok(false)
-	}
-}
-
 fn replace_namespace<'a, I>(parts: I, replace_namespaces: &[(Vec<&str>, Vec<String>)]) -> Vec<String> where I: IntoIterator<Item = &'a str> {
 	let parts: Vec<_> = parts.into_iter().collect();
 
@@ -880,15 +862,9 @@ fn write_operation(
 ) -> Result<(), Error> {
 	use std::io::Write;
 
-	let is_watch = match operation.kubernetes_action {
-		Some(swagger20::KubernetesAction::Watch) | Some(swagger20::KubernetesAction::WatchList) => true,
-		_ => false,
-	};
-
 	writeln!(file)?;
 
 	writeln!(file, "// Generated from operation {}", operation.id)?;
-	writeln!(file)?;
 
 	let operation_result_name = format!("{}{}Response", operation.id[0..1].to_uppercase(), &operation.id[1..]);
 
@@ -911,40 +887,16 @@ fn write_operation(
 				_ => return Err(format!("unrecognized status code {}", status_code)),
 			};
 
-			Ok((status_code, http_status_code, variant_name, schema))
+			let schema = schema.as_ref();
+
+			Ok((http_status_code, variant_name, schema))
 		})
 		.collect();
 	let operation_responses = operation_responses?;
 
-	if !is_watch {
-		// serde_json::StreamDeserializer isn't Debug
-		writeln!(file, "#[derive(Debug)]")?;
-	}
-	writeln!(file, "pub enum {}<R> where R: ::std::io::Read {{", operation_result_name)?;
-	for &(status_code, _, variant_name, schema) in &operation_responses {
-		if let Some(schema) = schema {
-			if is_watch {
-				writeln!(
-					file,
-					"    {}(::serde_json::StreamDeserializer<'static, ::serde_json::de::IoRead<R>, {}>),",
-					variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
-			}
-			else if is_read_pod_log_operation_ok_response(operation, status_code, schema)? {
-				writeln!(file, "    {}(::std::io::Lines<::std::io::BufReader<R>>),", variant_name)?;
-			}
-			else {
-				writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
-			}
-		}
-		else {
-			writeln!(file, "    {}(R),", variant_name)?;
-		}
-	}
-	writeln!(file, "    Other(::http::StatusCode, R),")?;
-	writeln!(file, "}}")?;
-	writeln!(file)?;
-
 	let indent = if type_name.is_some() { "    " } else { "" };
+
+	writeln!(file)?;
 
 	if let Some(type_name) = type_name {
 		writeln!(file, "impl {} {{", type_name)?;
@@ -993,8 +945,7 @@ fn write_operation(
 		}
 	}
 
-	writeln!(file, "{}pub fn {}<C>(", indent, operation_fn_name)?;
-	writeln!(file, "{}    __client: &C,", indent)?;
+	writeln!(file, "{}pub fn {}(", indent, operation_fn_name)?;
 	for (parameter_name, parameter_type, parameter) in &parameters {
 		match (operation.method, parameter.location) {
 			(swagger20::Method::Delete, swagger20::ParameterLocation::Body) |
@@ -1016,29 +967,41 @@ fn write_operation(
 			writeln!(file, "{}    {}: Option<{}>,", indent, parameter_name, parameter_type)?;
 		}
 	}
-	writeln!(file, "{}) -> Result<{}<C::Response>, ::Error<C::Error>> where C: ::Client {{", indent, operation_result_name)?;
+	writeln!(file, "{}) -> Result<::http::Request<Vec<u8>>, ::RequestError> {{", indent)?;
 
 	let have_query_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Query);
 
+	write!(file, r#"{}    let __url = format!("{}"#, indent, path)?;
 	if have_query_parameters {
-		write!(file, r#"{}    let mut __url = __client.base_url().join(&format!("{}""#, indent, path)?;
+		write!(file, "?")?;
 	}
-	else {
-		write!(file, r#"{}    let __url = __client.base_url().join(&format!("{}""#, indent, path)?;
-	}
+	write!(file, r#"""#)?;
 	for (parameter_name, _, parameter) in &parameters {
 		if parameter.location == swagger20::ParameterLocation::Path {
 			write!(file, ", {} = {}", parameter_name, parameter_name)?;
 		}
 	}
-	writeln!(file, r")).map_err(::Error::URL)?;")?;
+	writeln!(file, ");")?;
 
 	if have_query_parameters {
-		writeln!(file, "{}    {{", indent)?;
-		writeln!(file, "{}        let mut __query_pairs = __url.query_pairs_mut();", indent)?;
+		writeln!(file, "{}    let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);", indent)?;
 		for (parameter_name, parameter_type, parameter) in &parameters {
 			if parameter.location == swagger20::ParameterLocation::Query {
 				if parameter.required {
+					match parameter.schema.kind {
+						swagger20::SchemaKind::Ty(swagger20::Type::Boolean) |
+						swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
+						swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) =>
+							writeln!(file, r#"{}    __query_pairs.append_pair("{}", &{}.to_string());"#, indent, parameter.name, parameter_name)?,
+
+						swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
+							writeln!(file, r#"{}    __query_pairs.append_pair("{}", &{});"#, indent, parameter.name, parameter_name)?,
+
+						_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter_name, parameter_type).into()),
+					}
+				}
+				else {
+					writeln!(file, "{}    if let Some({}) = {} {{", indent, parameter_name, parameter_name)?;
 					match parameter.schema.kind {
 						swagger20::SchemaKind::Ty(swagger20::Type::Boolean) |
 						swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
@@ -1050,25 +1013,11 @@ fn write_operation(
 
 						_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter_name, parameter_type).into()),
 					}
-				}
-				else {
-					writeln!(file, "{}        if let Some({}) = {} {{", indent, parameter_name, parameter_name)?;
-					match parameter.schema.kind {
-						swagger20::SchemaKind::Ty(swagger20::Type::Boolean) |
-						swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
-						swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) =>
-							writeln!(file, r#"{}            __query_pairs.append_pair("{}", &{}.to_string());"#, indent, parameter.name, parameter_name)?,
-
-						swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
-							writeln!(file, r#"{}            __query_pairs.append_pair("{}", &{});"#, indent, parameter.name, parameter_name)?,
-
-						_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter_name, parameter_type).into()),
-					}
-					writeln!(file, "{}        }}", indent)?;
+					writeln!(file, "{}    }}", indent)?;
 				}
 			}
 		}
-		writeln!(file, "{}    }}", indent)?;
+		writeln!(file, "{}    let __url = __query_pairs.finish();", indent)?;
 	}
 	writeln!(file)?;
 
@@ -1080,84 +1029,124 @@ fn write_operation(
 		swagger20::Method::Put => "put",
 	};
 
-	write!(file, "{}    let response =", indent)?;
-	match operation.method {
-		swagger20::Method::Delete | swagger20::Method::Get =>
-			writeln!(file, " __client.{}(__url).map_err(::Error::Client)?;", method)?,
+	writeln!(file, "{}    let mut __request = ::http::Request::{}(__url);", indent, method)?;
+
+	let body_parameter = match operation.method {
+		swagger20::Method::Delete | swagger20::Method::Get => None,
 
 		swagger20::Method::Patch | swagger20::Method::Post | swagger20::Method::Put =>
-			if let Some((parameter_name, _, parameter)) =
-				parameters.iter()
-				.find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body)
-			{
-				if parameter.required {
-					writeln!(file, " __client.{}(__url, &{}).map_err(::Error::Client)?;", method, parameter_name)?;
-				}
-				else {
-					writeln!(file)?;
-					writeln!(file, "{}        if let Some(value) = {} {{", indent, parameter_name)?;
-					writeln!(file, "{}            __client.{}(__url, &{}).map_err(::Error::Client)?;", indent, method, parameter_name)?;
-					writeln!(file, "{}        }}", indent)?;
-					writeln!(file, "{}        else {{", indent)?;
-					writeln!(file, "{}            __client.{}(__url, &()).map_err(::Error::Client)?;", indent, method)?;
-					writeln!(file, "{}        }};", indent)?;
-				}
-			}
-			else {
-				writeln!(file, " __client.{}(__url, &()).map_err(::Error::Client)?;", method)?;
-			},
-	}
-	writeln!(file)?;
+			parameters.iter()
+			.find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body),
+	};
 
-	writeln!(file, "{}    Ok(match ::Response::status_code(&response) {{", indent)?;
-	for &(status_code, http_status_code, variant_name, schema) in &operation_responses {
-		write!(file, "{}        ::http::StatusCode::{} => ", indent, http_status_code)?;
-		if let Some(schema) = schema {
-			writeln!(file, "{{")?;
-
-			if is_read_pod_log_operation_ok_response(operation, status_code, schema)? {
-				writeln!(file, "{}            let result = ::std::io::BufRead::lines(::std::io::BufReader::new(response));", indent)?;
-			}
-			else {
-				match &schema.kind {
-					swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
-						writeln!(file, "{}            let mut response = response;", indent)?;
-						writeln!(file, "{}            let mut result = String::new();", indent)?;
-						writeln!(file, "{}            ::std::io::Read::read_to_string(&mut response, &mut result).map_err(::Error::IO)?;", indent)?;
-					},
-
-					swagger20::SchemaKind::Ty(swagger20::Type::Boolean { .. }) |
-					swagger20::SchemaKind::Ty(swagger20::Type::Integer { .. }) |
-					swagger20::SchemaKind::Ty(swagger20::Type::Number { .. }) => {
-						return Err(format!("unsupported response type {:?}", schema.kind).into());
-					},
-
-					_ => if is_watch {
-						writeln!(file, "{}            let result = ::serde_json::Deserializer::from_reader(response).into_iter();", indent)?;
-					}
-					else {
-						writeln!(file, "{}            let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;", indent)?;
-					},
-				}
-			}
-
-			writeln!(file, "                {}::{}(result)", operation_result_name, variant_name)?;
-			writeln!(file, "            }},")?;
+	write!(file, "{}    let __body = ", indent)?;
+	if let Some((parameter_name, _, parameter)) = body_parameter {
+		if parameter.required {
+			writeln!(file, "::serde_json::to_vec(&{}).map_err(::RequestError::Json)?;", parameter_name)?;
 		}
 		else {
-			writeln!(file, "{}::{}(response),", operation_result_name, variant_name)?;
+			writeln!(file)?;
+			writeln!(file, "{}.unwrap_or(Ok(vec![]), |value| ::serde_json::to_vec(value).map_err(::RequestError::Json))?;", parameter_name)?;
 		}
 	}
-	writeln!(file, "{}        other => {}::Other(other, response),", indent, operation_result_name)?;
-	writeln!(file, "{}    }})", indent)?;
+	else {
+		writeln!(file, "vec![];")?;
+	}
 
+	writeln!(file, "{}    __request.body(__body).map_err(::RequestError::Http)", indent)?;
 	writeln!(file, "{}}}", indent)?;
-
-	// TODO: Async
 
 	if type_name.is_some() {
 		writeln!(file, "}}")?;
 	}
+
+	writeln!(file)?;
+
+
+	writeln!(file, "#[derive(Debug)]")?;
+	writeln!(file, "pub enum {} {{", operation_result_name)?;
+
+	for &(_, variant_name, schema) in &operation_responses {
+		if let Some(schema) = schema {
+			writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
+		}
+		else {
+			writeln!(file, "    {},", variant_name)?;
+		}
+	}
+	writeln!(file, "    Other,")?;
+	writeln!(file, "}}")?;
+	writeln!(file)?;
+
+	writeln!(file, "impl ::Response for {} {{", operation_result_name)?;
+
+	let uses_buf = operation_responses.iter().any(|&(_, _, schema)| schema.is_some());
+
+	if uses_buf {
+		writeln!(file, "    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {{")?;
+	}
+	else {
+		writeln!(file, "    fn try_from_parts(status_code: ::http::StatusCode, _: &[u8]) -> Result<(Self, usize), ::ResponseError> {{")?;
+	}
+
+	let is_watch = match operation.kubernetes_action {
+		Some(swagger20::KubernetesAction::Watch) | Some(swagger20::KubernetesAction::WatchList) => true,
+		_ => false,
+	};
+
+	writeln!(file, "        match status_code {{")?;
+	for &(http_status_code, variant_name, schema) in &operation_responses {
+		write!(file, "            ::http::StatusCode::{} => ", http_status_code)?;
+		if let Some(schema) = schema {
+			writeln!(file, "{{")?;
+
+			match &schema.kind {
+				swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
+					writeln!(file, "                let result = match ::std::str::from_utf8(buf) {{")?;
+					writeln!(file, "                    Ok(s) => s,")?;
+					writeln!(file, "                    Err(err) if err.error_len().is_none() => {{")?;
+					writeln!(file, "                        let valid_up_to = err.valid_up_to();")?;
+					writeln!(file, "                        unsafe {{ ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }}")?;
+					writeln!(file, "                    }},")?;
+					writeln!(file, "                    Err(err) => return Err(::ResponseError::Utf8(err)),")?;
+					writeln!(file, "                }};")?;
+					writeln!(file, "                let result = result.to_string();")?;
+					writeln!(file, "                let len = result.len();")?;
+					writeln!(file, "                Ok(({}::{}(result), len))", operation_result_name, variant_name)?;
+				},
+
+				swagger20::SchemaKind::Ref(_) => if is_watch {
+					writeln!(file, "                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();")?;
+					writeln!(file, "                let (result, byte_offset) = match deserializer.next() {{")?;
+					writeln!(file, "                    Some(Ok(value)) => (value, deserializer.byte_offset()),")?;
+					writeln!(file, "                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                    Some(Err(err)) => return Err(::ResponseError::Json(err)),")?;
+					writeln!(file, "                    None => return Err(::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                }};")?;
+					writeln!(file, "                Ok(({}::{}(result), byte_offset))", operation_result_name, variant_name)?;
+				}
+				else {
+					writeln!(file, "                let result = match ::serde_json::from_slice(buf) {{")?;
+					writeln!(file, "                    Ok(value) => value,")?;
+					writeln!(file, "                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                    Err(err) => return Err(::ResponseError::Json(err)),")?;
+					writeln!(file, "                }};")?;
+					writeln!(file, "                Ok(({}::{}(result), buf.len()))", operation_result_name, variant_name)?;
+				},
+
+				other => return Err(format!("operation {} has unrecognized type for response of variant {}: {:?}", operation.id, variant_name, other).into()),
+			}
+
+			writeln!(file, "            }},")?;
+		}
+		else {
+			writeln!(file, "Ok(({}::{}, 0)),", operation_result_name, variant_name)?;
+		}
+	}
+	writeln!(file, "            _ => Ok(({}::Other, 0)),", operation_result_name)?;
+	writeln!(file, "        }}")?;
+	writeln!(file, "    }}")?;
+	writeln!(file, "}}")?;
 
 	Ok(())
 }

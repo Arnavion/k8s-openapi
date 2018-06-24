@@ -1,13 +1,15 @@
 #![cfg(test)]
 
 extern crate backtrace;
+extern crate bytes;
 extern crate k8s_openapi;
-extern crate http;
 extern crate reqwest;
 extern crate serde;
 #[macro_use] extern crate serde_derive;
-extern crate serde_json;
 extern crate serde_yaml;
+
+use k8s_openapi::http;
+use k8s_openapi::serde_json;
 
 #[cfg(windows)] #[path = "client_winapi.rs"] mod client;
 #[cfg(not(windows))] #[path = "client_openssl.rs"] mod client;
@@ -31,7 +33,7 @@ impl std::fmt::Debug for Error {
 #[derive(Debug)]
 struct Client {
 	inner: reqwest::Client,
-	server: reqwest::Url,
+	server: http::Uri,
 }
 
 impl Client {
@@ -57,7 +59,12 @@ impl Client {
 
 		let certificate_authority = client::x509_from_pem(&certificate_authority)?;
 
-		let server = server.parse().map_err(|err| format!("couldn't parse server URL: {}", err))?;
+		let server: http::Uri = http::HttpTryFrom::try_from(server).map_err(|err| format!("couldn't parse server URL: {}", err))?;
+		if let Some(path_and_query) = server.path_and_query() {
+			if path_and_query != "/" {
+				return Err(format!("server URL {} has path and query {}", server, path_and_query).into());
+			}
+		}
 
 		let KubeConfigUser { client_certificate, client_key } =
 			kubeconfig.users.into_iter()
@@ -78,108 +85,133 @@ impl Client {
 		})
 	}
 
-	fn get<T>(&self, path: &str) -> Result<T, Error> where for<'de> T: serde::Deserialize<'de> {
-		let url = self.server.join(path)?;
+	fn get(&self, path: &str) -> Result<reqwest::Response, Error> {
+		let url = {
+			let mut url: http::uri::Parts = self.server.clone().into();
+			let path: bytes::Bytes = path.into();
+			url.path_and_query = Some(http::uri::PathAndQuery::from_shared(path)?);
+			http::Uri::from_parts(url)?.to_string()
+		};
 
-		let mut response =
+		let response =
 			self.inner
-			.get(url)
+			.get(&url)
 			.header(reqwest::header::Accept::json())
 			.send()?;
 
-		let status = response.status();
-		if status != reqwest::StatusCode::Ok {
-			Err(status.to_string())?;
-		}
-
-		match response.headers().get() {
-			Some(reqwest::header::ContentType(mime)) if *mime == reqwest::mime::APPLICATION_JSON =>
-				(),
-			Some(reqwest::header::ContentType(mime)) =>
-				Err(format!("Unexpected Content-Type header: {}", mime))?,
-			None =>
-				Err("No Content-Type header")?,
-		}
-
-		Ok(response.json()?)
+		Ok(response)
 	}
 
-	fn delete(&self, path: &str) -> Result<(), Error> {
-		let url = self.server.join(path)?;
+	fn delete(&self, path: &str) -> Result<reqwest::Response, Error> {
+		let url = {
+			let mut url: http::uri::Parts = self.server.clone().into();
+			let path: bytes::Bytes = path.into();
+			url.path_and_query = Some(http::uri::PathAndQuery::from_shared(path)?);
+			http::Uri::from_parts(url)?.to_string()
+		};
 
-		let mut response =
+		let response =
 			self.inner
-			.delete(url)
+			.delete(&url)
 			.header(reqwest::header::Accept::json())
 			.send()?;
 
-		let status = response.status();
-		if status != reqwest::StatusCode::Ok {
-			Err(format!("{} {}", status.to_string(), response.text()?))?;
-		}
+		Ok(response)
+	}
 
-		match response.headers().get() {
-			Some(reqwest::header::ContentType(mime)) if *mime == reqwest::mime::APPLICATION_JSON =>
-				(),
-			Some(reqwest::header::ContentType(mime)) =>
-				Err(format!("Unexpected Content-Type header: {}", mime))?,
-			None =>
-				Err("No Content-Type header")?,
-		}
+	fn execute(&self, request: http::Request<Vec<u8>>) -> Result<reqwest::Response, Error> {
+		let (method, url, body) = {
+			let (mut parts, body) = request.into_parts();
+			let mut url: http::uri::Parts = parts.uri.into();
+			let path = url.path_and_query.take().expect("request doesn't have path and query");
+			let mut url: http::uri::Parts = self.server.clone().into();
+			url.path_and_query = Some(path);
+			let url = http::Uri::from_parts(url)?.to_string();
 
-		Ok(())
+			(parts.method, url.to_string(), body)
+		};
+
+		let mut request = match method {
+			http::Method::GET => self.inner.get(&url),
+			http::Method::POST => self.inner.post(&url),
+			other => panic!("{}", other),
+		};
+
+		request.body(body);
+
+		Ok(request.send()?)
 	}
 }
 
-impl k8s_openapi::Client for Client {
-	type Response = reqwest::Response;
-	type Error = reqwest::Error;
+enum ValueResult<T> {
+	GotValue(T),
+	NeedMoreData,
+}
 
-	fn base_url(&self) -> &reqwest::Url {
-		&self.server
-	}
+fn get_single_value<R, F, T>(response: reqwest::Response, f: F) -> Result<T, Error> where
+	R: k8s_openapi::Response,
+	F: FnMut(R, http::StatusCode, &[u8]) -> Result<ValueResult<T>, Error>,
+{
+	get_multiple_values(response, f)?.next().unwrap_or_else(|| Err("unexpected EOF".into()))
+}
 
-	fn delete(&self, url: reqwest::Url) -> Result<Self::Response, Self::Error> {
-		let response =
-			self.inner
-			.delete(url)
-			.send()?;
-		Ok(response)
-	}
+fn get_multiple_values<R, F, T>(response: reqwest::Response, f: F) -> Result<MultipleValuesIterator<R, F, T>, Error> where
+	R: k8s_openapi::Response,
+	F: FnMut(R, http::StatusCode, &[u8]) -> Result<ValueResult<T>, Error>,
+{
+	let status_code = response.status();
+	let status_code =
+		http::StatusCode::from_u16(status_code.into())
+		.map_err(|err| format!("couldn't convert reqwest::StatusCode {} to http::StatusCode: {}", status_code, err))?;
 
-	fn get(&self, url: reqwest::Url) -> Result<Self::Response, Self::Error> {
-		let response =
-			self.inner
-			.get(url)
-			.send()?;
-		Ok(response)
-	}
+	let response_body = k8s_openapi::ResponseBody::new(status_code);
 
-	fn patch<B>(&self, url: reqwest::Url, body: &B) -> Result<Self::Response, Self::Error> where B: serde::Serialize {
-		let response =
-			self.inner
-			.patch(url)
-			.json(body)
-			.send()?;
-		Ok(response)
-	}
+	let buf = Box::new([0u8; 4096]);
 
-	fn post<B>(&self, url: reqwest::Url, body: &B) -> Result<Self::Response, Self::Error> where B: serde::Serialize {
-		let response =
-			self.inner
-			.post(url)
-			.json(body)
-			.send()?;
-		Ok(response)
-	}
+	Ok(MultipleValuesIterator {
+		response,
+		f,
+		response_body,
+		buf,
+		_pd: Default::default(),
+	})
+}
 
-	fn put<B>(&self, url: reqwest::Url, body: &B) -> Result<Self::Response, Self::Error> where B: serde::Serialize {
-		let response =
-			self.inner
-			.put(url)
-			.json(body)
-			.send()?;
-		Ok(response)
+struct MultipleValuesIterator<R, F, T> {
+	response: reqwest::Response,
+	f: F,
+	response_body: k8s_openapi::ResponseBody,
+	buf: Box<[u8; 4096]>,
+	_pd: std::marker::PhantomData<(R, T)>,
+}
+
+impl<R, F, T> Iterator for MultipleValuesIterator<R, F, T> where
+	R: k8s_openapi::Response,
+	F: FnMut(R, http::StatusCode, &[u8]) -> Result<ValueResult<T>, Error>,
+{
+	type Item = Result<T, Error>;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		loop {
+			let read = match std::io::Read::read(&mut self.response, &mut *self.buf) {
+				Ok(0) if self.response_body.is_empty() => return None,
+				Ok(0) => return Some(Err("unexpected EOF".into())),
+				Ok(read) => read,
+				Err(err) => return Some(Err(err.into())),
+			};
+
+			let response = match self.response_body.append_slice_and_parse(&self.buf[..read]) {
+				Ok(value) => value,
+				Err(k8s_openapi::ResponseError::NeedMoreData) => continue,
+				Err(err) => return Some(Err(err.into())),
+			};
+
+			match (self.f)(response, self.response_body.status_code, &*self.response_body) {
+				Ok(ValueResult::GotValue(result)) => return Some(Ok(result)),
+				Ok(ValueResult::NeedMoreData) => (),
+				Err(err) => return Some(Err(err.into())),
+			}
+		}
 	}
 }
 

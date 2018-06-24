@@ -23,17 +23,9 @@ pub struct Scale {
 
 // Generated from operation patchExtensionsV1beta1NamespacedDeploymentScale
 
-#[derive(Debug)]
-pub enum PatchExtensionsV1beta1NamespacedDeploymentScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// partially update scale of the specified Deployment
-    pub fn patch_extensions_v1beta1_namespaced_deployment_scale<C>(
-        __client: &C,
+    pub fn patch_extensions_v1beta1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -41,41 +33,49 @@ impl Scale {
         body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchExtensionsV1beta1NamespacedDeploymentScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchExtensionsV1beta1NamespacedDeploymentScaleResponse {
+    Ok(::v1_9::api::extensions::v1beta1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchExtensionsV1beta1NamespacedDeploymentScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchExtensionsV1beta1NamespacedDeploymentScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchExtensionsV1beta1NamespacedDeploymentScaleResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchExtensionsV1beta1NamespacedDeploymentScaleResponse::Unauthorized(response),
-            other => PatchExtensionsV1beta1NamespacedDeploymentScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedDeploymentScaleResponse::Unauthorized, 0)),
+            _ => Ok((PatchExtensionsV1beta1NamespacedDeploymentScaleResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedReplicaSetScale
 
-#[derive(Debug)]
-pub enum PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// partially update scale of the specified ReplicaSet
-    pub fn patch_extensions_v1beta1_namespaced_replica_set_scale<C>(
-        __client: &C,
+    pub fn patch_extensions_v1beta1_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -83,41 +83,49 @@ impl Scale {
         body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse {
+    Ok(::v1_9::api::extensions::v1beta1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse::Unauthorized(response),
-            other => PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse::Unauthorized, 0)),
+            _ => Ok((PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation patchExtensionsV1beta1NamespacedReplicationControllerDummyScale
 
-#[derive(Debug)]
-pub enum PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// partially update scale of the specified ReplicationControllerDummy
-    pub fn patch_extensions_v1beta1_namespaced_replication_controller_dummy_scale<C>(
-        __client: &C,
+    pub fn patch_extensions_v1beta1_namespaced_replication_controller_dummy_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -125,165 +133,196 @@ impl Scale {
         body: &::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.patch(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::patch(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse {
+    Ok(::v1_9::api::extensions::v1beta1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Unauthorized(response),
-            other => PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Unauthorized, 0)),
+            _ => Ok((PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedDeploymentScale
 
-#[derive(Debug)]
-pub enum ReadExtensionsV1beta1NamespacedDeploymentScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// read scale of the specified Deployment
-    pub fn read_extensions_v1beta1_namespaced_deployment_scale<C>(
-        __client: &C,
+    pub fn read_extensions_v1beta1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadExtensionsV1beta1NamespacedDeploymentScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadExtensionsV1beta1NamespacedDeploymentScaleResponse {
+    Ok(::v1_9::api::extensions::v1beta1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadExtensionsV1beta1NamespacedDeploymentScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadExtensionsV1beta1NamespacedDeploymentScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadExtensionsV1beta1NamespacedDeploymentScaleResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadExtensionsV1beta1NamespacedDeploymentScaleResponse::Unauthorized(response),
-            other => ReadExtensionsV1beta1NamespacedDeploymentScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedDeploymentScaleResponse::Unauthorized, 0)),
+            _ => Ok((ReadExtensionsV1beta1NamespacedDeploymentScaleResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedReplicaSetScale
 
-#[derive(Debug)]
-pub enum ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// read scale of the specified ReplicaSet
-    pub fn read_extensions_v1beta1_namespaced_replica_set_scale<C>(
-        __client: &C,
+    pub fn read_extensions_v1beta1_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse {
+    Ok(::v1_9::api::extensions::v1beta1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse::Unauthorized(response),
-            other => ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse::Unauthorized, 0)),
+            _ => Ok((ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation readExtensionsV1beta1NamespacedReplicationControllerDummyScale
 
-#[derive(Debug)]
-pub enum ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// read scale of the specified ReplicationControllerDummy
-    pub fn read_extensions_v1beta1_namespaced_replication_controller_dummy_scale<C>(
-        __client: &C,
+    pub fn read_extensions_v1beta1_namespaced_replication_controller_dummy_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.get(__url).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::get(__url);
+        let __body = vec![];
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse {
+    Ok(::v1_9::api::extensions::v1beta1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Unauthorized(response),
-            other => ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Unauthorized, 0)),
+            _ => Ok((ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedDeploymentScale
 
-#[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::Scale),
-    Created(::v1_9::api::extensions::v1beta1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// replace scale of the specified Deployment
-    pub fn replace_extensions_v1beta1_namespaced_deployment_scale<C>(
-        __client: &C,
+    pub fn replace_extensions_v1beta1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -291,46 +330,58 @@ impl Scale {
         body: &::v1_9::api::extensions::v1beta1::Scale,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse {
+    Ok(::v1_9::api::extensions::v1beta1::Scale),
+    Created(::v1_9::api::extensions::v1beta1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse::Unauthorized(response),
-            other => ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedReplicaSetScale
 
-#[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::Scale),
-    Created(::v1_9::api::extensions::v1beta1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// replace scale of the specified ReplicaSet
-    pub fn replace_extensions_v1beta1_namespaced_replica_set_scale<C>(
-        __client: &C,
+    pub fn replace_extensions_v1beta1_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -338,46 +389,58 @@ impl Scale {
         body: &::v1_9::api::extensions::v1beta1::Scale,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse {
+    Ok(::v1_9::api::extensions::v1beta1::Scale),
+    Created(::v1_9::api::extensions::v1beta1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse::Unauthorized(response),
-            other => ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse::Other, 0)),
+        }
     }
 }
 
 // Generated from operation replaceExtensionsV1beta1NamespacedReplicationControllerDummyScale
 
-#[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse<R> where R: ::std::io::Read {
-    Ok(::v1_9::api::extensions::v1beta1::Scale),
-    Created(::v1_9::api::extensions::v1beta1::Scale),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Scale {
     /// replace scale of the specified ReplicationControllerDummy
-    pub fn replace_extensions_v1beta1_namespaced_replication_controller_dummy_scale<C>(
-        __client: &C,
+    pub fn replace_extensions_v1beta1_namespaced_replication_controller_dummy_scale(
         // name of the Scale
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -385,29 +448,50 @@ impl Scale {
         body: &::v1_9::api::extensions::v1beta1::Scale,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.put(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::put(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse {
+    Ok(::v1_9::api::extensions::v1beta1::Scale),
+    Created(::v1_9::api::extensions::v1beta1::Scale),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Unauthorized(response),
-            other => ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse::Other, 0)),
+        }
     }
 }
 

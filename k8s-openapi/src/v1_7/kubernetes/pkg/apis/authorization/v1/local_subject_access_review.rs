@@ -22,41 +22,49 @@ pub struct LocalSubjectAccessReview {
 
 // Generated from operation createAuthorizationV1NamespacedLocalSubjectAccessReview
 
-#[derive(Debug)]
-pub enum CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse<R> where R: ::std::io::Read {
-    Ok(::v1_7::kubernetes::pkg::apis::authorization::v1::LocalSubjectAccessReview),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl LocalSubjectAccessReview {
     /// create a LocalSubjectAccessReview
-    pub fn create_authorization_v1_namespaced_local_subject_access_review<C>(
-        __client: &C,
+    pub fn create_authorization_v1_namespaced_local_subject_access_review(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::authorization::v1::LocalSubjectAccessReview,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews", namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews?", namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse {
+    Ok(::v1_7::kubernetes::pkg::apis::authorization::v1::LocalSubjectAccessReview),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Unauthorized(response),
-            other => CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Unauthorized, 0)),
+            _ => Ok((CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Other, 0)),
+        }
     }
 }
 

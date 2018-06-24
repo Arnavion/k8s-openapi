@@ -20,19 +20,9 @@ pub struct Eviction {
 
 // Generated from operation createCoreV1NamespacedPodEviction
 
-#[derive(Debug)]
-pub enum CreateCoreV1NamespacedPodEvictionResponse<R> where R: ::std::io::Read {
-    Ok(::v1_10::api::policy::v1beta1::Eviction),
-    Created(::v1_10::api::policy::v1beta1::Eviction),
-    Accepted(::v1_10::api::policy::v1beta1::Eviction),
-    Unauthorized(R),
-    Other(::http::StatusCode, R),
-}
-
 impl Eviction {
     /// create eviction of a Pod
-    pub fn create_core_v1_namespaced_pod_eviction<C>(
-        __client: &C,
+    pub fn create_core_v1_namespaced_pod_eviction(
         // name of the Eviction
         name: &str,
         // object name and auth scope, such as for teams and projects
@@ -40,33 +30,59 @@ impl Eviction {
         body: &::v1_10::api::policy::v1beta1::Eviction,
         // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-    ) -> Result<CreateCoreV1NamespacedPodEvictionResponse<C::Response>, ::Error<C::Error>> where C: ::Client {
-        let mut __url = __client.base_url().join(&format!("/api/v1/namespaces/{namespace}/pods/{name}/eviction", name = name, namespace = namespace)).map_err(::Error::URL)?;
-        {
-            let mut __query_pairs = __url.query_pairs_mut();
-            if let Some(pretty) = pretty {
-                __query_pairs.append_pair("pretty", &pretty);
-            }
+    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+        let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/eviction?", name = name, namespace = namespace);
+        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", &pretty);
         }
+        let __url = __query_pairs.finish();
 
-        let response = __client.post(__url, &body).map_err(::Error::Client)?;
+        let mut __request = ::http::Request::post(__url);
+        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
+        __request.body(__body).map_err(::RequestError::Http)
+    }
+}
 
-        Ok(match ::Response::status_code(&response) {
+#[derive(Debug)]
+pub enum CreateCoreV1NamespacedPodEvictionResponse {
+    Ok(::v1_10::api::policy::v1beta1::Eviction),
+    Created(::v1_10::api::policy::v1beta1::Eviction),
+    Accepted(::v1_10::api::policy::v1beta1::Eviction),
+    Unauthorized,
+    Other,
+}
+
+impl ::Response for CreateCoreV1NamespacedPodEvictionResponse {
+    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+        match status_code {
             ::http::StatusCode::OK => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedPodEvictionResponse::Ok(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedPodEvictionResponse::Ok(result), buf.len()))
             },
             ::http::StatusCode::CREATED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedPodEvictionResponse::Created(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedPodEvictionResponse::Created(result), buf.len()))
             },
             ::http::StatusCode::ACCEPTED => {
-                let result = ::serde_json::from_reader(response).map_err(::Error::JSON)?;
-                CreateCoreV1NamespacedPodEvictionResponse::Accepted(result)
+                let result = match ::serde_json::from_slice(buf) {
+                    Ok(value) => value,
+                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
+                    Err(err) => return Err(::ResponseError::Json(err)),
+                };
+                Ok((CreateCoreV1NamespacedPodEvictionResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => CreateCoreV1NamespacedPodEvictionResponse::Unauthorized(response),
-            other => CreateCoreV1NamespacedPodEvictionResponse::Other(other, response),
-        })
+            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedPodEvictionResponse::Unauthorized, 0)),
+            _ => Ok((CreateCoreV1NamespacedPodEvictionResponse::Other, 0)),
+        }
     }
 }
 
