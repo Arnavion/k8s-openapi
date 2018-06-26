@@ -99,7 +99,8 @@ fn create() {
 
 	// Wait for job to fail
 	loop {
-		let response = client.get(&job_self_link).expect("couldn't get job");
+		let request = ::http::Request::get(&job_self_link).body(vec![]).expect("couldn't get job");
+		let response = client.execute(request).expect("couldn't get job");
 		let job: batch::Job =
 			::get_single_value(response, |response, status_code, _| match response {
 				batch::ReadBatchV1NamespacedJobResponse::Ok(job) => Ok(::ValueResult::GotValue(job)),
@@ -158,7 +159,8 @@ fn create() {
 		.terminated.expect("couldn't get job pod container termination info");
 	assert_eq!(job_pod_container_state_terminated.exit_code, 5);
 
-	let response = client.delete(&job_self_link).expect("couldn't delete job");
+	let request = ::http::Request::delete(&job_self_link).body(vec![]).expect("couldn't delete job");
+	let response = client.execute(request).expect("couldn't delete job");
 	::get_single_value(response, |response, status_code, _| match response {
 		batch::DeleteBatchV1NamespacedJobResponse::OkStatus(_) | batch::DeleteBatchV1NamespacedJobResponse::OkValue(_) => Ok(::ValueResult::GotValue(())),
 		other => Err(format!("{:?} {}", other, status_code).into()),
@@ -181,7 +183,8 @@ fn create() {
 		let self_link =
 			pod.metadata.expect("couldn't get job pod metadata")
 			.self_link.expect("couldn't get job pod self link");
-		let response = client.delete(&self_link).expect("couldn't delete job pod");
+		let request = ::http::Request::delete(self_link).body(vec![]).expect("couldn't delete job pod");
+		let response = client.execute(request).expect("couldn't delete job pod");
 		::get_single_value(response, |response, status_code, _| match response {
 			api::DeleteCoreV1NamespacedPodResponse::OkStatus(_) | api::DeleteCoreV1NamespacedPodResponse::OkValue(_) => Ok(::ValueResult::GotValue(())),
 			other => Err(format!("{:?} {}", other, status_code).into()),

@@ -259,5 +259,11 @@ fn list() {
 		metadata.self_link.expect("couldn't get custom resource definition self link")
 	};
 
-	client.delete(&custom_resource_definition_self_link).expect("couldn't delete custom resource definition");
+	let request = ::http::Request::delete(custom_resource_definition_self_link).body(vec![]).expect("couldn't delete custom resource definition");
+	let response = client.execute(request).expect("couldn't delete custom resource definition");
+	::get_single_value(response, |response, status_code, _| match response {
+		apiextensions::DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::OkStatus(_) |
+		apiextensions::DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::OkValue(_) => Ok(::ValueResult::GotValue(())),
+		other => Err(format!("{:?} {}", other, status_code).into()),
+	}).expect("couldn't delete custom resource definition");
 }

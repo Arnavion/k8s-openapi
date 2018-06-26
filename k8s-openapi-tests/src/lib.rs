@@ -85,40 +85,6 @@ impl Client {
 		})
 	}
 
-	fn get(&self, path: &str) -> Result<reqwest::Response, Error> {
-		let url = {
-			let mut url: http::uri::Parts = self.server.clone().into();
-			let path: bytes::Bytes = path.into();
-			url.path_and_query = Some(http::uri::PathAndQuery::from_shared(path)?);
-			http::Uri::from_parts(url)?.to_string()
-		};
-
-		let response =
-			self.inner
-			.get(&url)
-			.header(reqwest::header::Accept::json())
-			.send()?;
-
-		Ok(response)
-	}
-
-	fn delete(&self, path: &str) -> Result<reqwest::Response, Error> {
-		let url = {
-			let mut url: http::uri::Parts = self.server.clone().into();
-			let path: bytes::Bytes = path.into();
-			url.path_and_query = Some(http::uri::PathAndQuery::from_shared(path)?);
-			http::Uri::from_parts(url)?.to_string()
-		};
-
-		let response =
-			self.inner
-			.delete(&url)
-			.header(reqwest::header::Accept::json())
-			.send()?;
-
-		Ok(response)
-	}
-
 	fn execute(&self, request: http::Request<Vec<u8>>) -> Result<reqwest::Response, Error> {
 		let (method, url, body) = {
 			let (mut parts, body) = request.into_parts();
