@@ -191,18 +191,6 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 						if let swagger20::SchemaKind::Ref(ref ref_path) = schema.kind {
 							match (&**definition_path, &**name, &**ref_path) {
 								(
-									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray",
-									"Schema",
-									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-								) |
-
-								(
-									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool",
-									"Schema",
-									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
-								) |
-
-								(
 									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
 									"not",
 									"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps",
@@ -433,6 +421,89 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 				num_generated_structs += 1;
 			},
 
+			swagger20::SchemaKind::Ty(ty @ swagger20::Type::JSONSchemaPropsOrArray) |
+			swagger20::SchemaKind::Ty(ty @ swagger20::Type::JSONSchemaPropsOrBool) |
+			swagger20::SchemaKind::Ty(ty @ swagger20::Type::JSONSchemaPropsOrStringArray) => {
+				let json_schema_props_type_name =
+					get_fully_qualified_type_name(
+						&swagger20::RefPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps".to_string()),
+						&replace_namespaces,
+						mod_root);
+
+				writeln!(file, "#[derive(Clone, Debug, PartialEq)]")?;
+				writeln!(file, "pub enum {} {{", type_name)?;
+				writeln!(file, "    Schema(Box<{}>),", json_schema_props_type_name)?; // Box to fix infinite recursion
+				match ty {
+					swagger20::Type::JSONSchemaPropsOrArray => writeln!(file, "    Schemas(Vec<{}>),", json_schema_props_type_name)?,
+					swagger20::Type::JSONSchemaPropsOrBool => writeln!(file, "    Bool(bool),")?,
+					swagger20::Type::JSONSchemaPropsOrStringArray => writeln!(file, "    Strings(Vec<String>),")?,
+					_ => unreachable!(),
+				}
+				writeln!(file, "}}")?;
+				writeln!(file)?;
+				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
+				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "        struct Visitor;")?;
+				writeln!(file)?;
+				writeln!(file, "        impl<'de> ::serde::de::Visitor<'de> for Visitor {{")?;
+				writeln!(file, "            type Value = {};", type_name)?;
+				writeln!(file)?;
+				writeln!(file, "            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {{")?;
+				writeln!(file, r#"                write!(f, "enum {}")"#, type_name)?;
+				writeln!(file, "            }}")?;
+				writeln!(file)?;
+				writeln!(file, "            fn visit_map<A>(self, map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {{")?;
+				writeln!(file, "                Ok({}::Schema(::serde::de::Deserialize::deserialize(::serde::de::value::MapAccessDeserializer::new(map))?))", type_name)?;
+				writeln!(file, "            }}")?;
+				writeln!(file)?;
+
+				match ty {
+					swagger20::Type::JSONSchemaPropsOrArray => {
+						writeln!(file, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: ::serde::de::SeqAccess<'de> {{")?;
+						writeln!(file, "                Ok({}::Schemas(::serde::de::Deserialize::deserialize(::serde::de::value::SeqAccessDeserializer::new(seq))?))", type_name)?;
+						writeln!(file, "            }}")?;
+					},
+
+					swagger20::Type::JSONSchemaPropsOrBool => {
+						writeln!(file, "            fn visit_bool<E>(self, v: bool) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+						writeln!(file, "                Ok({}::Bool(v))", type_name)?;
+						writeln!(file, "            }}")?;
+					},
+
+					swagger20::Type::JSONSchemaPropsOrStringArray => {
+						writeln!(file, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: ::serde::de::SeqAccess<'de> {{")?;
+						writeln!(file, "                Ok({}::Strings(::serde::de::Deserialize::deserialize(::serde::de::value::SeqAccessDeserializer::new(seq))?))", type_name)?;
+						writeln!(file, "            }}")?;
+					},
+
+					_ => unreachable!(),
+				}
+
+				writeln!(file, "        }}")?;
+				writeln!(file)?;
+				writeln!(file, "        deserializer.deserialize_any(Visitor)")?;
+				writeln!(file, "    }}")?;
+				writeln!(file, "}}")?;
+				writeln!(file)?;
+				writeln!(file, "impl ::serde::Serialize for {} {{", type_name)?;
+				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {{")?;
+				writeln!(file, "        match self {{")?;
+				writeln!(file, "            {}::Schema(value) => value.serialize(serializer),", type_name)?;
+
+				match ty {
+					swagger20::Type::JSONSchemaPropsOrArray => writeln!(file, "            {}::Schemas(value) => value.serialize(serializer),", type_name)?,
+					swagger20::Type::JSONSchemaPropsOrBool => writeln!(file, "            {}::Bool(value) => value.serialize(serializer),", type_name)?,
+					swagger20::Type::JSONSchemaPropsOrStringArray => writeln!(file, "            {}::Strings(value) => value.serialize(serializer),", type_name)?,
+					_ => unreachable!(),
+				}
+
+				writeln!(file, "        }}")?;
+				writeln!(file, "    }}")?;
+				writeln!(file, "}}")?;
+
+				num_generated_structs += 1;
+			},
+
 			swagger20::SchemaKind::Ref(_) |
 			swagger20::SchemaKind::Ty(_) => {
 				// TODO: Should Ty be newtypes instead of aliases?
@@ -488,6 +559,10 @@ struct Fixups {
 	apiservicev1beta1_gkv: bool,
 	crd_gkv: bool,
 	crdstatus_optional_properties: bool,
+	json_ty: bool,
+	json_schema_props_or_array_ty: bool,
+	json_schema_props_or_bool_ty: bool,
+	json_schema_props_or_string_array_ty: bool,
 	poddisruptionbudgetstatus_optional_properties: bool,
 	raw_extension_ty: bool,
 }
@@ -510,6 +585,61 @@ impl Fixups {
 							}
 						}
 					},
+
+				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON" => {
+					// The spec says that `JSON` is an object with a property `Raw` that's a byte-formatted string.
+					// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
+					// The value of that field is itself a JSON-serialized value.
+					//
+					// Thus `JSON` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
+					//
+					// Ref: https://github.com/kubernetes/kubernetes/pull/65256
+					if let swagger20::SchemaKind::Ty(swagger20::Type::Any) = definition.kind {
+					}
+					else {
+						definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
+						self.json_ty = true;
+					}
+				},
+
+				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray" => {
+					// The spec says that `JSONSchemaPropsOrArray` is an object with properties `JSONSchemas` and `Schema`.
+					// In fact this type is either a `JSONSchemaProps` or an array of `JSONSchemaProps`.
+					//
+					// Ref: https://github.com/kubernetes/kubernetes/pull/65256
+					if let swagger20::SchemaKind::Ty(swagger20::Type::Any) = definition.kind {
+					}
+					else {
+						definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray);
+						self.json_schema_props_or_array_ty = true;
+					}
+				},
+
+				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool" => {
+					// The spec says that `JSONSchemaPropsOrBool` is an object with properties `Allows` and `Schema`.
+					// In fact this type is either a `bool` or a `JSONSchemaProps`.
+					//
+					// Ref: https://github.com/kubernetes/kubernetes/pull/65256
+					if let swagger20::SchemaKind::Ty(swagger20::Type::Any) = definition.kind {
+					}
+					else {
+						definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool);
+						self.json_schema_props_or_bool_ty = true;
+					}
+				},
+
+				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray" => {
+					// The spec says that `JSONSchemaPropsOrStringArray` is an object with properties `Property` and `Schema`.
+					// In fact this type is either a `bool` or a `JSONSchemaProps`.
+					//
+					// Ref: https://github.com/kubernetes/kubernetes/pull/65256
+					if let swagger20::SchemaKind::Ty(swagger20::Type::Any) = definition.kind {
+					}
+					else {
+						definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray);
+						self.json_schema_props_or_string_array_ty = true;
+					}
+				},
 
 				"io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup" =>
 					// The spec says that `APIGroup::serverAddressByClientCIDRs` is an array, but it can be null.
@@ -538,8 +668,12 @@ impl Fixups {
 					//
 					// https://github.com/kubernetes/kubernetes/pull/56434 will remove RawExtension and replace it with `{ type: "object" }`,
 					// which would've already been mapped to `Ty(Any)` by `Ty::parse`, so just replicate that for `RawExtension` here.
-					definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
-					self.raw_extension_ty = true;
+					if let swagger20::SchemaKind::Ty(swagger20::Type::Any) = definition.kind {
+					}
+					else {
+						definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
+						self.raw_extension_ty = true;
+					}
 				},
 
 				"io.k8s.api.policy.v1beta1.PodDisruptionBudgetStatus" =>
@@ -631,6 +765,22 @@ impl Fixups {
 
 		if !self.crdstatus_optional_properties {
 			return Err("never applied CustomResourceDefinitionStatus optional properties override".into());
+		}
+
+		if !self.json_ty {
+			return Err("never applied JSON override".into());
+		}
+
+		if !self.json_schema_props_or_array_ty {
+			return Err("never applied JSONSchemaPropsOrArray override".into());
+		}
+
+		if !self.json_schema_props_or_bool_ty {
+			return Err("never applied JSONSchemaPropsOrArray override".into());
+		}
+
+		if !self.json_schema_props_or_string_array_ty {
+			return Err("never applied JSONSchemaPropsOrArray override".into());
 		}
 
 		if !self.poddisruptionbudgetstatus_optional_properties {
@@ -808,6 +958,10 @@ fn get_rust_borrow_type(schema_kind: &swagger20::SchemaKind, replace_namespaces:
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => "&::chrono::DateTime<::chrono::Utc>".into(),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::IntOrString) }) => "&::IntOrString".into(),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => "&str".into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => panic!("JSON schema types not supported"),
 	}
 }
 
@@ -835,6 +989,10 @@ fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => "::chrono::DateTime<::chrono::Utc>".into(),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::IntOrString) }) => "::IntOrString".into(),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => "String".into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
+		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => panic!("JSON schema types not supported"),
 	}
 }
 

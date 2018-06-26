@@ -132,6 +132,7 @@ impl Client {
 		};
 
 		let mut request = match method {
+			http::Method::DELETE => self.inner.delete(&url),
 			http::Method::GET => self.inner.get(&url),
 			http::Method::POST => self.inner.post(&url),
 			other => panic!("{}", other),

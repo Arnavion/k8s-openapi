@@ -178,6 +178,11 @@ pub enum Type {
 	Number { format: NumberFormat },
 	Object { additional_properties: Box<Schema> },
 	String { format: Option<StringFormat> },
+
+	// Special types that need alterative codegen. Never parsed from the spec.
+	JSONSchemaPropsOrArray,
+	JSONSchemaPropsOrBool,
+	JSONSchemaPropsOrStringArray,
 }
 
 impl Type {
