@@ -143,7 +143,8 @@ impl StorageClass {
 
 #[derive(Debug)]
 pub enum DeleteStorageV1CollectionStorageClassResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_8::api::storage::v1::StorageClass),
     Unauthorized,
     Other,
 }
@@ -152,12 +153,25 @@ impl ::Response for DeleteStorageV1CollectionStorageClassResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteStorageV1CollectionStorageClassResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteStorageV1CollectionStorageClassResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteStorageV1CollectionStorageClassResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1CollectionStorageClassResponse::Unauthorized, 0)),
             _ => Ok((DeleteStorageV1CollectionStorageClassResponse::Other, 0)),
@@ -205,7 +219,8 @@ impl StorageClass {
 
 #[derive(Debug)]
 pub enum DeleteStorageV1StorageClassResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_8::api::storage::v1::StorageClass),
     Unauthorized,
     Other,
 }
@@ -214,12 +229,25 @@ impl ::Response for DeleteStorageV1StorageClassResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteStorageV1StorageClassResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteStorageV1StorageClassResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteStorageV1StorageClassResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1StorageClassResponse::Unauthorized, 0)),
             _ => Ok((DeleteStorageV1StorageClassResponse::Other, 0)),

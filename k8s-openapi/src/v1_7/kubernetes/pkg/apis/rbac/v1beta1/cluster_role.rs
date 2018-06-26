@@ -104,7 +104,8 @@ impl ClusterRole {
 
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1beta1ClusterRoleResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_7::kubernetes::pkg::apis::rbac::v1beta1::ClusterRole),
     Unauthorized,
     Other,
 }
@@ -113,12 +114,25 @@ impl ::Response for DeleteRbacAuthorizationV1beta1ClusterRoleResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteRbacAuthorizationV1beta1ClusterRoleResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteRbacAuthorizationV1beta1ClusterRoleResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteRbacAuthorizationV1beta1ClusterRoleResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1beta1ClusterRoleResponse::Unauthorized, 0)),
             _ => Ok((DeleteRbacAuthorizationV1beta1ClusterRoleResponse::Other, 0)),
@@ -179,7 +193,8 @@ impl ClusterRole {
 
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1beta1CollectionClusterRoleResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_7::kubernetes::pkg::apis::rbac::v1beta1::ClusterRole),
     Unauthorized,
     Other,
 }
@@ -188,12 +203,25 @@ impl ::Response for DeleteRbacAuthorizationV1beta1CollectionClusterRoleResponse 
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteRbacAuthorizationV1beta1CollectionClusterRoleResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteRbacAuthorizationV1beta1CollectionClusterRoleResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteRbacAuthorizationV1beta1CollectionClusterRoleResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1beta1CollectionClusterRoleResponse::Unauthorized, 0)),
             _ => Ok((DeleteRbacAuthorizationV1beta1CollectionClusterRoleResponse::Other, 0)),

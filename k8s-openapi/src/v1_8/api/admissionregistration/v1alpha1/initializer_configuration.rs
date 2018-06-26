@@ -129,7 +129,8 @@ impl InitializerConfiguration {
 
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Unauthorized,
     Other,
 }
@@ -138,12 +139,25 @@ impl ::Response for DeleteAdmissionregistrationV1alpha1CollectionInitializerConf
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse::Unauthorized, 0)),
             _ => Ok((DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse::Other, 0)),
@@ -191,7 +205,8 @@ impl InitializerConfiguration {
 
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Unauthorized,
     Other,
 }
@@ -200,12 +215,25 @@ impl ::Response for DeleteAdmissionregistrationV1alpha1InitializerConfigurationR
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse::Unauthorized, 0)),
             _ => Ok((DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other, 0)),

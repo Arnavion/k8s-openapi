@@ -106,7 +106,8 @@ impl APIService {
 
 #[derive(Debug)]
 pub enum DeleteApiregistrationV1beta1APIServiceResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_8::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
     Unauthorized,
     Other,
 }
@@ -115,12 +116,25 @@ impl ::Response for DeleteApiregistrationV1beta1APIServiceResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteApiregistrationV1beta1APIServiceResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteApiregistrationV1beta1APIServiceResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteApiregistrationV1beta1APIServiceResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteApiregistrationV1beta1APIServiceResponse::Unauthorized, 0)),
             _ => Ok((DeleteApiregistrationV1beta1APIServiceResponse::Other, 0)),
@@ -193,7 +207,8 @@ impl APIService {
 
 #[derive(Debug)]
 pub enum DeleteApiregistrationV1beta1CollectionAPIServiceResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_8::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
     Unauthorized,
     Other,
 }
@@ -202,12 +217,25 @@ impl ::Response for DeleteApiregistrationV1beta1CollectionAPIServiceResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteApiregistrationV1beta1CollectionAPIServiceResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteApiregistrationV1beta1CollectionAPIServiceResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteApiregistrationV1beta1CollectionAPIServiceResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteApiregistrationV1beta1CollectionAPIServiceResponse::Unauthorized, 0)),
             _ => Ok((DeleteApiregistrationV1beta1CollectionAPIServiceResponse::Other, 0)),

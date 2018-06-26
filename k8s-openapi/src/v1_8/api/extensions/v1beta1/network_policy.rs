@@ -133,7 +133,8 @@ impl NetworkPolicy {
 
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_8::api::extensions::v1beta1::NetworkPolicy),
     Unauthorized,
     Other,
 }
@@ -142,12 +143,25 @@ impl ::Response for DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResp
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse::Unauthorized, 0)),
             _ => Ok((DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse::Other, 0)),
@@ -197,7 +211,8 @@ impl NetworkPolicy {
 
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_8::api::extensions::v1beta1::NetworkPolicy),
     Unauthorized,
     Other,
 }
@@ -206,12 +221,25 @@ impl ::Response for DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
             _ => Ok((DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::Other, 0)),

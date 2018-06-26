@@ -156,7 +156,8 @@ impl StatefulSet {
 
 #[derive(Debug)]
 pub enum DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_9::api::apps::v1beta2::StatefulSet),
     Unauthorized,
     Other,
 }
@@ -165,12 +166,25 @@ impl ::Response for DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse::Unauthorized, 0)),
             _ => Ok((DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse::Other, 0)),
@@ -220,7 +234,8 @@ impl StatefulSet {
 
 #[derive(Debug)]
 pub enum DeleteAppsV1beta2NamespacedStatefulSetResponse {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_9::api::apps::v1beta2::StatefulSet),
     Unauthorized,
     Other,
 }
@@ -229,12 +244,25 @@ impl ::Response for DeleteAppsV1beta2NamespacedStatefulSetResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteAppsV1beta2NamespacedStatefulSetResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAppsV1beta2NamespacedStatefulSetResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAppsV1beta2NamespacedStatefulSetResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta2NamespacedStatefulSetResponse::Unauthorized, 0)),
             _ => Ok((DeleteAppsV1beta2NamespacedStatefulSetResponse::Other, 0)),

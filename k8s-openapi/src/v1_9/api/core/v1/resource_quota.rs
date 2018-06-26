@@ -154,7 +154,8 @@ impl ResourceQuota {
 
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedResourceQuotaResponse {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_9::api::core::v1::ResourceQuota),
     Unauthorized,
     Other,
 }
@@ -163,12 +164,25 @@ impl ::Response for DeleteCoreV1CollectionNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteCoreV1CollectionNamespacedResourceQuotaResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1CollectionNamespacedResourceQuotaResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1CollectionNamespacedResourceQuotaResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedResourceQuotaResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1CollectionNamespacedResourceQuotaResponse::Other, 0)),
@@ -218,7 +232,8 @@ impl ResourceQuota {
 
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedResourceQuotaResponse {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_9::api::core::v1::ResourceQuota),
     Unauthorized,
     Other,
 }
@@ -227,12 +242,25 @@ impl ::Response for DeleteCoreV1NamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteCoreV1NamespacedResourceQuotaResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1NamespacedResourceQuotaResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1NamespacedResourceQuotaResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedResourceQuotaResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1NamespacedResourceQuotaResponse::Other, 0)),

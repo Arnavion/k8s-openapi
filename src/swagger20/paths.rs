@@ -47,7 +47,7 @@ impl<'de> ::serde::Deserialize<'de> for KubernetesAction {
 	}
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Method {
 	Delete,
 	Get,

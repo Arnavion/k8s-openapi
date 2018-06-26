@@ -124,7 +124,8 @@ impl RoleBinding {
 
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::RoleBinding),
     Unauthorized,
     Other,
 }
@@ -133,12 +134,25 @@ impl ::Response for DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindi
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::Unauthorized, 0)),
             _ => Ok((DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::Other, 0)),
@@ -188,7 +202,8 @@ impl RoleBinding {
 
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::RoleBinding),
     Unauthorized,
     Other,
 }
@@ -197,12 +212,25 @@ impl ::Response for DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized, 0)),
             _ => Ok((DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other, 0)),

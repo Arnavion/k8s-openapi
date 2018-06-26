@@ -124,7 +124,8 @@ impl PersistentVolumeClaim {
 
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_7::kubernetes::pkg::api::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
@@ -133,12 +134,25 @@ impl ::Response for DeleteCoreV1CollectionNamespacedPersistentVolumeClaimRespons
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::Other, 0)),
@@ -188,7 +202,8 @@ impl PersistentVolumeClaim {
 
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_7::kubernetes::pkg::api::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
@@ -197,12 +212,25 @@ impl ::Response for DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),

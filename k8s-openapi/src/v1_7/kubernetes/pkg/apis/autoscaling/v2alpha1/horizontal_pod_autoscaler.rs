@@ -124,7 +124,8 @@ impl HorizontalPodAutoscaler {
 
 #[derive(Debug)]
 pub enum DeleteAutoscalingV2alpha1CollectionNamespacedHorizontalPodAutoscalerResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_7::kubernetes::pkg::apis::autoscaling::v2alpha1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
@@ -133,12 +134,25 @@ impl ::Response for DeleteAutoscalingV2alpha1CollectionNamespacedHorizontalPodAu
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteAutoscalingV2alpha1CollectionNamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAutoscalingV2alpha1CollectionNamespacedHorizontalPodAutoscalerResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAutoscalingV2alpha1CollectionNamespacedHorizontalPodAutoscalerResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAutoscalingV2alpha1CollectionNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
             _ => Ok((DeleteAutoscalingV2alpha1CollectionNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
@@ -188,7 +202,8 @@ impl HorizontalPodAutoscaler {
 
 #[derive(Debug)]
 pub enum DeleteAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_7::kubernetes::pkg::apis::autoscaling::v2alpha1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
@@ -197,12 +212,25 @@ impl ::Response for DeleteAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerRe
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
             _ => Ok((DeleteAutoscalingV2alpha1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),

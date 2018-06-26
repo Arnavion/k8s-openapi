@@ -150,7 +150,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 			}
 		}
 
-		let (mut file, type_name) = create_file_for_type(&definition_path, &out_dir, &replace_namespaces)?;
+		let (mut file, type_name, type_ref_path) = create_file_for_type(&definition_path, &out_dir, &replace_namespaces)?;
 
 		writeln!(file, "// Generated from definition {}", definition_path)?;
 		writeln!(file)?;
@@ -289,7 +289,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 								kubernetes_group_kind_version.group, kubernetes_group_kind_version.version, kubernetes_group_kind_version.kind)?;
 
 							for (path, path_item, operation) in operations {
-								write_operation(&mut file, operation, &replace_namespaces, mod_root, Some(&type_name), path, path_item)?;
+								write_operation(&mut file, operation, &replace_namespaces, mod_root, Some(&type_name), Some(&type_ref_path), path, path_item)?;
 								num_generated_apis += 1;
 							}
 
@@ -455,7 +455,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 						operation.id, group, version, kind).into());
 				}
 
-				write_operation(&mut mod_root_file, operation, &replace_namespaces, mod_root, None, path, path_item)?;
+				write_operation(&mut mod_root_file, operation, &replace_namespaces, mod_root, None, None, path, path_item)?;
 				num_generated_apis += 1;
 			}
 		}
@@ -649,7 +649,7 @@ fn create_file_for_type(
 	definition_path: &swagger20::DefinitionPath,
 	out_dir: &std::path::Path,
 	replace_namespaces: &[(Vec<&str>, Vec<String>)],
-) -> Result<(std::io::BufWriter<std::fs::File>, String), Error> {
+) -> Result<(std::io::BufWriter<std::fs::File>, String, swagger20::RefPath), Error> {
 	use std::io::Write;
 
 	let parts = replace_namespace(definition_path.split('.'), replace_namespaces);
@@ -697,8 +697,11 @@ fn create_file_for_type(
 	}
 
 	let file_name = current.join(&*mod_name).with_extension("rs");
+	let file = std::io::BufWriter::new(std::fs::File::create(file_name)?);
 
-	Ok((std::io::BufWriter::new(std::fs::File::create(file_name)?), type_name))
+	let ref_path = swagger20::RefPath(definition_path.0.to_string());
+
+	Ok((file, type_name, ref_path))
 }
 
 fn get_comment_text<'a>(s: &'a str) -> impl Iterator<Item = std::borrow::Cow<'static, str>> + 'a {
@@ -857,6 +860,7 @@ fn write_operation(
 	replace_namespaces: &[(Vec<&str>, Vec<String>)],
 	mod_root: &str,
 	type_name: Option<&str>,
+	type_ref_path: Option<&swagger20::RefPath>,
 	path: &str,
 	path_item: &swagger20::PathItem,
 ) -> Result<(), Error> {
@@ -889,7 +893,21 @@ fn write_operation(
 
 			let schema = schema.as_ref();
 
-			Ok((http_status_code, variant_name, schema))
+			let is_delete_ok_status = if let Some(schema) = schema {
+				match &schema.kind {
+					swagger20::SchemaKind::Ref(ref_path) if
+						&**ref_path == "io.k8s.apimachinery.pkg.apis.meta.v1.Status" &&
+						operation.method == swagger20::Method::Delete &&
+						status_code == reqwest::StatusCode::Ok => true,
+
+					_ => false,
+				}
+			}
+			else {
+				false
+			};
+
+			Ok((http_status_code, variant_name, schema, is_delete_ok_status))
 		})
 		.collect();
 	let operation_responses = operation_responses?;
@@ -1062,13 +1080,24 @@ fn write_operation(
 
 	writeln!(file)?;
 
-
 	writeln!(file, "#[derive(Debug)]")?;
 	writeln!(file, "pub enum {} {{", operation_result_name)?;
 
-	for &(_, variant_name, schema) in &operation_responses {
+	for &(_, variant_name, schema, is_delete_ok_status) in &operation_responses {
 		if let Some(schema) = schema {
-			writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
+			if is_delete_ok_status {
+				// DELETE operations that return metav1.Status for HTTP 200 can also return the object itself instead.
+				//
+				// Ref https://github.com/kubernetes/kubernetes/issues/59501
+				writeln!(file, "    {}Status({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
+				writeln!(file, "    {}Value({}),", variant_name, get_fully_qualified_type_name(
+					type_ref_path.ok_or_else(|| "DELETE-Ok-Status that isn't associated with a type")?,
+					&replace_namespaces,
+					mod_root))?;
+			}
+			else {
+				writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
+			}
 		}
 		else {
 			writeln!(file, "    {},", variant_name)?;
@@ -1080,7 +1109,7 @@ fn write_operation(
 
 	writeln!(file, "impl ::Response for {} {{", operation_result_name)?;
 
-	let uses_buf = operation_responses.iter().any(|&(_, _, schema)| schema.is_some());
+	let uses_buf = operation_responses.iter().any(|&(_, _, schema, _)| schema.is_some());
 
 	if uses_buf {
 		writeln!(file, "    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {{")?;
@@ -1095,7 +1124,7 @@ fn write_operation(
 	};
 
 	writeln!(file, "        match status_code {{")?;
-	for &(http_status_code, variant_name, schema) in &operation_responses {
+	for &(http_status_code, variant_name, schema, is_delete_ok_status) in &operation_responses {
 		write!(file, "            ::http::StatusCode::{} => ", http_status_code)?;
 		if let Some(schema) = schema {
 			writeln!(file, "{{")?;
@@ -1124,6 +1153,27 @@ fn write_operation(
 					writeln!(file, "                    None => return Err(::ResponseError::NeedMoreData),")?;
 					writeln!(file, "                }};")?;
 					writeln!(file, "                Ok(({}::{}(result), byte_offset))", operation_result_name, variant_name)?;
+				}
+				else if is_delete_ok_status {
+					writeln!(file, "                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {{")?;
+					writeln!(file, "                    Ok(value) => value,")?;
+					writeln!(file, "                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                    Err(err) => return Err(::ResponseError::Json(err)),")?;
+					writeln!(file, "                }};")?;
+					writeln!(file, r#"                let is_status = match result.get("kind") {{"#)?;
+					writeln!(file, r#"                    Some(::serde_json::Value::String(s)) if s == "Status" => true,"#)?;
+					writeln!(file, "                    _ => false,")?;
+					writeln!(file, "                }};")?;
+					writeln!(file, "                if is_status {{")?;
+					writeln!(file, "                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));")?;
+					writeln!(file, "                    let result = result.map_err(::ResponseError::Json)?;")?;
+					writeln!(file, "                    Ok(({}::{}Status(result), buf.len()))", operation_result_name, variant_name)?;
+					writeln!(file, "                }}")?;
+					writeln!(file, "                else {{")?;
+					writeln!(file, "                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));")?;
+					writeln!(file, "                    let result = result.map_err(::ResponseError::Json)?;")?;
+					writeln!(file, "                    Ok(({}::{}Value(result), buf.len()))", operation_result_name, variant_name)?;
+					writeln!(file, "                }}")?;
 				}
 				else {
 					writeln!(file, "                let result = match ::serde_json::from_slice(buf) {{")?;

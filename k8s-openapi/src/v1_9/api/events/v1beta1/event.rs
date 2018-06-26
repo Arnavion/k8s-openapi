@@ -189,7 +189,8 @@ impl Event {
 
 #[derive(Debug)]
 pub enum DeleteEventsV1beta1CollectionNamespacedEventResponse {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_9::api::events::v1beta1::Event),
     Unauthorized,
     Other,
 }
@@ -198,12 +199,25 @@ impl ::Response for DeleteEventsV1beta1CollectionNamespacedEventResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteEventsV1beta1CollectionNamespacedEventResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteEventsV1beta1CollectionNamespacedEventResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteEventsV1beta1CollectionNamespacedEventResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteEventsV1beta1CollectionNamespacedEventResponse::Unauthorized, 0)),
             _ => Ok((DeleteEventsV1beta1CollectionNamespacedEventResponse::Other, 0)),
@@ -253,7 +267,8 @@ impl Event {
 
 #[derive(Debug)]
 pub enum DeleteEventsV1beta1NamespacedEventResponse {
-    Ok(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_9::api::events::v1beta1::Event),
     Unauthorized,
     Other,
 }
@@ -262,12 +277,25 @@ impl ::Response for DeleteEventsV1beta1NamespacedEventResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteEventsV1beta1NamespacedEventResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteEventsV1beta1NamespacedEventResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteEventsV1beta1NamespacedEventResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteEventsV1beta1NamespacedEventResponse::Unauthorized, 0)),
             _ => Ok((DeleteEventsV1beta1NamespacedEventResponse::Other, 0)),

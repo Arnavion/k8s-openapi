@@ -1088,7 +1088,8 @@ impl Pod {
 
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedPodResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
@@ -1097,12 +1098,25 @@ impl ::Response for DeleteCoreV1CollectionNamespacedPodResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteCoreV1CollectionNamespacedPodResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1CollectionNamespacedPodResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1CollectionNamespacedPodResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1CollectionNamespacedPodResponse::Other, 0)),
@@ -1152,7 +1166,8 @@ impl Pod {
 
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedPodResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
@@ -1161,12 +1176,25 @@ impl ::Response for DeleteCoreV1NamespacedPodResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteCoreV1NamespacedPodResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1NamespacedPodResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteCoreV1NamespacedPodResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1NamespacedPodResponse::Other, 0)),

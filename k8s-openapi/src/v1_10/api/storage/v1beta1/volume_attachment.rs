@@ -152,7 +152,8 @@ impl VolumeAttachment {
 
 #[derive(Debug)]
 pub enum DeleteStorageV1beta1CollectionVolumeAttachmentResponse {
-    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_10::api::storage::v1beta1::VolumeAttachment),
     Unauthorized,
     Other,
 }
@@ -161,12 +162,25 @@ impl ::Response for DeleteStorageV1beta1CollectionVolumeAttachmentResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteStorageV1beta1CollectionVolumeAttachmentResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteStorageV1beta1CollectionVolumeAttachmentResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteStorageV1beta1CollectionVolumeAttachmentResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1beta1CollectionVolumeAttachmentResponse::Unauthorized, 0)),
             _ => Ok((DeleteStorageV1beta1CollectionVolumeAttachmentResponse::Other, 0)),
@@ -214,7 +228,8 @@ impl VolumeAttachment {
 
 #[derive(Debug)]
 pub enum DeleteStorageV1beta1VolumeAttachmentResponse {
-    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(::v1_10::api::storage::v1beta1::VolumeAttachment),
     Unauthorized,
     Other,
 }
@@ -223,12 +238,25 @@ impl ::Response for DeleteStorageV1beta1VolumeAttachmentResponse {
     fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
         match status_code {
             ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
                     Ok(value) => value,
                     Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
                     Err(err) => return Err(::ResponseError::Json(err)),
                 };
-                Ok((DeleteStorageV1beta1VolumeAttachmentResponse::Ok(result), buf.len()))
+                let is_status = match result.get("kind") {
+                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    _ => false,
+                };
+                if is_status {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteStorageV1beta1VolumeAttachmentResponse::OkStatus(result), buf.len()))
+                }
+                else {
+                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
+                    let result = result.map_err(::ResponseError::Json)?;
+                    Ok((DeleteStorageV1beta1VolumeAttachmentResponse::OkValue(result), buf.len()))
+                }
             },
             ::http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1beta1VolumeAttachmentResponse::Unauthorized, 0)),
             _ => Ok((DeleteStorageV1beta1VolumeAttachmentResponse::Other, 0)),
