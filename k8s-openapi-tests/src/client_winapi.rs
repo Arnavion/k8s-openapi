@@ -1,3 +1,9 @@
+#![cfg_attr(feature = "cargo-clippy", allow(
+	cast_possible_truncation,
+	cast_ptr_alignment,
+	unreadable_literal,
+))]
+
 extern crate winapi;
 
 pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::Path) -> Result<Vec<u8>, ::Error> {

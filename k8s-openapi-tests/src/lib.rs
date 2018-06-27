@@ -1,5 +1,12 @@
 #![cfg(test)]
 
+#![cfg_attr(feature = "cargo-clippy", deny(clippy, clippy_pedantic))]
+#![cfg_attr(feature = "cargo-clippy", allow(
+	default_trait_access,
+	indexing_slicing,
+	unseparated_literal_suffix,
+))]
+
 extern crate backtrace;
 extern crate bytes;
 extern crate k8s_openapi;
@@ -36,6 +43,7 @@ struct Client {
 	server: http::Uri,
 }
 
+#[cfg_attr(feature = "cargo-clippy", allow(use_self))]
 impl Client {
 	fn new() -> Result<Self, Error> {
 		let kubeconfig: KubeConfig = {
@@ -176,7 +184,7 @@ impl<R, F, T> Iterator for MultipleValuesIterator<R, F, T> where
 			match (self.f)(response, self.response_body.status_code, &*self.response_body) {
 				Ok(ValueResult::GotValue(result)) => return Some(Ok(result)),
 				Ok(ValueResult::NeedMoreData) => (),
-				Err(err) => return Some(Err(err.into())),
+				Err(err) => return Some(Err(err)),
 			}
 		}
 	}
