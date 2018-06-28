@@ -2,7 +2,6 @@
 name = "k8s-openapi"
 version = "0.1.0"
 authors = ["Arnavion <arnavion@gmail.com>"]
-publish = false
 
 [dependencies]
 base64 = "0.9.x"
