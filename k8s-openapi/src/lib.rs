@@ -242,3 +242,6 @@ pub mod v1_9;
 
 #[cfg(feature = "v1_10")]
 pub mod v1_10;
+
+#[cfg(feature = "v1_11")]
+pub mod v1_11;

@@ -8,6 +8,8 @@ fn get() {
 
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::api::core::v1 as api;
 
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::api::core::v1 as api;
+
 	let client = ::Client::new().expect("couldn't create client");
 
 	#[cfg(feature = "v1_7")] let request =

@@ -9,6 +9,9 @@ fn list() {
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
 
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
+
 	#[derive(Debug, Default, Deserialize, Serialize)]
 	struct FooBar {
 		#[serde(rename = "apiVersion")]
@@ -84,7 +87,7 @@ fn list() {
 			..Default::default()
 		},
 		scope: "Namespaced".to_string(),
-		version: "v1".to_string(),
+		version: "v1".to_string().into(),
 		..Default::default()
 	};
 

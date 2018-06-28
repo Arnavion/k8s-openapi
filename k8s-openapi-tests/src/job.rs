@@ -16,7 +16,9 @@ fn create() {
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::api::batch::v1 as batch;
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
 
-	// ::std::thread::sleep(::std::time::Duration::from_secs(10));
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::api::core::v1 as api;
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::api::batch::v1 as batch;
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
 
 	let client = ::Client::new().expect("couldn't create client");
 

@@ -8,6 +8,8 @@ fn list() {
 
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10 as k8s;
 
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11 as k8s;
+
 	let client = ::Client::new().expect("couldn't create client");
 
 	let request = k8s::get_api_versions().expect("couldn't get API versions");

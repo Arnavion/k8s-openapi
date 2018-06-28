@@ -19,6 +19,11 @@ fn special_idents() {
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
 	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::api::rbac::v1beta1 as rbac;
 
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::api::core::v1 as api;
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::api::authorization::v1 as authorization;
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
+	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::api::rbac::v1beta1 as rbac;
+
 	let _ = api::FCVolumeSource { target_wwns: Default::default(), ..Default::default() };
 
 	let _ = api::ServiceSpec { external_ips: Default::default(), ..Default::default() };
