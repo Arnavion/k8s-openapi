@@ -245,3 +245,5 @@ pub mod v1_10;
 
 #[cfg(feature = "v1_11")]
 pub mod v1_11;
+
+include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));

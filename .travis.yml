@@ -3,11 +3,11 @@ rust:
 - stable
 
 env:
-- FEATURE=v1_7
+- FEATURE=test_v1_7
   K8S_VERSION=v1.7.5
-- FEATURE=v1_8
+- FEATURE=test_v1_8
   K8S_VERSION=v1.8.0
-- FEATURE=v1_9
+- FEATURE=test_v1_9
   K8S_VERSION=v1.9.4
 
 script:

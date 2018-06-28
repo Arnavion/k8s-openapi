@@ -8,7 +8,7 @@
 ))]
 
 extern crate backtrace;
-extern crate k8s_openapi;
+#[macro_use] extern crate k8s_openapi;
 extern crate reqwest;
 extern crate serde;
 #[macro_use] extern crate serde_derive;
@@ -239,8 +239,10 @@ struct KubeConfigUser {
 
 mod api_versions;
 
-#[cfg(not(feature = "v1_7"))] // CRDs not supported in v1.7
-mod custom_resource_definition;
+k8s_if_ge_1_8! {
+	// CRDs not supported in v1.7
+	mod custom_resource_definition;
+}
 
 mod deployment;
 

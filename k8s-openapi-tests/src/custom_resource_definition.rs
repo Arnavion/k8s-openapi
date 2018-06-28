@@ -1,16 +1,21 @@
 #[test]
 fn list() {
-	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::apimachinery::pkg::apis::meta::v1 as meta;
-
-	#[cfg(feature = "v1_9")] use ::k8s_openapi::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-	#[cfg(feature = "v1_9")] use ::k8s_openapi::v1_9::apimachinery::pkg::apis::meta::v1 as meta;
-
-	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
-
-	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
+	k8s_if_1_8! {
+		use ::k8s_openapi::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+		use ::k8s_openapi::v1_8::apimachinery::pkg::apis::meta::v1 as meta;
+	}
+	k8s_if_1_9! {
+		use ::k8s_openapi::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+		use ::k8s_openapi::v1_9::apimachinery::pkg::apis::meta::v1 as meta;
+	}
+	k8s_if_1_10! {
+		use ::k8s_openapi::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+		use ::k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
+	}
+	k8s_if_1_11! {
+		use ::k8s_openapi::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+		use ::k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
+	}
 
 	#[derive(Debug, Default, Deserialize, Serialize)]
 	struct FooBar {
@@ -91,43 +96,45 @@ fn list() {
 		..Default::default()
 	};
 
-	#[cfg(not(any(feature = "v1_7", feature = "v1_8")))]
-	let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
-		validation: Some(apiextensions::CustomResourceValidation {
-			open_api_v3_schema: Some(apiextensions::JSONSchemaProps {
-				properties: Some(vec![
-					("spec".to_string(), apiextensions::JSONSchemaProps {
-						properties: Some(vec![
-							("prop1".to_string(), apiextensions::JSONSchemaProps {
-								type_: Some("string".to_string()),
-								..Default::default()
-							}),
-							("prop2".to_string(), apiextensions::JSONSchemaProps {
-								type_: Some("array".to_string()),
-								items: Some(apiextensions::JSONSchemaPropsOrArray::Schema(Box::new(apiextensions::JSONSchemaProps {
-									type_: Some("boolean".to_string()),
+	k8s_if_ge_1_9! {
+		// CRD validation entered beta in v1.9
+		let custom_resource_definition_spec = apiextensions::CustomResourceDefinitionSpec {
+			validation: Some(apiextensions::CustomResourceValidation {
+				open_api_v3_schema: Some(apiextensions::JSONSchemaProps {
+					properties: Some(vec![
+						("spec".to_string(), apiextensions::JSONSchemaProps {
+							properties: Some(vec![
+								("prop1".to_string(), apiextensions::JSONSchemaProps {
+									type_: Some("string".to_string()),
 									..Default::default()
-								}))),
-								..Default::default()
-							}),
-							("prop3".to_string(), apiextensions::JSONSchemaProps {
-								format: Some("int32".to_string()),
-								type_: Some("integer".to_string()),
-								..Default::default()
-							}),
-						].into_iter().collect()),
-						required: Some(vec![
-							"prop1".to_string(),
-							"prop2".to_string(),
-						]),
-						..Default::default()
-					}),
-				].into_iter().collect()),
-				..Default::default()
+								}),
+								("prop2".to_string(), apiextensions::JSONSchemaProps {
+									type_: Some("array".to_string()),
+									items: Some(apiextensions::JSONSchemaPropsOrArray::Schema(Box::new(apiextensions::JSONSchemaProps {
+										type_: Some("boolean".to_string()),
+										..Default::default()
+									}))),
+									..Default::default()
+								}),
+								("prop3".to_string(), apiextensions::JSONSchemaProps {
+									format: Some("int32".to_string()),
+									type_: Some("integer".to_string()),
+									..Default::default()
+								}),
+							].into_iter().collect()),
+							required: Some(vec![
+								"prop1".to_string(),
+								"prop2".to_string(),
+							]),
+							..Default::default()
+						}),
+					].into_iter().collect()),
+					..Default::default()
+				}),
 			}),
-		}),
-		..custom_resource_definition_spec
-	};
+			..custom_resource_definition_spec
+		};
+	}
 
 	let custom_resource_definition = apiextensions::CustomResourceDefinition {
 		metadata: Some(meta::ObjectMeta {
@@ -143,17 +150,17 @@ fn list() {
 		.expect("couldn't create custom resource definition");
 	let response = client.execute(request).expect("couldn't create custom resource definition");
 	let custom_resource_definition: apiextensions::CustomResourceDefinition =
-		::get_single_value(response, |response, status_code, _response_body| match response {
-			#[cfg(feature = "v1_8")] apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == ::http::StatusCode::CREATED =>
+		::get_single_value(response, |response, status_code, _response_body| k8s_match!(response, {
+			k8s_if_le_1_8!(apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == ::http::StatusCode::CREATED =>
 				match ::serde_json::from_slice(_response_body) {
 					Ok(custom_resource_definition) => Ok(::ValueResult::GotValue(custom_resource_definition)),
 					Err(ref err) if err.is_eof() => Ok(::ValueResult::NeedMoreData),
 					Err(err) => Err(err.into()),
-				},
-			#[cfg(not(feature = "v1_8"))] apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Created(custom_resource_definition) =>
-				Ok(::ValueResult::GotValue(custom_resource_definition)),
+				}),
+			k8s_if_ge_1_9!(apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Created(custom_resource_definition) =>
+				Ok(::ValueResult::GotValue(custom_resource_definition))),
 			other => Err(format!("{:?} {}", other, status_code).into()),
-		}).expect("couldn't create custom resource definition");
+		})).expect("couldn't create custom resource definition");
 
 	// Wait for CRD to be registered
 	loop {
@@ -210,8 +217,7 @@ fn list() {
 		other => Err(format!("{:?} {}", other, status_code).into()),
 	}).expect("couldn't delete custom resource");
 
-	#[cfg(not(any(feature = "v1_7", feature = "v1_8")))]
-	{
+	k8s_if_ge_1_9! {
 		let fb2 = ::serde_json::Value::Object(vec![
 			("apiVersion".to_string(), ::serde_json::Value::String("k8s-openapi-tests-custom-resource-definition.com/v1".to_string())),
 			("kind".to_string(), ::serde_json::Value::String("FooBar".to_string())),
@@ -233,8 +239,7 @@ fn list() {
 		}).expect("expected custom resource creation to fail validation");
 	}
 
-	#[cfg(not(any(feature = "v1_7", feature = "v1_8")))]
-	{
+	k8s_if_ge_1_9! {
 		let fb3 = ::serde_json::Value::Object(vec![
 			("apiVersion".to_string(), ::serde_json::Value::String("k8s-openapi-tests-custom-resource-definition.com/v1".to_string())),
 			("kind".to_string(), ::serde_json::Value::String("FooBar".to_string())),

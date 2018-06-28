@@ -1,24 +1,30 @@
 #[test]
 fn create() {
-	#[cfg(feature = "v1_7")] use ::k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
-	#[cfg(feature = "v1_7")] use ::k8s_openapi::v1_7::kubernetes::pkg::apis::batch::v1 as batch;
-	#[cfg(feature = "v1_7")] use ::k8s_openapi::v1_7::apimachinery::pkg::apis::meta::v1 as meta;
-
-	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::api::core::v1 as api;
-	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::api::batch::v1 as batch;
-	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::apimachinery::pkg::apis::meta::v1 as meta;
-
-	#[cfg(feature = "v1_9")] use ::k8s_openapi::v1_9::api::core::v1 as api;
-	#[cfg(feature = "v1_9")] use ::k8s_openapi::v1_9::api::batch::v1 as batch;
-	#[cfg(feature = "v1_9")] use ::k8s_openapi::v1_9::apimachinery::pkg::apis::meta::v1 as meta;
-
-	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::api::core::v1 as api;
-	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::api::batch::v1 as batch;
-	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
-
-	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::api::core::v1 as api;
-	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::api::batch::v1 as batch;
-	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
+	k8s_if_1_7! {
+		use ::k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
+		use ::k8s_openapi::v1_7::kubernetes::pkg::apis::batch::v1 as batch;
+		use ::k8s_openapi::v1_7::apimachinery::pkg::apis::meta::v1 as meta;
+	}
+	k8s_if_1_8! {
+		use ::k8s_openapi::v1_8::api::core::v1 as api;
+		use ::k8s_openapi::v1_8::api::batch::v1 as batch;
+		use ::k8s_openapi::v1_8::apimachinery::pkg::apis::meta::v1 as meta;
+	}
+	k8s_if_1_9! {
+		use ::k8s_openapi::v1_9::api::core::v1 as api;
+		use ::k8s_openapi::v1_9::api::batch::v1 as batch;
+		use ::k8s_openapi::v1_9::apimachinery::pkg::apis::meta::v1 as meta;
+	}
+	k8s_if_1_10! {
+		use ::k8s_openapi::v1_10::api::core::v1 as api;
+		use ::k8s_openapi::v1_10::api::batch::v1 as batch;
+		use ::k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
+	}
+	k8s_if_1_11! {
+		use ::k8s_openapi::v1_11::api::core::v1 as api;
+		use ::k8s_openapi::v1_11::api::batch::v1 as batch;
+		use ::k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
+	}
 
 	let client = ::Client::new().expect("couldn't create client");
 
@@ -51,11 +57,12 @@ fn create() {
 		},
 		..Default::default()
 	};
-	#[cfg(not(feature = "v1_7"))]
-	let job_spec = batch::JobSpec {
-		backoff_limit: Some(0),
-		..job_spec
-	};
+	k8s_if_ge_1_8! {
+		let job_spec = batch::JobSpec {
+			backoff_limit: Some(0),
+			..job_spec
+		};
+	}
 
 	let job = batch::Job {
 		metadata: Some(meta::ObjectMeta {
@@ -71,17 +78,17 @@ fn create() {
 		.expect("couldn't create job");
 	let response = client.execute(request).expect("couldn't create job");
 	let job: batch::Job =
-		::get_single_value(response, |response, status_code, _response_body| match response {
-			#[cfg(any(feature = "v1_7", feature = "v1_8"))] batch::CreateBatchV1NamespacedJobResponse::Other if status_code == ::http::StatusCode::CREATED =>
+		::get_single_value(response, |response, status_code, _response_body| k8s_match!(response, {
+			k8s_if_le_1_8!(batch::CreateBatchV1NamespacedJobResponse::Other if status_code == ::http::StatusCode::CREATED =>
 				match ::serde_json::from_slice(_response_body) {
 					Ok(job) => Ok(::ValueResult::GotValue(job)),
 					Err(ref err) if err.is_eof() => Ok(::ValueResult::NeedMoreData),
 					Err(err) => Err(err.into()),
-				},
-			#[cfg(not(any(feature = "v1_7", feature = "v1_8")))] batch::CreateBatchV1NamespacedJobResponse::Created(job) =>
-				Ok(::ValueResult::GotValue(job)),
+				}),
+			k8s_if_ge_1_9!(batch::CreateBatchV1NamespacedJobResponse::Created(job) =>
+				Ok(::ValueResult::GotValue(job))),
 			other => Err(format!("{:?} {}", other, status_code).into()),
-		}).expect("couldn't create job");
+		})).expect("couldn't create job");
 
 	let job_image =
 		job
@@ -90,8 +97,9 @@ fn create() {
 		.spec.expect("couldn't get job spec template spec")
 		.containers.into_iter().next().expect("couldn't get job container spec")
 		.image;
-	#[cfg(not(feature = "v1_7"))]
-	let job_image = job_image.expect("couldn't get job container image");
+	k8s_if_ge_1_8! {
+		let job_image = job_image.expect("couldn't get job container image");
+	}
 	assert_eq!(job_image, "alpine");
 
 	let (job_self_link, job_uid) = {
@@ -122,10 +130,14 @@ fn create() {
 
 	// Find a pod of the failed job using owner reference
 	let job_pod_status = loop {
-		#[cfg(feature = "v1_7")] let request =
-			api::Pod::list_core_v1_namespaced_pod("default", None, None, None, None, None, None, None);
-		#[cfg(not(feature = "v1_7"))] let request =
-			api::Pod::list_core_v1_namespaced_pod("default", None, None, None, None, None, None, None, None, None);
+		k8s_if_le_1_7! {
+			let request =
+				api::Pod::list_core_v1_namespaced_pod("default", None, None, None, None, None, None, None);
+		}
+		k8s_if_ge_1_8! {
+			let request =
+				api::Pod::list_core_v1_namespaced_pod("default", None, None, None, None, None, None, None, None, None);
+		}
 		let request = request.expect("couldn't list pods");
 		let response = client.execute(request).expect("couldn't list pods");;
 		let pod_list =
@@ -169,10 +181,14 @@ fn create() {
 	}).expect("couldn't delete job");
 
 	// Delete all pods of the job using label selector
-	#[cfg(feature = "v1_7")] let request =
-		api::Pod::list_core_v1_namespaced_pod("default", None, None, Some("job-name=k8s-openapi-tests-create-job"), None, None, None, None);
-	#[cfg(not(feature = "v1_7"))] let request =
-		api::Pod::list_core_v1_namespaced_pod("default", None, None, None, Some("job-name=k8s-openapi-tests-create-job"), None, None, None, None, None);
+	k8s_if_le_1_7! {
+		let request =
+			api::Pod::list_core_v1_namespaced_pod("default", None, None, Some("job-name=k8s-openapi-tests-create-job"), None, None, None, None);
+	}
+	k8s_if_ge_1_8! {
+		let request =
+			api::Pod::list_core_v1_namespaced_pod("default", None, None, None, Some("job-name=k8s-openapi-tests-create-job"), None, None, None, None, None);
+	}
 	let request = request.expect("couldn't list pods");
 	let response = client.execute(request).expect("couldn't list pods");;
 	let pod_list =

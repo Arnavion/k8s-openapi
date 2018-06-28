@@ -1,21 +1,31 @@
 #[test]
 fn watch_pods() {
-	#[cfg(feature = "v1_7")] use ::k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
-
-	#[cfg(feature = "v1_8")] use ::k8s_openapi::v1_8::api::core::v1 as api;
-
-	#[cfg(feature = "v1_9")] use ::k8s_openapi::v1_9::api::core::v1 as api;
-
-	#[cfg(feature = "v1_10")] use ::k8s_openapi::v1_10::api::core::v1 as api;
-
-	#[cfg(feature = "v1_11")] use ::k8s_openapi::v1_11::api::core::v1 as api;
+	k8s_if_1_7! {
+		use ::k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
+	}
+	k8s_if_1_8! {
+		use ::k8s_openapi::v1_8::api::core::v1 as api;
+	}
+	k8s_if_1_9! {
+		use ::k8s_openapi::v1_9::api::core::v1 as api;
+	}
+	k8s_if_1_10! {
+		use ::k8s_openapi::v1_10::api::core::v1 as api;
+	}
+	k8s_if_1_11! {
+		use ::k8s_openapi::v1_11::api::core::v1 as api;
+	}
 
 	let client = ::Client::new().expect("couldn't create client");
 
-	#[cfg(feature = "v1_7")] let request =
-		api::Pod::watch_core_v1_namespaced_pod_list("kube-system", None, None, None, None, None, None, None);
-	#[cfg(not(feature = "v1_7"))] let request =
-		api::Pod::watch_core_v1_namespaced_pod_list("kube-system", None, None, None, None, None, None, None, None, None);
+	k8s_if_le_1_7! {
+		let request =
+			api::Pod::watch_core_v1_namespaced_pod_list("kube-system", None, None, None, None, None, None, None);
+	}
+	k8s_if_ge_1_8! {
+		let request =
+			api::Pod::watch_core_v1_namespaced_pod_list("kube-system", None, None, None, None, None, None, None, None, None);
+	}
 	let request = request.expect("couldn't watch pods");
 	let response = client.execute(request).expect("couldn't watch pods");
 	let pod_watch_events =
