@@ -5,6 +5,7 @@
 	indexing_slicing,
 	similar_names,
 	too_many_arguments,
+	type_complexity,
 	unseparated_literal_suffix,
 ))]
 
@@ -17,6 +18,8 @@ extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 
+mod fixups;
+mod supported_version;
 mod swagger20;
 
 struct Error(Box<std::error::Error>, backtrace::Backtrace);
@@ -52,21 +55,17 @@ fn main() -> Result<(), Error> {
 	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
 	let out_dir_base = out_dir_base.join("k8s-openapi").join("src");
 
-	let mut fixups: Fixups = Default::default();
-
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.7.16/api/openapi-spec/swagger.json", &out_dir_base, "v1_7", &client, &mut fixups)?;
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.8.14/api/openapi-spec/swagger.json", &out_dir_base, "v1_8", &client, &mut fixups)?;
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.9.9/api/openapi-spec/swagger.json", &out_dir_base, "v1_9", &client, &mut fixups)?;
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.10.5/api/openapi-spec/swagger.json", &out_dir_base, "v1_10", &client, &mut fixups)?;
-	run("https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.0/api/openapi-spec/swagger.json", &out_dir_base, "v1_11", &client, &mut fixups)?;
-
-	fixups.verify()?;
+	for &supported_version in supported_version::ALL {
+		run(supported_version, &out_dir_base, &client)?;
+	}
 
 	Ok(())
 }
 
-fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &reqwest::Client, fixups: &mut Fixups) -> Result<(), Error> {
+fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::Client) -> Result<(), Error> {
 	use std::io::Write;
+
+	let mod_root = supported_version.mod_root();
 
 	let out_dir = out_dir_base.join(mod_root);
 
@@ -86,10 +85,10 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 	let mut num_skipped_refs = 0usize;
 	let mut num_generated_apis = 0usize;
 
-	info!(target: "", "Parsing spec file at {} ...", input);
-
 	let mut spec: swagger20::Spec = {
-		let mut response = client.get(input).send()?;
+		let spec_url = supported_version.spec_url();
+		info!(target: "", "Parsing spec file at {} ...", spec_url);
+		let mut response = client.get(spec_url).send()?;
 		let status = response.status();
 		if status != reqwest::StatusCode::Ok {
 			return Err(status.to_string().into());
@@ -97,7 +96,7 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 		response.json()?
 	};
 
-	fixups.apply(&mut spec);
+	supported_version.fixup(&mut spec)?;
 
 	let expected_num_generated_or_skipped_types: usize = spec.definitions.len();
 	let expected_num_generated_apis: usize = spec.paths.iter().map(|(_, path_item)| path_item.operations.len()).sum();
@@ -554,250 +553,6 @@ fn run(input: &str, out_dir_base: &std::path::Path, mod_root: &str, client: &req
 	info!("");
 
 	Ok(())
-}
-
-#[derive(Debug, Default)]
-struct Fixups {
-	apigroup_optional_properties: bool,
-	apiresource_gkv: bool,
-	apiservicev1_gkv: bool,
-	apiservicev1beta1_gkv: bool,
-	crd_gkv: bool,
-	crdstatus_optional_properties: bool,
-	json_ty: bool,
-	json_schema_props_or_array_ty: bool,
-	json_schema_props_or_bool_ty: bool,
-	json_schema_props_or_string_array_ty: bool,
-	poddisruptionbudgetstatus_optional_properties: bool,
-	raw_extension_ty: bool,
-}
-
-impl Fixups {
-	fn apply(&mut self, spec: &mut swagger20::Spec) {
-		for (definition_path, definition) in &mut spec.definitions {
-			match &**definition_path {
-				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionStatus" =>
-					// The spec says that `CustomResourceDefinitionStatus::conditions` is an array, but it can be null.
-					//
-					// Override it to be optional to achieve the same effect.
-					//
-					// Ref: https://github.com/kubernetes/kubernetes/pull/64996
-					if let swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-						if let Some(property) = properties.get_mut(&swagger20::PropertyName("conditions".to_string())) {
-							if property.1 {
-								property.1 = false;
-								self.crdstatus_optional_properties = true;
-							}
-						}
-					},
-
-				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON" => {
-					// The spec says that `JSON` is an object with a property `Raw` that's a byte-formatted string.
-					// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
-					// The value of that field is itself a JSON-serialized value.
-					//
-					// Thus `JSON` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
-					//
-					// Ref: https://github.com/kubernetes/kubernetes/pull/65256
-					if let swagger20::SchemaKind::Ty(swagger20::Type::Any) = definition.kind {
-					}
-					else {
-						definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
-						self.json_ty = true;
-					}
-				},
-
-				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray" => {
-					// The spec says that `JSONSchemaPropsOrArray` is an object with properties `JSONSchemas` and `Schema`.
-					// In fact this type is either a `JSONSchemaProps` or an array of `JSONSchemaProps`.
-					//
-					// Ref: https://github.com/kubernetes/kubernetes/pull/65256
-					if let swagger20::SchemaKind::Ty(swagger20::Type::Any) = definition.kind {
-					}
-					else {
-						definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray);
-						self.json_schema_props_or_array_ty = true;
-					}
-				},
-
-				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool" => {
-					// The spec says that `JSONSchemaPropsOrBool` is an object with properties `Allows` and `Schema`.
-					// In fact this type is either a `bool` or a `JSONSchemaProps`.
-					//
-					// Ref: https://github.com/kubernetes/kubernetes/pull/65256
-					if let swagger20::SchemaKind::Ty(swagger20::Type::Any) = definition.kind {
-					}
-					else {
-						definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool);
-						self.json_schema_props_or_bool_ty = true;
-					}
-				},
-
-				"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray" => {
-					// The spec says that `JSONSchemaPropsOrStringArray` is an object with properties `Property` and `Schema`.
-					// In fact this type is either a `bool` or a `JSONSchemaProps`.
-					//
-					// Ref: https://github.com/kubernetes/kubernetes/pull/65256
-					if let swagger20::SchemaKind::Ty(swagger20::Type::Any) = definition.kind {
-					}
-					else {
-						definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray);
-						self.json_schema_props_or_string_array_ty = true;
-					}
-				},
-
-				"io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup" =>
-					// The spec says that `APIGroup::serverAddressByClientCIDRs` is an array, but it can be null.
-					//
-					// Override it to be optional to achieve the same effect.
-					//
-					// Ref: https://github.com/kubernetes/kubernetes/pull/61963
-					if let swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-						if let Some(property) = properties.get_mut(&swagger20::PropertyName("serverAddressByClientCIDRs".to_string())) {
-							if property.1 {
-								property.1 = false;
-								self.apigroup_optional_properties = true;
-							}
-						}
-					},
-
-				"io.k8s.apimachinery.pkg.runtime.RawExtension" => {
-					// The spec says that `RawExtension` is an object with a property `raw` that's a byte-formatted string.
-					// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
-					// The value of that field is itself a JSON-serialized value. For example, a `WatchEvent` of `Pod`s has the `Pod` object serialized as
-					// the value of the `WatchEvent::object` property.
-					//
-					// Thus `RawExtension` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
-					//
-					// Ref: https://github.com/kubernetes/kubernetes/issues/55890
-					//
-					// https://github.com/kubernetes/kubernetes/pull/56434 will remove RawExtension and replace it with `{ type: "object" }`,
-					// which would've already been mapped to `Ty(Any)` by `Ty::parse`, so just replicate that for `RawExtension` here.
-					if let swagger20::SchemaKind::Ty(swagger20::Type::Any) = definition.kind {
-					}
-					else {
-						definition.kind = swagger20::SchemaKind::Ty(swagger20::Type::Any);
-						self.raw_extension_ty = true;
-					}
-				},
-
-				"io.k8s.api.policy.v1beta1.PodDisruptionBudgetStatus" =>
-					// The spec says that `APIGroup::serverAddressByClientCIDRs` is an array, but it can be null.
-					//
-					// Override it to be optional to achieve the same effect.
-					//
-					// Ref: https://github.com/kubernetes/kubernetes/pull/65041
-					if let swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-						if let Some(property) = properties.get_mut(&swagger20::PropertyName("disruptedPods".to_string())) {
-							if property.1 {
-								property.1 = false;
-								self.poddisruptionbudgetstatus_optional_properties = true;
-							}
-						}
-					},
-
-				_ => (),
-			}
-
-			if definition.kubernetes_group_kind_versions.is_none() {
-				// Various types not annotated with "x-kubernetes-group-kind-versions", which would make their associated functions end up in the mod root
-				//
-				// Ref: https://github.com/kubernetes/kubernetes/issues/49465
-				// Ref: https://github.com/kubernetes/kubernetes/pull/64174
-				match &**definition_path {
-					"io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinition" => {
-						definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
-							group: "apiextensions.k8s.io".to_string(),
-							kind: "CustomResourceDefinition".to_string(),
-							version: "v1beta1".to_string(),
-						}]);
-						self.crd_gkv = true;
-					},
-
-					"io.k8s.apimachinery.pkg.apis.meta.v1.APIResource" => {
-						definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
-							group: "".to_string(),
-							kind: "APIResource".to_string(),
-							version: "v1".to_string(),
-						}]);
-						self.apiresource_gkv = true;
-					},
-
-					"io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService" => {
-						definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
-							group: "apiregistration.k8s.io".to_string(),
-							kind: "APIService".to_string(),
-							version: "v1".to_string(),
-						}]);
-						self.apiservicev1_gkv = true;
-					},
-
-					"io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIService" => {
-						definition.kubernetes_group_kind_versions = Some(vec![swagger20::KubernetesGroupKindVersion {
-							group: "apiregistration.k8s.io".to_string(),
-							kind: "APIService".to_string(),
-							version: "v1beta1".to_string(),
-						}]);
-						self.apiservicev1beta1_gkv = true;
-					},
-
-					_ => (),
-				}
-			}
-		}
-	}
-
-	fn verify(&self) -> Result<(), Error> {
-		if !self.apigroup_optional_properties {
-			return Err("never applied APIGroups optional properties override".into());
-		}
-
-		if !self.apiresource_gkv {
-			return Err("never applied APIResource kubernetes_group_kind_version override".into());
-		}
-
-		if !self.apiservicev1_gkv {
-			return Err("never applied APIService v1 kubernetes_group_kind_version override".into());
-		}
-
-		if !self.apiservicev1beta1_gkv {
-			return Err("never applied APIService v1beta1 kubernetes_group_kind_version override".into());
-		}
-
-		if !self.crd_gkv {
-			return Err("never applied CustomResourceDefinition kubernetes_group_kind_version override".into());
-		}
-
-		if !self.crdstatus_optional_properties {
-			return Err("never applied CustomResourceDefinitionStatus optional properties override".into());
-		}
-
-		if !self.json_ty {
-			return Err("never applied JSON override".into());
-		}
-
-		if !self.json_schema_props_or_array_ty {
-			return Err("never applied JSONSchemaPropsOrArray override".into());
-		}
-
-		if !self.json_schema_props_or_bool_ty {
-			return Err("never applied JSONSchemaPropsOrArray override".into());
-		}
-
-		if !self.json_schema_props_or_string_array_ty {
-			return Err("never applied JSONSchemaPropsOrArray override".into());
-		}
-
-		if !self.poddisruptionbudgetstatus_optional_properties {
-			return Err("never applied PodDisruptionBudgetStatus optional properties override".into());
-		}
-
-		if !self.raw_extension_ty {
-			return Err("never applied RawExtension override".into());
-		}
-
-		Ok(())
-	}
 }
 
 fn create_file_for_type(
