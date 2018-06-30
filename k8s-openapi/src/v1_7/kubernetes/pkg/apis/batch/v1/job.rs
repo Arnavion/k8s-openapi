@@ -25,6 +25,8 @@ pub struct Job {
 
 impl Job {
     /// create a Job
+    ///
+    /// Use [`CreateBatchV1NamespacedJobResponse`](./enum.CreateBatchV1NamespacedJobResponse.html) to parse the HTTP response.
     pub fn create_batch_v1_namespaced_job(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::create_batch_v1_namespaced_job`](./struct.Job.html#method.create_batch_v1_namespaced_job)
 #[derive(Debug)]
 pub enum CreateBatchV1NamespacedJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v1::Job),
@@ -73,6 +76,8 @@ impl ::Response for CreateBatchV1NamespacedJobResponse {
 
 impl Job {
     /// delete collection of Job
+    ///
+    /// Use [`DeleteBatchV1CollectionNamespacedJobResponse`](./enum.DeleteBatchV1CollectionNamespacedJobResponse.html) to parse the HTTP response.
     pub fn delete_batch_v1_collection_namespaced_job(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -122,6 +127,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::delete_batch_v1_collection_namespaced_job`](./struct.Job.html#method.delete_batch_v1_collection_namespaced_job)
 #[derive(Debug)]
 pub enum DeleteBatchV1CollectionNamespacedJobResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -164,6 +170,8 @@ impl ::Response for DeleteBatchV1CollectionNamespacedJobResponse {
 
 impl Job {
     /// delete a Job
+    ///
+    /// Use [`DeleteBatchV1NamespacedJobResponse`](./enum.DeleteBatchV1NamespacedJobResponse.html) to parse the HTTP response.
     pub fn delete_batch_v1_namespaced_job(
         // name of the Job
         name: &str,
@@ -200,6 +208,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::delete_batch_v1_namespaced_job`](./struct.Job.html#method.delete_batch_v1_namespaced_job)
 #[derive(Debug)]
 pub enum DeleteBatchV1NamespacedJobResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -242,6 +251,8 @@ impl ::Response for DeleteBatchV1NamespacedJobResponse {
 
 impl Job {
     /// list or watch objects of kind Job
+    ///
+    /// Use [`ListBatchV1JobForAllNamespacesResponse`](./enum.ListBatchV1JobForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_batch_v1_job_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -289,6 +300,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::list_batch_v1_job_for_all_namespaces`](./struct.Job.html#method.list_batch_v1_job_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListBatchV1JobForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v1::JobList),
@@ -317,6 +329,8 @@ impl ::Response for ListBatchV1JobForAllNamespacesResponse {
 
 impl Job {
     /// list or watch objects of kind Job
+    ///
+    /// Use [`ListBatchV1NamespacedJobResponse`](./enum.ListBatchV1NamespacedJobResponse.html) to parse the HTTP response.
     pub fn list_batch_v1_namespaced_job(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -366,6 +380,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::list_batch_v1_namespaced_job`](./struct.Job.html#method.list_batch_v1_namespaced_job)
 #[derive(Debug)]
 pub enum ListBatchV1NamespacedJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v1::JobList),
@@ -394,6 +409,8 @@ impl ::Response for ListBatchV1NamespacedJobResponse {
 
 impl Job {
     /// partially update the specified Job
+    ///
+    /// Use [`PatchBatchV1NamespacedJobResponse`](./enum.PatchBatchV1NamespacedJobResponse.html) to parse the HTTP response.
     pub fn patch_batch_v1_namespaced_job(
         // name of the Job
         name: &str,
@@ -416,6 +433,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::patch_batch_v1_namespaced_job`](./struct.Job.html#method.patch_batch_v1_namespaced_job)
 #[derive(Debug)]
 pub enum PatchBatchV1NamespacedJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v1::Job),
@@ -444,6 +462,8 @@ impl ::Response for PatchBatchV1NamespacedJobResponse {
 
 impl Job {
     /// partially update status of the specified Job
+    ///
+    /// Use [`PatchBatchV1NamespacedJobStatusResponse`](./enum.PatchBatchV1NamespacedJobStatusResponse.html) to parse the HTTP response.
     pub fn patch_batch_v1_namespaced_job_status(
         // name of the Job
         name: &str,
@@ -466,6 +486,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::patch_batch_v1_namespaced_job_status`](./struct.Job.html#method.patch_batch_v1_namespaced_job_status)
 #[derive(Debug)]
 pub enum PatchBatchV1NamespacedJobStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v1::Job),
@@ -494,6 +515,8 @@ impl ::Response for PatchBatchV1NamespacedJobStatusResponse {
 
 impl Job {
     /// read the specified Job
+    ///
+    /// Use [`ReadBatchV1NamespacedJobResponse`](./enum.ReadBatchV1NamespacedJobResponse.html) to parse the HTTP response.
     pub fn read_batch_v1_namespaced_job(
         // name of the Job
         name: &str,
@@ -525,6 +548,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::read_batch_v1_namespaced_job`](./struct.Job.html#method.read_batch_v1_namespaced_job)
 #[derive(Debug)]
 pub enum ReadBatchV1NamespacedJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v1::Job),
@@ -553,6 +577,8 @@ impl ::Response for ReadBatchV1NamespacedJobResponse {
 
 impl Job {
     /// read status of the specified Job
+    ///
+    /// Use [`ReadBatchV1NamespacedJobStatusResponse`](./enum.ReadBatchV1NamespacedJobStatusResponse.html) to parse the HTTP response.
     pub fn read_batch_v1_namespaced_job_status(
         // name of the Job
         name: &str,
@@ -574,6 +600,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::read_batch_v1_namespaced_job_status`](./struct.Job.html#method.read_batch_v1_namespaced_job_status)
 #[derive(Debug)]
 pub enum ReadBatchV1NamespacedJobStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v1::Job),
@@ -602,6 +629,8 @@ impl ::Response for ReadBatchV1NamespacedJobStatusResponse {
 
 impl Job {
     /// replace the specified Job
+    ///
+    /// Use [`ReplaceBatchV1NamespacedJobResponse`](./enum.ReplaceBatchV1NamespacedJobResponse.html) to parse the HTTP response.
     pub fn replace_batch_v1_namespaced_job(
         // name of the Job
         name: &str,
@@ -624,6 +653,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::replace_batch_v1_namespaced_job`](./struct.Job.html#method.replace_batch_v1_namespaced_job)
 #[derive(Debug)]
 pub enum ReplaceBatchV1NamespacedJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v1::Job),
@@ -652,6 +682,8 @@ impl ::Response for ReplaceBatchV1NamespacedJobResponse {
 
 impl Job {
     /// replace status of the specified Job
+    ///
+    /// Use [`ReplaceBatchV1NamespacedJobStatusResponse`](./enum.ReplaceBatchV1NamespacedJobStatusResponse.html) to parse the HTTP response.
     pub fn replace_batch_v1_namespaced_job_status(
         // name of the Job
         name: &str,
@@ -674,6 +706,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::replace_batch_v1_namespaced_job_status`](./struct.Job.html#method.replace_batch_v1_namespaced_job_status)
 #[derive(Debug)]
 pub enum ReplaceBatchV1NamespacedJobStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v1::Job),
@@ -702,6 +735,8 @@ impl ::Response for ReplaceBatchV1NamespacedJobStatusResponse {
 
 impl Job {
     /// watch individual changes to a list of Job
+    ///
+    /// Use [`WatchBatchV1JobListForAllNamespacesResponse`](./enum.WatchBatchV1JobListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_batch_v1_job_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -749,6 +784,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::watch_batch_v1_job_list_for_all_namespaces`](./struct.Job.html#method.watch_batch_v1_job_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchBatchV1JobListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -779,6 +815,8 @@ impl ::Response for WatchBatchV1JobListForAllNamespacesResponse {
 
 impl Job {
     /// watch changes to an object of kind Job
+    ///
+    /// Use [`WatchBatchV1NamespacedJobResponse`](./enum.WatchBatchV1NamespacedJobResponse.html) to parse the HTTP response.
     pub fn watch_batch_v1_namespaced_job(
         // name of the Job
         name: &str,
@@ -830,6 +868,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::watch_batch_v1_namespaced_job`](./struct.Job.html#method.watch_batch_v1_namespaced_job)
 #[derive(Debug)]
 pub enum WatchBatchV1NamespacedJobResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -860,6 +899,8 @@ impl ::Response for WatchBatchV1NamespacedJobResponse {
 
 impl Job {
     /// watch individual changes to a list of Job
+    ///
+    /// Use [`WatchBatchV1NamespacedJobListResponse`](./enum.WatchBatchV1NamespacedJobListResponse.html) to parse the HTTP response.
     pub fn watch_batch_v1_namespaced_job_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -909,6 +950,7 @@ impl Job {
     }
 }
 
+/// Parses the HTTP response of [`Job::watch_batch_v1_namespaced_job_list`](./struct.Job.html#method.watch_batch_v1_namespaced_job_list)
 #[derive(Debug)]
 pub enum WatchBatchV1NamespacedJobListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

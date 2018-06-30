@@ -25,6 +25,8 @@ pub struct Ingress {
 
 impl Ingress {
     /// create an Ingress
+    ///
+    /// Use [`CreateExtensionsV1beta1NamespacedIngressResponse`](./enum.CreateExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
     pub fn create_extensions_v1beta1_namespaced_ingress(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::create_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.create_extensions_v1beta1_namespaced_ingress)
 #[derive(Debug)]
 pub enum CreateExtensionsV1beta1NamespacedIngressResponse {
     Ok(::v1_9::api::extensions::v1beta1::Ingress),
@@ -91,6 +94,8 @@ impl ::Response for CreateExtensionsV1beta1NamespacedIngressResponse {
 
 impl Ingress {
     /// delete collection of Ingress
+    ///
+    /// Use [`DeleteExtensionsV1beta1CollectionNamespacedIngressResponse`](./enum.DeleteExtensionsV1beta1CollectionNamespacedIngressResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_collection_namespaced_ingress(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -152,6 +157,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::delete_extensions_v1beta1_collection_namespaced_ingress`](./struct.Ingress.html#method.delete_extensions_v1beta1_collection_namespaced_ingress)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1CollectionNamespacedIngressResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -194,6 +200,8 @@ impl ::Response for DeleteExtensionsV1beta1CollectionNamespacedIngressResponse {
 
 impl Ingress {
     /// delete an Ingress
+    ///
+    /// Use [`DeleteExtensionsV1beta1NamespacedIngressResponse`](./enum.DeleteExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_namespaced_ingress(
         // name of the Ingress
         name: &str,
@@ -230,6 +238,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::delete_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.delete_extensions_v1beta1_namespaced_ingress)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1NamespacedIngressResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -272,6 +281,8 @@ impl ::Response for DeleteExtensionsV1beta1NamespacedIngressResponse {
 
 impl Ingress {
     /// list or watch objects of kind Ingress
+    ///
+    /// Use [`ListExtensionsV1beta1IngressForAllNamespacesResponse`](./enum.ListExtensionsV1beta1IngressForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_extensions_v1beta1_ingress_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -331,6 +342,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::list_extensions_v1beta1_ingress_for_all_namespaces`](./struct.Ingress.html#method.list_extensions_v1beta1_ingress_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1IngressForAllNamespacesResponse {
     Ok(::v1_9::api::extensions::v1beta1::IngressList),
@@ -359,6 +371,8 @@ impl ::Response for ListExtensionsV1beta1IngressForAllNamespacesResponse {
 
 impl Ingress {
     /// list or watch objects of kind Ingress
+    ///
+    /// Use [`ListExtensionsV1beta1NamespacedIngressResponse`](./enum.ListExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
     pub fn list_extensions_v1beta1_namespaced_ingress(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -420,6 +434,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::list_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.list_extensions_v1beta1_namespaced_ingress)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1NamespacedIngressResponse {
     Ok(::v1_9::api::extensions::v1beta1::IngressList),
@@ -448,6 +463,8 @@ impl ::Response for ListExtensionsV1beta1NamespacedIngressResponse {
 
 impl Ingress {
     /// partially update the specified Ingress
+    ///
+    /// Use [`PatchExtensionsV1beta1NamespacedIngressResponse`](./enum.PatchExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_namespaced_ingress(
         // name of the Ingress
         name: &str,
@@ -470,6 +487,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::patch_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.patch_extensions_v1beta1_namespaced_ingress)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedIngressResponse {
     Ok(::v1_9::api::extensions::v1beta1::Ingress),
@@ -498,6 +516,8 @@ impl ::Response for PatchExtensionsV1beta1NamespacedIngressResponse {
 
 impl Ingress {
     /// partially update status of the specified Ingress
+    ///
+    /// Use [`PatchExtensionsV1beta1NamespacedIngressStatusResponse`](./enum.PatchExtensionsV1beta1NamespacedIngressStatusResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_namespaced_ingress_status(
         // name of the Ingress
         name: &str,
@@ -520,6 +540,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::patch_extensions_v1beta1_namespaced_ingress_status`](./struct.Ingress.html#method.patch_extensions_v1beta1_namespaced_ingress_status)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedIngressStatusResponse {
     Ok(::v1_9::api::extensions::v1beta1::Ingress),
@@ -548,6 +569,8 @@ impl ::Response for PatchExtensionsV1beta1NamespacedIngressStatusResponse {
 
 impl Ingress {
     /// read the specified Ingress
+    ///
+    /// Use [`ReadExtensionsV1beta1NamespacedIngressResponse`](./enum.ReadExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_namespaced_ingress(
         // name of the Ingress
         name: &str,
@@ -579,6 +602,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::read_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.read_extensions_v1beta1_namespaced_ingress)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedIngressResponse {
     Ok(::v1_9::api::extensions::v1beta1::Ingress),
@@ -607,6 +631,8 @@ impl ::Response for ReadExtensionsV1beta1NamespacedIngressResponse {
 
 impl Ingress {
     /// read status of the specified Ingress
+    ///
+    /// Use [`ReadExtensionsV1beta1NamespacedIngressStatusResponse`](./enum.ReadExtensionsV1beta1NamespacedIngressStatusResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_namespaced_ingress_status(
         // name of the Ingress
         name: &str,
@@ -628,6 +654,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::read_extensions_v1beta1_namespaced_ingress_status`](./struct.Ingress.html#method.read_extensions_v1beta1_namespaced_ingress_status)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedIngressStatusResponse {
     Ok(::v1_9::api::extensions::v1beta1::Ingress),
@@ -656,6 +683,8 @@ impl ::Response for ReadExtensionsV1beta1NamespacedIngressStatusResponse {
 
 impl Ingress {
     /// replace the specified Ingress
+    ///
+    /// Use [`ReplaceExtensionsV1beta1NamespacedIngressResponse`](./enum.ReplaceExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_namespaced_ingress(
         // name of the Ingress
         name: &str,
@@ -678,6 +707,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::replace_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.replace_extensions_v1beta1_namespaced_ingress)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedIngressResponse {
     Ok(::v1_9::api::extensions::v1beta1::Ingress),
@@ -715,6 +745,8 @@ impl ::Response for ReplaceExtensionsV1beta1NamespacedIngressResponse {
 
 impl Ingress {
     /// replace status of the specified Ingress
+    ///
+    /// Use [`ReplaceExtensionsV1beta1NamespacedIngressStatusResponse`](./enum.ReplaceExtensionsV1beta1NamespacedIngressStatusResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_namespaced_ingress_status(
         // name of the Ingress
         name: &str,
@@ -737,6 +769,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::replace_extensions_v1beta1_namespaced_ingress_status`](./struct.Ingress.html#method.replace_extensions_v1beta1_namespaced_ingress_status)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedIngressStatusResponse {
     Ok(::v1_9::api::extensions::v1beta1::Ingress),
@@ -774,6 +807,8 @@ impl ::Response for ReplaceExtensionsV1beta1NamespacedIngressStatusResponse {
 
 impl Ingress {
     /// watch individual changes to a list of Ingress
+    ///
+    /// Use [`WatchExtensionsV1beta1IngressListForAllNamespacesResponse`](./enum.WatchExtensionsV1beta1IngressListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_ingress_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -833,6 +868,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::watch_extensions_v1beta1_ingress_list_for_all_namespaces`](./struct.Ingress.html#method.watch_extensions_v1beta1_ingress_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1IngressListForAllNamespacesResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -863,6 +899,8 @@ impl ::Response for WatchExtensionsV1beta1IngressListForAllNamespacesResponse {
 
 impl Ingress {
     /// watch changes to an object of kind Ingress
+    ///
+    /// Use [`WatchExtensionsV1beta1NamespacedIngressResponse`](./enum.WatchExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_namespaced_ingress(
         // name of the Ingress
         name: &str,
@@ -926,6 +964,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::watch_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.watch_extensions_v1beta1_namespaced_ingress)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NamespacedIngressResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -956,6 +995,8 @@ impl ::Response for WatchExtensionsV1beta1NamespacedIngressResponse {
 
 impl Ingress {
     /// watch individual changes to a list of Ingress
+    ///
+    /// Use [`WatchExtensionsV1beta1NamespacedIngressListResponse`](./enum.WatchExtensionsV1beta1NamespacedIngressListResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_namespaced_ingress_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -1017,6 +1058,7 @@ impl Ingress {
     }
 }
 
+/// Parses the HTTP response of [`Ingress::watch_extensions_v1beta1_namespaced_ingress_list`](./struct.Ingress.html#method.watch_extensions_v1beta1_namespaced_ingress_list)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NamespacedIngressListResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),

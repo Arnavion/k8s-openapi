@@ -22,6 +22,8 @@ pub struct ComponentStatus {
 
 impl ComponentStatus {
     /// list objects of kind ComponentStatus
+    ///
+    /// Use [`ListCoreV1ComponentStatusResponse`](./enum.ListCoreV1ComponentStatusResponse.html) to parse the HTTP response.
     pub fn list_core_v1_component_status(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -69,6 +71,7 @@ impl ComponentStatus {
     }
 }
 
+/// Parses the HTTP response of [`ComponentStatus::list_core_v1_component_status`](./struct.ComponentStatus.html#method.list_core_v1_component_status)
 #[derive(Debug)]
 pub enum ListCoreV1ComponentStatusResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::ComponentStatusList),
@@ -97,6 +100,8 @@ impl ::Response for ListCoreV1ComponentStatusResponse {
 
 impl ComponentStatus {
     /// read the specified ComponentStatus
+    ///
+    /// Use [`ReadCoreV1ComponentStatusResponse`](./enum.ReadCoreV1ComponentStatusResponse.html) to parse the HTTP response.
     pub fn read_core_v1_component_status(
         // name of the ComponentStatus
         name: &str,
@@ -116,6 +121,7 @@ impl ComponentStatus {
     }
 }
 
+/// Parses the HTTP response of [`ComponentStatus::read_core_v1_component_status`](./struct.ComponentStatus.html#method.read_core_v1_component_status)
 #[derive(Debug)]
 pub enum ReadCoreV1ComponentStatusResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::ComponentStatus),

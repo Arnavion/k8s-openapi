@@ -25,6 +25,8 @@ pub struct ReplicationController {
 
 impl ReplicationController {
     /// create a ReplicationController
+    ///
+    /// Use [`CreateCoreV1NamespacedReplicationControllerResponse`](./enum.CreateCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_replication_controller(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::create_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.create_core_v1_namespaced_replication_controller)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedReplicationControllerResponse {
     Ok(::v1_8::api::core::v1::ReplicationController),
@@ -73,6 +76,8 @@ impl ::Response for CreateCoreV1NamespacedReplicationControllerResponse {
 
 impl ReplicationController {
     /// delete collection of ReplicationController
+    ///
+    /// Use [`DeleteCoreV1CollectionNamespacedReplicationControllerResponse`](./enum.DeleteCoreV1CollectionNamespacedReplicationControllerResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_namespaced_replication_controller(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -134,6 +139,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::delete_core_v1_collection_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_core_v1_collection_namespaced_replication_controller)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedReplicationControllerResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -176,6 +182,8 @@ impl ::Response for DeleteCoreV1CollectionNamespacedReplicationControllerRespons
 
 impl ReplicationController {
     /// delete a ReplicationController
+    ///
+    /// Use [`DeleteCoreV1NamespacedReplicationControllerResponse`](./enum.DeleteCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespaced_replication_controller(
         // name of the ReplicationController
         name: &str,
@@ -212,6 +220,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::delete_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_core_v1_namespaced_replication_controller)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedReplicationControllerResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -254,6 +263,8 @@ impl ::Response for DeleteCoreV1NamespacedReplicationControllerResponse {
 
 impl ReplicationController {
     /// list or watch objects of kind ReplicationController
+    ///
+    /// Use [`ListCoreV1NamespacedReplicationControllerResponse`](./enum.ListCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespaced_replication_controller(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -315,6 +326,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::list_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.list_core_v1_namespaced_replication_controller)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedReplicationControllerResponse {
     Ok(::v1_8::api::core::v1::ReplicationControllerList),
@@ -343,6 +355,8 @@ impl ::Response for ListCoreV1NamespacedReplicationControllerResponse {
 
 impl ReplicationController {
     /// list or watch objects of kind ReplicationController
+    ///
+    /// Use [`ListCoreV1ReplicationControllerForAllNamespacesResponse`](./enum.ListCoreV1ReplicationControllerForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_core_v1_replication_controller_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -402,6 +416,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::list_core_v1_replication_controller_for_all_namespaces`](./struct.ReplicationController.html#method.list_core_v1_replication_controller_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1ReplicationControllerForAllNamespacesResponse {
     Ok(::v1_8::api::core::v1::ReplicationControllerList),
@@ -430,6 +445,8 @@ impl ::Response for ListCoreV1ReplicationControllerForAllNamespacesResponse {
 
 impl ReplicationController {
     /// partially update the specified ReplicationController
+    ///
+    /// Use [`PatchCoreV1NamespacedReplicationControllerResponse`](./enum.PatchCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_replication_controller(
         // name of the ReplicationController
         name: &str,
@@ -452,6 +469,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::patch_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.patch_core_v1_namespaced_replication_controller)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedReplicationControllerResponse {
     Ok(::v1_8::api::core::v1::ReplicationController),
@@ -480,6 +498,8 @@ impl ::Response for PatchCoreV1NamespacedReplicationControllerResponse {
 
 impl ReplicationController {
     /// partially update status of the specified ReplicationController
+    ///
+    /// Use [`PatchCoreV1NamespacedReplicationControllerStatusResponse`](./enum.PatchCoreV1NamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_replication_controller_status(
         // name of the ReplicationController
         name: &str,
@@ -502,6 +522,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::patch_core_v1_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.patch_core_v1_namespaced_replication_controller_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedReplicationControllerStatusResponse {
     Ok(::v1_8::api::core::v1::ReplicationController),
@@ -530,6 +551,8 @@ impl ::Response for PatchCoreV1NamespacedReplicationControllerStatusResponse {
 
 impl ReplicationController {
     /// read the specified ReplicationController
+    ///
+    /// Use [`ReadCoreV1NamespacedReplicationControllerResponse`](./enum.ReadCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_replication_controller(
         // name of the ReplicationController
         name: &str,
@@ -561,6 +584,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::read_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.read_core_v1_namespaced_replication_controller)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedReplicationControllerResponse {
     Ok(::v1_8::api::core::v1::ReplicationController),
@@ -589,6 +613,8 @@ impl ::Response for ReadCoreV1NamespacedReplicationControllerResponse {
 
 impl ReplicationController {
     /// read status of the specified ReplicationController
+    ///
+    /// Use [`ReadCoreV1NamespacedReplicationControllerStatusResponse`](./enum.ReadCoreV1NamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_replication_controller_status(
         // name of the ReplicationController
         name: &str,
@@ -610,6 +636,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::read_core_v1_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.read_core_v1_namespaced_replication_controller_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedReplicationControllerStatusResponse {
     Ok(::v1_8::api::core::v1::ReplicationController),
@@ -638,6 +665,8 @@ impl ::Response for ReadCoreV1NamespacedReplicationControllerStatusResponse {
 
 impl ReplicationController {
     /// replace the specified ReplicationController
+    ///
+    /// Use [`ReplaceCoreV1NamespacedReplicationControllerResponse`](./enum.ReplaceCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_replication_controller(
         // name of the ReplicationController
         name: &str,
@@ -660,6 +689,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::replace_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.replace_core_v1_namespaced_replication_controller)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedReplicationControllerResponse {
     Ok(::v1_8::api::core::v1::ReplicationController),
@@ -688,6 +718,8 @@ impl ::Response for ReplaceCoreV1NamespacedReplicationControllerResponse {
 
 impl ReplicationController {
     /// replace status of the specified ReplicationController
+    ///
+    /// Use [`ReplaceCoreV1NamespacedReplicationControllerStatusResponse`](./enum.ReplaceCoreV1NamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_replication_controller_status(
         // name of the ReplicationController
         name: &str,
@@ -710,6 +742,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::replace_core_v1_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.replace_core_v1_namespaced_replication_controller_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedReplicationControllerStatusResponse {
     Ok(::v1_8::api::core::v1::ReplicationController),
@@ -738,6 +771,8 @@ impl ::Response for ReplaceCoreV1NamespacedReplicationControllerStatusResponse {
 
 impl ReplicationController {
     /// watch changes to an object of kind ReplicationController
+    ///
+    /// Use [`WatchCoreV1NamespacedReplicationControllerResponse`](./enum.WatchCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_replication_controller(
         // name of the ReplicationController
         name: &str,
@@ -801,6 +836,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::watch_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.watch_core_v1_namespaced_replication_controller)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedReplicationControllerResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -831,6 +867,8 @@ impl ::Response for WatchCoreV1NamespacedReplicationControllerResponse {
 
 impl ReplicationController {
     /// watch individual changes to a list of ReplicationController
+    ///
+    /// Use [`WatchCoreV1NamespacedReplicationControllerListResponse`](./enum.WatchCoreV1NamespacedReplicationControllerListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_replication_controller_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -892,6 +930,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::watch_core_v1_namespaced_replication_controller_list`](./struct.ReplicationController.html#method.watch_core_v1_namespaced_replication_controller_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedReplicationControllerListResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -922,6 +961,8 @@ impl ::Response for WatchCoreV1NamespacedReplicationControllerListResponse {
 
 impl ReplicationController {
     /// watch individual changes to a list of ReplicationController
+    ///
+    /// Use [`WatchCoreV1ReplicationControllerListForAllNamespacesResponse`](./enum.WatchCoreV1ReplicationControllerListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_replication_controller_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -981,6 +1022,7 @@ impl ReplicationController {
     }
 }
 
+/// Parses the HTTP response of [`ReplicationController::watch_core_v1_replication_controller_list_for_all_namespaces`](./struct.ReplicationController.html#method.watch_core_v1_replication_controller_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1ReplicationControllerListForAllNamespacesResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

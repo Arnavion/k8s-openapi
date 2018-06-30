@@ -25,6 +25,8 @@ pub struct HorizontalPodAutoscaler {
 
 impl HorizontalPodAutoscaler {
     /// create a HorizontalPodAutoscaler
+    ///
+    /// Use [`CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     pub fn create_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::create_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.create_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
 pub enum CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
     Ok(::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
@@ -73,6 +76,8 @@ impl ::Response for CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse
 
 impl HorizontalPodAutoscaler {
     /// delete collection of HorizontalPodAutoscaler
+    ///
+    /// Use [`DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse`](./enum.DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     pub fn delete_autoscaling_v1_collection_namespaced_horizontal_pod_autoscaler(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -134,6 +139,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::delete_autoscaling_v1_collection_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.delete_autoscaling_v1_collection_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
 pub enum DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -176,6 +182,8 @@ impl ::Response for DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscal
 
 impl HorizontalPodAutoscaler {
     /// delete a HorizontalPodAutoscaler
+    ///
+    /// Use [`DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     pub fn delete_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // name of the HorizontalPodAutoscaler
         name: &str,
@@ -212,6 +220,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::delete_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.delete_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
 pub enum DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -254,6 +263,8 @@ impl ::Response for DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse
 
 impl HorizontalPodAutoscaler {
     /// list or watch objects of kind HorizontalPodAutoscaler
+    ///
+    /// Use [`ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse`](./enum.ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_autoscaling_v1_horizontal_pod_autoscaler_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -313,6 +324,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::list_autoscaling_v1_horizontal_pod_autoscaler_for_all_namespaces`](./struct.HorizontalPodAutoscaler.html#method.list_autoscaling_v1_horizontal_pod_autoscaler_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse {
     Ok(::v1_8::api::autoscaling::v1::HorizontalPodAutoscalerList),
@@ -341,6 +353,8 @@ impl ::Response for ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResp
 
 impl HorizontalPodAutoscaler {
     /// list or watch objects of kind HorizontalPodAutoscaler
+    ///
+    /// Use [`ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     pub fn list_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -402,6 +416,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::list_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.list_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
 pub enum ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
     Ok(::v1_8::api::autoscaling::v1::HorizontalPodAutoscalerList),
@@ -430,6 +445,8 @@ impl ::Response for ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
 
 impl HorizontalPodAutoscaler {
     /// partially update the specified HorizontalPodAutoscaler
+    ///
+    /// Use [`PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     pub fn patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // name of the HorizontalPodAutoscaler
         name: &str,
@@ -452,6 +469,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
 pub enum PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
     Ok(::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
@@ -480,6 +498,8 @@ impl ::Response for PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse 
 
 impl HorizontalPodAutoscaler {
     /// partially update status of the specified HorizontalPodAutoscaler
+    ///
+    /// Use [`PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse`](./enum.PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse.html) to parse the HTTP response.
     pub fn patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status(
         // name of the HorizontalPodAutoscaler
         name: &str,
@@ -502,6 +522,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status)
 #[derive(Debug)]
 pub enum PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
@@ -530,6 +551,8 @@ impl ::Response for PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusRes
 
 impl HorizontalPodAutoscaler {
     /// read the specified HorizontalPodAutoscaler
+    ///
+    /// Use [`ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     pub fn read_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // name of the HorizontalPodAutoscaler
         name: &str,
@@ -561,6 +584,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::read_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.read_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
 pub enum ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
     Ok(::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
@@ -589,6 +613,8 @@ impl ::Response for ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
 
 impl HorizontalPodAutoscaler {
     /// read status of the specified HorizontalPodAutoscaler
+    ///
+    /// Use [`ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse`](./enum.ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse.html) to parse the HTTP response.
     pub fn read_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status(
         // name of the HorizontalPodAutoscaler
         name: &str,
@@ -610,6 +636,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::read_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.read_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status)
 #[derive(Debug)]
 pub enum ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
@@ -638,6 +665,8 @@ impl ::Response for ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResp
 
 impl HorizontalPodAutoscaler {
     /// replace the specified HorizontalPodAutoscaler
+    ///
+    /// Use [`ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     pub fn replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // name of the HorizontalPodAutoscaler
         name: &str,
@@ -660,6 +689,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
 pub enum ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
     Ok(::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
@@ -688,6 +718,8 @@ impl ::Response for ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerRespons
 
 impl HorizontalPodAutoscaler {
     /// replace status of the specified HorizontalPodAutoscaler
+    ///
+    /// Use [`ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse`](./enum.ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse.html) to parse the HTTP response.
     pub fn replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status(
         // name of the HorizontalPodAutoscaler
         name: &str,
@@ -710,6 +742,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status)
 #[derive(Debug)]
 pub enum ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
@@ -738,6 +771,8 @@ impl ::Response for ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusR
 
 impl HorizontalPodAutoscaler {
     /// watch individual changes to a list of HorizontalPodAutoscaler
+    ///
+    /// Use [`WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse`](./enum.WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_autoscaling_v1_horizontal_pod_autoscaler_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -797,6 +832,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::watch_autoscaling_v1_horizontal_pod_autoscaler_list_for_all_namespaces`](./struct.HorizontalPodAutoscaler.html#method.watch_autoscaling_v1_horizontal_pod_autoscaler_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -827,6 +863,8 @@ impl ::Response for WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespace
 
 impl HorizontalPodAutoscaler {
     /// watch changes to an object of kind HorizontalPodAutoscaler
+    ///
+    /// Use [`WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     pub fn watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
         // name of the HorizontalPodAutoscaler
         name: &str,
@@ -890,6 +928,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
 pub enum WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -920,6 +959,8 @@ impl ::Response for WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse 
 
 impl HorizontalPodAutoscaler {
     /// watch individual changes to a list of HorizontalPodAutoscaler
+    ///
+    /// Use [`WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse`](./enum.WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse.html) to parse the HTTP response.
     pub fn watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -981,6 +1022,7 @@ impl HorizontalPodAutoscaler {
     }
 }
 
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_list`](./struct.HorizontalPodAutoscaler.html#method.watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_list)
 #[derive(Debug)]
 pub enum WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

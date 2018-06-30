@@ -22,6 +22,8 @@ pub struct NetworkPolicy {
 
 impl NetworkPolicy {
     /// create a NetworkPolicy
+    ///
+    /// Use [`CreateExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.CreateExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn create_extensions_v1beta1_namespaced_network_policy(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -42,6 +44,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::create_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.create_extensions_v1beta1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum CreateExtensionsV1beta1NamespacedNetworkPolicyResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::NetworkPolicy),
@@ -70,6 +73,8 @@ impl ::Response for CreateExtensionsV1beta1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// delete collection of NetworkPolicy
+    ///
+    /// Use [`DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse`](./enum.DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_collection_namespaced_network_policy(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -119,6 +124,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::delete_extensions_v1beta1_collection_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_extensions_v1beta1_collection_namespaced_network_policy)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -161,6 +167,8 @@ impl ::Response for DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResp
 
 impl NetworkPolicy {
     /// delete a NetworkPolicy
+    ///
+    /// Use [`DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
@@ -197,6 +205,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::delete_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_extensions_v1beta1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -239,6 +248,8 @@ impl ::Response for DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
+    ///
+    /// Use [`ListExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.ListExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn list_extensions_v1beta1_namespaced_network_policy(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -288,6 +299,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::list_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.list_extensions_v1beta1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1NamespacedNetworkPolicyResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::NetworkPolicyList),
@@ -316,6 +328,8 @@ impl ::Response for ListExtensionsV1beta1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
+    ///
+    /// Use [`ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse`](./enum.ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_extensions_v1beta1_network_policy_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -363,6 +377,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::list_extensions_v1beta1_network_policy_for_all_namespaces`](./struct.NetworkPolicy.html#method.list_extensions_v1beta1_network_policy_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::NetworkPolicyList),
@@ -391,6 +406,8 @@ impl ::Response for ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse {
 
 impl NetworkPolicy {
     /// partially update the specified NetworkPolicy
+    ///
+    /// Use [`PatchExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.PatchExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
@@ -413,6 +430,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::patch_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.patch_extensions_v1beta1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::NetworkPolicy),
@@ -441,6 +459,8 @@ impl ::Response for PatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// read the specified NetworkPolicy
+    ///
+    /// Use [`ReadExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.ReadExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
@@ -472,6 +492,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::read_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.read_extensions_v1beta1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedNetworkPolicyResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::NetworkPolicy),
@@ -500,6 +521,8 @@ impl ::Response for ReadExtensionsV1beta1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// replace the specified NetworkPolicy
+    ///
+    /// Use [`ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
@@ -522,6 +545,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::replace_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.replace_extensions_v1beta1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::NetworkPolicy),
@@ -550,6 +574,8 @@ impl ::Response for ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// watch changes to an object of kind NetworkPolicy
+    ///
+    /// Use [`WatchExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.WatchExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
@@ -601,6 +627,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::watch_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.watch_extensions_v1beta1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -631,6 +658,8 @@ impl ::Response for WatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// watch individual changes to a list of NetworkPolicy
+    ///
+    /// Use [`WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse`](./enum.WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_namespaced_network_policy_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -680,6 +709,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::watch_extensions_v1beta1_namespaced_network_policy_list`](./struct.NetworkPolicy.html#method.watch_extensions_v1beta1_namespaced_network_policy_list)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -710,6 +740,8 @@ impl ::Response for WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse {
 
 impl NetworkPolicy {
     /// watch individual changes to a list of NetworkPolicy
+    ///
+    /// Use [`WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse`](./enum.WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_network_policy_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -757,6 +789,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::watch_extensions_v1beta1_network_policy_list_for_all_namespaces`](./struct.NetworkPolicy.html#method.watch_extensions_v1beta1_network_policy_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

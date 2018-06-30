@@ -22,6 +22,8 @@ pub struct Role {
 
 impl Role {
     /// create a Role
+    ///
+    /// Use [`CreateRbacAuthorizationV1beta1NamespacedRoleResponse`](./enum.CreateRbacAuthorizationV1beta1NamespacedRoleResponse.html) to parse the HTTP response.
     pub fn create_rbac_authorization_v1beta1_namespaced_role(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -42,6 +44,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::create_rbac_authorization_v1beta1_namespaced_role`](./struct.Role.html#method.create_rbac_authorization_v1beta1_namespaced_role)
 #[derive(Debug)]
 pub enum CreateRbacAuthorizationV1beta1NamespacedRoleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1beta1::Role),
@@ -70,6 +73,8 @@ impl ::Response for CreateRbacAuthorizationV1beta1NamespacedRoleResponse {
 
 impl Role {
     /// delete collection of Role
+    ///
+    /// Use [`DeleteRbacAuthorizationV1beta1CollectionNamespacedRoleResponse`](./enum.DeleteRbacAuthorizationV1beta1CollectionNamespacedRoleResponse.html) to parse the HTTP response.
     pub fn delete_rbac_authorization_v1beta1_collection_namespaced_role(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -119,6 +124,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::delete_rbac_authorization_v1beta1_collection_namespaced_role`](./struct.Role.html#method.delete_rbac_authorization_v1beta1_collection_namespaced_role)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1beta1CollectionNamespacedRoleResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -161,6 +167,8 @@ impl ::Response for DeleteRbacAuthorizationV1beta1CollectionNamespacedRoleRespon
 
 impl Role {
     /// delete a Role
+    ///
+    /// Use [`DeleteRbacAuthorizationV1beta1NamespacedRoleResponse`](./enum.DeleteRbacAuthorizationV1beta1NamespacedRoleResponse.html) to parse the HTTP response.
     pub fn delete_rbac_authorization_v1beta1_namespaced_role(
         // name of the Role
         name: &str,
@@ -197,6 +205,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::delete_rbac_authorization_v1beta1_namespaced_role`](./struct.Role.html#method.delete_rbac_authorization_v1beta1_namespaced_role)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1beta1NamespacedRoleResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -239,6 +248,8 @@ impl ::Response for DeleteRbacAuthorizationV1beta1NamespacedRoleResponse {
 
 impl Role {
     /// list or watch objects of kind Role
+    ///
+    /// Use [`ListRbacAuthorizationV1beta1NamespacedRoleResponse`](./enum.ListRbacAuthorizationV1beta1NamespacedRoleResponse.html) to parse the HTTP response.
     pub fn list_rbac_authorization_v1beta1_namespaced_role(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -288,6 +299,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::list_rbac_authorization_v1beta1_namespaced_role`](./struct.Role.html#method.list_rbac_authorization_v1beta1_namespaced_role)
 #[derive(Debug)]
 pub enum ListRbacAuthorizationV1beta1NamespacedRoleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1beta1::RoleList),
@@ -316,6 +328,8 @@ impl ::Response for ListRbacAuthorizationV1beta1NamespacedRoleResponse {
 
 impl Role {
     /// list or watch objects of kind Role
+    ///
+    /// Use [`ListRbacAuthorizationV1beta1RoleForAllNamespacesResponse`](./enum.ListRbacAuthorizationV1beta1RoleForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_rbac_authorization_v1beta1_role_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -363,6 +377,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::list_rbac_authorization_v1beta1_role_for_all_namespaces`](./struct.Role.html#method.list_rbac_authorization_v1beta1_role_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListRbacAuthorizationV1beta1RoleForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1beta1::RoleList),
@@ -391,6 +406,8 @@ impl ::Response for ListRbacAuthorizationV1beta1RoleForAllNamespacesResponse {
 
 impl Role {
     /// partially update the specified Role
+    ///
+    /// Use [`PatchRbacAuthorizationV1beta1NamespacedRoleResponse`](./enum.PatchRbacAuthorizationV1beta1NamespacedRoleResponse.html) to parse the HTTP response.
     pub fn patch_rbac_authorization_v1beta1_namespaced_role(
         // name of the Role
         name: &str,
@@ -413,6 +430,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::patch_rbac_authorization_v1beta1_namespaced_role`](./struct.Role.html#method.patch_rbac_authorization_v1beta1_namespaced_role)
 #[derive(Debug)]
 pub enum PatchRbacAuthorizationV1beta1NamespacedRoleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1beta1::Role),
@@ -441,6 +459,8 @@ impl ::Response for PatchRbacAuthorizationV1beta1NamespacedRoleResponse {
 
 impl Role {
     /// read the specified Role
+    ///
+    /// Use [`ReadRbacAuthorizationV1beta1NamespacedRoleResponse`](./enum.ReadRbacAuthorizationV1beta1NamespacedRoleResponse.html) to parse the HTTP response.
     pub fn read_rbac_authorization_v1beta1_namespaced_role(
         // name of the Role
         name: &str,
@@ -462,6 +482,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::read_rbac_authorization_v1beta1_namespaced_role`](./struct.Role.html#method.read_rbac_authorization_v1beta1_namespaced_role)
 #[derive(Debug)]
 pub enum ReadRbacAuthorizationV1beta1NamespacedRoleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1beta1::Role),
@@ -490,6 +511,8 @@ impl ::Response for ReadRbacAuthorizationV1beta1NamespacedRoleResponse {
 
 impl Role {
     /// replace the specified Role
+    ///
+    /// Use [`ReplaceRbacAuthorizationV1beta1NamespacedRoleResponse`](./enum.ReplaceRbacAuthorizationV1beta1NamespacedRoleResponse.html) to parse the HTTP response.
     pub fn replace_rbac_authorization_v1beta1_namespaced_role(
         // name of the Role
         name: &str,
@@ -512,6 +535,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::replace_rbac_authorization_v1beta1_namespaced_role`](./struct.Role.html#method.replace_rbac_authorization_v1beta1_namespaced_role)
 #[derive(Debug)]
 pub enum ReplaceRbacAuthorizationV1beta1NamespacedRoleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1beta1::Role),
@@ -540,6 +564,8 @@ impl ::Response for ReplaceRbacAuthorizationV1beta1NamespacedRoleResponse {
 
 impl Role {
     /// watch changes to an object of kind Role
+    ///
+    /// Use [`WatchRbacAuthorizationV1beta1NamespacedRoleResponse`](./enum.WatchRbacAuthorizationV1beta1NamespacedRoleResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1beta1_namespaced_role(
         // name of the Role
         name: &str,
@@ -591,6 +617,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::watch_rbac_authorization_v1beta1_namespaced_role`](./struct.Role.html#method.watch_rbac_authorization_v1beta1_namespaced_role)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1beta1NamespacedRoleResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -621,6 +648,8 @@ impl ::Response for WatchRbacAuthorizationV1beta1NamespacedRoleResponse {
 
 impl Role {
     /// watch individual changes to a list of Role
+    ///
+    /// Use [`WatchRbacAuthorizationV1beta1NamespacedRoleListResponse`](./enum.WatchRbacAuthorizationV1beta1NamespacedRoleListResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1beta1_namespaced_role_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -670,6 +699,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::watch_rbac_authorization_v1beta1_namespaced_role_list`](./struct.Role.html#method.watch_rbac_authorization_v1beta1_namespaced_role_list)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1beta1NamespacedRoleListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -700,6 +730,8 @@ impl ::Response for WatchRbacAuthorizationV1beta1NamespacedRoleListResponse {
 
 impl Role {
     /// watch individual changes to a list of Role
+    ///
+    /// Use [`WatchRbacAuthorizationV1beta1RoleListForAllNamespacesResponse`](./enum.WatchRbacAuthorizationV1beta1RoleListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1beta1_role_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -747,6 +779,7 @@ impl Role {
     }
 }
 
+/// Parses the HTTP response of [`Role::watch_rbac_authorization_v1beta1_role_list_for_all_namespaces`](./struct.Role.html#method.watch_rbac_authorization_v1beta1_role_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1beta1RoleListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

@@ -24,6 +24,8 @@ pub struct PodDisruptionBudget {
 
 impl PodDisruptionBudget {
     /// create a PodDisruptionBudget
+    ///
+    /// Use [`CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     pub fn create_policy_v1beta1_namespaced_pod_disruption_budget(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -44,6 +46,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::create_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.create_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
     Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
@@ -72,6 +75,8 @@ impl ::Response for CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
 
 impl PodDisruptionBudget {
     /// delete collection of PodDisruptionBudget
+    ///
+    /// Use [`DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse`](./enum.DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     pub fn delete_policy_v1beta1_collection_namespaced_pod_disruption_budget(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -121,6 +126,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::delete_policy_v1beta1_collection_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_policy_v1beta1_collection_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -163,6 +169,8 @@ impl ::Response for DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetRe
 
 impl PodDisruptionBudget {
     /// delete a PodDisruptionBudget
+    ///
+    /// Use [`DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     pub fn delete_policy_v1beta1_namespaced_pod_disruption_budget(
         // name of the PodDisruptionBudget
         name: &str,
@@ -199,6 +207,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::delete_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -241,6 +250,8 @@ impl ::Response for DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
 
 impl PodDisruptionBudget {
     /// list or watch objects of kind PodDisruptionBudget
+    ///
+    /// Use [`ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     pub fn list_policy_v1beta1_namespaced_pod_disruption_budget(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -290,6 +301,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::list_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.list_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
     Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetList),
@@ -318,6 +330,8 @@ impl ::Response for ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
 
 impl PodDisruptionBudget {
     /// list or watch objects of kind PodDisruptionBudget
+    ///
+    /// Use [`ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse`](./enum.ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_policy_v1beta1_pod_disruption_budget_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -365,6 +379,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::list_policy_v1beta1_pod_disruption_budget_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.list_policy_v1beta1_pod_disruption_budget_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetList),
@@ -393,6 +408,8 @@ impl ::Response for ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse
 
 impl PodDisruptionBudget {
     /// partially update the specified PodDisruptionBudget
+    ///
+    /// Use [`PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     pub fn patch_policy_v1beta1_namespaced_pod_disruption_budget(
         // name of the PodDisruptionBudget
         name: &str,
@@ -415,6 +432,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::patch_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.patch_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
     Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
@@ -443,6 +461,8 @@ impl ::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
 
 impl PodDisruptionBudget {
     /// partially update status of the specified PodDisruptionBudget
+    ///
+    /// Use [`PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse`](./enum.PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
     pub fn patch_policy_v1beta1_namespaced_pod_disruption_budget_status(
         // name of the PodDisruptionBudget
         name: &str,
@@ -465,6 +485,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::patch_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.patch_policy_v1beta1_namespaced_pod_disruption_budget_status)
 #[derive(Debug)]
 pub enum PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
@@ -493,6 +514,8 @@ impl ::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusRespons
 
 impl PodDisruptionBudget {
     /// read the specified PodDisruptionBudget
+    ///
+    /// Use [`ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     pub fn read_policy_v1beta1_namespaced_pod_disruption_budget(
         // name of the PodDisruptionBudget
         name: &str,
@@ -524,6 +547,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::read_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.read_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
     Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
@@ -552,6 +576,8 @@ impl ::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
 
 impl PodDisruptionBudget {
     /// read status of the specified PodDisruptionBudget
+    ///
+    /// Use [`ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse`](./enum.ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
     pub fn read_policy_v1beta1_namespaced_pod_disruption_budget_status(
         // name of the PodDisruptionBudget
         name: &str,
@@ -573,6 +599,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::read_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.read_policy_v1beta1_namespaced_pod_disruption_budget_status)
 #[derive(Debug)]
 pub enum ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
@@ -601,6 +628,8 @@ impl ::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse
 
 impl PodDisruptionBudget {
     /// replace the specified PodDisruptionBudget
+    ///
+    /// Use [`ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     pub fn replace_policy_v1beta1_namespaced_pod_disruption_budget(
         // name of the PodDisruptionBudget
         name: &str,
@@ -623,6 +652,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::replace_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.replace_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
     Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
@@ -651,6 +681,8 @@ impl ::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
 
 impl PodDisruptionBudget {
     /// replace status of the specified PodDisruptionBudget
+    ///
+    /// Use [`ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse`](./enum.ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
     pub fn replace_policy_v1beta1_namespaced_pod_disruption_budget_status(
         // name of the PodDisruptionBudget
         name: &str,
@@ -673,6 +705,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::replace_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.replace_policy_v1beta1_namespaced_pod_disruption_budget_status)
 #[derive(Debug)]
 pub enum ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
@@ -701,6 +734,8 @@ impl ::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusRespo
 
 impl PodDisruptionBudget {
     /// watch changes to an object of kind PodDisruptionBudget
+    ///
+    /// Use [`WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     pub fn watch_policy_v1beta1_namespaced_pod_disruption_budget(
         // name of the PodDisruptionBudget
         name: &str,
@@ -752,6 +787,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::watch_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -782,6 +818,8 @@ impl ::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
 
 impl PodDisruptionBudget {
     /// watch individual changes to a list of PodDisruptionBudget
+    ///
+    /// Use [`WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse`](./enum.WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse.html) to parse the HTTP response.
     pub fn watch_policy_v1beta1_namespaced_pod_disruption_budget_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -831,6 +869,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::watch_policy_v1beta1_namespaced_pod_disruption_budget_list`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_namespaced_pod_disruption_budget_list)
 #[derive(Debug)]
 pub enum WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -861,6 +900,8 @@ impl ::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse 
 
 impl PodDisruptionBudget {
     /// watch individual changes to a list of PodDisruptionBudget
+    ///
+    /// Use [`WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse`](./enum.WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_policy_v1beta1_pod_disruption_budget_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -908,6 +949,7 @@ impl PodDisruptionBudget {
     }
 }
 
+/// Parses the HTTP response of [`PodDisruptionBudget::watch_policy_v1beta1_pod_disruption_budget_list_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_pod_disruption_budget_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

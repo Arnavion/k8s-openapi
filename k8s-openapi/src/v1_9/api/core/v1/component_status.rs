@@ -22,6 +22,8 @@ pub struct ComponentStatus {
 
 impl ComponentStatus {
     /// list objects of kind ComponentStatus
+    ///
+    /// Use [`ListCoreV1ComponentStatusResponse`](./enum.ListCoreV1ComponentStatusResponse.html) to parse the HTTP response.
     pub fn list_core_v1_component_status(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -81,6 +83,7 @@ impl ComponentStatus {
     }
 }
 
+/// Parses the HTTP response of [`ComponentStatus::list_core_v1_component_status`](./struct.ComponentStatus.html#method.list_core_v1_component_status)
 #[derive(Debug)]
 pub enum ListCoreV1ComponentStatusResponse {
     Ok(::v1_9::api::core::v1::ComponentStatusList),
@@ -109,6 +112,8 @@ impl ::Response for ListCoreV1ComponentStatusResponse {
 
 impl ComponentStatus {
     /// read the specified ComponentStatus
+    ///
+    /// Use [`ReadCoreV1ComponentStatusResponse`](./enum.ReadCoreV1ComponentStatusResponse.html) to parse the HTTP response.
     pub fn read_core_v1_component_status(
         // name of the ComponentStatus
         name: &str,
@@ -128,6 +133,7 @@ impl ComponentStatus {
     }
 }
 
+/// Parses the HTTP response of [`ComponentStatus::read_core_v1_component_status`](./struct.ComponentStatus.html#method.read_core_v1_component_status)
 #[derive(Debug)]
 pub enum ReadCoreV1ComponentStatusResponse {
     Ok(::v1_9::api::core::v1::ComponentStatus),

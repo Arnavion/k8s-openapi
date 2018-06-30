@@ -22,6 +22,8 @@ pub struct Binding {
 
 impl Binding {
     /// create a Binding
+    ///
+    /// Use [`CreateCoreV1NamespacedBindingResponse`](./enum.CreateCoreV1NamespacedBindingResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_binding(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -42,6 +44,7 @@ impl Binding {
     }
 }
 
+/// Parses the HTTP response of [`Binding::create_core_v1_namespaced_binding`](./struct.Binding.html#method.create_core_v1_namespaced_binding)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedBindingResponse {
     Ok(::v1_9::api::core::v1::Binding),
@@ -88,6 +91,8 @@ impl ::Response for CreateCoreV1NamespacedBindingResponse {
 
 impl Binding {
     /// create binding of a Pod
+    ///
+    /// Use [`CreateCoreV1NamespacedPodBindingResponse`](./enum.CreateCoreV1NamespacedPodBindingResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_pod_binding(
         // name of the Binding
         name: &str,
@@ -110,6 +115,7 @@ impl Binding {
     }
 }
 
+/// Parses the HTTP response of [`Binding::create_core_v1_namespaced_pod_binding`](./struct.Binding.html#method.create_core_v1_namespaced_pod_binding)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedPodBindingResponse {
     Ok(::v1_9::api::core::v1::Binding),

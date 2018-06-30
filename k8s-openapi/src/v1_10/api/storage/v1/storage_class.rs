@@ -39,6 +39,8 @@ pub struct StorageClass {
 
 impl StorageClass {
     /// create a StorageClass
+    ///
+    /// Use [`CreateStorageV1StorageClassResponse`](./enum.CreateStorageV1StorageClassResponse.html) to parse the HTTP response.
     pub fn create_storage_v1_storage_class(
         body: &::v1_10::api::storage::v1::StorageClass,
         // If 'true', then the output is pretty printed.
@@ -57,6 +59,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::create_storage_v1_storage_class`](./struct.StorageClass.html#method.create_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum CreateStorageV1StorageClassResponse {
     Ok(::v1_10::api::storage::v1::StorageClass),
@@ -103,6 +106,8 @@ impl ::Response for CreateStorageV1StorageClassResponse {
 
 impl StorageClass {
     /// delete collection of StorageClass
+    ///
+    /// Use [`DeleteStorageV1CollectionStorageClassResponse`](./enum.DeleteStorageV1CollectionStorageClassResponse.html) to parse the HTTP response.
     pub fn delete_storage_v1_collection_storage_class(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -162,6 +167,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::delete_storage_v1_collection_storage_class`](./struct.StorageClass.html#method.delete_storage_v1_collection_storage_class)
 #[derive(Debug)]
 pub enum DeleteStorageV1CollectionStorageClassResponse {
     OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -204,6 +210,8 @@ impl ::Response for DeleteStorageV1CollectionStorageClassResponse {
 
 impl StorageClass {
     /// delete a StorageClass
+    ///
+    /// Use [`DeleteStorageV1StorageClassResponse`](./enum.DeleteStorageV1StorageClassResponse.html) to parse the HTTP response.
     pub fn delete_storage_v1_storage_class(
         // name of the StorageClass
         name: &str,
@@ -238,6 +246,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::delete_storage_v1_storage_class`](./struct.StorageClass.html#method.delete_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum DeleteStorageV1StorageClassResponse {
     OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -280,6 +289,8 @@ impl ::Response for DeleteStorageV1StorageClassResponse {
 
 impl StorageClass {
     /// list or watch objects of kind StorageClass
+    ///
+    /// Use [`ListStorageV1StorageClassResponse`](./enum.ListStorageV1StorageClassResponse.html) to parse the HTTP response.
     pub fn list_storage_v1_storage_class(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -339,6 +350,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::list_storage_v1_storage_class`](./struct.StorageClass.html#method.list_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum ListStorageV1StorageClassResponse {
     Ok(::v1_10::api::storage::v1::StorageClassList),
@@ -367,6 +379,8 @@ impl ::Response for ListStorageV1StorageClassResponse {
 
 impl StorageClass {
     /// partially update the specified StorageClass
+    ///
+    /// Use [`PatchStorageV1StorageClassResponse`](./enum.PatchStorageV1StorageClassResponse.html) to parse the HTTP response.
     pub fn patch_storage_v1_storage_class(
         // name of the StorageClass
         name: &str,
@@ -387,6 +401,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::patch_storage_v1_storage_class`](./struct.StorageClass.html#method.patch_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum PatchStorageV1StorageClassResponse {
     Ok(::v1_10::api::storage::v1::StorageClass),
@@ -415,6 +430,8 @@ impl ::Response for PatchStorageV1StorageClassResponse {
 
 impl StorageClass {
     /// read the specified StorageClass
+    ///
+    /// Use [`ReadStorageV1StorageClassResponse`](./enum.ReadStorageV1StorageClassResponse.html) to parse the HTTP response.
     pub fn read_storage_v1_storage_class(
         // name of the StorageClass
         name: &str,
@@ -444,6 +461,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::read_storage_v1_storage_class`](./struct.StorageClass.html#method.read_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum ReadStorageV1StorageClassResponse {
     Ok(::v1_10::api::storage::v1::StorageClass),
@@ -472,6 +490,8 @@ impl ::Response for ReadStorageV1StorageClassResponse {
 
 impl StorageClass {
     /// replace the specified StorageClass
+    ///
+    /// Use [`ReplaceStorageV1StorageClassResponse`](./enum.ReplaceStorageV1StorageClassResponse.html) to parse the HTTP response.
     pub fn replace_storage_v1_storage_class(
         // name of the StorageClass
         name: &str,
@@ -492,6 +512,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::replace_storage_v1_storage_class`](./struct.StorageClass.html#method.replace_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum ReplaceStorageV1StorageClassResponse {
     Ok(::v1_10::api::storage::v1::StorageClass),
@@ -529,6 +550,8 @@ impl ::Response for ReplaceStorageV1StorageClassResponse {
 
 impl StorageClass {
     /// watch changes to an object of kind StorageClass
+    ///
+    /// Use [`WatchStorageV1StorageClassResponse`](./enum.WatchStorageV1StorageClassResponse.html) to parse the HTTP response.
     pub fn watch_storage_v1_storage_class(
         // name of the StorageClass
         name: &str,
@@ -590,6 +613,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::watch_storage_v1_storage_class`](./struct.StorageClass.html#method.watch_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum WatchStorageV1StorageClassResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -620,6 +644,8 @@ impl ::Response for WatchStorageV1StorageClassResponse {
 
 impl StorageClass {
     /// watch individual changes to a list of StorageClass
+    ///
+    /// Use [`WatchStorageV1StorageClassListResponse`](./enum.WatchStorageV1StorageClassListResponse.html) to parse the HTTP response.
     pub fn watch_storage_v1_storage_class_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -679,6 +705,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::watch_storage_v1_storage_class_list`](./struct.StorageClass.html#method.watch_storage_v1_storage_class_list)
 #[derive(Debug)]
 pub enum WatchStorageV1StorageClassListResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),

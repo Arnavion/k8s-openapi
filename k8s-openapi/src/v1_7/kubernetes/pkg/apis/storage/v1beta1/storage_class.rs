@@ -27,6 +27,8 @@ pub struct StorageClass {
 
 impl StorageClass {
     /// create a StorageClass
+    ///
+    /// Use [`CreateStorageV1beta1StorageClassResponse`](./enum.CreateStorageV1beta1StorageClassResponse.html) to parse the HTTP response.
     pub fn create_storage_v1beta1_storage_class(
         body: &::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass,
         // If 'true', then the output is pretty printed.
@@ -45,6 +47,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::create_storage_v1beta1_storage_class`](./struct.StorageClass.html#method.create_storage_v1beta1_storage_class)
 #[derive(Debug)]
 pub enum CreateStorageV1beta1StorageClassResponse {
     Ok(::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass),
@@ -73,6 +76,8 @@ impl ::Response for CreateStorageV1beta1StorageClassResponse {
 
 impl StorageClass {
     /// delete collection of StorageClass
+    ///
+    /// Use [`DeleteStorageV1beta1CollectionStorageClassResponse`](./enum.DeleteStorageV1beta1CollectionStorageClassResponse.html) to parse the HTTP response.
     pub fn delete_storage_v1beta1_collection_storage_class(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -120,6 +125,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::delete_storage_v1beta1_collection_storage_class`](./struct.StorageClass.html#method.delete_storage_v1beta1_collection_storage_class)
 #[derive(Debug)]
 pub enum DeleteStorageV1beta1CollectionStorageClassResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -162,6 +168,8 @@ impl ::Response for DeleteStorageV1beta1CollectionStorageClassResponse {
 
 impl StorageClass {
     /// delete a StorageClass
+    ///
+    /// Use [`DeleteStorageV1beta1StorageClassResponse`](./enum.DeleteStorageV1beta1StorageClassResponse.html) to parse the HTTP response.
     pub fn delete_storage_v1beta1_storage_class(
         // name of the StorageClass
         name: &str,
@@ -196,6 +204,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::delete_storage_v1beta1_storage_class`](./struct.StorageClass.html#method.delete_storage_v1beta1_storage_class)
 #[derive(Debug)]
 pub enum DeleteStorageV1beta1StorageClassResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -238,6 +247,8 @@ impl ::Response for DeleteStorageV1beta1StorageClassResponse {
 
 impl StorageClass {
     /// list or watch objects of kind StorageClass
+    ///
+    /// Use [`ListStorageV1beta1StorageClassResponse`](./enum.ListStorageV1beta1StorageClassResponse.html) to parse the HTTP response.
     pub fn list_storage_v1beta1_storage_class(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -285,6 +296,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::list_storage_v1beta1_storage_class`](./struct.StorageClass.html#method.list_storage_v1beta1_storage_class)
 #[derive(Debug)]
 pub enum ListStorageV1beta1StorageClassResponse {
     Ok(::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClassList),
@@ -313,6 +325,8 @@ impl ::Response for ListStorageV1beta1StorageClassResponse {
 
 impl StorageClass {
     /// partially update the specified StorageClass
+    ///
+    /// Use [`PatchStorageV1beta1StorageClassResponse`](./enum.PatchStorageV1beta1StorageClassResponse.html) to parse the HTTP response.
     pub fn patch_storage_v1beta1_storage_class(
         // name of the StorageClass
         name: &str,
@@ -333,6 +347,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::patch_storage_v1beta1_storage_class`](./struct.StorageClass.html#method.patch_storage_v1beta1_storage_class)
 #[derive(Debug)]
 pub enum PatchStorageV1beta1StorageClassResponse {
     Ok(::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass),
@@ -361,6 +376,8 @@ impl ::Response for PatchStorageV1beta1StorageClassResponse {
 
 impl StorageClass {
     /// read the specified StorageClass
+    ///
+    /// Use [`ReadStorageV1beta1StorageClassResponse`](./enum.ReadStorageV1beta1StorageClassResponse.html) to parse the HTTP response.
     pub fn read_storage_v1beta1_storage_class(
         // name of the StorageClass
         name: &str,
@@ -390,6 +407,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::read_storage_v1beta1_storage_class`](./struct.StorageClass.html#method.read_storage_v1beta1_storage_class)
 #[derive(Debug)]
 pub enum ReadStorageV1beta1StorageClassResponse {
     Ok(::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass),
@@ -418,6 +436,8 @@ impl ::Response for ReadStorageV1beta1StorageClassResponse {
 
 impl StorageClass {
     /// replace the specified StorageClass
+    ///
+    /// Use [`ReplaceStorageV1beta1StorageClassResponse`](./enum.ReplaceStorageV1beta1StorageClassResponse.html) to parse the HTTP response.
     pub fn replace_storage_v1beta1_storage_class(
         // name of the StorageClass
         name: &str,
@@ -438,6 +458,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::replace_storage_v1beta1_storage_class`](./struct.StorageClass.html#method.replace_storage_v1beta1_storage_class)
 #[derive(Debug)]
 pub enum ReplaceStorageV1beta1StorageClassResponse {
     Ok(::v1_7::kubernetes::pkg::apis::storage::v1beta1::StorageClass),
@@ -466,6 +487,8 @@ impl ::Response for ReplaceStorageV1beta1StorageClassResponse {
 
 impl StorageClass {
     /// watch changes to an object of kind StorageClass
+    ///
+    /// Use [`WatchStorageV1beta1StorageClassResponse`](./enum.WatchStorageV1beta1StorageClassResponse.html) to parse the HTTP response.
     pub fn watch_storage_v1beta1_storage_class(
         // name of the StorageClass
         name: &str,
@@ -515,6 +538,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::watch_storage_v1beta1_storage_class`](./struct.StorageClass.html#method.watch_storage_v1beta1_storage_class)
 #[derive(Debug)]
 pub enum WatchStorageV1beta1StorageClassResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -545,6 +569,8 @@ impl ::Response for WatchStorageV1beta1StorageClassResponse {
 
 impl StorageClass {
     /// watch individual changes to a list of StorageClass
+    ///
+    /// Use [`WatchStorageV1beta1StorageClassListResponse`](./enum.WatchStorageV1beta1StorageClassListResponse.html) to parse the HTTP response.
     pub fn watch_storage_v1beta1_storage_class_list(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -592,6 +618,7 @@ impl StorageClass {
     }
 }
 
+/// Parses the HTTP response of [`StorageClass::watch_storage_v1beta1_storage_class_list`](./struct.StorageClass.html#method.watch_storage_v1beta1_storage_class_list)
 #[derive(Debug)]
 pub enum WatchStorageV1beta1StorageClassListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

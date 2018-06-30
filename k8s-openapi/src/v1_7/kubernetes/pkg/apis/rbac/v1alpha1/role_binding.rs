@@ -25,6 +25,8 @@ pub struct RoleBinding {
 
 impl RoleBinding {
     /// create a RoleBinding
+    ///
+    /// Use [`CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn create_rbac_authorization_v1alpha1_namespaced_role_binding(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::create_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.create_rbac_authorization_v1alpha1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::RoleBinding),
@@ -73,6 +76,8 @@ impl ::Response for CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse
 
 impl RoleBinding {
     /// delete collection of RoleBinding
+    ///
+    /// Use [`DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn delete_rbac_authorization_v1alpha1_collection_namespaced_role_binding(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -122,6 +127,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::delete_rbac_authorization_v1alpha1_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1alpha1_collection_namespaced_role_binding)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -164,6 +170,8 @@ impl ::Response for DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindi
 
 impl RoleBinding {
     /// delete a RoleBinding
+    ///
+    /// Use [`DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn delete_rbac_authorization_v1alpha1_namespaced_role_binding(
         // name of the RoleBinding
         name: &str,
@@ -200,6 +208,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::delete_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1alpha1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -242,6 +251,8 @@ impl ::Response for DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse
 
 impl RoleBinding {
     /// list or watch objects of kind RoleBinding
+    ///
+    /// Use [`ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn list_rbac_authorization_v1alpha1_namespaced_role_binding(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -291,6 +302,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::list_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.list_rbac_authorization_v1alpha1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::RoleBindingList),
@@ -319,6 +331,8 @@ impl ::Response for ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
 
 impl RoleBinding {
     /// list or watch objects of kind RoleBinding
+    ///
+    /// Use [`ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse`](./enum.ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_rbac_authorization_v1alpha1_role_binding_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -366,6 +380,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::list_rbac_authorization_v1alpha1_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_rbac_authorization_v1alpha1_role_binding_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::RoleBindingList),
@@ -394,6 +409,8 @@ impl ::Response for ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResp
 
 impl RoleBinding {
     /// partially update the specified RoleBinding
+    ///
+    /// Use [`PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn patch_rbac_authorization_v1alpha1_namespaced_role_binding(
         // name of the RoleBinding
         name: &str,
@@ -416,6 +433,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::patch_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_rbac_authorization_v1alpha1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::RoleBinding),
@@ -444,6 +462,8 @@ impl ::Response for PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse 
 
 impl RoleBinding {
     /// read the specified RoleBinding
+    ///
+    /// Use [`ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn read_rbac_authorization_v1alpha1_namespaced_role_binding(
         // name of the RoleBinding
         name: &str,
@@ -465,6 +485,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::read_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.read_rbac_authorization_v1alpha1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::RoleBinding),
@@ -493,6 +514,8 @@ impl ::Response for ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
 
 impl RoleBinding {
     /// replace the specified RoleBinding
+    ///
+    /// Use [`ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn replace_rbac_authorization_v1alpha1_namespaced_role_binding(
         // name of the RoleBinding
         name: &str,
@@ -515,6 +538,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::replace_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_rbac_authorization_v1alpha1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::RoleBinding),
@@ -543,6 +567,8 @@ impl ::Response for ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingRespons
 
 impl RoleBinding {
     /// watch changes to an object of kind RoleBinding
+    ///
+    /// Use [`WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1alpha1_namespaced_role_binding(
         // name of the RoleBinding
         name: &str,
@@ -594,6 +620,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1alpha1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -624,6 +651,8 @@ impl ::Response for WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse 
 
 impl RoleBinding {
     /// watch individual changes to a list of RoleBinding
+    ///
+    /// Use [`WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse`](./enum.WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1alpha1_namespaced_role_binding_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -673,6 +702,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1alpha1_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1alpha1_namespaced_role_binding_list)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -703,6 +733,8 @@ impl ::Response for WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListRespo
 
 impl RoleBinding {
     /// watch individual changes to a list of RoleBinding
+    ///
+    /// Use [`WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse`](./enum.WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1alpha1_role_binding_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -750,6 +782,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1alpha1_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1alpha1_role_binding_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

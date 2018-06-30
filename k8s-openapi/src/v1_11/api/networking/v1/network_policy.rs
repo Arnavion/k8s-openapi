@@ -22,6 +22,8 @@ pub struct NetworkPolicy {
 
 impl NetworkPolicy {
     /// create a NetworkPolicy
+    ///
+    /// Use [`CreateNetworkingV1NamespacedNetworkPolicyResponse`](./enum.CreateNetworkingV1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn create_networking_v1_namespaced_network_policy(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -42,6 +44,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::create_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.create_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum CreateNetworkingV1NamespacedNetworkPolicyResponse {
     Ok(::v1_11::api::networking::v1::NetworkPolicy),
@@ -88,6 +91,8 @@ impl ::Response for CreateNetworkingV1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// delete collection of NetworkPolicy
+    ///
+    /// Use [`DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse`](./enum.DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn delete_networking_v1_collection_namespaced_network_policy(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -149,6 +154,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::delete_networking_v1_collection_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_networking_v1_collection_namespaced_network_policy)
 #[derive(Debug)]
 pub enum DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -191,6 +197,8 @@ impl ::Response for DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse 
 
 impl NetworkPolicy {
     /// delete a NetworkPolicy
+    ///
+    /// Use [`DeleteNetworkingV1NamespacedNetworkPolicyResponse`](./enum.DeleteNetworkingV1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn delete_networking_v1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
@@ -227,6 +235,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::delete_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum DeleteNetworkingV1NamespacedNetworkPolicyResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -269,6 +278,8 @@ impl ::Response for DeleteNetworkingV1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
+    ///
+    /// Use [`ListNetworkingV1NamespacedNetworkPolicyResponse`](./enum.ListNetworkingV1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn list_networking_v1_namespaced_network_policy(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -330,6 +341,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::list_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.list_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum ListNetworkingV1NamespacedNetworkPolicyResponse {
     Ok(::v1_11::api::networking::v1::NetworkPolicyList),
@@ -358,6 +370,8 @@ impl ::Response for ListNetworkingV1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
+    ///
+    /// Use [`ListNetworkingV1NetworkPolicyForAllNamespacesResponse`](./enum.ListNetworkingV1NetworkPolicyForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_networking_v1_network_policy_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -417,6 +431,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::list_networking_v1_network_policy_for_all_namespaces`](./struct.NetworkPolicy.html#method.list_networking_v1_network_policy_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListNetworkingV1NetworkPolicyForAllNamespacesResponse {
     Ok(::v1_11::api::networking::v1::NetworkPolicyList),
@@ -445,6 +460,8 @@ impl ::Response for ListNetworkingV1NetworkPolicyForAllNamespacesResponse {
 
 impl NetworkPolicy {
     /// partially update the specified NetworkPolicy
+    ///
+    /// Use [`PatchNetworkingV1NamespacedNetworkPolicyResponse`](./enum.PatchNetworkingV1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn patch_networking_v1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
@@ -467,6 +484,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::patch_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.patch_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum PatchNetworkingV1NamespacedNetworkPolicyResponse {
     Ok(::v1_11::api::networking::v1::NetworkPolicy),
@@ -495,6 +513,8 @@ impl ::Response for PatchNetworkingV1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// read the specified NetworkPolicy
+    ///
+    /// Use [`ReadNetworkingV1NamespacedNetworkPolicyResponse`](./enum.ReadNetworkingV1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn read_networking_v1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
@@ -526,6 +546,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::read_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.read_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum ReadNetworkingV1NamespacedNetworkPolicyResponse {
     Ok(::v1_11::api::networking::v1::NetworkPolicy),
@@ -554,6 +575,8 @@ impl ::Response for ReadNetworkingV1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// replace the specified NetworkPolicy
+    ///
+    /// Use [`ReplaceNetworkingV1NamespacedNetworkPolicyResponse`](./enum.ReplaceNetworkingV1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn replace_networking_v1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
@@ -576,6 +599,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::replace_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.replace_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum ReplaceNetworkingV1NamespacedNetworkPolicyResponse {
     Ok(::v1_11::api::networking::v1::NetworkPolicy),
@@ -613,6 +637,8 @@ impl ::Response for ReplaceNetworkingV1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// watch changes to an object of kind NetworkPolicy
+    ///
+    /// Use [`WatchNetworkingV1NamespacedNetworkPolicyResponse`](./enum.WatchNetworkingV1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     pub fn watch_networking_v1_namespaced_network_policy(
         // name of the NetworkPolicy
         name: &str,
@@ -676,6 +702,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::watch_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.watch_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum WatchNetworkingV1NamespacedNetworkPolicyResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -706,6 +733,8 @@ impl ::Response for WatchNetworkingV1NamespacedNetworkPolicyResponse {
 
 impl NetworkPolicy {
     /// watch individual changes to a list of NetworkPolicy
+    ///
+    /// Use [`WatchNetworkingV1NamespacedNetworkPolicyListResponse`](./enum.WatchNetworkingV1NamespacedNetworkPolicyListResponse.html) to parse the HTTP response.
     pub fn watch_networking_v1_namespaced_network_policy_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -767,6 +796,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::watch_networking_v1_namespaced_network_policy_list`](./struct.NetworkPolicy.html#method.watch_networking_v1_namespaced_network_policy_list)
 #[derive(Debug)]
 pub enum WatchNetworkingV1NamespacedNetworkPolicyListResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -797,6 +827,8 @@ impl ::Response for WatchNetworkingV1NamespacedNetworkPolicyListResponse {
 
 impl NetworkPolicy {
     /// watch individual changes to a list of NetworkPolicy
+    ///
+    /// Use [`WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse`](./enum.WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_networking_v1_network_policy_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -856,6 +888,7 @@ impl NetworkPolicy {
     }
 }
 
+/// Parses the HTTP response of [`NetworkPolicy::watch_networking_v1_network_policy_list_for_all_namespaces`](./struct.NetworkPolicy.html#method.watch_networking_v1_network_policy_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

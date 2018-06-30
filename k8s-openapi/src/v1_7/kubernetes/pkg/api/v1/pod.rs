@@ -25,6 +25,8 @@ pub struct Pod {
 
 impl Pod {
     /// connect DELETE requests to proxy of Pod
+    ///
+    /// Use [`ConnectCoreV1DeleteNamespacedPodProxyResponse`](./enum.ConnectCoreV1DeleteNamespacedPodProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_delete_namespaced_pod_proxy(
         // name of the Pod
         name: &str,
@@ -46,6 +48,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_delete_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_delete_namespaced_pod_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1DeleteNamespacedPodProxyResponse {
     Ok(String),
@@ -79,6 +82,8 @@ impl ::Response for ConnectCoreV1DeleteNamespacedPodProxyResponse {
 
 impl Pod {
     /// connect DELETE requests to proxy of Pod
+    ///
+    /// Use [`ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_delete_namespaced_pod_proxy_with_path(
         // name of the Pod
         name: &str,
@@ -102,6 +107,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_delete_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_delete_namespaced_pod_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse {
     Ok(String),
@@ -135,6 +141,8 @@ impl ::Response for ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse {
 
 impl Pod {
     /// connect GET requests to attach of Pod
+    ///
+    /// Use [`ConnectCoreV1GetNamespacedPodAttachResponse`](./enum.ConnectCoreV1GetNamespacedPodAttachResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_get_namespaced_pod_attach(
         // name of the Pod
         name: &str,
@@ -176,6 +184,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_attach`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_attach)
 #[derive(Debug)]
 pub enum ConnectCoreV1GetNamespacedPodAttachResponse {
     Ok(String),
@@ -209,6 +218,8 @@ impl ::Response for ConnectCoreV1GetNamespacedPodAttachResponse {
 
 impl Pod {
     /// connect GET requests to exec of Pod
+    ///
+    /// Use [`ConnectCoreV1GetNamespacedPodExecResponse`](./enum.ConnectCoreV1GetNamespacedPodExecResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_get_namespaced_pod_exec(
         // name of the Pod
         name: &str,
@@ -255,6 +266,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_exec`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_exec)
 #[derive(Debug)]
 pub enum ConnectCoreV1GetNamespacedPodExecResponse {
     Ok(String),
@@ -288,6 +300,8 @@ impl ::Response for ConnectCoreV1GetNamespacedPodExecResponse {
 
 impl Pod {
     /// connect GET requests to portforward of Pod
+    ///
+    /// Use [`ConnectCoreV1GetNamespacedPodPortforwardResponse`](./enum.ConnectCoreV1GetNamespacedPodPortforwardResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_get_namespaced_pod_portforward(
         // name of the Pod
         name: &str,
@@ -309,6 +323,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_portforward`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_portforward)
 #[derive(Debug)]
 pub enum ConnectCoreV1GetNamespacedPodPortforwardResponse {
     Ok(String),
@@ -342,6 +357,8 @@ impl ::Response for ConnectCoreV1GetNamespacedPodPortforwardResponse {
 
 impl Pod {
     /// connect GET requests to proxy of Pod
+    ///
+    /// Use [`ConnectCoreV1GetNamespacedPodProxyResponse`](./enum.ConnectCoreV1GetNamespacedPodProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_get_namespaced_pod_proxy(
         // name of the Pod
         name: &str,
@@ -363,6 +380,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1GetNamespacedPodProxyResponse {
     Ok(String),
@@ -396,6 +414,8 @@ impl ::Response for ConnectCoreV1GetNamespacedPodProxyResponse {
 
 impl Pod {
     /// connect GET requests to proxy of Pod
+    ///
+    /// Use [`ConnectCoreV1GetNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1GetNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_get_namespaced_pod_proxy_with_path(
         // name of the Pod
         name: &str,
@@ -419,6 +439,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1GetNamespacedPodProxyWithPathResponse {
     Ok(String),
@@ -452,6 +473,8 @@ impl ::Response for ConnectCoreV1GetNamespacedPodProxyWithPathResponse {
 
 impl Pod {
     /// connect PATCH requests to proxy of Pod
+    ///
+    /// Use [`ConnectCoreV1PatchNamespacedPodProxyResponse`](./enum.ConnectCoreV1PatchNamespacedPodProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_patch_namespaced_pod_proxy(
         // name of the Pod
         name: &str,
@@ -473,6 +496,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_patch_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_patch_namespaced_pod_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1PatchNamespacedPodProxyResponse {
     Ok(String),
@@ -506,6 +530,8 @@ impl ::Response for ConnectCoreV1PatchNamespacedPodProxyResponse {
 
 impl Pod {
     /// connect PATCH requests to proxy of Pod
+    ///
+    /// Use [`ConnectCoreV1PatchNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1PatchNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_patch_namespaced_pod_proxy_with_path(
         // name of the Pod
         name: &str,
@@ -529,6 +555,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_patch_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_patch_namespaced_pod_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1PatchNamespacedPodProxyWithPathResponse {
     Ok(String),
@@ -562,6 +589,8 @@ impl ::Response for ConnectCoreV1PatchNamespacedPodProxyWithPathResponse {
 
 impl Pod {
     /// connect POST requests to attach of Pod
+    ///
+    /// Use [`ConnectCoreV1PostNamespacedPodAttachResponse`](./enum.ConnectCoreV1PostNamespacedPodAttachResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_post_namespaced_pod_attach(
         // name of the Pod
         name: &str,
@@ -603,6 +632,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_attach`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_attach)
 #[derive(Debug)]
 pub enum ConnectCoreV1PostNamespacedPodAttachResponse {
     Ok(String),
@@ -636,6 +666,8 @@ impl ::Response for ConnectCoreV1PostNamespacedPodAttachResponse {
 
 impl Pod {
     /// connect POST requests to exec of Pod
+    ///
+    /// Use [`ConnectCoreV1PostNamespacedPodExecResponse`](./enum.ConnectCoreV1PostNamespacedPodExecResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_post_namespaced_pod_exec(
         // name of the Pod
         name: &str,
@@ -682,6 +714,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_exec`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_exec)
 #[derive(Debug)]
 pub enum ConnectCoreV1PostNamespacedPodExecResponse {
     Ok(String),
@@ -715,6 +748,8 @@ impl ::Response for ConnectCoreV1PostNamespacedPodExecResponse {
 
 impl Pod {
     /// connect POST requests to portforward of Pod
+    ///
+    /// Use [`ConnectCoreV1PostNamespacedPodPortforwardResponse`](./enum.ConnectCoreV1PostNamespacedPodPortforwardResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_post_namespaced_pod_portforward(
         // name of the Pod
         name: &str,
@@ -736,6 +771,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_portforward`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_portforward)
 #[derive(Debug)]
 pub enum ConnectCoreV1PostNamespacedPodPortforwardResponse {
     Ok(String),
@@ -769,6 +805,8 @@ impl ::Response for ConnectCoreV1PostNamespacedPodPortforwardResponse {
 
 impl Pod {
     /// connect POST requests to proxy of Pod
+    ///
+    /// Use [`ConnectCoreV1PostNamespacedPodProxyResponse`](./enum.ConnectCoreV1PostNamespacedPodProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_post_namespaced_pod_proxy(
         // name of the Pod
         name: &str,
@@ -790,6 +828,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1PostNamespacedPodProxyResponse {
     Ok(String),
@@ -823,6 +862,8 @@ impl ::Response for ConnectCoreV1PostNamespacedPodProxyResponse {
 
 impl Pod {
     /// connect POST requests to proxy of Pod
+    ///
+    /// Use [`ConnectCoreV1PostNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1PostNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_post_namespaced_pod_proxy_with_path(
         // name of the Pod
         name: &str,
@@ -846,6 +887,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1PostNamespacedPodProxyWithPathResponse {
     Ok(String),
@@ -879,6 +921,8 @@ impl ::Response for ConnectCoreV1PostNamespacedPodProxyWithPathResponse {
 
 impl Pod {
     /// connect PUT requests to proxy of Pod
+    ///
+    /// Use [`ConnectCoreV1PutNamespacedPodProxyResponse`](./enum.ConnectCoreV1PutNamespacedPodProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_put_namespaced_pod_proxy(
         // name of the Pod
         name: &str,
@@ -900,6 +944,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_put_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_put_namespaced_pod_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1PutNamespacedPodProxyResponse {
     Ok(String),
@@ -933,6 +978,8 @@ impl ::Response for ConnectCoreV1PutNamespacedPodProxyResponse {
 
 impl Pod {
     /// connect PUT requests to proxy of Pod
+    ///
+    /// Use [`ConnectCoreV1PutNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1PutNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_put_namespaced_pod_proxy_with_path(
         // name of the Pod
         name: &str,
@@ -956,6 +1003,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::connect_core_v1_put_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_put_namespaced_pod_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1PutNamespacedPodProxyWithPathResponse {
     Ok(String),
@@ -989,6 +1037,8 @@ impl ::Response for ConnectCoreV1PutNamespacedPodProxyWithPathResponse {
 
 impl Pod {
     /// create a Pod
+    ///
+    /// Use [`CreateCoreV1NamespacedPodResponse`](./enum.CreateCoreV1NamespacedPodResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_pod(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -1009,6 +1059,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::create_core_v1_namespaced_pod`](./struct.Pod.html#method.create_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedPodResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
@@ -1037,6 +1088,8 @@ impl ::Response for CreateCoreV1NamespacedPodResponse {
 
 impl Pod {
     /// delete collection of Pod
+    ///
+    /// Use [`DeleteCoreV1CollectionNamespacedPodResponse`](./enum.DeleteCoreV1CollectionNamespacedPodResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_namespaced_pod(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -1086,6 +1139,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::delete_core_v1_collection_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_collection_namespaced_pod)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedPodResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -1128,6 +1182,8 @@ impl ::Response for DeleteCoreV1CollectionNamespacedPodResponse {
 
 impl Pod {
     /// delete a Pod
+    ///
+    /// Use [`DeleteCoreV1NamespacedPodResponse`](./enum.DeleteCoreV1NamespacedPodResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespaced_pod(
         // name of the Pod
         name: &str,
@@ -1164,6 +1220,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::delete_core_v1_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedPodResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -1206,6 +1263,8 @@ impl ::Response for DeleteCoreV1NamespacedPodResponse {
 
 impl Pod {
     /// list or watch objects of kind Pod
+    ///
+    /// Use [`ListCoreV1NamespacedPodResponse`](./enum.ListCoreV1NamespacedPodResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespaced_pod(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -1255,6 +1314,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::list_core_v1_namespaced_pod`](./struct.Pod.html#method.list_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedPodResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::PodList),
@@ -1283,6 +1343,8 @@ impl ::Response for ListCoreV1NamespacedPodResponse {
 
 impl Pod {
     /// list or watch objects of kind Pod
+    ///
+    /// Use [`ListCoreV1PodForAllNamespacesResponse`](./enum.ListCoreV1PodForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_core_v1_pod_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -1330,6 +1392,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::list_core_v1_pod_for_all_namespaces`](./struct.Pod.html#method.list_core_v1_pod_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1PodForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::PodList),
@@ -1358,6 +1421,8 @@ impl ::Response for ListCoreV1PodForAllNamespacesResponse {
 
 impl Pod {
     /// partially update the specified Pod
+    ///
+    /// Use [`PatchCoreV1NamespacedPodResponse`](./enum.PatchCoreV1NamespacedPodResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_pod(
         // name of the Pod
         name: &str,
@@ -1380,6 +1445,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::patch_core_v1_namespaced_pod`](./struct.Pod.html#method.patch_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedPodResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
@@ -1408,6 +1474,8 @@ impl ::Response for PatchCoreV1NamespacedPodResponse {
 
 impl Pod {
     /// partially update status of the specified Pod
+    ///
+    /// Use [`PatchCoreV1NamespacedPodStatusResponse`](./enum.PatchCoreV1NamespacedPodStatusResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_pod_status(
         // name of the Pod
         name: &str,
@@ -1430,6 +1498,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::patch_core_v1_namespaced_pod_status`](./struct.Pod.html#method.patch_core_v1_namespaced_pod_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedPodStatusResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
@@ -1458,6 +1527,8 @@ impl ::Response for PatchCoreV1NamespacedPodStatusResponse {
 
 impl Pod {
     /// proxy DELETE requests to Pod
+    ///
+    /// Use [`ProxyCoreV1DELETENamespacedPodResponse`](./enum.ProxyCoreV1DELETENamespacedPodResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_delete_namespaced_pod(
         // name of the Pod
         name: &str,
@@ -1472,6 +1543,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::proxy_core_v1_delete_namespaced_pod`](./struct.Pod.html#method.proxy_core_v1_delete_namespaced_pod)
 #[derive(Debug)]
 pub enum ProxyCoreV1DELETENamespacedPodResponse {
     Ok(String),
@@ -1505,6 +1577,8 @@ impl ::Response for ProxyCoreV1DELETENamespacedPodResponse {
 
 impl Pod {
     /// proxy DELETE requests to Pod
+    ///
+    /// Use [`ProxyCoreV1DELETENamespacedPodWithPathResponse`](./enum.ProxyCoreV1DELETENamespacedPodWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_delete_namespaced_pod_with_path(
         // name of the Pod
         name: &str,
@@ -1521,6 +1595,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::proxy_core_v1_delete_namespaced_pod_with_path`](./struct.Pod.html#method.proxy_core_v1_delete_namespaced_pod_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1DELETENamespacedPodWithPathResponse {
     Ok(String),
@@ -1554,6 +1629,8 @@ impl ::Response for ProxyCoreV1DELETENamespacedPodWithPathResponse {
 
 impl Pod {
     /// proxy GET requests to Pod
+    ///
+    /// Use [`ProxyCoreV1GETNamespacedPodResponse`](./enum.ProxyCoreV1GETNamespacedPodResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_get_namespaced_pod(
         // name of the Pod
         name: &str,
@@ -1568,6 +1645,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::proxy_core_v1_get_namespaced_pod`](./struct.Pod.html#method.proxy_core_v1_get_namespaced_pod)
 #[derive(Debug)]
 pub enum ProxyCoreV1GETNamespacedPodResponse {
     Ok(String),
@@ -1601,6 +1679,8 @@ impl ::Response for ProxyCoreV1GETNamespacedPodResponse {
 
 impl Pod {
     /// proxy GET requests to Pod
+    ///
+    /// Use [`ProxyCoreV1GETNamespacedPodWithPathResponse`](./enum.ProxyCoreV1GETNamespacedPodWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_get_namespaced_pod_with_path(
         // name of the Pod
         name: &str,
@@ -1617,6 +1697,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::proxy_core_v1_get_namespaced_pod_with_path`](./struct.Pod.html#method.proxy_core_v1_get_namespaced_pod_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1GETNamespacedPodWithPathResponse {
     Ok(String),
@@ -1650,6 +1731,8 @@ impl ::Response for ProxyCoreV1GETNamespacedPodWithPathResponse {
 
 impl Pod {
     /// proxy PATCH requests to Pod
+    ///
+    /// Use [`ProxyCoreV1PATCHNamespacedPodResponse`](./enum.ProxyCoreV1PATCHNamespacedPodResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_patch_namespaced_pod(
         // name of the Pod
         name: &str,
@@ -1664,6 +1747,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::proxy_core_v1_patch_namespaced_pod`](./struct.Pod.html#method.proxy_core_v1_patch_namespaced_pod)
 #[derive(Debug)]
 pub enum ProxyCoreV1PATCHNamespacedPodResponse {
     Ok(String),
@@ -1697,6 +1781,8 @@ impl ::Response for ProxyCoreV1PATCHNamespacedPodResponse {
 
 impl Pod {
     /// proxy PATCH requests to Pod
+    ///
+    /// Use [`ProxyCoreV1PATCHNamespacedPodWithPathResponse`](./enum.ProxyCoreV1PATCHNamespacedPodWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_patch_namespaced_pod_with_path(
         // name of the Pod
         name: &str,
@@ -1713,6 +1799,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::proxy_core_v1_patch_namespaced_pod_with_path`](./struct.Pod.html#method.proxy_core_v1_patch_namespaced_pod_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1PATCHNamespacedPodWithPathResponse {
     Ok(String),
@@ -1746,6 +1833,8 @@ impl ::Response for ProxyCoreV1PATCHNamespacedPodWithPathResponse {
 
 impl Pod {
     /// proxy POST requests to Pod
+    ///
+    /// Use [`ProxyCoreV1POSTNamespacedPodResponse`](./enum.ProxyCoreV1POSTNamespacedPodResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_post_namespaced_pod(
         // name of the Pod
         name: &str,
@@ -1760,6 +1849,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::proxy_core_v1_post_namespaced_pod`](./struct.Pod.html#method.proxy_core_v1_post_namespaced_pod)
 #[derive(Debug)]
 pub enum ProxyCoreV1POSTNamespacedPodResponse {
     Ok(String),
@@ -1793,6 +1883,8 @@ impl ::Response for ProxyCoreV1POSTNamespacedPodResponse {
 
 impl Pod {
     /// proxy POST requests to Pod
+    ///
+    /// Use [`ProxyCoreV1POSTNamespacedPodWithPathResponse`](./enum.ProxyCoreV1POSTNamespacedPodWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_post_namespaced_pod_with_path(
         // name of the Pod
         name: &str,
@@ -1809,6 +1901,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::proxy_core_v1_post_namespaced_pod_with_path`](./struct.Pod.html#method.proxy_core_v1_post_namespaced_pod_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1POSTNamespacedPodWithPathResponse {
     Ok(String),
@@ -1842,6 +1935,8 @@ impl ::Response for ProxyCoreV1POSTNamespacedPodWithPathResponse {
 
 impl Pod {
     /// proxy PUT requests to Pod
+    ///
+    /// Use [`ProxyCoreV1PUTNamespacedPodResponse`](./enum.ProxyCoreV1PUTNamespacedPodResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_put_namespaced_pod(
         // name of the Pod
         name: &str,
@@ -1856,6 +1951,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::proxy_core_v1_put_namespaced_pod`](./struct.Pod.html#method.proxy_core_v1_put_namespaced_pod)
 #[derive(Debug)]
 pub enum ProxyCoreV1PUTNamespacedPodResponse {
     Ok(String),
@@ -1889,6 +1985,8 @@ impl ::Response for ProxyCoreV1PUTNamespacedPodResponse {
 
 impl Pod {
     /// proxy PUT requests to Pod
+    ///
+    /// Use [`ProxyCoreV1PUTNamespacedPodWithPathResponse`](./enum.ProxyCoreV1PUTNamespacedPodWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_put_namespaced_pod_with_path(
         // name of the Pod
         name: &str,
@@ -1905,6 +2003,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::proxy_core_v1_put_namespaced_pod_with_path`](./struct.Pod.html#method.proxy_core_v1_put_namespaced_pod_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1PUTNamespacedPodWithPathResponse {
     Ok(String),
@@ -1938,6 +2037,8 @@ impl ::Response for ProxyCoreV1PUTNamespacedPodWithPathResponse {
 
 impl Pod {
     /// read the specified Pod
+    ///
+    /// Use [`ReadCoreV1NamespacedPodResponse`](./enum.ReadCoreV1NamespacedPodResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_pod(
         // name of the Pod
         name: &str,
@@ -1969,6 +2070,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod`](./struct.Pod.html#method.read_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPodResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
@@ -1997,6 +2099,8 @@ impl ::Response for ReadCoreV1NamespacedPodResponse {
 
 impl Pod {
     /// read log of the specified Pod
+    ///
+    /// Use [`ReadCoreV1NamespacedPodLogResponse`](./enum.ReadCoreV1NamespacedPodLogResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_pod_log(
         // name of the Pod
         name: &str,
@@ -2053,6 +2157,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod_log`](./struct.Pod.html#method.read_core_v1_namespaced_pod_log)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPodLogResponse {
     Ok(String),
@@ -2086,6 +2191,8 @@ impl ::Response for ReadCoreV1NamespacedPodLogResponse {
 
 impl Pod {
     /// read status of the specified Pod
+    ///
+    /// Use [`ReadCoreV1NamespacedPodStatusResponse`](./enum.ReadCoreV1NamespacedPodStatusResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_pod_status(
         // name of the Pod
         name: &str,
@@ -2107,6 +2214,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod_status`](./struct.Pod.html#method.read_core_v1_namespaced_pod_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPodStatusResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
@@ -2135,6 +2243,8 @@ impl ::Response for ReadCoreV1NamespacedPodStatusResponse {
 
 impl Pod {
     /// replace the specified Pod
+    ///
+    /// Use [`ReplaceCoreV1NamespacedPodResponse`](./enum.ReplaceCoreV1NamespacedPodResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_pod(
         // name of the Pod
         name: &str,
@@ -2157,6 +2267,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::replace_core_v1_namespaced_pod`](./struct.Pod.html#method.replace_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedPodResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
@@ -2185,6 +2296,8 @@ impl ::Response for ReplaceCoreV1NamespacedPodResponse {
 
 impl Pod {
     /// replace status of the specified Pod
+    ///
+    /// Use [`ReplaceCoreV1NamespacedPodStatusResponse`](./enum.ReplaceCoreV1NamespacedPodStatusResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_pod_status(
         // name of the Pod
         name: &str,
@@ -2207,6 +2320,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::replace_core_v1_namespaced_pod_status`](./struct.Pod.html#method.replace_core_v1_namespaced_pod_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedPodStatusResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
@@ -2235,6 +2349,8 @@ impl ::Response for ReplaceCoreV1NamespacedPodStatusResponse {
 
 impl Pod {
     /// watch changes to an object of kind Pod
+    ///
+    /// Use [`WatchCoreV1NamespacedPodResponse`](./enum.WatchCoreV1NamespacedPodResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_pod(
         // name of the Pod
         name: &str,
@@ -2286,6 +2402,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::watch_core_v1_namespaced_pod`](./struct.Pod.html#method.watch_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedPodResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -2316,6 +2433,8 @@ impl ::Response for WatchCoreV1NamespacedPodResponse {
 
 impl Pod {
     /// watch individual changes to a list of Pod
+    ///
+    /// Use [`WatchCoreV1NamespacedPodListResponse`](./enum.WatchCoreV1NamespacedPodListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_pod_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -2365,6 +2484,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::watch_core_v1_namespaced_pod_list`](./struct.Pod.html#method.watch_core_v1_namespaced_pod_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedPodListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -2395,6 +2515,8 @@ impl ::Response for WatchCoreV1NamespacedPodListResponse {
 
 impl Pod {
     /// watch individual changes to a list of Pod
+    ///
+    /// Use [`WatchCoreV1PodListForAllNamespacesResponse`](./enum.WatchCoreV1PodListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_pod_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -2442,6 +2564,7 @@ impl Pod {
     }
 }
 
+/// Parses the HTTP response of [`Pod::watch_core_v1_pod_list_for_all_namespaces`](./struct.Pod.html#method.watch_core_v1_pod_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1PodListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

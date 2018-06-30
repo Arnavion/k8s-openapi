@@ -25,6 +25,8 @@ pub struct Scale {
 
 impl Scale {
     /// partially update scale of the specified ReplicationController
+    ///
+    /// Use [`PatchCoreV1NamespacedReplicationControllerScaleResponse`](./enum.PatchCoreV1NamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_replication_controller_scale(
         // name of the Scale
         name: &str,
@@ -47,6 +49,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.patch_core_v1_namespaced_replication_controller_scale)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedReplicationControllerScaleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::autoscaling::v1::Scale),
@@ -75,6 +78,8 @@ impl ::Response for PatchCoreV1NamespacedReplicationControllerScaleResponse {
 
 impl Scale {
     /// read scale of the specified ReplicationController
+    ///
+    /// Use [`ReadCoreV1NamespacedReplicationControllerScaleResponse`](./enum.ReadCoreV1NamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_replication_controller_scale(
         // name of the Scale
         name: &str,
@@ -96,6 +101,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.read_core_v1_namespaced_replication_controller_scale)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedReplicationControllerScaleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::autoscaling::v1::Scale),
@@ -124,6 +130,8 @@ impl ::Response for ReadCoreV1NamespacedReplicationControllerScaleResponse {
 
 impl Scale {
     /// replace scale of the specified ReplicationController
+    ///
+    /// Use [`ReplaceCoreV1NamespacedReplicationControllerScaleResponse`](./enum.ReplaceCoreV1NamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_replication_controller_scale(
         // name of the Scale
         name: &str,
@@ -146,6 +154,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.replace_core_v1_namespaced_replication_controller_scale)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedReplicationControllerScaleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::autoscaling::v1::Scale),

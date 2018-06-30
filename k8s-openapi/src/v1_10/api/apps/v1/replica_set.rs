@@ -25,6 +25,8 @@ pub struct ReplicaSet {
 
 impl ReplicaSet {
     /// create a ReplicaSet
+    ///
+    /// Use [`CreateAppsV1NamespacedReplicaSetResponse`](./enum.CreateAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
     pub fn create_apps_v1_namespaced_replica_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::create_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.create_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum CreateAppsV1NamespacedReplicaSetResponse {
     Ok(::v1_10::api::apps::v1::ReplicaSet),
@@ -91,6 +94,8 @@ impl ::Response for CreateAppsV1NamespacedReplicaSetResponse {
 
 impl ReplicaSet {
     /// delete collection of ReplicaSet
+    ///
+    /// Use [`DeleteAppsV1CollectionNamespacedReplicaSetResponse`](./enum.DeleteAppsV1CollectionNamespacedReplicaSetResponse.html) to parse the HTTP response.
     pub fn delete_apps_v1_collection_namespaced_replica_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -152,6 +157,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::delete_apps_v1_collection_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_apps_v1_collection_namespaced_replica_set)
 #[derive(Debug)]
 pub enum DeleteAppsV1CollectionNamespacedReplicaSetResponse {
     OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -194,6 +200,8 @@ impl ::Response for DeleteAppsV1CollectionNamespacedReplicaSetResponse {
 
 impl ReplicaSet {
     /// delete a ReplicaSet
+    ///
+    /// Use [`DeleteAppsV1NamespacedReplicaSetResponse`](./enum.DeleteAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
     pub fn delete_apps_v1_namespaced_replica_set(
         // name of the ReplicaSet
         name: &str,
@@ -230,6 +238,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::delete_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum DeleteAppsV1NamespacedReplicaSetResponse {
     OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -272,6 +281,8 @@ impl ::Response for DeleteAppsV1NamespacedReplicaSetResponse {
 
 impl ReplicaSet {
     /// list or watch objects of kind ReplicaSet
+    ///
+    /// Use [`ListAppsV1NamespacedReplicaSetResponse`](./enum.ListAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
     pub fn list_apps_v1_namespaced_replica_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -333,6 +344,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::list_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.list_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum ListAppsV1NamespacedReplicaSetResponse {
     Ok(::v1_10::api::apps::v1::ReplicaSetList),
@@ -361,6 +373,8 @@ impl ::Response for ListAppsV1NamespacedReplicaSetResponse {
 
 impl ReplicaSet {
     /// list or watch objects of kind ReplicaSet
+    ///
+    /// Use [`ListAppsV1ReplicaSetForAllNamespacesResponse`](./enum.ListAppsV1ReplicaSetForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_apps_v1_replica_set_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -420,6 +434,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::list_apps_v1_replica_set_for_all_namespaces`](./struct.ReplicaSet.html#method.list_apps_v1_replica_set_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListAppsV1ReplicaSetForAllNamespacesResponse {
     Ok(::v1_10::api::apps::v1::ReplicaSetList),
@@ -448,6 +463,8 @@ impl ::Response for ListAppsV1ReplicaSetForAllNamespacesResponse {
 
 impl ReplicaSet {
     /// partially update the specified ReplicaSet
+    ///
+    /// Use [`PatchAppsV1NamespacedReplicaSetResponse`](./enum.PatchAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1_namespaced_replica_set(
         // name of the ReplicaSet
         name: &str,
@@ -470,6 +487,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::patch_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.patch_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum PatchAppsV1NamespacedReplicaSetResponse {
     Ok(::v1_10::api::apps::v1::ReplicaSet),
@@ -498,6 +516,8 @@ impl ::Response for PatchAppsV1NamespacedReplicaSetResponse {
 
 impl ReplicaSet {
     /// partially update status of the specified ReplicaSet
+    ///
+    /// Use [`PatchAppsV1NamespacedReplicaSetStatusResponse`](./enum.PatchAppsV1NamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1_namespaced_replica_set_status(
         // name of the ReplicaSet
         name: &str,
@@ -520,6 +540,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::patch_apps_v1_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.patch_apps_v1_namespaced_replica_set_status)
 #[derive(Debug)]
 pub enum PatchAppsV1NamespacedReplicaSetStatusResponse {
     Ok(::v1_10::api::apps::v1::ReplicaSet),
@@ -548,6 +569,8 @@ impl ::Response for PatchAppsV1NamespacedReplicaSetStatusResponse {
 
 impl ReplicaSet {
     /// read the specified ReplicaSet
+    ///
+    /// Use [`ReadAppsV1NamespacedReplicaSetResponse`](./enum.ReadAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
     pub fn read_apps_v1_namespaced_replica_set(
         // name of the ReplicaSet
         name: &str,
@@ -579,6 +602,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::read_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.read_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum ReadAppsV1NamespacedReplicaSetResponse {
     Ok(::v1_10::api::apps::v1::ReplicaSet),
@@ -607,6 +631,8 @@ impl ::Response for ReadAppsV1NamespacedReplicaSetResponse {
 
 impl ReplicaSet {
     /// read status of the specified ReplicaSet
+    ///
+    /// Use [`ReadAppsV1NamespacedReplicaSetStatusResponse`](./enum.ReadAppsV1NamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
     pub fn read_apps_v1_namespaced_replica_set_status(
         // name of the ReplicaSet
         name: &str,
@@ -628,6 +654,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::read_apps_v1_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.read_apps_v1_namespaced_replica_set_status)
 #[derive(Debug)]
 pub enum ReadAppsV1NamespacedReplicaSetStatusResponse {
     Ok(::v1_10::api::apps::v1::ReplicaSet),
@@ -656,6 +683,8 @@ impl ::Response for ReadAppsV1NamespacedReplicaSetStatusResponse {
 
 impl ReplicaSet {
     /// replace the specified ReplicaSet
+    ///
+    /// Use [`ReplaceAppsV1NamespacedReplicaSetResponse`](./enum.ReplaceAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1_namespaced_replica_set(
         // name of the ReplicaSet
         name: &str,
@@ -678,6 +707,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::replace_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.replace_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum ReplaceAppsV1NamespacedReplicaSetResponse {
     Ok(::v1_10::api::apps::v1::ReplicaSet),
@@ -715,6 +745,8 @@ impl ::Response for ReplaceAppsV1NamespacedReplicaSetResponse {
 
 impl ReplicaSet {
     /// replace status of the specified ReplicaSet
+    ///
+    /// Use [`ReplaceAppsV1NamespacedReplicaSetStatusResponse`](./enum.ReplaceAppsV1NamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1_namespaced_replica_set_status(
         // name of the ReplicaSet
         name: &str,
@@ -737,6 +769,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::replace_apps_v1_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.replace_apps_v1_namespaced_replica_set_status)
 #[derive(Debug)]
 pub enum ReplaceAppsV1NamespacedReplicaSetStatusResponse {
     Ok(::v1_10::api::apps::v1::ReplicaSet),
@@ -774,6 +807,8 @@ impl ::Response for ReplaceAppsV1NamespacedReplicaSetStatusResponse {
 
 impl ReplicaSet {
     /// watch changes to an object of kind ReplicaSet
+    ///
+    /// Use [`WatchAppsV1NamespacedReplicaSetResponse`](./enum.WatchAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1_namespaced_replica_set(
         // name of the ReplicaSet
         name: &str,
@@ -837,6 +872,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::watch_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.watch_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum WatchAppsV1NamespacedReplicaSetResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -867,6 +903,8 @@ impl ::Response for WatchAppsV1NamespacedReplicaSetResponse {
 
 impl ReplicaSet {
     /// watch individual changes to a list of ReplicaSet
+    ///
+    /// Use [`WatchAppsV1NamespacedReplicaSetListResponse`](./enum.WatchAppsV1NamespacedReplicaSetListResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1_namespaced_replica_set_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -928,6 +966,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::watch_apps_v1_namespaced_replica_set_list`](./struct.ReplicaSet.html#method.watch_apps_v1_namespaced_replica_set_list)
 #[derive(Debug)]
 pub enum WatchAppsV1NamespacedReplicaSetListResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -958,6 +997,8 @@ impl ::Response for WatchAppsV1NamespacedReplicaSetListResponse {
 
 impl ReplicaSet {
     /// watch individual changes to a list of ReplicaSet
+    ///
+    /// Use [`WatchAppsV1ReplicaSetListForAllNamespacesResponse`](./enum.WatchAppsV1ReplicaSetListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1_replica_set_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -1017,6 +1058,7 @@ impl ReplicaSet {
     }
 }
 
+/// Parses the HTTP response of [`ReplicaSet::watch_apps_v1_replica_set_list_for_all_namespaces`](./struct.ReplicaSet.html#method.watch_apps_v1_replica_set_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchAppsV1ReplicaSetListForAllNamespacesResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),

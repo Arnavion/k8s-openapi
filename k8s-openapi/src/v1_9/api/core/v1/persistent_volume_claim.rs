@@ -25,6 +25,8 @@ pub struct PersistentVolumeClaim {
 
 impl PersistentVolumeClaim {
     /// create a PersistentVolumeClaim
+    ///
+    /// Use [`CreateCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.CreateCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_persistent_volume_claim(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::create_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.create_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedPersistentVolumeClaimResponse {
     Ok(::v1_9::api::core::v1::PersistentVolumeClaim),
@@ -91,6 +94,8 @@ impl ::Response for CreateCoreV1NamespacedPersistentVolumeClaimResponse {
 
 impl PersistentVolumeClaim {
     /// delete collection of PersistentVolumeClaim
+    ///
+    /// Use [`DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse`](./enum.DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_namespaced_persistent_volume_claim(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -152,6 +157,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::delete_core_v1_collection_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_collection_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -194,6 +200,8 @@ impl ::Response for DeleteCoreV1CollectionNamespacedPersistentVolumeClaimRespons
 
 impl PersistentVolumeClaim {
     /// delete a PersistentVolumeClaim
+    ///
+    /// Use [`DeleteCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.DeleteCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespaced_persistent_volume_claim(
         // name of the PersistentVolumeClaim
         name: &str,
@@ -230,6 +238,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::delete_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -272,6 +281,8 @@ impl ::Response for DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
 
 impl PersistentVolumeClaim {
     /// list or watch objects of kind PersistentVolumeClaim
+    ///
+    /// Use [`ListCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.ListCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespaced_persistent_volume_claim(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -333,6 +344,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::list_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.list_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedPersistentVolumeClaimResponse {
     Ok(::v1_9::api::core::v1::PersistentVolumeClaimList),
@@ -361,6 +373,8 @@ impl ::Response for ListCoreV1NamespacedPersistentVolumeClaimResponse {
 
 impl PersistentVolumeClaim {
     /// list or watch objects of kind PersistentVolumeClaim
+    ///
+    /// Use [`ListCoreV1PersistentVolumeClaimForAllNamespacesResponse`](./enum.ListCoreV1PersistentVolumeClaimForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_core_v1_persistent_volume_claim_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -420,6 +434,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::list_core_v1_persistent_volume_claim_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.list_core_v1_persistent_volume_claim_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1PersistentVolumeClaimForAllNamespacesResponse {
     Ok(::v1_9::api::core::v1::PersistentVolumeClaimList),
@@ -448,6 +463,8 @@ impl ::Response for ListCoreV1PersistentVolumeClaimForAllNamespacesResponse {
 
 impl PersistentVolumeClaim {
     /// partially update the specified PersistentVolumeClaim
+    ///
+    /// Use [`PatchCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.PatchCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_persistent_volume_claim(
         // name of the PersistentVolumeClaim
         name: &str,
@@ -470,6 +487,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedPersistentVolumeClaimResponse {
     Ok(::v1_9::api::core::v1::PersistentVolumeClaim),
@@ -498,6 +516,8 @@ impl ::Response for PatchCoreV1NamespacedPersistentVolumeClaimResponse {
 
 impl PersistentVolumeClaim {
     /// partially update status of the specified PersistentVolumeClaim
+    ///
+    /// Use [`PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse`](./enum.PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_persistent_volume_claim_status(
         // name of the PersistentVolumeClaim
         name: &str,
@@ -520,6 +540,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse {
     Ok(::v1_9::api::core::v1::PersistentVolumeClaim),
@@ -548,6 +569,8 @@ impl ::Response for PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse {
 
 impl PersistentVolumeClaim {
     /// read the specified PersistentVolumeClaim
+    ///
+    /// Use [`ReadCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.ReadCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_persistent_volume_claim(
         // name of the PersistentVolumeClaim
         name: &str,
@@ -579,6 +602,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPersistentVolumeClaimResponse {
     Ok(::v1_9::api::core::v1::PersistentVolumeClaim),
@@ -607,6 +631,8 @@ impl ::Response for ReadCoreV1NamespacedPersistentVolumeClaimResponse {
 
 impl PersistentVolumeClaim {
     /// read status of the specified PersistentVolumeClaim
+    ///
+    /// Use [`ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse`](./enum.ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_persistent_volume_claim_status(
         // name of the PersistentVolumeClaim
         name: &str,
@@ -628,6 +654,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse {
     Ok(::v1_9::api::core::v1::PersistentVolumeClaim),
@@ -656,6 +683,8 @@ impl ::Response for ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse {
 
 impl PersistentVolumeClaim {
     /// replace the specified PersistentVolumeClaim
+    ///
+    /// Use [`ReplaceCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.ReplaceCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_persistent_volume_claim(
         // name of the PersistentVolumeClaim
         name: &str,
@@ -678,6 +707,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedPersistentVolumeClaimResponse {
     Ok(::v1_9::api::core::v1::PersistentVolumeClaim),
@@ -715,6 +745,8 @@ impl ::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimResponse {
 
 impl PersistentVolumeClaim {
     /// replace status of the specified PersistentVolumeClaim
+    ///
+    /// Use [`ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse`](./enum.ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_persistent_volume_claim_status(
         // name of the PersistentVolumeClaim
         name: &str,
@@ -737,6 +769,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse {
     Ok(::v1_9::api::core::v1::PersistentVolumeClaim),
@@ -774,6 +807,8 @@ impl ::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse {
 
 impl PersistentVolumeClaim {
     /// watch changes to an object of kind PersistentVolumeClaim
+    ///
+    /// Use [`WatchCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.WatchCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_persistent_volume_claim(
         // name of the PersistentVolumeClaim
         name: &str,
@@ -837,6 +872,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedPersistentVolumeClaimResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -867,6 +903,8 @@ impl ::Response for WatchCoreV1NamespacedPersistentVolumeClaimResponse {
 
 impl PersistentVolumeClaim {
     /// watch individual changes to a list of PersistentVolumeClaim
+    ///
+    /// Use [`WatchCoreV1NamespacedPersistentVolumeClaimListResponse`](./enum.WatchCoreV1NamespacedPersistentVolumeClaimListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_persistent_volume_claim_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -928,6 +966,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim_list`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedPersistentVolumeClaimListResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -958,6 +997,8 @@ impl ::Response for WatchCoreV1NamespacedPersistentVolumeClaimListResponse {
 
 impl PersistentVolumeClaim {
     /// watch individual changes to a list of PersistentVolumeClaim
+    ///
+    /// Use [`WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse`](./enum.WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_persistent_volume_claim_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -1017,6 +1058,7 @@ impl PersistentVolumeClaim {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_persistent_volume_claim_list_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_persistent_volume_claim_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),

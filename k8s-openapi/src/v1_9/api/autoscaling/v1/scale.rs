@@ -25,6 +25,8 @@ pub struct Scale {
 
 impl Scale {
     /// partially update scale of the specified Deployment
+    ///
+    /// Use [`PatchAppsV1NamespacedDeploymentScaleResponse`](./enum.PatchAppsV1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -47,6 +49,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_apps_v1_namespaced_deployment_scale`](./struct.Scale.html#method.patch_apps_v1_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum PatchAppsV1NamespacedDeploymentScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -75,6 +78,8 @@ impl ::Response for PatchAppsV1NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// partially update scale of the specified ReplicaSet
+    ///
+    /// Use [`PatchAppsV1NamespacedReplicaSetScaleResponse`](./enum.PatchAppsV1NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
@@ -97,6 +102,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_apps_v1_namespaced_replica_set_scale`](./struct.Scale.html#method.patch_apps_v1_namespaced_replica_set_scale)
 #[derive(Debug)]
 pub enum PatchAppsV1NamespacedReplicaSetScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -125,6 +131,8 @@ impl ::Response for PatchAppsV1NamespacedReplicaSetScaleResponse {
 
 impl Scale {
     /// partially update scale of the specified StatefulSet
+    ///
+    /// Use [`PatchAppsV1NamespacedStatefulSetScaleResponse`](./enum.PatchAppsV1NamespacedStatefulSetScaleResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1_namespaced_stateful_set_scale(
         // name of the Scale
         name: &str,
@@ -147,6 +155,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_apps_v1_namespaced_stateful_set_scale`](./struct.Scale.html#method.patch_apps_v1_namespaced_stateful_set_scale)
 #[derive(Debug)]
 pub enum PatchAppsV1NamespacedStatefulSetScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -175,6 +184,8 @@ impl ::Response for PatchAppsV1NamespacedStatefulSetScaleResponse {
 
 impl Scale {
     /// partially update scale of the specified ReplicationController
+    ///
+    /// Use [`PatchCoreV1NamespacedReplicationControllerScaleResponse`](./enum.PatchCoreV1NamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_replication_controller_scale(
         // name of the Scale
         name: &str,
@@ -197,6 +208,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.patch_core_v1_namespaced_replication_controller_scale)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedReplicationControllerScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -225,6 +237,8 @@ impl ::Response for PatchCoreV1NamespacedReplicationControllerScaleResponse {
 
 impl Scale {
     /// read scale of the specified Deployment
+    ///
+    /// Use [`ReadAppsV1NamespacedDeploymentScaleResponse`](./enum.ReadAppsV1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn read_apps_v1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -246,6 +260,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_apps_v1_namespaced_deployment_scale`](./struct.Scale.html#method.read_apps_v1_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum ReadAppsV1NamespacedDeploymentScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -274,6 +289,8 @@ impl ::Response for ReadAppsV1NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// read scale of the specified ReplicaSet
+    ///
+    /// Use [`ReadAppsV1NamespacedReplicaSetScaleResponse`](./enum.ReadAppsV1NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
     pub fn read_apps_v1_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
@@ -295,6 +312,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_apps_v1_namespaced_replica_set_scale`](./struct.Scale.html#method.read_apps_v1_namespaced_replica_set_scale)
 #[derive(Debug)]
 pub enum ReadAppsV1NamespacedReplicaSetScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -323,6 +341,8 @@ impl ::Response for ReadAppsV1NamespacedReplicaSetScaleResponse {
 
 impl Scale {
     /// read scale of the specified StatefulSet
+    ///
+    /// Use [`ReadAppsV1NamespacedStatefulSetScaleResponse`](./enum.ReadAppsV1NamespacedStatefulSetScaleResponse.html) to parse the HTTP response.
     pub fn read_apps_v1_namespaced_stateful_set_scale(
         // name of the Scale
         name: &str,
@@ -344,6 +364,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_apps_v1_namespaced_stateful_set_scale`](./struct.Scale.html#method.read_apps_v1_namespaced_stateful_set_scale)
 #[derive(Debug)]
 pub enum ReadAppsV1NamespacedStatefulSetScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -372,6 +393,8 @@ impl ::Response for ReadAppsV1NamespacedStatefulSetScaleResponse {
 
 impl Scale {
     /// read scale of the specified ReplicationController
+    ///
+    /// Use [`ReadCoreV1NamespacedReplicationControllerScaleResponse`](./enum.ReadCoreV1NamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_replication_controller_scale(
         // name of the Scale
         name: &str,
@@ -393,6 +416,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.read_core_v1_namespaced_replication_controller_scale)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedReplicationControllerScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -421,6 +445,8 @@ impl ::Response for ReadCoreV1NamespacedReplicationControllerScaleResponse {
 
 impl Scale {
     /// replace scale of the specified Deployment
+    ///
+    /// Use [`ReplaceAppsV1NamespacedDeploymentScaleResponse`](./enum.ReplaceAppsV1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -443,6 +469,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_apps_v1_namespaced_deployment_scale`](./struct.Scale.html#method.replace_apps_v1_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum ReplaceAppsV1NamespacedDeploymentScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -480,6 +507,8 @@ impl ::Response for ReplaceAppsV1NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// replace scale of the specified ReplicaSet
+    ///
+    /// Use [`ReplaceAppsV1NamespacedReplicaSetScaleResponse`](./enum.ReplaceAppsV1NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
@@ -502,6 +531,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_apps_v1_namespaced_replica_set_scale`](./struct.Scale.html#method.replace_apps_v1_namespaced_replica_set_scale)
 #[derive(Debug)]
 pub enum ReplaceAppsV1NamespacedReplicaSetScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -539,6 +569,8 @@ impl ::Response for ReplaceAppsV1NamespacedReplicaSetScaleResponse {
 
 impl Scale {
     /// replace scale of the specified StatefulSet
+    ///
+    /// Use [`ReplaceAppsV1NamespacedStatefulSetScaleResponse`](./enum.ReplaceAppsV1NamespacedStatefulSetScaleResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1_namespaced_stateful_set_scale(
         // name of the Scale
         name: &str,
@@ -561,6 +593,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_apps_v1_namespaced_stateful_set_scale`](./struct.Scale.html#method.replace_apps_v1_namespaced_stateful_set_scale)
 #[derive(Debug)]
 pub enum ReplaceAppsV1NamespacedStatefulSetScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),
@@ -598,6 +631,8 @@ impl ::Response for ReplaceAppsV1NamespacedStatefulSetScaleResponse {
 
 impl Scale {
     /// replace scale of the specified ReplicationController
+    ///
+    /// Use [`ReplaceCoreV1NamespacedReplicationControllerScaleResponse`](./enum.ReplaceCoreV1NamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_replication_controller_scale(
         // name of the Scale
         name: &str,
@@ -620,6 +655,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.replace_core_v1_namespaced_replication_controller_scale)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedReplicationControllerScaleResponse {
     Ok(::v1_9::api::autoscaling::v1::Scale),

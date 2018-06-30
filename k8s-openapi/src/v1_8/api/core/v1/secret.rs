@@ -28,6 +28,8 @@ pub struct Secret {
 
 impl Secret {
     /// create a Secret
+    ///
+    /// Use [`CreateCoreV1NamespacedSecretResponse`](./enum.CreateCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_secret(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -48,6 +50,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::create_core_v1_namespaced_secret`](./struct.Secret.html#method.create_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedSecretResponse {
     Ok(::v1_8::api::core::v1::Secret),
@@ -76,6 +79,8 @@ impl ::Response for CreateCoreV1NamespacedSecretResponse {
 
 impl Secret {
     /// delete collection of Secret
+    ///
+    /// Use [`DeleteCoreV1CollectionNamespacedSecretResponse`](./enum.DeleteCoreV1CollectionNamespacedSecretResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_namespaced_secret(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -137,6 +142,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::delete_core_v1_collection_namespaced_secret`](./struct.Secret.html#method.delete_core_v1_collection_namespaced_secret)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedSecretResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -179,6 +185,8 @@ impl ::Response for DeleteCoreV1CollectionNamespacedSecretResponse {
 
 impl Secret {
     /// delete a Secret
+    ///
+    /// Use [`DeleteCoreV1NamespacedSecretResponse`](./enum.DeleteCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespaced_secret(
         // name of the Secret
         name: &str,
@@ -215,6 +223,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::delete_core_v1_namespaced_secret`](./struct.Secret.html#method.delete_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedSecretResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -257,6 +266,8 @@ impl ::Response for DeleteCoreV1NamespacedSecretResponse {
 
 impl Secret {
     /// list or watch objects of kind Secret
+    ///
+    /// Use [`ListCoreV1NamespacedSecretResponse`](./enum.ListCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespaced_secret(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -318,6 +329,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::list_core_v1_namespaced_secret`](./struct.Secret.html#method.list_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedSecretResponse {
     Ok(::v1_8::api::core::v1::SecretList),
@@ -346,6 +358,8 @@ impl ::Response for ListCoreV1NamespacedSecretResponse {
 
 impl Secret {
     /// list or watch objects of kind Secret
+    ///
+    /// Use [`ListCoreV1SecretForAllNamespacesResponse`](./enum.ListCoreV1SecretForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_core_v1_secret_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -405,6 +419,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::list_core_v1_secret_for_all_namespaces`](./struct.Secret.html#method.list_core_v1_secret_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1SecretForAllNamespacesResponse {
     Ok(::v1_8::api::core::v1::SecretList),
@@ -433,6 +448,8 @@ impl ::Response for ListCoreV1SecretForAllNamespacesResponse {
 
 impl Secret {
     /// partially update the specified Secret
+    ///
+    /// Use [`PatchCoreV1NamespacedSecretResponse`](./enum.PatchCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_secret(
         // name of the Secret
         name: &str,
@@ -455,6 +472,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::patch_core_v1_namespaced_secret`](./struct.Secret.html#method.patch_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedSecretResponse {
     Ok(::v1_8::api::core::v1::Secret),
@@ -483,6 +501,8 @@ impl ::Response for PatchCoreV1NamespacedSecretResponse {
 
 impl Secret {
     /// read the specified Secret
+    ///
+    /// Use [`ReadCoreV1NamespacedSecretResponse`](./enum.ReadCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_secret(
         // name of the Secret
         name: &str,
@@ -514,6 +534,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::read_core_v1_namespaced_secret`](./struct.Secret.html#method.read_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedSecretResponse {
     Ok(::v1_8::api::core::v1::Secret),
@@ -542,6 +563,8 @@ impl ::Response for ReadCoreV1NamespacedSecretResponse {
 
 impl Secret {
     /// replace the specified Secret
+    ///
+    /// Use [`ReplaceCoreV1NamespacedSecretResponse`](./enum.ReplaceCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_secret(
         // name of the Secret
         name: &str,
@@ -564,6 +587,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::replace_core_v1_namespaced_secret`](./struct.Secret.html#method.replace_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedSecretResponse {
     Ok(::v1_8::api::core::v1::Secret),
@@ -592,6 +616,8 @@ impl ::Response for ReplaceCoreV1NamespacedSecretResponse {
 
 impl Secret {
     /// watch changes to an object of kind Secret
+    ///
+    /// Use [`WatchCoreV1NamespacedSecretResponse`](./enum.WatchCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_secret(
         // name of the Secret
         name: &str,
@@ -655,6 +681,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::watch_core_v1_namespaced_secret`](./struct.Secret.html#method.watch_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedSecretResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -685,6 +712,8 @@ impl ::Response for WatchCoreV1NamespacedSecretResponse {
 
 impl Secret {
     /// watch individual changes to a list of Secret
+    ///
+    /// Use [`WatchCoreV1NamespacedSecretListResponse`](./enum.WatchCoreV1NamespacedSecretListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_secret_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -746,6 +775,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::watch_core_v1_namespaced_secret_list`](./struct.Secret.html#method.watch_core_v1_namespaced_secret_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedSecretListResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -776,6 +806,8 @@ impl ::Response for WatchCoreV1NamespacedSecretListResponse {
 
 impl Secret {
     /// watch individual changes to a list of Secret
+    ///
+    /// Use [`WatchCoreV1SecretListForAllNamespacesResponse`](./enum.WatchCoreV1SecretListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_secret_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -835,6 +867,7 @@ impl Secret {
     }
 }
 
+/// Parses the HTTP response of [`Secret::watch_core_v1_secret_list_for_all_namespaces`](./struct.Secret.html#method.watch_core_v1_secret_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1SecretListForAllNamespacesResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

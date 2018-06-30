@@ -25,6 +25,8 @@ pub struct Deployment {
 
 impl Deployment {
     /// create a Deployment
+    ///
+    /// Use [`CreateExtensionsV1beta1NamespacedDeploymentResponse`](./enum.CreateExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn create_extensions_v1beta1_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::create_extensions_v1beta1_namespaced_deployment`](./struct.Deployment.html#method.create_extensions_v1beta1_namespaced_deployment)
 #[derive(Debug)]
 pub enum CreateExtensionsV1beta1NamespacedDeploymentResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
@@ -73,6 +76,8 @@ impl ::Response for CreateExtensionsV1beta1NamespacedDeploymentResponse {
 
 impl Deployment {
     /// delete collection of Deployment
+    ///
+    /// Use [`DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse`](./enum.DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_collection_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -122,6 +127,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::delete_extensions_v1beta1_collection_namespaced_deployment`](./struct.Deployment.html#method.delete_extensions_v1beta1_collection_namespaced_deployment)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -164,6 +170,8 @@ impl ::Response for DeleteExtensionsV1beta1CollectionNamespacedDeploymentRespons
 
 impl Deployment {
     /// delete a Deployment
+    ///
+    /// Use [`DeleteExtensionsV1beta1NamespacedDeploymentResponse`](./enum.DeleteExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
@@ -200,6 +208,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::delete_extensions_v1beta1_namespaced_deployment`](./struct.Deployment.html#method.delete_extensions_v1beta1_namespaced_deployment)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1NamespacedDeploymentResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -242,6 +251,8 @@ impl ::Response for DeleteExtensionsV1beta1NamespacedDeploymentResponse {
 
 impl Deployment {
     /// list or watch objects of kind Deployment
+    ///
+    /// Use [`ListExtensionsV1beta1DeploymentForAllNamespacesResponse`](./enum.ListExtensionsV1beta1DeploymentForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_extensions_v1beta1_deployment_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -289,6 +300,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::list_extensions_v1beta1_deployment_for_all_namespaces`](./struct.Deployment.html#method.list_extensions_v1beta1_deployment_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1DeploymentForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentList),
@@ -317,6 +329,8 @@ impl ::Response for ListExtensionsV1beta1DeploymentForAllNamespacesResponse {
 
 impl Deployment {
     /// list or watch objects of kind Deployment
+    ///
+    /// Use [`ListExtensionsV1beta1NamespacedDeploymentResponse`](./enum.ListExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn list_extensions_v1beta1_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -366,6 +380,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::list_extensions_v1beta1_namespaced_deployment`](./struct.Deployment.html#method.list_extensions_v1beta1_namespaced_deployment)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1NamespacedDeploymentResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentList),
@@ -394,6 +409,8 @@ impl ::Response for ListExtensionsV1beta1NamespacedDeploymentResponse {
 
 impl Deployment {
     /// partially update the specified Deployment
+    ///
+    /// Use [`PatchExtensionsV1beta1NamespacedDeploymentResponse`](./enum.PatchExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
@@ -416,6 +433,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::patch_extensions_v1beta1_namespaced_deployment`](./struct.Deployment.html#method.patch_extensions_v1beta1_namespaced_deployment)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedDeploymentResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
@@ -444,6 +462,8 @@ impl ::Response for PatchExtensionsV1beta1NamespacedDeploymentResponse {
 
 impl Deployment {
     /// partially update status of the specified Deployment
+    ///
+    /// Use [`PatchExtensionsV1beta1NamespacedDeploymentStatusResponse`](./enum.PatchExtensionsV1beta1NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
@@ -466,6 +486,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::patch_extensions_v1beta1_namespaced_deployment_status`](./struct.Deployment.html#method.patch_extensions_v1beta1_namespaced_deployment_status)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedDeploymentStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
@@ -494,6 +515,8 @@ impl ::Response for PatchExtensionsV1beta1NamespacedDeploymentStatusResponse {
 
 impl Deployment {
     /// read the specified Deployment
+    ///
+    /// Use [`ReadExtensionsV1beta1NamespacedDeploymentResponse`](./enum.ReadExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
@@ -525,6 +548,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::read_extensions_v1beta1_namespaced_deployment`](./struct.Deployment.html#method.read_extensions_v1beta1_namespaced_deployment)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedDeploymentResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
@@ -553,6 +577,8 @@ impl ::Response for ReadExtensionsV1beta1NamespacedDeploymentResponse {
 
 impl Deployment {
     /// read status of the specified Deployment
+    ///
+    /// Use [`ReadExtensionsV1beta1NamespacedDeploymentStatusResponse`](./enum.ReadExtensionsV1beta1NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
@@ -574,6 +600,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::read_extensions_v1beta1_namespaced_deployment_status`](./struct.Deployment.html#method.read_extensions_v1beta1_namespaced_deployment_status)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedDeploymentStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
@@ -602,6 +629,8 @@ impl ::Response for ReadExtensionsV1beta1NamespacedDeploymentStatusResponse {
 
 impl Deployment {
     /// replace the specified Deployment
+    ///
+    /// Use [`ReplaceExtensionsV1beta1NamespacedDeploymentResponse`](./enum.ReplaceExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
@@ -624,6 +653,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::replace_extensions_v1beta1_namespaced_deployment`](./struct.Deployment.html#method.replace_extensions_v1beta1_namespaced_deployment)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedDeploymentResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
@@ -652,6 +682,8 @@ impl ::Response for ReplaceExtensionsV1beta1NamespacedDeploymentResponse {
 
 impl Deployment {
     /// replace status of the specified Deployment
+    ///
+    /// Use [`ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse`](./enum.ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
@@ -674,6 +706,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::replace_extensions_v1beta1_namespaced_deployment_status`](./struct.Deployment.html#method.replace_extensions_v1beta1_namespaced_deployment_status)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment),
@@ -702,6 +735,8 @@ impl ::Response for ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse {
 
 impl Deployment {
     /// watch individual changes to a list of Deployment
+    ///
+    /// Use [`WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse`](./enum.WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_deployment_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -749,6 +784,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::watch_extensions_v1beta1_deployment_list_for_all_namespaces`](./struct.Deployment.html#method.watch_extensions_v1beta1_deployment_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -779,6 +815,8 @@ impl ::Response for WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse
 
 impl Deployment {
     /// watch changes to an object of kind Deployment
+    ///
+    /// Use [`WatchExtensionsV1beta1NamespacedDeploymentResponse`](./enum.WatchExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_namespaced_deployment(
         // name of the Deployment
         name: &str,
@@ -830,6 +868,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::watch_extensions_v1beta1_namespaced_deployment`](./struct.Deployment.html#method.watch_extensions_v1beta1_namespaced_deployment)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NamespacedDeploymentResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -860,6 +899,8 @@ impl ::Response for WatchExtensionsV1beta1NamespacedDeploymentResponse {
 
 impl Deployment {
     /// watch individual changes to a list of Deployment
+    ///
+    /// Use [`WatchExtensionsV1beta1NamespacedDeploymentListResponse`](./enum.WatchExtensionsV1beta1NamespacedDeploymentListResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_namespaced_deployment_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -909,6 +950,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::watch_extensions_v1beta1_namespaced_deployment_list`](./struct.Deployment.html#method.watch_extensions_v1beta1_namespaced_deployment_list)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NamespacedDeploymentListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

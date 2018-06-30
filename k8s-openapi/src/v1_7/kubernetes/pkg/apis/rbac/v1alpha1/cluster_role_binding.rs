@@ -25,6 +25,8 @@ pub struct ClusterRoleBinding {
 
 impl ClusterRoleBinding {
     /// create a ClusterRoleBinding
+    ///
+    /// Use [`CreateRbacAuthorizationV1alpha1ClusterRoleBindingResponse`](./enum.CreateRbacAuthorizationV1alpha1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn create_rbac_authorization_v1alpha1_cluster_role_binding(
         body: &::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::ClusterRoleBinding,
         // If 'true', then the output is pretty printed.
@@ -43,6 +45,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::create_rbac_authorization_v1alpha1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.create_rbac_authorization_v1alpha1_cluster_role_binding)
 #[derive(Debug)]
 pub enum CreateRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::ClusterRoleBinding),
@@ -71,6 +74,8 @@ impl ::Response for CreateRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// delete a ClusterRoleBinding
+    ///
+    /// Use [`DeleteRbacAuthorizationV1alpha1ClusterRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1alpha1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn delete_rbac_authorization_v1alpha1_cluster_role_binding(
         // name of the ClusterRoleBinding
         name: &str,
@@ -105,6 +110,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::delete_rbac_authorization_v1alpha1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_rbac_authorization_v1alpha1_cluster_role_binding)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -147,6 +153,8 @@ impl ::Response for DeleteRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// delete collection of ClusterRoleBinding
+    ///
+    /// Use [`DeleteRbacAuthorizationV1alpha1CollectionClusterRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1alpha1CollectionClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn delete_rbac_authorization_v1alpha1_collection_cluster_role_binding(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -194,6 +202,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::delete_rbac_authorization_v1alpha1_collection_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_rbac_authorization_v1alpha1_collection_cluster_role_binding)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1alpha1CollectionClusterRoleBindingResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -236,6 +245,8 @@ impl ::Response for DeleteRbacAuthorizationV1alpha1CollectionClusterRoleBindingR
 
 impl ClusterRoleBinding {
     /// list or watch objects of kind ClusterRoleBinding
+    ///
+    /// Use [`ListRbacAuthorizationV1alpha1ClusterRoleBindingResponse`](./enum.ListRbacAuthorizationV1alpha1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn list_rbac_authorization_v1alpha1_cluster_role_binding(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -283,6 +294,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::list_rbac_authorization_v1alpha1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.list_rbac_authorization_v1alpha1_cluster_role_binding)
 #[derive(Debug)]
 pub enum ListRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::ClusterRoleBindingList),
@@ -311,6 +323,8 @@ impl ::Response for ListRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// partially update the specified ClusterRoleBinding
+    ///
+    /// Use [`PatchRbacAuthorizationV1alpha1ClusterRoleBindingResponse`](./enum.PatchRbacAuthorizationV1alpha1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn patch_rbac_authorization_v1alpha1_cluster_role_binding(
         // name of the ClusterRoleBinding
         name: &str,
@@ -331,6 +345,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::patch_rbac_authorization_v1alpha1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.patch_rbac_authorization_v1alpha1_cluster_role_binding)
 #[derive(Debug)]
 pub enum PatchRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::ClusterRoleBinding),
@@ -359,6 +374,8 @@ impl ::Response for PatchRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// read the specified ClusterRoleBinding
+    ///
+    /// Use [`ReadRbacAuthorizationV1alpha1ClusterRoleBindingResponse`](./enum.ReadRbacAuthorizationV1alpha1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn read_rbac_authorization_v1alpha1_cluster_role_binding(
         // name of the ClusterRoleBinding
         name: &str,
@@ -378,6 +395,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::read_rbac_authorization_v1alpha1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.read_rbac_authorization_v1alpha1_cluster_role_binding)
 #[derive(Debug)]
 pub enum ReadRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::ClusterRoleBinding),
@@ -406,6 +424,8 @@ impl ::Response for ReadRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// replace the specified ClusterRoleBinding
+    ///
+    /// Use [`ReplaceRbacAuthorizationV1alpha1ClusterRoleBindingResponse`](./enum.ReplaceRbacAuthorizationV1alpha1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn replace_rbac_authorization_v1alpha1_cluster_role_binding(
         // name of the ClusterRoleBinding
         name: &str,
@@ -426,6 +446,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::replace_rbac_authorization_v1alpha1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.replace_rbac_authorization_v1alpha1_cluster_role_binding)
 #[derive(Debug)]
 pub enum ReplaceRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
     Ok(::v1_7::kubernetes::pkg::apis::rbac::v1alpha1::ClusterRoleBinding),
@@ -454,6 +475,8 @@ impl ::Response for ReplaceRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// watch changes to an object of kind ClusterRoleBinding
+    ///
+    /// Use [`WatchRbacAuthorizationV1alpha1ClusterRoleBindingResponse`](./enum.WatchRbacAuthorizationV1alpha1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1alpha1_cluster_role_binding(
         // name of the ClusterRoleBinding
         name: &str,
@@ -503,6 +526,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::watch_rbac_authorization_v1alpha1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.watch_rbac_authorization_v1alpha1_cluster_role_binding)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -533,6 +557,8 @@ impl ::Response for WatchRbacAuthorizationV1alpha1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// watch individual changes to a list of ClusterRoleBinding
+    ///
+    /// Use [`WatchRbacAuthorizationV1alpha1ClusterRoleBindingListResponse`](./enum.WatchRbacAuthorizationV1alpha1ClusterRoleBindingListResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1alpha1_cluster_role_binding_list(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -580,6 +606,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::watch_rbac_authorization_v1alpha1_cluster_role_binding_list`](./struct.ClusterRoleBinding.html#method.watch_rbac_authorization_v1alpha1_cluster_role_binding_list)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1alpha1ClusterRoleBindingListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

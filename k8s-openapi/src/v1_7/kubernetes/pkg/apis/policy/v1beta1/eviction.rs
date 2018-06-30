@@ -22,6 +22,8 @@ pub struct Eviction {
 
 impl Eviction {
     /// create eviction of a Pod
+    ///
+    /// Use [`CreateCoreV1NamespacedPodEvictionResponse`](./enum.CreateCoreV1NamespacedPodEvictionResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_pod_eviction(
         // name of the Eviction
         name: &str,
@@ -44,6 +46,7 @@ impl Eviction {
     }
 }
 
+/// Parses the HTTP response of [`Eviction::create_core_v1_namespaced_pod_eviction`](./struct.Eviction.html#method.create_core_v1_namespaced_pod_eviction)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedPodEvictionResponse {
     Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::Eviction),

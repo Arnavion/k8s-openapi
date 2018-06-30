@@ -24,6 +24,8 @@ pub struct APIService {
 
 impl APIService {
     /// create an APIService
+    ///
+    /// Use [`CreateApiregistrationV1beta1APIServiceResponse`](./enum.CreateApiregistrationV1beta1APIServiceResponse.html) to parse the HTTP response.
     pub fn create_apiregistration_v1beta1_api_service(
         body: &::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService,
         // If 'true', then the output is pretty printed.
@@ -42,6 +44,7 @@ impl APIService {
     }
 }
 
+/// Parses the HTTP response of [`APIService::create_apiregistration_v1beta1_api_service`](./struct.APIService.html#method.create_apiregistration_v1beta1_api_service)
 #[derive(Debug)]
 pub enum CreateApiregistrationV1beta1APIServiceResponse {
     Ok(::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
@@ -88,6 +91,8 @@ impl ::Response for CreateApiregistrationV1beta1APIServiceResponse {
 
 impl APIService {
     /// delete an APIService
+    ///
+    /// Use [`DeleteApiregistrationV1beta1APIServiceResponse`](./enum.DeleteApiregistrationV1beta1APIServiceResponse.html) to parse the HTTP response.
     pub fn delete_apiregistration_v1beta1_api_service(
         // name of the APIService
         name: &str,
@@ -122,6 +127,7 @@ impl APIService {
     }
 }
 
+/// Parses the HTTP response of [`APIService::delete_apiregistration_v1beta1_api_service`](./struct.APIService.html#method.delete_apiregistration_v1beta1_api_service)
 #[derive(Debug)]
 pub enum DeleteApiregistrationV1beta1APIServiceResponse {
     OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -164,6 +170,8 @@ impl ::Response for DeleteApiregistrationV1beta1APIServiceResponse {
 
 impl APIService {
     /// delete collection of APIService
+    ///
+    /// Use [`DeleteApiregistrationV1beta1CollectionAPIServiceResponse`](./enum.DeleteApiregistrationV1beta1CollectionAPIServiceResponse.html) to parse the HTTP response.
     pub fn delete_apiregistration_v1beta1_collection_api_service(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -223,6 +231,7 @@ impl APIService {
     }
 }
 
+/// Parses the HTTP response of [`APIService::delete_apiregistration_v1beta1_collection_api_service`](./struct.APIService.html#method.delete_apiregistration_v1beta1_collection_api_service)
 #[derive(Debug)]
 pub enum DeleteApiregistrationV1beta1CollectionAPIServiceResponse {
     OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -265,6 +274,8 @@ impl ::Response for DeleteApiregistrationV1beta1CollectionAPIServiceResponse {
 
 impl APIService {
     /// list or watch objects of kind APIService
+    ///
+    /// Use [`ListApiregistrationV1beta1APIServiceResponse`](./enum.ListApiregistrationV1beta1APIServiceResponse.html) to parse the HTTP response.
     pub fn list_apiregistration_v1beta1_api_service(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -324,6 +335,7 @@ impl APIService {
     }
 }
 
+/// Parses the HTTP response of [`APIService::list_apiregistration_v1beta1_api_service`](./struct.APIService.html#method.list_apiregistration_v1beta1_api_service)
 #[derive(Debug)]
 pub enum ListApiregistrationV1beta1APIServiceResponse {
     Ok(::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIServiceList),
@@ -352,6 +364,8 @@ impl ::Response for ListApiregistrationV1beta1APIServiceResponse {
 
 impl APIService {
     /// partially update the specified APIService
+    ///
+    /// Use [`PatchApiregistrationV1beta1APIServiceResponse`](./enum.PatchApiregistrationV1beta1APIServiceResponse.html) to parse the HTTP response.
     pub fn patch_apiregistration_v1beta1_api_service(
         // name of the APIService
         name: &str,
@@ -372,6 +386,7 @@ impl APIService {
     }
 }
 
+/// Parses the HTTP response of [`APIService::patch_apiregistration_v1beta1_api_service`](./struct.APIService.html#method.patch_apiregistration_v1beta1_api_service)
 #[derive(Debug)]
 pub enum PatchApiregistrationV1beta1APIServiceResponse {
     Ok(::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
@@ -400,6 +415,8 @@ impl ::Response for PatchApiregistrationV1beta1APIServiceResponse {
 
 impl APIService {
     /// read the specified APIService
+    ///
+    /// Use [`ReadApiregistrationV1beta1APIServiceResponse`](./enum.ReadApiregistrationV1beta1APIServiceResponse.html) to parse the HTTP response.
     pub fn read_apiregistration_v1beta1_api_service(
         // name of the APIService
         name: &str,
@@ -429,6 +446,7 @@ impl APIService {
     }
 }
 
+/// Parses the HTTP response of [`APIService::read_apiregistration_v1beta1_api_service`](./struct.APIService.html#method.read_apiregistration_v1beta1_api_service)
 #[derive(Debug)]
 pub enum ReadApiregistrationV1beta1APIServiceResponse {
     Ok(::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
@@ -457,6 +475,8 @@ impl ::Response for ReadApiregistrationV1beta1APIServiceResponse {
 
 impl APIService {
     /// replace the specified APIService
+    ///
+    /// Use [`ReplaceApiregistrationV1beta1APIServiceResponse`](./enum.ReplaceApiregistrationV1beta1APIServiceResponse.html) to parse the HTTP response.
     pub fn replace_apiregistration_v1beta1_api_service(
         // name of the APIService
         name: &str,
@@ -477,6 +497,7 @@ impl APIService {
     }
 }
 
+/// Parses the HTTP response of [`APIService::replace_apiregistration_v1beta1_api_service`](./struct.APIService.html#method.replace_apiregistration_v1beta1_api_service)
 #[derive(Debug)]
 pub enum ReplaceApiregistrationV1beta1APIServiceResponse {
     Ok(::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
@@ -514,6 +535,8 @@ impl ::Response for ReplaceApiregistrationV1beta1APIServiceResponse {
 
 impl APIService {
     /// replace status of the specified APIService
+    ///
+    /// Use [`ReplaceApiregistrationV1beta1APIServiceStatusResponse`](./enum.ReplaceApiregistrationV1beta1APIServiceStatusResponse.html) to parse the HTTP response.
     pub fn replace_apiregistration_v1beta1_api_service_status(
         // name of the APIService
         name: &str,
@@ -534,6 +557,7 @@ impl APIService {
     }
 }
 
+/// Parses the HTTP response of [`APIService::replace_apiregistration_v1beta1_api_service_status`](./struct.APIService.html#method.replace_apiregistration_v1beta1_api_service_status)
 #[derive(Debug)]
 pub enum ReplaceApiregistrationV1beta1APIServiceStatusResponse {
     Ok(::v1_10::kube_aggregator::pkg::apis::apiregistration::v1beta1::APIService),
@@ -571,6 +595,8 @@ impl ::Response for ReplaceApiregistrationV1beta1APIServiceStatusResponse {
 
 impl APIService {
     /// watch changes to an object of kind APIService
+    ///
+    /// Use [`WatchApiregistrationV1beta1APIServiceResponse`](./enum.WatchApiregistrationV1beta1APIServiceResponse.html) to parse the HTTP response.
     pub fn watch_apiregistration_v1beta1_api_service(
         // name of the APIService
         name: &str,
@@ -632,6 +658,7 @@ impl APIService {
     }
 }
 
+/// Parses the HTTP response of [`APIService::watch_apiregistration_v1beta1_api_service`](./struct.APIService.html#method.watch_apiregistration_v1beta1_api_service)
 #[derive(Debug)]
 pub enum WatchApiregistrationV1beta1APIServiceResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -662,6 +689,8 @@ impl ::Response for WatchApiregistrationV1beta1APIServiceResponse {
 
 impl APIService {
     /// watch individual changes to a list of APIService
+    ///
+    /// Use [`WatchApiregistrationV1beta1APIServiceListResponse`](./enum.WatchApiregistrationV1beta1APIServiceListResponse.html) to parse the HTTP response.
     pub fn watch_apiregistration_v1beta1_api_service_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -721,6 +750,7 @@ impl APIService {
     }
 }
 
+/// Parses the HTTP response of [`APIService::watch_apiregistration_v1beta1_api_service_list`](./struct.APIService.html#method.watch_apiregistration_v1beta1_api_service_list)
 #[derive(Debug)]
 pub enum WatchApiregistrationV1beta1APIServiceListResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),

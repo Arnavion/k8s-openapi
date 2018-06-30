@@ -25,6 +25,8 @@ pub struct PersistentVolume {
 
 impl PersistentVolume {
     /// create a PersistentVolume
+    ///
+    /// Use [`CreateCoreV1PersistentVolumeResponse`](./enum.CreateCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
     pub fn create_core_v1_persistent_volume(
         body: &::v1_9::api::core::v1::PersistentVolume,
         // If 'true', then the output is pretty printed.
@@ -43,6 +45,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::create_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.create_core_v1_persistent_volume)
 #[derive(Debug)]
 pub enum CreateCoreV1PersistentVolumeResponse {
     Ok(::v1_9::api::core::v1::PersistentVolume),
@@ -89,6 +92,8 @@ impl ::Response for CreateCoreV1PersistentVolumeResponse {
 
 impl PersistentVolume {
     /// delete collection of PersistentVolume
+    ///
+    /// Use [`DeleteCoreV1CollectionPersistentVolumeResponse`](./enum.DeleteCoreV1CollectionPersistentVolumeResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_persistent_volume(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -148,6 +153,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::delete_core_v1_collection_persistent_volume`](./struct.PersistentVolume.html#method.delete_core_v1_collection_persistent_volume)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionPersistentVolumeResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -190,6 +196,8 @@ impl ::Response for DeleteCoreV1CollectionPersistentVolumeResponse {
 
 impl PersistentVolume {
     /// delete a PersistentVolume
+    ///
+    /// Use [`DeleteCoreV1PersistentVolumeResponse`](./enum.DeleteCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_persistent_volume(
         // name of the PersistentVolume
         name: &str,
@@ -224,6 +232,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::delete_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.delete_core_v1_persistent_volume)
 #[derive(Debug)]
 pub enum DeleteCoreV1PersistentVolumeResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -266,6 +275,8 @@ impl ::Response for DeleteCoreV1PersistentVolumeResponse {
 
 impl PersistentVolume {
     /// list or watch objects of kind PersistentVolume
+    ///
+    /// Use [`ListCoreV1PersistentVolumeResponse`](./enum.ListCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
     pub fn list_core_v1_persistent_volume(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -325,6 +336,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::list_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.list_core_v1_persistent_volume)
 #[derive(Debug)]
 pub enum ListCoreV1PersistentVolumeResponse {
     Ok(::v1_9::api::core::v1::PersistentVolumeList),
@@ -353,6 +365,8 @@ impl ::Response for ListCoreV1PersistentVolumeResponse {
 
 impl PersistentVolume {
     /// partially update the specified PersistentVolume
+    ///
+    /// Use [`PatchCoreV1PersistentVolumeResponse`](./enum.PatchCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_persistent_volume(
         // name of the PersistentVolume
         name: &str,
@@ -373,6 +387,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::patch_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.patch_core_v1_persistent_volume)
 #[derive(Debug)]
 pub enum PatchCoreV1PersistentVolumeResponse {
     Ok(::v1_9::api::core::v1::PersistentVolume),
@@ -401,6 +416,8 @@ impl ::Response for PatchCoreV1PersistentVolumeResponse {
 
 impl PersistentVolume {
     /// partially update status of the specified PersistentVolume
+    ///
+    /// Use [`PatchCoreV1PersistentVolumeStatusResponse`](./enum.PatchCoreV1PersistentVolumeStatusResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_persistent_volume_status(
         // name of the PersistentVolume
         name: &str,
@@ -421,6 +438,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::patch_core_v1_persistent_volume_status`](./struct.PersistentVolume.html#method.patch_core_v1_persistent_volume_status)
 #[derive(Debug)]
 pub enum PatchCoreV1PersistentVolumeStatusResponse {
     Ok(::v1_9::api::core::v1::PersistentVolume),
@@ -449,6 +467,8 @@ impl ::Response for PatchCoreV1PersistentVolumeStatusResponse {
 
 impl PersistentVolume {
     /// read the specified PersistentVolume
+    ///
+    /// Use [`ReadCoreV1PersistentVolumeResponse`](./enum.ReadCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
     pub fn read_core_v1_persistent_volume(
         // name of the PersistentVolume
         name: &str,
@@ -478,6 +498,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::read_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.read_core_v1_persistent_volume)
 #[derive(Debug)]
 pub enum ReadCoreV1PersistentVolumeResponse {
     Ok(::v1_9::api::core::v1::PersistentVolume),
@@ -506,6 +527,8 @@ impl ::Response for ReadCoreV1PersistentVolumeResponse {
 
 impl PersistentVolume {
     /// read status of the specified PersistentVolume
+    ///
+    /// Use [`ReadCoreV1PersistentVolumeStatusResponse`](./enum.ReadCoreV1PersistentVolumeStatusResponse.html) to parse the HTTP response.
     pub fn read_core_v1_persistent_volume_status(
         // name of the PersistentVolume
         name: &str,
@@ -525,6 +548,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::read_core_v1_persistent_volume_status`](./struct.PersistentVolume.html#method.read_core_v1_persistent_volume_status)
 #[derive(Debug)]
 pub enum ReadCoreV1PersistentVolumeStatusResponse {
     Ok(::v1_9::api::core::v1::PersistentVolume),
@@ -553,6 +577,8 @@ impl ::Response for ReadCoreV1PersistentVolumeStatusResponse {
 
 impl PersistentVolume {
     /// replace the specified PersistentVolume
+    ///
+    /// Use [`ReplaceCoreV1PersistentVolumeResponse`](./enum.ReplaceCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_persistent_volume(
         // name of the PersistentVolume
         name: &str,
@@ -573,6 +599,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::replace_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.replace_core_v1_persistent_volume)
 #[derive(Debug)]
 pub enum ReplaceCoreV1PersistentVolumeResponse {
     Ok(::v1_9::api::core::v1::PersistentVolume),
@@ -610,6 +637,8 @@ impl ::Response for ReplaceCoreV1PersistentVolumeResponse {
 
 impl PersistentVolume {
     /// replace status of the specified PersistentVolume
+    ///
+    /// Use [`ReplaceCoreV1PersistentVolumeStatusResponse`](./enum.ReplaceCoreV1PersistentVolumeStatusResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_persistent_volume_status(
         // name of the PersistentVolume
         name: &str,
@@ -630,6 +659,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::replace_core_v1_persistent_volume_status`](./struct.PersistentVolume.html#method.replace_core_v1_persistent_volume_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1PersistentVolumeStatusResponse {
     Ok(::v1_9::api::core::v1::PersistentVolume),
@@ -667,6 +697,8 @@ impl ::Response for ReplaceCoreV1PersistentVolumeStatusResponse {
 
 impl PersistentVolume {
     /// watch changes to an object of kind PersistentVolume
+    ///
+    /// Use [`WatchCoreV1PersistentVolumeResponse`](./enum.WatchCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_persistent_volume(
         // name of the PersistentVolume
         name: &str,
@@ -728,6 +760,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::watch_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.watch_core_v1_persistent_volume)
 #[derive(Debug)]
 pub enum WatchCoreV1PersistentVolumeResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -758,6 +791,8 @@ impl ::Response for WatchCoreV1PersistentVolumeResponse {
 
 impl PersistentVolume {
     /// watch individual changes to a list of PersistentVolume
+    ///
+    /// Use [`WatchCoreV1PersistentVolumeListResponse`](./enum.WatchCoreV1PersistentVolumeListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_persistent_volume_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -817,6 +852,7 @@ impl PersistentVolume {
     }
 }
 
+/// Parses the HTTP response of [`PersistentVolume::watch_core_v1_persistent_volume_list`](./struct.PersistentVolume.html#method.watch_core_v1_persistent_volume_list)
 #[derive(Debug)]
 pub enum WatchCoreV1PersistentVolumeListResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),

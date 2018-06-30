@@ -875,11 +875,17 @@ fn write_operation(
 	});
 	let parameters = parameters;
 
+	let mut wrote_description = false;
 	if let Some(description) = operation.description.as_ref() {
 		for line in get_comment_text(description) {
 			writeln!(file, "{}/{}", indent, line)?;
+			wrote_description = true;
 		}
 	}
+	if wrote_description {
+		writeln!(file, "{}///", indent)?;
+	}
+	writeln!(file, "{}/// Use [`{}`](./enum.{}.html) to parse the HTTP response.", indent, operation_result_name, operation_result_name)?;
 
 	writeln!(file, "{}pub fn {}(", indent, operation_fn_name)?;
 	for (parameter_name, parameter_type, parameter) in &parameters {
@@ -997,6 +1003,13 @@ fn write_operation(
 	}
 
 	writeln!(file)?;
+
+	if let Some(type_name) = type_name {
+		writeln!(file, "/// Parses the HTTP response of [`{}::{}`](./struct.{}.html#method.{})", type_name, operation_fn_name, type_name, operation_fn_name)?;
+	}
+	else {
+		writeln!(file, "/// Parses the HTTP response of [`{}`](./fn.{}.html)", operation_fn_name, operation_fn_name)?;
+	}
 
 	writeln!(file, "#[derive(Debug)]")?;
 	writeln!(file, "pub enum {} {{", operation_result_name)?;

@@ -24,6 +24,8 @@ pub struct LocalSubjectAccessReview {
 
 impl LocalSubjectAccessReview {
     /// create a LocalSubjectAccessReview
+    ///
+    /// Use [`CreateAuthorizationV1beta1NamespacedLocalSubjectAccessReviewResponse`](./enum.CreateAuthorizationV1beta1NamespacedLocalSubjectAccessReviewResponse.html) to parse the HTTP response.
     pub fn create_authorization_v1beta1_namespaced_local_subject_access_review(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -44,6 +46,7 @@ impl LocalSubjectAccessReview {
     }
 }
 
+/// Parses the HTTP response of [`LocalSubjectAccessReview::create_authorization_v1beta1_namespaced_local_subject_access_review`](./struct.LocalSubjectAccessReview.html#method.create_authorization_v1beta1_namespaced_local_subject_access_review)
 #[derive(Debug)]
 pub enum CreateAuthorizationV1beta1NamespacedLocalSubjectAccessReviewResponse {
     Ok(::v1_8::api::authorization::v1beta1::LocalSubjectAccessReview),

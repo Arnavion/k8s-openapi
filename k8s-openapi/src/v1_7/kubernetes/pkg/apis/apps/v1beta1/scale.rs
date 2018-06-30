@@ -25,6 +25,8 @@ pub struct Scale {
 
 impl Scale {
     /// partially update scale of the specified Deployment
+    ///
+    /// Use [`PatchAppsV1beta1NamespacedDeploymentScaleResponse`](./enum.PatchAppsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1beta1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -47,6 +49,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_apps_v1beta1_namespaced_deployment_scale`](./struct.Scale.html#method.patch_apps_v1beta1_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum PatchAppsV1beta1NamespacedDeploymentScaleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::apps::v1beta1::Scale),
@@ -75,6 +78,8 @@ impl ::Response for PatchAppsV1beta1NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// read scale of the specified Deployment
+    ///
+    /// Use [`ReadAppsV1beta1NamespacedDeploymentScaleResponse`](./enum.ReadAppsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn read_apps_v1beta1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -96,6 +101,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_apps_v1beta1_namespaced_deployment_scale`](./struct.Scale.html#method.read_apps_v1beta1_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum ReadAppsV1beta1NamespacedDeploymentScaleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::apps::v1beta1::Scale),
@@ -124,6 +130,8 @@ impl ::Response for ReadAppsV1beta1NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// replace scale of the specified Deployment
+    ///
+    /// Use [`ReplaceAppsV1beta1NamespacedDeploymentScaleResponse`](./enum.ReplaceAppsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1beta1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -146,6 +154,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_apps_v1beta1_namespaced_deployment_scale`](./struct.Scale.html#method.replace_apps_v1beta1_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta1NamespacedDeploymentScaleResponse {
     Ok(::v1_7::kubernetes::pkg::apis::apps::v1beta1::Scale),

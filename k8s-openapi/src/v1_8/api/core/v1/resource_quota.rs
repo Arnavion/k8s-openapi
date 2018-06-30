@@ -25,6 +25,8 @@ pub struct ResourceQuota {
 
 impl ResourceQuota {
     /// create a ResourceQuota
+    ///
+    /// Use [`CreateCoreV1NamespacedResourceQuotaResponse`](./enum.CreateCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_resource_quota(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::create_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.create_core_v1_namespaced_resource_quota)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedResourceQuotaResponse {
     Ok(::v1_8::api::core::v1::ResourceQuota),
@@ -73,6 +76,8 @@ impl ::Response for CreateCoreV1NamespacedResourceQuotaResponse {
 
 impl ResourceQuota {
     /// delete collection of ResourceQuota
+    ///
+    /// Use [`DeleteCoreV1CollectionNamespacedResourceQuotaResponse`](./enum.DeleteCoreV1CollectionNamespacedResourceQuotaResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_namespaced_resource_quota(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -134,6 +139,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::delete_core_v1_collection_namespaced_resource_quota`](./struct.ResourceQuota.html#method.delete_core_v1_collection_namespaced_resource_quota)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedResourceQuotaResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -176,6 +182,8 @@ impl ::Response for DeleteCoreV1CollectionNamespacedResourceQuotaResponse {
 
 impl ResourceQuota {
     /// delete a ResourceQuota
+    ///
+    /// Use [`DeleteCoreV1NamespacedResourceQuotaResponse`](./enum.DeleteCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespaced_resource_quota(
         // name of the ResourceQuota
         name: &str,
@@ -212,6 +220,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::delete_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.delete_core_v1_namespaced_resource_quota)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedResourceQuotaResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -254,6 +263,8 @@ impl ::Response for DeleteCoreV1NamespacedResourceQuotaResponse {
 
 impl ResourceQuota {
     /// list or watch objects of kind ResourceQuota
+    ///
+    /// Use [`ListCoreV1NamespacedResourceQuotaResponse`](./enum.ListCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespaced_resource_quota(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -315,6 +326,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::list_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.list_core_v1_namespaced_resource_quota)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedResourceQuotaResponse {
     Ok(::v1_8::api::core::v1::ResourceQuotaList),
@@ -343,6 +355,8 @@ impl ::Response for ListCoreV1NamespacedResourceQuotaResponse {
 
 impl ResourceQuota {
     /// list or watch objects of kind ResourceQuota
+    ///
+    /// Use [`ListCoreV1ResourceQuotaForAllNamespacesResponse`](./enum.ListCoreV1ResourceQuotaForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_core_v1_resource_quota_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -402,6 +416,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::list_core_v1_resource_quota_for_all_namespaces`](./struct.ResourceQuota.html#method.list_core_v1_resource_quota_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1ResourceQuotaForAllNamespacesResponse {
     Ok(::v1_8::api::core::v1::ResourceQuotaList),
@@ -430,6 +445,8 @@ impl ::Response for ListCoreV1ResourceQuotaForAllNamespacesResponse {
 
 impl ResourceQuota {
     /// partially update the specified ResourceQuota
+    ///
+    /// Use [`PatchCoreV1NamespacedResourceQuotaResponse`](./enum.PatchCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_resource_quota(
         // name of the ResourceQuota
         name: &str,
@@ -452,6 +469,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::patch_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.patch_core_v1_namespaced_resource_quota)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedResourceQuotaResponse {
     Ok(::v1_8::api::core::v1::ResourceQuota),
@@ -480,6 +498,8 @@ impl ::Response for PatchCoreV1NamespacedResourceQuotaResponse {
 
 impl ResourceQuota {
     /// partially update status of the specified ResourceQuota
+    ///
+    /// Use [`PatchCoreV1NamespacedResourceQuotaStatusResponse`](./enum.PatchCoreV1NamespacedResourceQuotaStatusResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_resource_quota_status(
         // name of the ResourceQuota
         name: &str,
@@ -502,6 +522,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::patch_core_v1_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.patch_core_v1_namespaced_resource_quota_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedResourceQuotaStatusResponse {
     Ok(::v1_8::api::core::v1::ResourceQuota),
@@ -530,6 +551,8 @@ impl ::Response for PatchCoreV1NamespacedResourceQuotaStatusResponse {
 
 impl ResourceQuota {
     /// read the specified ResourceQuota
+    ///
+    /// Use [`ReadCoreV1NamespacedResourceQuotaResponse`](./enum.ReadCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_resource_quota(
         // name of the ResourceQuota
         name: &str,
@@ -561,6 +584,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::read_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.read_core_v1_namespaced_resource_quota)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedResourceQuotaResponse {
     Ok(::v1_8::api::core::v1::ResourceQuota),
@@ -589,6 +613,8 @@ impl ::Response for ReadCoreV1NamespacedResourceQuotaResponse {
 
 impl ResourceQuota {
     /// read status of the specified ResourceQuota
+    ///
+    /// Use [`ReadCoreV1NamespacedResourceQuotaStatusResponse`](./enum.ReadCoreV1NamespacedResourceQuotaStatusResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_resource_quota_status(
         // name of the ResourceQuota
         name: &str,
@@ -610,6 +636,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::read_core_v1_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.read_core_v1_namespaced_resource_quota_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedResourceQuotaStatusResponse {
     Ok(::v1_8::api::core::v1::ResourceQuota),
@@ -638,6 +665,8 @@ impl ::Response for ReadCoreV1NamespacedResourceQuotaStatusResponse {
 
 impl ResourceQuota {
     /// replace the specified ResourceQuota
+    ///
+    /// Use [`ReplaceCoreV1NamespacedResourceQuotaResponse`](./enum.ReplaceCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_resource_quota(
         // name of the ResourceQuota
         name: &str,
@@ -660,6 +689,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::replace_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.replace_core_v1_namespaced_resource_quota)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedResourceQuotaResponse {
     Ok(::v1_8::api::core::v1::ResourceQuota),
@@ -688,6 +718,8 @@ impl ::Response for ReplaceCoreV1NamespacedResourceQuotaResponse {
 
 impl ResourceQuota {
     /// replace status of the specified ResourceQuota
+    ///
+    /// Use [`ReplaceCoreV1NamespacedResourceQuotaStatusResponse`](./enum.ReplaceCoreV1NamespacedResourceQuotaStatusResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_resource_quota_status(
         // name of the ResourceQuota
         name: &str,
@@ -710,6 +742,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::replace_core_v1_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.replace_core_v1_namespaced_resource_quota_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedResourceQuotaStatusResponse {
     Ok(::v1_8::api::core::v1::ResourceQuota),
@@ -738,6 +771,8 @@ impl ::Response for ReplaceCoreV1NamespacedResourceQuotaStatusResponse {
 
 impl ResourceQuota {
     /// watch changes to an object of kind ResourceQuota
+    ///
+    /// Use [`WatchCoreV1NamespacedResourceQuotaResponse`](./enum.WatchCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_resource_quota(
         // name of the ResourceQuota
         name: &str,
@@ -801,6 +836,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::watch_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.watch_core_v1_namespaced_resource_quota)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedResourceQuotaResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -831,6 +867,8 @@ impl ::Response for WatchCoreV1NamespacedResourceQuotaResponse {
 
 impl ResourceQuota {
     /// watch individual changes to a list of ResourceQuota
+    ///
+    /// Use [`WatchCoreV1NamespacedResourceQuotaListResponse`](./enum.WatchCoreV1NamespacedResourceQuotaListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_resource_quota_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -892,6 +930,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::watch_core_v1_namespaced_resource_quota_list`](./struct.ResourceQuota.html#method.watch_core_v1_namespaced_resource_quota_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedResourceQuotaListResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -922,6 +961,8 @@ impl ::Response for WatchCoreV1NamespacedResourceQuotaListResponse {
 
 impl ResourceQuota {
     /// watch individual changes to a list of ResourceQuota
+    ///
+    /// Use [`WatchCoreV1ResourceQuotaListForAllNamespacesResponse`](./enum.WatchCoreV1ResourceQuotaListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_resource_quota_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -981,6 +1022,7 @@ impl ResourceQuota {
     }
 }
 
+/// Parses the HTTP response of [`ResourceQuota::watch_core_v1_resource_quota_list_for_all_namespaces`](./struct.ResourceQuota.html#method.watch_core_v1_resource_quota_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1ResourceQuotaListForAllNamespacesResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

@@ -25,6 +25,8 @@ pub struct RoleBinding {
 
 impl RoleBinding {
     /// create a RoleBinding
+    ///
+    /// Use [`CreateRbacAuthorizationV1NamespacedRoleBindingResponse`](./enum.CreateRbacAuthorizationV1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn create_rbac_authorization_v1_namespaced_role_binding(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::create_rbac_authorization_v1_namespaced_role_binding`](./struct.RoleBinding.html#method.create_rbac_authorization_v1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum CreateRbacAuthorizationV1NamespacedRoleBindingResponse {
     Ok(::v1_8::api::rbac::v1::RoleBinding),
@@ -73,6 +76,8 @@ impl ::Response for CreateRbacAuthorizationV1NamespacedRoleBindingResponse {
 
 impl RoleBinding {
     /// delete collection of RoleBinding
+    ///
+    /// Use [`DeleteRbacAuthorizationV1CollectionNamespacedRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1CollectionNamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn delete_rbac_authorization_v1_collection_namespaced_role_binding(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -134,6 +139,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::delete_rbac_authorization_v1_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1_collection_namespaced_role_binding)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1CollectionNamespacedRoleBindingResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -176,6 +182,8 @@ impl ::Response for DeleteRbacAuthorizationV1CollectionNamespacedRoleBindingResp
 
 impl RoleBinding {
     /// delete a RoleBinding
+    ///
+    /// Use [`DeleteRbacAuthorizationV1NamespacedRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn delete_rbac_authorization_v1_namespaced_role_binding(
         // name of the RoleBinding
         name: &str,
@@ -212,6 +220,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::delete_rbac_authorization_v1_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1NamespacedRoleBindingResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -254,6 +263,8 @@ impl ::Response for DeleteRbacAuthorizationV1NamespacedRoleBindingResponse {
 
 impl RoleBinding {
     /// list or watch objects of kind RoleBinding
+    ///
+    /// Use [`ListRbacAuthorizationV1NamespacedRoleBindingResponse`](./enum.ListRbacAuthorizationV1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn list_rbac_authorization_v1_namespaced_role_binding(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -315,6 +326,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::list_rbac_authorization_v1_namespaced_role_binding`](./struct.RoleBinding.html#method.list_rbac_authorization_v1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum ListRbacAuthorizationV1NamespacedRoleBindingResponse {
     Ok(::v1_8::api::rbac::v1::RoleBindingList),
@@ -343,6 +355,8 @@ impl ::Response for ListRbacAuthorizationV1NamespacedRoleBindingResponse {
 
 impl RoleBinding {
     /// list or watch objects of kind RoleBinding
+    ///
+    /// Use [`ListRbacAuthorizationV1RoleBindingForAllNamespacesResponse`](./enum.ListRbacAuthorizationV1RoleBindingForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_rbac_authorization_v1_role_binding_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -402,6 +416,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::list_rbac_authorization_v1_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_rbac_authorization_v1_role_binding_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListRbacAuthorizationV1RoleBindingForAllNamespacesResponse {
     Ok(::v1_8::api::rbac::v1::RoleBindingList),
@@ -430,6 +445,8 @@ impl ::Response for ListRbacAuthorizationV1RoleBindingForAllNamespacesResponse {
 
 impl RoleBinding {
     /// partially update the specified RoleBinding
+    ///
+    /// Use [`PatchRbacAuthorizationV1NamespacedRoleBindingResponse`](./enum.PatchRbacAuthorizationV1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn patch_rbac_authorization_v1_namespaced_role_binding(
         // name of the RoleBinding
         name: &str,
@@ -452,6 +469,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::patch_rbac_authorization_v1_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_rbac_authorization_v1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum PatchRbacAuthorizationV1NamespacedRoleBindingResponse {
     Ok(::v1_8::api::rbac::v1::RoleBinding),
@@ -480,6 +498,8 @@ impl ::Response for PatchRbacAuthorizationV1NamespacedRoleBindingResponse {
 
 impl RoleBinding {
     /// read the specified RoleBinding
+    ///
+    /// Use [`ReadRbacAuthorizationV1NamespacedRoleBindingResponse`](./enum.ReadRbacAuthorizationV1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn read_rbac_authorization_v1_namespaced_role_binding(
         // name of the RoleBinding
         name: &str,
@@ -501,6 +521,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::read_rbac_authorization_v1_namespaced_role_binding`](./struct.RoleBinding.html#method.read_rbac_authorization_v1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum ReadRbacAuthorizationV1NamespacedRoleBindingResponse {
     Ok(::v1_8::api::rbac::v1::RoleBinding),
@@ -529,6 +550,8 @@ impl ::Response for ReadRbacAuthorizationV1NamespacedRoleBindingResponse {
 
 impl RoleBinding {
     /// replace the specified RoleBinding
+    ///
+    /// Use [`ReplaceRbacAuthorizationV1NamespacedRoleBindingResponse`](./enum.ReplaceRbacAuthorizationV1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn replace_rbac_authorization_v1_namespaced_role_binding(
         // name of the RoleBinding
         name: &str,
@@ -551,6 +574,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::replace_rbac_authorization_v1_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_rbac_authorization_v1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum ReplaceRbacAuthorizationV1NamespacedRoleBindingResponse {
     Ok(::v1_8::api::rbac::v1::RoleBinding),
@@ -579,6 +603,8 @@ impl ::Response for ReplaceRbacAuthorizationV1NamespacedRoleBindingResponse {
 
 impl RoleBinding {
     /// watch changes to an object of kind RoleBinding
+    ///
+    /// Use [`WatchRbacAuthorizationV1NamespacedRoleBindingResponse`](./enum.WatchRbacAuthorizationV1NamespacedRoleBindingResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1_namespaced_role_binding(
         // name of the RoleBinding
         name: &str,
@@ -642,6 +668,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1_namespaced_role_binding)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1NamespacedRoleBindingResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -672,6 +699,8 @@ impl ::Response for WatchRbacAuthorizationV1NamespacedRoleBindingResponse {
 
 impl RoleBinding {
     /// watch individual changes to a list of RoleBinding
+    ///
+    /// Use [`WatchRbacAuthorizationV1NamespacedRoleBindingListResponse`](./enum.WatchRbacAuthorizationV1NamespacedRoleBindingListResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1_namespaced_role_binding_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -733,6 +762,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1_namespaced_role_binding_list)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1NamespacedRoleBindingListResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -763,6 +793,8 @@ impl ::Response for WatchRbacAuthorizationV1NamespacedRoleBindingListResponse {
 
 impl RoleBinding {
     /// watch individual changes to a list of RoleBinding
+    ///
+    /// Use [`WatchRbacAuthorizationV1RoleBindingListForAllNamespacesResponse`](./enum.WatchRbacAuthorizationV1RoleBindingListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1_role_binding_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -822,6 +854,7 @@ impl RoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1_role_binding_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1RoleBindingListForAllNamespacesResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

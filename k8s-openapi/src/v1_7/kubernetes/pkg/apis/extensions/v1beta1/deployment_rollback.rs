@@ -25,6 +25,8 @@ pub struct DeploymentRollback {
 
 impl DeploymentRollback {
     /// create rollback of a Deployment
+    ///
+    /// Use [`CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse`](./enum.CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse.html) to parse the HTTP response.
     pub fn create_extensions_v1beta1_namespaced_deployment_rollback(
         // name of the DeploymentRollback
         name: &str,
@@ -47,6 +49,7 @@ impl DeploymentRollback {
     }
 }
 
+/// Parses the HTTP response of [`DeploymentRollback::create_extensions_v1beta1_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_extensions_v1beta1_namespaced_deployment_rollback)
 #[derive(Debug)]
 pub enum CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DeploymentRollback),

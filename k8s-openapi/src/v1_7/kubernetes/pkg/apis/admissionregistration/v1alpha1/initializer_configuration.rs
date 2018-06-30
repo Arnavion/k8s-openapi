@@ -22,6 +22,8 @@ pub struct InitializerConfiguration {
 
 impl InitializerConfiguration {
     /// create an InitializerConfiguration
+    ///
+    /// Use [`CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
     pub fn create_admissionregistration_v1alpha1_initializer_configuration(
         body: &::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::InitializerConfiguration,
         // If 'true', then the output is pretty printed.
@@ -40,6 +42,7 @@ impl InitializerConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`InitializerConfiguration::create_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.create_admissionregistration_v1alpha1_initializer_configuration)
 #[derive(Debug)]
 pub enum CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse {
     Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::InitializerConfiguration),
@@ -68,6 +71,8 @@ impl ::Response for CreateAdmissionregistrationV1alpha1InitializerConfigurationR
 
 impl InitializerConfiguration {
     /// delete collection of InitializerConfiguration
+    ///
+    /// Use [`DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse`](./enum.DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse.html) to parse the HTTP response.
     pub fn delete_admissionregistration_v1alpha1_collection_initializer_configuration(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -115,6 +120,7 @@ impl InitializerConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`InitializerConfiguration::delete_admissionregistration_v1alpha1_collection_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_admissionregistration_v1alpha1_collection_initializer_configuration)
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -157,6 +163,8 @@ impl ::Response for DeleteAdmissionregistrationV1alpha1CollectionInitializerConf
 
 impl InitializerConfiguration {
     /// delete an InitializerConfiguration
+    ///
+    /// Use [`DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
     pub fn delete_admissionregistration_v1alpha1_initializer_configuration(
         // name of the InitializerConfiguration
         name: &str,
@@ -191,6 +199,7 @@ impl InitializerConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`InitializerConfiguration::delete_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_admissionregistration_v1alpha1_initializer_configuration)
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -233,6 +242,8 @@ impl ::Response for DeleteAdmissionregistrationV1alpha1InitializerConfigurationR
 
 impl InitializerConfiguration {
     /// list or watch objects of kind InitializerConfiguration
+    ///
+    /// Use [`ListAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.ListAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
     pub fn list_admissionregistration_v1alpha1_initializer_configuration(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -280,6 +291,7 @@ impl InitializerConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`InitializerConfiguration::list_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.list_admissionregistration_v1alpha1_initializer_configuration)
 #[derive(Debug)]
 pub enum ListAdmissionregistrationV1alpha1InitializerConfigurationResponse {
     Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::InitializerConfigurationList),
@@ -308,6 +320,8 @@ impl ::Response for ListAdmissionregistrationV1alpha1InitializerConfigurationRes
 
 impl InitializerConfiguration {
     /// partially update the specified InitializerConfiguration
+    ///
+    /// Use [`PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
     pub fn patch_admissionregistration_v1alpha1_initializer_configuration(
         // name of the InitializerConfiguration
         name: &str,
@@ -328,6 +342,7 @@ impl InitializerConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`InitializerConfiguration::patch_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.patch_admissionregistration_v1alpha1_initializer_configuration)
 #[derive(Debug)]
 pub enum PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse {
     Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::InitializerConfiguration),
@@ -356,6 +371,8 @@ impl ::Response for PatchAdmissionregistrationV1alpha1InitializerConfigurationRe
 
 impl InitializerConfiguration {
     /// read the specified InitializerConfiguration
+    ///
+    /// Use [`ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
     pub fn read_admissionregistration_v1alpha1_initializer_configuration(
         // name of the InitializerConfiguration
         name: &str,
@@ -385,6 +402,7 @@ impl InitializerConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`InitializerConfiguration::read_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.read_admissionregistration_v1alpha1_initializer_configuration)
 #[derive(Debug)]
 pub enum ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse {
     Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::InitializerConfiguration),
@@ -413,6 +431,8 @@ impl ::Response for ReadAdmissionregistrationV1alpha1InitializerConfigurationRes
 
 impl InitializerConfiguration {
     /// replace the specified InitializerConfiguration
+    ///
+    /// Use [`ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
     pub fn replace_admissionregistration_v1alpha1_initializer_configuration(
         // name of the InitializerConfiguration
         name: &str,
@@ -433,6 +453,7 @@ impl InitializerConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`InitializerConfiguration::replace_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.replace_admissionregistration_v1alpha1_initializer_configuration)
 #[derive(Debug)]
 pub enum ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse {
     Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::InitializerConfiguration),
@@ -461,6 +482,8 @@ impl ::Response for ReplaceAdmissionregistrationV1alpha1InitializerConfiguration
 
 impl InitializerConfiguration {
     /// watch changes to an object of kind InitializerConfiguration
+    ///
+    /// Use [`WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
     pub fn watch_admissionregistration_v1alpha1_initializer_configuration(
         // name of the InitializerConfiguration
         name: &str,
@@ -510,6 +533,7 @@ impl InitializerConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`InitializerConfiguration::watch_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.watch_admissionregistration_v1alpha1_initializer_configuration)
 #[derive(Debug)]
 pub enum WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -540,6 +564,8 @@ impl ::Response for WatchAdmissionregistrationV1alpha1InitializerConfigurationRe
 
 impl InitializerConfiguration {
     /// watch individual changes to a list of InitializerConfiguration
+    ///
+    /// Use [`WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse`](./enum.WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse.html) to parse the HTTP response.
     pub fn watch_admissionregistration_v1alpha1_initializer_configuration_list(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -587,6 +613,7 @@ impl InitializerConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`InitializerConfiguration::watch_admissionregistration_v1alpha1_initializer_configuration_list`](./struct.InitializerConfiguration.html#method.watch_admissionregistration_v1alpha1_initializer_configuration_list)
 #[derive(Debug)]
 pub enum WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

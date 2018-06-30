@@ -22,6 +22,8 @@ pub struct PodSecurityPolicy {
 
 impl PodSecurityPolicy {
     /// create a PodSecurityPolicy
+    ///
+    /// Use [`CreateExtensionsV1beta1PodSecurityPolicyResponse`](./enum.CreateExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
     pub fn create_extensions_v1beta1_pod_security_policy(
         body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::PodSecurityPolicy,
         // If 'true', then the output is pretty printed.
@@ -40,6 +42,7 @@ impl PodSecurityPolicy {
     }
 }
 
+/// Parses the HTTP response of [`PodSecurityPolicy::create_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.create_extensions_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum CreateExtensionsV1beta1PodSecurityPolicyResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::PodSecurityPolicy),
@@ -68,6 +71,8 @@ impl ::Response for CreateExtensionsV1beta1PodSecurityPolicyResponse {
 
 impl PodSecurityPolicy {
     /// delete collection of PodSecurityPolicy
+    ///
+    /// Use [`DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse`](./enum.DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_collection_pod_security_policy(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -115,6 +120,7 @@ impl PodSecurityPolicy {
     }
 }
 
+/// Parses the HTTP response of [`PodSecurityPolicy::delete_extensions_v1beta1_collection_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_extensions_v1beta1_collection_pod_security_policy)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -157,6 +163,8 @@ impl ::Response for DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse {
 
 impl PodSecurityPolicy {
     /// delete a PodSecurityPolicy
+    ///
+    /// Use [`DeleteExtensionsV1beta1PodSecurityPolicyResponse`](./enum.DeleteExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_pod_security_policy(
         // name of the PodSecurityPolicy
         name: &str,
@@ -191,6 +199,7 @@ impl PodSecurityPolicy {
     }
 }
 
+/// Parses the HTTP response of [`PodSecurityPolicy::delete_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_extensions_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1PodSecurityPolicyResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -233,6 +242,8 @@ impl ::Response for DeleteExtensionsV1beta1PodSecurityPolicyResponse {
 
 impl PodSecurityPolicy {
     /// list or watch objects of kind PodSecurityPolicy
+    ///
+    /// Use [`ListExtensionsV1beta1PodSecurityPolicyResponse`](./enum.ListExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
     pub fn list_extensions_v1beta1_pod_security_policy(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -280,6 +291,7 @@ impl PodSecurityPolicy {
     }
 }
 
+/// Parses the HTTP response of [`PodSecurityPolicy::list_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.list_extensions_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1PodSecurityPolicyResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::PodSecurityPolicyList),
@@ -308,6 +320,8 @@ impl ::Response for ListExtensionsV1beta1PodSecurityPolicyResponse {
 
 impl PodSecurityPolicy {
     /// partially update the specified PodSecurityPolicy
+    ///
+    /// Use [`PatchExtensionsV1beta1PodSecurityPolicyResponse`](./enum.PatchExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_pod_security_policy(
         // name of the PodSecurityPolicy
         name: &str,
@@ -328,6 +342,7 @@ impl PodSecurityPolicy {
     }
 }
 
+/// Parses the HTTP response of [`PodSecurityPolicy::patch_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.patch_extensions_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1PodSecurityPolicyResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::PodSecurityPolicy),
@@ -356,6 +371,8 @@ impl ::Response for PatchExtensionsV1beta1PodSecurityPolicyResponse {
 
 impl PodSecurityPolicy {
     /// read the specified PodSecurityPolicy
+    ///
+    /// Use [`ReadExtensionsV1beta1PodSecurityPolicyResponse`](./enum.ReadExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_pod_security_policy(
         // name of the PodSecurityPolicy
         name: &str,
@@ -385,6 +402,7 @@ impl PodSecurityPolicy {
     }
 }
 
+/// Parses the HTTP response of [`PodSecurityPolicy::read_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.read_extensions_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1PodSecurityPolicyResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::PodSecurityPolicy),
@@ -413,6 +431,8 @@ impl ::Response for ReadExtensionsV1beta1PodSecurityPolicyResponse {
 
 impl PodSecurityPolicy {
     /// replace the specified PodSecurityPolicy
+    ///
+    /// Use [`ReplaceExtensionsV1beta1PodSecurityPolicyResponse`](./enum.ReplaceExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_pod_security_policy(
         // name of the PodSecurityPolicy
         name: &str,
@@ -433,6 +453,7 @@ impl PodSecurityPolicy {
     }
 }
 
+/// Parses the HTTP response of [`PodSecurityPolicy::replace_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.replace_extensions_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1PodSecurityPolicyResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::PodSecurityPolicy),
@@ -461,6 +482,8 @@ impl ::Response for ReplaceExtensionsV1beta1PodSecurityPolicyResponse {
 
 impl PodSecurityPolicy {
     /// watch changes to an object of kind PodSecurityPolicy
+    ///
+    /// Use [`WatchExtensionsV1beta1PodSecurityPolicyResponse`](./enum.WatchExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_pod_security_policy(
         // name of the PodSecurityPolicy
         name: &str,
@@ -510,6 +533,7 @@ impl PodSecurityPolicy {
     }
 }
 
+/// Parses the HTTP response of [`PodSecurityPolicy::watch_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.watch_extensions_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1PodSecurityPolicyResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -540,6 +564,8 @@ impl ::Response for WatchExtensionsV1beta1PodSecurityPolicyResponse {
 
 impl PodSecurityPolicy {
     /// watch individual changes to a list of PodSecurityPolicy
+    ///
+    /// Use [`WatchExtensionsV1beta1PodSecurityPolicyListResponse`](./enum.WatchExtensionsV1beta1PodSecurityPolicyListResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_pod_security_policy_list(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -587,6 +613,7 @@ impl PodSecurityPolicy {
     }
 }
 
+/// Parses the HTTP response of [`PodSecurityPolicy::watch_extensions_v1beta1_pod_security_policy_list`](./struct.PodSecurityPolicy.html#method.watch_extensions_v1beta1_pod_security_policy_list)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1PodSecurityPolicyListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

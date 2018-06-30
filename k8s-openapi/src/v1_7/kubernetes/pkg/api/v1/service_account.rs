@@ -28,6 +28,8 @@ pub struct ServiceAccount {
 
 impl ServiceAccount {
     /// create a ServiceAccount
+    ///
+    /// Use [`CreateCoreV1NamespacedServiceAccountResponse`](./enum.CreateCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_service_account(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -48,6 +50,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::create_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.create_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedServiceAccountResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
@@ -76,6 +79,8 @@ impl ::Response for CreateCoreV1NamespacedServiceAccountResponse {
 
 impl ServiceAccount {
     /// delete collection of ServiceAccount
+    ///
+    /// Use [`DeleteCoreV1CollectionNamespacedServiceAccountResponse`](./enum.DeleteCoreV1CollectionNamespacedServiceAccountResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_namespaced_service_account(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -125,6 +130,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::delete_core_v1_collection_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_core_v1_collection_namespaced_service_account)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedServiceAccountResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -167,6 +173,8 @@ impl ::Response for DeleteCoreV1CollectionNamespacedServiceAccountResponse {
 
 impl ServiceAccount {
     /// delete a ServiceAccount
+    ///
+    /// Use [`DeleteCoreV1NamespacedServiceAccountResponse`](./enum.DeleteCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespaced_service_account(
         // name of the ServiceAccount
         name: &str,
@@ -203,6 +211,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::delete_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedServiceAccountResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -245,6 +254,8 @@ impl ::Response for DeleteCoreV1NamespacedServiceAccountResponse {
 
 impl ServiceAccount {
     /// list or watch objects of kind ServiceAccount
+    ///
+    /// Use [`ListCoreV1NamespacedServiceAccountResponse`](./enum.ListCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespaced_service_account(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -294,6 +305,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::list_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.list_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedServiceAccountResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccountList),
@@ -322,6 +334,8 @@ impl ::Response for ListCoreV1NamespacedServiceAccountResponse {
 
 impl ServiceAccount {
     /// list or watch objects of kind ServiceAccount
+    ///
+    /// Use [`ListCoreV1ServiceAccountForAllNamespacesResponse`](./enum.ListCoreV1ServiceAccountForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_core_v1_service_account_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -369,6 +383,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::list_core_v1_service_account_for_all_namespaces`](./struct.ServiceAccount.html#method.list_core_v1_service_account_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1ServiceAccountForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccountList),
@@ -397,6 +412,8 @@ impl ::Response for ListCoreV1ServiceAccountForAllNamespacesResponse {
 
 impl ServiceAccount {
     /// partially update the specified ServiceAccount
+    ///
+    /// Use [`PatchCoreV1NamespacedServiceAccountResponse`](./enum.PatchCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_service_account(
         // name of the ServiceAccount
         name: &str,
@@ -419,6 +436,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::patch_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.patch_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedServiceAccountResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
@@ -447,6 +465,8 @@ impl ::Response for PatchCoreV1NamespacedServiceAccountResponse {
 
 impl ServiceAccount {
     /// read the specified ServiceAccount
+    ///
+    /// Use [`ReadCoreV1NamespacedServiceAccountResponse`](./enum.ReadCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_service_account(
         // name of the ServiceAccount
         name: &str,
@@ -478,6 +498,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::read_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.read_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedServiceAccountResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
@@ -506,6 +527,8 @@ impl ::Response for ReadCoreV1NamespacedServiceAccountResponse {
 
 impl ServiceAccount {
     /// replace the specified ServiceAccount
+    ///
+    /// Use [`ReplaceCoreV1NamespacedServiceAccountResponse`](./enum.ReplaceCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_service_account(
         // name of the ServiceAccount
         name: &str,
@@ -528,6 +551,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::replace_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.replace_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedServiceAccountResponse {
     Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
@@ -556,6 +580,8 @@ impl ::Response for ReplaceCoreV1NamespacedServiceAccountResponse {
 
 impl ServiceAccount {
     /// watch changes to an object of kind ServiceAccount
+    ///
+    /// Use [`WatchCoreV1NamespacedServiceAccountResponse`](./enum.WatchCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_service_account(
         // name of the ServiceAccount
         name: &str,
@@ -607,6 +633,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::watch_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.watch_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedServiceAccountResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -637,6 +664,8 @@ impl ::Response for WatchCoreV1NamespacedServiceAccountResponse {
 
 impl ServiceAccount {
     /// watch individual changes to a list of ServiceAccount
+    ///
+    /// Use [`WatchCoreV1NamespacedServiceAccountListResponse`](./enum.WatchCoreV1NamespacedServiceAccountListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_service_account_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -686,6 +715,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::watch_core_v1_namespaced_service_account_list`](./struct.ServiceAccount.html#method.watch_core_v1_namespaced_service_account_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedServiceAccountListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -716,6 +746,8 @@ impl ::Response for WatchCoreV1NamespacedServiceAccountListResponse {
 
 impl ServiceAccount {
     /// watch individual changes to a list of ServiceAccount
+    ///
+    /// Use [`WatchCoreV1ServiceAccountListForAllNamespacesResponse`](./enum.WatchCoreV1ServiceAccountListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_service_account_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -763,6 +795,7 @@ impl ServiceAccount {
     }
 }
 
+/// Parses the HTTP response of [`ServiceAccount::watch_core_v1_service_account_list_for_all_namespaces`](./struct.ServiceAccount.html#method.watch_core_v1_service_account_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1ServiceAccountListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

@@ -24,6 +24,8 @@ pub struct TokenReview {
 
 impl TokenReview {
     /// create a TokenReview
+    ///
+    /// Use [`CreateAuthenticationV1beta1TokenReviewResponse`](./enum.CreateAuthenticationV1beta1TokenReviewResponse.html) to parse the HTTP response.
     pub fn create_authentication_v1beta1_token_review(
         body: &::v1_8::api::authentication::v1beta1::TokenReview,
         // If 'true', then the output is pretty printed.
@@ -42,6 +44,7 @@ impl TokenReview {
     }
 }
 
+/// Parses the HTTP response of [`TokenReview::create_authentication_v1beta1_token_review`](./struct.TokenReview.html#method.create_authentication_v1beta1_token_review)
 #[derive(Debug)]
 pub enum CreateAuthenticationV1beta1TokenReviewResponse {
     Ok(::v1_8::api::authentication::v1beta1::TokenReview),

@@ -28,6 +28,8 @@ pub struct PriorityClass {
 
 impl PriorityClass {
     /// create a PriorityClass
+    ///
+    /// Use [`CreateSchedulingV1alpha1PriorityClassResponse`](./enum.CreateSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
     pub fn create_scheduling_v1alpha1_priority_class(
         body: &::v1_11::api::scheduling::v1alpha1::PriorityClass,
         // If 'true', then the output is pretty printed.
@@ -46,6 +48,7 @@ impl PriorityClass {
     }
 }
 
+/// Parses the HTTP response of [`PriorityClass::create_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.create_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum CreateSchedulingV1alpha1PriorityClassResponse {
     Ok(::v1_11::api::scheduling::v1alpha1::PriorityClass),
@@ -92,6 +95,8 @@ impl ::Response for CreateSchedulingV1alpha1PriorityClassResponse {
 
 impl PriorityClass {
     /// delete collection of PriorityClass
+    ///
+    /// Use [`DeleteSchedulingV1alpha1CollectionPriorityClassResponse`](./enum.DeleteSchedulingV1alpha1CollectionPriorityClassResponse.html) to parse the HTTP response.
     pub fn delete_scheduling_v1alpha1_collection_priority_class(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -151,6 +156,7 @@ impl PriorityClass {
     }
 }
 
+/// Parses the HTTP response of [`PriorityClass::delete_scheduling_v1alpha1_collection_priority_class`](./struct.PriorityClass.html#method.delete_scheduling_v1alpha1_collection_priority_class)
 #[derive(Debug)]
 pub enum DeleteSchedulingV1alpha1CollectionPriorityClassResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -193,6 +199,8 @@ impl ::Response for DeleteSchedulingV1alpha1CollectionPriorityClassResponse {
 
 impl PriorityClass {
     /// delete a PriorityClass
+    ///
+    /// Use [`DeleteSchedulingV1alpha1PriorityClassResponse`](./enum.DeleteSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
     pub fn delete_scheduling_v1alpha1_priority_class(
         // name of the PriorityClass
         name: &str,
@@ -227,6 +235,7 @@ impl PriorityClass {
     }
 }
 
+/// Parses the HTTP response of [`PriorityClass::delete_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.delete_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum DeleteSchedulingV1alpha1PriorityClassResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -269,6 +278,8 @@ impl ::Response for DeleteSchedulingV1alpha1PriorityClassResponse {
 
 impl PriorityClass {
     /// list or watch objects of kind PriorityClass
+    ///
+    /// Use [`ListSchedulingV1alpha1PriorityClassResponse`](./enum.ListSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
     pub fn list_scheduling_v1alpha1_priority_class(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -328,6 +339,7 @@ impl PriorityClass {
     }
 }
 
+/// Parses the HTTP response of [`PriorityClass::list_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.list_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum ListSchedulingV1alpha1PriorityClassResponse {
     Ok(::v1_11::api::scheduling::v1alpha1::PriorityClassList),
@@ -356,6 +368,8 @@ impl ::Response for ListSchedulingV1alpha1PriorityClassResponse {
 
 impl PriorityClass {
     /// partially update the specified PriorityClass
+    ///
+    /// Use [`PatchSchedulingV1alpha1PriorityClassResponse`](./enum.PatchSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
     pub fn patch_scheduling_v1alpha1_priority_class(
         // name of the PriorityClass
         name: &str,
@@ -376,6 +390,7 @@ impl PriorityClass {
     }
 }
 
+/// Parses the HTTP response of [`PriorityClass::patch_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.patch_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum PatchSchedulingV1alpha1PriorityClassResponse {
     Ok(::v1_11::api::scheduling::v1alpha1::PriorityClass),
@@ -404,6 +419,8 @@ impl ::Response for PatchSchedulingV1alpha1PriorityClassResponse {
 
 impl PriorityClass {
     /// read the specified PriorityClass
+    ///
+    /// Use [`ReadSchedulingV1alpha1PriorityClassResponse`](./enum.ReadSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
     pub fn read_scheduling_v1alpha1_priority_class(
         // name of the PriorityClass
         name: &str,
@@ -433,6 +450,7 @@ impl PriorityClass {
     }
 }
 
+/// Parses the HTTP response of [`PriorityClass::read_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.read_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum ReadSchedulingV1alpha1PriorityClassResponse {
     Ok(::v1_11::api::scheduling::v1alpha1::PriorityClass),
@@ -461,6 +479,8 @@ impl ::Response for ReadSchedulingV1alpha1PriorityClassResponse {
 
 impl PriorityClass {
     /// replace the specified PriorityClass
+    ///
+    /// Use [`ReplaceSchedulingV1alpha1PriorityClassResponse`](./enum.ReplaceSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
     pub fn replace_scheduling_v1alpha1_priority_class(
         // name of the PriorityClass
         name: &str,
@@ -481,6 +501,7 @@ impl PriorityClass {
     }
 }
 
+/// Parses the HTTP response of [`PriorityClass::replace_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.replace_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum ReplaceSchedulingV1alpha1PriorityClassResponse {
     Ok(::v1_11::api::scheduling::v1alpha1::PriorityClass),
@@ -518,6 +539,8 @@ impl ::Response for ReplaceSchedulingV1alpha1PriorityClassResponse {
 
 impl PriorityClass {
     /// watch changes to an object of kind PriorityClass
+    ///
+    /// Use [`WatchSchedulingV1alpha1PriorityClassResponse`](./enum.WatchSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
     pub fn watch_scheduling_v1alpha1_priority_class(
         // name of the PriorityClass
         name: &str,
@@ -579,6 +602,7 @@ impl PriorityClass {
     }
 }
 
+/// Parses the HTTP response of [`PriorityClass::watch_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.watch_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum WatchSchedulingV1alpha1PriorityClassResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -609,6 +633,8 @@ impl ::Response for WatchSchedulingV1alpha1PriorityClassResponse {
 
 impl PriorityClass {
     /// watch individual changes to a list of PriorityClass
+    ///
+    /// Use [`WatchSchedulingV1alpha1PriorityClassListResponse`](./enum.WatchSchedulingV1alpha1PriorityClassListResponse.html) to parse the HTTP response.
     pub fn watch_scheduling_v1alpha1_priority_class_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -668,6 +694,7 @@ impl PriorityClass {
     }
 }
 
+/// Parses the HTTP response of [`PriorityClass::watch_scheduling_v1alpha1_priority_class_list`](./struct.PriorityClass.html#method.watch_scheduling_v1alpha1_priority_class_list)
 #[derive(Debug)]
 pub enum WatchSchedulingV1alpha1PriorityClassListResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

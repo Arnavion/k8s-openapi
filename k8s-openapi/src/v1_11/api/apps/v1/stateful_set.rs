@@ -27,6 +27,8 @@ pub struct StatefulSet {
 
 impl StatefulSet {
     /// create a StatefulSet
+    ///
+    /// Use [`CreateAppsV1NamespacedStatefulSetResponse`](./enum.CreateAppsV1NamespacedStatefulSetResponse.html) to parse the HTTP response.
     pub fn create_apps_v1_namespaced_stateful_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -47,6 +49,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::create_apps_v1_namespaced_stateful_set`](./struct.StatefulSet.html#method.create_apps_v1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum CreateAppsV1NamespacedStatefulSetResponse {
     Ok(::v1_11::api::apps::v1::StatefulSet),
@@ -93,6 +96,8 @@ impl ::Response for CreateAppsV1NamespacedStatefulSetResponse {
 
 impl StatefulSet {
     /// delete collection of StatefulSet
+    ///
+    /// Use [`DeleteAppsV1CollectionNamespacedStatefulSetResponse`](./enum.DeleteAppsV1CollectionNamespacedStatefulSetResponse.html) to parse the HTTP response.
     pub fn delete_apps_v1_collection_namespaced_stateful_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -154,6 +159,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::delete_apps_v1_collection_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_apps_v1_collection_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum DeleteAppsV1CollectionNamespacedStatefulSetResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -196,6 +202,8 @@ impl ::Response for DeleteAppsV1CollectionNamespacedStatefulSetResponse {
 
 impl StatefulSet {
     /// delete a StatefulSet
+    ///
+    /// Use [`DeleteAppsV1NamespacedStatefulSetResponse`](./enum.DeleteAppsV1NamespacedStatefulSetResponse.html) to parse the HTTP response.
     pub fn delete_apps_v1_namespaced_stateful_set(
         // name of the StatefulSet
         name: &str,
@@ -232,6 +240,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::delete_apps_v1_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_apps_v1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum DeleteAppsV1NamespacedStatefulSetResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -274,6 +283,8 @@ impl ::Response for DeleteAppsV1NamespacedStatefulSetResponse {
 
 impl StatefulSet {
     /// list or watch objects of kind StatefulSet
+    ///
+    /// Use [`ListAppsV1NamespacedStatefulSetResponse`](./enum.ListAppsV1NamespacedStatefulSetResponse.html) to parse the HTTP response.
     pub fn list_apps_v1_namespaced_stateful_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -335,6 +346,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::list_apps_v1_namespaced_stateful_set`](./struct.StatefulSet.html#method.list_apps_v1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum ListAppsV1NamespacedStatefulSetResponse {
     Ok(::v1_11::api::apps::v1::StatefulSetList),
@@ -363,6 +375,8 @@ impl ::Response for ListAppsV1NamespacedStatefulSetResponse {
 
 impl StatefulSet {
     /// list or watch objects of kind StatefulSet
+    ///
+    /// Use [`ListAppsV1StatefulSetForAllNamespacesResponse`](./enum.ListAppsV1StatefulSetForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_apps_v1_stateful_set_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -422,6 +436,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::list_apps_v1_stateful_set_for_all_namespaces`](./struct.StatefulSet.html#method.list_apps_v1_stateful_set_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListAppsV1StatefulSetForAllNamespacesResponse {
     Ok(::v1_11::api::apps::v1::StatefulSetList),
@@ -450,6 +465,8 @@ impl ::Response for ListAppsV1StatefulSetForAllNamespacesResponse {
 
 impl StatefulSet {
     /// partially update the specified StatefulSet
+    ///
+    /// Use [`PatchAppsV1NamespacedStatefulSetResponse`](./enum.PatchAppsV1NamespacedStatefulSetResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1_namespaced_stateful_set(
         // name of the StatefulSet
         name: &str,
@@ -472,6 +489,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::patch_apps_v1_namespaced_stateful_set`](./struct.StatefulSet.html#method.patch_apps_v1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum PatchAppsV1NamespacedStatefulSetResponse {
     Ok(::v1_11::api::apps::v1::StatefulSet),
@@ -500,6 +518,8 @@ impl ::Response for PatchAppsV1NamespacedStatefulSetResponse {
 
 impl StatefulSet {
     /// partially update status of the specified StatefulSet
+    ///
+    /// Use [`PatchAppsV1NamespacedStatefulSetStatusResponse`](./enum.PatchAppsV1NamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1_namespaced_stateful_set_status(
         // name of the StatefulSet
         name: &str,
@@ -522,6 +542,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::patch_apps_v1_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.patch_apps_v1_namespaced_stateful_set_status)
 #[derive(Debug)]
 pub enum PatchAppsV1NamespacedStatefulSetStatusResponse {
     Ok(::v1_11::api::apps::v1::StatefulSet),
@@ -550,6 +571,8 @@ impl ::Response for PatchAppsV1NamespacedStatefulSetStatusResponse {
 
 impl StatefulSet {
     /// read the specified StatefulSet
+    ///
+    /// Use [`ReadAppsV1NamespacedStatefulSetResponse`](./enum.ReadAppsV1NamespacedStatefulSetResponse.html) to parse the HTTP response.
     pub fn read_apps_v1_namespaced_stateful_set(
         // name of the StatefulSet
         name: &str,
@@ -581,6 +604,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::read_apps_v1_namespaced_stateful_set`](./struct.StatefulSet.html#method.read_apps_v1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum ReadAppsV1NamespacedStatefulSetResponse {
     Ok(::v1_11::api::apps::v1::StatefulSet),
@@ -609,6 +633,8 @@ impl ::Response for ReadAppsV1NamespacedStatefulSetResponse {
 
 impl StatefulSet {
     /// read status of the specified StatefulSet
+    ///
+    /// Use [`ReadAppsV1NamespacedStatefulSetStatusResponse`](./enum.ReadAppsV1NamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
     pub fn read_apps_v1_namespaced_stateful_set_status(
         // name of the StatefulSet
         name: &str,
@@ -630,6 +656,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::read_apps_v1_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.read_apps_v1_namespaced_stateful_set_status)
 #[derive(Debug)]
 pub enum ReadAppsV1NamespacedStatefulSetStatusResponse {
     Ok(::v1_11::api::apps::v1::StatefulSet),
@@ -658,6 +685,8 @@ impl ::Response for ReadAppsV1NamespacedStatefulSetStatusResponse {
 
 impl StatefulSet {
     /// replace the specified StatefulSet
+    ///
+    /// Use [`ReplaceAppsV1NamespacedStatefulSetResponse`](./enum.ReplaceAppsV1NamespacedStatefulSetResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1_namespaced_stateful_set(
         // name of the StatefulSet
         name: &str,
@@ -680,6 +709,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::replace_apps_v1_namespaced_stateful_set`](./struct.StatefulSet.html#method.replace_apps_v1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum ReplaceAppsV1NamespacedStatefulSetResponse {
     Ok(::v1_11::api::apps::v1::StatefulSet),
@@ -717,6 +747,8 @@ impl ::Response for ReplaceAppsV1NamespacedStatefulSetResponse {
 
 impl StatefulSet {
     /// replace status of the specified StatefulSet
+    ///
+    /// Use [`ReplaceAppsV1NamespacedStatefulSetStatusResponse`](./enum.ReplaceAppsV1NamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1_namespaced_stateful_set_status(
         // name of the StatefulSet
         name: &str,
@@ -739,6 +771,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::replace_apps_v1_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.replace_apps_v1_namespaced_stateful_set_status)
 #[derive(Debug)]
 pub enum ReplaceAppsV1NamespacedStatefulSetStatusResponse {
     Ok(::v1_11::api::apps::v1::StatefulSet),
@@ -776,6 +809,8 @@ impl ::Response for ReplaceAppsV1NamespacedStatefulSetStatusResponse {
 
 impl StatefulSet {
     /// watch changes to an object of kind StatefulSet
+    ///
+    /// Use [`WatchAppsV1NamespacedStatefulSetResponse`](./enum.WatchAppsV1NamespacedStatefulSetResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1_namespaced_stateful_set(
         // name of the StatefulSet
         name: &str,
@@ -839,6 +874,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::watch_apps_v1_namespaced_stateful_set`](./struct.StatefulSet.html#method.watch_apps_v1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum WatchAppsV1NamespacedStatefulSetResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -869,6 +905,8 @@ impl ::Response for WatchAppsV1NamespacedStatefulSetResponse {
 
 impl StatefulSet {
     /// watch individual changes to a list of StatefulSet
+    ///
+    /// Use [`WatchAppsV1NamespacedStatefulSetListResponse`](./enum.WatchAppsV1NamespacedStatefulSetListResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1_namespaced_stateful_set_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -930,6 +968,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::watch_apps_v1_namespaced_stateful_set_list`](./struct.StatefulSet.html#method.watch_apps_v1_namespaced_stateful_set_list)
 #[derive(Debug)]
 pub enum WatchAppsV1NamespacedStatefulSetListResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -960,6 +999,8 @@ impl ::Response for WatchAppsV1NamespacedStatefulSetListResponse {
 
 impl StatefulSet {
     /// watch individual changes to a list of StatefulSet
+    ///
+    /// Use [`WatchAppsV1StatefulSetListForAllNamespacesResponse`](./enum.WatchAppsV1StatefulSetListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1_stateful_set_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -1019,6 +1060,7 @@ impl StatefulSet {
     }
 }
 
+/// Parses the HTTP response of [`StatefulSet::watch_apps_v1_stateful_set_list_for_all_namespaces`](./struct.StatefulSet.html#method.watch_apps_v1_stateful_set_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchAppsV1StatefulSetListForAllNamespacesResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

@@ -20,6 +20,8 @@ pub struct PodPreset {
 
 impl PodPreset {
     /// create a PodPreset
+    ///
+    /// Use [`CreateSettingsV1alpha1NamespacedPodPresetResponse`](./enum.CreateSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
     pub fn create_settings_v1alpha1_namespaced_pod_preset(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -40,6 +42,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::create_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.create_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum CreateSettingsV1alpha1NamespacedPodPresetResponse {
     Ok(::v1_11::api::settings::v1alpha1::PodPreset),
@@ -86,6 +89,8 @@ impl ::Response for CreateSettingsV1alpha1NamespacedPodPresetResponse {
 
 impl PodPreset {
     /// delete collection of PodPreset
+    ///
+    /// Use [`DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse`](./enum.DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse.html) to parse the HTTP response.
     pub fn delete_settings_v1alpha1_collection_namespaced_pod_preset(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -147,6 +152,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::delete_settings_v1alpha1_collection_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_settings_v1alpha1_collection_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -189,6 +195,8 @@ impl ::Response for DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse 
 
 impl PodPreset {
     /// delete a PodPreset
+    ///
+    /// Use [`DeleteSettingsV1alpha1NamespacedPodPresetResponse`](./enum.DeleteSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
     pub fn delete_settings_v1alpha1_namespaced_pod_preset(
         // name of the PodPreset
         name: &str,
@@ -225,6 +233,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::delete_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum DeleteSettingsV1alpha1NamespacedPodPresetResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -267,6 +276,8 @@ impl ::Response for DeleteSettingsV1alpha1NamespacedPodPresetResponse {
 
 impl PodPreset {
     /// list or watch objects of kind PodPreset
+    ///
+    /// Use [`ListSettingsV1alpha1NamespacedPodPresetResponse`](./enum.ListSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
     pub fn list_settings_v1alpha1_namespaced_pod_preset(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -328,6 +339,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::list_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.list_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum ListSettingsV1alpha1NamespacedPodPresetResponse {
     Ok(::v1_11::api::settings::v1alpha1::PodPresetList),
@@ -356,6 +368,8 @@ impl ::Response for ListSettingsV1alpha1NamespacedPodPresetResponse {
 
 impl PodPreset {
     /// list or watch objects of kind PodPreset
+    ///
+    /// Use [`ListSettingsV1alpha1PodPresetForAllNamespacesResponse`](./enum.ListSettingsV1alpha1PodPresetForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_settings_v1alpha1_pod_preset_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -415,6 +429,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::list_settings_v1alpha1_pod_preset_for_all_namespaces`](./struct.PodPreset.html#method.list_settings_v1alpha1_pod_preset_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
     Ok(::v1_11::api::settings::v1alpha1::PodPresetList),
@@ -443,6 +458,8 @@ impl ::Response for ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
 
 impl PodPreset {
     /// partially update the specified PodPreset
+    ///
+    /// Use [`PatchSettingsV1alpha1NamespacedPodPresetResponse`](./enum.PatchSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
     pub fn patch_settings_v1alpha1_namespaced_pod_preset(
         // name of the PodPreset
         name: &str,
@@ -465,6 +482,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::patch_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.patch_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum PatchSettingsV1alpha1NamespacedPodPresetResponse {
     Ok(::v1_11::api::settings::v1alpha1::PodPreset),
@@ -493,6 +511,8 @@ impl ::Response for PatchSettingsV1alpha1NamespacedPodPresetResponse {
 
 impl PodPreset {
     /// read the specified PodPreset
+    ///
+    /// Use [`ReadSettingsV1alpha1NamespacedPodPresetResponse`](./enum.ReadSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
     pub fn read_settings_v1alpha1_namespaced_pod_preset(
         // name of the PodPreset
         name: &str,
@@ -524,6 +544,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::read_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.read_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum ReadSettingsV1alpha1NamespacedPodPresetResponse {
     Ok(::v1_11::api::settings::v1alpha1::PodPreset),
@@ -552,6 +573,8 @@ impl ::Response for ReadSettingsV1alpha1NamespacedPodPresetResponse {
 
 impl PodPreset {
     /// replace the specified PodPreset
+    ///
+    /// Use [`ReplaceSettingsV1alpha1NamespacedPodPresetResponse`](./enum.ReplaceSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
     pub fn replace_settings_v1alpha1_namespaced_pod_preset(
         // name of the PodPreset
         name: &str,
@@ -574,6 +597,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::replace_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.replace_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
     Ok(::v1_11::api::settings::v1alpha1::PodPreset),
@@ -611,6 +635,8 @@ impl ::Response for ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
 
 impl PodPreset {
     /// watch changes to an object of kind PodPreset
+    ///
+    /// Use [`WatchSettingsV1alpha1NamespacedPodPresetResponse`](./enum.WatchSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
     pub fn watch_settings_v1alpha1_namespaced_pod_preset(
         // name of the PodPreset
         name: &str,
@@ -674,6 +700,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::watch_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.watch_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum WatchSettingsV1alpha1NamespacedPodPresetResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -704,6 +731,8 @@ impl ::Response for WatchSettingsV1alpha1NamespacedPodPresetResponse {
 
 impl PodPreset {
     /// watch individual changes to a list of PodPreset
+    ///
+    /// Use [`WatchSettingsV1alpha1NamespacedPodPresetListResponse`](./enum.WatchSettingsV1alpha1NamespacedPodPresetListResponse.html) to parse the HTTP response.
     pub fn watch_settings_v1alpha1_namespaced_pod_preset_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -765,6 +794,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::watch_settings_v1alpha1_namespaced_pod_preset_list`](./struct.PodPreset.html#method.watch_settings_v1alpha1_namespaced_pod_preset_list)
 #[derive(Debug)]
 pub enum WatchSettingsV1alpha1NamespacedPodPresetListResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -795,6 +825,8 @@ impl ::Response for WatchSettingsV1alpha1NamespacedPodPresetListResponse {
 
 impl PodPreset {
     /// watch individual changes to a list of PodPreset
+    ///
+    /// Use [`WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse`](./enum.WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_settings_v1alpha1_pod_preset_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -854,6 +886,7 @@ impl PodPreset {
     }
 }
 
+/// Parses the HTTP response of [`PodPreset::watch_settings_v1alpha1_pod_preset_list_for_all_namespaces`](./struct.PodPreset.html#method.watch_settings_v1alpha1_pod_preset_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

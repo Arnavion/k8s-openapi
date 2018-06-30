@@ -22,6 +22,8 @@ pub struct ValidatingWebhookConfiguration {
 
 impl ValidatingWebhookConfiguration {
     /// create a ValidatingWebhookConfiguration
+    ///
+    /// Use [`CreateAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse`](./enum.CreateAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn create_admissionregistration_v1beta1_validating_webhook_configuration(
         body: &::v1_10::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration,
         // If 'true', then the output is pretty printed.
@@ -40,6 +42,7 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ValidatingWebhookConfiguration::create_admissionregistration_v1beta1_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.create_admissionregistration_v1beta1_validating_webhook_configuration)
 #[derive(Debug)]
 pub enum CreateAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse {
     Ok(::v1_10::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
@@ -86,6 +89,8 @@ impl ::Response for CreateAdmissionregistrationV1beta1ValidatingWebhookConfigura
 
 impl ValidatingWebhookConfiguration {
     /// delete collection of ValidatingWebhookConfiguration
+    ///
+    /// Use [`DeleteAdmissionregistrationV1beta1CollectionValidatingWebhookConfigurationResponse`](./enum.DeleteAdmissionregistrationV1beta1CollectionValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn delete_admissionregistration_v1beta1_collection_validating_webhook_configuration(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -145,6 +150,7 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ValidatingWebhookConfiguration::delete_admissionregistration_v1beta1_collection_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.delete_admissionregistration_v1beta1_collection_validating_webhook_configuration)
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1beta1CollectionValidatingWebhookConfigurationResponse {
     OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -187,6 +193,8 @@ impl ::Response for DeleteAdmissionregistrationV1beta1CollectionValidatingWebhoo
 
 impl ValidatingWebhookConfiguration {
     /// delete a ValidatingWebhookConfiguration
+    ///
+    /// Use [`DeleteAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse`](./enum.DeleteAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn delete_admissionregistration_v1beta1_validating_webhook_configuration(
         // name of the ValidatingWebhookConfiguration
         name: &str,
@@ -221,6 +229,7 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ValidatingWebhookConfiguration::delete_admissionregistration_v1beta1_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.delete_admissionregistration_v1beta1_validating_webhook_configuration)
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse {
     OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -263,6 +272,8 @@ impl ::Response for DeleteAdmissionregistrationV1beta1ValidatingWebhookConfigura
 
 impl ValidatingWebhookConfiguration {
     /// list or watch objects of kind ValidatingWebhookConfiguration
+    ///
+    /// Use [`ListAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse`](./enum.ListAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn list_admissionregistration_v1beta1_validating_webhook_configuration(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -322,6 +333,7 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ValidatingWebhookConfiguration::list_admissionregistration_v1beta1_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.list_admissionregistration_v1beta1_validating_webhook_configuration)
 #[derive(Debug)]
 pub enum ListAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse {
     Ok(::v1_10::api::admissionregistration::v1beta1::ValidatingWebhookConfigurationList),
@@ -350,6 +362,8 @@ impl ::Response for ListAdmissionregistrationV1beta1ValidatingWebhookConfigurati
 
 impl ValidatingWebhookConfiguration {
     /// partially update the specified ValidatingWebhookConfiguration
+    ///
+    /// Use [`PatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse`](./enum.PatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn patch_admissionregistration_v1beta1_validating_webhook_configuration(
         // name of the ValidatingWebhookConfiguration
         name: &str,
@@ -370,6 +384,7 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ValidatingWebhookConfiguration::patch_admissionregistration_v1beta1_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.patch_admissionregistration_v1beta1_validating_webhook_configuration)
 #[derive(Debug)]
 pub enum PatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse {
     Ok(::v1_10::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
@@ -398,6 +413,8 @@ impl ::Response for PatchAdmissionregistrationV1beta1ValidatingWebhookConfigurat
 
 impl ValidatingWebhookConfiguration {
     /// read the specified ValidatingWebhookConfiguration
+    ///
+    /// Use [`ReadAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse`](./enum.ReadAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn read_admissionregistration_v1beta1_validating_webhook_configuration(
         // name of the ValidatingWebhookConfiguration
         name: &str,
@@ -427,6 +444,7 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ValidatingWebhookConfiguration::read_admissionregistration_v1beta1_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.read_admissionregistration_v1beta1_validating_webhook_configuration)
 #[derive(Debug)]
 pub enum ReadAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse {
     Ok(::v1_10::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
@@ -455,6 +473,8 @@ impl ::Response for ReadAdmissionregistrationV1beta1ValidatingWebhookConfigurati
 
 impl ValidatingWebhookConfiguration {
     /// replace the specified ValidatingWebhookConfiguration
+    ///
+    /// Use [`ReplaceAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse`](./enum.ReplaceAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn replace_admissionregistration_v1beta1_validating_webhook_configuration(
         // name of the ValidatingWebhookConfiguration
         name: &str,
@@ -475,6 +495,7 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ValidatingWebhookConfiguration::replace_admissionregistration_v1beta1_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.replace_admissionregistration_v1beta1_validating_webhook_configuration)
 #[derive(Debug)]
 pub enum ReplaceAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse {
     Ok(::v1_10::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
@@ -512,6 +533,8 @@ impl ::Response for ReplaceAdmissionregistrationV1beta1ValidatingWebhookConfigur
 
 impl ValidatingWebhookConfiguration {
     /// watch changes to an object of kind ValidatingWebhookConfiguration
+    ///
+    /// Use [`WatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse`](./enum.WatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn watch_admissionregistration_v1beta1_validating_webhook_configuration(
         // name of the ValidatingWebhookConfiguration
         name: &str,
@@ -573,6 +596,7 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ValidatingWebhookConfiguration::watch_admissionregistration_v1beta1_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.watch_admissionregistration_v1beta1_validating_webhook_configuration)
 #[derive(Debug)]
 pub enum WatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -603,6 +627,8 @@ impl ::Response for WatchAdmissionregistrationV1beta1ValidatingWebhookConfigurat
 
 impl ValidatingWebhookConfiguration {
     /// watch individual changes to a list of ValidatingWebhookConfiguration
+    ///
+    /// Use [`WatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationListResponse`](./enum.WatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationListResponse.html) to parse the HTTP response.
     pub fn watch_admissionregistration_v1beta1_validating_webhook_configuration_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -662,6 +688,7 @@ impl ValidatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ValidatingWebhookConfiguration::watch_admissionregistration_v1beta1_validating_webhook_configuration_list`](./struct.ValidatingWebhookConfiguration.html#method.watch_admissionregistration_v1beta1_validating_webhook_configuration_list)
 #[derive(Debug)]
 pub enum WatchAdmissionregistrationV1beta1ValidatingWebhookConfigurationListResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),

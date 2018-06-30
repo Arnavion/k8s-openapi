@@ -25,6 +25,8 @@ pub struct ControllerRevision {
 
 impl ControllerRevision {
     /// create a ControllerRevision
+    ///
+    /// Use [`CreateAppsV1beta1NamespacedControllerRevisionResponse`](./enum.CreateAppsV1beta1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
     pub fn create_apps_v1beta1_namespaced_controller_revision(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::create_apps_v1beta1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.create_apps_v1beta1_namespaced_controller_revision)
 #[derive(Debug)]
 pub enum CreateAppsV1beta1NamespacedControllerRevisionResponse {
     Ok(::v1_7::kubernetes::pkg::apis::apps::v1beta1::ControllerRevision),
@@ -73,6 +76,8 @@ impl ::Response for CreateAppsV1beta1NamespacedControllerRevisionResponse {
 
 impl ControllerRevision {
     /// delete collection of ControllerRevision
+    ///
+    /// Use [`DeleteAppsV1beta1CollectionNamespacedControllerRevisionResponse`](./enum.DeleteAppsV1beta1CollectionNamespacedControllerRevisionResponse.html) to parse the HTTP response.
     pub fn delete_apps_v1beta1_collection_namespaced_controller_revision(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -122,6 +127,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::delete_apps_v1beta1_collection_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_apps_v1beta1_collection_namespaced_controller_revision)
 #[derive(Debug)]
 pub enum DeleteAppsV1beta1CollectionNamespacedControllerRevisionResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -164,6 +170,8 @@ impl ::Response for DeleteAppsV1beta1CollectionNamespacedControllerRevisionRespo
 
 impl ControllerRevision {
     /// delete a ControllerRevision
+    ///
+    /// Use [`DeleteAppsV1beta1NamespacedControllerRevisionResponse`](./enum.DeleteAppsV1beta1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
     pub fn delete_apps_v1beta1_namespaced_controller_revision(
         // name of the ControllerRevision
         name: &str,
@@ -200,6 +208,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::delete_apps_v1beta1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_apps_v1beta1_namespaced_controller_revision)
 #[derive(Debug)]
 pub enum DeleteAppsV1beta1NamespacedControllerRevisionResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -242,6 +251,8 @@ impl ::Response for DeleteAppsV1beta1NamespacedControllerRevisionResponse {
 
 impl ControllerRevision {
     /// list or watch objects of kind ControllerRevision
+    ///
+    /// Use [`ListAppsV1beta1ControllerRevisionForAllNamespacesResponse`](./enum.ListAppsV1beta1ControllerRevisionForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_apps_v1beta1_controller_revision_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -289,6 +300,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::list_apps_v1beta1_controller_revision_for_all_namespaces`](./struct.ControllerRevision.html#method.list_apps_v1beta1_controller_revision_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListAppsV1beta1ControllerRevisionForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::apis::apps::v1beta1::ControllerRevisionList),
@@ -317,6 +329,8 @@ impl ::Response for ListAppsV1beta1ControllerRevisionForAllNamespacesResponse {
 
 impl ControllerRevision {
     /// list or watch objects of kind ControllerRevision
+    ///
+    /// Use [`ListAppsV1beta1NamespacedControllerRevisionResponse`](./enum.ListAppsV1beta1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
     pub fn list_apps_v1beta1_namespaced_controller_revision(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -366,6 +380,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::list_apps_v1beta1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.list_apps_v1beta1_namespaced_controller_revision)
 #[derive(Debug)]
 pub enum ListAppsV1beta1NamespacedControllerRevisionResponse {
     Ok(::v1_7::kubernetes::pkg::apis::apps::v1beta1::ControllerRevisionList),
@@ -394,6 +409,8 @@ impl ::Response for ListAppsV1beta1NamespacedControllerRevisionResponse {
 
 impl ControllerRevision {
     /// partially update the specified ControllerRevision
+    ///
+    /// Use [`PatchAppsV1beta1NamespacedControllerRevisionResponse`](./enum.PatchAppsV1beta1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1beta1_namespaced_controller_revision(
         // name of the ControllerRevision
         name: &str,
@@ -416,6 +433,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::patch_apps_v1beta1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.patch_apps_v1beta1_namespaced_controller_revision)
 #[derive(Debug)]
 pub enum PatchAppsV1beta1NamespacedControllerRevisionResponse {
     Ok(::v1_7::kubernetes::pkg::apis::apps::v1beta1::ControllerRevision),
@@ -444,6 +462,8 @@ impl ::Response for PatchAppsV1beta1NamespacedControllerRevisionResponse {
 
 impl ControllerRevision {
     /// read the specified ControllerRevision
+    ///
+    /// Use [`ReadAppsV1beta1NamespacedControllerRevisionResponse`](./enum.ReadAppsV1beta1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
     pub fn read_apps_v1beta1_namespaced_controller_revision(
         // name of the ControllerRevision
         name: &str,
@@ -475,6 +495,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::read_apps_v1beta1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.read_apps_v1beta1_namespaced_controller_revision)
 #[derive(Debug)]
 pub enum ReadAppsV1beta1NamespacedControllerRevisionResponse {
     Ok(::v1_7::kubernetes::pkg::apis::apps::v1beta1::ControllerRevision),
@@ -503,6 +524,8 @@ impl ::Response for ReadAppsV1beta1NamespacedControllerRevisionResponse {
 
 impl ControllerRevision {
     /// replace the specified ControllerRevision
+    ///
+    /// Use [`ReplaceAppsV1beta1NamespacedControllerRevisionResponse`](./enum.ReplaceAppsV1beta1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1beta1_namespaced_controller_revision(
         // name of the ControllerRevision
         name: &str,
@@ -525,6 +548,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::replace_apps_v1beta1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.replace_apps_v1beta1_namespaced_controller_revision)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta1NamespacedControllerRevisionResponse {
     Ok(::v1_7::kubernetes::pkg::apis::apps::v1beta1::ControllerRevision),
@@ -553,6 +577,8 @@ impl ::Response for ReplaceAppsV1beta1NamespacedControllerRevisionResponse {
 
 impl ControllerRevision {
     /// watch individual changes to a list of ControllerRevision
+    ///
+    /// Use [`WatchAppsV1beta1ControllerRevisionListForAllNamespacesResponse`](./enum.WatchAppsV1beta1ControllerRevisionListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1beta1_controller_revision_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -600,6 +626,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::watch_apps_v1beta1_controller_revision_list_for_all_namespaces`](./struct.ControllerRevision.html#method.watch_apps_v1beta1_controller_revision_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchAppsV1beta1ControllerRevisionListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -630,6 +657,8 @@ impl ::Response for WatchAppsV1beta1ControllerRevisionListForAllNamespacesRespon
 
 impl ControllerRevision {
     /// watch changes to an object of kind ControllerRevision
+    ///
+    /// Use [`WatchAppsV1beta1NamespacedControllerRevisionResponse`](./enum.WatchAppsV1beta1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1beta1_namespaced_controller_revision(
         // name of the ControllerRevision
         name: &str,
@@ -681,6 +710,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::watch_apps_v1beta1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.watch_apps_v1beta1_namespaced_controller_revision)
 #[derive(Debug)]
 pub enum WatchAppsV1beta1NamespacedControllerRevisionResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -711,6 +741,8 @@ impl ::Response for WatchAppsV1beta1NamespacedControllerRevisionResponse {
 
 impl ControllerRevision {
     /// watch individual changes to a list of ControllerRevision
+    ///
+    /// Use [`WatchAppsV1beta1NamespacedControllerRevisionListResponse`](./enum.WatchAppsV1beta1NamespacedControllerRevisionListResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1beta1_namespaced_controller_revision_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -760,6 +792,7 @@ impl ControllerRevision {
     }
 }
 
+/// Parses the HTTP response of [`ControllerRevision::watch_apps_v1beta1_namespaced_controller_revision_list`](./struct.ControllerRevision.html#method.watch_apps_v1beta1_namespaced_controller_revision_list)
 #[derive(Debug)]
 pub enum WatchAppsV1beta1NamespacedControllerRevisionListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

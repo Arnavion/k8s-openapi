@@ -24,6 +24,8 @@ pub struct SelfSubjectAccessReview {
 
 impl SelfSubjectAccessReview {
     /// create a SelfSubjectAccessReview
+    ///
+    /// Use [`CreateAuthorizationV1SelfSubjectAccessReviewResponse`](./enum.CreateAuthorizationV1SelfSubjectAccessReviewResponse.html) to parse the HTTP response.
     pub fn create_authorization_v1_self_subject_access_review(
         body: &::v1_8::api::authorization::v1::SelfSubjectAccessReview,
         // If 'true', then the output is pretty printed.
@@ -42,6 +44,7 @@ impl SelfSubjectAccessReview {
     }
 }
 
+/// Parses the HTTP response of [`SelfSubjectAccessReview::create_authorization_v1_self_subject_access_review`](./struct.SelfSubjectAccessReview.html#method.create_authorization_v1_self_subject_access_review)
 #[derive(Debug)]
 pub enum CreateAuthorizationV1SelfSubjectAccessReviewResponse {
     Ok(::v1_8::api::authorization::v1::SelfSubjectAccessReview),

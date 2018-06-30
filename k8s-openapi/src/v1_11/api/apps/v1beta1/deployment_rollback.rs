@@ -25,6 +25,8 @@ pub struct DeploymentRollback {
 
 impl DeploymentRollback {
     /// create rollback of a Deployment
+    ///
+    /// Use [`CreateAppsV1beta1NamespacedDeploymentRollbackResponse`](./enum.CreateAppsV1beta1NamespacedDeploymentRollbackResponse.html) to parse the HTTP response.
     pub fn create_apps_v1beta1_namespaced_deployment_rollback(
         // name of the DeploymentRollback
         name: &str,
@@ -47,6 +49,7 @@ impl DeploymentRollback {
     }
 }
 
+/// Parses the HTTP response of [`DeploymentRollback::create_apps_v1beta1_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_apps_v1beta1_namespaced_deployment_rollback)
 #[derive(Debug)]
 pub enum CreateAppsV1beta1NamespacedDeploymentRollbackResponse {
     Ok(::v1_11::api::apps::v1beta1::DeploymentRollback),

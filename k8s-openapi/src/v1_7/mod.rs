@@ -7,6 +7,8 @@ pub mod kubernetes;
 // Generated from operation getAPIVersions
 
 /// get available API versions
+///
+/// Use [`GetAPIVersionsResponse`](./enum.GetAPIVersionsResponse.html) to parse the HTTP response.
 pub fn get_api_versions(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/");
@@ -16,6 +18,7 @@ pub fn get_api_versions(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_api_versions`](./fn.get_api_versions.html)
 #[derive(Debug)]
 pub enum GetAPIVersionsResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroupList),
@@ -43,6 +46,8 @@ impl ::Response for GetAPIVersionsResponse {
 // Generated from operation getAdmissionregistrationAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetAdmissionregistrationAPIGroupResponse`](./enum.GetAdmissionregistrationAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_admissionregistration_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/admissionregistration.k8s.io/");
@@ -52,6 +57,7 @@ pub fn get_admissionregistration_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_admissionregistration_api_group`](./fn.get_admissionregistration_api_group.html)
 #[derive(Debug)]
 pub enum GetAdmissionregistrationAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -79,6 +85,8 @@ impl ::Response for GetAdmissionregistrationAPIGroupResponse {
 // Generated from operation getAdmissionregistrationV1alpha1APIResources
 
 /// get available resources
+///
+/// Use [`GetAdmissionregistrationV1alpha1APIResourcesResponse`](./enum.GetAdmissionregistrationV1alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_admissionregistration_v1alpha1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/");
@@ -88,6 +96,7 @@ pub fn get_admissionregistration_v1alpha1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_admissionregistration_v1alpha1_api_resources`](./fn.get_admissionregistration_v1alpha1_api_resources.html)
 #[derive(Debug)]
 pub enum GetAdmissionregistrationV1alpha1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -115,6 +124,8 @@ impl ::Response for GetAdmissionregistrationV1alpha1APIResourcesResponse {
 // Generated from operation getApiregistrationAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetApiregistrationAPIGroupResponse`](./enum.GetApiregistrationAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_apiregistration_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/apiregistration.k8s.io/");
@@ -124,6 +135,7 @@ pub fn get_apiregistration_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_apiregistration_api_group`](./fn.get_apiregistration_api_group.html)
 #[derive(Debug)]
 pub enum GetApiregistrationAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -151,6 +163,8 @@ impl ::Response for GetApiregistrationAPIGroupResponse {
 // Generated from operation getApiregistrationV1beta1APIResources
 
 /// get available resources
+///
+/// Use [`GetApiregistrationV1beta1APIResourcesResponse`](./enum.GetApiregistrationV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_apiregistration_v1beta1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/apiregistration.k8s.io/v1beta1/");
@@ -160,6 +174,7 @@ pub fn get_apiregistration_v1beta1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_apiregistration_v1beta1_api_resources`](./fn.get_apiregistration_v1beta1_api_resources.html)
 #[derive(Debug)]
 pub enum GetApiregistrationV1beta1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -187,6 +202,8 @@ impl ::Response for GetApiregistrationV1beta1APIResourcesResponse {
 // Generated from operation getAppsAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetAppsAPIGroupResponse`](./enum.GetAppsAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_apps_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/apps/");
@@ -196,6 +213,7 @@ pub fn get_apps_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_apps_api_group`](./fn.get_apps_api_group.html)
 #[derive(Debug)]
 pub enum GetAppsAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -223,6 +241,8 @@ impl ::Response for GetAppsAPIGroupResponse {
 // Generated from operation getAppsV1beta1APIResources
 
 /// get available resources
+///
+/// Use [`GetAppsV1beta1APIResourcesResponse`](./enum.GetAppsV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_apps_v1beta1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/apps/v1beta1/");
@@ -232,6 +252,7 @@ pub fn get_apps_v1beta1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_apps_v1beta1_api_resources`](./fn.get_apps_v1beta1_api_resources.html)
 #[derive(Debug)]
 pub enum GetAppsV1beta1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -259,6 +280,8 @@ impl ::Response for GetAppsV1beta1APIResourcesResponse {
 // Generated from operation getAuthenticationAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetAuthenticationAPIGroupResponse`](./enum.GetAuthenticationAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_authentication_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/authentication.k8s.io/");
@@ -268,6 +291,7 @@ pub fn get_authentication_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_authentication_api_group`](./fn.get_authentication_api_group.html)
 #[derive(Debug)]
 pub enum GetAuthenticationAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -295,6 +319,8 @@ impl ::Response for GetAuthenticationAPIGroupResponse {
 // Generated from operation getAuthenticationV1APIResources
 
 /// get available resources
+///
+/// Use [`GetAuthenticationV1APIResourcesResponse`](./enum.GetAuthenticationV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_authentication_v1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/authentication.k8s.io/v1/");
@@ -304,6 +330,7 @@ pub fn get_authentication_v1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_authentication_v1_api_resources`](./fn.get_authentication_v1_api_resources.html)
 #[derive(Debug)]
 pub enum GetAuthenticationV1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -331,6 +358,8 @@ impl ::Response for GetAuthenticationV1APIResourcesResponse {
 // Generated from operation getAuthenticationV1beta1APIResources
 
 /// get available resources
+///
+/// Use [`GetAuthenticationV1beta1APIResourcesResponse`](./enum.GetAuthenticationV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_authentication_v1beta1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/authentication.k8s.io/v1beta1/");
@@ -340,6 +369,7 @@ pub fn get_authentication_v1beta1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_authentication_v1beta1_api_resources`](./fn.get_authentication_v1beta1_api_resources.html)
 #[derive(Debug)]
 pub enum GetAuthenticationV1beta1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -367,6 +397,8 @@ impl ::Response for GetAuthenticationV1beta1APIResourcesResponse {
 // Generated from operation getAuthorizationAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetAuthorizationAPIGroupResponse`](./enum.GetAuthorizationAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_authorization_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/authorization.k8s.io/");
@@ -376,6 +408,7 @@ pub fn get_authorization_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_authorization_api_group`](./fn.get_authorization_api_group.html)
 #[derive(Debug)]
 pub enum GetAuthorizationAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -403,6 +436,8 @@ impl ::Response for GetAuthorizationAPIGroupResponse {
 // Generated from operation getAuthorizationV1APIResources
 
 /// get available resources
+///
+/// Use [`GetAuthorizationV1APIResourcesResponse`](./enum.GetAuthorizationV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_authorization_v1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/authorization.k8s.io/v1/");
@@ -412,6 +447,7 @@ pub fn get_authorization_v1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_authorization_v1_api_resources`](./fn.get_authorization_v1_api_resources.html)
 #[derive(Debug)]
 pub enum GetAuthorizationV1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -439,6 +475,8 @@ impl ::Response for GetAuthorizationV1APIResourcesResponse {
 // Generated from operation getAuthorizationV1beta1APIResources
 
 /// get available resources
+///
+/// Use [`GetAuthorizationV1beta1APIResourcesResponse`](./enum.GetAuthorizationV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_authorization_v1beta1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/authorization.k8s.io/v1beta1/");
@@ -448,6 +486,7 @@ pub fn get_authorization_v1beta1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_authorization_v1beta1_api_resources`](./fn.get_authorization_v1beta1_api_resources.html)
 #[derive(Debug)]
 pub enum GetAuthorizationV1beta1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -475,6 +514,8 @@ impl ::Response for GetAuthorizationV1beta1APIResourcesResponse {
 // Generated from operation getAutoscalingAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetAutoscalingAPIGroupResponse`](./enum.GetAutoscalingAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_autoscaling_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/autoscaling/");
@@ -484,6 +525,7 @@ pub fn get_autoscaling_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_autoscaling_api_group`](./fn.get_autoscaling_api_group.html)
 #[derive(Debug)]
 pub enum GetAutoscalingAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -511,6 +553,8 @@ impl ::Response for GetAutoscalingAPIGroupResponse {
 // Generated from operation getAutoscalingV1APIResources
 
 /// get available resources
+///
+/// Use [`GetAutoscalingV1APIResourcesResponse`](./enum.GetAutoscalingV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_autoscaling_v1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/autoscaling/v1/");
@@ -520,6 +564,7 @@ pub fn get_autoscaling_v1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_autoscaling_v1_api_resources`](./fn.get_autoscaling_v1_api_resources.html)
 #[derive(Debug)]
 pub enum GetAutoscalingV1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -547,6 +592,8 @@ impl ::Response for GetAutoscalingV1APIResourcesResponse {
 // Generated from operation getAutoscalingV2alpha1APIResources
 
 /// get available resources
+///
+/// Use [`GetAutoscalingV2alpha1APIResourcesResponse`](./enum.GetAutoscalingV2alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_autoscaling_v2alpha1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/autoscaling/v2alpha1/");
@@ -556,6 +603,7 @@ pub fn get_autoscaling_v2alpha1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_autoscaling_v2alpha1_api_resources`](./fn.get_autoscaling_v2alpha1_api_resources.html)
 #[derive(Debug)]
 pub enum GetAutoscalingV2alpha1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -583,6 +631,8 @@ impl ::Response for GetAutoscalingV2alpha1APIResourcesResponse {
 // Generated from operation getBatchAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetBatchAPIGroupResponse`](./enum.GetBatchAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_batch_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/batch/");
@@ -592,6 +642,7 @@ pub fn get_batch_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_batch_api_group`](./fn.get_batch_api_group.html)
 #[derive(Debug)]
 pub enum GetBatchAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -619,6 +670,8 @@ impl ::Response for GetBatchAPIGroupResponse {
 // Generated from operation getBatchV1APIResources
 
 /// get available resources
+///
+/// Use [`GetBatchV1APIResourcesResponse`](./enum.GetBatchV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_batch_v1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/batch/v1/");
@@ -628,6 +681,7 @@ pub fn get_batch_v1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_batch_v1_api_resources`](./fn.get_batch_v1_api_resources.html)
 #[derive(Debug)]
 pub enum GetBatchV1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -655,6 +709,8 @@ impl ::Response for GetBatchV1APIResourcesResponse {
 // Generated from operation getBatchV2alpha1APIResources
 
 /// get available resources
+///
+/// Use [`GetBatchV2alpha1APIResourcesResponse`](./enum.GetBatchV2alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_batch_v2alpha1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/batch/v2alpha1/");
@@ -664,6 +720,7 @@ pub fn get_batch_v2alpha1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_batch_v2alpha1_api_resources`](./fn.get_batch_v2alpha1_api_resources.html)
 #[derive(Debug)]
 pub enum GetBatchV2alpha1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -691,6 +748,8 @@ impl ::Response for GetBatchV2alpha1APIResourcesResponse {
 // Generated from operation getCertificatesAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetCertificatesAPIGroupResponse`](./enum.GetCertificatesAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_certificates_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/certificates.k8s.io/");
@@ -700,6 +759,7 @@ pub fn get_certificates_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_certificates_api_group`](./fn.get_certificates_api_group.html)
 #[derive(Debug)]
 pub enum GetCertificatesAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -727,6 +787,8 @@ impl ::Response for GetCertificatesAPIGroupResponse {
 // Generated from operation getCertificatesV1beta1APIResources
 
 /// get available resources
+///
+/// Use [`GetCertificatesV1beta1APIResourcesResponse`](./enum.GetCertificatesV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_certificates_v1beta1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/certificates.k8s.io/v1beta1/");
@@ -736,6 +798,7 @@ pub fn get_certificates_v1beta1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_certificates_v1beta1_api_resources`](./fn.get_certificates_v1beta1_api_resources.html)
 #[derive(Debug)]
 pub enum GetCertificatesV1beta1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -763,6 +826,8 @@ impl ::Response for GetCertificatesV1beta1APIResourcesResponse {
 // Generated from operation getCodeVersion
 
 /// get the code version
+///
+/// Use [`GetCodeVersionResponse`](./enum.GetCodeVersionResponse.html) to parse the HTTP response.
 pub fn get_code_version(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/version/");
@@ -772,6 +837,7 @@ pub fn get_code_version(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_code_version`](./fn.get_code_version.html)
 #[derive(Debug)]
 pub enum GetCodeVersionResponse {
     Ok(::v1_7::apimachinery::pkg::version::Info),
@@ -799,6 +865,8 @@ impl ::Response for GetCodeVersionResponse {
 // Generated from operation getCoreAPIVersions
 
 /// get available API versions
+///
+/// Use [`GetCoreAPIVersionsResponse`](./enum.GetCoreAPIVersionsResponse.html) to parse the HTTP response.
 pub fn get_core_api_versions(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/api/");
@@ -808,6 +876,7 @@ pub fn get_core_api_versions(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_core_api_versions`](./fn.get_core_api_versions.html)
 #[derive(Debug)]
 pub enum GetCoreAPIVersionsResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIVersions),
@@ -835,6 +904,8 @@ impl ::Response for GetCoreAPIVersionsResponse {
 // Generated from operation getCoreV1APIResources
 
 /// get available resources
+///
+/// Use [`GetCoreV1APIResourcesResponse`](./enum.GetCoreV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_core_v1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/api/v1/");
@@ -844,6 +915,7 @@ pub fn get_core_v1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_core_v1_api_resources`](./fn.get_core_v1_api_resources.html)
 #[derive(Debug)]
 pub enum GetCoreV1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -871,6 +943,8 @@ impl ::Response for GetCoreV1APIResourcesResponse {
 // Generated from operation getExtensionsAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetExtensionsAPIGroupResponse`](./enum.GetExtensionsAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_extensions_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/extensions/");
@@ -880,6 +954,7 @@ pub fn get_extensions_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_extensions_api_group`](./fn.get_extensions_api_group.html)
 #[derive(Debug)]
 pub enum GetExtensionsAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -907,6 +982,8 @@ impl ::Response for GetExtensionsAPIGroupResponse {
 // Generated from operation getExtensionsV1beta1APIResources
 
 /// get available resources
+///
+/// Use [`GetExtensionsV1beta1APIResourcesResponse`](./enum.GetExtensionsV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_extensions_v1beta1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/extensions/v1beta1/");
@@ -916,6 +993,7 @@ pub fn get_extensions_v1beta1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_extensions_v1beta1_api_resources`](./fn.get_extensions_v1beta1_api_resources.html)
 #[derive(Debug)]
 pub enum GetExtensionsV1beta1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -943,6 +1021,8 @@ impl ::Response for GetExtensionsV1beta1APIResourcesResponse {
 // Generated from operation getNetworkingAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetNetworkingAPIGroupResponse`](./enum.GetNetworkingAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_networking_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/networking.k8s.io/");
@@ -952,6 +1032,7 @@ pub fn get_networking_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_networking_api_group`](./fn.get_networking_api_group.html)
 #[derive(Debug)]
 pub enum GetNetworkingAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -979,6 +1060,8 @@ impl ::Response for GetNetworkingAPIGroupResponse {
 // Generated from operation getNetworkingV1APIResources
 
 /// get available resources
+///
+/// Use [`GetNetworkingV1APIResourcesResponse`](./enum.GetNetworkingV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_networking_v1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/networking.k8s.io/v1/");
@@ -988,6 +1071,7 @@ pub fn get_networking_v1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_networking_v1_api_resources`](./fn.get_networking_v1_api_resources.html)
 #[derive(Debug)]
 pub enum GetNetworkingV1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1015,6 +1099,8 @@ impl ::Response for GetNetworkingV1APIResourcesResponse {
 // Generated from operation getPolicyAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetPolicyAPIGroupResponse`](./enum.GetPolicyAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_policy_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/policy/");
@@ -1024,6 +1110,7 @@ pub fn get_policy_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_policy_api_group`](./fn.get_policy_api_group.html)
 #[derive(Debug)]
 pub enum GetPolicyAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1051,6 +1138,8 @@ impl ::Response for GetPolicyAPIGroupResponse {
 // Generated from operation getPolicyV1beta1APIResources
 
 /// get available resources
+///
+/// Use [`GetPolicyV1beta1APIResourcesResponse`](./enum.GetPolicyV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_policy_v1beta1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/policy/v1beta1/");
@@ -1060,6 +1149,7 @@ pub fn get_policy_v1beta1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_policy_v1beta1_api_resources`](./fn.get_policy_v1beta1_api_resources.html)
 #[derive(Debug)]
 pub enum GetPolicyV1beta1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1087,6 +1177,8 @@ impl ::Response for GetPolicyV1beta1APIResourcesResponse {
 // Generated from operation getRbacAuthorizationAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetRbacAuthorizationAPIGroupResponse`](./enum.GetRbacAuthorizationAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_rbac_authorization_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/rbac.authorization.k8s.io/");
@@ -1096,6 +1188,7 @@ pub fn get_rbac_authorization_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_rbac_authorization_api_group`](./fn.get_rbac_authorization_api_group.html)
 #[derive(Debug)]
 pub enum GetRbacAuthorizationAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1123,6 +1216,8 @@ impl ::Response for GetRbacAuthorizationAPIGroupResponse {
 // Generated from operation getRbacAuthorizationV1alpha1APIResources
 
 /// get available resources
+///
+/// Use [`GetRbacAuthorizationV1alpha1APIResourcesResponse`](./enum.GetRbacAuthorizationV1alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_rbac_authorization_v1alpha1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/");
@@ -1132,6 +1227,7 @@ pub fn get_rbac_authorization_v1alpha1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_rbac_authorization_v1alpha1_api_resources`](./fn.get_rbac_authorization_v1alpha1_api_resources.html)
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1alpha1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1159,6 +1255,8 @@ impl ::Response for GetRbacAuthorizationV1alpha1APIResourcesResponse {
 // Generated from operation getRbacAuthorizationV1beta1APIResources
 
 /// get available resources
+///
+/// Use [`GetRbacAuthorizationV1beta1APIResourcesResponse`](./enum.GetRbacAuthorizationV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_rbac_authorization_v1beta1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/");
@@ -1168,6 +1266,7 @@ pub fn get_rbac_authorization_v1beta1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_rbac_authorization_v1beta1_api_resources`](./fn.get_rbac_authorization_v1beta1_api_resources.html)
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1beta1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1195,6 +1294,8 @@ impl ::Response for GetRbacAuthorizationV1beta1APIResourcesResponse {
 // Generated from operation getSettingsAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetSettingsAPIGroupResponse`](./enum.GetSettingsAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_settings_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/settings.k8s.io/");
@@ -1204,6 +1305,7 @@ pub fn get_settings_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_settings_api_group`](./fn.get_settings_api_group.html)
 #[derive(Debug)]
 pub enum GetSettingsAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1231,6 +1333,8 @@ impl ::Response for GetSettingsAPIGroupResponse {
 // Generated from operation getSettingsV1alpha1APIResources
 
 /// get available resources
+///
+/// Use [`GetSettingsV1alpha1APIResourcesResponse`](./enum.GetSettingsV1alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_settings_v1alpha1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/settings.k8s.io/v1alpha1/");
@@ -1240,6 +1344,7 @@ pub fn get_settings_v1alpha1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_settings_v1alpha1_api_resources`](./fn.get_settings_v1alpha1_api_resources.html)
 #[derive(Debug)]
 pub enum GetSettingsV1alpha1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1267,6 +1372,8 @@ impl ::Response for GetSettingsV1alpha1APIResourcesResponse {
 // Generated from operation getStorageAPIGroup
 
 /// get information of a group
+///
+/// Use [`GetStorageAPIGroupResponse`](./enum.GetStorageAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_storage_api_group(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/storage.k8s.io/");
@@ -1276,6 +1383,7 @@ pub fn get_storage_api_group(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_storage_api_group`](./fn.get_storage_api_group.html)
 #[derive(Debug)]
 pub enum GetStorageAPIGroupResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1303,6 +1411,8 @@ impl ::Response for GetStorageAPIGroupResponse {
 // Generated from operation getStorageV1APIResources
 
 /// get available resources
+///
+/// Use [`GetStorageV1APIResourcesResponse`](./enum.GetStorageV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_storage_v1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/storage.k8s.io/v1/");
@@ -1312,6 +1422,7 @@ pub fn get_storage_v1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_storage_v1_api_resources`](./fn.get_storage_v1_api_resources.html)
 #[derive(Debug)]
 pub enum GetStorageV1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1339,6 +1450,8 @@ impl ::Response for GetStorageV1APIResourcesResponse {
 // Generated from operation getStorageV1beta1APIResources
 
 /// get available resources
+///
+/// Use [`GetStorageV1beta1APIResourcesResponse`](./enum.GetStorageV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_storage_v1beta1_api_resources(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/apis/storage.k8s.io/v1beta1/");
@@ -1348,6 +1461,7 @@ pub fn get_storage_v1beta1_api_resources(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`get_storage_v1beta1_api_resources`](./fn.get_storage_v1beta1_api_resources.html)
 #[derive(Debug)]
 pub enum GetStorageV1beta1APIResourcesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1374,6 +1488,7 @@ impl ::Response for GetStorageV1beta1APIResourcesResponse {
 
 // Generated from operation logFileHandler
 
+/// Use [`LogFileHandlerResponse`](./enum.LogFileHandlerResponse.html) to parse the HTTP response.
 pub fn log_file_handler(
     // path to the log
     logpath: &str,
@@ -1385,6 +1500,7 @@ pub fn log_file_handler(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`log_file_handler`](./fn.log_file_handler.html)
 #[derive(Debug)]
 pub enum LogFileHandlerResponse {
     Unauthorized,
@@ -1402,6 +1518,7 @@ impl ::Response for LogFileHandlerResponse {
 
 // Generated from operation logFileListHandler
 
+/// Use [`LogFileListHandlerResponse`](./enum.LogFileListHandlerResponse.html) to parse the HTTP response.
 pub fn log_file_list_handler(
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/logs/");
@@ -1411,6 +1528,7 @@ pub fn log_file_list_handler(
     __request.body(__body).map_err(::RequestError::Http)
 }
 
+/// Parses the HTTP response of [`log_file_list_handler`](./fn.log_file_list_handler.html)
 #[derive(Debug)]
 pub enum LogFileListHandlerResponse {
     Unauthorized,

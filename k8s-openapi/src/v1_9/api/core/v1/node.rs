@@ -25,6 +25,8 @@ pub struct Node {
 
 impl Node {
     /// connect DELETE requests to proxy of Node
+    ///
+    /// Use [`ConnectCoreV1DeleteNodeProxyResponse`](./enum.ConnectCoreV1DeleteNodeProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_delete_node_proxy(
         // name of the Node
         name: &str,
@@ -44,6 +46,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::connect_core_v1_delete_node_proxy`](./struct.Node.html#method.connect_core_v1_delete_node_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1DeleteNodeProxyResponse {
     Ok(String),
@@ -77,6 +80,8 @@ impl ::Response for ConnectCoreV1DeleteNodeProxyResponse {
 
 impl Node {
     /// connect DELETE requests to proxy of Node
+    ///
+    /// Use [`ConnectCoreV1DeleteNodeProxyWithPathResponse`](./enum.ConnectCoreV1DeleteNodeProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_delete_node_proxy_with_path(
         // name of the Node
         name: &str,
@@ -98,6 +103,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::connect_core_v1_delete_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_delete_node_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1DeleteNodeProxyWithPathResponse {
     Ok(String),
@@ -131,6 +137,8 @@ impl ::Response for ConnectCoreV1DeleteNodeProxyWithPathResponse {
 
 impl Node {
     /// connect GET requests to proxy of Node
+    ///
+    /// Use [`ConnectCoreV1GetNodeProxyResponse`](./enum.ConnectCoreV1GetNodeProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_get_node_proxy(
         // name of the Node
         name: &str,
@@ -150,6 +158,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::connect_core_v1_get_node_proxy`](./struct.Node.html#method.connect_core_v1_get_node_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1GetNodeProxyResponse {
     Ok(String),
@@ -183,6 +192,8 @@ impl ::Response for ConnectCoreV1GetNodeProxyResponse {
 
 impl Node {
     /// connect GET requests to proxy of Node
+    ///
+    /// Use [`ConnectCoreV1GetNodeProxyWithPathResponse`](./enum.ConnectCoreV1GetNodeProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_get_node_proxy_with_path(
         // name of the Node
         name: &str,
@@ -204,6 +215,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::connect_core_v1_get_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_get_node_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1GetNodeProxyWithPathResponse {
     Ok(String),
@@ -237,6 +249,8 @@ impl ::Response for ConnectCoreV1GetNodeProxyWithPathResponse {
 
 impl Node {
     /// connect PATCH requests to proxy of Node
+    ///
+    /// Use [`ConnectCoreV1PatchNodeProxyResponse`](./enum.ConnectCoreV1PatchNodeProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_patch_node_proxy(
         // name of the Node
         name: &str,
@@ -256,6 +270,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::connect_core_v1_patch_node_proxy`](./struct.Node.html#method.connect_core_v1_patch_node_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1PatchNodeProxyResponse {
     Ok(String),
@@ -289,6 +304,8 @@ impl ::Response for ConnectCoreV1PatchNodeProxyResponse {
 
 impl Node {
     /// connect PATCH requests to proxy of Node
+    ///
+    /// Use [`ConnectCoreV1PatchNodeProxyWithPathResponse`](./enum.ConnectCoreV1PatchNodeProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_patch_node_proxy_with_path(
         // name of the Node
         name: &str,
@@ -310,6 +327,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::connect_core_v1_patch_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_patch_node_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1PatchNodeProxyWithPathResponse {
     Ok(String),
@@ -343,6 +361,8 @@ impl ::Response for ConnectCoreV1PatchNodeProxyWithPathResponse {
 
 impl Node {
     /// connect POST requests to proxy of Node
+    ///
+    /// Use [`ConnectCoreV1PostNodeProxyResponse`](./enum.ConnectCoreV1PostNodeProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_post_node_proxy(
         // name of the Node
         name: &str,
@@ -362,6 +382,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::connect_core_v1_post_node_proxy`](./struct.Node.html#method.connect_core_v1_post_node_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1PostNodeProxyResponse {
     Ok(String),
@@ -395,6 +416,8 @@ impl ::Response for ConnectCoreV1PostNodeProxyResponse {
 
 impl Node {
     /// connect POST requests to proxy of Node
+    ///
+    /// Use [`ConnectCoreV1PostNodeProxyWithPathResponse`](./enum.ConnectCoreV1PostNodeProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_post_node_proxy_with_path(
         // name of the Node
         name: &str,
@@ -416,6 +439,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::connect_core_v1_post_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_post_node_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1PostNodeProxyWithPathResponse {
     Ok(String),
@@ -449,6 +473,8 @@ impl ::Response for ConnectCoreV1PostNodeProxyWithPathResponse {
 
 impl Node {
     /// connect PUT requests to proxy of Node
+    ///
+    /// Use [`ConnectCoreV1PutNodeProxyResponse`](./enum.ConnectCoreV1PutNodeProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_put_node_proxy(
         // name of the Node
         name: &str,
@@ -468,6 +494,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::connect_core_v1_put_node_proxy`](./struct.Node.html#method.connect_core_v1_put_node_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1PutNodeProxyResponse {
     Ok(String),
@@ -501,6 +528,8 @@ impl ::Response for ConnectCoreV1PutNodeProxyResponse {
 
 impl Node {
     /// connect PUT requests to proxy of Node
+    ///
+    /// Use [`ConnectCoreV1PutNodeProxyWithPathResponse`](./enum.ConnectCoreV1PutNodeProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_put_node_proxy_with_path(
         // name of the Node
         name: &str,
@@ -522,6 +551,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::connect_core_v1_put_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_put_node_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1PutNodeProxyWithPathResponse {
     Ok(String),
@@ -555,6 +585,8 @@ impl ::Response for ConnectCoreV1PutNodeProxyWithPathResponse {
 
 impl Node {
     /// create a Node
+    ///
+    /// Use [`CreateCoreV1NodeResponse`](./enum.CreateCoreV1NodeResponse.html) to parse the HTTP response.
     pub fn create_core_v1_node(
         body: &::v1_9::api::core::v1::Node,
         // If 'true', then the output is pretty printed.
@@ -573,6 +605,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::create_core_v1_node`](./struct.Node.html#method.create_core_v1_node)
 #[derive(Debug)]
 pub enum CreateCoreV1NodeResponse {
     Ok(::v1_9::api::core::v1::Node),
@@ -619,6 +652,8 @@ impl ::Response for CreateCoreV1NodeResponse {
 
 impl Node {
     /// delete collection of Node
+    ///
+    /// Use [`DeleteCoreV1CollectionNodeResponse`](./enum.DeleteCoreV1CollectionNodeResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_node(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -678,6 +713,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::delete_core_v1_collection_node`](./struct.Node.html#method.delete_core_v1_collection_node)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNodeResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -720,6 +756,8 @@ impl ::Response for DeleteCoreV1CollectionNodeResponse {
 
 impl Node {
     /// delete a Node
+    ///
+    /// Use [`DeleteCoreV1NodeResponse`](./enum.DeleteCoreV1NodeResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_node(
         // name of the Node
         name: &str,
@@ -754,6 +792,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::delete_core_v1_node`](./struct.Node.html#method.delete_core_v1_node)
 #[derive(Debug)]
 pub enum DeleteCoreV1NodeResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -796,6 +835,8 @@ impl ::Response for DeleteCoreV1NodeResponse {
 
 impl Node {
     /// list or watch objects of kind Node
+    ///
+    /// Use [`ListCoreV1NodeResponse`](./enum.ListCoreV1NodeResponse.html) to parse the HTTP response.
     pub fn list_core_v1_node(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -855,6 +896,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::list_core_v1_node`](./struct.Node.html#method.list_core_v1_node)
 #[derive(Debug)]
 pub enum ListCoreV1NodeResponse {
     Ok(::v1_9::api::core::v1::NodeList),
@@ -883,6 +925,8 @@ impl ::Response for ListCoreV1NodeResponse {
 
 impl Node {
     /// partially update the specified Node
+    ///
+    /// Use [`PatchCoreV1NodeResponse`](./enum.PatchCoreV1NodeResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_node(
         // name of the Node
         name: &str,
@@ -903,6 +947,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::patch_core_v1_node`](./struct.Node.html#method.patch_core_v1_node)
 #[derive(Debug)]
 pub enum PatchCoreV1NodeResponse {
     Ok(::v1_9::api::core::v1::Node),
@@ -931,6 +976,8 @@ impl ::Response for PatchCoreV1NodeResponse {
 
 impl Node {
     /// partially update status of the specified Node
+    ///
+    /// Use [`PatchCoreV1NodeStatusResponse`](./enum.PatchCoreV1NodeStatusResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_node_status(
         // name of the Node
         name: &str,
@@ -951,6 +998,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::patch_core_v1_node_status`](./struct.Node.html#method.patch_core_v1_node_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NodeStatusResponse {
     Ok(::v1_9::api::core::v1::Node),
@@ -979,6 +1027,8 @@ impl ::Response for PatchCoreV1NodeStatusResponse {
 
 impl Node {
     /// proxy DELETE requests to Node
+    ///
+    /// Use [`ProxyCoreV1DELETENodeResponse`](./enum.ProxyCoreV1DELETENodeResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_delete_node(
         // name of the Node
         name: &str,
@@ -991,6 +1041,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::proxy_core_v1_delete_node`](./struct.Node.html#method.proxy_core_v1_delete_node)
 #[derive(Debug)]
 pub enum ProxyCoreV1DELETENodeResponse {
     Ok(String),
@@ -1024,6 +1075,8 @@ impl ::Response for ProxyCoreV1DELETENodeResponse {
 
 impl Node {
     /// proxy DELETE requests to Node
+    ///
+    /// Use [`ProxyCoreV1DELETENodeWithPathResponse`](./enum.ProxyCoreV1DELETENodeWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_delete_node_with_path(
         // name of the Node
         name: &str,
@@ -1038,6 +1091,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::proxy_core_v1_delete_node_with_path`](./struct.Node.html#method.proxy_core_v1_delete_node_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1DELETENodeWithPathResponse {
     Ok(String),
@@ -1071,6 +1125,8 @@ impl ::Response for ProxyCoreV1DELETENodeWithPathResponse {
 
 impl Node {
     /// proxy GET requests to Node
+    ///
+    /// Use [`ProxyCoreV1GETNodeResponse`](./enum.ProxyCoreV1GETNodeResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_get_node(
         // name of the Node
         name: &str,
@@ -1083,6 +1139,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::proxy_core_v1_get_node`](./struct.Node.html#method.proxy_core_v1_get_node)
 #[derive(Debug)]
 pub enum ProxyCoreV1GETNodeResponse {
     Ok(String),
@@ -1116,6 +1173,8 @@ impl ::Response for ProxyCoreV1GETNodeResponse {
 
 impl Node {
     /// proxy GET requests to Node
+    ///
+    /// Use [`ProxyCoreV1GETNodeWithPathResponse`](./enum.ProxyCoreV1GETNodeWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_get_node_with_path(
         // name of the Node
         name: &str,
@@ -1130,6 +1189,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::proxy_core_v1_get_node_with_path`](./struct.Node.html#method.proxy_core_v1_get_node_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1GETNodeWithPathResponse {
     Ok(String),
@@ -1163,6 +1223,8 @@ impl ::Response for ProxyCoreV1GETNodeWithPathResponse {
 
 impl Node {
     /// proxy PATCH requests to Node
+    ///
+    /// Use [`ProxyCoreV1PATCHNodeResponse`](./enum.ProxyCoreV1PATCHNodeResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_patch_node(
         // name of the Node
         name: &str,
@@ -1175,6 +1237,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::proxy_core_v1_patch_node`](./struct.Node.html#method.proxy_core_v1_patch_node)
 #[derive(Debug)]
 pub enum ProxyCoreV1PATCHNodeResponse {
     Ok(String),
@@ -1208,6 +1271,8 @@ impl ::Response for ProxyCoreV1PATCHNodeResponse {
 
 impl Node {
     /// proxy PATCH requests to Node
+    ///
+    /// Use [`ProxyCoreV1PATCHNodeWithPathResponse`](./enum.ProxyCoreV1PATCHNodeWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_patch_node_with_path(
         // name of the Node
         name: &str,
@@ -1222,6 +1287,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::proxy_core_v1_patch_node_with_path`](./struct.Node.html#method.proxy_core_v1_patch_node_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1PATCHNodeWithPathResponse {
     Ok(String),
@@ -1255,6 +1321,8 @@ impl ::Response for ProxyCoreV1PATCHNodeWithPathResponse {
 
 impl Node {
     /// proxy POST requests to Node
+    ///
+    /// Use [`ProxyCoreV1POSTNodeResponse`](./enum.ProxyCoreV1POSTNodeResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_post_node(
         // name of the Node
         name: &str,
@@ -1267,6 +1335,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::proxy_core_v1_post_node`](./struct.Node.html#method.proxy_core_v1_post_node)
 #[derive(Debug)]
 pub enum ProxyCoreV1POSTNodeResponse {
     Ok(String),
@@ -1300,6 +1369,8 @@ impl ::Response for ProxyCoreV1POSTNodeResponse {
 
 impl Node {
     /// proxy POST requests to Node
+    ///
+    /// Use [`ProxyCoreV1POSTNodeWithPathResponse`](./enum.ProxyCoreV1POSTNodeWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_post_node_with_path(
         // name of the Node
         name: &str,
@@ -1314,6 +1385,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::proxy_core_v1_post_node_with_path`](./struct.Node.html#method.proxy_core_v1_post_node_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1POSTNodeWithPathResponse {
     Ok(String),
@@ -1347,6 +1419,8 @@ impl ::Response for ProxyCoreV1POSTNodeWithPathResponse {
 
 impl Node {
     /// proxy PUT requests to Node
+    ///
+    /// Use [`ProxyCoreV1PUTNodeResponse`](./enum.ProxyCoreV1PUTNodeResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_put_node(
         // name of the Node
         name: &str,
@@ -1359,6 +1433,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::proxy_core_v1_put_node`](./struct.Node.html#method.proxy_core_v1_put_node)
 #[derive(Debug)]
 pub enum ProxyCoreV1PUTNodeResponse {
     Ok(String),
@@ -1392,6 +1467,8 @@ impl ::Response for ProxyCoreV1PUTNodeResponse {
 
 impl Node {
     /// proxy PUT requests to Node
+    ///
+    /// Use [`ProxyCoreV1PUTNodeWithPathResponse`](./enum.ProxyCoreV1PUTNodeWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_put_node_with_path(
         // name of the Node
         name: &str,
@@ -1406,6 +1483,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::proxy_core_v1_put_node_with_path`](./struct.Node.html#method.proxy_core_v1_put_node_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1PUTNodeWithPathResponse {
     Ok(String),
@@ -1439,6 +1517,8 @@ impl ::Response for ProxyCoreV1PUTNodeWithPathResponse {
 
 impl Node {
     /// read the specified Node
+    ///
+    /// Use [`ReadCoreV1NodeResponse`](./enum.ReadCoreV1NodeResponse.html) to parse the HTTP response.
     pub fn read_core_v1_node(
         // name of the Node
         name: &str,
@@ -1468,6 +1548,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::read_core_v1_node`](./struct.Node.html#method.read_core_v1_node)
 #[derive(Debug)]
 pub enum ReadCoreV1NodeResponse {
     Ok(::v1_9::api::core::v1::Node),
@@ -1496,6 +1577,8 @@ impl ::Response for ReadCoreV1NodeResponse {
 
 impl Node {
     /// read status of the specified Node
+    ///
+    /// Use [`ReadCoreV1NodeStatusResponse`](./enum.ReadCoreV1NodeStatusResponse.html) to parse the HTTP response.
     pub fn read_core_v1_node_status(
         // name of the Node
         name: &str,
@@ -1515,6 +1598,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::read_core_v1_node_status`](./struct.Node.html#method.read_core_v1_node_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NodeStatusResponse {
     Ok(::v1_9::api::core::v1::Node),
@@ -1543,6 +1627,8 @@ impl ::Response for ReadCoreV1NodeStatusResponse {
 
 impl Node {
     /// replace the specified Node
+    ///
+    /// Use [`ReplaceCoreV1NodeResponse`](./enum.ReplaceCoreV1NodeResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_node(
         // name of the Node
         name: &str,
@@ -1563,6 +1649,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::replace_core_v1_node`](./struct.Node.html#method.replace_core_v1_node)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NodeResponse {
     Ok(::v1_9::api::core::v1::Node),
@@ -1600,6 +1687,8 @@ impl ::Response for ReplaceCoreV1NodeResponse {
 
 impl Node {
     /// replace status of the specified Node
+    ///
+    /// Use [`ReplaceCoreV1NodeStatusResponse`](./enum.ReplaceCoreV1NodeStatusResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_node_status(
         // name of the Node
         name: &str,
@@ -1620,6 +1709,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::replace_core_v1_node_status`](./struct.Node.html#method.replace_core_v1_node_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NodeStatusResponse {
     Ok(::v1_9::api::core::v1::Node),
@@ -1657,6 +1747,8 @@ impl ::Response for ReplaceCoreV1NodeStatusResponse {
 
 impl Node {
     /// watch changes to an object of kind Node
+    ///
+    /// Use [`WatchCoreV1NodeResponse`](./enum.WatchCoreV1NodeResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_node(
         // name of the Node
         name: &str,
@@ -1718,6 +1810,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::watch_core_v1_node`](./struct.Node.html#method.watch_core_v1_node)
 #[derive(Debug)]
 pub enum WatchCoreV1NodeResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1748,6 +1841,8 @@ impl ::Response for WatchCoreV1NodeResponse {
 
 impl Node {
     /// watch individual changes to a list of Node
+    ///
+    /// Use [`WatchCoreV1NodeListResponse`](./enum.WatchCoreV1NodeListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_node_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -1807,6 +1902,7 @@ impl Node {
     }
 }
 
+/// Parses the HTTP response of [`Node::watch_core_v1_node_list`](./struct.Node.html#method.watch_core_v1_node_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NodeListResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),

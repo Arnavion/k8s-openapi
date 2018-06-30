@@ -22,6 +22,8 @@ pub struct MutatingWebhookConfiguration {
 
 impl MutatingWebhookConfiguration {
     /// create a MutatingWebhookConfiguration
+    ///
+    /// Use [`CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn create_admissionregistration_v1beta1_mutating_webhook_configuration(
         body: &::v1_11::api::admissionregistration::v1beta1::MutatingWebhookConfiguration,
         // If 'true', then the output is pretty printed.
@@ -40,6 +42,7 @@ impl MutatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::create_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.create_admissionregistration_v1beta1_mutating_webhook_configuration)
 #[derive(Debug)]
 pub enum CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
     Ok(::v1_11::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -86,6 +89,8 @@ impl ::Response for CreateAdmissionregistrationV1beta1MutatingWebhookConfigurati
 
 impl MutatingWebhookConfiguration {
     /// delete collection of MutatingWebhookConfiguration
+    ///
+    /// Use [`DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse`](./enum.DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn delete_admissionregistration_v1beta1_collection_mutating_webhook_configuration(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -145,6 +150,7 @@ impl MutatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::delete_admissionregistration_v1beta1_collection_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_admissionregistration_v1beta1_collection_mutating_webhook_configuration)
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -187,6 +193,8 @@ impl ::Response for DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookC
 
 impl MutatingWebhookConfiguration {
     /// delete a MutatingWebhookConfiguration
+    ///
+    /// Use [`DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn delete_admissionregistration_v1beta1_mutating_webhook_configuration(
         // name of the MutatingWebhookConfiguration
         name: &str,
@@ -221,6 +229,7 @@ impl MutatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::delete_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_admissionregistration_v1beta1_mutating_webhook_configuration)
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -263,6 +272,8 @@ impl ::Response for DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurati
 
 impl MutatingWebhookConfiguration {
     /// list or watch objects of kind MutatingWebhookConfiguration
+    ///
+    /// Use [`ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn list_admissionregistration_v1beta1_mutating_webhook_configuration(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -322,6 +333,7 @@ impl MutatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::list_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.list_admissionregistration_v1beta1_mutating_webhook_configuration)
 #[derive(Debug)]
 pub enum ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
     Ok(::v1_11::api::admissionregistration::v1beta1::MutatingWebhookConfigurationList),
@@ -350,6 +362,8 @@ impl ::Response for ListAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
 impl MutatingWebhookConfiguration {
     /// partially update the specified MutatingWebhookConfiguration
+    ///
+    /// Use [`PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn patch_admissionregistration_v1beta1_mutating_webhook_configuration(
         // name of the MutatingWebhookConfiguration
         name: &str,
@@ -370,6 +384,7 @@ impl MutatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::patch_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.patch_admissionregistration_v1beta1_mutating_webhook_configuration)
 #[derive(Debug)]
 pub enum PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
     Ok(::v1_11::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -398,6 +413,8 @@ impl ::Response for PatchAdmissionregistrationV1beta1MutatingWebhookConfiguratio
 
 impl MutatingWebhookConfiguration {
     /// read the specified MutatingWebhookConfiguration
+    ///
+    /// Use [`ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn read_admissionregistration_v1beta1_mutating_webhook_configuration(
         // name of the MutatingWebhookConfiguration
         name: &str,
@@ -427,6 +444,7 @@ impl MutatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::read_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.read_admissionregistration_v1beta1_mutating_webhook_configuration)
 #[derive(Debug)]
 pub enum ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
     Ok(::v1_11::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -455,6 +473,8 @@ impl ::Response for ReadAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
 impl MutatingWebhookConfiguration {
     /// replace the specified MutatingWebhookConfiguration
+    ///
+    /// Use [`ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn replace_admissionregistration_v1beta1_mutating_webhook_configuration(
         // name of the MutatingWebhookConfiguration
         name: &str,
@@ -475,6 +495,7 @@ impl MutatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::replace_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.replace_admissionregistration_v1beta1_mutating_webhook_configuration)
 #[derive(Debug)]
 pub enum ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
     Ok(::v1_11::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -512,6 +533,8 @@ impl ::Response for ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurat
 
 impl MutatingWebhookConfiguration {
     /// watch changes to an object of kind MutatingWebhookConfiguration
+    ///
+    /// Use [`WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     pub fn watch_admissionregistration_v1beta1_mutating_webhook_configuration(
         // name of the MutatingWebhookConfiguration
         name: &str,
@@ -573,6 +596,7 @@ impl MutatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::watch_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.watch_admissionregistration_v1beta1_mutating_webhook_configuration)
 #[derive(Debug)]
 pub enum WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -603,6 +627,8 @@ impl ::Response for WatchAdmissionregistrationV1beta1MutatingWebhookConfiguratio
 
 impl MutatingWebhookConfiguration {
     /// watch individual changes to a list of MutatingWebhookConfiguration
+    ///
+    /// Use [`WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse`](./enum.WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse.html) to parse the HTTP response.
     pub fn watch_admissionregistration_v1beta1_mutating_webhook_configuration_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -662,6 +688,7 @@ impl MutatingWebhookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::watch_admissionregistration_v1beta1_mutating_webhook_configuration_list`](./struct.MutatingWebhookConfiguration.html#method.watch_admissionregistration_v1beta1_mutating_webhook_configuration_list)
 #[derive(Debug)]
 pub enum WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

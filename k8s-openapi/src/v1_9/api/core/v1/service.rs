@@ -25,6 +25,8 @@ pub struct Service {
 
 impl Service {
     /// connect DELETE requests to proxy of Service
+    ///
+    /// Use [`ConnectCoreV1DeleteNamespacedServiceProxyResponse`](./enum.ConnectCoreV1DeleteNamespacedServiceProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_delete_namespaced_service_proxy(
         // name of the Service
         name: &str,
@@ -46,6 +48,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::connect_core_v1_delete_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_delete_namespaced_service_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1DeleteNamespacedServiceProxyResponse {
     Ok(String),
@@ -79,6 +82,8 @@ impl ::Response for ConnectCoreV1DeleteNamespacedServiceProxyResponse {
 
 impl Service {
     /// connect DELETE requests to proxy of Service
+    ///
+    /// Use [`ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse`](./enum.ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_delete_namespaced_service_proxy_with_path(
         // name of the Service
         name: &str,
@@ -102,6 +107,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::connect_core_v1_delete_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_delete_namespaced_service_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse {
     Ok(String),
@@ -135,6 +141,8 @@ impl ::Response for ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse {
 
 impl Service {
     /// connect GET requests to proxy of Service
+    ///
+    /// Use [`ConnectCoreV1GetNamespacedServiceProxyResponse`](./enum.ConnectCoreV1GetNamespacedServiceProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_get_namespaced_service_proxy(
         // name of the Service
         name: &str,
@@ -156,6 +164,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::connect_core_v1_get_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_get_namespaced_service_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1GetNamespacedServiceProxyResponse {
     Ok(String),
@@ -189,6 +198,8 @@ impl ::Response for ConnectCoreV1GetNamespacedServiceProxyResponse {
 
 impl Service {
     /// connect GET requests to proxy of Service
+    ///
+    /// Use [`ConnectCoreV1GetNamespacedServiceProxyWithPathResponse`](./enum.ConnectCoreV1GetNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_get_namespaced_service_proxy_with_path(
         // name of the Service
         name: &str,
@@ -212,6 +223,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::connect_core_v1_get_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_get_namespaced_service_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1GetNamespacedServiceProxyWithPathResponse {
     Ok(String),
@@ -245,6 +257,8 @@ impl ::Response for ConnectCoreV1GetNamespacedServiceProxyWithPathResponse {
 
 impl Service {
     /// connect PATCH requests to proxy of Service
+    ///
+    /// Use [`ConnectCoreV1PatchNamespacedServiceProxyResponse`](./enum.ConnectCoreV1PatchNamespacedServiceProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_patch_namespaced_service_proxy(
         // name of the Service
         name: &str,
@@ -266,6 +280,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::connect_core_v1_patch_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_patch_namespaced_service_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1PatchNamespacedServiceProxyResponse {
     Ok(String),
@@ -299,6 +314,8 @@ impl ::Response for ConnectCoreV1PatchNamespacedServiceProxyResponse {
 
 impl Service {
     /// connect PATCH requests to proxy of Service
+    ///
+    /// Use [`ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse`](./enum.ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_patch_namespaced_service_proxy_with_path(
         // name of the Service
         name: &str,
@@ -322,6 +339,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::connect_core_v1_patch_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_patch_namespaced_service_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse {
     Ok(String),
@@ -355,6 +373,8 @@ impl ::Response for ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse {
 
 impl Service {
     /// connect POST requests to proxy of Service
+    ///
+    /// Use [`ConnectCoreV1PostNamespacedServiceProxyResponse`](./enum.ConnectCoreV1PostNamespacedServiceProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_post_namespaced_service_proxy(
         // name of the Service
         name: &str,
@@ -376,6 +396,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::connect_core_v1_post_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_post_namespaced_service_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1PostNamespacedServiceProxyResponse {
     Ok(String),
@@ -409,6 +430,8 @@ impl ::Response for ConnectCoreV1PostNamespacedServiceProxyResponse {
 
 impl Service {
     /// connect POST requests to proxy of Service
+    ///
+    /// Use [`ConnectCoreV1PostNamespacedServiceProxyWithPathResponse`](./enum.ConnectCoreV1PostNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_post_namespaced_service_proxy_with_path(
         // name of the Service
         name: &str,
@@ -432,6 +455,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::connect_core_v1_post_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_post_namespaced_service_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1PostNamespacedServiceProxyWithPathResponse {
     Ok(String),
@@ -465,6 +489,8 @@ impl ::Response for ConnectCoreV1PostNamespacedServiceProxyWithPathResponse {
 
 impl Service {
     /// connect PUT requests to proxy of Service
+    ///
+    /// Use [`ConnectCoreV1PutNamespacedServiceProxyResponse`](./enum.ConnectCoreV1PutNamespacedServiceProxyResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_put_namespaced_service_proxy(
         // name of the Service
         name: &str,
@@ -486,6 +512,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::connect_core_v1_put_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_put_namespaced_service_proxy)
 #[derive(Debug)]
 pub enum ConnectCoreV1PutNamespacedServiceProxyResponse {
     Ok(String),
@@ -519,6 +546,8 @@ impl ::Response for ConnectCoreV1PutNamespacedServiceProxyResponse {
 
 impl Service {
     /// connect PUT requests to proxy of Service
+    ///
+    /// Use [`ConnectCoreV1PutNamespacedServiceProxyWithPathResponse`](./enum.ConnectCoreV1PutNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
     pub fn connect_core_v1_put_namespaced_service_proxy_with_path(
         // name of the Service
         name: &str,
@@ -542,6 +571,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::connect_core_v1_put_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_put_namespaced_service_proxy_with_path)
 #[derive(Debug)]
 pub enum ConnectCoreV1PutNamespacedServiceProxyWithPathResponse {
     Ok(String),
@@ -575,6 +605,8 @@ impl ::Response for ConnectCoreV1PutNamespacedServiceProxyWithPathResponse {
 
 impl Service {
     /// create a Service
+    ///
+    /// Use [`CreateCoreV1NamespacedServiceResponse`](./enum.CreateCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_service(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -595,6 +627,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::create_core_v1_namespaced_service`](./struct.Service.html#method.create_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedServiceResponse {
     Ok(::v1_9::api::core::v1::Service),
@@ -641,6 +674,8 @@ impl ::Response for CreateCoreV1NamespacedServiceResponse {
 
 impl Service {
     /// delete a Service
+    ///
+    /// Use [`DeleteCoreV1NamespacedServiceResponse`](./enum.DeleteCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespaced_service(
         // name of the Service
         name: &str,
@@ -662,6 +697,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::delete_core_v1_namespaced_service`](./struct.Service.html#method.delete_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedServiceResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -704,6 +740,8 @@ impl ::Response for DeleteCoreV1NamespacedServiceResponse {
 
 impl Service {
     /// list or watch objects of kind Service
+    ///
+    /// Use [`ListCoreV1NamespacedServiceResponse`](./enum.ListCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespaced_service(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -765,6 +803,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::list_core_v1_namespaced_service`](./struct.Service.html#method.list_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedServiceResponse {
     Ok(::v1_9::api::core::v1::ServiceList),
@@ -793,6 +832,8 @@ impl ::Response for ListCoreV1NamespacedServiceResponse {
 
 impl Service {
     /// list or watch objects of kind Service
+    ///
+    /// Use [`ListCoreV1ServiceForAllNamespacesResponse`](./enum.ListCoreV1ServiceForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_core_v1_service_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -852,6 +893,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::list_core_v1_service_for_all_namespaces`](./struct.Service.html#method.list_core_v1_service_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1ServiceForAllNamespacesResponse {
     Ok(::v1_9::api::core::v1::ServiceList),
@@ -880,6 +922,8 @@ impl ::Response for ListCoreV1ServiceForAllNamespacesResponse {
 
 impl Service {
     /// partially update the specified Service
+    ///
+    /// Use [`PatchCoreV1NamespacedServiceResponse`](./enum.PatchCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_service(
         // name of the Service
         name: &str,
@@ -902,6 +946,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::patch_core_v1_namespaced_service`](./struct.Service.html#method.patch_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedServiceResponse {
     Ok(::v1_9::api::core::v1::Service),
@@ -930,6 +975,8 @@ impl ::Response for PatchCoreV1NamespacedServiceResponse {
 
 impl Service {
     /// partially update status of the specified Service
+    ///
+    /// Use [`PatchCoreV1NamespacedServiceStatusResponse`](./enum.PatchCoreV1NamespacedServiceStatusResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_service_status(
         // name of the Service
         name: &str,
@@ -952,6 +999,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::patch_core_v1_namespaced_service_status`](./struct.Service.html#method.patch_core_v1_namespaced_service_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedServiceStatusResponse {
     Ok(::v1_9::api::core::v1::Service),
@@ -980,6 +1028,8 @@ impl ::Response for PatchCoreV1NamespacedServiceStatusResponse {
 
 impl Service {
     /// proxy DELETE requests to Service
+    ///
+    /// Use [`ProxyCoreV1DELETENamespacedServiceResponse`](./enum.ProxyCoreV1DELETENamespacedServiceResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_delete_namespaced_service(
         // name of the Service
         name: &str,
@@ -994,6 +1044,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::proxy_core_v1_delete_namespaced_service`](./struct.Service.html#method.proxy_core_v1_delete_namespaced_service)
 #[derive(Debug)]
 pub enum ProxyCoreV1DELETENamespacedServiceResponse {
     Ok(String),
@@ -1027,6 +1078,8 @@ impl ::Response for ProxyCoreV1DELETENamespacedServiceResponse {
 
 impl Service {
     /// proxy DELETE requests to Service
+    ///
+    /// Use [`ProxyCoreV1DELETENamespacedServiceWithPathResponse`](./enum.ProxyCoreV1DELETENamespacedServiceWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_delete_namespaced_service_with_path(
         // name of the Service
         name: &str,
@@ -1043,6 +1096,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::proxy_core_v1_delete_namespaced_service_with_path`](./struct.Service.html#method.proxy_core_v1_delete_namespaced_service_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1DELETENamespacedServiceWithPathResponse {
     Ok(String),
@@ -1076,6 +1130,8 @@ impl ::Response for ProxyCoreV1DELETENamespacedServiceWithPathResponse {
 
 impl Service {
     /// proxy GET requests to Service
+    ///
+    /// Use [`ProxyCoreV1GETNamespacedServiceResponse`](./enum.ProxyCoreV1GETNamespacedServiceResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_get_namespaced_service(
         // name of the Service
         name: &str,
@@ -1090,6 +1146,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::proxy_core_v1_get_namespaced_service`](./struct.Service.html#method.proxy_core_v1_get_namespaced_service)
 #[derive(Debug)]
 pub enum ProxyCoreV1GETNamespacedServiceResponse {
     Ok(String),
@@ -1123,6 +1180,8 @@ impl ::Response for ProxyCoreV1GETNamespacedServiceResponse {
 
 impl Service {
     /// proxy GET requests to Service
+    ///
+    /// Use [`ProxyCoreV1GETNamespacedServiceWithPathResponse`](./enum.ProxyCoreV1GETNamespacedServiceWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_get_namespaced_service_with_path(
         // name of the Service
         name: &str,
@@ -1139,6 +1198,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::proxy_core_v1_get_namespaced_service_with_path`](./struct.Service.html#method.proxy_core_v1_get_namespaced_service_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1GETNamespacedServiceWithPathResponse {
     Ok(String),
@@ -1172,6 +1232,8 @@ impl ::Response for ProxyCoreV1GETNamespacedServiceWithPathResponse {
 
 impl Service {
     /// proxy PATCH requests to Service
+    ///
+    /// Use [`ProxyCoreV1PATCHNamespacedServiceResponse`](./enum.ProxyCoreV1PATCHNamespacedServiceResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_patch_namespaced_service(
         // name of the Service
         name: &str,
@@ -1186,6 +1248,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::proxy_core_v1_patch_namespaced_service`](./struct.Service.html#method.proxy_core_v1_patch_namespaced_service)
 #[derive(Debug)]
 pub enum ProxyCoreV1PATCHNamespacedServiceResponse {
     Ok(String),
@@ -1219,6 +1282,8 @@ impl ::Response for ProxyCoreV1PATCHNamespacedServiceResponse {
 
 impl Service {
     /// proxy PATCH requests to Service
+    ///
+    /// Use [`ProxyCoreV1PATCHNamespacedServiceWithPathResponse`](./enum.ProxyCoreV1PATCHNamespacedServiceWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_patch_namespaced_service_with_path(
         // name of the Service
         name: &str,
@@ -1235,6 +1300,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::proxy_core_v1_patch_namespaced_service_with_path`](./struct.Service.html#method.proxy_core_v1_patch_namespaced_service_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1PATCHNamespacedServiceWithPathResponse {
     Ok(String),
@@ -1268,6 +1334,8 @@ impl ::Response for ProxyCoreV1PATCHNamespacedServiceWithPathResponse {
 
 impl Service {
     /// proxy POST requests to Service
+    ///
+    /// Use [`ProxyCoreV1POSTNamespacedServiceResponse`](./enum.ProxyCoreV1POSTNamespacedServiceResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_post_namespaced_service(
         // name of the Service
         name: &str,
@@ -1282,6 +1350,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::proxy_core_v1_post_namespaced_service`](./struct.Service.html#method.proxy_core_v1_post_namespaced_service)
 #[derive(Debug)]
 pub enum ProxyCoreV1POSTNamespacedServiceResponse {
     Ok(String),
@@ -1315,6 +1384,8 @@ impl ::Response for ProxyCoreV1POSTNamespacedServiceResponse {
 
 impl Service {
     /// proxy POST requests to Service
+    ///
+    /// Use [`ProxyCoreV1POSTNamespacedServiceWithPathResponse`](./enum.ProxyCoreV1POSTNamespacedServiceWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_post_namespaced_service_with_path(
         // name of the Service
         name: &str,
@@ -1331,6 +1402,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::proxy_core_v1_post_namespaced_service_with_path`](./struct.Service.html#method.proxy_core_v1_post_namespaced_service_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1POSTNamespacedServiceWithPathResponse {
     Ok(String),
@@ -1364,6 +1436,8 @@ impl ::Response for ProxyCoreV1POSTNamespacedServiceWithPathResponse {
 
 impl Service {
     /// proxy PUT requests to Service
+    ///
+    /// Use [`ProxyCoreV1PUTNamespacedServiceResponse`](./enum.ProxyCoreV1PUTNamespacedServiceResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_put_namespaced_service(
         // name of the Service
         name: &str,
@@ -1378,6 +1452,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::proxy_core_v1_put_namespaced_service`](./struct.Service.html#method.proxy_core_v1_put_namespaced_service)
 #[derive(Debug)]
 pub enum ProxyCoreV1PUTNamespacedServiceResponse {
     Ok(String),
@@ -1411,6 +1486,8 @@ impl ::Response for ProxyCoreV1PUTNamespacedServiceResponse {
 
 impl Service {
     /// proxy PUT requests to Service
+    ///
+    /// Use [`ProxyCoreV1PUTNamespacedServiceWithPathResponse`](./enum.ProxyCoreV1PUTNamespacedServiceWithPathResponse.html) to parse the HTTP response.
     pub fn proxy_core_v1_put_namespaced_service_with_path(
         // name of the Service
         name: &str,
@@ -1427,6 +1504,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::proxy_core_v1_put_namespaced_service_with_path`](./struct.Service.html#method.proxy_core_v1_put_namespaced_service_with_path)
 #[derive(Debug)]
 pub enum ProxyCoreV1PUTNamespacedServiceWithPathResponse {
     Ok(String),
@@ -1460,6 +1538,8 @@ impl ::Response for ProxyCoreV1PUTNamespacedServiceWithPathResponse {
 
 impl Service {
     /// read the specified Service
+    ///
+    /// Use [`ReadCoreV1NamespacedServiceResponse`](./enum.ReadCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_service(
         // name of the Service
         name: &str,
@@ -1491,6 +1571,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::read_core_v1_namespaced_service`](./struct.Service.html#method.read_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedServiceResponse {
     Ok(::v1_9::api::core::v1::Service),
@@ -1519,6 +1600,8 @@ impl ::Response for ReadCoreV1NamespacedServiceResponse {
 
 impl Service {
     /// read status of the specified Service
+    ///
+    /// Use [`ReadCoreV1NamespacedServiceStatusResponse`](./enum.ReadCoreV1NamespacedServiceStatusResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_service_status(
         // name of the Service
         name: &str,
@@ -1540,6 +1623,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::read_core_v1_namespaced_service_status`](./struct.Service.html#method.read_core_v1_namespaced_service_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedServiceStatusResponse {
     Ok(::v1_9::api::core::v1::Service),
@@ -1568,6 +1652,8 @@ impl ::Response for ReadCoreV1NamespacedServiceStatusResponse {
 
 impl Service {
     /// replace the specified Service
+    ///
+    /// Use [`ReplaceCoreV1NamespacedServiceResponse`](./enum.ReplaceCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_service(
         // name of the Service
         name: &str,
@@ -1590,6 +1676,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::replace_core_v1_namespaced_service`](./struct.Service.html#method.replace_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedServiceResponse {
     Ok(::v1_9::api::core::v1::Service),
@@ -1627,6 +1714,8 @@ impl ::Response for ReplaceCoreV1NamespacedServiceResponse {
 
 impl Service {
     /// replace status of the specified Service
+    ///
+    /// Use [`ReplaceCoreV1NamespacedServiceStatusResponse`](./enum.ReplaceCoreV1NamespacedServiceStatusResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_service_status(
         // name of the Service
         name: &str,
@@ -1649,6 +1738,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::replace_core_v1_namespaced_service_status`](./struct.Service.html#method.replace_core_v1_namespaced_service_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedServiceStatusResponse {
     Ok(::v1_9::api::core::v1::Service),
@@ -1686,6 +1776,8 @@ impl ::Response for ReplaceCoreV1NamespacedServiceStatusResponse {
 
 impl Service {
     /// watch changes to an object of kind Service
+    ///
+    /// Use [`WatchCoreV1NamespacedServiceResponse`](./enum.WatchCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_service(
         // name of the Service
         name: &str,
@@ -1749,6 +1841,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::watch_core_v1_namespaced_service`](./struct.Service.html#method.watch_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedServiceResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1779,6 +1872,8 @@ impl ::Response for WatchCoreV1NamespacedServiceResponse {
 
 impl Service {
     /// watch individual changes to a list of Service
+    ///
+    /// Use [`WatchCoreV1NamespacedServiceListResponse`](./enum.WatchCoreV1NamespacedServiceListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_service_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -1840,6 +1935,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::watch_core_v1_namespaced_service_list`](./struct.Service.html#method.watch_core_v1_namespaced_service_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedServiceListResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1870,6 +1966,8 @@ impl ::Response for WatchCoreV1NamespacedServiceListResponse {
 
 impl Service {
     /// watch individual changes to a list of Service
+    ///
+    /// Use [`WatchCoreV1ServiceListForAllNamespacesResponse`](./enum.WatchCoreV1ServiceListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_service_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -1929,6 +2027,7 @@ impl Service {
     }
 }
 
+/// Parses the HTTP response of [`Service::watch_core_v1_service_list_for_all_namespaces`](./struct.Service.html#method.watch_core_v1_service_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1ServiceListForAllNamespacesResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),

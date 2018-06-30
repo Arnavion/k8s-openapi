@@ -33,6 +33,8 @@ pub struct Endpoints {
 
 impl Endpoints {
     /// create Endpoints
+    ///
+    /// Use [`CreateCoreV1NamespacedEndpointsResponse`](./enum.CreateCoreV1NamespacedEndpointsResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_endpoints(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -53,6 +55,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::create_core_v1_namespaced_endpoints`](./struct.Endpoints.html#method.create_core_v1_namespaced_endpoints)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedEndpointsResponse {
     Ok(::v1_11::api::core::v1::Endpoints),
@@ -99,6 +102,8 @@ impl ::Response for CreateCoreV1NamespacedEndpointsResponse {
 
 impl Endpoints {
     /// delete collection of Endpoints
+    ///
+    /// Use [`DeleteCoreV1CollectionNamespacedEndpointsResponse`](./enum.DeleteCoreV1CollectionNamespacedEndpointsResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_namespaced_endpoints(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -160,6 +165,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::delete_core_v1_collection_namespaced_endpoints`](./struct.Endpoints.html#method.delete_core_v1_collection_namespaced_endpoints)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedEndpointsResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -202,6 +208,8 @@ impl ::Response for DeleteCoreV1CollectionNamespacedEndpointsResponse {
 
 impl Endpoints {
     /// delete Endpoints
+    ///
+    /// Use [`DeleteCoreV1NamespacedEndpointsResponse`](./enum.DeleteCoreV1NamespacedEndpointsResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespaced_endpoints(
         // name of the Endpoints
         name: &str,
@@ -238,6 +246,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::delete_core_v1_namespaced_endpoints`](./struct.Endpoints.html#method.delete_core_v1_namespaced_endpoints)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedEndpointsResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -280,6 +289,8 @@ impl ::Response for DeleteCoreV1NamespacedEndpointsResponse {
 
 impl Endpoints {
     /// list or watch objects of kind Endpoints
+    ///
+    /// Use [`ListCoreV1EndpointsForAllNamespacesResponse`](./enum.ListCoreV1EndpointsForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_core_v1_endpoints_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -339,6 +350,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::list_core_v1_endpoints_for_all_namespaces`](./struct.Endpoints.html#method.list_core_v1_endpoints_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1EndpointsForAllNamespacesResponse {
     Ok(::v1_11::api::core::v1::EndpointsList),
@@ -367,6 +379,8 @@ impl ::Response for ListCoreV1EndpointsForAllNamespacesResponse {
 
 impl Endpoints {
     /// list or watch objects of kind Endpoints
+    ///
+    /// Use [`ListCoreV1NamespacedEndpointsResponse`](./enum.ListCoreV1NamespacedEndpointsResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespaced_endpoints(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -428,6 +442,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::list_core_v1_namespaced_endpoints`](./struct.Endpoints.html#method.list_core_v1_namespaced_endpoints)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedEndpointsResponse {
     Ok(::v1_11::api::core::v1::EndpointsList),
@@ -456,6 +471,8 @@ impl ::Response for ListCoreV1NamespacedEndpointsResponse {
 
 impl Endpoints {
     /// partially update the specified Endpoints
+    ///
+    /// Use [`PatchCoreV1NamespacedEndpointsResponse`](./enum.PatchCoreV1NamespacedEndpointsResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_endpoints(
         // name of the Endpoints
         name: &str,
@@ -478,6 +495,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::patch_core_v1_namespaced_endpoints`](./struct.Endpoints.html#method.patch_core_v1_namespaced_endpoints)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedEndpointsResponse {
     Ok(::v1_11::api::core::v1::Endpoints),
@@ -506,6 +524,8 @@ impl ::Response for PatchCoreV1NamespacedEndpointsResponse {
 
 impl Endpoints {
     /// read the specified Endpoints
+    ///
+    /// Use [`ReadCoreV1NamespacedEndpointsResponse`](./enum.ReadCoreV1NamespacedEndpointsResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_endpoints(
         // name of the Endpoints
         name: &str,
@@ -537,6 +557,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::read_core_v1_namespaced_endpoints`](./struct.Endpoints.html#method.read_core_v1_namespaced_endpoints)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedEndpointsResponse {
     Ok(::v1_11::api::core::v1::Endpoints),
@@ -565,6 +586,8 @@ impl ::Response for ReadCoreV1NamespacedEndpointsResponse {
 
 impl Endpoints {
     /// replace the specified Endpoints
+    ///
+    /// Use [`ReplaceCoreV1NamespacedEndpointsResponse`](./enum.ReplaceCoreV1NamespacedEndpointsResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_endpoints(
         // name of the Endpoints
         name: &str,
@@ -587,6 +610,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::replace_core_v1_namespaced_endpoints`](./struct.Endpoints.html#method.replace_core_v1_namespaced_endpoints)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedEndpointsResponse {
     Ok(::v1_11::api::core::v1::Endpoints),
@@ -624,6 +648,8 @@ impl ::Response for ReplaceCoreV1NamespacedEndpointsResponse {
 
 impl Endpoints {
     /// watch individual changes to a list of Endpoints
+    ///
+    /// Use [`WatchCoreV1EndpointsListForAllNamespacesResponse`](./enum.WatchCoreV1EndpointsListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_endpoints_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -683,6 +709,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::watch_core_v1_endpoints_list_for_all_namespaces`](./struct.Endpoints.html#method.watch_core_v1_endpoints_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1EndpointsListForAllNamespacesResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -713,6 +740,8 @@ impl ::Response for WatchCoreV1EndpointsListForAllNamespacesResponse {
 
 impl Endpoints {
     /// watch changes to an object of kind Endpoints
+    ///
+    /// Use [`WatchCoreV1NamespacedEndpointsResponse`](./enum.WatchCoreV1NamespacedEndpointsResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_endpoints(
         // name of the Endpoints
         name: &str,
@@ -776,6 +805,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::watch_core_v1_namespaced_endpoints`](./struct.Endpoints.html#method.watch_core_v1_namespaced_endpoints)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedEndpointsResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -806,6 +836,8 @@ impl ::Response for WatchCoreV1NamespacedEndpointsResponse {
 
 impl Endpoints {
     /// watch individual changes to a list of Endpoints
+    ///
+    /// Use [`WatchCoreV1NamespacedEndpointsListResponse`](./enum.WatchCoreV1NamespacedEndpointsListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_endpoints_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -867,6 +899,7 @@ impl Endpoints {
     }
 }
 
+/// Parses the HTTP response of [`Endpoints::watch_core_v1_namespaced_endpoints_list`](./struct.Endpoints.html#method.watch_core_v1_namespaced_endpoints_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedEndpointsListResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

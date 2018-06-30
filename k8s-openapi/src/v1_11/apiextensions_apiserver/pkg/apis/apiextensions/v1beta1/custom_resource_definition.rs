@@ -24,6 +24,8 @@ pub struct CustomResourceDefinition {
 
 impl CustomResourceDefinition {
     /// create a CustomResourceDefinition
+    ///
+    /// Use [`CreateApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.CreateApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
     pub fn create_apiextensions_v1beta1_custom_resource_definition(
         body: &::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         // If 'true', then the output is pretty printed.
@@ -42,6 +44,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.create_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum CreateApiextensionsV1beta1CustomResourceDefinitionResponse {
     Ok(::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -88,6 +91,8 @@ impl ::Response for CreateApiextensionsV1beta1CustomResourceDefinitionResponse {
 
 impl CustomResourceDefinition {
     /// delete collection of CustomResourceDefinition
+    ///
+    /// Use [`DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse`](./enum.DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse.html) to parse the HTTP response.
     pub fn delete_apiextensions_v1beta1_collection_custom_resource_definition(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -147,6 +152,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::delete_apiextensions_v1beta1_collection_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_apiextensions_v1beta1_collection_custom_resource_definition)
 #[derive(Debug)]
 pub enum DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -189,6 +195,8 @@ impl ::Response for DeleteApiextensionsV1beta1CollectionCustomResourceDefinition
 
 impl CustomResourceDefinition {
     /// delete a CustomResourceDefinition
+    ///
+    /// Use [`DeleteApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.DeleteApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
     pub fn delete_apiextensions_v1beta1_custom_resource_definition(
         // name of the CustomResourceDefinition
         name: &str,
@@ -223,6 +231,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::delete_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum DeleteApiextensionsV1beta1CustomResourceDefinitionResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -265,6 +274,8 @@ impl ::Response for DeleteApiextensionsV1beta1CustomResourceDefinitionResponse {
 
 impl CustomResourceDefinition {
     /// list or watch objects of kind CustomResourceDefinition
+    ///
+    /// Use [`ListApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.ListApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
     pub fn list_apiextensions_v1beta1_custom_resource_definition(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -324,6 +335,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::list_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.list_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum ListApiextensionsV1beta1CustomResourceDefinitionResponse {
     Ok(::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
@@ -352,6 +364,8 @@ impl ::Response for ListApiextensionsV1beta1CustomResourceDefinitionResponse {
 
 impl CustomResourceDefinition {
     /// partially update the specified CustomResourceDefinition
+    ///
+    /// Use [`PatchApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.PatchApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
     pub fn patch_apiextensions_v1beta1_custom_resource_definition(
         // name of the CustomResourceDefinition
         name: &str,
@@ -372,6 +386,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::patch_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.patch_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum PatchApiextensionsV1beta1CustomResourceDefinitionResponse {
     Ok(::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -400,6 +415,8 @@ impl ::Response for PatchApiextensionsV1beta1CustomResourceDefinitionResponse {
 
 impl CustomResourceDefinition {
     /// partially update status of the specified CustomResourceDefinition
+    ///
+    /// Use [`PatchApiextensionsV1beta1CustomResourceDefinitionStatusResponse`](./enum.PatchApiextensionsV1beta1CustomResourceDefinitionStatusResponse.html) to parse the HTTP response.
     pub fn patch_apiextensions_v1beta1_custom_resource_definition_status(
         // name of the CustomResourceDefinition
         name: &str,
@@ -420,6 +437,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::patch_apiextensions_v1beta1_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.patch_apiextensions_v1beta1_custom_resource_definition_status)
 #[derive(Debug)]
 pub enum PatchApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
     Ok(::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -448,6 +466,8 @@ impl ::Response for PatchApiextensionsV1beta1CustomResourceDefinitionStatusRespo
 
 impl CustomResourceDefinition {
     /// read the specified CustomResourceDefinition
+    ///
+    /// Use [`ReadApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.ReadApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
     pub fn read_apiextensions_v1beta1_custom_resource_definition(
         // name of the CustomResourceDefinition
         name: &str,
@@ -477,6 +497,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::read_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.read_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum ReadApiextensionsV1beta1CustomResourceDefinitionResponse {
     Ok(::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -505,6 +526,8 @@ impl ::Response for ReadApiextensionsV1beta1CustomResourceDefinitionResponse {
 
 impl CustomResourceDefinition {
     /// read status of the specified CustomResourceDefinition
+    ///
+    /// Use [`ReadApiextensionsV1beta1CustomResourceDefinitionStatusResponse`](./enum.ReadApiextensionsV1beta1CustomResourceDefinitionStatusResponse.html) to parse the HTTP response.
     pub fn read_apiextensions_v1beta1_custom_resource_definition_status(
         // name of the CustomResourceDefinition
         name: &str,
@@ -524,6 +547,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::read_apiextensions_v1beta1_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.read_apiextensions_v1beta1_custom_resource_definition_status)
 #[derive(Debug)]
 pub enum ReadApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
     Ok(::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -552,6 +576,8 @@ impl ::Response for ReadApiextensionsV1beta1CustomResourceDefinitionStatusRespon
 
 impl CustomResourceDefinition {
     /// replace the specified CustomResourceDefinition
+    ///
+    /// Use [`ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
     pub fn replace_apiextensions_v1beta1_custom_resource_definition(
         // name of the CustomResourceDefinition
         name: &str,
@@ -572,6 +598,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::replace_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.replace_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse {
     Ok(::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -609,6 +636,8 @@ impl ::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse 
 
 impl CustomResourceDefinition {
     /// replace status of the specified CustomResourceDefinition
+    ///
+    /// Use [`ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse`](./enum.ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse.html) to parse the HTTP response.
     pub fn replace_apiextensions_v1beta1_custom_resource_definition_status(
         // name of the CustomResourceDefinition
         name: &str,
@@ -629,6 +658,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::replace_apiextensions_v1beta1_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.replace_apiextensions_v1beta1_custom_resource_definition_status)
 #[derive(Debug)]
 pub enum ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
     Ok(::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -666,6 +696,8 @@ impl ::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusRes
 
 impl CustomResourceDefinition {
     /// watch changes to an object of kind CustomResourceDefinition
+    ///
+    /// Use [`WatchApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.WatchApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
     pub fn watch_apiextensions_v1beta1_custom_resource_definition(
         // name of the CustomResourceDefinition
         name: &str,
@@ -727,6 +759,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::watch_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.watch_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum WatchApiextensionsV1beta1CustomResourceDefinitionResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -757,6 +790,8 @@ impl ::Response for WatchApiextensionsV1beta1CustomResourceDefinitionResponse {
 
 impl CustomResourceDefinition {
     /// watch individual changes to a list of CustomResourceDefinition
+    ///
+    /// Use [`WatchApiextensionsV1beta1CustomResourceDefinitionListResponse`](./enum.WatchApiextensionsV1beta1CustomResourceDefinitionListResponse.html) to parse the HTTP response.
     pub fn watch_apiextensions_v1beta1_custom_resource_definition_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -816,6 +851,7 @@ impl CustomResourceDefinition {
     }
 }
 
+/// Parses the HTTP response of [`CustomResourceDefinition::watch_apiextensions_v1beta1_custom_resource_definition_list`](./struct.CustomResourceDefinition.html#method.watch_apiextensions_v1beta1_custom_resource_definition_list)
 #[derive(Debug)]
 pub enum WatchApiextensionsV1beta1CustomResourceDefinitionListResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

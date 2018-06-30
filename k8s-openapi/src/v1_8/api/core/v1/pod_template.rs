@@ -22,6 +22,8 @@ pub struct PodTemplate {
 
 impl PodTemplate {
     /// create a PodTemplate
+    ///
+    /// Use [`CreateCoreV1NamespacedPodTemplateResponse`](./enum.CreateCoreV1NamespacedPodTemplateResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_pod_template(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -42,6 +44,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::create_core_v1_namespaced_pod_template`](./struct.PodTemplate.html#method.create_core_v1_namespaced_pod_template)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedPodTemplateResponse {
     Ok(::v1_8::api::core::v1::PodTemplate),
@@ -70,6 +73,8 @@ impl ::Response for CreateCoreV1NamespacedPodTemplateResponse {
 
 impl PodTemplate {
     /// delete collection of PodTemplate
+    ///
+    /// Use [`DeleteCoreV1CollectionNamespacedPodTemplateResponse`](./enum.DeleteCoreV1CollectionNamespacedPodTemplateResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_namespaced_pod_template(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -131,6 +136,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::delete_core_v1_collection_namespaced_pod_template`](./struct.PodTemplate.html#method.delete_core_v1_collection_namespaced_pod_template)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedPodTemplateResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -173,6 +179,8 @@ impl ::Response for DeleteCoreV1CollectionNamespacedPodTemplateResponse {
 
 impl PodTemplate {
     /// delete a PodTemplate
+    ///
+    /// Use [`DeleteCoreV1NamespacedPodTemplateResponse`](./enum.DeleteCoreV1NamespacedPodTemplateResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespaced_pod_template(
         // name of the PodTemplate
         name: &str,
@@ -209,6 +217,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::delete_core_v1_namespaced_pod_template`](./struct.PodTemplate.html#method.delete_core_v1_namespaced_pod_template)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedPodTemplateResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -251,6 +260,8 @@ impl ::Response for DeleteCoreV1NamespacedPodTemplateResponse {
 
 impl PodTemplate {
     /// list or watch objects of kind PodTemplate
+    ///
+    /// Use [`ListCoreV1NamespacedPodTemplateResponse`](./enum.ListCoreV1NamespacedPodTemplateResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespaced_pod_template(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -312,6 +323,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::list_core_v1_namespaced_pod_template`](./struct.PodTemplate.html#method.list_core_v1_namespaced_pod_template)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedPodTemplateResponse {
     Ok(::v1_8::api::core::v1::PodTemplateList),
@@ -340,6 +352,8 @@ impl ::Response for ListCoreV1NamespacedPodTemplateResponse {
 
 impl PodTemplate {
     /// list or watch objects of kind PodTemplate
+    ///
+    /// Use [`ListCoreV1PodTemplateForAllNamespacesResponse`](./enum.ListCoreV1PodTemplateForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_core_v1_pod_template_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -399,6 +413,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::list_core_v1_pod_template_for_all_namespaces`](./struct.PodTemplate.html#method.list_core_v1_pod_template_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1PodTemplateForAllNamespacesResponse {
     Ok(::v1_8::api::core::v1::PodTemplateList),
@@ -427,6 +442,8 @@ impl ::Response for ListCoreV1PodTemplateForAllNamespacesResponse {
 
 impl PodTemplate {
     /// partially update the specified PodTemplate
+    ///
+    /// Use [`PatchCoreV1NamespacedPodTemplateResponse`](./enum.PatchCoreV1NamespacedPodTemplateResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_pod_template(
         // name of the PodTemplate
         name: &str,
@@ -449,6 +466,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::patch_core_v1_namespaced_pod_template`](./struct.PodTemplate.html#method.patch_core_v1_namespaced_pod_template)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedPodTemplateResponse {
     Ok(::v1_8::api::core::v1::PodTemplate),
@@ -477,6 +495,8 @@ impl ::Response for PatchCoreV1NamespacedPodTemplateResponse {
 
 impl PodTemplate {
     /// read the specified PodTemplate
+    ///
+    /// Use [`ReadCoreV1NamespacedPodTemplateResponse`](./enum.ReadCoreV1NamespacedPodTemplateResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_pod_template(
         // name of the PodTemplate
         name: &str,
@@ -508,6 +528,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::read_core_v1_namespaced_pod_template`](./struct.PodTemplate.html#method.read_core_v1_namespaced_pod_template)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPodTemplateResponse {
     Ok(::v1_8::api::core::v1::PodTemplate),
@@ -536,6 +557,8 @@ impl ::Response for ReadCoreV1NamespacedPodTemplateResponse {
 
 impl PodTemplate {
     /// replace the specified PodTemplate
+    ///
+    /// Use [`ReplaceCoreV1NamespacedPodTemplateResponse`](./enum.ReplaceCoreV1NamespacedPodTemplateResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_pod_template(
         // name of the PodTemplate
         name: &str,
@@ -558,6 +581,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::replace_core_v1_namespaced_pod_template`](./struct.PodTemplate.html#method.replace_core_v1_namespaced_pod_template)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedPodTemplateResponse {
     Ok(::v1_8::api::core::v1::PodTemplate),
@@ -586,6 +610,8 @@ impl ::Response for ReplaceCoreV1NamespacedPodTemplateResponse {
 
 impl PodTemplate {
     /// watch changes to an object of kind PodTemplate
+    ///
+    /// Use [`WatchCoreV1NamespacedPodTemplateResponse`](./enum.WatchCoreV1NamespacedPodTemplateResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_pod_template(
         // name of the PodTemplate
         name: &str,
@@ -649,6 +675,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::watch_core_v1_namespaced_pod_template`](./struct.PodTemplate.html#method.watch_core_v1_namespaced_pod_template)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedPodTemplateResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -679,6 +706,8 @@ impl ::Response for WatchCoreV1NamespacedPodTemplateResponse {
 
 impl PodTemplate {
     /// watch individual changes to a list of PodTemplate
+    ///
+    /// Use [`WatchCoreV1NamespacedPodTemplateListResponse`](./enum.WatchCoreV1NamespacedPodTemplateListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_pod_template_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -740,6 +769,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::watch_core_v1_namespaced_pod_template_list`](./struct.PodTemplate.html#method.watch_core_v1_namespaced_pod_template_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedPodTemplateListResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -770,6 +800,8 @@ impl ::Response for WatchCoreV1NamespacedPodTemplateListResponse {
 
 impl PodTemplate {
     /// watch individual changes to a list of PodTemplate
+    ///
+    /// Use [`WatchCoreV1PodTemplateListForAllNamespacesResponse`](./enum.WatchCoreV1PodTemplateListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_pod_template_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -829,6 +861,7 @@ impl PodTemplate {
     }
 }
 
+/// Parses the HTTP response of [`PodTemplate::watch_core_v1_pod_template_list_for_all_namespaces`](./struct.PodTemplate.html#method.watch_core_v1_pod_template_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1PodTemplateListForAllNamespacesResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

@@ -25,6 +25,8 @@ pub struct ClusterRoleBinding {
 
 impl ClusterRoleBinding {
     /// create a ClusterRoleBinding
+    ///
+    /// Use [`CreateRbacAuthorizationV1ClusterRoleBindingResponse`](./enum.CreateRbacAuthorizationV1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn create_rbac_authorization_v1_cluster_role_binding(
         body: &::v1_10::api::rbac::v1::ClusterRoleBinding,
         // If 'true', then the output is pretty printed.
@@ -43,6 +45,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::create_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.create_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum CreateRbacAuthorizationV1ClusterRoleBindingResponse {
     Ok(::v1_10::api::rbac::v1::ClusterRoleBinding),
@@ -89,6 +92,8 @@ impl ::Response for CreateRbacAuthorizationV1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// delete a ClusterRoleBinding
+    ///
+    /// Use [`DeleteRbacAuthorizationV1ClusterRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn delete_rbac_authorization_v1_cluster_role_binding(
         // name of the ClusterRoleBinding
         name: &str,
@@ -123,6 +128,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::delete_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1ClusterRoleBindingResponse {
     OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -165,6 +171,8 @@ impl ::Response for DeleteRbacAuthorizationV1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// delete collection of ClusterRoleBinding
+    ///
+    /// Use [`DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn delete_rbac_authorization_v1_collection_cluster_role_binding(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -224,6 +232,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::delete_rbac_authorization_v1_collection_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_rbac_authorization_v1_collection_cluster_role_binding)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse {
     OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -266,6 +275,8 @@ impl ::Response for DeleteRbacAuthorizationV1CollectionClusterRoleBindingRespons
 
 impl ClusterRoleBinding {
     /// list or watch objects of kind ClusterRoleBinding
+    ///
+    /// Use [`ListRbacAuthorizationV1ClusterRoleBindingResponse`](./enum.ListRbacAuthorizationV1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn list_rbac_authorization_v1_cluster_role_binding(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -325,6 +336,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::list_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.list_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum ListRbacAuthorizationV1ClusterRoleBindingResponse {
     Ok(::v1_10::api::rbac::v1::ClusterRoleBindingList),
@@ -353,6 +365,8 @@ impl ::Response for ListRbacAuthorizationV1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// partially update the specified ClusterRoleBinding
+    ///
+    /// Use [`PatchRbacAuthorizationV1ClusterRoleBindingResponse`](./enum.PatchRbacAuthorizationV1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn patch_rbac_authorization_v1_cluster_role_binding(
         // name of the ClusterRoleBinding
         name: &str,
@@ -373,6 +387,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::patch_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.patch_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum PatchRbacAuthorizationV1ClusterRoleBindingResponse {
     Ok(::v1_10::api::rbac::v1::ClusterRoleBinding),
@@ -401,6 +416,8 @@ impl ::Response for PatchRbacAuthorizationV1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// read the specified ClusterRoleBinding
+    ///
+    /// Use [`ReadRbacAuthorizationV1ClusterRoleBindingResponse`](./enum.ReadRbacAuthorizationV1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn read_rbac_authorization_v1_cluster_role_binding(
         // name of the ClusterRoleBinding
         name: &str,
@@ -420,6 +437,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::read_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.read_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum ReadRbacAuthorizationV1ClusterRoleBindingResponse {
     Ok(::v1_10::api::rbac::v1::ClusterRoleBinding),
@@ -448,6 +466,8 @@ impl ::Response for ReadRbacAuthorizationV1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// replace the specified ClusterRoleBinding
+    ///
+    /// Use [`ReplaceRbacAuthorizationV1ClusterRoleBindingResponse`](./enum.ReplaceRbacAuthorizationV1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn replace_rbac_authorization_v1_cluster_role_binding(
         // name of the ClusterRoleBinding
         name: &str,
@@ -468,6 +488,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::replace_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.replace_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum ReplaceRbacAuthorizationV1ClusterRoleBindingResponse {
     Ok(::v1_10::api::rbac::v1::ClusterRoleBinding),
@@ -505,6 +526,8 @@ impl ::Response for ReplaceRbacAuthorizationV1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// watch changes to an object of kind ClusterRoleBinding
+    ///
+    /// Use [`WatchRbacAuthorizationV1ClusterRoleBindingResponse`](./enum.WatchRbacAuthorizationV1ClusterRoleBindingResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1_cluster_role_binding(
         // name of the ClusterRoleBinding
         name: &str,
@@ -566,6 +589,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::watch_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.watch_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1ClusterRoleBindingResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -596,6 +620,8 @@ impl ::Response for WatchRbacAuthorizationV1ClusterRoleBindingResponse {
 
 impl ClusterRoleBinding {
     /// watch individual changes to a list of ClusterRoleBinding
+    ///
+    /// Use [`WatchRbacAuthorizationV1ClusterRoleBindingListResponse`](./enum.WatchRbacAuthorizationV1ClusterRoleBindingListResponse.html) to parse the HTTP response.
     pub fn watch_rbac_authorization_v1_cluster_role_binding_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -655,6 +681,7 @@ impl ClusterRoleBinding {
     }
 }
 
+/// Parses the HTTP response of [`ClusterRoleBinding::watch_rbac_authorization_v1_cluster_role_binding_list`](./struct.ClusterRoleBinding.html#method.watch_rbac_authorization_v1_cluster_role_binding_list)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1ClusterRoleBindingListResponse {
     Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),

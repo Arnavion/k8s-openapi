@@ -25,6 +25,8 @@ pub struct Deployment {
 
 impl Deployment {
     /// create a Deployment
+    ///
+    /// Use [`CreateAppsV1beta2NamespacedDeploymentResponse`](./enum.CreateAppsV1beta2NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn create_apps_v1beta2_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::create_apps_v1beta2_namespaced_deployment`](./struct.Deployment.html#method.create_apps_v1beta2_namespaced_deployment)
 #[derive(Debug)]
 pub enum CreateAppsV1beta2NamespacedDeploymentResponse {
     Ok(::v1_8::api::apps::v1beta2::Deployment),
@@ -73,6 +76,8 @@ impl ::Response for CreateAppsV1beta2NamespacedDeploymentResponse {
 
 impl Deployment {
     /// delete collection of Deployment
+    ///
+    /// Use [`DeleteAppsV1beta2CollectionNamespacedDeploymentResponse`](./enum.DeleteAppsV1beta2CollectionNamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn delete_apps_v1beta2_collection_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -134,6 +139,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::delete_apps_v1beta2_collection_namespaced_deployment`](./struct.Deployment.html#method.delete_apps_v1beta2_collection_namespaced_deployment)
 #[derive(Debug)]
 pub enum DeleteAppsV1beta2CollectionNamespacedDeploymentResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -176,6 +182,8 @@ impl ::Response for DeleteAppsV1beta2CollectionNamespacedDeploymentResponse {
 
 impl Deployment {
     /// delete a Deployment
+    ///
+    /// Use [`DeleteAppsV1beta2NamespacedDeploymentResponse`](./enum.DeleteAppsV1beta2NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn delete_apps_v1beta2_namespaced_deployment(
         // name of the Deployment
         name: &str,
@@ -212,6 +220,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::delete_apps_v1beta2_namespaced_deployment`](./struct.Deployment.html#method.delete_apps_v1beta2_namespaced_deployment)
 #[derive(Debug)]
 pub enum DeleteAppsV1beta2NamespacedDeploymentResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -254,6 +263,8 @@ impl ::Response for DeleteAppsV1beta2NamespacedDeploymentResponse {
 
 impl Deployment {
     /// list or watch objects of kind Deployment
+    ///
+    /// Use [`ListAppsV1beta2DeploymentForAllNamespacesResponse`](./enum.ListAppsV1beta2DeploymentForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_apps_v1beta2_deployment_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -313,6 +324,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::list_apps_v1beta2_deployment_for_all_namespaces`](./struct.Deployment.html#method.list_apps_v1beta2_deployment_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListAppsV1beta2DeploymentForAllNamespacesResponse {
     Ok(::v1_8::api::apps::v1beta2::DeploymentList),
@@ -341,6 +353,8 @@ impl ::Response for ListAppsV1beta2DeploymentForAllNamespacesResponse {
 
 impl Deployment {
     /// list or watch objects of kind Deployment
+    ///
+    /// Use [`ListAppsV1beta2NamespacedDeploymentResponse`](./enum.ListAppsV1beta2NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn list_apps_v1beta2_namespaced_deployment(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -402,6 +416,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::list_apps_v1beta2_namespaced_deployment`](./struct.Deployment.html#method.list_apps_v1beta2_namespaced_deployment)
 #[derive(Debug)]
 pub enum ListAppsV1beta2NamespacedDeploymentResponse {
     Ok(::v1_8::api::apps::v1beta2::DeploymentList),
@@ -430,6 +445,8 @@ impl ::Response for ListAppsV1beta2NamespacedDeploymentResponse {
 
 impl Deployment {
     /// partially update the specified Deployment
+    ///
+    /// Use [`PatchAppsV1beta2NamespacedDeploymentResponse`](./enum.PatchAppsV1beta2NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1beta2_namespaced_deployment(
         // name of the Deployment
         name: &str,
@@ -452,6 +469,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::patch_apps_v1beta2_namespaced_deployment`](./struct.Deployment.html#method.patch_apps_v1beta2_namespaced_deployment)
 #[derive(Debug)]
 pub enum PatchAppsV1beta2NamespacedDeploymentResponse {
     Ok(::v1_8::api::apps::v1beta2::Deployment),
@@ -480,6 +498,8 @@ impl ::Response for PatchAppsV1beta2NamespacedDeploymentResponse {
 
 impl Deployment {
     /// partially update status of the specified Deployment
+    ///
+    /// Use [`PatchAppsV1beta2NamespacedDeploymentStatusResponse`](./enum.PatchAppsV1beta2NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1beta2_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
@@ -502,6 +522,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::patch_apps_v1beta2_namespaced_deployment_status`](./struct.Deployment.html#method.patch_apps_v1beta2_namespaced_deployment_status)
 #[derive(Debug)]
 pub enum PatchAppsV1beta2NamespacedDeploymentStatusResponse {
     Ok(::v1_8::api::apps::v1beta2::Deployment),
@@ -530,6 +551,8 @@ impl ::Response for PatchAppsV1beta2NamespacedDeploymentStatusResponse {
 
 impl Deployment {
     /// read the specified Deployment
+    ///
+    /// Use [`ReadAppsV1beta2NamespacedDeploymentResponse`](./enum.ReadAppsV1beta2NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn read_apps_v1beta2_namespaced_deployment(
         // name of the Deployment
         name: &str,
@@ -561,6 +584,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::read_apps_v1beta2_namespaced_deployment`](./struct.Deployment.html#method.read_apps_v1beta2_namespaced_deployment)
 #[derive(Debug)]
 pub enum ReadAppsV1beta2NamespacedDeploymentResponse {
     Ok(::v1_8::api::apps::v1beta2::Deployment),
@@ -589,6 +613,8 @@ impl ::Response for ReadAppsV1beta2NamespacedDeploymentResponse {
 
 impl Deployment {
     /// read status of the specified Deployment
+    ///
+    /// Use [`ReadAppsV1beta2NamespacedDeploymentStatusResponse`](./enum.ReadAppsV1beta2NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
     pub fn read_apps_v1beta2_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
@@ -610,6 +636,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::read_apps_v1beta2_namespaced_deployment_status`](./struct.Deployment.html#method.read_apps_v1beta2_namespaced_deployment_status)
 #[derive(Debug)]
 pub enum ReadAppsV1beta2NamespacedDeploymentStatusResponse {
     Ok(::v1_8::api::apps::v1beta2::Deployment),
@@ -638,6 +665,8 @@ impl ::Response for ReadAppsV1beta2NamespacedDeploymentStatusResponse {
 
 impl Deployment {
     /// replace the specified Deployment
+    ///
+    /// Use [`ReplaceAppsV1beta2NamespacedDeploymentResponse`](./enum.ReplaceAppsV1beta2NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1beta2_namespaced_deployment(
         // name of the Deployment
         name: &str,
@@ -660,6 +689,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::replace_apps_v1beta2_namespaced_deployment`](./struct.Deployment.html#method.replace_apps_v1beta2_namespaced_deployment)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta2NamespacedDeploymentResponse {
     Ok(::v1_8::api::apps::v1beta2::Deployment),
@@ -688,6 +718,8 @@ impl ::Response for ReplaceAppsV1beta2NamespacedDeploymentResponse {
 
 impl Deployment {
     /// replace status of the specified Deployment
+    ///
+    /// Use [`ReplaceAppsV1beta2NamespacedDeploymentStatusResponse`](./enum.ReplaceAppsV1beta2NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1beta2_namespaced_deployment_status(
         // name of the Deployment
         name: &str,
@@ -710,6 +742,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::replace_apps_v1beta2_namespaced_deployment_status`](./struct.Deployment.html#method.replace_apps_v1beta2_namespaced_deployment_status)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta2NamespacedDeploymentStatusResponse {
     Ok(::v1_8::api::apps::v1beta2::Deployment),
@@ -738,6 +771,8 @@ impl ::Response for ReplaceAppsV1beta2NamespacedDeploymentStatusResponse {
 
 impl Deployment {
     /// watch individual changes to a list of Deployment
+    ///
+    /// Use [`WatchAppsV1beta2DeploymentListForAllNamespacesResponse`](./enum.WatchAppsV1beta2DeploymentListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1beta2_deployment_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -797,6 +832,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::watch_apps_v1beta2_deployment_list_for_all_namespaces`](./struct.Deployment.html#method.watch_apps_v1beta2_deployment_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchAppsV1beta2DeploymentListForAllNamespacesResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -827,6 +863,8 @@ impl ::Response for WatchAppsV1beta2DeploymentListForAllNamespacesResponse {
 
 impl Deployment {
     /// watch changes to an object of kind Deployment
+    ///
+    /// Use [`WatchAppsV1beta2NamespacedDeploymentResponse`](./enum.WatchAppsV1beta2NamespacedDeploymentResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1beta2_namespaced_deployment(
         // name of the Deployment
         name: &str,
@@ -890,6 +928,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::watch_apps_v1beta2_namespaced_deployment`](./struct.Deployment.html#method.watch_apps_v1beta2_namespaced_deployment)
 #[derive(Debug)]
 pub enum WatchAppsV1beta2NamespacedDeploymentResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -920,6 +959,8 @@ impl ::Response for WatchAppsV1beta2NamespacedDeploymentResponse {
 
 impl Deployment {
     /// watch individual changes to a list of Deployment
+    ///
+    /// Use [`WatchAppsV1beta2NamespacedDeploymentListResponse`](./enum.WatchAppsV1beta2NamespacedDeploymentListResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1beta2_namespaced_deployment_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -981,6 +1022,7 @@ impl Deployment {
     }
 }
 
+/// Parses the HTTP response of [`Deployment::watch_apps_v1beta2_namespaced_deployment_list`](./struct.Deployment.html#method.watch_apps_v1beta2_namespaced_deployment_list)
 #[derive(Debug)]
 pub enum WatchAppsV1beta2NamespacedDeploymentListResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

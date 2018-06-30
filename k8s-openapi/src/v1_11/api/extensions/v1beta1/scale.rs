@@ -25,6 +25,8 @@ pub struct Scale {
 
 impl Scale {
     /// partially update scale of the specified Deployment
+    ///
+    /// Use [`PatchExtensionsV1beta1NamespacedDeploymentScaleResponse`](./enum.PatchExtensionsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -47,6 +49,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_extensions_v1beta1_namespaced_deployment_scale`](./struct.Scale.html#method.patch_extensions_v1beta1_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedDeploymentScaleResponse {
     Ok(::v1_11::api::extensions::v1beta1::Scale),
@@ -75,6 +78,8 @@ impl ::Response for PatchExtensionsV1beta1NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// partially update scale of the specified ReplicaSet
+    ///
+    /// Use [`PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse`](./enum.PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
@@ -97,6 +102,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_extensions_v1beta1_namespaced_replica_set_scale`](./struct.Scale.html#method.patch_extensions_v1beta1_namespaced_replica_set_scale)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse {
     Ok(::v1_11::api::extensions::v1beta1::Scale),
@@ -125,6 +131,8 @@ impl ::Response for PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse {
 
 impl Scale {
     /// partially update scale of the specified ReplicationControllerDummy
+    ///
+    /// Use [`PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse`](./enum.PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_namespaced_replication_controller_dummy_scale(
         // name of the Scale
         name: &str,
@@ -147,6 +155,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_extensions_v1beta1_namespaced_replication_controller_dummy_scale`](./struct.Scale.html#method.patch_extensions_v1beta1_namespaced_replication_controller_dummy_scale)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse {
     Ok(::v1_11::api::extensions::v1beta1::Scale),
@@ -175,6 +184,8 @@ impl ::Response for PatchExtensionsV1beta1NamespacedReplicationControllerDummySc
 
 impl Scale {
     /// read scale of the specified Deployment
+    ///
+    /// Use [`ReadExtensionsV1beta1NamespacedDeploymentScaleResponse`](./enum.ReadExtensionsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -196,6 +207,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_extensions_v1beta1_namespaced_deployment_scale`](./struct.Scale.html#method.read_extensions_v1beta1_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedDeploymentScaleResponse {
     Ok(::v1_11::api::extensions::v1beta1::Scale),
@@ -224,6 +236,8 @@ impl ::Response for ReadExtensionsV1beta1NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// read scale of the specified ReplicaSet
+    ///
+    /// Use [`ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse`](./enum.ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
@@ -245,6 +259,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_extensions_v1beta1_namespaced_replica_set_scale`](./struct.Scale.html#method.read_extensions_v1beta1_namespaced_replica_set_scale)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse {
     Ok(::v1_11::api::extensions::v1beta1::Scale),
@@ -273,6 +288,8 @@ impl ::Response for ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse {
 
 impl Scale {
     /// read scale of the specified ReplicationControllerDummy
+    ///
+    /// Use [`ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse`](./enum.ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_namespaced_replication_controller_dummy_scale(
         // name of the Scale
         name: &str,
@@ -294,6 +311,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_extensions_v1beta1_namespaced_replication_controller_dummy_scale`](./struct.Scale.html#method.read_extensions_v1beta1_namespaced_replication_controller_dummy_scale)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse {
     Ok(::v1_11::api::extensions::v1beta1::Scale),
@@ -322,6 +340,8 @@ impl ::Response for ReadExtensionsV1beta1NamespacedReplicationControllerDummySca
 
 impl Scale {
     /// replace scale of the specified Deployment
+    ///
+    /// Use [`ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse`](./enum.ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -344,6 +364,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_extensions_v1beta1_namespaced_deployment_scale`](./struct.Scale.html#method.replace_extensions_v1beta1_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse {
     Ok(::v1_11::api::extensions::v1beta1::Scale),
@@ -381,6 +402,8 @@ impl ::Response for ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// replace scale of the specified ReplicaSet
+    ///
+    /// Use [`ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse`](./enum.ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
@@ -403,6 +426,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_extensions_v1beta1_namespaced_replica_set_scale`](./struct.Scale.html#method.replace_extensions_v1beta1_namespaced_replica_set_scale)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse {
     Ok(::v1_11::api::extensions::v1beta1::Scale),
@@ -440,6 +464,8 @@ impl ::Response for ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse {
 
 impl Scale {
     /// replace scale of the specified ReplicationControllerDummy
+    ///
+    /// Use [`ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse`](./enum.ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_namespaced_replication_controller_dummy_scale(
         // name of the Scale
         name: &str,
@@ -462,6 +488,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_extensions_v1beta1_namespaced_replication_controller_dummy_scale`](./struct.Scale.html#method.replace_extensions_v1beta1_namespaced_replication_controller_dummy_scale)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse {
     Ok(::v1_11::api::extensions::v1beta1::Scale),

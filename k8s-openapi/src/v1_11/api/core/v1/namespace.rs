@@ -25,6 +25,8 @@ pub struct Namespace {
 
 impl Namespace {
     /// create a Namespace
+    ///
+    /// Use [`CreateCoreV1NamespaceResponse`](./enum.CreateCoreV1NamespaceResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespace(
         body: &::v1_11::api::core::v1::Namespace,
         // If 'true', then the output is pretty printed.
@@ -43,6 +45,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::create_core_v1_namespace`](./struct.Namespace.html#method.create_core_v1_namespace)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespaceResponse {
     Ok(::v1_11::api::core::v1::Namespace),
@@ -89,6 +92,8 @@ impl ::Response for CreateCoreV1NamespaceResponse {
 
 impl Namespace {
     /// delete a Namespace
+    ///
+    /// Use [`DeleteCoreV1NamespaceResponse`](./enum.DeleteCoreV1NamespaceResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespace(
         // name of the Namespace
         name: &str,
@@ -123,6 +128,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::delete_core_v1_namespace`](./struct.Namespace.html#method.delete_core_v1_namespace)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespaceResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -165,6 +171,8 @@ impl ::Response for DeleteCoreV1NamespaceResponse {
 
 impl Namespace {
     /// list or watch objects of kind Namespace
+    ///
+    /// Use [`ListCoreV1NamespaceResponse`](./enum.ListCoreV1NamespaceResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespace(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -224,6 +232,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::list_core_v1_namespace`](./struct.Namespace.html#method.list_core_v1_namespace)
 #[derive(Debug)]
 pub enum ListCoreV1NamespaceResponse {
     Ok(::v1_11::api::core::v1::NamespaceList),
@@ -252,6 +261,8 @@ impl ::Response for ListCoreV1NamespaceResponse {
 
 impl Namespace {
     /// partially update the specified Namespace
+    ///
+    /// Use [`PatchCoreV1NamespaceResponse`](./enum.PatchCoreV1NamespaceResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespace(
         // name of the Namespace
         name: &str,
@@ -272,6 +283,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::patch_core_v1_namespace`](./struct.Namespace.html#method.patch_core_v1_namespace)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespaceResponse {
     Ok(::v1_11::api::core::v1::Namespace),
@@ -300,6 +312,8 @@ impl ::Response for PatchCoreV1NamespaceResponse {
 
 impl Namespace {
     /// partially update status of the specified Namespace
+    ///
+    /// Use [`PatchCoreV1NamespaceStatusResponse`](./enum.PatchCoreV1NamespaceStatusResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespace_status(
         // name of the Namespace
         name: &str,
@@ -320,6 +334,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::patch_core_v1_namespace_status`](./struct.Namespace.html#method.patch_core_v1_namespace_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespaceStatusResponse {
     Ok(::v1_11::api::core::v1::Namespace),
@@ -348,6 +363,8 @@ impl ::Response for PatchCoreV1NamespaceStatusResponse {
 
 impl Namespace {
     /// read the specified Namespace
+    ///
+    /// Use [`ReadCoreV1NamespaceResponse`](./enum.ReadCoreV1NamespaceResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespace(
         // name of the Namespace
         name: &str,
@@ -377,6 +394,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::read_core_v1_namespace`](./struct.Namespace.html#method.read_core_v1_namespace)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespaceResponse {
     Ok(::v1_11::api::core::v1::Namespace),
@@ -405,6 +423,8 @@ impl ::Response for ReadCoreV1NamespaceResponse {
 
 impl Namespace {
     /// read status of the specified Namespace
+    ///
+    /// Use [`ReadCoreV1NamespaceStatusResponse`](./enum.ReadCoreV1NamespaceStatusResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespace_status(
         // name of the Namespace
         name: &str,
@@ -424,6 +444,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::read_core_v1_namespace_status`](./struct.Namespace.html#method.read_core_v1_namespace_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespaceStatusResponse {
     Ok(::v1_11::api::core::v1::Namespace),
@@ -452,6 +473,8 @@ impl ::Response for ReadCoreV1NamespaceStatusResponse {
 
 impl Namespace {
     /// replace the specified Namespace
+    ///
+    /// Use [`ReplaceCoreV1NamespaceResponse`](./enum.ReplaceCoreV1NamespaceResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespace(
         // name of the Namespace
         name: &str,
@@ -472,6 +495,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::replace_core_v1_namespace`](./struct.Namespace.html#method.replace_core_v1_namespace)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespaceResponse {
     Ok(::v1_11::api::core::v1::Namespace),
@@ -509,6 +533,8 @@ impl ::Response for ReplaceCoreV1NamespaceResponse {
 
 impl Namespace {
     /// replace finalize of the specified Namespace
+    ///
+    /// Use [`ReplaceCoreV1NamespaceFinalizeResponse`](./enum.ReplaceCoreV1NamespaceFinalizeResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespace_finalize(
         // name of the Namespace
         name: &str,
@@ -529,6 +555,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::replace_core_v1_namespace_finalize`](./struct.Namespace.html#method.replace_core_v1_namespace_finalize)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespaceFinalizeResponse {
     Ok(::v1_11::api::core::v1::Namespace),
@@ -566,6 +593,8 @@ impl ::Response for ReplaceCoreV1NamespaceFinalizeResponse {
 
 impl Namespace {
     /// replace status of the specified Namespace
+    ///
+    /// Use [`ReplaceCoreV1NamespaceStatusResponse`](./enum.ReplaceCoreV1NamespaceStatusResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespace_status(
         // name of the Namespace
         name: &str,
@@ -586,6 +615,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::replace_core_v1_namespace_status`](./struct.Namespace.html#method.replace_core_v1_namespace_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespaceStatusResponse {
     Ok(::v1_11::api::core::v1::Namespace),
@@ -623,6 +653,8 @@ impl ::Response for ReplaceCoreV1NamespaceStatusResponse {
 
 impl Namespace {
     /// watch changes to an object of kind Namespace
+    ///
+    /// Use [`WatchCoreV1NamespaceResponse`](./enum.WatchCoreV1NamespaceResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespace(
         // name of the Namespace
         name: &str,
@@ -684,6 +716,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::watch_core_v1_namespace`](./struct.Namespace.html#method.watch_core_v1_namespace)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespaceResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -714,6 +747,8 @@ impl ::Response for WatchCoreV1NamespaceResponse {
 
 impl Namespace {
     /// watch individual changes to a list of Namespace
+    ///
+    /// Use [`WatchCoreV1NamespaceListResponse`](./enum.WatchCoreV1NamespaceListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespace_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -773,6 +808,7 @@ impl Namespace {
     }
 }
 
+/// Parses the HTTP response of [`Namespace::watch_core_v1_namespace_list`](./struct.Namespace.html#method.watch_core_v1_namespace_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespaceListResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

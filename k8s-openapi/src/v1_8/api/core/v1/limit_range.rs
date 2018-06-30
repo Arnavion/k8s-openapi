@@ -22,6 +22,8 @@ pub struct LimitRange {
 
 impl LimitRange {
     /// create a LimitRange
+    ///
+    /// Use [`CreateCoreV1NamespacedLimitRangeResponse`](./enum.CreateCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
     pub fn create_core_v1_namespaced_limit_range(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -42,6 +44,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::create_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.create_core_v1_namespaced_limit_range)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedLimitRangeResponse {
     Ok(::v1_8::api::core::v1::LimitRange),
@@ -70,6 +73,8 @@ impl ::Response for CreateCoreV1NamespacedLimitRangeResponse {
 
 impl LimitRange {
     /// delete collection of LimitRange
+    ///
+    /// Use [`DeleteCoreV1CollectionNamespacedLimitRangeResponse`](./enum.DeleteCoreV1CollectionNamespacedLimitRangeResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_collection_namespaced_limit_range(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -131,6 +136,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::delete_core_v1_collection_namespaced_limit_range`](./struct.LimitRange.html#method.delete_core_v1_collection_namespaced_limit_range)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedLimitRangeResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -173,6 +179,8 @@ impl ::Response for DeleteCoreV1CollectionNamespacedLimitRangeResponse {
 
 impl LimitRange {
     /// delete a LimitRange
+    ///
+    /// Use [`DeleteCoreV1NamespacedLimitRangeResponse`](./enum.DeleteCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
     pub fn delete_core_v1_namespaced_limit_range(
         // name of the LimitRange
         name: &str,
@@ -209,6 +217,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::delete_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.delete_core_v1_namespaced_limit_range)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedLimitRangeResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -251,6 +260,8 @@ impl ::Response for DeleteCoreV1NamespacedLimitRangeResponse {
 
 impl LimitRange {
     /// list or watch objects of kind LimitRange
+    ///
+    /// Use [`ListCoreV1LimitRangeForAllNamespacesResponse`](./enum.ListCoreV1LimitRangeForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_core_v1_limit_range_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -310,6 +321,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::list_core_v1_limit_range_for_all_namespaces`](./struct.LimitRange.html#method.list_core_v1_limit_range_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1LimitRangeForAllNamespacesResponse {
     Ok(::v1_8::api::core::v1::LimitRangeList),
@@ -338,6 +350,8 @@ impl ::Response for ListCoreV1LimitRangeForAllNamespacesResponse {
 
 impl LimitRange {
     /// list or watch objects of kind LimitRange
+    ///
+    /// Use [`ListCoreV1NamespacedLimitRangeResponse`](./enum.ListCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
     pub fn list_core_v1_namespaced_limit_range(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -399,6 +413,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::list_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.list_core_v1_namespaced_limit_range)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedLimitRangeResponse {
     Ok(::v1_8::api::core::v1::LimitRangeList),
@@ -427,6 +442,8 @@ impl ::Response for ListCoreV1NamespacedLimitRangeResponse {
 
 impl LimitRange {
     /// partially update the specified LimitRange
+    ///
+    /// Use [`PatchCoreV1NamespacedLimitRangeResponse`](./enum.PatchCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
     pub fn patch_core_v1_namespaced_limit_range(
         // name of the LimitRange
         name: &str,
@@ -449,6 +466,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::patch_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.patch_core_v1_namespaced_limit_range)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedLimitRangeResponse {
     Ok(::v1_8::api::core::v1::LimitRange),
@@ -477,6 +495,8 @@ impl ::Response for PatchCoreV1NamespacedLimitRangeResponse {
 
 impl LimitRange {
     /// read the specified LimitRange
+    ///
+    /// Use [`ReadCoreV1NamespacedLimitRangeResponse`](./enum.ReadCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
     pub fn read_core_v1_namespaced_limit_range(
         // name of the LimitRange
         name: &str,
@@ -508,6 +528,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::read_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.read_core_v1_namespaced_limit_range)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedLimitRangeResponse {
     Ok(::v1_8::api::core::v1::LimitRange),
@@ -536,6 +557,8 @@ impl ::Response for ReadCoreV1NamespacedLimitRangeResponse {
 
 impl LimitRange {
     /// replace the specified LimitRange
+    ///
+    /// Use [`ReplaceCoreV1NamespacedLimitRangeResponse`](./enum.ReplaceCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
     pub fn replace_core_v1_namespaced_limit_range(
         // name of the LimitRange
         name: &str,
@@ -558,6 +581,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::replace_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.replace_core_v1_namespaced_limit_range)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedLimitRangeResponse {
     Ok(::v1_8::api::core::v1::LimitRange),
@@ -586,6 +610,8 @@ impl ::Response for ReplaceCoreV1NamespacedLimitRangeResponse {
 
 impl LimitRange {
     /// watch individual changes to a list of LimitRange
+    ///
+    /// Use [`WatchCoreV1LimitRangeListForAllNamespacesResponse`](./enum.WatchCoreV1LimitRangeListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_limit_range_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -645,6 +671,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::watch_core_v1_limit_range_list_for_all_namespaces`](./struct.LimitRange.html#method.watch_core_v1_limit_range_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1LimitRangeListForAllNamespacesResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -675,6 +702,8 @@ impl ::Response for WatchCoreV1LimitRangeListForAllNamespacesResponse {
 
 impl LimitRange {
     /// watch changes to an object of kind LimitRange
+    ///
+    /// Use [`WatchCoreV1NamespacedLimitRangeResponse`](./enum.WatchCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_limit_range(
         // name of the LimitRange
         name: &str,
@@ -738,6 +767,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::watch_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.watch_core_v1_namespaced_limit_range)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedLimitRangeResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -768,6 +798,8 @@ impl ::Response for WatchCoreV1NamespacedLimitRangeResponse {
 
 impl LimitRange {
     /// watch individual changes to a list of LimitRange
+    ///
+    /// Use [`WatchCoreV1NamespacedLimitRangeListResponse`](./enum.WatchCoreV1NamespacedLimitRangeListResponse.html) to parse the HTTP response.
     pub fn watch_core_v1_namespaced_limit_range_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -829,6 +861,7 @@ impl LimitRange {
     }
 }
 
+/// Parses the HTTP response of [`LimitRange::watch_core_v1_namespaced_limit_range_list`](./struct.LimitRange.html#method.watch_core_v1_namespaced_limit_range_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedLimitRangeListResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

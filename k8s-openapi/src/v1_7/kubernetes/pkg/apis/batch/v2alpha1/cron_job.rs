@@ -25,6 +25,8 @@ pub struct CronJob {
 
 impl CronJob {
     /// create a CronJob
+    ///
+    /// Use [`CreateBatchV2alpha1NamespacedCronJobResponse`](./enum.CreateBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
     pub fn create_batch_v2alpha1_namespaced_cron_job(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::create_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.create_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum CreateBatchV2alpha1NamespacedCronJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -73,6 +76,8 @@ impl ::Response for CreateBatchV2alpha1NamespacedCronJobResponse {
 
 impl CronJob {
     /// delete collection of CronJob
+    ///
+    /// Use [`DeleteBatchV2alpha1CollectionNamespacedCronJobResponse`](./enum.DeleteBatchV2alpha1CollectionNamespacedCronJobResponse.html) to parse the HTTP response.
     pub fn delete_batch_v2alpha1_collection_namespaced_cron_job(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -122,6 +127,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::delete_batch_v2alpha1_collection_namespaced_cron_job`](./struct.CronJob.html#method.delete_batch_v2alpha1_collection_namespaced_cron_job)
 #[derive(Debug)]
 pub enum DeleteBatchV2alpha1CollectionNamespacedCronJobResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -164,6 +170,8 @@ impl ::Response for DeleteBatchV2alpha1CollectionNamespacedCronJobResponse {
 
 impl CronJob {
     /// delete a CronJob
+    ///
+    /// Use [`DeleteBatchV2alpha1NamespacedCronJobResponse`](./enum.DeleteBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
     pub fn delete_batch_v2alpha1_namespaced_cron_job(
         // name of the CronJob
         name: &str,
@@ -200,6 +208,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::delete_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.delete_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum DeleteBatchV2alpha1NamespacedCronJobResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -242,6 +251,8 @@ impl ::Response for DeleteBatchV2alpha1NamespacedCronJobResponse {
 
 impl CronJob {
     /// list or watch objects of kind CronJob
+    ///
+    /// Use [`ListBatchV2alpha1CronJobForAllNamespacesResponse`](./enum.ListBatchV2alpha1CronJobForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_batch_v2alpha1_cron_job_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -289,6 +300,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::list_batch_v2alpha1_cron_job_for_all_namespaces`](./struct.CronJob.html#method.list_batch_v2alpha1_cron_job_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListBatchV2alpha1CronJobForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJobList),
@@ -317,6 +329,8 @@ impl ::Response for ListBatchV2alpha1CronJobForAllNamespacesResponse {
 
 impl CronJob {
     /// list or watch objects of kind CronJob
+    ///
+    /// Use [`ListBatchV2alpha1NamespacedCronJobResponse`](./enum.ListBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
     pub fn list_batch_v2alpha1_namespaced_cron_job(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -366,6 +380,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::list_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.list_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum ListBatchV2alpha1NamespacedCronJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJobList),
@@ -394,6 +409,8 @@ impl ::Response for ListBatchV2alpha1NamespacedCronJobResponse {
 
 impl CronJob {
     /// partially update the specified CronJob
+    ///
+    /// Use [`PatchBatchV2alpha1NamespacedCronJobResponse`](./enum.PatchBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
     pub fn patch_batch_v2alpha1_namespaced_cron_job(
         // name of the CronJob
         name: &str,
@@ -416,6 +433,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::patch_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.patch_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum PatchBatchV2alpha1NamespacedCronJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -444,6 +462,8 @@ impl ::Response for PatchBatchV2alpha1NamespacedCronJobResponse {
 
 impl CronJob {
     /// partially update status of the specified CronJob
+    ///
+    /// Use [`PatchBatchV2alpha1NamespacedCronJobStatusResponse`](./enum.PatchBatchV2alpha1NamespacedCronJobStatusResponse.html) to parse the HTTP response.
     pub fn patch_batch_v2alpha1_namespaced_cron_job_status(
         // name of the CronJob
         name: &str,
@@ -466,6 +486,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::patch_batch_v2alpha1_namespaced_cron_job_status`](./struct.CronJob.html#method.patch_batch_v2alpha1_namespaced_cron_job_status)
 #[derive(Debug)]
 pub enum PatchBatchV2alpha1NamespacedCronJobStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -494,6 +515,8 @@ impl ::Response for PatchBatchV2alpha1NamespacedCronJobStatusResponse {
 
 impl CronJob {
     /// read the specified CronJob
+    ///
+    /// Use [`ReadBatchV2alpha1NamespacedCronJobResponse`](./enum.ReadBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
     pub fn read_batch_v2alpha1_namespaced_cron_job(
         // name of the CronJob
         name: &str,
@@ -525,6 +548,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::read_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.read_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum ReadBatchV2alpha1NamespacedCronJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -553,6 +577,8 @@ impl ::Response for ReadBatchV2alpha1NamespacedCronJobResponse {
 
 impl CronJob {
     /// read status of the specified CronJob
+    ///
+    /// Use [`ReadBatchV2alpha1NamespacedCronJobStatusResponse`](./enum.ReadBatchV2alpha1NamespacedCronJobStatusResponse.html) to parse the HTTP response.
     pub fn read_batch_v2alpha1_namespaced_cron_job_status(
         // name of the CronJob
         name: &str,
@@ -574,6 +600,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::read_batch_v2alpha1_namespaced_cron_job_status`](./struct.CronJob.html#method.read_batch_v2alpha1_namespaced_cron_job_status)
 #[derive(Debug)]
 pub enum ReadBatchV2alpha1NamespacedCronJobStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -602,6 +629,8 @@ impl ::Response for ReadBatchV2alpha1NamespacedCronJobStatusResponse {
 
 impl CronJob {
     /// replace the specified CronJob
+    ///
+    /// Use [`ReplaceBatchV2alpha1NamespacedCronJobResponse`](./enum.ReplaceBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
     pub fn replace_batch_v2alpha1_namespaced_cron_job(
         // name of the CronJob
         name: &str,
@@ -624,6 +653,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::replace_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.replace_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum ReplaceBatchV2alpha1NamespacedCronJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -652,6 +682,8 @@ impl ::Response for ReplaceBatchV2alpha1NamespacedCronJobResponse {
 
 impl CronJob {
     /// replace status of the specified CronJob
+    ///
+    /// Use [`ReplaceBatchV2alpha1NamespacedCronJobStatusResponse`](./enum.ReplaceBatchV2alpha1NamespacedCronJobStatusResponse.html) to parse the HTTP response.
     pub fn replace_batch_v2alpha1_namespaced_cron_job_status(
         // name of the CronJob
         name: &str,
@@ -674,6 +706,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::replace_batch_v2alpha1_namespaced_cron_job_status`](./struct.CronJob.html#method.replace_batch_v2alpha1_namespaced_cron_job_status)
 #[derive(Debug)]
 pub enum ReplaceBatchV2alpha1NamespacedCronJobStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -702,6 +735,8 @@ impl ::Response for ReplaceBatchV2alpha1NamespacedCronJobStatusResponse {
 
 impl CronJob {
     /// watch individual changes to a list of CronJob
+    ///
+    /// Use [`WatchBatchV2alpha1CronJobListForAllNamespacesResponse`](./enum.WatchBatchV2alpha1CronJobListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_batch_v2alpha1_cron_job_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -749,6 +784,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::watch_batch_v2alpha1_cron_job_list_for_all_namespaces`](./struct.CronJob.html#method.watch_batch_v2alpha1_cron_job_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchBatchV2alpha1CronJobListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -779,6 +815,8 @@ impl ::Response for WatchBatchV2alpha1CronJobListForAllNamespacesResponse {
 
 impl CronJob {
     /// watch changes to an object of kind CronJob
+    ///
+    /// Use [`WatchBatchV2alpha1NamespacedCronJobResponse`](./enum.WatchBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
     pub fn watch_batch_v2alpha1_namespaced_cron_job(
         // name of the CronJob
         name: &str,
@@ -830,6 +868,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::watch_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.watch_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum WatchBatchV2alpha1NamespacedCronJobResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -860,6 +899,8 @@ impl ::Response for WatchBatchV2alpha1NamespacedCronJobResponse {
 
 impl CronJob {
     /// watch individual changes to a list of CronJob
+    ///
+    /// Use [`WatchBatchV2alpha1NamespacedCronJobListResponse`](./enum.WatchBatchV2alpha1NamespacedCronJobListResponse.html) to parse the HTTP response.
     pub fn watch_batch_v2alpha1_namespaced_cron_job_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -909,6 +950,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::watch_batch_v2alpha1_namespaced_cron_job_list`](./struct.CronJob.html#method.watch_batch_v2alpha1_namespaced_cron_job_list)
 #[derive(Debug)]
 pub enum WatchBatchV2alpha1NamespacedCronJobListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -943,6 +985,8 @@ impl ::Response for WatchBatchV2alpha1NamespacedCronJobListResponse {
 
 impl CronJob {
     /// create a ScheduledJob
+    ///
+    /// Use [`CreateBatchV2alpha1NamespacedScheduledJobResponse`](./enum.CreateBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
     pub fn create_batch_v2alpha1_namespaced_scheduled_job(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -963,6 +1007,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::create_batch_v2alpha1_namespaced_scheduled_job`](./struct.CronJob.html#method.create_batch_v2alpha1_namespaced_scheduled_job)
 #[derive(Debug)]
 pub enum CreateBatchV2alpha1NamespacedScheduledJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -991,6 +1036,8 @@ impl ::Response for CreateBatchV2alpha1NamespacedScheduledJobResponse {
 
 impl CronJob {
     /// delete collection of ScheduledJob
+    ///
+    /// Use [`DeleteBatchV2alpha1CollectionNamespacedScheduledJobResponse`](./enum.DeleteBatchV2alpha1CollectionNamespacedScheduledJobResponse.html) to parse the HTTP response.
     pub fn delete_batch_v2alpha1_collection_namespaced_scheduled_job(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -1040,6 +1087,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::delete_batch_v2alpha1_collection_namespaced_scheduled_job`](./struct.CronJob.html#method.delete_batch_v2alpha1_collection_namespaced_scheduled_job)
 #[derive(Debug)]
 pub enum DeleteBatchV2alpha1CollectionNamespacedScheduledJobResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -1082,6 +1130,8 @@ impl ::Response for DeleteBatchV2alpha1CollectionNamespacedScheduledJobResponse 
 
 impl CronJob {
     /// delete a ScheduledJob
+    ///
+    /// Use [`DeleteBatchV2alpha1NamespacedScheduledJobResponse`](./enum.DeleteBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
     pub fn delete_batch_v2alpha1_namespaced_scheduled_job(
         // name of the ScheduledJob
         name: &str,
@@ -1118,6 +1168,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::delete_batch_v2alpha1_namespaced_scheduled_job`](./struct.CronJob.html#method.delete_batch_v2alpha1_namespaced_scheduled_job)
 #[derive(Debug)]
 pub enum DeleteBatchV2alpha1NamespacedScheduledJobResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -1160,6 +1211,8 @@ impl ::Response for DeleteBatchV2alpha1NamespacedScheduledJobResponse {
 
 impl CronJob {
     /// list or watch objects of kind ScheduledJob
+    ///
+    /// Use [`ListBatchV2alpha1NamespacedScheduledJobResponse`](./enum.ListBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
     pub fn list_batch_v2alpha1_namespaced_scheduled_job(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -1209,6 +1262,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::list_batch_v2alpha1_namespaced_scheduled_job`](./struct.CronJob.html#method.list_batch_v2alpha1_namespaced_scheduled_job)
 #[derive(Debug)]
 pub enum ListBatchV2alpha1NamespacedScheduledJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJobList),
@@ -1237,6 +1291,8 @@ impl ::Response for ListBatchV2alpha1NamespacedScheduledJobResponse {
 
 impl CronJob {
     /// list or watch objects of kind ScheduledJob
+    ///
+    /// Use [`ListBatchV2alpha1ScheduledJobForAllNamespacesResponse`](./enum.ListBatchV2alpha1ScheduledJobForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_batch_v2alpha1_scheduled_job_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -1284,6 +1340,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::list_batch_v2alpha1_scheduled_job_for_all_namespaces`](./struct.CronJob.html#method.list_batch_v2alpha1_scheduled_job_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListBatchV2alpha1ScheduledJobForAllNamespacesResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJobList),
@@ -1312,6 +1369,8 @@ impl ::Response for ListBatchV2alpha1ScheduledJobForAllNamespacesResponse {
 
 impl CronJob {
     /// partially update the specified ScheduledJob
+    ///
+    /// Use [`PatchBatchV2alpha1NamespacedScheduledJobResponse`](./enum.PatchBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
     pub fn patch_batch_v2alpha1_namespaced_scheduled_job(
         // name of the ScheduledJob
         name: &str,
@@ -1334,6 +1393,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::patch_batch_v2alpha1_namespaced_scheduled_job`](./struct.CronJob.html#method.patch_batch_v2alpha1_namespaced_scheduled_job)
 #[derive(Debug)]
 pub enum PatchBatchV2alpha1NamespacedScheduledJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -1362,6 +1422,8 @@ impl ::Response for PatchBatchV2alpha1NamespacedScheduledJobResponse {
 
 impl CronJob {
     /// partially update status of the specified ScheduledJob
+    ///
+    /// Use [`PatchBatchV2alpha1NamespacedScheduledJobStatusResponse`](./enum.PatchBatchV2alpha1NamespacedScheduledJobStatusResponse.html) to parse the HTTP response.
     pub fn patch_batch_v2alpha1_namespaced_scheduled_job_status(
         // name of the ScheduledJob
         name: &str,
@@ -1384,6 +1446,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::patch_batch_v2alpha1_namespaced_scheduled_job_status`](./struct.CronJob.html#method.patch_batch_v2alpha1_namespaced_scheduled_job_status)
 #[derive(Debug)]
 pub enum PatchBatchV2alpha1NamespacedScheduledJobStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -1412,6 +1475,8 @@ impl ::Response for PatchBatchV2alpha1NamespacedScheduledJobStatusResponse {
 
 impl CronJob {
     /// read the specified ScheduledJob
+    ///
+    /// Use [`ReadBatchV2alpha1NamespacedScheduledJobResponse`](./enum.ReadBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
     pub fn read_batch_v2alpha1_namespaced_scheduled_job(
         // name of the ScheduledJob
         name: &str,
@@ -1443,6 +1508,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::read_batch_v2alpha1_namespaced_scheduled_job`](./struct.CronJob.html#method.read_batch_v2alpha1_namespaced_scheduled_job)
 #[derive(Debug)]
 pub enum ReadBatchV2alpha1NamespacedScheduledJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -1471,6 +1537,8 @@ impl ::Response for ReadBatchV2alpha1NamespacedScheduledJobResponse {
 
 impl CronJob {
     /// read status of the specified ScheduledJob
+    ///
+    /// Use [`ReadBatchV2alpha1NamespacedScheduledJobStatusResponse`](./enum.ReadBatchV2alpha1NamespacedScheduledJobStatusResponse.html) to parse the HTTP response.
     pub fn read_batch_v2alpha1_namespaced_scheduled_job_status(
         // name of the ScheduledJob
         name: &str,
@@ -1492,6 +1560,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::read_batch_v2alpha1_namespaced_scheduled_job_status`](./struct.CronJob.html#method.read_batch_v2alpha1_namespaced_scheduled_job_status)
 #[derive(Debug)]
 pub enum ReadBatchV2alpha1NamespacedScheduledJobStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -1520,6 +1589,8 @@ impl ::Response for ReadBatchV2alpha1NamespacedScheduledJobStatusResponse {
 
 impl CronJob {
     /// replace the specified ScheduledJob
+    ///
+    /// Use [`ReplaceBatchV2alpha1NamespacedScheduledJobResponse`](./enum.ReplaceBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
     pub fn replace_batch_v2alpha1_namespaced_scheduled_job(
         // name of the ScheduledJob
         name: &str,
@@ -1542,6 +1613,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::replace_batch_v2alpha1_namespaced_scheduled_job`](./struct.CronJob.html#method.replace_batch_v2alpha1_namespaced_scheduled_job)
 #[derive(Debug)]
 pub enum ReplaceBatchV2alpha1NamespacedScheduledJobResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -1570,6 +1642,8 @@ impl ::Response for ReplaceBatchV2alpha1NamespacedScheduledJobResponse {
 
 impl CronJob {
     /// replace status of the specified ScheduledJob
+    ///
+    /// Use [`ReplaceBatchV2alpha1NamespacedScheduledJobStatusResponse`](./enum.ReplaceBatchV2alpha1NamespacedScheduledJobStatusResponse.html) to parse the HTTP response.
     pub fn replace_batch_v2alpha1_namespaced_scheduled_job_status(
         // name of the ScheduledJob
         name: &str,
@@ -1592,6 +1666,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::replace_batch_v2alpha1_namespaced_scheduled_job_status`](./struct.CronJob.html#method.replace_batch_v2alpha1_namespaced_scheduled_job_status)
 #[derive(Debug)]
 pub enum ReplaceBatchV2alpha1NamespacedScheduledJobStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob),
@@ -1620,6 +1695,8 @@ impl ::Response for ReplaceBatchV2alpha1NamespacedScheduledJobStatusResponse {
 
 impl CronJob {
     /// watch changes to an object of kind ScheduledJob
+    ///
+    /// Use [`WatchBatchV2alpha1NamespacedScheduledJobResponse`](./enum.WatchBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
     pub fn watch_batch_v2alpha1_namespaced_scheduled_job(
         // name of the ScheduledJob
         name: &str,
@@ -1671,6 +1748,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::watch_batch_v2alpha1_namespaced_scheduled_job`](./struct.CronJob.html#method.watch_batch_v2alpha1_namespaced_scheduled_job)
 #[derive(Debug)]
 pub enum WatchBatchV2alpha1NamespacedScheduledJobResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1701,6 +1779,8 @@ impl ::Response for WatchBatchV2alpha1NamespacedScheduledJobResponse {
 
 impl CronJob {
     /// watch individual changes to a list of ScheduledJob
+    ///
+    /// Use [`WatchBatchV2alpha1NamespacedScheduledJobListResponse`](./enum.WatchBatchV2alpha1NamespacedScheduledJobListResponse.html) to parse the HTTP response.
     pub fn watch_batch_v2alpha1_namespaced_scheduled_job_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -1750,6 +1830,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::watch_batch_v2alpha1_namespaced_scheduled_job_list`](./struct.CronJob.html#method.watch_batch_v2alpha1_namespaced_scheduled_job_list)
 #[derive(Debug)]
 pub enum WatchBatchV2alpha1NamespacedScheduledJobListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1780,6 +1861,8 @@ impl ::Response for WatchBatchV2alpha1NamespacedScheduledJobListResponse {
 
 impl CronJob {
     /// watch individual changes to a list of ScheduledJob
+    ///
+    /// Use [`WatchBatchV2alpha1ScheduledJobListForAllNamespacesResponse`](./enum.WatchBatchV2alpha1ScheduledJobListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_batch_v2alpha1_scheduled_job_list_for_all_namespaces(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -1827,6 +1910,7 @@ impl CronJob {
     }
 }
 
+/// Parses the HTTP response of [`CronJob::watch_batch_v2alpha1_scheduled_job_list_for_all_namespaces`](./struct.CronJob.html#method.watch_batch_v2alpha1_scheduled_job_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchBatchV2alpha1ScheduledJobListForAllNamespacesResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

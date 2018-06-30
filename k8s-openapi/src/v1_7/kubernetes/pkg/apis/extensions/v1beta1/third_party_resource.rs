@@ -25,6 +25,8 @@ pub struct ThirdPartyResource {
 
 impl ThirdPartyResource {
     /// create a ThirdPartyResource
+    ///
+    /// Use [`CreateExtensionsV1beta1ThirdPartyResourceResponse`](./enum.CreateExtensionsV1beta1ThirdPartyResourceResponse.html) to parse the HTTP response.
     pub fn create_extensions_v1beta1_third_party_resource(
         body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::ThirdPartyResource,
         // If 'true', then the output is pretty printed.
@@ -43,6 +45,7 @@ impl ThirdPartyResource {
     }
 }
 
+/// Parses the HTTP response of [`ThirdPartyResource::create_extensions_v1beta1_third_party_resource`](./struct.ThirdPartyResource.html#method.create_extensions_v1beta1_third_party_resource)
 #[derive(Debug)]
 pub enum CreateExtensionsV1beta1ThirdPartyResourceResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::ThirdPartyResource),
@@ -71,6 +74,8 @@ impl ::Response for CreateExtensionsV1beta1ThirdPartyResourceResponse {
 
 impl ThirdPartyResource {
     /// delete collection of ThirdPartyResource
+    ///
+    /// Use [`DeleteExtensionsV1beta1CollectionThirdPartyResourceResponse`](./enum.DeleteExtensionsV1beta1CollectionThirdPartyResourceResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_collection_third_party_resource(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -118,6 +123,7 @@ impl ThirdPartyResource {
     }
 }
 
+/// Parses the HTTP response of [`ThirdPartyResource::delete_extensions_v1beta1_collection_third_party_resource`](./struct.ThirdPartyResource.html#method.delete_extensions_v1beta1_collection_third_party_resource)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1CollectionThirdPartyResourceResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -160,6 +166,8 @@ impl ::Response for DeleteExtensionsV1beta1CollectionThirdPartyResourceResponse 
 
 impl ThirdPartyResource {
     /// delete a ThirdPartyResource
+    ///
+    /// Use [`DeleteExtensionsV1beta1ThirdPartyResourceResponse`](./enum.DeleteExtensionsV1beta1ThirdPartyResourceResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_third_party_resource(
         // name of the ThirdPartyResource
         name: &str,
@@ -194,6 +202,7 @@ impl ThirdPartyResource {
     }
 }
 
+/// Parses the HTTP response of [`ThirdPartyResource::delete_extensions_v1beta1_third_party_resource`](./struct.ThirdPartyResource.html#method.delete_extensions_v1beta1_third_party_resource)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1ThirdPartyResourceResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -236,6 +245,8 @@ impl ::Response for DeleteExtensionsV1beta1ThirdPartyResourceResponse {
 
 impl ThirdPartyResource {
     /// list or watch objects of kind ThirdPartyResource
+    ///
+    /// Use [`ListExtensionsV1beta1ThirdPartyResourceResponse`](./enum.ListExtensionsV1beta1ThirdPartyResourceResponse.html) to parse the HTTP response.
     pub fn list_extensions_v1beta1_third_party_resource(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -283,6 +294,7 @@ impl ThirdPartyResource {
     }
 }
 
+/// Parses the HTTP response of [`ThirdPartyResource::list_extensions_v1beta1_third_party_resource`](./struct.ThirdPartyResource.html#method.list_extensions_v1beta1_third_party_resource)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1ThirdPartyResourceResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::ThirdPartyResourceList),
@@ -311,6 +323,8 @@ impl ::Response for ListExtensionsV1beta1ThirdPartyResourceResponse {
 
 impl ThirdPartyResource {
     /// partially update the specified ThirdPartyResource
+    ///
+    /// Use [`PatchExtensionsV1beta1ThirdPartyResourceResponse`](./enum.PatchExtensionsV1beta1ThirdPartyResourceResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_third_party_resource(
         // name of the ThirdPartyResource
         name: &str,
@@ -331,6 +345,7 @@ impl ThirdPartyResource {
     }
 }
 
+/// Parses the HTTP response of [`ThirdPartyResource::patch_extensions_v1beta1_third_party_resource`](./struct.ThirdPartyResource.html#method.patch_extensions_v1beta1_third_party_resource)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1ThirdPartyResourceResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::ThirdPartyResource),
@@ -359,6 +374,8 @@ impl ::Response for PatchExtensionsV1beta1ThirdPartyResourceResponse {
 
 impl ThirdPartyResource {
     /// read the specified ThirdPartyResource
+    ///
+    /// Use [`ReadExtensionsV1beta1ThirdPartyResourceResponse`](./enum.ReadExtensionsV1beta1ThirdPartyResourceResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_third_party_resource(
         // name of the ThirdPartyResource
         name: &str,
@@ -388,6 +405,7 @@ impl ThirdPartyResource {
     }
 }
 
+/// Parses the HTTP response of [`ThirdPartyResource::read_extensions_v1beta1_third_party_resource`](./struct.ThirdPartyResource.html#method.read_extensions_v1beta1_third_party_resource)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1ThirdPartyResourceResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::ThirdPartyResource),
@@ -416,6 +434,8 @@ impl ::Response for ReadExtensionsV1beta1ThirdPartyResourceResponse {
 
 impl ThirdPartyResource {
     /// replace the specified ThirdPartyResource
+    ///
+    /// Use [`ReplaceExtensionsV1beta1ThirdPartyResourceResponse`](./enum.ReplaceExtensionsV1beta1ThirdPartyResourceResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_third_party_resource(
         // name of the ThirdPartyResource
         name: &str,
@@ -436,6 +456,7 @@ impl ThirdPartyResource {
     }
 }
 
+/// Parses the HTTP response of [`ThirdPartyResource::replace_extensions_v1beta1_third_party_resource`](./struct.ThirdPartyResource.html#method.replace_extensions_v1beta1_third_party_resource)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1ThirdPartyResourceResponse {
     Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::ThirdPartyResource),
@@ -464,6 +485,8 @@ impl ::Response for ReplaceExtensionsV1beta1ThirdPartyResourceResponse {
 
 impl ThirdPartyResource {
     /// watch changes to an object of kind ThirdPartyResource
+    ///
+    /// Use [`WatchExtensionsV1beta1ThirdPartyResourceResponse`](./enum.WatchExtensionsV1beta1ThirdPartyResourceResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_third_party_resource(
         // name of the ThirdPartyResource
         name: &str,
@@ -513,6 +536,7 @@ impl ThirdPartyResource {
     }
 }
 
+/// Parses the HTTP response of [`ThirdPartyResource::watch_extensions_v1beta1_third_party_resource`](./struct.ThirdPartyResource.html#method.watch_extensions_v1beta1_third_party_resource)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1ThirdPartyResourceResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -543,6 +567,8 @@ impl ::Response for WatchExtensionsV1beta1ThirdPartyResourceResponse {
 
 impl ThirdPartyResource {
     /// watch individual changes to a list of ThirdPartyResource
+    ///
+    /// Use [`WatchExtensionsV1beta1ThirdPartyResourceListResponse`](./enum.WatchExtensionsV1beta1ThirdPartyResourceListResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_third_party_resource_list(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -590,6 +616,7 @@ impl ThirdPartyResource {
     }
 }
 
+/// Parses the HTTP response of [`ThirdPartyResource::watch_extensions_v1beta1_third_party_resource_list`](./struct.ThirdPartyResource.html#method.watch_extensions_v1beta1_third_party_resource_list)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1ThirdPartyResourceListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

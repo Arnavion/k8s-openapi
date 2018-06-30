@@ -25,6 +25,8 @@ pub struct DaemonSet {
 
 impl DaemonSet {
     /// create a DaemonSet
+    ///
+    /// Use [`CreateAppsV1beta2NamespacedDaemonSetResponse`](./enum.CreateAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn create_apps_v1beta2_namespaced_daemon_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::create_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_apps_v1beta2_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum CreateAppsV1beta2NamespacedDaemonSetResponse {
     Ok(::v1_8::api::apps::v1beta2::DaemonSet),
@@ -73,6 +76,8 @@ impl ::Response for CreateAppsV1beta2NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// delete collection of DaemonSet
+    ///
+    /// Use [`DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse`](./enum.DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn delete_apps_v1beta2_collection_namespaced_daemon_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -134,6 +139,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::delete_apps_v1beta2_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_apps_v1beta2_collection_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -176,6 +182,8 @@ impl ::Response for DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// delete a DaemonSet
+    ///
+    /// Use [`DeleteAppsV1beta2NamespacedDaemonSetResponse`](./enum.DeleteAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn delete_apps_v1beta2_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
@@ -212,6 +220,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::delete_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_apps_v1beta2_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum DeleteAppsV1beta2NamespacedDaemonSetResponse {
     OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -254,6 +263,8 @@ impl ::Response for DeleteAppsV1beta2NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// list or watch objects of kind DaemonSet
+    ///
+    /// Use [`ListAppsV1beta2DaemonSetForAllNamespacesResponse`](./enum.ListAppsV1beta2DaemonSetForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_apps_v1beta2_daemon_set_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -313,6 +324,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::list_apps_v1beta2_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_apps_v1beta2_daemon_set_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListAppsV1beta2DaemonSetForAllNamespacesResponse {
     Ok(::v1_8::api::apps::v1beta2::DaemonSetList),
@@ -341,6 +353,8 @@ impl ::Response for ListAppsV1beta2DaemonSetForAllNamespacesResponse {
 
 impl DaemonSet {
     /// list or watch objects of kind DaemonSet
+    ///
+    /// Use [`ListAppsV1beta2NamespacedDaemonSetResponse`](./enum.ListAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn list_apps_v1beta2_namespaced_daemon_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -402,6 +416,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::list_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_apps_v1beta2_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum ListAppsV1beta2NamespacedDaemonSetResponse {
     Ok(::v1_8::api::apps::v1beta2::DaemonSetList),
@@ -430,6 +445,8 @@ impl ::Response for ListAppsV1beta2NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// partially update the specified DaemonSet
+    ///
+    /// Use [`PatchAppsV1beta2NamespacedDaemonSetResponse`](./enum.PatchAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1beta2_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
@@ -452,6 +469,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::patch_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_apps_v1beta2_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum PatchAppsV1beta2NamespacedDaemonSetResponse {
     Ok(::v1_8::api::apps::v1beta2::DaemonSet),
@@ -480,6 +498,8 @@ impl ::Response for PatchAppsV1beta2NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// partially update status of the specified DaemonSet
+    ///
+    /// Use [`PatchAppsV1beta2NamespacedDaemonSetStatusResponse`](./enum.PatchAppsV1beta2NamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1beta2_namespaced_daemon_set_status(
         // name of the DaemonSet
         name: &str,
@@ -502,6 +522,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::patch_apps_v1beta2_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_apps_v1beta2_namespaced_daemon_set_status)
 #[derive(Debug)]
 pub enum PatchAppsV1beta2NamespacedDaemonSetStatusResponse {
     Ok(::v1_8::api::apps::v1beta2::DaemonSet),
@@ -530,6 +551,8 @@ impl ::Response for PatchAppsV1beta2NamespacedDaemonSetStatusResponse {
 
 impl DaemonSet {
     /// read the specified DaemonSet
+    ///
+    /// Use [`ReadAppsV1beta2NamespacedDaemonSetResponse`](./enum.ReadAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn read_apps_v1beta2_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
@@ -561,6 +584,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::read_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_apps_v1beta2_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum ReadAppsV1beta2NamespacedDaemonSetResponse {
     Ok(::v1_8::api::apps::v1beta2::DaemonSet),
@@ -589,6 +613,8 @@ impl ::Response for ReadAppsV1beta2NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// read status of the specified DaemonSet
+    ///
+    /// Use [`ReadAppsV1beta2NamespacedDaemonSetStatusResponse`](./enum.ReadAppsV1beta2NamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
     pub fn read_apps_v1beta2_namespaced_daemon_set_status(
         // name of the DaemonSet
         name: &str,
@@ -610,6 +636,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::read_apps_v1beta2_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_apps_v1beta2_namespaced_daemon_set_status)
 #[derive(Debug)]
 pub enum ReadAppsV1beta2NamespacedDaemonSetStatusResponse {
     Ok(::v1_8::api::apps::v1beta2::DaemonSet),
@@ -638,6 +665,8 @@ impl ::Response for ReadAppsV1beta2NamespacedDaemonSetStatusResponse {
 
 impl DaemonSet {
     /// replace the specified DaemonSet
+    ///
+    /// Use [`ReplaceAppsV1beta2NamespacedDaemonSetResponse`](./enum.ReplaceAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1beta2_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
@@ -660,6 +689,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::replace_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_apps_v1beta2_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta2NamespacedDaemonSetResponse {
     Ok(::v1_8::api::apps::v1beta2::DaemonSet),
@@ -688,6 +718,8 @@ impl ::Response for ReplaceAppsV1beta2NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// replace status of the specified DaemonSet
+    ///
+    /// Use [`ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse`](./enum.ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1beta2_namespaced_daemon_set_status(
         // name of the DaemonSet
         name: &str,
@@ -710,6 +742,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::replace_apps_v1beta2_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_apps_v1beta2_namespaced_daemon_set_status)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse {
     Ok(::v1_8::api::apps::v1beta2::DaemonSet),
@@ -738,6 +771,8 @@ impl ::Response for ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse {
 
 impl DaemonSet {
     /// watch individual changes to a list of DaemonSet
+    ///
+    /// Use [`WatchAppsV1beta2DaemonSetListForAllNamespacesResponse`](./enum.WatchAppsV1beta2DaemonSetListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1beta2_daemon_set_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -797,6 +832,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::watch_apps_v1beta2_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_apps_v1beta2_daemon_set_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchAppsV1beta2DaemonSetListForAllNamespacesResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -827,6 +863,8 @@ impl ::Response for WatchAppsV1beta2DaemonSetListForAllNamespacesResponse {
 
 impl DaemonSet {
     /// watch changes to an object of kind DaemonSet
+    ///
+    /// Use [`WatchAppsV1beta2NamespacedDaemonSetResponse`](./enum.WatchAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1beta2_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
@@ -890,6 +928,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::watch_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_apps_v1beta2_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum WatchAppsV1beta2NamespacedDaemonSetResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -920,6 +959,8 @@ impl ::Response for WatchAppsV1beta2NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// watch individual changes to a list of DaemonSet
+    ///
+    /// Use [`WatchAppsV1beta2NamespacedDaemonSetListResponse`](./enum.WatchAppsV1beta2NamespacedDaemonSetListResponse.html) to parse the HTTP response.
     pub fn watch_apps_v1beta2_namespaced_daemon_set_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -981,6 +1022,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::watch_apps_v1beta2_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_apps_v1beta2_namespaced_daemon_set_list)
 #[derive(Debug)]
 pub enum WatchAppsV1beta2NamespacedDaemonSetListResponse {
     Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

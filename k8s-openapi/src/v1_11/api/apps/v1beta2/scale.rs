@@ -25,6 +25,8 @@ pub struct Scale {
 
 impl Scale {
     /// partially update scale of the specified Deployment
+    ///
+    /// Use [`PatchAppsV1beta2NamespacedDeploymentScaleResponse`](./enum.PatchAppsV1beta2NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1beta2_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -47,6 +49,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_apps_v1beta2_namespaced_deployment_scale`](./struct.Scale.html#method.patch_apps_v1beta2_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum PatchAppsV1beta2NamespacedDeploymentScaleResponse {
     Ok(::v1_11::api::apps::v1beta2::Scale),
@@ -75,6 +78,8 @@ impl ::Response for PatchAppsV1beta2NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// partially update scale of the specified ReplicaSet
+    ///
+    /// Use [`PatchAppsV1beta2NamespacedReplicaSetScaleResponse`](./enum.PatchAppsV1beta2NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1beta2_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
@@ -97,6 +102,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_apps_v1beta2_namespaced_replica_set_scale`](./struct.Scale.html#method.patch_apps_v1beta2_namespaced_replica_set_scale)
 #[derive(Debug)]
 pub enum PatchAppsV1beta2NamespacedReplicaSetScaleResponse {
     Ok(::v1_11::api::apps::v1beta2::Scale),
@@ -125,6 +131,8 @@ impl ::Response for PatchAppsV1beta2NamespacedReplicaSetScaleResponse {
 
 impl Scale {
     /// partially update scale of the specified StatefulSet
+    ///
+    /// Use [`PatchAppsV1beta2NamespacedStatefulSetScaleResponse`](./enum.PatchAppsV1beta2NamespacedStatefulSetScaleResponse.html) to parse the HTTP response.
     pub fn patch_apps_v1beta2_namespaced_stateful_set_scale(
         // name of the Scale
         name: &str,
@@ -147,6 +155,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::patch_apps_v1beta2_namespaced_stateful_set_scale`](./struct.Scale.html#method.patch_apps_v1beta2_namespaced_stateful_set_scale)
 #[derive(Debug)]
 pub enum PatchAppsV1beta2NamespacedStatefulSetScaleResponse {
     Ok(::v1_11::api::apps::v1beta2::Scale),
@@ -175,6 +184,8 @@ impl ::Response for PatchAppsV1beta2NamespacedStatefulSetScaleResponse {
 
 impl Scale {
     /// read scale of the specified Deployment
+    ///
+    /// Use [`ReadAppsV1beta2NamespacedDeploymentScaleResponse`](./enum.ReadAppsV1beta2NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn read_apps_v1beta2_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -196,6 +207,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_apps_v1beta2_namespaced_deployment_scale`](./struct.Scale.html#method.read_apps_v1beta2_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum ReadAppsV1beta2NamespacedDeploymentScaleResponse {
     Ok(::v1_11::api::apps::v1beta2::Scale),
@@ -224,6 +236,8 @@ impl ::Response for ReadAppsV1beta2NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// read scale of the specified ReplicaSet
+    ///
+    /// Use [`ReadAppsV1beta2NamespacedReplicaSetScaleResponse`](./enum.ReadAppsV1beta2NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
     pub fn read_apps_v1beta2_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
@@ -245,6 +259,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_apps_v1beta2_namespaced_replica_set_scale`](./struct.Scale.html#method.read_apps_v1beta2_namespaced_replica_set_scale)
 #[derive(Debug)]
 pub enum ReadAppsV1beta2NamespacedReplicaSetScaleResponse {
     Ok(::v1_11::api::apps::v1beta2::Scale),
@@ -273,6 +288,8 @@ impl ::Response for ReadAppsV1beta2NamespacedReplicaSetScaleResponse {
 
 impl Scale {
     /// read scale of the specified StatefulSet
+    ///
+    /// Use [`ReadAppsV1beta2NamespacedStatefulSetScaleResponse`](./enum.ReadAppsV1beta2NamespacedStatefulSetScaleResponse.html) to parse the HTTP response.
     pub fn read_apps_v1beta2_namespaced_stateful_set_scale(
         // name of the Scale
         name: &str,
@@ -294,6 +311,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::read_apps_v1beta2_namespaced_stateful_set_scale`](./struct.Scale.html#method.read_apps_v1beta2_namespaced_stateful_set_scale)
 #[derive(Debug)]
 pub enum ReadAppsV1beta2NamespacedStatefulSetScaleResponse {
     Ok(::v1_11::api::apps::v1beta2::Scale),
@@ -322,6 +340,8 @@ impl ::Response for ReadAppsV1beta2NamespacedStatefulSetScaleResponse {
 
 impl Scale {
     /// replace scale of the specified Deployment
+    ///
+    /// Use [`ReplaceAppsV1beta2NamespacedDeploymentScaleResponse`](./enum.ReplaceAppsV1beta2NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1beta2_namespaced_deployment_scale(
         // name of the Scale
         name: &str,
@@ -344,6 +364,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_apps_v1beta2_namespaced_deployment_scale`](./struct.Scale.html#method.replace_apps_v1beta2_namespaced_deployment_scale)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta2NamespacedDeploymentScaleResponse {
     Ok(::v1_11::api::apps::v1beta2::Scale),
@@ -381,6 +402,8 @@ impl ::Response for ReplaceAppsV1beta2NamespacedDeploymentScaleResponse {
 
 impl Scale {
     /// replace scale of the specified ReplicaSet
+    ///
+    /// Use [`ReplaceAppsV1beta2NamespacedReplicaSetScaleResponse`](./enum.ReplaceAppsV1beta2NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1beta2_namespaced_replica_set_scale(
         // name of the Scale
         name: &str,
@@ -403,6 +426,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_apps_v1beta2_namespaced_replica_set_scale`](./struct.Scale.html#method.replace_apps_v1beta2_namespaced_replica_set_scale)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta2NamespacedReplicaSetScaleResponse {
     Ok(::v1_11::api::apps::v1beta2::Scale),
@@ -440,6 +464,8 @@ impl ::Response for ReplaceAppsV1beta2NamespacedReplicaSetScaleResponse {
 
 impl Scale {
     /// replace scale of the specified StatefulSet
+    ///
+    /// Use [`ReplaceAppsV1beta2NamespacedStatefulSetScaleResponse`](./enum.ReplaceAppsV1beta2NamespacedStatefulSetScaleResponse.html) to parse the HTTP response.
     pub fn replace_apps_v1beta2_namespaced_stateful_set_scale(
         // name of the Scale
         name: &str,
@@ -462,6 +488,7 @@ impl Scale {
     }
 }
 
+/// Parses the HTTP response of [`Scale::replace_apps_v1beta2_namespaced_stateful_set_scale`](./struct.Scale.html#method.replace_apps_v1beta2_namespaced_stateful_set_scale)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta2NamespacedStatefulSetScaleResponse {
     Ok(::v1_11::api::apps::v1beta2::Scale),

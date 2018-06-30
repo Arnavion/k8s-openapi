@@ -22,6 +22,8 @@ pub struct ExternalAdmissionHookConfiguration {
 
 impl ExternalAdmissionHookConfiguration {
     /// create an ExternalAdmissionHookConfiguration
+    ///
+    /// Use [`CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse`](./enum.CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
     pub fn create_admissionregistration_v1alpha1_external_admission_hook_configuration(
         body: &::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
         // If 'true', then the output is pretty printed.
@@ -40,6 +42,7 @@ impl ExternalAdmissionHookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::create_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.create_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
     Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
@@ -68,6 +71,8 @@ impl ::Response for CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConf
 
 impl ExternalAdmissionHookConfiguration {
     /// delete collection of ExternalAdmissionHookConfiguration
+    ///
+    /// Use [`DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse`](./enum.DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
     pub fn delete_admissionregistration_v1alpha1_collection_external_admission_hook_configuration(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -115,6 +120,7 @@ impl ExternalAdmissionHookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::delete_admissionregistration_v1alpha1_collection_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.delete_admissionregistration_v1alpha1_collection_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -157,6 +163,8 @@ impl ::Response for DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissi
 
 impl ExternalAdmissionHookConfiguration {
     /// delete an ExternalAdmissionHookConfiguration
+    ///
+    /// Use [`DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse`](./enum.DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
     pub fn delete_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // name of the ExternalAdmissionHookConfiguration
         name: &str,
@@ -191,6 +199,7 @@ impl ExternalAdmissionHookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::delete_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.delete_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -233,6 +242,8 @@ impl ::Response for DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConf
 
 impl ExternalAdmissionHookConfiguration {
     /// list or watch objects of kind ExternalAdmissionHookConfiguration
+    ///
+    /// Use [`ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse`](./enum.ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
     pub fn list_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -280,6 +291,7 @@ impl ExternalAdmissionHookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::list_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.list_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
     Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
@@ -308,6 +320,8 @@ impl ::Response for ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfig
 
 impl ExternalAdmissionHookConfiguration {
     /// partially update the specified ExternalAdmissionHookConfiguration
+    ///
+    /// Use [`PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse`](./enum.PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
     pub fn patch_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // name of the ExternalAdmissionHookConfiguration
         name: &str,
@@ -328,6 +342,7 @@ impl ExternalAdmissionHookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::patch_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.patch_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
     Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
@@ -356,6 +371,8 @@ impl ::Response for PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfi
 
 impl ExternalAdmissionHookConfiguration {
     /// read the specified ExternalAdmissionHookConfiguration
+    ///
+    /// Use [`ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse`](./enum.ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
     pub fn read_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // name of the ExternalAdmissionHookConfiguration
         name: &str,
@@ -385,6 +402,7 @@ impl ExternalAdmissionHookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::read_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.read_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
     Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
@@ -413,6 +431,8 @@ impl ::Response for ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfig
 
 impl ExternalAdmissionHookConfiguration {
     /// replace the specified ExternalAdmissionHookConfiguration
+    ///
+    /// Use [`ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse`](./enum.ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
     pub fn replace_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // name of the ExternalAdmissionHookConfiguration
         name: &str,
@@ -433,6 +453,7 @@ impl ExternalAdmissionHookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::replace_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.replace_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
     Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
@@ -461,6 +482,8 @@ impl ::Response for ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookCon
 
 impl ExternalAdmissionHookConfiguration {
     /// watch changes to an object of kind ExternalAdmissionHookConfiguration
+    ///
+    /// Use [`WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse`](./enum.WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
     pub fn watch_admissionregistration_v1alpha1_external_admission_hook_configuration(
         // name of the ExternalAdmissionHookConfiguration
         name: &str,
@@ -510,6 +533,7 @@ impl ExternalAdmissionHookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::watch_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.watch_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -540,6 +564,8 @@ impl ::Response for WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfi
 
 impl ExternalAdmissionHookConfiguration {
     /// watch individual changes to a list of ExternalAdmissionHookConfiguration
+    ///
+    /// Use [`WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse`](./enum.WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse.html) to parse the HTTP response.
     pub fn watch_admissionregistration_v1alpha1_external_admission_hook_configuration_list(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -587,6 +613,7 @@ impl ExternalAdmissionHookConfiguration {
     }
 }
 
+/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::watch_admissionregistration_v1alpha1_external_admission_hook_configuration_list`](./struct.ExternalAdmissionHookConfiguration.html#method.watch_admissionregistration_v1alpha1_external_admission_hook_configuration_list)
 #[derive(Debug)]
 pub enum WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

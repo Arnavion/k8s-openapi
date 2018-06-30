@@ -24,6 +24,8 @@ pub struct CertificateSigningRequest {
 
 impl CertificateSigningRequest {
     /// create a CertificateSigningRequest
+    ///
+    /// Use [`CreateCertificatesV1beta1CertificateSigningRequestResponse`](./enum.CreateCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
     pub fn create_certificates_v1beta1_certificate_signing_request(
         body: &::v1_7::kubernetes::pkg::apis::certificates::v1beta1::CertificateSigningRequest,
         // If 'true', then the output is pretty printed.
@@ -42,6 +44,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::create_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.create_certificates_v1beta1_certificate_signing_request)
 #[derive(Debug)]
 pub enum CreateCertificatesV1beta1CertificateSigningRequestResponse {
     Ok(::v1_7::kubernetes::pkg::apis::certificates::v1beta1::CertificateSigningRequest),
@@ -70,6 +73,8 @@ impl ::Response for CreateCertificatesV1beta1CertificateSigningRequestResponse {
 
 impl CertificateSigningRequest {
     /// delete a CertificateSigningRequest
+    ///
+    /// Use [`DeleteCertificatesV1beta1CertificateSigningRequestResponse`](./enum.DeleteCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
     pub fn delete_certificates_v1beta1_certificate_signing_request(
         // name of the CertificateSigningRequest
         name: &str,
@@ -104,6 +109,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::delete_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificates_v1beta1_certificate_signing_request)
 #[derive(Debug)]
 pub enum DeleteCertificatesV1beta1CertificateSigningRequestResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -146,6 +152,8 @@ impl ::Response for DeleteCertificatesV1beta1CertificateSigningRequestResponse {
 
 impl CertificateSigningRequest {
     /// delete collection of CertificateSigningRequest
+    ///
+    /// Use [`DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse`](./enum.DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse.html) to parse the HTTP response.
     pub fn delete_certificates_v1beta1_collection_certificate_signing_request(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -193,6 +201,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::delete_certificates_v1beta1_collection_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificates_v1beta1_collection_certificate_signing_request)
 #[derive(Debug)]
 pub enum DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse {
     OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
@@ -235,6 +244,8 @@ impl ::Response for DeleteCertificatesV1beta1CollectionCertificateSigningRequest
 
 impl CertificateSigningRequest {
     /// list or watch objects of kind CertificateSigningRequest
+    ///
+    /// Use [`ListCertificatesV1beta1CertificateSigningRequestResponse`](./enum.ListCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
     pub fn list_certificates_v1beta1_certificate_signing_request(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -282,6 +293,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::list_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.list_certificates_v1beta1_certificate_signing_request)
 #[derive(Debug)]
 pub enum ListCertificatesV1beta1CertificateSigningRequestResponse {
     Ok(::v1_7::kubernetes::pkg::apis::certificates::v1beta1::CertificateSigningRequestList),
@@ -310,6 +322,8 @@ impl ::Response for ListCertificatesV1beta1CertificateSigningRequestResponse {
 
 impl CertificateSigningRequest {
     /// partially update the specified CertificateSigningRequest
+    ///
+    /// Use [`PatchCertificatesV1beta1CertificateSigningRequestResponse`](./enum.PatchCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
     pub fn patch_certificates_v1beta1_certificate_signing_request(
         // name of the CertificateSigningRequest
         name: &str,
@@ -330,6 +344,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::patch_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.patch_certificates_v1beta1_certificate_signing_request)
 #[derive(Debug)]
 pub enum PatchCertificatesV1beta1CertificateSigningRequestResponse {
     Ok(::v1_7::kubernetes::pkg::apis::certificates::v1beta1::CertificateSigningRequest),
@@ -358,6 +373,8 @@ impl ::Response for PatchCertificatesV1beta1CertificateSigningRequestResponse {
 
 impl CertificateSigningRequest {
     /// read the specified CertificateSigningRequest
+    ///
+    /// Use [`ReadCertificatesV1beta1CertificateSigningRequestResponse`](./enum.ReadCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
     pub fn read_certificates_v1beta1_certificate_signing_request(
         // name of the CertificateSigningRequest
         name: &str,
@@ -387,6 +404,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::read_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.read_certificates_v1beta1_certificate_signing_request)
 #[derive(Debug)]
 pub enum ReadCertificatesV1beta1CertificateSigningRequestResponse {
     Ok(::v1_7::kubernetes::pkg::apis::certificates::v1beta1::CertificateSigningRequest),
@@ -415,6 +433,8 @@ impl ::Response for ReadCertificatesV1beta1CertificateSigningRequestResponse {
 
 impl CertificateSigningRequest {
     /// replace the specified CertificateSigningRequest
+    ///
+    /// Use [`ReplaceCertificatesV1beta1CertificateSigningRequestResponse`](./enum.ReplaceCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
     pub fn replace_certificates_v1beta1_certificate_signing_request(
         // name of the CertificateSigningRequest
         name: &str,
@@ -435,6 +455,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.replace_certificates_v1beta1_certificate_signing_request)
 #[derive(Debug)]
 pub enum ReplaceCertificatesV1beta1CertificateSigningRequestResponse {
     Ok(::v1_7::kubernetes::pkg::apis::certificates::v1beta1::CertificateSigningRequest),
@@ -463,6 +484,8 @@ impl ::Response for ReplaceCertificatesV1beta1CertificateSigningRequestResponse 
 
 impl CertificateSigningRequest {
     /// replace approval of the specified CertificateSigningRequest
+    ///
+    /// Use [`ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse`](./enum.ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse.html) to parse the HTTP response.
     pub fn replace_certificates_v1beta1_certificate_signing_request_approval(
         // name of the CertificateSigningRequest
         name: &str,
@@ -483,6 +506,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificates_v1beta1_certificate_signing_request_approval`](./struct.CertificateSigningRequest.html#method.replace_certificates_v1beta1_certificate_signing_request_approval)
 #[derive(Debug)]
 pub enum ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse {
     Ok(::v1_7::kubernetes::pkg::apis::certificates::v1beta1::CertificateSigningRequest),
@@ -511,6 +535,8 @@ impl ::Response for ReplaceCertificatesV1beta1CertificateSigningRequestApprovalR
 
 impl CertificateSigningRequest {
     /// replace status of the specified CertificateSigningRequest
+    ///
+    /// Use [`ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse`](./enum.ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse.html) to parse the HTTP response.
     pub fn replace_certificates_v1beta1_certificate_signing_request_status(
         // name of the CertificateSigningRequest
         name: &str,
@@ -531,6 +557,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificates_v1beta1_certificate_signing_request_status`](./struct.CertificateSigningRequest.html#method.replace_certificates_v1beta1_certificate_signing_request_status)
 #[derive(Debug)]
 pub enum ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse {
     Ok(::v1_7::kubernetes::pkg::apis::certificates::v1beta1::CertificateSigningRequest),
@@ -559,6 +586,8 @@ impl ::Response for ReplaceCertificatesV1beta1CertificateSigningRequestStatusRes
 
 impl CertificateSigningRequest {
     /// watch changes to an object of kind CertificateSigningRequest
+    ///
+    /// Use [`WatchCertificatesV1beta1CertificateSigningRequestResponse`](./enum.WatchCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
     pub fn watch_certificates_v1beta1_certificate_signing_request(
         // name of the CertificateSigningRequest
         name: &str,
@@ -608,6 +637,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::watch_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.watch_certificates_v1beta1_certificate_signing_request)
 #[derive(Debug)]
 pub enum WatchCertificatesV1beta1CertificateSigningRequestResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -638,6 +668,8 @@ impl ::Response for WatchCertificatesV1beta1CertificateSigningRequestResponse {
 
 impl CertificateSigningRequest {
     /// watch individual changes to a list of CertificateSigningRequest
+    ///
+    /// Use [`WatchCertificatesV1beta1CertificateSigningRequestListResponse`](./enum.WatchCertificatesV1beta1CertificateSigningRequestListResponse.html) to parse the HTTP response.
     pub fn watch_certificates_v1beta1_certificate_signing_request_list(
         // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
@@ -685,6 +717,7 @@ impl CertificateSigningRequest {
     }
 }
 
+/// Parses the HTTP response of [`CertificateSigningRequest::watch_certificates_v1beta1_certificate_signing_request_list`](./struct.CertificateSigningRequest.html#method.watch_certificates_v1beta1_certificate_signing_request_list)
 #[derive(Debug)]
 pub enum WatchCertificatesV1beta1CertificateSigningRequestListResponse {
     Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),

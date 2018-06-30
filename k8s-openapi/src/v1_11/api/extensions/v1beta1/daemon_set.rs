@@ -25,6 +25,8 @@ pub struct DaemonSet {
 
 impl DaemonSet {
     /// create a DaemonSet
+    ///
+    /// Use [`CreateExtensionsV1beta1NamespacedDaemonSetResponse`](./enum.CreateExtensionsV1beta1NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn create_extensions_v1beta1_namespaced_daemon_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -45,6 +47,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::create_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum CreateExtensionsV1beta1NamespacedDaemonSetResponse {
     Ok(::v1_11::api::extensions::v1beta1::DaemonSet),
@@ -91,6 +94,8 @@ impl ::Response for CreateExtensionsV1beta1NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// delete collection of DaemonSet
+    ///
+    /// Use [`DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse`](./enum.DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_collection_namespaced_daemon_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -152,6 +157,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::delete_extensions_v1beta1_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_extensions_v1beta1_collection_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -194,6 +200,8 @@ impl ::Response for DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse
 
 impl DaemonSet {
     /// delete a DaemonSet
+    ///
+    /// Use [`DeleteExtensionsV1beta1NamespacedDaemonSetResponse`](./enum.DeleteExtensionsV1beta1NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn delete_extensions_v1beta1_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
@@ -230,6 +238,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::delete_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1NamespacedDaemonSetResponse {
     OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -272,6 +281,8 @@ impl ::Response for DeleteExtensionsV1beta1NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// list or watch objects of kind DaemonSet
+    ///
+    /// Use [`ListExtensionsV1beta1DaemonSetForAllNamespacesResponse`](./enum.ListExtensionsV1beta1DaemonSetForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_extensions_v1beta1_daemon_set_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -331,6 +342,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::list_extensions_v1beta1_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_extensions_v1beta1_daemon_set_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1DaemonSetForAllNamespacesResponse {
     Ok(::v1_11::api::extensions::v1beta1::DaemonSetList),
@@ -359,6 +371,8 @@ impl ::Response for ListExtensionsV1beta1DaemonSetForAllNamespacesResponse {
 
 impl DaemonSet {
     /// list or watch objects of kind DaemonSet
+    ///
+    /// Use [`ListExtensionsV1beta1NamespacedDaemonSetResponse`](./enum.ListExtensionsV1beta1NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn list_extensions_v1beta1_namespaced_daemon_set(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -420,6 +434,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::list_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1NamespacedDaemonSetResponse {
     Ok(::v1_11::api::extensions::v1beta1::DaemonSetList),
@@ -448,6 +463,8 @@ impl ::Response for ListExtensionsV1beta1NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// partially update the specified DaemonSet
+    ///
+    /// Use [`PatchExtensionsV1beta1NamespacedDaemonSetResponse`](./enum.PatchExtensionsV1beta1NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
@@ -470,6 +487,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::patch_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedDaemonSetResponse {
     Ok(::v1_11::api::extensions::v1beta1::DaemonSet),
@@ -498,6 +516,8 @@ impl ::Response for PatchExtensionsV1beta1NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// partially update status of the specified DaemonSet
+    ///
+    /// Use [`PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse`](./enum.PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
     pub fn patch_extensions_v1beta1_namespaced_daemon_set_status(
         // name of the DaemonSet
         name: &str,
@@ -520,6 +540,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::patch_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_extensions_v1beta1_namespaced_daemon_set_status)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse {
     Ok(::v1_11::api::extensions::v1beta1::DaemonSet),
@@ -548,6 +569,8 @@ impl ::Response for PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse {
 
 impl DaemonSet {
     /// read the specified DaemonSet
+    ///
+    /// Use [`ReadExtensionsV1beta1NamespacedDaemonSetResponse`](./enum.ReadExtensionsV1beta1NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
@@ -579,6 +602,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::read_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedDaemonSetResponse {
     Ok(::v1_11::api::extensions::v1beta1::DaemonSet),
@@ -607,6 +631,8 @@ impl ::Response for ReadExtensionsV1beta1NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// read status of the specified DaemonSet
+    ///
+    /// Use [`ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse`](./enum.ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
     pub fn read_extensions_v1beta1_namespaced_daemon_set_status(
         // name of the DaemonSet
         name: &str,
@@ -628,6 +654,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::read_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_extensions_v1beta1_namespaced_daemon_set_status)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse {
     Ok(::v1_11::api::extensions::v1beta1::DaemonSet),
@@ -656,6 +683,8 @@ impl ::Response for ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse {
 
 impl DaemonSet {
     /// replace the specified DaemonSet
+    ///
+    /// Use [`ReplaceExtensionsV1beta1NamespacedDaemonSetResponse`](./enum.ReplaceExtensionsV1beta1NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
@@ -678,6 +707,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::replace_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedDaemonSetResponse {
     Ok(::v1_11::api::extensions::v1beta1::DaemonSet),
@@ -715,6 +745,8 @@ impl ::Response for ReplaceExtensionsV1beta1NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// replace status of the specified DaemonSet
+    ///
+    /// Use [`ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse`](./enum.ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
     pub fn replace_extensions_v1beta1_namespaced_daemon_set_status(
         // name of the DaemonSet
         name: &str,
@@ -737,6 +769,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::replace_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_extensions_v1beta1_namespaced_daemon_set_status)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse {
     Ok(::v1_11::api::extensions::v1beta1::DaemonSet),
@@ -774,6 +807,8 @@ impl ::Response for ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse {
 
 impl DaemonSet {
     /// watch individual changes to a list of DaemonSet
+    ///
+    /// Use [`WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse`](./enum.WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_daemon_set_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -833,6 +868,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::watch_extensions_v1beta1_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_daemon_set_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -863,6 +899,8 @@ impl ::Response for WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse 
 
 impl DaemonSet {
     /// watch changes to an object of kind DaemonSet
+    ///
+    /// Use [`WatchExtensionsV1beta1NamespacedDaemonSetResponse`](./enum.WatchExtensionsV1beta1NamespacedDaemonSetResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_namespaced_daemon_set(
         // name of the DaemonSet
         name: &str,
@@ -926,6 +964,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::watch_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NamespacedDaemonSetResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -956,6 +995,8 @@ impl ::Response for WatchExtensionsV1beta1NamespacedDaemonSetResponse {
 
 impl DaemonSet {
     /// watch individual changes to a list of DaemonSet
+    ///
+    /// Use [`WatchExtensionsV1beta1NamespacedDaemonSetListResponse`](./enum.WatchExtensionsV1beta1NamespacedDaemonSetListResponse.html) to parse the HTTP response.
     pub fn watch_extensions_v1beta1_namespaced_daemon_set_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -1017,6 +1058,7 @@ impl DaemonSet {
     }
 }
 
+/// Parses the HTTP response of [`DaemonSet::watch_extensions_v1beta1_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_namespaced_daemon_set_list)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NamespacedDaemonSetListResponse {
     Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

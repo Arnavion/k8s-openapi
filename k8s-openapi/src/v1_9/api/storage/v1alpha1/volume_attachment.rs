@@ -27,6 +27,8 @@ pub struct VolumeAttachment {
 
 impl VolumeAttachment {
     /// create a VolumeAttachment
+    ///
+    /// Use [`CreateStorageV1alpha1VolumeAttachmentResponse`](./enum.CreateStorageV1alpha1VolumeAttachmentResponse.html) to parse the HTTP response.
     pub fn create_storage_v1alpha1_volume_attachment(
         body: &::v1_9::api::storage::v1alpha1::VolumeAttachment,
         // If 'true', then the output is pretty printed.
@@ -45,6 +47,7 @@ impl VolumeAttachment {
     }
 }
 
+/// Parses the HTTP response of [`VolumeAttachment::create_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.create_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum CreateStorageV1alpha1VolumeAttachmentResponse {
     Ok(::v1_9::api::storage::v1alpha1::VolumeAttachment),
@@ -91,6 +94,8 @@ impl ::Response for CreateStorageV1alpha1VolumeAttachmentResponse {
 
 impl VolumeAttachment {
     /// delete collection of VolumeAttachment
+    ///
+    /// Use [`DeleteStorageV1alpha1CollectionVolumeAttachmentResponse`](./enum.DeleteStorageV1alpha1CollectionVolumeAttachmentResponse.html) to parse the HTTP response.
     pub fn delete_storage_v1alpha1_collection_volume_attachment(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -150,6 +155,7 @@ impl VolumeAttachment {
     }
 }
 
+/// Parses the HTTP response of [`VolumeAttachment::delete_storage_v1alpha1_collection_volume_attachment`](./struct.VolumeAttachment.html#method.delete_storage_v1alpha1_collection_volume_attachment)
 #[derive(Debug)]
 pub enum DeleteStorageV1alpha1CollectionVolumeAttachmentResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -192,6 +198,8 @@ impl ::Response for DeleteStorageV1alpha1CollectionVolumeAttachmentResponse {
 
 impl VolumeAttachment {
     /// delete a VolumeAttachment
+    ///
+    /// Use [`DeleteStorageV1alpha1VolumeAttachmentResponse`](./enum.DeleteStorageV1alpha1VolumeAttachmentResponse.html) to parse the HTTP response.
     pub fn delete_storage_v1alpha1_volume_attachment(
         // name of the VolumeAttachment
         name: &str,
@@ -226,6 +234,7 @@ impl VolumeAttachment {
     }
 }
 
+/// Parses the HTTP response of [`VolumeAttachment::delete_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.delete_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum DeleteStorageV1alpha1VolumeAttachmentResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -268,6 +277,8 @@ impl ::Response for DeleteStorageV1alpha1VolumeAttachmentResponse {
 
 impl VolumeAttachment {
     /// list or watch objects of kind VolumeAttachment
+    ///
+    /// Use [`ListStorageV1alpha1VolumeAttachmentResponse`](./enum.ListStorageV1alpha1VolumeAttachmentResponse.html) to parse the HTTP response.
     pub fn list_storage_v1alpha1_volume_attachment(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -327,6 +338,7 @@ impl VolumeAttachment {
     }
 }
 
+/// Parses the HTTP response of [`VolumeAttachment::list_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.list_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum ListStorageV1alpha1VolumeAttachmentResponse {
     Ok(::v1_9::api::storage::v1alpha1::VolumeAttachmentList),
@@ -355,6 +367,8 @@ impl ::Response for ListStorageV1alpha1VolumeAttachmentResponse {
 
 impl VolumeAttachment {
     /// partially update the specified VolumeAttachment
+    ///
+    /// Use [`PatchStorageV1alpha1VolumeAttachmentResponse`](./enum.PatchStorageV1alpha1VolumeAttachmentResponse.html) to parse the HTTP response.
     pub fn patch_storage_v1alpha1_volume_attachment(
         // name of the VolumeAttachment
         name: &str,
@@ -375,6 +389,7 @@ impl VolumeAttachment {
     }
 }
 
+/// Parses the HTTP response of [`VolumeAttachment::patch_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.patch_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum PatchStorageV1alpha1VolumeAttachmentResponse {
     Ok(::v1_9::api::storage::v1alpha1::VolumeAttachment),
@@ -403,6 +418,8 @@ impl ::Response for PatchStorageV1alpha1VolumeAttachmentResponse {
 
 impl VolumeAttachment {
     /// read the specified VolumeAttachment
+    ///
+    /// Use [`ReadStorageV1alpha1VolumeAttachmentResponse`](./enum.ReadStorageV1alpha1VolumeAttachmentResponse.html) to parse the HTTP response.
     pub fn read_storage_v1alpha1_volume_attachment(
         // name of the VolumeAttachment
         name: &str,
@@ -432,6 +449,7 @@ impl VolumeAttachment {
     }
 }
 
+/// Parses the HTTP response of [`VolumeAttachment::read_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.read_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum ReadStorageV1alpha1VolumeAttachmentResponse {
     Ok(::v1_9::api::storage::v1alpha1::VolumeAttachment),
@@ -460,6 +478,8 @@ impl ::Response for ReadStorageV1alpha1VolumeAttachmentResponse {
 
 impl VolumeAttachment {
     /// replace the specified VolumeAttachment
+    ///
+    /// Use [`ReplaceStorageV1alpha1VolumeAttachmentResponse`](./enum.ReplaceStorageV1alpha1VolumeAttachmentResponse.html) to parse the HTTP response.
     pub fn replace_storage_v1alpha1_volume_attachment(
         // name of the VolumeAttachment
         name: &str,
@@ -480,6 +500,7 @@ impl VolumeAttachment {
     }
 }
 
+/// Parses the HTTP response of [`VolumeAttachment::replace_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.replace_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum ReplaceStorageV1alpha1VolumeAttachmentResponse {
     Ok(::v1_9::api::storage::v1alpha1::VolumeAttachment),
@@ -517,6 +538,8 @@ impl ::Response for ReplaceStorageV1alpha1VolumeAttachmentResponse {
 
 impl VolumeAttachment {
     /// watch changes to an object of kind VolumeAttachment
+    ///
+    /// Use [`WatchStorageV1alpha1VolumeAttachmentResponse`](./enum.WatchStorageV1alpha1VolumeAttachmentResponse.html) to parse the HTTP response.
     pub fn watch_storage_v1alpha1_volume_attachment(
         // name of the VolumeAttachment
         name: &str,
@@ -578,6 +601,7 @@ impl VolumeAttachment {
     }
 }
 
+/// Parses the HTTP response of [`VolumeAttachment::watch_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.watch_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum WatchStorageV1alpha1VolumeAttachmentResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -608,6 +632,8 @@ impl ::Response for WatchStorageV1alpha1VolumeAttachmentResponse {
 
 impl VolumeAttachment {
     /// watch individual changes to a list of VolumeAttachment
+    ///
+    /// Use [`WatchStorageV1alpha1VolumeAttachmentListResponse`](./enum.WatchStorageV1alpha1VolumeAttachmentListResponse.html) to parse the HTTP response.
     pub fn watch_storage_v1alpha1_volume_attachment_list(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -667,6 +693,7 @@ impl VolumeAttachment {
     }
 }
 
+/// Parses the HTTP response of [`VolumeAttachment::watch_storage_v1alpha1_volume_attachment_list`](./struct.VolumeAttachment.html#method.watch_storage_v1alpha1_volume_attachment_list)
 #[derive(Debug)]
 pub enum WatchStorageV1alpha1VolumeAttachmentListResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),

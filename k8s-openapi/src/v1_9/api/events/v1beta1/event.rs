@@ -60,6 +60,8 @@ pub struct Event {
 
 impl Event {
     /// create an Event
+    ///
+    /// Use [`CreateEventsV1beta1NamespacedEventResponse`](./enum.CreateEventsV1beta1NamespacedEventResponse.html) to parse the HTTP response.
     pub fn create_events_v1beta1_namespaced_event(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -80,6 +82,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::create_events_v1beta1_namespaced_event`](./struct.Event.html#method.create_events_v1beta1_namespaced_event)
 #[derive(Debug)]
 pub enum CreateEventsV1beta1NamespacedEventResponse {
     Ok(::v1_9::api::events::v1beta1::Event),
@@ -126,6 +129,8 @@ impl ::Response for CreateEventsV1beta1NamespacedEventResponse {
 
 impl Event {
     /// delete collection of Event
+    ///
+    /// Use [`DeleteEventsV1beta1CollectionNamespacedEventResponse`](./enum.DeleteEventsV1beta1CollectionNamespacedEventResponse.html) to parse the HTTP response.
     pub fn delete_events_v1beta1_collection_namespaced_event(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -187,6 +192,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::delete_events_v1beta1_collection_namespaced_event`](./struct.Event.html#method.delete_events_v1beta1_collection_namespaced_event)
 #[derive(Debug)]
 pub enum DeleteEventsV1beta1CollectionNamespacedEventResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -229,6 +235,8 @@ impl ::Response for DeleteEventsV1beta1CollectionNamespacedEventResponse {
 
 impl Event {
     /// delete an Event
+    ///
+    /// Use [`DeleteEventsV1beta1NamespacedEventResponse`](./enum.DeleteEventsV1beta1NamespacedEventResponse.html) to parse the HTTP response.
     pub fn delete_events_v1beta1_namespaced_event(
         // name of the Event
         name: &str,
@@ -265,6 +273,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::delete_events_v1beta1_namespaced_event`](./struct.Event.html#method.delete_events_v1beta1_namespaced_event)
 #[derive(Debug)]
 pub enum DeleteEventsV1beta1NamespacedEventResponse {
     OkStatus(::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -307,6 +316,8 @@ impl ::Response for DeleteEventsV1beta1NamespacedEventResponse {
 
 impl Event {
     /// list or watch objects of kind Event
+    ///
+    /// Use [`ListEventsV1beta1EventForAllNamespacesResponse`](./enum.ListEventsV1beta1EventForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn list_events_v1beta1_event_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -366,6 +377,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::list_events_v1beta1_event_for_all_namespaces`](./struct.Event.html#method.list_events_v1beta1_event_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListEventsV1beta1EventForAllNamespacesResponse {
     Ok(::v1_9::api::events::v1beta1::EventList),
@@ -394,6 +406,8 @@ impl ::Response for ListEventsV1beta1EventForAllNamespacesResponse {
 
 impl Event {
     /// list or watch objects of kind Event
+    ///
+    /// Use [`ListEventsV1beta1NamespacedEventResponse`](./enum.ListEventsV1beta1NamespacedEventResponse.html) to parse the HTTP response.
     pub fn list_events_v1beta1_namespaced_event(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -455,6 +469,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::list_events_v1beta1_namespaced_event`](./struct.Event.html#method.list_events_v1beta1_namespaced_event)
 #[derive(Debug)]
 pub enum ListEventsV1beta1NamespacedEventResponse {
     Ok(::v1_9::api::events::v1beta1::EventList),
@@ -483,6 +498,8 @@ impl ::Response for ListEventsV1beta1NamespacedEventResponse {
 
 impl Event {
     /// partially update the specified Event
+    ///
+    /// Use [`PatchEventsV1beta1NamespacedEventResponse`](./enum.PatchEventsV1beta1NamespacedEventResponse.html) to parse the HTTP response.
     pub fn patch_events_v1beta1_namespaced_event(
         // name of the Event
         name: &str,
@@ -505,6 +522,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::patch_events_v1beta1_namespaced_event`](./struct.Event.html#method.patch_events_v1beta1_namespaced_event)
 #[derive(Debug)]
 pub enum PatchEventsV1beta1NamespacedEventResponse {
     Ok(::v1_9::api::events::v1beta1::Event),
@@ -533,6 +551,8 @@ impl ::Response for PatchEventsV1beta1NamespacedEventResponse {
 
 impl Event {
     /// read the specified Event
+    ///
+    /// Use [`ReadEventsV1beta1NamespacedEventResponse`](./enum.ReadEventsV1beta1NamespacedEventResponse.html) to parse the HTTP response.
     pub fn read_events_v1beta1_namespaced_event(
         // name of the Event
         name: &str,
@@ -564,6 +584,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::read_events_v1beta1_namespaced_event`](./struct.Event.html#method.read_events_v1beta1_namespaced_event)
 #[derive(Debug)]
 pub enum ReadEventsV1beta1NamespacedEventResponse {
     Ok(::v1_9::api::events::v1beta1::Event),
@@ -592,6 +613,8 @@ impl ::Response for ReadEventsV1beta1NamespacedEventResponse {
 
 impl Event {
     /// replace the specified Event
+    ///
+    /// Use [`ReplaceEventsV1beta1NamespacedEventResponse`](./enum.ReplaceEventsV1beta1NamespacedEventResponse.html) to parse the HTTP response.
     pub fn replace_events_v1beta1_namespaced_event(
         // name of the Event
         name: &str,
@@ -614,6 +637,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::replace_events_v1beta1_namespaced_event`](./struct.Event.html#method.replace_events_v1beta1_namespaced_event)
 #[derive(Debug)]
 pub enum ReplaceEventsV1beta1NamespacedEventResponse {
     Ok(::v1_9::api::events::v1beta1::Event),
@@ -651,6 +675,8 @@ impl ::Response for ReplaceEventsV1beta1NamespacedEventResponse {
 
 impl Event {
     /// watch individual changes to a list of Event
+    ///
+    /// Use [`WatchEventsV1beta1EventListForAllNamespacesResponse`](./enum.WatchEventsV1beta1EventListForAllNamespacesResponse.html) to parse the HTTP response.
     pub fn watch_events_v1beta1_event_list_for_all_namespaces(
         // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
@@ -710,6 +736,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::watch_events_v1beta1_event_list_for_all_namespaces`](./struct.Event.html#method.watch_events_v1beta1_event_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchEventsV1beta1EventListForAllNamespacesResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -740,6 +767,8 @@ impl ::Response for WatchEventsV1beta1EventListForAllNamespacesResponse {
 
 impl Event {
     /// watch changes to an object of kind Event
+    ///
+    /// Use [`WatchEventsV1beta1NamespacedEventResponse`](./enum.WatchEventsV1beta1NamespacedEventResponse.html) to parse the HTTP response.
     pub fn watch_events_v1beta1_namespaced_event(
         // name of the Event
         name: &str,
@@ -803,6 +832,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::watch_events_v1beta1_namespaced_event`](./struct.Event.html#method.watch_events_v1beta1_namespaced_event)
 #[derive(Debug)]
 pub enum WatchEventsV1beta1NamespacedEventResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -833,6 +863,8 @@ impl ::Response for WatchEventsV1beta1NamespacedEventResponse {
 
 impl Event {
     /// watch individual changes to a list of Event
+    ///
+    /// Use [`WatchEventsV1beta1NamespacedEventListResponse`](./enum.WatchEventsV1beta1NamespacedEventListResponse.html) to parse the HTTP response.
     pub fn watch_events_v1beta1_namespaced_event_list(
         // object name and auth scope, such as for teams and projects
         namespace: &str,
@@ -894,6 +926,7 @@ impl Event {
     }
 }
 
+/// Parses the HTTP response of [`Event::watch_events_v1beta1_namespaced_event_list`](./struct.Event.html#method.watch_events_v1beta1_namespaced_event_list)
 #[derive(Debug)]
 pub enum WatchEventsV1beta1NamespacedEventListResponse {
     Ok(::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
