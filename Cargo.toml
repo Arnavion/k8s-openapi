@@ -2,6 +2,7 @@
 name = "k8s-openapi-codegen"
 version = "0.1.0"
 authors = ["Arnavion <arnavion@gmail.com>"]
+publish = false
 
 [dependencies]
 backtrace = "0.3.x"

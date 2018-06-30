@@ -1,3 +1,122 @@
+//! Bindings for the Kubernetes client API, generated from the OpenAPI spec.
+//!
+//! Each supported version of Kubernetes is represented by one top-level module (like `::v1_9`) and is enabled by a crate feature of the same name (like `v1_9`).
+//!
+//!
+//! # Examples
+//!
+//! ## Resources
+//!
+//! ```rust,ignore
+//! extern crate k8s_openapi;
+//!
+//! use k8s_openapi::v1_9::api::core::v1 as api;
+//!
+//! fn main() {
+//!     let pod_spec: api::core::v1::PodSpec = Default::default();
+//!     println!("{:#?}", pod_spec);
+//! }
+//! ```
+//!
+//! ## Client API
+//!
+//! ```rust,ignore
+//! extern crate k8s_openapi;
+//!
+//! // Re-export of the http crate since it's used in the public API
+//! use k8s_openapi::http;
+//!
+//! use k8s_openapi::v1_9::api::core::v1 as api;
+//!
+//! // `execute` is some function that takes an `http::Request` and executes it
+//! // synchronously or asynchronously to get a response.
+//! // Among other things, it will need to change the URL of the request to an
+//! // absolute URL with the API server's authority.
+//! fn execute(req: http::Request) { unimplemented!(); }
+//!
+//! fn main() -> Result<(), Box<Error>> {
+//!     // Create a `http::Request` to list all the pods in the
+//!     // "kube-system" namespace.
+//!     let request =
+//!         api::Pod::list_core_v1_namespaced_pod(
+//!             "kube-system",
+//!             None, None, None, None, None, None, None, None, None)?;
+//!
+//!     // Execute the request and get a response.
+//!     // If this is an asynchronous operation, you would await
+//!     // or otherwise defer here.
+//!     let response = execute(request);
+//! 
+//!     // Got a status code from executing the request.
+//!     let status_code: http::StatusCode = response.status_code();
+//!
+//!     // Construct a `ResponseBody` to accumulate the bytes received from
+//!     // the HTTP response.
+//!     //
+//!     // It is not *necessary* to use this type. It's only a helper to
+//!     // provide a convenient byte buffer that can be written to at the end
+//!     // and consumed from the front.
+//!     //
+//!     // You can instead use any buffer type that can be converted to
+//!     // a `&[u8]`.
+//!     let response_body = k8s_openapi::ResponseBody::new(status_code);
+//!
+//!     // Buffer used for each read from the HTTP response.
+//!     let buf = Box::new([0u8; 4096]);
+//!
+//!     let pod_list = loop {
+//!         // Read some bytes from the HTTP response into the buffer.
+//!         // If this is an asynchronous operation, you would await or
+//!         // otherwise defer here.
+//!         let read = response.read_into(&mut buf)?;
+//!
+//!         // `buf` now contains some data read from the response. Append it
+//!         // to the `ResponseBody` and try to parse it into
+//!         // the response type.
+//!         //
+//!         // For `Pod::list_core_v1_namespaced_pod` this is the
+//!         // `ListCoreV1NamespacedPodResponse` type.
+//!         //
+//!         // `ResponseBody::append_slice_and_parse` internally calls
+//!         // `Response::try_from_parts` for the response type. So you would
+//!         // call that function directly if you were not using `ResponseBody`
+//!         let response = response_body.append_slice_and_parse(&buf[..read]);
+//!         match response {
+//!             // Successful response (HTTP 200 and parsed successfully)
+//!             Ok(api::ListCoreV1NamespacedPodResponse::Ok(pod_list)) =>
+//!                 break pod_list,
+//!
+//!             // Some unexpected response
+//!             // (not HTTP 200, but still parsed successfully)
+//!             Ok(other) => return Err(format!(
+//!                 "expected Ok but got {} {:?}",
+//!                 status_code, other).into()),
+//!
+//!             // Need more response data.
+//!             // Read more bytes from the response into the `ResponseBody`
+//!             Err(k8s_openapi::ResponseError::NeedMoreData) => continue,
+//!
+//!             // Some other error, like the response body being
+//!             // malformed JSON or invalid UTF-8.
+//!             Err(err) => return Err(format!(
+//!                 "error: {} {:?}",
+//!                 status_code, err).into()),
+//!         }
+//!     };
+//!
+//!     for pod in pod_list.items {
+//!         println!("{:#?}", pod);
+//!     }
+//! }
+//! ```
+//!
+//! Since `Response::try_from_parts` is implemented in terms of a status code and a byte buffer for the response body, it is independent of the method
+//! of *actually executing* the HTTP request. This means you can use a synchronous client like `reqwest`, an asynchronous client like `hyper`,
+//! a mock client that returns bytes read from a test file, or anything else you want.
+//!
+//! See the `get_single_value` and `get_multiple_values` functions in the `k8s-openapi-tests/` directory in the repository for an example of how to use
+//! a synchronous client with this style of API.
+
 extern crate base64;
 extern crate bytes;
 pub extern crate chrono;

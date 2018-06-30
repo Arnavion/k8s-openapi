@@ -3,49 +3,19 @@
 This binary generates Rust types for the resource definitions in the Kubernetes OpenAPI spec.
 
 
-# Usage
+# Generating the bindings
 
-```toml
-[dependencies]
-k8s-openapi = { git = "https://github.com/Arnavion/k8s-openapi-codegen", branch = "master", features = ["v1_9"] }
+Run this binary:
+
+```sh
+cargo run
 ```
 
-```rust
-extern crate k8s_openapi;
-
-fn main() {
-	let pod_spec: k8s_openapi::v1_9::api::core::v1::PodSpec = Default::default();
-	println!("{:#?}", pod_spec);
-}
-```
-
-Each supported version of Kubernetes is represented by one top-level module (like `::v1_9`) and is enabled by a feature flag of the same name (like `v1_9`).
+Bindings will now be generated in the `k8s-openapi/` directory.
 
 
-# Build
+# Using the bindings
 
-1. Run this binary.
+See `k8s-openapi/README.md` for information about the bindings crate itself.
 
-	```sh
-	cargo run
-	```
-
-1. Build the `k8s-openapi` crate to test that the generated code compiles
-
-	1. Enter directory
-
-		```sh
-		pushd $PWD/k8s-openapi
-		```
-
-	1. Build
-
-		```sh
-		cargo build --all-features
-		```
-
-	1. Leave directory
-
-		```sh
-		popd
-		```
+See the `k8s-openapi-tests/` directory for examples.
