@@ -29,4 +29,4 @@ limitations under the License.
 
 The OpenAPI spec that these bindings are generated from is sourced from the
 Kubernetes repository https://github.com/kubernetes/kubernetes which also uses
-the APL-2.0 license.
+the Apache-2.0 license.
