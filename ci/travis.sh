@@ -16,4 +16,4 @@ children="$(jobs -pr)"
 wait $children
 
 cd k8s-openapi-tests
-cargo test --verbose --features "$FEATURE"
+RUST_BACKTRACE=full cargo test --verbose --features "$FEATURE"
