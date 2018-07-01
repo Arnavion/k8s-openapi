@@ -24,13 +24,26 @@ impl Eviction {
     /// create eviction of a Pod
     ///
     /// Use [`CreateCoreV1NamespacedPodEvictionResponse`](./enum.CreateCoreV1NamespacedPodEvictionResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Eviction
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_pod_eviction(
-        // name of the Eviction
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_9::api::policy::v1beta1::Eviction,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/eviction?", name = name, namespace = namespace);

@@ -1998,8 +1998,13 @@ impl ::Response for GetStorageV1beta1APIResourcesResponse {
 // Generated from operation logFileHandler
 
 /// Use [`LogFileHandlerResponse`](./enum.LogFileHandlerResponse.html) to parse the HTTP response.
+///
+/// # Arguments
+///
+/// * `logpath`
+///
+///     path to the log
 pub fn log_file_handler(
-    // path to the log
     logpath: &str,
 ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
     let __url = format!("/logs/{logpath}", logpath = logpath);

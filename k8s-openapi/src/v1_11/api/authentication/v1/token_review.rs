@@ -26,9 +26,16 @@ impl TokenReview {
     /// create a TokenReview
     ///
     /// Use [`CreateAuthenticationV1TokenReviewResponse`](./enum.CreateAuthenticationV1TokenReviewResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_authentication_v1_token_review(
         body: &::v1_11::api::authentication::v1::TokenReview,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/authentication.k8s.io/v1/tokenreviews?");

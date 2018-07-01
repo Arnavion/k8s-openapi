@@ -27,11 +27,21 @@ impl Deployment {
     /// create a Deployment
     ///
     /// Use [`CreateExtensionsV1beta1NamespacedDeploymentResponse`](./enum.CreateExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_extensions_v1beta1_namespaced_deployment(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
@@ -78,22 +88,48 @@ impl Deployment {
     /// delete collection of Deployment
     ///
     /// Use [`DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse`](./enum.DeleteExtensionsV1beta1CollectionNamespacedDeploymentResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn delete_extensions_v1beta1_collection_namespaced_deployment(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
@@ -172,18 +208,40 @@ impl Deployment {
     /// delete a Deployment
     ///
     /// Use [`DeleteExtensionsV1beta1NamespacedDeploymentResponse`](./enum.DeleteExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Deployment
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `grace_period_seconds`
+    ///
+    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    ///
+    /// * `orphan_dependents`
+    ///
+    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `propagation_policy`
+    ///
+    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
     pub fn delete_extensions_v1beta1_namespaced_deployment(
-        // name of the Deployment
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
         grace_period_seconds: Option<i64>,
-        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
         orphan_dependents: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
         propagation_policy: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
@@ -253,20 +311,43 @@ impl Deployment {
     /// list or watch objects of kind Deployment
     ///
     /// Use [`ListExtensionsV1beta1DeploymentForAllNamespacesResponse`](./enum.ListExtensionsV1beta1DeploymentForAllNamespacesResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_extensions_v1beta1_deployment_for_all_namespaces(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/deployments?");
@@ -331,22 +412,48 @@ impl Deployment {
     /// list or watch objects of kind Deployment
     ///
     /// Use [`ListExtensionsV1beta1NamespacedDeploymentResponse`](./enum.ListExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_extensions_v1beta1_namespaced_deployment(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments?", namespace = namespace);
@@ -411,13 +518,26 @@ impl Deployment {
     /// partially update the specified Deployment
     ///
     /// Use [`PatchExtensionsV1beta1NamespacedDeploymentResponse`](./enum.PatchExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Deployment
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_extensions_v1beta1_namespaced_deployment(
-        // name of the Deployment
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
@@ -464,13 +584,26 @@ impl Deployment {
     /// partially update status of the specified Deployment
     ///
     /// Use [`PatchExtensionsV1beta1NamespacedDeploymentStatusResponse`](./enum.PatchExtensionsV1beta1NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Deployment
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_extensions_v1beta1_namespaced_deployment_status(
-        // name of the Deployment
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
@@ -517,16 +650,33 @@ impl Deployment {
     /// read the specified Deployment
     ///
     /// Use [`ReadExtensionsV1beta1NamespacedDeploymentResponse`](./enum.ReadExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Deployment
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `exact`
+    ///
+    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    ///
+    /// * `export`
+    ///
+    ///     Should this value be exported.  Export strips fields that a user can not specify.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_extensions_v1beta1_namespaced_deployment(
-        // name of the Deployment
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
         exact: Option<bool>,
-        // Should this value be exported.  Export strips fields that a user can not specify.
         export: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
@@ -579,12 +729,23 @@ impl Deployment {
     /// read status of the specified Deployment
     ///
     /// Use [`ReadExtensionsV1beta1NamespacedDeploymentStatusResponse`](./enum.ReadExtensionsV1beta1NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Deployment
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_extensions_v1beta1_namespaced_deployment_status(
-        // name of the Deployment
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
@@ -631,13 +792,26 @@ impl Deployment {
     /// replace the specified Deployment
     ///
     /// Use [`ReplaceExtensionsV1beta1NamespacedDeploymentResponse`](./enum.ReplaceExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Deployment
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_extensions_v1beta1_namespaced_deployment(
-        // name of the Deployment
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
@@ -684,13 +858,26 @@ impl Deployment {
     /// replace status of the specified Deployment
     ///
     /// Use [`ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse`](./enum.ReplaceExtensionsV1beta1NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Deployment
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_extensions_v1beta1_namespaced_deployment_status(
-        // name of the Deployment
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::Deployment,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
@@ -737,20 +924,43 @@ impl Deployment {
     /// watch individual changes to a list of Deployment
     ///
     /// Use [`WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse`](./enum.WatchExtensionsV1beta1DeploymentListForAllNamespacesResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_extensions_v1beta1_deployment_list_for_all_namespaces(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/watch/deployments?");
@@ -817,24 +1027,53 @@ impl Deployment {
     /// watch changes to an object of kind Deployment
     ///
     /// Use [`WatchExtensionsV1beta1NamespacedDeploymentResponse`](./enum.WatchExtensionsV1beta1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Deployment
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_extensions_v1beta1_namespaced_deployment(
-        // name of the Deployment
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/deployments/{name}?", name = name, namespace = namespace);
@@ -901,22 +1140,48 @@ impl Deployment {
     /// watch individual changes to a list of Deployment
     ///
     /// Use [`WatchExtensionsV1beta1NamespacedDeploymentListResponse`](./enum.WatchExtensionsV1beta1NamespacedDeploymentListResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_extensions_v1beta1_namespaced_deployment_list(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/deployments?", namespace = namespace);

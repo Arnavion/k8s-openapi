@@ -27,13 +27,26 @@ impl DeploymentRollback {
     /// create rollback of a Deployment
     ///
     /// Use [`CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse`](./enum.CreateExtensionsV1beta1NamespacedDeploymentRollbackResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the DeploymentRollback
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_extensions_v1beta1_namespaced_deployment_rollback(
-        // name of the DeploymentRollback
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_11::api::extensions::v1beta1::DeploymentRollback,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/rollback?", name = name, namespace = namespace);

@@ -160,8 +160,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 		writeln!(file)?;
 
 		if let Some(description) = &definition.description {
-			for line in get_comment_text(description) {
-				writeln!(file, "/{}", line)?;
+			for line in get_comment_text(description, "") {
+				writeln!(file, "///{}", line)?;
 			}
 		}
 
@@ -258,8 +258,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					}
 
 					if let Some(ref description) = schema.description {
-						for line in get_comment_text(description) {
-							writeln!(file, "    /{}", line)?;
+						for line in get_comment_text(description, "") {
+							writeln!(file, "    ///{}", line)?;
 						}
 					}
 
@@ -614,15 +614,15 @@ fn create_file_for_type(
 	Ok((file, type_name, ref_path))
 }
 
-fn get_comment_text<'a>(s: &'a str) -> impl Iterator<Item = std::borrow::Cow<'static, str>> + 'a {
-	s.lines().map(|line|
+fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std::borrow::Cow<'static, str>> + 'a {
+	s.lines().map(move |line|
 		if line.is_empty() {
-			"//".into()
+			"".into()
 		}
 		else {
 			let line = line.replace("[", r"\[");
 			let line = line.replace("]", r"\]");
-			format!("// {}", line).into()
+			format!("{} {}", indent, line).into()
 		})
 }
 
@@ -877,15 +877,31 @@ fn write_operation(
 
 	let mut wrote_description = false;
 	if let Some(description) = operation.description.as_ref() {
-		for line in get_comment_text(description) {
-			writeln!(file, "{}/{}", indent, line)?;
+		for line in get_comment_text(description, "") {
+			writeln!(file, "{}///{}", indent, line)?;
 			wrote_description = true;
 		}
 	}
+
 	if wrote_description {
 		writeln!(file, "{}///", indent)?;
 	}
 	writeln!(file, "{}/// Use [`{}`](./enum.{}.html) to parse the HTTP response.", indent, operation_result_name, operation_result_name)?;
+
+	if !parameters.is_empty() {
+		writeln!(file, "{}///", indent)?;
+		writeln!(file, "{}/// # Arguments", indent)?;
+		for (parameter_name, _, parameter) in &parameters {
+			writeln!(file, "{}///", indent)?;
+			writeln!(file, "{}/// * `{}`", indent, parameter_name)?;
+			if let Some(description) = parameter.schema.description.as_ref() {
+				writeln!(file, "{}///", indent)?;
+				for line in get_comment_text(description, "    ") {
+					writeln!(file, "{}///{}", indent, line)?;
+				}
+			}
+		}
+	}
 
 	writeln!(file, "{}pub fn {}(", indent, operation_fn_name)?;
 	for (parameter_name, parameter_type, parameter) in &parameters {
@@ -894,12 +910,6 @@ fn write_operation(
 			(swagger20::Method::Get, swagger20::ParameterLocation::Body) => continue,
 
 			_ => (),
-		}
-
-		if let Some(description) = parameter.schema.description.as_ref() {
-			for line in get_comment_text(description) {
-				writeln!(file, "{}    {}", indent, line)?;
-			}
 		}
 
 		if parameter.required {

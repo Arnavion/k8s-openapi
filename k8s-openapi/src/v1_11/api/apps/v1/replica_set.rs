@@ -27,11 +27,21 @@ impl ReplicaSet {
     /// create a ReplicaSet
     ///
     /// Use [`CreateAppsV1NamespacedReplicaSetResponse`](./enum.CreateAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_apps_v1_namespaced_replica_set(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_11::api::apps::v1::ReplicaSet,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets?", namespace = namespace);
@@ -96,28 +106,60 @@ impl ReplicaSet {
     /// delete collection of ReplicaSet
     ///
     /// Use [`DeleteAppsV1CollectionNamespacedReplicaSetResponse`](./enum.DeleteAppsV1CollectionNamespacedReplicaSetResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `continue_`
+    ///
+    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `limit`
+    ///
+    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn delete_apps_v1_collection_namespaced_replica_set(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-        //
-        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
         limit: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets?", namespace = namespace);
@@ -202,18 +244,40 @@ impl ReplicaSet {
     /// delete a ReplicaSet
     ///
     /// Use [`DeleteAppsV1NamespacedReplicaSetResponse`](./enum.DeleteAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `grace_period_seconds`
+    ///
+    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    ///
+    /// * `orphan_dependents`
+    ///
+    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `propagation_policy`
+    ///
+    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
     pub fn delete_apps_v1_namespaced_replica_set(
-        // name of the ReplicaSet
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
         grace_period_seconds: Option<i64>,
-        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
         orphan_dependents: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
         propagation_policy: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?", name = name, namespace = namespace);
@@ -283,28 +347,60 @@ impl ReplicaSet {
     /// list or watch objects of kind ReplicaSet
     ///
     /// Use [`ListAppsV1NamespacedReplicaSetResponse`](./enum.ListAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `continue_`
+    ///
+    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `limit`
+    ///
+    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_apps_v1_namespaced_replica_set(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-        //
-        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
         limit: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets?", namespace = namespace);
@@ -375,26 +471,55 @@ impl ReplicaSet {
     /// list or watch objects of kind ReplicaSet
     ///
     /// Use [`ListAppsV1ReplicaSetForAllNamespacesResponse`](./enum.ListAppsV1ReplicaSetForAllNamespacesResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `continue_`
+    ///
+    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `limit`
+    ///
+    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_apps_v1_replica_set_for_all_namespaces(
-        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-        //
-        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
         limit: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/replicasets?");
@@ -465,13 +590,26 @@ impl ReplicaSet {
     /// partially update the specified ReplicaSet
     ///
     /// Use [`PatchAppsV1NamespacedReplicaSetResponse`](./enum.PatchAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_apps_v1_namespaced_replica_set(
-        // name of the ReplicaSet
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?", name = name, namespace = namespace);
@@ -518,13 +656,26 @@ impl ReplicaSet {
     /// partially update status of the specified ReplicaSet
     ///
     /// Use [`PatchAppsV1NamespacedReplicaSetStatusResponse`](./enum.PatchAppsV1NamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_apps_v1_namespaced_replica_set_status(
-        // name of the ReplicaSet
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status?", name = name, namespace = namespace);
@@ -571,16 +722,33 @@ impl ReplicaSet {
     /// read the specified ReplicaSet
     ///
     /// Use [`ReadAppsV1NamespacedReplicaSetResponse`](./enum.ReadAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `exact`
+    ///
+    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    ///
+    /// * `export`
+    ///
+    ///     Should this value be exported.  Export strips fields that a user can not specify.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_apps_v1_namespaced_replica_set(
-        // name of the ReplicaSet
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
         exact: Option<bool>,
-        // Should this value be exported.  Export strips fields that a user can not specify.
         export: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?", name = name, namespace = namespace);
@@ -633,12 +801,23 @@ impl ReplicaSet {
     /// read status of the specified ReplicaSet
     ///
     /// Use [`ReadAppsV1NamespacedReplicaSetStatusResponse`](./enum.ReadAppsV1NamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_apps_v1_namespaced_replica_set_status(
-        // name of the ReplicaSet
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status?", name = name, namespace = namespace);
@@ -685,13 +864,26 @@ impl ReplicaSet {
     /// replace the specified ReplicaSet
     ///
     /// Use [`ReplaceAppsV1NamespacedReplicaSetResponse`](./enum.ReplaceAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_apps_v1_namespaced_replica_set(
-        // name of the ReplicaSet
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_11::api::apps::v1::ReplicaSet,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?", name = name, namespace = namespace);
@@ -747,13 +939,26 @@ impl ReplicaSet {
     /// replace status of the specified ReplicaSet
     ///
     /// Use [`ReplaceAppsV1NamespacedReplicaSetStatusResponse`](./enum.ReplaceAppsV1NamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_apps_v1_namespaced_replica_set_status(
-        // name of the ReplicaSet
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_11::api::apps::v1::ReplicaSet,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status?", name = name, namespace = namespace);
@@ -809,30 +1014,65 @@ impl ReplicaSet {
     /// watch changes to an object of kind ReplicaSet
     ///
     /// Use [`WatchAppsV1NamespacedReplicaSetResponse`](./enum.WatchAppsV1NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ReplicaSet
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `continue_`
+    ///
+    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `limit`
+    ///
+    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_apps_v1_namespaced_replica_set(
-        // name of the ReplicaSet
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-        //
-        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
         limit: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/watch/namespaces/{namespace}/replicasets/{name}?", name = name, namespace = namespace);
@@ -905,28 +1145,60 @@ impl ReplicaSet {
     /// watch individual changes to a list of ReplicaSet
     ///
     /// Use [`WatchAppsV1NamespacedReplicaSetListResponse`](./enum.WatchAppsV1NamespacedReplicaSetListResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `continue_`
+    ///
+    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `limit`
+    ///
+    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_apps_v1_namespaced_replica_set_list(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-        //
-        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
         limit: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/watch/namespaces/{namespace}/replicasets?", namespace = namespace);
@@ -999,26 +1271,55 @@ impl ReplicaSet {
     /// watch individual changes to a list of ReplicaSet
     ///
     /// Use [`WatchAppsV1ReplicaSetListForAllNamespacesResponse`](./enum.WatchAppsV1ReplicaSetListForAllNamespacesResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `continue_`
+    ///
+    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `limit`
+    ///
+    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_apps_v1_replica_set_list_for_all_namespaces(
-        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-        //
-        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
         limit: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/watch/replicasets?");

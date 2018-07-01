@@ -24,11 +24,21 @@ impl Binding {
     /// create a Binding
     ///
     /// Use [`CreateCoreV1NamespacedBindingResponse`](./enum.CreateCoreV1NamespacedBindingResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_binding(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::api::core::v1::Binding,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/bindings?", namespace = namespace);
@@ -75,13 +85,26 @@ impl Binding {
     /// create binding of a Pod
     ///
     /// Use [`CreateCoreV1NamespacedPodBindingResponse`](./enum.CreateCoreV1NamespacedPodBindingResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Binding
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_pod_binding(
-        // name of the Binding
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::api::core::v1::Binding,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/binding?", name = name, namespace = namespace);

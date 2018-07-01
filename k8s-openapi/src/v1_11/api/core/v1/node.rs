@@ -27,10 +27,18 @@ impl Node {
     /// connect DELETE requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1DeleteNodeProxyResponse`](./enum.ConnectCoreV1DeleteNodeProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_delete_node_proxy(
-        // name of the Node
         name: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -82,12 +90,23 @@ impl Node {
     /// connect DELETE requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1DeleteNodeProxyWithPathResponse`](./enum.ConnectCoreV1DeleteNodeProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_delete_node_proxy_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -139,10 +158,18 @@ impl Node {
     /// connect GET requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1GetNodeProxyResponse`](./enum.ConnectCoreV1GetNodeProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_get_node_proxy(
-        // name of the Node
         name: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -194,12 +221,23 @@ impl Node {
     /// connect GET requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1GetNodeProxyWithPathResponse`](./enum.ConnectCoreV1GetNodeProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_get_node_proxy_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -251,10 +289,18 @@ impl Node {
     /// connect PATCH requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PatchNodeProxyResponse`](./enum.ConnectCoreV1PatchNodeProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_patch_node_proxy(
-        // name of the Node
         name: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -306,12 +352,23 @@ impl Node {
     /// connect PATCH requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PatchNodeProxyWithPathResponse`](./enum.ConnectCoreV1PatchNodeProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_patch_node_proxy_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -363,10 +420,18 @@ impl Node {
     /// connect POST requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PostNodeProxyResponse`](./enum.ConnectCoreV1PostNodeProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_post_node_proxy(
-        // name of the Node
         name: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -418,12 +483,23 @@ impl Node {
     /// connect POST requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PostNodeProxyWithPathResponse`](./enum.ConnectCoreV1PostNodeProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_post_node_proxy_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -475,10 +551,18 @@ impl Node {
     /// connect PUT requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PutNodeProxyResponse`](./enum.ConnectCoreV1PutNodeProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_put_node_proxy(
-        // name of the Node
         name: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -530,12 +614,23 @@ impl Node {
     /// connect PUT requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PutNodeProxyWithPathResponse`](./enum.ConnectCoreV1PutNodeProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_put_node_proxy_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -587,9 +682,16 @@ impl Node {
     /// create a Node
     ///
     /// Use [`CreateCoreV1NodeResponse`](./enum.CreateCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_node(
         body: &::v1_11::api::core::v1::Node,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes?");
@@ -654,26 +756,55 @@ impl Node {
     /// delete collection of Node
     ///
     /// Use [`DeleteCoreV1CollectionNodeResponse`](./enum.DeleteCoreV1CollectionNodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `continue_`
+    ///
+    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `limit`
+    ///
+    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn delete_core_v1_collection_node(
-        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-        //
-        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
         limit: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes?");
@@ -758,16 +889,35 @@ impl Node {
     /// delete a Node
     ///
     /// Use [`DeleteCoreV1NodeResponse`](./enum.DeleteCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `body`
+    ///
+    /// * `grace_period_seconds`
+    ///
+    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    ///
+    /// * `orphan_dependents`
+    ///
+    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `propagation_policy`
+    ///
+    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
     pub fn delete_core_v1_node(
-        // name of the Node
         name: &str,
-        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
         grace_period_seconds: Option<i64>,
-        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
         orphan_dependents: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
         propagation_policy: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
@@ -837,26 +987,55 @@ impl Node {
     /// list or watch objects of kind Node
     ///
     /// Use [`ListCoreV1NodeResponse`](./enum.ListCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `continue_`
+    ///
+    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `limit`
+    ///
+    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_core_v1_node(
-        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-        //
-        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
         limit: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes?");
@@ -927,11 +1106,21 @@ impl Node {
     /// partially update the specified Node
     ///
     /// Use [`PatchCoreV1NodeResponse`](./enum.PatchCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_core_v1_node(
-        // name of the Node
         name: &str,
         body: &::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
@@ -978,11 +1167,21 @@ impl Node {
     /// partially update status of the specified Node
     ///
     /// Use [`PatchCoreV1NodeStatusResponse`](./enum.PatchCoreV1NodeStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_core_v1_node_status(
-        // name of the Node
         name: &str,
         body: &::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
@@ -1029,14 +1228,28 @@ impl Node {
     /// read the specified Node
     ///
     /// Use [`ReadCoreV1NodeResponse`](./enum.ReadCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `exact`
+    ///
+    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    ///
+    /// * `export`
+    ///
+    ///     Should this value be exported.  Export strips fields that a user can not specify.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_core_v1_node(
-        // name of the Node
         name: &str,
-        // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
         exact: Option<bool>,
-        // Should this value be exported.  Export strips fields that a user can not specify.
         export: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
@@ -1089,10 +1302,18 @@ impl Node {
     /// read status of the specified Node
     ///
     /// Use [`ReadCoreV1NodeStatusResponse`](./enum.ReadCoreV1NodeStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_core_v1_node_status(
-        // name of the Node
         name: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
@@ -1139,11 +1360,21 @@ impl Node {
     /// replace the specified Node
     ///
     /// Use [`ReplaceCoreV1NodeResponse`](./enum.ReplaceCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_core_v1_node(
-        // name of the Node
         name: &str,
         body: &::v1_11::api::core::v1::Node,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
@@ -1199,11 +1430,21 @@ impl Node {
     /// replace status of the specified Node
     ///
     /// Use [`ReplaceCoreV1NodeStatusResponse`](./enum.ReplaceCoreV1NodeStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_core_v1_node_status(
-        // name of the Node
         name: &str,
         body: &::v1_11::api::core::v1::Node,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
@@ -1259,28 +1500,60 @@ impl Node {
     /// watch changes to an object of kind Node
     ///
     /// Use [`WatchCoreV1NodeResponse`](./enum.WatchCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `continue_`
+    ///
+    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `limit`
+    ///
+    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_core_v1_node(
-        // name of the Node
         name: &str,
-        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-        //
-        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
         limit: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/watch/nodes/{name}?", name = name);
@@ -1353,26 +1626,55 @@ impl Node {
     /// watch individual changes to a list of Node
     ///
     /// Use [`WatchCoreV1NodeListResponse`](./enum.WatchCoreV1NodeListResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `continue_`
+    ///
+    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `limit`
+    ///
+    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_core_v1_node_list(
-        // The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
         continue_: Option<&str>,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-        //
-        // The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
         limit: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/watch/nodes?");

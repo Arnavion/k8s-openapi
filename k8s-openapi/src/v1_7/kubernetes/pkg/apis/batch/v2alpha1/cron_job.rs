@@ -27,11 +27,21 @@ impl CronJob {
     /// create a CronJob
     ///
     /// Use [`CreateBatchV2alpha1NamespacedCronJobResponse`](./enum.CreateBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_batch_v2alpha1_namespaced_cron_job(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?", namespace = namespace);
@@ -78,22 +88,48 @@ impl CronJob {
     /// delete collection of CronJob
     ///
     /// Use [`DeleteBatchV2alpha1CollectionNamespacedCronJobResponse`](./enum.DeleteBatchV2alpha1CollectionNamespacedCronJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn delete_batch_v2alpha1_collection_namespaced_cron_job(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?", namespace = namespace);
@@ -172,18 +208,40 @@ impl CronJob {
     /// delete a CronJob
     ///
     /// Use [`DeleteBatchV2alpha1NamespacedCronJobResponse`](./enum.DeleteBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the CronJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `grace_period_seconds`
+    ///
+    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    ///
+    /// * `orphan_dependents`
+    ///
+    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `propagation_policy`
+    ///
+    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
     pub fn delete_batch_v2alpha1_namespaced_cron_job(
-        // name of the CronJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
         grace_period_seconds: Option<i64>,
-        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
         orphan_dependents: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
         propagation_policy: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
@@ -253,20 +311,43 @@ impl CronJob {
     /// list or watch objects of kind CronJob
     ///
     /// Use [`ListBatchV2alpha1CronJobForAllNamespacesResponse`](./enum.ListBatchV2alpha1CronJobForAllNamespacesResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_batch_v2alpha1_cron_job_for_all_namespaces(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/cronjobs?");
@@ -331,22 +412,48 @@ impl CronJob {
     /// list or watch objects of kind CronJob
     ///
     /// Use [`ListBatchV2alpha1NamespacedCronJobResponse`](./enum.ListBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_batch_v2alpha1_namespaced_cron_job(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?", namespace = namespace);
@@ -411,13 +518,26 @@ impl CronJob {
     /// partially update the specified CronJob
     ///
     /// Use [`PatchBatchV2alpha1NamespacedCronJobResponse`](./enum.PatchBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the CronJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_batch_v2alpha1_namespaced_cron_job(
-        // name of the CronJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
@@ -464,13 +584,26 @@ impl CronJob {
     /// partially update status of the specified CronJob
     ///
     /// Use [`PatchBatchV2alpha1NamespacedCronJobStatusResponse`](./enum.PatchBatchV2alpha1NamespacedCronJobStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the CronJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_batch_v2alpha1_namespaced_cron_job_status(
-        // name of the CronJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?", name = name, namespace = namespace);
@@ -517,16 +650,33 @@ impl CronJob {
     /// read the specified CronJob
     ///
     /// Use [`ReadBatchV2alpha1NamespacedCronJobResponse`](./enum.ReadBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the CronJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `exact`
+    ///
+    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    ///
+    /// * `export`
+    ///
+    ///     Should this value be exported.  Export strips fields that a user can not specify.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_batch_v2alpha1_namespaced_cron_job(
-        // name of the CronJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
         exact: Option<bool>,
-        // Should this value be exported.  Export strips fields that a user can not specify.
         export: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
@@ -579,12 +729,23 @@ impl CronJob {
     /// read status of the specified CronJob
     ///
     /// Use [`ReadBatchV2alpha1NamespacedCronJobStatusResponse`](./enum.ReadBatchV2alpha1NamespacedCronJobStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the CronJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_batch_v2alpha1_namespaced_cron_job_status(
-        // name of the CronJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?", name = name, namespace = namespace);
@@ -631,13 +792,26 @@ impl CronJob {
     /// replace the specified CronJob
     ///
     /// Use [`ReplaceBatchV2alpha1NamespacedCronJobResponse`](./enum.ReplaceBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the CronJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_batch_v2alpha1_namespaced_cron_job(
-        // name of the CronJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
@@ -684,13 +858,26 @@ impl CronJob {
     /// replace status of the specified CronJob
     ///
     /// Use [`ReplaceBatchV2alpha1NamespacedCronJobStatusResponse`](./enum.ReplaceBatchV2alpha1NamespacedCronJobStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the CronJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_batch_v2alpha1_namespaced_cron_job_status(
-        // name of the CronJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?", name = name, namespace = namespace);
@@ -737,20 +924,43 @@ impl CronJob {
     /// watch individual changes to a list of CronJob
     ///
     /// Use [`WatchBatchV2alpha1CronJobListForAllNamespacesResponse`](./enum.WatchBatchV2alpha1CronJobListForAllNamespacesResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_batch_v2alpha1_cron_job_list_for_all_namespaces(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/watch/cronjobs?");
@@ -817,24 +1027,53 @@ impl CronJob {
     /// watch changes to an object of kind CronJob
     ///
     /// Use [`WatchBatchV2alpha1NamespacedCronJobResponse`](./enum.WatchBatchV2alpha1NamespacedCronJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the CronJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_batch_v2alpha1_namespaced_cron_job(
-        // name of the CronJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/watch/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
@@ -901,22 +1140,48 @@ impl CronJob {
     /// watch individual changes to a list of CronJob
     ///
     /// Use [`WatchBatchV2alpha1NamespacedCronJobListResponse`](./enum.WatchBatchV2alpha1NamespacedCronJobListResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_batch_v2alpha1_namespaced_cron_job_list(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/watch/namespaces/{namespace}/cronjobs?", namespace = namespace);
@@ -987,11 +1252,21 @@ impl CronJob {
     /// create a ScheduledJob
     ///
     /// Use [`CreateBatchV2alpha1NamespacedScheduledJobResponse`](./enum.CreateBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_batch_v2alpha1_namespaced_scheduled_job(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/scheduledjobs?", namespace = namespace);
@@ -1038,22 +1313,48 @@ impl CronJob {
     /// delete collection of ScheduledJob
     ///
     /// Use [`DeleteBatchV2alpha1CollectionNamespacedScheduledJobResponse`](./enum.DeleteBatchV2alpha1CollectionNamespacedScheduledJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn delete_batch_v2alpha1_collection_namespaced_scheduled_job(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/scheduledjobs?", namespace = namespace);
@@ -1132,18 +1433,40 @@ impl CronJob {
     /// delete a ScheduledJob
     ///
     /// Use [`DeleteBatchV2alpha1NamespacedScheduledJobResponse`](./enum.DeleteBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ScheduledJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `grace_period_seconds`
+    ///
+    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    ///
+    /// * `orphan_dependents`
+    ///
+    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `propagation_policy`
+    ///
+    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
     pub fn delete_batch_v2alpha1_namespaced_scheduled_job(
-        // name of the ScheduledJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
         grace_period_seconds: Option<i64>,
-        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
         orphan_dependents: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
         propagation_policy: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/scheduledjobs/{name}?", name = name, namespace = namespace);
@@ -1213,22 +1536,48 @@ impl CronJob {
     /// list or watch objects of kind ScheduledJob
     ///
     /// Use [`ListBatchV2alpha1NamespacedScheduledJobResponse`](./enum.ListBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_batch_v2alpha1_namespaced_scheduled_job(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/scheduledjobs?", namespace = namespace);
@@ -1293,20 +1642,43 @@ impl CronJob {
     /// list or watch objects of kind ScheduledJob
     ///
     /// Use [`ListBatchV2alpha1ScheduledJobForAllNamespacesResponse`](./enum.ListBatchV2alpha1ScheduledJobForAllNamespacesResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_batch_v2alpha1_scheduled_job_for_all_namespaces(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/scheduledjobs?");
@@ -1371,13 +1743,26 @@ impl CronJob {
     /// partially update the specified ScheduledJob
     ///
     /// Use [`PatchBatchV2alpha1NamespacedScheduledJobResponse`](./enum.PatchBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ScheduledJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_batch_v2alpha1_namespaced_scheduled_job(
-        // name of the ScheduledJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/scheduledjobs/{name}?", name = name, namespace = namespace);
@@ -1424,13 +1809,26 @@ impl CronJob {
     /// partially update status of the specified ScheduledJob
     ///
     /// Use [`PatchBatchV2alpha1NamespacedScheduledJobStatusResponse`](./enum.PatchBatchV2alpha1NamespacedScheduledJobStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ScheduledJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_batch_v2alpha1_namespaced_scheduled_job_status(
-        // name of the ScheduledJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/scheduledjobs/{name}/status?", name = name, namespace = namespace);
@@ -1477,16 +1875,33 @@ impl CronJob {
     /// read the specified ScheduledJob
     ///
     /// Use [`ReadBatchV2alpha1NamespacedScheduledJobResponse`](./enum.ReadBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ScheduledJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `exact`
+    ///
+    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    ///
+    /// * `export`
+    ///
+    ///     Should this value be exported.  Export strips fields that a user can not specify.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_batch_v2alpha1_namespaced_scheduled_job(
-        // name of the ScheduledJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
         exact: Option<bool>,
-        // Should this value be exported.  Export strips fields that a user can not specify.
         export: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/scheduledjobs/{name}?", name = name, namespace = namespace);
@@ -1539,12 +1954,23 @@ impl CronJob {
     /// read status of the specified ScheduledJob
     ///
     /// Use [`ReadBatchV2alpha1NamespacedScheduledJobStatusResponse`](./enum.ReadBatchV2alpha1NamespacedScheduledJobStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ScheduledJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_batch_v2alpha1_namespaced_scheduled_job_status(
-        // name of the ScheduledJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/scheduledjobs/{name}/status?", name = name, namespace = namespace);
@@ -1591,13 +2017,26 @@ impl CronJob {
     /// replace the specified ScheduledJob
     ///
     /// Use [`ReplaceBatchV2alpha1NamespacedScheduledJobResponse`](./enum.ReplaceBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ScheduledJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_batch_v2alpha1_namespaced_scheduled_job(
-        // name of the ScheduledJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/scheduledjobs/{name}?", name = name, namespace = namespace);
@@ -1644,13 +2083,26 @@ impl CronJob {
     /// replace status of the specified ScheduledJob
     ///
     /// Use [`ReplaceBatchV2alpha1NamespacedScheduledJobStatusResponse`](./enum.ReplaceBatchV2alpha1NamespacedScheduledJobStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ScheduledJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_batch_v2alpha1_namespaced_scheduled_job_status(
-        // name of the ScheduledJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/scheduledjobs/{name}/status?", name = name, namespace = namespace);
@@ -1697,24 +2149,53 @@ impl CronJob {
     /// watch changes to an object of kind ScheduledJob
     ///
     /// Use [`WatchBatchV2alpha1NamespacedScheduledJobResponse`](./enum.WatchBatchV2alpha1NamespacedScheduledJobResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the ScheduledJob
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_batch_v2alpha1_namespaced_scheduled_job(
-        // name of the ScheduledJob
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/watch/namespaces/{namespace}/scheduledjobs/{name}?", name = name, namespace = namespace);
@@ -1781,22 +2262,48 @@ impl CronJob {
     /// watch individual changes to a list of ScheduledJob
     ///
     /// Use [`WatchBatchV2alpha1NamespacedScheduledJobListResponse`](./enum.WatchBatchV2alpha1NamespacedScheduledJobListResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_batch_v2alpha1_namespaced_scheduled_job_list(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/watch/namespaces/{namespace}/scheduledjobs?", namespace = namespace);
@@ -1863,20 +2370,43 @@ impl CronJob {
     /// watch individual changes to a list of ScheduledJob
     ///
     /// Use [`WatchBatchV2alpha1ScheduledJobListForAllNamespacesResponse`](./enum.WatchBatchV2alpha1ScheduledJobListForAllNamespacesResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_batch_v2alpha1_scheduled_job_list_for_all_namespaces(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/watch/scheduledjobs?");

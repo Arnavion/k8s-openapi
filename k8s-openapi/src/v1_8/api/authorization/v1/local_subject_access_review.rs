@@ -26,11 +26,21 @@ impl LocalSubjectAccessReview {
     /// create a LocalSubjectAccessReview
     ///
     /// Use [`CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse`](./enum.CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_authorization_v1_namespaced_local_subject_access_review(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::api::authorization::v1::LocalSubjectAccessReview,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews?", namespace = namespace);

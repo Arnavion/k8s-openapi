@@ -26,9 +26,16 @@ impl SubjectAccessReview {
     /// create a SubjectAccessReview
     ///
     /// Use [`CreateAuthorizationV1beta1SubjectAccessReviewResponse`](./enum.CreateAuthorizationV1beta1SubjectAccessReviewResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_authorization_v1beta1_subject_access_review(
         body: &::v1_10::api::authorization::v1beta1::SubjectAccessReview,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/authorization.k8s.io/v1beta1/subjectaccessreviews?");

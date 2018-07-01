@@ -27,13 +27,26 @@ impl Scale {
     /// partially update scale of the specified Deployment
     ///
     /// Use [`PatchAppsV1beta2NamespacedDeploymentScaleResponse`](./enum.PatchAppsV1beta2NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_apps_v1beta2_namespaced_deployment_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
@@ -80,13 +93,26 @@ impl Scale {
     /// partially update scale of the specified ReplicaSet
     ///
     /// Use [`PatchAppsV1beta2NamespacedReplicaSetScaleResponse`](./enum.PatchAppsV1beta2NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_apps_v1beta2_namespaced_replica_set_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
@@ -133,13 +159,26 @@ impl Scale {
     /// partially update scale of the specified StatefulSet
     ///
     /// Use [`PatchAppsV1beta2NamespacedStatefulSetScaleResponse`](./enum.PatchAppsV1beta2NamespacedStatefulSetScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_apps_v1beta2_namespaced_stateful_set_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/scale?", name = name, namespace = namespace);
@@ -186,12 +225,23 @@ impl Scale {
     /// read scale of the specified Deployment
     ///
     /// Use [`ReadAppsV1beta2NamespacedDeploymentScaleResponse`](./enum.ReadAppsV1beta2NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_apps_v1beta2_namespaced_deployment_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
@@ -238,12 +288,23 @@ impl Scale {
     /// read scale of the specified ReplicaSet
     ///
     /// Use [`ReadAppsV1beta2NamespacedReplicaSetScaleResponse`](./enum.ReadAppsV1beta2NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_apps_v1beta2_namespaced_replica_set_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
@@ -290,12 +351,23 @@ impl Scale {
     /// read scale of the specified StatefulSet
     ///
     /// Use [`ReadAppsV1beta2NamespacedStatefulSetScaleResponse`](./enum.ReadAppsV1beta2NamespacedStatefulSetScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_apps_v1beta2_namespaced_stateful_set_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/scale?", name = name, namespace = namespace);
@@ -342,13 +414,26 @@ impl Scale {
     /// replace scale of the specified Deployment
     ///
     /// Use [`ReplaceAppsV1beta2NamespacedDeploymentScaleResponse`](./enum.ReplaceAppsV1beta2NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_apps_v1beta2_namespaced_deployment_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::api::apps::v1beta2::Scale,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
@@ -395,13 +480,26 @@ impl Scale {
     /// replace scale of the specified ReplicaSet
     ///
     /// Use [`ReplaceAppsV1beta2NamespacedReplicaSetScaleResponse`](./enum.ReplaceAppsV1beta2NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_apps_v1beta2_namespaced_replica_set_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::api::apps::v1beta2::Scale,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
@@ -448,13 +546,26 @@ impl Scale {
     /// replace scale of the specified StatefulSet
     ///
     /// Use [`ReplaceAppsV1beta2NamespacedStatefulSetScaleResponse`](./enum.ReplaceAppsV1beta2NamespacedStatefulSetScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_apps_v1beta2_namespaced_stateful_set_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::api::apps::v1beta2::Scale,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/scale?", name = name, namespace = namespace);

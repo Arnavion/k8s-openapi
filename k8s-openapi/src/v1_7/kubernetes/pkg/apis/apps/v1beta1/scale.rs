@@ -27,13 +27,26 @@ impl Scale {
     /// partially update scale of the specified Deployment
     ///
     /// Use [`PatchAppsV1beta1NamespacedDeploymentScaleResponse`](./enum.PatchAppsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_apps_v1beta1_namespaced_deployment_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
@@ -80,12 +93,23 @@ impl Scale {
     /// read scale of the specified Deployment
     ///
     /// Use [`ReadAppsV1beta1NamespacedDeploymentScaleResponse`](./enum.ReadAppsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_apps_v1beta1_namespaced_deployment_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
@@ -132,13 +156,26 @@ impl Scale {
     /// replace scale of the specified Deployment
     ///
     /// Use [`ReplaceAppsV1beta1NamespacedDeploymentScaleResponse`](./enum.ReplaceAppsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_apps_v1beta1_namespaced_deployment_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::apis::apps::v1beta1::Scale,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);

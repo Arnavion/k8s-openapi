@@ -27,12 +27,23 @@ impl Pod {
     /// connect DELETE requests to proxy of Pod
     ///
     /// Use [`ConnectCoreV1DeleteNamespacedPodProxyResponse`](./enum.ConnectCoreV1DeleteNamespacedPodProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to pod.
     pub fn connect_core_v1_delete_namespaced_pod_proxy(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Path is the URL path to use for the current proxy request to pod.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
@@ -84,14 +95,28 @@ impl Pod {
     /// connect DELETE requests to proxy of Pod
     ///
     /// Use [`ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to pod.
     pub fn connect_core_v1_delete_namespaced_pod_proxy_with_path(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to pod.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -143,20 +168,43 @@ impl Pod {
     /// connect GET requests to attach of Pod
     ///
     /// Use [`ConnectCoreV1GetNamespacedPodAttachResponse`](./enum.ConnectCoreV1GetNamespacedPodAttachResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `container`
+    ///
+    ///     The container in which to execute the command. Defaults to only container if there is only one container in the pod.
+    ///
+    /// * `stderr`
+    ///
+    ///     Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
+    ///
+    /// * `stdin`
+    ///
+    ///     Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false.
+    ///
+    /// * `stdout`
+    ///
+    ///     Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true.
+    ///
+    /// * `tty`
+    ///
+    ///     TTY if true indicates that a tty will be allocated for the attach call. This is passed through the container runtime so the tty is allocated on the worker node by the container runtime. Defaults to false.
     pub fn connect_core_v1_get_namespaced_pod_attach(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The container in which to execute the command. Defaults to only container if there is only one container in the pod.
         container: Option<&str>,
-        // Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
         stderr: Option<bool>,
-        // Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false.
         stdin: Option<bool>,
-        // Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true.
         stdout: Option<bool>,
-        // TTY if true indicates that a tty will be allocated for the attach call. This is passed through the container runtime so the tty is allocated on the worker node by the container runtime. Defaults to false.
         tty: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?", name = name, namespace = namespace);
@@ -220,22 +268,48 @@ impl Pod {
     /// connect GET requests to exec of Pod
     ///
     /// Use [`ConnectCoreV1GetNamespacedPodExecResponse`](./enum.ConnectCoreV1GetNamespacedPodExecResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `command`
+    ///
+    ///     Command is the remote command to execute. argv array. Not executed within a shell.
+    ///
+    /// * `container`
+    ///
+    ///     Container in which to execute the command. Defaults to only container if there is only one container in the pod.
+    ///
+    /// * `stderr`
+    ///
+    ///     Redirect the standard error stream of the pod for this call. Defaults to true.
+    ///
+    /// * `stdin`
+    ///
+    ///     Redirect the standard input stream of the pod for this call. Defaults to false.
+    ///
+    /// * `stdout`
+    ///
+    ///     Redirect the standard output stream of the pod for this call. Defaults to true.
+    ///
+    /// * `tty`
+    ///
+    ///     TTY if true indicates that a tty will be allocated for the exec call. Defaults to false.
     pub fn connect_core_v1_get_namespaced_pod_exec(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Command is the remote command to execute. argv array. Not executed within a shell.
         command: Option<&str>,
-        // Container in which to execute the command. Defaults to only container if there is only one container in the pod.
         container: Option<&str>,
-        // Redirect the standard error stream of the pod for this call. Defaults to true.
         stderr: Option<bool>,
-        // Redirect the standard input stream of the pod for this call. Defaults to false.
         stdin: Option<bool>,
-        // Redirect the standard output stream of the pod for this call. Defaults to true.
         stdout: Option<bool>,
-        // TTY if true indicates that a tty will be allocated for the exec call. Defaults to false.
         tty: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?", name = name, namespace = namespace);
@@ -302,12 +376,23 @@ impl Pod {
     /// connect GET requests to portforward of Pod
     ///
     /// Use [`ConnectCoreV1GetNamespacedPodPortforwardResponse`](./enum.ConnectCoreV1GetNamespacedPodPortforwardResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `ports`
+    ///
+    ///     List of ports to forward Required when using WebSockets
     pub fn connect_core_v1_get_namespaced_pod_portforward(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // List of ports to forward Required when using WebSockets
         ports: Option<i64>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?", name = name, namespace = namespace);
@@ -359,12 +444,23 @@ impl Pod {
     /// connect GET requests to proxy of Pod
     ///
     /// Use [`ConnectCoreV1GetNamespacedPodProxyResponse`](./enum.ConnectCoreV1GetNamespacedPodProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to pod.
     pub fn connect_core_v1_get_namespaced_pod_proxy(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Path is the URL path to use for the current proxy request to pod.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
@@ -416,14 +512,28 @@ impl Pod {
     /// connect GET requests to proxy of Pod
     ///
     /// Use [`ConnectCoreV1GetNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1GetNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to pod.
     pub fn connect_core_v1_get_namespaced_pod_proxy_with_path(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to pod.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -475,12 +585,23 @@ impl Pod {
     /// connect PATCH requests to proxy of Pod
     ///
     /// Use [`ConnectCoreV1PatchNamespacedPodProxyResponse`](./enum.ConnectCoreV1PatchNamespacedPodProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to pod.
     pub fn connect_core_v1_patch_namespaced_pod_proxy(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Path is the URL path to use for the current proxy request to pod.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
@@ -532,14 +653,28 @@ impl Pod {
     /// connect PATCH requests to proxy of Pod
     ///
     /// Use [`ConnectCoreV1PatchNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1PatchNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to pod.
     pub fn connect_core_v1_patch_namespaced_pod_proxy_with_path(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to pod.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -591,20 +726,43 @@ impl Pod {
     /// connect POST requests to attach of Pod
     ///
     /// Use [`ConnectCoreV1PostNamespacedPodAttachResponse`](./enum.ConnectCoreV1PostNamespacedPodAttachResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `container`
+    ///
+    ///     The container in which to execute the command. Defaults to only container if there is only one container in the pod.
+    ///
+    /// * `stderr`
+    ///
+    ///     Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
+    ///
+    /// * `stdin`
+    ///
+    ///     Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false.
+    ///
+    /// * `stdout`
+    ///
+    ///     Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true.
+    ///
+    /// * `tty`
+    ///
+    ///     TTY if true indicates that a tty will be allocated for the attach call. This is passed through the container runtime so the tty is allocated on the worker node by the container runtime. Defaults to false.
     pub fn connect_core_v1_post_namespaced_pod_attach(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The container in which to execute the command. Defaults to only container if there is only one container in the pod.
         container: Option<&str>,
-        // Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
         stderr: Option<bool>,
-        // Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false.
         stdin: Option<bool>,
-        // Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true.
         stdout: Option<bool>,
-        // TTY if true indicates that a tty will be allocated for the attach call. This is passed through the container runtime so the tty is allocated on the worker node by the container runtime. Defaults to false.
         tty: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?", name = name, namespace = namespace);
@@ -668,22 +826,48 @@ impl Pod {
     /// connect POST requests to exec of Pod
     ///
     /// Use [`ConnectCoreV1PostNamespacedPodExecResponse`](./enum.ConnectCoreV1PostNamespacedPodExecResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `command`
+    ///
+    ///     Command is the remote command to execute. argv array. Not executed within a shell.
+    ///
+    /// * `container`
+    ///
+    ///     Container in which to execute the command. Defaults to only container if there is only one container in the pod.
+    ///
+    /// * `stderr`
+    ///
+    ///     Redirect the standard error stream of the pod for this call. Defaults to true.
+    ///
+    /// * `stdin`
+    ///
+    ///     Redirect the standard input stream of the pod for this call. Defaults to false.
+    ///
+    /// * `stdout`
+    ///
+    ///     Redirect the standard output stream of the pod for this call. Defaults to true.
+    ///
+    /// * `tty`
+    ///
+    ///     TTY if true indicates that a tty will be allocated for the exec call. Defaults to false.
     pub fn connect_core_v1_post_namespaced_pod_exec(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Command is the remote command to execute. argv array. Not executed within a shell.
         command: Option<&str>,
-        // Container in which to execute the command. Defaults to only container if there is only one container in the pod.
         container: Option<&str>,
-        // Redirect the standard error stream of the pod for this call. Defaults to true.
         stderr: Option<bool>,
-        // Redirect the standard input stream of the pod for this call. Defaults to false.
         stdin: Option<bool>,
-        // Redirect the standard output stream of the pod for this call. Defaults to true.
         stdout: Option<bool>,
-        // TTY if true indicates that a tty will be allocated for the exec call. Defaults to false.
         tty: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?", name = name, namespace = namespace);
@@ -750,12 +934,23 @@ impl Pod {
     /// connect POST requests to portforward of Pod
     ///
     /// Use [`ConnectCoreV1PostNamespacedPodPortforwardResponse`](./enum.ConnectCoreV1PostNamespacedPodPortforwardResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `ports`
+    ///
+    ///     List of ports to forward Required when using WebSockets
     pub fn connect_core_v1_post_namespaced_pod_portforward(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // List of ports to forward Required when using WebSockets
         ports: Option<i64>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?", name = name, namespace = namespace);
@@ -807,12 +1002,23 @@ impl Pod {
     /// connect POST requests to proxy of Pod
     ///
     /// Use [`ConnectCoreV1PostNamespacedPodProxyResponse`](./enum.ConnectCoreV1PostNamespacedPodProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to pod.
     pub fn connect_core_v1_post_namespaced_pod_proxy(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Path is the URL path to use for the current proxy request to pod.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
@@ -864,14 +1070,28 @@ impl Pod {
     /// connect POST requests to proxy of Pod
     ///
     /// Use [`ConnectCoreV1PostNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1PostNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to pod.
     pub fn connect_core_v1_post_namespaced_pod_proxy_with_path(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to pod.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -923,12 +1143,23 @@ impl Pod {
     /// connect PUT requests to proxy of Pod
     ///
     /// Use [`ConnectCoreV1PutNamespacedPodProxyResponse`](./enum.ConnectCoreV1PutNamespacedPodProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to pod.
     pub fn connect_core_v1_put_namespaced_pod_proxy(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Path is the URL path to use for the current proxy request to pod.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
@@ -980,14 +1211,28 @@ impl Pod {
     /// connect PUT requests to proxy of Pod
     ///
     /// Use [`ConnectCoreV1PutNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1PutNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to pod.
     pub fn connect_core_v1_put_namespaced_pod_proxy_with_path(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to pod.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -1039,11 +1284,21 @@ impl Pod {
     /// create a Pod
     ///
     /// Use [`CreateCoreV1NamespacedPodResponse`](./enum.CreateCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_pod(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::api::v1::Pod,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
@@ -1090,22 +1345,48 @@ impl Pod {
     /// delete collection of Pod
     ///
     /// Use [`DeleteCoreV1CollectionNamespacedPodResponse`](./enum.DeleteCoreV1CollectionNamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn delete_core_v1_collection_namespaced_pod(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
@@ -1184,18 +1465,40 @@ impl Pod {
     /// delete a Pod
     ///
     /// Use [`DeleteCoreV1NamespacedPodResponse`](./enum.DeleteCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `grace_period_seconds`
+    ///
+    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    ///
+    /// * `orphan_dependents`
+    ///
+    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `propagation_policy`
+    ///
+    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
     pub fn delete_core_v1_namespaced_pod(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
         grace_period_seconds: Option<i64>,
-        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
         orphan_dependents: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
         propagation_policy: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
@@ -1265,22 +1568,48 @@ impl Pod {
     /// list or watch objects of kind Pod
     ///
     /// Use [`ListCoreV1NamespacedPodResponse`](./enum.ListCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_core_v1_namespaced_pod(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
@@ -1345,20 +1674,43 @@ impl Pod {
     /// list or watch objects of kind Pod
     ///
     /// Use [`ListCoreV1PodForAllNamespacesResponse`](./enum.ListCoreV1PodForAllNamespacesResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_core_v1_pod_for_all_namespaces(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/pods?");
@@ -1423,13 +1775,26 @@ impl Pod {
     /// partially update the specified Pod
     ///
     /// Use [`PatchCoreV1NamespacedPodResponse`](./enum.PatchCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_core_v1_namespaced_pod(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
@@ -1476,13 +1841,26 @@ impl Pod {
     /// partially update status of the specified Pod
     ///
     /// Use [`PatchCoreV1NamespacedPodStatusResponse`](./enum.PatchCoreV1NamespacedPodStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_core_v1_namespaced_pod_status(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
@@ -1529,10 +1907,18 @@ impl Pod {
     /// proxy DELETE requests to Pod
     ///
     /// Use [`ProxyCoreV1DELETENamespacedPodResponse`](./enum.ProxyCoreV1DELETENamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
     pub fn proxy_core_v1_delete_namespaced_pod(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}", name = name, namespace = namespace);
@@ -1579,12 +1965,23 @@ impl Pod {
     /// proxy DELETE requests to Pod
     ///
     /// Use [`ProxyCoreV1DELETENamespacedPodWithPathResponse`](./enum.ProxyCoreV1DELETENamespacedPodWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
     pub fn proxy_core_v1_delete_namespaced_pod_with_path(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // path to the resource
         path: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}", name = name, namespace = namespace, path = path);
@@ -1631,10 +2028,18 @@ impl Pod {
     /// proxy GET requests to Pod
     ///
     /// Use [`ProxyCoreV1GETNamespacedPodResponse`](./enum.ProxyCoreV1GETNamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
     pub fn proxy_core_v1_get_namespaced_pod(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}", name = name, namespace = namespace);
@@ -1681,12 +2086,23 @@ impl Pod {
     /// proxy GET requests to Pod
     ///
     /// Use [`ProxyCoreV1GETNamespacedPodWithPathResponse`](./enum.ProxyCoreV1GETNamespacedPodWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
     pub fn proxy_core_v1_get_namespaced_pod_with_path(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // path to the resource
         path: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}", name = name, namespace = namespace, path = path);
@@ -1733,10 +2149,18 @@ impl Pod {
     /// proxy PATCH requests to Pod
     ///
     /// Use [`ProxyCoreV1PATCHNamespacedPodResponse`](./enum.ProxyCoreV1PATCHNamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
     pub fn proxy_core_v1_patch_namespaced_pod(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}", name = name, namespace = namespace);
@@ -1783,12 +2207,23 @@ impl Pod {
     /// proxy PATCH requests to Pod
     ///
     /// Use [`ProxyCoreV1PATCHNamespacedPodWithPathResponse`](./enum.ProxyCoreV1PATCHNamespacedPodWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
     pub fn proxy_core_v1_patch_namespaced_pod_with_path(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // path to the resource
         path: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}", name = name, namespace = namespace, path = path);
@@ -1835,10 +2270,18 @@ impl Pod {
     /// proxy POST requests to Pod
     ///
     /// Use [`ProxyCoreV1POSTNamespacedPodResponse`](./enum.ProxyCoreV1POSTNamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
     pub fn proxy_core_v1_post_namespaced_pod(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}", name = name, namespace = namespace);
@@ -1885,12 +2328,23 @@ impl Pod {
     /// proxy POST requests to Pod
     ///
     /// Use [`ProxyCoreV1POSTNamespacedPodWithPathResponse`](./enum.ProxyCoreV1POSTNamespacedPodWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
     pub fn proxy_core_v1_post_namespaced_pod_with_path(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // path to the resource
         path: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}", name = name, namespace = namespace, path = path);
@@ -1937,10 +2391,18 @@ impl Pod {
     /// proxy PUT requests to Pod
     ///
     /// Use [`ProxyCoreV1PUTNamespacedPodResponse`](./enum.ProxyCoreV1PUTNamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
     pub fn proxy_core_v1_put_namespaced_pod(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}", name = name, namespace = namespace);
@@ -1987,12 +2449,23 @@ impl Pod {
     /// proxy PUT requests to Pod
     ///
     /// Use [`ProxyCoreV1PUTNamespacedPodWithPathResponse`](./enum.ProxyCoreV1PUTNamespacedPodWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
     pub fn proxy_core_v1_put_namespaced_pod_with_path(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // path to the resource
         path: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}", name = name, namespace = namespace, path = path);
@@ -2039,16 +2512,33 @@ impl Pod {
     /// read the specified Pod
     ///
     /// Use [`ReadCoreV1NamespacedPodResponse`](./enum.ReadCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `exact`
+    ///
+    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    ///
+    /// * `export`
+    ///
+    ///     Should this value be exported.  Export strips fields that a user can not specify.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_core_v1_namespaced_pod(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
         exact: Option<bool>,
-        // Should this value be exported.  Export strips fields that a user can not specify.
         export: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
@@ -2101,26 +2591,58 @@ impl Pod {
     /// read log of the specified Pod
     ///
     /// Use [`ReadCoreV1NamespacedPodLogResponse`](./enum.ReadCoreV1NamespacedPodLogResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `container`
+    ///
+    ///     The container for which to stream logs. Defaults to only container if there is one container in the pod.
+    ///
+    /// * `follow`
+    ///
+    ///     Follow the log stream of the pod. Defaults to false.
+    ///
+    /// * `limit_bytes`
+    ///
+    ///     If set, the number of bytes to read from the server before terminating the log output. This may not display a complete final line of logging, and may return slightly more or slightly less than the specified limit.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `previous`
+    ///
+    ///     Return previous terminated container logs. Defaults to false.
+    ///
+    /// * `since_seconds`
+    ///
+    ///     A relative time in seconds before the current time from which to show logs. If this value precedes the time a pod was started, only logs since the pod start will be returned. If this value is in the future, no logs will be returned. Only one of sinceSeconds or sinceTime may be specified.
+    ///
+    /// * `tail_lines`
+    ///
+    ///     If set, the number of lines from the end of the logs to show. If not specified, logs are shown from the creation of the container or sinceSeconds or sinceTime
+    ///
+    /// * `timestamps`
+    ///
+    ///     If true, add an RFC3339 or RFC3339Nano timestamp at the beginning of every line of log output. Defaults to false.
     pub fn read_core_v1_namespaced_pod_log(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // The container for which to stream logs. Defaults to only container if there is one container in the pod.
         container: Option<&str>,
-        // Follow the log stream of the pod. Defaults to false.
         follow: Option<bool>,
-        // If set, the number of bytes to read from the server before terminating the log output. This may not display a complete final line of logging, and may return slightly more or slightly less than the specified limit.
         limit_bytes: Option<i64>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // Return previous terminated container logs. Defaults to false.
         previous: Option<bool>,
-        // A relative time in seconds before the current time from which to show logs. If this value precedes the time a pod was started, only logs since the pod start will be returned. If this value is in the future, no logs will be returned. Only one of sinceSeconds or sinceTime may be specified.
         since_seconds: Option<i64>,
-        // If set, the number of lines from the end of the logs to show. If not specified, logs are shown from the creation of the container or sinceSeconds or sinceTime
         tail_lines: Option<i64>,
-        // If true, add an RFC3339 or RFC3339Nano timestamp at the beginning of every line of log output. Defaults to false.
         timestamps: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/log?", name = name, namespace = namespace);
@@ -2193,12 +2715,23 @@ impl Pod {
     /// read status of the specified Pod
     ///
     /// Use [`ReadCoreV1NamespacedPodStatusResponse`](./enum.ReadCoreV1NamespacedPodStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_core_v1_namespaced_pod_status(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
@@ -2245,13 +2778,26 @@ impl Pod {
     /// replace the specified Pod
     ///
     /// Use [`ReplaceCoreV1NamespacedPodResponse`](./enum.ReplaceCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_core_v1_namespaced_pod(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::api::v1::Pod,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
@@ -2298,13 +2844,26 @@ impl Pod {
     /// replace status of the specified Pod
     ///
     /// Use [`ReplaceCoreV1NamespacedPodStatusResponse`](./enum.ReplaceCoreV1NamespacedPodStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_core_v1_namespaced_pod_status(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_7::kubernetes::pkg::api::v1::Pod,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
@@ -2351,24 +2910,53 @@ impl Pod {
     /// watch changes to an object of kind Pod
     ///
     /// Use [`WatchCoreV1NamespacedPodResponse`](./enum.WatchCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Pod
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_core_v1_namespaced_pod(
-        // name of the Pod
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
@@ -2435,22 +3023,48 @@ impl Pod {
     /// watch individual changes to a list of Pod
     ///
     /// Use [`WatchCoreV1NamespacedPodListResponse`](./enum.WatchCoreV1NamespacedPodListResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_core_v1_namespaced_pod_list(
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/pods?", namespace = namespace);
@@ -2517,20 +3131,43 @@ impl Pod {
     /// watch individual changes to a list of Pod
     ///
     /// Use [`WatchCoreV1PodListForAllNamespacesResponse`](./enum.WatchCoreV1PodListForAllNamespacesResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_core_v1_pod_list_for_all_namespaces(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/watch/pods?");

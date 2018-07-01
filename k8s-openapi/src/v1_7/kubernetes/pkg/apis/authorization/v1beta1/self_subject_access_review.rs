@@ -26,9 +26,16 @@ impl SelfSubjectAccessReview {
     /// create a SelfSubjectAccessReview
     ///
     /// Use [`CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse`](./enum.CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_authorization_v1beta1_self_subject_access_review(
         body: &::v1_7::kubernetes::pkg::apis::authorization::v1beta1::SelfSubjectAccessReview,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/authorization.k8s.io/v1beta1/selfsubjectaccessreviews?");

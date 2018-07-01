@@ -27,13 +27,26 @@ impl Scale {
     /// partially update scale of the specified Deployment
     ///
     /// Use [`PatchExtensionsV1beta1NamespacedDeploymentScaleResponse`](./enum.PatchExtensionsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_extensions_v1beta1_namespaced_deployment_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
@@ -80,13 +93,26 @@ impl Scale {
     /// partially update scale of the specified ReplicaSet
     ///
     /// Use [`PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse`](./enum.PatchExtensionsV1beta1NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_extensions_v1beta1_namespaced_replica_set_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
@@ -133,13 +159,26 @@ impl Scale {
     /// partially update scale of the specified ReplicationControllerDummy
     ///
     /// Use [`PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse`](./enum.PatchExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_extensions_v1beta1_namespaced_replication_controller_dummy_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
@@ -186,12 +225,23 @@ impl Scale {
     /// read scale of the specified Deployment
     ///
     /// Use [`ReadExtensionsV1beta1NamespacedDeploymentScaleResponse`](./enum.ReadExtensionsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_extensions_v1beta1_namespaced_deployment_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
@@ -238,12 +288,23 @@ impl Scale {
     /// read scale of the specified ReplicaSet
     ///
     /// Use [`ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse`](./enum.ReadExtensionsV1beta1NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_extensions_v1beta1_namespaced_replica_set_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
@@ -290,12 +351,23 @@ impl Scale {
     /// read scale of the specified ReplicationControllerDummy
     ///
     /// Use [`ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse`](./enum.ReadExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_extensions_v1beta1_namespaced_replication_controller_dummy_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
@@ -342,13 +414,26 @@ impl Scale {
     /// replace scale of the specified Deployment
     ///
     /// Use [`ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse`](./enum.ReplaceExtensionsV1beta1NamespacedDeploymentScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_extensions_v1beta1_namespaced_deployment_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::api::extensions::v1beta1::Scale,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
@@ -395,13 +480,26 @@ impl Scale {
     /// replace scale of the specified ReplicaSet
     ///
     /// Use [`ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse`](./enum.ReplaceExtensionsV1beta1NamespacedReplicaSetScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_extensions_v1beta1_namespaced_replica_set_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::api::extensions::v1beta1::Scale,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
@@ -448,13 +546,26 @@ impl Scale {
     /// replace scale of the specified ReplicationControllerDummy
     ///
     /// Use [`ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse`](./enum.ReplaceExtensionsV1beta1NamespacedReplicationControllerDummyScaleResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Scale
+    ///
+    /// * `namespace`
+    ///
+    ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_extensions_v1beta1_namespaced_replication_controller_dummy_scale(
-        // name of the Scale
         name: &str,
-        // object name and auth scope, such as for teams and projects
         namespace: &str,
         body: &::v1_8::api::extensions::v1beta1::Scale,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);

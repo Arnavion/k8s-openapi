@@ -27,10 +27,18 @@ impl Node {
     /// connect DELETE requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1DeleteNodeProxyResponse`](./enum.ConnectCoreV1DeleteNodeProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_delete_node_proxy(
-        // name of the Node
         name: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -82,12 +90,23 @@ impl Node {
     /// connect DELETE requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1DeleteNodeProxyWithPathResponse`](./enum.ConnectCoreV1DeleteNodeProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_delete_node_proxy_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -139,10 +158,18 @@ impl Node {
     /// connect GET requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1GetNodeProxyResponse`](./enum.ConnectCoreV1GetNodeProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_get_node_proxy(
-        // name of the Node
         name: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -194,12 +221,23 @@ impl Node {
     /// connect GET requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1GetNodeProxyWithPathResponse`](./enum.ConnectCoreV1GetNodeProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_get_node_proxy_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -251,10 +289,18 @@ impl Node {
     /// connect PATCH requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PatchNodeProxyResponse`](./enum.ConnectCoreV1PatchNodeProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_patch_node_proxy(
-        // name of the Node
         name: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -306,12 +352,23 @@ impl Node {
     /// connect PATCH requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PatchNodeProxyWithPathResponse`](./enum.ConnectCoreV1PatchNodeProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_patch_node_proxy_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -363,10 +420,18 @@ impl Node {
     /// connect POST requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PostNodeProxyResponse`](./enum.ConnectCoreV1PostNodeProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_post_node_proxy(
-        // name of the Node
         name: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -418,12 +483,23 @@ impl Node {
     /// connect POST requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PostNodeProxyWithPathResponse`](./enum.ConnectCoreV1PostNodeProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_post_node_proxy_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -475,10 +551,18 @@ impl Node {
     /// connect PUT requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PutNodeProxyResponse`](./enum.ConnectCoreV1PutNodeProxyResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_put_node_proxy(
-        // name of the Node
         name: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -530,12 +614,23 @@ impl Node {
     /// connect PUT requests to proxy of Node
     ///
     /// Use [`ConnectCoreV1PutNodeProxyWithPathResponse`](./enum.ConnectCoreV1PutNodeProxyWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
+    ///
+    /// * `path_`
+    ///
+    ///     Path is the URL path to use for the current proxy request to node.
     pub fn connect_core_v1_put_node_proxy_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
-        // Path is the URL path to use for the current proxy request to node.
         path_: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -587,9 +682,16 @@ impl Node {
     /// create a Node
     ///
     /// Use [`CreateCoreV1NodeResponse`](./enum.CreateCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_node(
         body: &::v1_7::kubernetes::pkg::api::v1::Node,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes?");
@@ -636,20 +738,43 @@ impl Node {
     /// delete collection of Node
     ///
     /// Use [`DeleteCoreV1CollectionNodeResponse`](./enum.DeleteCoreV1CollectionNodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn delete_core_v1_collection_node(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes?");
@@ -728,16 +853,35 @@ impl Node {
     /// delete a Node
     ///
     /// Use [`DeleteCoreV1NodeResponse`](./enum.DeleteCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `body`
+    ///
+    /// * `grace_period_seconds`
+    ///
+    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    ///
+    /// * `orphan_dependents`
+    ///
+    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `propagation_policy`
+    ///
+    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
     pub fn delete_core_v1_node(
-        // name of the Node
         name: &str,
-        // The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
         grace_period_seconds: Option<i64>,
-        // Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
         orphan_dependents: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
         propagation_policy: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
@@ -807,20 +951,43 @@ impl Node {
     /// list or watch objects of kind Node
     ///
     /// Use [`ListCoreV1NodeResponse`](./enum.ListCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn list_core_v1_node(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes?");
@@ -885,11 +1052,21 @@ impl Node {
     /// partially update the specified Node
     ///
     /// Use [`PatchCoreV1NodeResponse`](./enum.PatchCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_core_v1_node(
-        // name of the Node
         name: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
@@ -936,11 +1113,21 @@ impl Node {
     /// partially update status of the specified Node
     ///
     /// Use [`PatchCoreV1NodeStatusResponse`](./enum.PatchCoreV1NodeStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn patch_core_v1_node_status(
-        // name of the Node
         name: &str,
         body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
@@ -987,8 +1174,13 @@ impl Node {
     /// proxy DELETE requests to Node
     ///
     /// Use [`ProxyCoreV1DELETENodeResponse`](./enum.ProxyCoreV1DELETENodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
     pub fn proxy_core_v1_delete_node(
-        // name of the Node
         name: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}", name = name);
@@ -1035,10 +1227,18 @@ impl Node {
     /// proxy DELETE requests to Node
     ///
     /// Use [`ProxyCoreV1DELETENodeWithPathResponse`](./enum.ProxyCoreV1DELETENodeWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
     pub fn proxy_core_v1_delete_node_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path);
@@ -1085,8 +1285,13 @@ impl Node {
     /// proxy GET requests to Node
     ///
     /// Use [`ProxyCoreV1GETNodeResponse`](./enum.ProxyCoreV1GETNodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
     pub fn proxy_core_v1_get_node(
-        // name of the Node
         name: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}", name = name);
@@ -1133,10 +1338,18 @@ impl Node {
     /// proxy GET requests to Node
     ///
     /// Use [`ProxyCoreV1GETNodeWithPathResponse`](./enum.ProxyCoreV1GETNodeWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
     pub fn proxy_core_v1_get_node_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path);
@@ -1183,8 +1396,13 @@ impl Node {
     /// proxy PATCH requests to Node
     ///
     /// Use [`ProxyCoreV1PATCHNodeResponse`](./enum.ProxyCoreV1PATCHNodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
     pub fn proxy_core_v1_patch_node(
-        // name of the Node
         name: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}", name = name);
@@ -1231,10 +1449,18 @@ impl Node {
     /// proxy PATCH requests to Node
     ///
     /// Use [`ProxyCoreV1PATCHNodeWithPathResponse`](./enum.ProxyCoreV1PATCHNodeWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
     pub fn proxy_core_v1_patch_node_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path);
@@ -1281,8 +1507,13 @@ impl Node {
     /// proxy POST requests to Node
     ///
     /// Use [`ProxyCoreV1POSTNodeResponse`](./enum.ProxyCoreV1POSTNodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
     pub fn proxy_core_v1_post_node(
-        // name of the Node
         name: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}", name = name);
@@ -1329,10 +1560,18 @@ impl Node {
     /// proxy POST requests to Node
     ///
     /// Use [`ProxyCoreV1POSTNodeWithPathResponse`](./enum.ProxyCoreV1POSTNodeWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
     pub fn proxy_core_v1_post_node_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path);
@@ -1379,8 +1618,13 @@ impl Node {
     /// proxy PUT requests to Node
     ///
     /// Use [`ProxyCoreV1PUTNodeResponse`](./enum.ProxyCoreV1PUTNodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
     pub fn proxy_core_v1_put_node(
-        // name of the Node
         name: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}", name = name);
@@ -1427,10 +1671,18 @@ impl Node {
     /// proxy PUT requests to Node
     ///
     /// Use [`ProxyCoreV1PUTNodeWithPathResponse`](./enum.ProxyCoreV1PUTNodeWithPathResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `path`
+    ///
+    ///     path to the resource
     pub fn proxy_core_v1_put_node_with_path(
-        // name of the Node
         name: &str,
-        // path to the resource
         path: &str,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/proxy/nodes/{name}/{path}", name = name, path = path);
@@ -1477,14 +1729,28 @@ impl Node {
     /// read the specified Node
     ///
     /// Use [`ReadCoreV1NodeResponse`](./enum.ReadCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `exact`
+    ///
+    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    ///
+    /// * `export`
+    ///
+    ///     Should this value be exported.  Export strips fields that a user can not specify.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_core_v1_node(
-        // name of the Node
         name: &str,
-        // Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
         exact: Option<bool>,
-        // Should this value be exported.  Export strips fields that a user can not specify.
         export: Option<bool>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
@@ -1537,10 +1803,18 @@ impl Node {
     /// read status of the specified Node
     ///
     /// Use [`ReadCoreV1NodeStatusResponse`](./enum.ReadCoreV1NodeStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn read_core_v1_node_status(
-        // name of the Node
         name: &str,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
@@ -1587,11 +1861,21 @@ impl Node {
     /// replace the specified Node
     ///
     /// Use [`ReplaceCoreV1NodeResponse`](./enum.ReplaceCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_core_v1_node(
-        // name of the Node
         name: &str,
         body: &::v1_7::kubernetes::pkg::api::v1::Node,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
@@ -1638,11 +1922,21 @@ impl Node {
     /// replace status of the specified Node
     ///
     /// Use [`ReplaceCoreV1NodeStatusResponse`](./enum.ReplaceCoreV1NodeStatusResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `body`
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
     pub fn replace_core_v1_node_status(
-        // name of the Node
         name: &str,
         body: &::v1_7::kubernetes::pkg::api::v1::Node,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
@@ -1689,22 +1983,48 @@ impl Node {
     /// watch changes to an object of kind Node
     ///
     /// Use [`WatchCoreV1NodeResponse`](./enum.WatchCoreV1NodeResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `name`
+    ///
+    ///     name of the Node
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_core_v1_node(
-        // name of the Node
         name: &str,
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/watch/nodes/{name}?", name = name);
@@ -1771,20 +2091,43 @@ impl Node {
     /// watch individual changes to a list of Node
     ///
     /// Use [`WatchCoreV1NodeListResponse`](./enum.WatchCoreV1NodeListResponse.html) to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
+    /// * `label_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    ///
+    /// * `pretty`
+    ///
+    ///     If 'true', then the output is pretty printed.
+    ///
+    /// * `resource_version`
+    ///
+    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    ///
+    /// * `timeout_seconds`
+    ///
+    ///     Timeout for the list/watch call.
+    ///
+    /// * `watch`
+    ///
+    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
     pub fn watch_core_v1_node_list(
-        // A selector to restrict the list of returned objects by their fields. Defaults to everything.
         field_selector: Option<&str>,
-        // If true, partially initialized resources are included in the response.
         include_uninitialized: Option<bool>,
-        // A selector to restrict the list of returned objects by their labels. Defaults to everything.
         label_selector: Option<&str>,
-        // If 'true', then the output is pretty printed.
         pretty: Option<&str>,
-        // When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
         resource_version: Option<&str>,
-        // Timeout for the list/watch call.
         timeout_seconds: Option<i64>,
-        // Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
         watch: Option<bool>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/watch/nodes?");
