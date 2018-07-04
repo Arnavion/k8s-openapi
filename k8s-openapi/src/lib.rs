@@ -7,40 +7,84 @@
 //!
 //! ## Resources
 //!
-//! ```rust,ignore
-//! extern crate k8s_openapi;
+//! ```rust
+//! #[macro_use] extern crate k8s_openapi;
 //!
-//! use k8s_openapi::v1_9::api::core::v1 as api;
+//! k8s_if_1_7! {
+//!     use k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
+//! }
+//! k8s_if_1_8! {
+//!     use k8s_openapi::v1_8::api::core::v1 as api;
+//! }
+//! k8s_if_1_9! {
+//!     use k8s_openapi::v1_9::api::core::v1 as api;
+//! }
+//! k8s_if_1_10! {
+//!     use k8s_openapi::v1_10::api::core::v1 as api;
+//! }
+//! k8s_if_1_11! {
+//!     use k8s_openapi::v1_11::api::core::v1 as api;
+//! }
 //!
 //! fn main() {
-//!     let pod_spec: api::core::v1::PodSpec = Default::default();
+//!     let pod_spec: api::PodSpec = Default::default();
 //!     println!("{:#?}", pod_spec);
 //! }
 //! ```
 //!
 //! ## Client API
 //!
-//! ```rust,ignore
-//! extern crate k8s_openapi;
+//! ```rust,no_run
+//! #[macro_use] extern crate k8s_openapi;
 //!
 //! // Re-export of the http crate since it's used in the public API
 //! use k8s_openapi::http;
 //!
-//! use k8s_openapi::v1_9::api::core::v1 as api;
+//! k8s_if_1_7! {
+//!     use k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
+//! }
+//! k8s_if_1_8! {
+//!     use k8s_openapi::v1_8::api::core::v1 as api;
+//! }
+//! k8s_if_1_9! {
+//!     use k8s_openapi::v1_9::api::core::v1 as api;
+//! }
+//! k8s_if_1_10! {
+//!     use k8s_openapi::v1_10::api::core::v1 as api;
+//! }
+//! k8s_if_1_11! {
+//!     use k8s_openapi::v1_11::api::core::v1 as api;
+//! }
 //!
+//! # struct Response;
+//! # impl Response {
+//! #     fn status_code(&self) -> http::StatusCode {
+//! #         unimplemented!()
+//! #     }
+//! #     fn read_into(&self, _buf: &mut [u8]) -> std::io::Result<usize> {
+//! #         unimplemented!()
+//! #     }
+//! # }
+//! #
 //! // `execute` is some function that takes an `http::Request` and executes it
 //! // synchronously or asynchronously to get a response.
 //! // Among other things, it will need to change the URL of the request to an
 //! // absolute URL with the API server's authority.
-//! fn execute(req: http::Request) { unimplemented!(); }
+//! fn execute(req: http::Request<Vec<u8>>) -> Response { unimplemented!(); }
 //!
-//! fn main() -> Result<(), Box<Error>> {
+//! fn main() -> Result<(), Box<std::error::Error>> {
 //!     // Create a `http::Request` to list all the pods in the
 //!     // "kube-system" namespace.
-//!     let request =
-//!         api::Pod::list_core_v1_namespaced_pod(
+//!     k8s_if_le_1_7! {
+//!         let request = api::Pod::list_core_v1_namespaced_pod(
+//!             "kube-system",
+//!             None, None, None, None, None, None, None)?;
+//!     }
+//!     k8s_if_ge_1_8! {
+//!         let request = api::Pod::list_core_v1_namespaced_pod(
 //!             "kube-system",
 //!             None, None, None, None, None, None, None, None, None)?;
+//!     }
 //!
 //!     // Execute the request and get a response.
 //!     // If this is an asynchronous operation, you would await
@@ -59,16 +103,16 @@
 //!     //
 //!     // You can instead use any buffer type that can be converted to
 //!     // a `&[u8]`.
-//!     let response_body = k8s_openapi::ResponseBody::new(status_code);
+//!     let mut response_body = k8s_openapi::ResponseBody::new(status_code);
 //!
 //!     // Buffer used for each read from the HTTP response.
-//!     let buf = Box::new([0u8; 4096]);
+//!     let mut buf = Box::new([0u8; 4096]);
 //!
 //!     let pod_list = loop {
 //!         // Read some bytes from the HTTP response into the buffer.
 //!         // If this is an asynchronous operation, you would await or
 //!         // otherwise defer here.
-//!         let read = response.read_into(&mut buf)?;
+//!         let read = response.read_into(&mut *buf)?;
 //!
 //!         // `buf` now contains some data read from the response. Append it
 //!         // to the `ResponseBody` and try to parse it into
@@ -107,6 +151,8 @@
 //!     for pod in pod_list.items {
 //!         println!("{:#?}", pod);
 //!     }
+//!
+//!     Ok(())
 //! }
 //! ```
 //!

@@ -3,8 +3,13 @@ set -euo pipefail
 : "${K8S_VERSION:=}"
 
 (
-	cd k8s-openapi-tests
+	pushd k8s-openapi
 	cargo test --verbose --no-run --features "$FEATURE"
+	popd
+
+	pushd k8s-openapi-tests
+	cargo test --verbose --no-run --features "test_$FEATURE"
+	popd
 ) &
 
 if [[ -n "$K8S_VERSION" ]]; then
@@ -19,7 +24,12 @@ fi
 children="$(jobs -pr)"
 wait $children
 
+pushd k8s-openapi
+RUST_BACKTRACE=full cargo test --verbose --features "$FEATURE"
+popd
+
 if [[ -n "$K8S_VERSION" ]]; then
-	cd k8s-openapi-tests
-	RUST_BACKTRACE=full cargo test --verbose --features "$FEATURE"
+	pushd k8s-openapi-tests
+	RUST_BACKTRACE=full cargo test --verbose --features "test_$FEATURE"
+	popd
 fi

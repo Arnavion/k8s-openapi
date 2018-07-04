@@ -16,10 +16,16 @@ fn main() -> Result<(), Box<std::error::Error>> {
         writeln!(f, "///")?;
         writeln!(f, "/// # Examples")?;
         writeln!(f, "///")?;
-        writeln!(f, "/// ```rust,ignore")?;
+        writeln!(f, "/// ```rust")?;
+        writeln!(f, "/// # #[macro_use] extern crate k8s_openapi;")?;
         writeln!(f, "/// k8s_if_1_{}! {{", v)?;
-        writeln!(f, "///     use ::k8s_openapi::v1_{}::kubernetes::pkg::api::v1 as api;", v)?;
-        writeln!(f, "///     use ::k8s_openapi::v1_{}::apimachinery::pkg::apis::meta::v1 as meta;", v)?;
+        if v == 7 {
+            writeln!(f, "///     use k8s_openapi::v1_{}::kubernetes::pkg::api::v1 as api;", v)?;
+        }
+        else {
+            writeln!(f, "///     use k8s_openapi::v1_{}::api::core::v1 as api;", v)?;
+        }
+        writeln!(f, "///     use k8s_openapi::v1_{}::apimachinery::pkg::apis::meta::v1 as meta;", v)?;
         writeln!(f, "/// }}")?;
         writeln!(f, "/// ```")?;
         writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
@@ -28,10 +34,16 @@ fn main() -> Result<(), Box<std::error::Error>> {
         writeln!(f, "///")?;
         writeln!(f, "/// # Examples")?;
         writeln!(f, "///")?;
-        writeln!(f, "/// ```rust,ignore")?;
+        writeln!(f, "/// ```rust")?;
+        writeln!(f, "/// # #[macro_use] extern crate k8s_openapi;")?;
         writeln!(f, "/// k8s_if_1_{}! {{", v)?;
-        writeln!(f, "///     use ::k8s_openapi::v1_{}::kubernetes::pkg::api::v1 as api;", v)?;
-        writeln!(f, "///     use ::k8s_openapi::v1_{}::apimachinery::pkg::apis::meta::v1 as meta;", v)?;
+        if v == 7 {
+            writeln!(f, "///     use k8s_openapi::v1_{}::kubernetes::pkg::api::v1 as api;", v)?;
+        }
+        else {
+            writeln!(f, "///     use k8s_openapi::v1_{}::api::core::v1 as api;", v)?;
+        }
+        writeln!(f, "///     use k8s_openapi::v1_{}::apimachinery::pkg::apis::meta::v1 as meta;", v)?;
         writeln!(f, "/// }}")?;
         writeln!(f, "/// ```")?;
         writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{} {{ ($($tt:tt)*) => {{ }}; }}", v)?;
@@ -61,7 +73,7 @@ fn main() -> Result<(), Box<std::error::Error>> {
     writeln!(f, "/// # Examples")?;
     writeln!(f, "///")?;
     writeln!(f, "/// The `CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition` function returns an `HTTP 201 CREATED`")?;
-    writeln!(f, "/// when it succeeds, but the codegen before v1.9 does not have a `Created` variant in the response type. So extracting the successful result from")?;
+    writeln!(f, "/// when it succeeds, but the codegen for v1.8 does not have a `Created` variant in the response type. So extracting the successful result from")?;
     writeln!(f, "/// the response requires matching `CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other` for v1.8 and below")?;
     writeln!(f, "/// and `CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Created` for v1.9 and above.")?;
     writeln!(f, "///")?;
@@ -69,8 +81,31 @@ fn main() -> Result<(), Box<std::error::Error>> {
     writeln!(f, "/// and `CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other` would not be returned in v1.9 and above,")?;
     writeln!(f, "/// both arms need to be wrapped in conditional compilation predicates.")?;
     writeln!(f, "///")?;
-    writeln!(f, "/// ```rust,ignore")?;
-    writeln!(f, "/// let custom_resource_definition = k8s_match!(response, {{")?;
+    writeln!(f, "/// ```rust,no_run")?;
+    writeln!(f, "/// # #[macro_use] extern crate k8s_openapi;")?;
+    writeln!(f, "/// # use k8s_openapi::http;")?;
+    writeln!(f, "/// #")?;
+    writeln!(f, "/// # k8s_if_1_8! {{")?;
+    writeln!(f, "/// #     use k8s_openapi::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
+    writeln!(f, "/// # }}")?;
+    writeln!(f, "/// # k8s_if_1_9! {{")?;
+    writeln!(f, "/// #     use k8s_openapi::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
+    writeln!(f, "/// # }}")?;
+    writeln!(f, "/// # k8s_if_1_10! {{")?;
+    writeln!(f, "/// #     use k8s_openapi::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
+    writeln!(f, "/// # }}")?;
+    writeln!(f, "/// # k8s_if_1_11! {{")?;
+    writeln!(f, "/// #     use k8s_openapi::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
+    writeln!(f, "/// # }}")?;
+    writeln!(f, "/// #")?;
+    writeln!(f, "/// # fn main() -> Result<(), Box<std::error::Error>> {{")?;
+    writeln!(f, "/// #     k8s_if_ge_1_8! {{")?;
+    writeln!(f, "/// use apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse;")?;
+    writeln!(f, "///")?;
+    writeln!(f, "/// let response: CreateApiextensionsV1beta1CustomResourceDefinitionResponse = unimplemented!();")?;
+    writeln!(f, "/// let status_code: http::StatusCode = unimplemented!();")?;
+    writeln!(f, "///")?;
+    writeln!(f, "/// let custom_resource_definition: apiextensions::CustomResourceDefinition = k8s_match!(response, {{")?;
     writeln!(f, "///     k8s_if_le_1_8!(CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == ::http::StatusCode::CREATED => {{")?;
     writeln!(f, "///         // Parse response body into a CustomResourceDefinition")?;
     writeln!(f, "///         Ok(unimplemented!())")?;
@@ -80,6 +115,11 @@ fn main() -> Result<(), Box<std::error::Error>> {
     writeln!(f, "///     }}),")?;
     writeln!(f, r#"///     other => Err(format!("unexpected response {{}} {{:?}}", status_code, other)),"#)?;
     writeln!(f, "/// }})?;")?;
+    writeln!(f, "/// #")?;
+    writeln!(f, "/// #     }}")?;
+    writeln!(f, "/// #")?;
+    writeln!(f, "/// #     Ok(())")?;
+    writeln!(f, "/// # }}")?;
     writeln!(f, "/// ```")?;
     writeln!(f, "#[macro_export] macro_rules! k8s_match {{")?;
     writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ }}) => {{")?;
