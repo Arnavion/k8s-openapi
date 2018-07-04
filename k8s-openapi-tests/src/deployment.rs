@@ -2,18 +2,23 @@
 fn list() {
 	k8s_if_1_7! {
 		use ::k8s_openapi::v1_7::kubernetes::pkg::apis::apps::v1beta1 as apps;
+		use ::k8s_openapi::v1_7::apimachinery::pkg::util as util;
 	}
 	k8s_if_1_8! {
 		use ::k8s_openapi::v1_8::api::apps::v1beta2 as apps;
+		use ::k8s_openapi::v1_8::apimachinery::pkg::util as util;
 	}
 	k8s_if_1_9! {
 		use ::k8s_openapi::v1_9::api::apps::v1 as apps;
+		use ::k8s_openapi::v1_9::apimachinery::pkg::util as util;
 	}
 	k8s_if_1_10! {
 		use ::k8s_openapi::v1_10::api::apps::v1 as apps;
+		use ::k8s_openapi::v1_10::apimachinery::pkg::util as util;
 	}
 	k8s_if_1_11! {
 		use ::k8s_openapi::v1_11::api::apps::v1 as apps;
+		use ::k8s_openapi::v1_11::apimachinery::pkg::util as util;
 	}
 
 	let client = ::Client::new().expect("couldn't create client");
@@ -103,11 +108,11 @@ fn list() {
 
 	k8s_if_le_1_10! {
 		assert_eq!(dns_container_liveness_probe_http_get_action.path, Some("/healthcheck/kubedns".to_string()));
-		assert_eq!(dns_container_liveness_probe_http_get_action.port, ::k8s_openapi::IntOrString::Int(10054));
+		assert_eq!(dns_container_liveness_probe_http_get_action.port, util::intstr::IntOrString::Int(10054));
 	}
 	k8s_if_ge_1_11! {
 		assert_eq!(dns_container_liveness_probe_http_get_action.path, Some("/health".to_string()));
-		assert_eq!(dns_container_liveness_probe_http_get_action.port, ::k8s_openapi::IntOrString::Int(8080));
+		assert_eq!(dns_container_liveness_probe_http_get_action.port, util::intstr::IntOrString::Int(8080));
 	}
 
 	let dns_deployment_status = dns_deployment.status.expect("couldn't get dns deployment status");

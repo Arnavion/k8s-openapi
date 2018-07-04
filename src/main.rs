@@ -165,6 +165,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			}
 		}
 
+		let can_be_default = can_be_default(&definition.kind);
+
 		match &definition.kind {
 			swagger20::SchemaKind::Properties(properties) => {
 				struct Property<'a> {
@@ -225,26 +227,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 				write!(file, "#[derive(Clone, Debug")?;
 
-				let all_properties_are_default =
-					properties.iter().all(|Property { schema, required, .. }| {
-						if !required {
-							// Option<T>::default is None regardless of T
-							return true;
-						}
-
-						if let swagger20::SchemaKind::Ref(ref ref_path) = schema.kind {
-							match &**ref_path {
-								// chrono::DateTime<chrono::Utc> is not Default
-								"io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime" |
-								"io.k8s.apimachinery.pkg.apis.meta.v1.Time" => false,
-								_ => true,
-							}
-						}
-						else {
-							true
-						}
-					});
-				if all_properties_are_default {
+				if can_be_default {
 					write!(file, ", Default")?;
 				}
 
@@ -425,6 +408,77 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				num_generated_structs += 1;
 			},
 
+			swagger20::SchemaKind::Ref(_) => return Err(format!("{} is a Ref", definition_path).into()),
+
+			swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => {
+				writeln!(file, "#[derive(Clone, Debug, Eq, PartialEq)]")?;
+				writeln!(file, "pub enum {} {{", type_name)?;
+				writeln!(file, "    Int(i32),")?;
+				writeln!(file, "    String(String),")?;
+				writeln!(file, "}}")?;
+				writeln!(file)?;
+				writeln!(file, "impl Default for {} {{", type_name)?;
+				writeln!(file, "    fn default() -> Self {{")?;
+				writeln!(file, "        {}::Int(0)", type_name)?;
+				writeln!(file, "    }}")?;
+				writeln!(file, "}}")?;
+				writeln!(file)?;
+				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
+				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "        struct Visitor;")?;
+				writeln!(file)?;
+				writeln!(file, "        impl<'de> ::serde::de::Visitor<'de> for Visitor {{")?;
+				writeln!(file, "            type Value = {};", type_name)?;
+				writeln!(file)?;
+				writeln!(file, "            fn expecting(&self, formatter: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {{")?;
+				writeln!(file, r#"                write!(formatter, "enum {}")"#, type_name)?;
+				writeln!(file, "            }}")?;
+				writeln!(file)?;
+				writeln!(file, "            fn visit_i32<E>(self, v: i32) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+				writeln!(file, "                Ok({}::Int(v))", type_name)?;
+				writeln!(file, "            }}")?;
+				writeln!(file)?;
+				writeln!(file, "            fn visit_i64<E>(self, v: i64) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+				writeln!(file, "                if v < ::std::i32::MIN as i64 || v > ::std::i32::MAX as i64 {{")?;
+				writeln!(file, r#"                    return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Signed(v), &"a 32-bit integer"));"#)?;
+				writeln!(file, "                }}")?;
+				writeln!(file)?;
+				writeln!(file, "                Ok({}::Int(v as i32))", type_name)?;
+				writeln!(file, "            }}")?;
+				writeln!(file)?;
+				writeln!(file, "            fn visit_u64<E>(self, v: u64) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+				writeln!(file, "                if v > ::std::i32::MAX as u64 {{")?;
+				writeln!(file, r#"                    return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Unsigned(v), &"a 32-bit integer"));"#)?;
+				writeln!(file, "                }}")?;
+				writeln!(file)?;
+				writeln!(file, "                Ok({}::Int(v as i32))", type_name)?;
+				writeln!(file, "            }}")?;
+				writeln!(file)?;
+				writeln!(file, "            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+				writeln!(file, "                self.visit_string(v.to_string())")?;
+				writeln!(file, "            }}")?;
+				writeln!(file)?;
+				writeln!(file, "            fn visit_string<E>(self, v: String) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+				writeln!(file, "                Ok({}::String(v))", type_name)?;
+				writeln!(file, "            }}")?;
+				writeln!(file, "        }}")?;
+				writeln!(file)?;
+				writeln!(file, "        deserializer.deserialize_any(Visitor)")?;
+				writeln!(file, "    }}")?;
+				writeln!(file, "}}")?;
+				writeln!(file)?;
+				writeln!(file, "impl ::serde::Serialize for {} {{", type_name)?;
+				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {{")?;
+				writeln!(file, "        match self {{")?;
+				writeln!(file, "            {}::Int(i) => i.serialize(serializer),", type_name)?;
+				writeln!(file, "            {}::String(s) => s.serialize(serializer),", type_name)?;
+				writeln!(file, "        }}")?;
+				writeln!(file, "    }}")?;
+				writeln!(file, "}}")?;
+
+				num_generated_structs += 1;
+			},
+
 			swagger20::SchemaKind::Ty(ty @ swagger20::Type::JSONSchemaPropsOrArray) |
 			swagger20::SchemaKind::Ty(ty @ swagger20::Type::JSONSchemaPropsOrBool) |
 			swagger20::SchemaKind::Ty(ty @ swagger20::Type::JSONSchemaPropsOrStringArray) => {
@@ -508,10 +562,41 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				num_generated_structs += 1;
 			},
 
-			swagger20::SchemaKind::Ref(_) |
 			swagger20::SchemaKind::Ty(_) => {
-				// TODO: Should Ty be newtypes instead of aliases?
-				writeln!(file, "pub type {} = {};", type_name, get_rust_type(&definition.kind, &replace_namespaces, mod_root))?;
+				write!(file, "#[derive(Clone, Debug, ")?;
+				if can_be_default {
+					write!(file, "Default, ")?;
+				}
+				writeln!(file, "PartialEq)]")?;
+
+				writeln!(file, "pub struct {}(pub {});", type_name, get_rust_type(&definition.kind, &replace_namespaces, mod_root))?;
+				writeln!(file)?;
+				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
+				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "        struct Visitor;")?;
+				writeln!(file)?;
+				writeln!(file, "        impl<'de> ::serde::de::Visitor<'de> for Visitor {{")?;
+				writeln!(file, "            type Value = {};", type_name)?;
+				writeln!(file)?;
+				writeln!(file, "            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {{")?;
+				writeln!(file, r#"                write!(f, "{}")"#, type_name)?;
+				writeln!(file, "            }}")?;
+				writeln!(file)?;
+				writeln!(file, "            fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "                Ok({}(::serde::Deserialize::deserialize(deserializer)?))", type_name)?;
+				writeln!(file, "            }}")?;
+				writeln!(file, "        }}")?;
+				writeln!(file)?;
+				writeln!(file, r#"        deserializer.deserialize_newtype_struct("{}", Visitor)"#, type_name)?;
+				writeln!(file, "    }}")?;
+				writeln!(file, "}}")?;
+				writeln!(file)?;
+				writeln!(file, "impl ::serde::Serialize for {} {{", type_name)?;
+				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {{")?;
+				writeln!(file, r#"        serializer.serialize_newtype_struct("{}", &self.0)"#, type_name)?;
+				writeln!(file, "    }}")?;
+				writeln!(file, "}}")?;
+
 				num_generated_type_aliases += 1;
 			},
 		}
@@ -553,6 +638,34 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	info!("");
 
 	Ok(())
+}
+
+fn can_be_default(kind: &swagger20::SchemaKind) -> bool {
+	match kind {
+		swagger20::SchemaKind::Properties(properties) => properties.values().all(|(schema, required)| {
+			if !required {
+				// Option<T>::default is None regardless of T
+				return true;
+			}
+
+			can_be_default(&schema.kind)
+		}),
+
+		swagger20::SchemaKind::Ref(ref_path) => match &**ref_path {
+			// chrono::DateTime<chrono::Utc> is not Default
+			//
+			// TODO: Ideally this would "dereference" the ref path to see that the target is a `String(StringFormat::DateTime)`
+			// instead of hard-coding the ref paths.
+			"io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime" |
+			"io.k8s.apimachinery.pkg.apis.meta.v1.Time" => false,
+			_ => true,
+		},
+
+		// chrono::DateTime<chrono::Utc> is not Default
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => false,
+
+		swagger20::SchemaKind::Ty(_) => true,
+	}
 }
 
 fn create_file_for_type(
@@ -716,8 +829,9 @@ fn get_rust_borrow_type(schema_kind: &swagger20::SchemaKind, replace_namespaces:
 
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => "&::ByteString".into(),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => "&::chrono::DateTime<::chrono::Utc>".into(),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::IntOrString) }) => "&::IntOrString".into(),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => "&str".into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => panic!("nothing should be trying to refer to IntOrString"),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
@@ -747,8 +861,9 @@ fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec
 
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => "::ByteString".into(),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => "::chrono::DateTime<::chrono::Utc>".into(),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::IntOrString) }) => "::IntOrString".into(),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => "String".into(),
+
+		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => panic!("nothing should be trying to refer to IntOrString"),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |

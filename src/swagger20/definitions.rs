@@ -166,7 +166,6 @@ pub enum SchemaKind {
 pub enum StringFormat {
 	Byte,
 	DateTime,
-	IntOrString,
 }
 
 #[derive(Debug)]
@@ -179,7 +178,8 @@ pub enum Type {
 	Object { additional_properties: Box<Schema> },
 	String { format: Option<StringFormat> },
 
-	// Special types that need alterative codegen. Never parsed from the spec.
+	// Special types that need alterative codegen
+	IntOrString,
 	JSONSchemaPropsOrArray,
 	JSONSchemaPropsOrBool,
 	JSONSchemaPropsOrStringArray,
@@ -226,7 +226,7 @@ impl Type {
 				let format = match format {
 					Some("byte") => Some(StringFormat::Byte),
 					Some("date-time") => Some(StringFormat::DateTime),
-					Some("int-or-string") => Some(StringFormat::IntOrString),
+					Some("int-or-string") => return Ok(Type::IntOrString),
 					Some(format) => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(format), &"one of byte, date-time, int-or-string")),
 					None => None,
 				};

@@ -43,7 +43,7 @@ fn watch_pods() {
 				return None;
 			}
 
-			let pod: api::Pod = ::serde_json::from_value(pod_watch_event.object).expect("couldn't re-deserialize pod watch event object");
+			let pod: api::Pod = ::serde_json::from_value(pod_watch_event.object.0).expect("couldn't re-deserialize pod watch event object");
 			if pod.metadata.as_ref().and_then(|metadata| metadata.name.as_ref()).map_or(false, |name| name.starts_with("kube-addon-manager-")) {
 				Some(pod)
 			}

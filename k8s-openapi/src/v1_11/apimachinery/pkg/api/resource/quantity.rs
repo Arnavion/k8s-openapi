@@ -35,4 +35,31 @@
 /// Non-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)
 ///
 /// This format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.
-pub type Quantity = String;
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct Quantity(pub String);
+
+impl<'de> ::serde::Deserialize<'de> for Quantity {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        struct Visitor;
+
+        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+            type Value = Quantity;
+
+            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                write!(f, "Quantity")
+            }
+
+            fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: ::serde::Deserializer<'de> {
+                Ok(Quantity(::serde::Deserialize::deserialize(deserializer)?))
+            }
+        }
+
+        deserializer.deserialize_newtype_struct("Quantity", Visitor)
+    }
+}
+
+impl ::serde::Serialize for Quantity {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+        serializer.serialize_newtype_struct("Quantity", &self.0)
+    }
+}
