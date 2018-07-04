@@ -9,6 +9,8 @@ env:
   K8S_VERSION=v1.8.0
 - FEATURE=test_v1_9
   K8S_VERSION=v1.9.4
+- FEATURE=test_v1_10
+- FEATURE=test_v1_11
 
 script:
 - bash ./ci/travis.sh
