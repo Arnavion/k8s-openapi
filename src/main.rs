@@ -142,7 +142,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 	info!("Generating types...");
 
-	for (definition_path, definition) in &mut spec.definitions {
+	for (definition_path, definition) in &spec.definitions {
 		trace!("Working on {} ...", definition_path);
 
 		if let swagger20::SchemaKind::Ref(_) = definition.kind {
@@ -165,7 +165,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			}
 		}
 
-		let can_be_default = can_be_default(&definition.kind);
+		let can_be_default = can_be_default(&definition.kind, &spec);
 
 		match &definition.kind {
 			swagger20::SchemaKind::Properties(properties) => {
@@ -640,7 +640,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	Ok(())
 }
 
-fn can_be_default(kind: &swagger20::SchemaKind) -> bool {
+fn can_be_default(kind: &swagger20::SchemaKind, spec: &swagger20::Spec) -> bool {
 	match kind {
 		swagger20::SchemaKind::Properties(properties) => properties.values().all(|(schema, required)| {
 			if !required {
@@ -648,17 +648,14 @@ fn can_be_default(kind: &swagger20::SchemaKind) -> bool {
 				return true;
 			}
 
-			can_be_default(&schema.kind)
+			can_be_default(&schema.kind, spec)
 		}),
 
-		swagger20::SchemaKind::Ref(ref_path) => match &**ref_path {
-			// chrono::DateTime<chrono::Utc> is not Default
-			//
-			// TODO: Ideally this would "dereference" the ref path to see that the target is a `String(StringFormat::DateTime)`
-			// instead of hard-coding the ref paths.
-			"io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime" |
-			"io.k8s.apimachinery.pkg.apis.meta.v1.Time" => false,
-			_ => true,
+		swagger20::SchemaKind::Ref(ref_path) => {
+			let target =
+				spec.definitions.get(&swagger20::DefinitionPath(ref_path.0.clone()))
+				.unwrap_or_else(|| panic!("couldn't find target of ref path {}", ref_path));
+			can_be_default(&target.kind, spec)
 		},
 
 		// chrono::DateTime<chrono::Utc> is not Default
