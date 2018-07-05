@@ -69,14 +69,14 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	let out_dir = out_dir_base.join(mod_root);
 
 	// `$ref`s under these namespaces will not be emitted
-	let skip_refs_under_namespaces = vec![
+	let skip_refs_under_namespaces: &[&[_]] = &[
 		// All marked deprecated and point to corresponding definitions under io.k8s.api
-		vec!["io", "k8s", "kubernetes", "pkg"],
+		&["io", "k8s", "kubernetes", "pkg"],
 	];
 
-	let replace_namespaces: Vec<(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)> = vec![
+	let replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])] = &[
 		// Everything's under io.k8s, so strip it
-		(vec!["io".into(), "k8s".into()], vec![]),
+		(&["io".into(), "k8s".into()], &[]),
 	];
 
 	let mut num_generated_structs = 0usize;
@@ -673,7 +673,7 @@ fn can_be_default(kind: &swagger20::SchemaKind, spec: &swagger20::Spec) -> Resul
 fn create_file_for_type(
 	definition_path: &swagger20::DefinitionPath,
 	out_dir: &std::path::Path,
-	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
+	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 ) -> Result<(std::io::BufWriter<std::fs::File>, String, swagger20::RefPath), Error> {
 	use std::io::Write;
 
@@ -743,7 +743,7 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
 
 fn get_fully_qualified_type_name(
 	ref_path: &swagger20::RefPath,
-	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
+	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	mod_root: &str,
 ) -> Result<String, Error> {
 	use std::fmt::Write;
@@ -813,7 +813,7 @@ fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 
 fn get_rust_borrow_type(
 	schema_kind: &swagger20::SchemaKind,
-	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
+	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	mod_root: &str,
 ) -> Result<std::borrow::Cow<'static, str>, Error> {
 	match *schema_kind {
@@ -849,7 +849,7 @@ fn get_rust_borrow_type(
 
 fn get_rust_type(
 	schema_kind: &swagger20::SchemaKind,
-	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
+	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	mod_root: &str,
 ) -> Result<std::borrow::Cow<'static, str>, Error> {
 	match *schema_kind {
@@ -885,7 +885,7 @@ fn get_rust_type(
 
 fn replace_namespace<'a, I>(
 	parts: I,
-	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
+	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 ) -> Vec<std::borrow::Cow<'a, str>> where I: IntoIterator<Item = &'a str> {
 	let parts: Vec<_> = parts.into_iter().map(Into::into).collect();
 
@@ -893,7 +893,7 @@ fn replace_namespace<'a, I>(
 
 	for (from, to) in replace_namespaces {
 		if parts.starts_with(from) {
-			let mut result = to.clone();
+			let mut result = to.to_vec();
 			result.extend(parts.into_iter().skip(from.len()));
 			return result;
 		}
@@ -905,7 +905,7 @@ fn replace_namespace<'a, I>(
 fn write_operation(
 	file: &mut std::io::BufWriter<std::fs::File>,
 	operation: &swagger20::Operation,
-	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
+	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	mod_root: &str,
 	type_name: Option<&str>,
 	type_ref_path: Option<&swagger20::RefPath>,
