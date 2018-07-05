@@ -246,3 +246,30 @@ pub(crate) fn raw_extension_ty(spec: &mut ::swagger20::Spec) -> Result<(), ::Err
 
 	Err("never applied RawExtension override".into())
 }
+
+// Remove `$ref`s under `io.k8s.kubernetes.pkg` since these are marked deprecated and point to corresponding definitions under `io.k8s.api`.
+// They only exist for backward-compatibility with 1.7's spec.
+pub(crate) fn remove_compat_refs(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+	const COMPAT_NAMESPACE: &[&str] = &["io", "k8s", "kubernetes", "pkg"];
+
+	let mut to_remove = vec![];
+
+	for (definition_path, definition) in &spec.definitions {
+		if let ::swagger20::SchemaKind::Ref(_) = definition.kind {
+			let parts: Vec<_> = definition_path.split('.').collect();
+			if parts.starts_with(COMPAT_NAMESPACE) {
+				to_remove.push(definition_path.clone());
+			}
+		}
+	}
+
+	if to_remove.is_empty() {
+		return Err("never removed compat refs".into());
+	}
+
+	for to_remove in to_remove {
+		spec.definitions.remove(&to_remove);
+	}
+
+	Ok(())
+}

@@ -1,4 +1,4 @@
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, Deserialize)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd, Deserialize)]
 pub struct DefinitionPath(pub String);
 
 impl ::std::ops::Deref for DefinitionPath {

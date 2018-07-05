@@ -68,12 +68,6 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 	let out_dir = out_dir_base.join(mod_root);
 
-	// `$ref`s under these namespaces will not be emitted
-	let skip_refs_under_namespaces: &[&[_]] = &[
-		// All marked deprecated and point to corresponding definitions under io.k8s.api
-		&["io", "k8s", "kubernetes", "pkg"],
-	];
-
 	let replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])] = &[
 		// Everything's under io.k8s, so strip it
 		(&["io".into(), "k8s".into()], &[]),
@@ -81,7 +75,6 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 	let mut num_generated_structs = 0usize;
 	let mut num_generated_type_aliases = 0usize;
-	let mut num_skipped_refs = 0usize;
 	let mut num_generated_apis = 0usize;
 
 	let mut spec: swagger20::Spec = {
@@ -97,7 +90,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 	supported_version.fixup(&mut spec)?;
 
-	let expected_num_generated_or_skipped_types: usize = spec.definitions.len();
+	let expected_num_generated_types: usize = spec.definitions.len();
 	let expected_num_generated_apis: usize = spec.paths.iter().map(|(_, path_item)| path_item.operations.len()).sum();
 
 	info!(
@@ -143,15 +136,6 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 	for (definition_path, definition) in &spec.definitions {
 		trace!("Working on {} ...", definition_path);
-
-		if let swagger20::SchemaKind::Ref(_) = definition.kind {
-			let parts: Vec<_> = definition_path.split('.').collect();
-			if skip_refs_under_namespaces.iter().any(|skip_refs_under_namespace| parts.starts_with(skip_refs_under_namespace)) {
-				trace!("Skipping ref {} because its namespace is to be skipped", definition_path);
-				num_skipped_refs += 1;
-				continue;
-			}
-		}
 
 		let (mut file, type_name, type_ref_path) = create_file_for_type(&definition_path, &out_dir, &replace_namespaces)?;
 
@@ -623,10 +607,9 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	info!("OK");
 	info!("Generated {} structs", num_generated_structs);
 	info!("Generated {} type aliases", num_generated_type_aliases);
-	info!("Skipped generating {} type aliases", num_skipped_refs);
 	info!("Generated {} API functions", num_generated_apis);
 
-	if num_generated_structs + num_generated_type_aliases + num_skipped_refs != expected_num_generated_or_skipped_types {
+	if num_generated_structs + num_generated_type_aliases != expected_num_generated_types {
 		return Err("Did not generate or skip expected number of types".into());
 	}
 

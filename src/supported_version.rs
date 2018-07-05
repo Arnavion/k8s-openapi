@@ -58,6 +58,7 @@ impl SupportedVersion {
 				::fixups::json_schema_props_or_string_array_ty,
 				::fixups::poddisruptionbudgetstatus_optional_properties,
 				::fixups::raw_extension_ty,
+				::fixups::remove_compat_refs,
 			],
 
 			SupportedVersion::V1_9 => &[
@@ -72,6 +73,7 @@ impl SupportedVersion {
 				::fixups::json_schema_props_or_string_array_ty,
 				::fixups::poddisruptionbudgetstatus_optional_properties,
 				::fixups::raw_extension_ty,
+				::fixups::remove_compat_refs,
 			],
 
 			SupportedVersion::V1_10 => &[
@@ -87,6 +89,7 @@ impl SupportedVersion {
 				::fixups::json_schema_props_or_string_array_ty,
 				::fixups::poddisruptionbudgetstatus_optional_properties,
 				::fixups::raw_extension_ty,
+				::fixups::remove_compat_refs,
 			],
 
 			SupportedVersion::V1_11 => &[
@@ -97,6 +100,7 @@ impl SupportedVersion {
 				::fixups::json_schema_props_or_string_array_ty,
 				::fixups::poddisruptionbudgetstatus_optional_properties,
 				::fixups::raw_extension_ty,
+				::fixups::remove_compat_refs,
 			],
 		};
 
