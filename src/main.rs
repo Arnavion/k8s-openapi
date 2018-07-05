@@ -2,7 +2,6 @@
 #![cfg_attr(feature = "cargo-clippy", allow(
 	cyclomatic_complexity,
 	default_trait_access,
-	indexing_slicing,
 	similar_names,
 	too_many_arguments,
 	type_complexity,
@@ -75,9 +74,9 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 		vec!["io", "k8s", "kubernetes", "pkg"],
 	];
 
-	let replace_namespaces: Vec<(_, Vec<String>)> = vec![
+	let replace_namespaces: Vec<(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)> = vec![
 		// Everything's under io.k8s, so strip it
-		(vec!["io", "k8s"], vec![]),
+		(vec!["io".into(), "k8s".into()], vec![]),
 	];
 
 	let mut num_generated_structs = 0usize;
@@ -165,7 +164,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			}
 		}
 
-		let can_be_default = can_be_default(&definition.kind, &spec);
+		let can_be_default = can_be_default(&definition.kind, &spec)?;
 
 		match &definition.kind {
 			swagger20::SchemaKind::Properties(properties) => {
@@ -191,7 +190,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 							write!(field_type_name, "Option<")?;
 						}
 
-						let type_name = get_rust_type(&schema.kind, &replace_namespaces, mod_root);
+						let type_name = get_rust_type(&schema.kind, &replace_namespaces, mod_root)?;
 
 						// Fix cases of infinite recursion
 						if let swagger20::SchemaKind::Ref(ref ref_path) = schema.kind {
@@ -486,7 +485,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					get_fully_qualified_type_name(
 						&swagger20::RefPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps".to_string()),
 						&replace_namespaces,
-						mod_root);
+						mod_root)?;
 
 				writeln!(file, "#[derive(Clone, Debug, PartialEq)]")?;
 				writeln!(file, "pub enum {} {{", type_name)?;
@@ -569,7 +568,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				}
 				writeln!(file, "PartialEq)]")?;
 
-				writeln!(file, "pub struct {}(pub {});", type_name, get_rust_type(&definition.kind, &replace_namespaces, mod_root))?;
+				writeln!(file, "pub struct {}(pub {});", type_name, get_rust_type(&definition.kind, &replace_namespaces, mod_root)?)?;
 				writeln!(file)?;
 				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
 				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
@@ -640,35 +639,41 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	Ok(())
 }
 
-fn can_be_default(kind: &swagger20::SchemaKind, spec: &swagger20::Spec) -> bool {
+fn can_be_default(kind: &swagger20::SchemaKind, spec: &swagger20::Spec) -> Result<bool, Error> {
 	match kind {
-		swagger20::SchemaKind::Properties(properties) => properties.values().all(|(schema, required)| {
-			if !required {
-				// Option<T>::default is None regardless of T
-				return true;
+		swagger20::SchemaKind::Properties(properties) => {
+			for (schema, required) in properties.values() {
+				if !required {
+					// Option<T>::default is None regardless of T
+					continue;
+				}
+
+				if !can_be_default(&schema.kind, spec)? {
+					return Ok(false);
+				}
 			}
 
-			can_be_default(&schema.kind, spec)
-		}),
+			Ok(true)
+		},
 
 		swagger20::SchemaKind::Ref(ref_path) => {
 			let target =
 				spec.definitions.get(&swagger20::DefinitionPath(ref_path.0.clone()))
-				.unwrap_or_else(|| panic!("couldn't find target of ref path {}", ref_path));
+				.ok_or_else(|| format!("couldn't find target of ref path {}", ref_path))?;
 			can_be_default(&target.kind, spec)
 		},
 
 		// chrono::DateTime<chrono::Utc> is not Default
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => false,
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
 
-		swagger20::SchemaKind::Ty(_) => true,
+		swagger20::SchemaKind::Ty(_) => Ok(true),
 	}
 }
 
 fn create_file_for_type(
 	definition_path: &swagger20::DefinitionPath,
 	out_dir: &std::path::Path,
-	replace_namespaces: &[(Vec<&str>, Vec<String>)],
+	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
 ) -> Result<(std::io::BufWriter<std::fs::File>, String, swagger20::RefPath), Error> {
 	use std::io::Write;
 
@@ -676,7 +681,7 @@ fn create_file_for_type(
 
 	let mut current = out_dir.to_owned();
 
-	for part in &parts[0..parts.len() - 1] {
+	for part in parts.iter().rev().skip(1).rev() {
 		trace!("Current directory: {}", current.display());
 
 		let mod_name = get_rust_ident(part);
@@ -706,7 +711,7 @@ fn create_file_for_type(
 		trace!("OK");
 	}
 
-	let type_name = parts[parts.len() - 1].to_string();
+	let type_name = parts.last().ok_or_else(|| format!("path for {} has no parts", definition_path))?.to_string();
 
 	let mod_name = get_rust_ident(&type_name);
 	{
@@ -736,25 +741,27 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
 		})
 }
 
-fn get_fully_qualified_type_name(ref_path: &swagger20::RefPath, replace_namespaces: &[(Vec<&str>, Vec<String>)], mod_root: &str) -> String {
+fn get_fully_qualified_type_name(
+	ref_path: &swagger20::RefPath,
+	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
+	mod_root: &str,
+) -> Result<String, Error> {
 	use std::fmt::Write;
 
 	let mut result = format!("::{}", mod_root);
 
 	let parts = replace_namespace(ref_path.split('.'), replace_namespaces);
 
-	for part in &parts[..parts.len() - 1] {
-		write!(result, "::{}", get_rust_ident(part)).unwrap();
+	for part in parts.iter().rev().skip(1).rev() {
+		write!(result, "::{}", get_rust_ident(part))?;
 	}
 
-	write!(result, "::{}", parts[parts.len() - 1]).unwrap();
+	write!(result, "::{}", parts.last().ok_or_else(|| format!("path for {} has no parts", ref_path))?)?;
 
-	result
+	Ok(result)
 }
 
 fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
-	use std::fmt::Write;
-
 	// Fix cases of invalid rust idents
 	match name {
 		"$ref" => return "ref_path".into(),
@@ -776,22 +783,22 @@ fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 		_ => (),
 	}
 
-	let chars: Vec<_> = name.chars().collect();
-
 	let mut result = String::new();
 
-	for (i, &c) in chars.iter().enumerate() {
-		if c.is_uppercase() {
-			let previous = if i == 0 { None } else { Some(chars[i - 1].is_uppercase()) };
-			let next = chars.get(i + 1).map(|c| c.is_uppercase());
+	let chars =
+		name.chars()
+		.zip(std::iter::once(None).chain(name.chars().map(|c| Some(c.is_uppercase()))))
+		.zip(name.chars().skip(1).map(|c| Some(c.is_uppercase())).chain(std::iter::once(None)));
 
+	for ((c, previous), next) in chars {
+		if c.is_uppercase() {
 			match (previous, next) {
 				(Some(false), _) |
 				(Some(true), Some(false)) => result.push('_'),
 				_ => (),
 			}
 
-			write!(result, "{}", c.to_lowercase()).unwrap();
+			result.extend(c.to_lowercase());
 		}
 		else {
 			result.push(match c {
@@ -804,90 +811,101 @@ fn get_rust_ident(name: &str) -> std::borrow::Cow<'static, str> {
 	result.into()
 }
 
-fn get_rust_borrow_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec<&str>, Vec<String>)], mod_root: &str) -> std::borrow::Cow<'static, str> {
+fn get_rust_borrow_type(
+	schema_kind: &swagger20::SchemaKind,
+	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
+	mod_root: &str,
+) -> Result<std::borrow::Cow<'static, str>, Error> {
 	match *schema_kind {
-		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
+		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
-		swagger20::SchemaKind::Ref(ref ref_path) => format!("&{}", get_fully_qualified_type_name(ref_path, replace_namespaces, mod_root)).into(),
+		swagger20::SchemaKind::Ref(ref ref_path) => Ok(format!("&{}", get_fully_qualified_type_name(ref_path, replace_namespaces, mod_root)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Any) => "&::serde_json::Value".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("&::serde_json::Value".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("&[{}]", get_rust_type(&items.kind, replace_namespaces, mod_root)).into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => Ok(format!("&[{}]", get_rust_type(&items.kind, replace_namespaces, mod_root)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => "bool".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => Ok("bool".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int32 }) => "i32".into(),
-		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int64 }) => "i64".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int32 }) => Ok("i32".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int64 }) => Ok("i64".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => "f64".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) =>
-			format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, mod_root)).into(),
+			Ok(format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, mod_root)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => "&::ByteString".into(),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => "&::chrono::DateTime<::chrono::Utc>".into(),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => "&str".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok("&::ByteString".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("&::chrono::DateTime<::chrono::Utc>".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("&str".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => panic!("nothing should be trying to refer to IntOrString"),
+		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => panic!("JSON schema types not supported"),
+		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
 	}
 }
 
-fn get_rust_type(schema_kind: &swagger20::SchemaKind, replace_namespaces: &[(Vec<&str>, Vec<String>)], mod_root: &str) -> std::borrow::Cow<'static, str> {
+fn get_rust_type(
+	schema_kind: &swagger20::SchemaKind,
+	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
+	mod_root: &str,
+) -> Result<std::borrow::Cow<'static, str>, Error> {
 	match *schema_kind {
-		swagger20::SchemaKind::Properties(_) => panic!("Nested anonymous types not supported"),
+		swagger20::SchemaKind::Properties(_) => Err("Nested anonymous types not supported".into()),
 
-		swagger20::SchemaKind::Ref(ref ref_path) => get_fully_qualified_type_name(ref_path, replace_namespaces, mod_root).into(),
+		swagger20::SchemaKind::Ref(ref ref_path) => Ok(get_fully_qualified_type_name(ref_path, replace_namespaces, mod_root)?.into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Any) => "::serde_json::Value".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("::serde_json::Value".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => format!("Vec<{}>", get_rust_type(&items.kind, replace_namespaces, mod_root)).into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => Ok(format!("Vec<{}>", get_rust_type(&items.kind, replace_namespaces, mod_root)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => "bool".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Boolean) => Ok("bool".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int32 }) => "i32".into(),
-		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int64 }) => "i64".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int32 }) => Ok("i32".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Integer { format: swagger20::IntegerFormat::Int64 }) => Ok("i64".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => "f64".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) =>
-			format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, mod_root)).into(),
+			Ok(format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, mod_root)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => "::ByteString".into(),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => "::chrono::DateTime<::chrono::Utc>".into(),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => "String".into(),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok("::ByteString".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("::chrono::DateTime<::chrono::Utc>".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("String".into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => panic!("nothing should be trying to refer to IntOrString"),
+		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
-		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => panic!("JSON schema types not supported"),
+		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
 	}
 }
 
-fn replace_namespace<'a, I>(parts: I, replace_namespaces: &[(Vec<&str>, Vec<String>)]) -> Vec<String> where I: IntoIterator<Item = &'a str> {
-	let parts: Vec<_> = parts.into_iter().collect();
+fn replace_namespace<'a, I>(
+	parts: I,
+	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
+) -> Vec<std::borrow::Cow<'a, str>> where I: IntoIterator<Item = &'a str> {
+	let parts: Vec<_> = parts.into_iter().map(Into::into).collect();
 
 	trace!("parts = {:?}, replace_namespaces = {:?}", parts, replace_namespaces);
 
-	for &(ref from, ref to) in replace_namespaces {
+	for (from, to) in replace_namespaces {
 		if parts.starts_with(from) {
 			let mut result = to.clone();
-			result.extend(parts[from.len()..].into_iter().map(ToString::to_string));
+			result.extend(parts.into_iter().skip(from.len()));
 			return result;
 		}
 	}
 
-	parts.into_iter().map(ToString::to_string).collect()
+	parts
 }
 
 fn write_operation(
 	file: &mut std::io::BufWriter<std::fs::File>,
 	operation: &swagger20::Operation,
-	replace_namespaces: &[(Vec<&str>, Vec<String>)],
+	replace_namespaces: &[(Vec<std::borrow::Cow<'static, str>>, Vec<std::borrow::Cow<'static, str>>)],
 	mod_root: &str,
 	type_name: Option<&str>,
 	type_ref_path: Option<&swagger20::RefPath>,
@@ -900,7 +918,12 @@ fn write_operation(
 
 	writeln!(file, "// Generated from operation {}", operation.id)?;
 
-	let operation_result_name = format!("{}{}Response", operation.id[0..1].to_uppercase(), &operation.id[1..]);
+	let operation_result_name = {
+		let mut operation_id_chars = operation.id.chars();
+		let first_operation_id_chars = operation_id_chars.next().ok_or_else(|| format!("operation has empty ID: {:?}", operation))?.to_uppercase();
+		let rest_operation_id_chars = operation_id_chars.as_str();
+		format!("{}{}Response", first_operation_id_chars, rest_operation_id_chars)
+	};
 
 	let operation_responses: Result<Vec<_>, _> =
 		operation.responses.iter()
@@ -962,7 +985,7 @@ fn write_operation(
 		parameters.push(parameter);
 	}
 	let mut previous_parameters: std::collections::HashSet<_> = Default::default();
-	let mut parameters: Vec<_> =
+	let parameters: Result<Vec<_>, Error> =
 		parameters.into_iter()
 		.map(|parameter| {
 			let mut parameter_name = get_rust_ident(&parameter.name);
@@ -971,11 +994,12 @@ fn write_operation(
 			}
 			previous_parameters.insert(parameter_name.clone());
 
-			let parameter_type = get_rust_borrow_type(&parameter.schema.kind, replace_namespaces, mod_root);
+			let parameter_type = get_rust_borrow_type(&parameter.schema.kind, replace_namespaces, mod_root)?;
 
-			(parameter_name, parameter_type, parameter)
+			Ok((parameter_name, parameter_type, parameter))
 		})
 		.collect();
+	let mut parameters = parameters?;
 	parameters.sort_by(|(_, _, parameter1), (_, _, parameter2)| {
 		(match (parameter1.location, parameter2.location) {
 			(location1, location2) if location1 == location2 => std::cmp::Ordering::Equal,
@@ -1142,14 +1166,14 @@ fn write_operation(
 				// DELETE operations that return metav1.Status for HTTP 200 can also return the object itself instead.
 				//
 				// Ref https://github.com/kubernetes/kubernetes/issues/59501
-				writeln!(file, "    {}Status({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
+				writeln!(file, "    {}Status({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root)?)?;
 				writeln!(file, "    {}Value({}),", variant_name, get_fully_qualified_type_name(
 					type_ref_path.ok_or_else(|| "DELETE-Ok-Status that isn't associated with a type")?,
 					&replace_namespaces,
-					mod_root))?;
+					mod_root)?)?;
 			}
 			else {
-				writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root))?;
+				writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root)?)?;
 			}
 		}
 		else {
