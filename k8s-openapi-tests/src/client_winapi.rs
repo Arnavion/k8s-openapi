@@ -202,6 +202,7 @@ fn parse_pem(path: &::std::path::Path) -> Result<Vec<u8>, ::Error> {
 		) != winapi::shared::minwindef::TRUE {
 			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 		}
+		result.resize(result_len as _, 0);
 
 		Ok(result)
 	}
