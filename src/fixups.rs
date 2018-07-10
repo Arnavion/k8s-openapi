@@ -199,7 +199,7 @@ pub(crate) fn json_schema_props_or_string_array_ty(spec: &mut ::swagger20::Spec)
 	Err("never applied JSONSchemaPropsOrStringArray override".into())
 }
 
-// The spec says that `APIGroup::serverAddressByClientCIDRs` is an array, but it can be null.
+// The spec says that `PodDisruptionBudgetStatus::disruptedPods` is an array, but it can be null.
 //
 // Override it to be optional to achieve the same effect.
 //
