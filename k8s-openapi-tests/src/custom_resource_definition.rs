@@ -1,5 +1,5 @@
 #[test]
-fn list() {
+fn create() {
 	k8s_if_1_8! {
 		use ::k8s_openapi::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
 		use ::k8s_openapi::v1_8::apimachinery::pkg::apis::meta::v1 as meta;
