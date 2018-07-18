@@ -6,7 +6,7 @@ pub struct VolumeMount {
     /// Path within the container at which the volume should be mounted.  Must not contain ':'.
     pub mount_path: String,
 
-    /// mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationHostToContainer is used. This field is beta in 1.10.
+    /// mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
     pub mount_propagation: Option<String>,
 
     /// This must match the Name of a Volume.
