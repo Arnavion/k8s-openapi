@@ -8,6 +8,7 @@
 ))]
 
 extern crate backtrace;
+extern crate dirs;
 #[macro_use] extern crate k8s_openapi;
 extern crate reqwest;
 extern crate serde;
@@ -46,7 +47,7 @@ struct Client {
 impl Client {
 	fn new() -> Result<Self, Error> {
 		let kubeconfig: KubeConfig = {
-			let mut kubeconfig_path = std::env::home_dir().ok_or("can't find home directory")?;
+			let mut kubeconfig_path = dirs::home_dir().ok_or("can't find home directory")?;
 			kubeconfig_path.push(".kube");
 			kubeconfig_path.push("config");
 			serde_yaml::from_reader(std::io::BufReader::new(std::fs::File::open(kubeconfig_path)?))?
