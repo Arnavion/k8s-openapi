@@ -4,6 +4,18 @@ const MAX: usize = 11;
 fn main() -> Result<(), Box<std::error::Error>> {
     use std::io::Write;
 
+    let versions = {
+        let mut versions: std::collections::HashSet<_> = Default::default();
+
+        for v in MIN..=MAX {
+            if std::env::var(format!("CARGO_FEATURE_V1_{}", v)).is_ok() {
+                versions.insert(v);
+            }
+        }
+
+        versions
+    };
+
     let mut f = {
         let mut out_file: std::path::PathBuf = std::env::var_os("OUT_DIR").ok_or_else(|| "OUT_DIR not set")?.into();
         out_file.push("conditional_compilation_macros.rs");
@@ -11,7 +23,6 @@ fn main() -> Result<(), Box<std::error::Error>> {
     };
 
     for v in MIN..=MAX {
-        writeln!(f, r#"#[cfg(feature = "v1_{}")]"#, v)?;
         writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` feature is enabled, otherwise it evaluates to nothing.", v)?;
         writeln!(f, "///")?;
         writeln!(f, "/// # Examples")?;
@@ -28,41 +39,30 @@ fn main() -> Result<(), Box<std::error::Error>> {
         writeln!(f, "///     use k8s_openapi::v1_{}::apimachinery::pkg::apis::meta::v1 as meta;", v)?;
         writeln!(f, "/// }}")?;
         writeln!(f, "/// ```")?;
-        writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
-        writeln!(f, r#"#[cfg(not(feature = "v1_{}"))]"#, v)?;
-        writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` feature is enabled, otherwise it evaluates to nothing.", v)?;
-        writeln!(f, "///")?;
-        writeln!(f, "/// # Examples")?;
-        writeln!(f, "///")?;
-        writeln!(f, "/// ```rust")?;
-        writeln!(f, "/// # #[macro_use] extern crate k8s_openapi;")?;
-        writeln!(f, "/// k8s_if_1_{}! {{", v)?;
-        if v == 7 {
-            writeln!(f, "///     use k8s_openapi::v1_{}::kubernetes::pkg::api::v1 as api;", v)?;
+        if versions.contains(&v) {
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
         }
         else {
-            writeln!(f, "///     use k8s_openapi::v1_{}::api::core::v1 as api;", v)?;
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{} {{ ($($tt:tt)*) => {{ }}; }}", v)?;
         }
-        writeln!(f, "///     use k8s_openapi::v1_{}::apimachinery::pkg::apis::meta::v1 as meta;", v)?;
-        writeln!(f, "/// }}")?;
-        writeln!(f, "/// ```")?;
-        writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{} {{ ($($tt:tt)*) => {{ }}; }}", v)?;
         writeln!(f)?;
 
-        writeln_cfg_ge(&mut f, v, true)?;
         writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` or higher feature is enabled, otherwise it evaluates to nothing.", v)?;
-        writeln!(f, "#[macro_export] macro_rules! k8s_if_ge_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
-        writeln_cfg_ge(&mut f, v, false)?;
-        writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` or higher feature is enabled, otherwise it evaluates to nothing.", v)?;
-        writeln!(f, "#[macro_export] macro_rules! k8s_if_ge_1_{} {{ ($($tt:tt)*) => {{ }}; }}", v)?;
+        if cfg_ge(v, &versions) {
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_ge_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
+        }
+        else {
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_ge_1_{} {{ ($($tt:tt)*) => {{ }}; }}", v)?;
+        }
         writeln!(f)?;
 
-        writeln_cfg_le(&mut f, v, true)?;
         writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` or lower feature is enabled, otherwise it evaluates to nothing.", v)?;
-        writeln!(f, "#[macro_export] macro_rules! k8s_if_le_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
-        writeln_cfg_le(&mut f, v, false)?;
-        writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` or lower feature is enabled, otherwise it evaluates to nothing.", v)?;
-        writeln!(f, "#[macro_export] macro_rules! k8s_if_le_1_{} {{ ($($tt:tt)*) => {{ }}; }}", v)?;
+        if cfg_le(v, &versions) {
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_le_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
+        }
+        else {
+            writeln!(f, "#[macro_export] macro_rules! k8s_if_le_1_{} {{ ($($tt:tt)*) => {{ }}; }}", v)?;
+        }
         writeln!(f)?;
     }
 
@@ -128,17 +128,17 @@ fn main() -> Result<(), Box<std::error::Error>> {
 
     for v in MIN..=MAX {
         writeln!(f)?;
-        writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ k8s_if_1_{}!($($arm:tt)*), $($rest:tt)* }}) => {{", v)?;
-        writeln!(f, "        _k8s_match_1_{}!(@inner {{ $test }} {{ $($arms)* }} {{ ($($arm)*), $($rest)* }})", v)?;
-        writeln!(f, "    }};")?;
-        writeln!(f)?;
-        writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ k8s_if_ge_1_{}!($($arm:tt)*), $($rest:tt)* }}) => {{", v)?;
-        writeln!(f, "        _k8s_match_ge_1_{}!(@inner {{ $test }} {{ $($arms)* }} {{ ($($arm)*), $($rest)* }})", v)?;
-        writeln!(f, "    }};")?;
-        writeln!(f)?;
-        writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ k8s_if_le_1_{}!($($arm:tt)*), $($rest:tt)* }}) => {{", v)?;
-        writeln!(f, "        _k8s_match_le_1_{}!(@inner {{ $test }} {{ $($arms)* }} {{ ($($arm)*), $($rest)* }})", v)?;
-        writeln!(f, "    }};")?;
+
+        for (name, enabled) in &[("", versions.contains(&v)), ("_ge", cfg_ge(v, &versions)), ("_le", cfg_le(v, &versions))] {
+            writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ k8s_if{}_1_{}!($($arm:tt)*), $($rest:tt)* }}) => {{", name, v)?;
+            if *enabled {
+                writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($arm)*, $($rest)* }})")?;
+            }
+            else {
+                writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($rest)* }})")?;
+            }
+            writeln!(f, "    }};")?;
+        }
     }
 
     writeln!(f)?;
@@ -155,103 +155,25 @@ fn main() -> Result<(), Box<std::error::Error>> {
     writeln!(f, "    }};")?;
     writeln!(f, "}}")?;
 
-    for v in MIN..=MAX {
-        writeln!(f)?;
-        writeln!(f, r#"#[cfg(feature = "v1_{}")]"#, v)?;
-        writeln!(f, "#[doc(hidden)] #[macro_export] macro_rules! _k8s_match_1_{} {{", v)?;
-        writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ ($($arm:tt)*), $($rest:tt)* }}) => {{")?;
-        writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($arm)*, $($rest)* }})")?;
-        writeln!(f, "    }};")?;
-        writeln!(f, "}}")?;
-        writeln!(f, r#"#[cfg(not(feature = "v1_{}"))]"#, v)?;
-        writeln!(f, "#[doc(hidden)] #[macro_export] macro_rules! _k8s_match_1_{} {{", v)?;
-        writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ ($($arm:tt)*), $($rest:tt)* }}) => {{")?;
-        writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($rest)* }})")?;
-        writeln!(f, "    }};")?;
-        writeln!(f, "}}")?;
-        writeln!(f)?;
-        writeln_cfg_ge(&mut f, v, true)?;
-        writeln!(f, "#[doc(hidden)] #[macro_export] macro_rules! _k8s_match_ge_1_{} {{", v)?;
-        writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ ($($arm:tt)*), $($rest:tt)* }}) => {{")?;
-        writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($arm)*, $($rest)* }})")?;
-        writeln!(f, "    }};")?;
-        writeln!(f, "}}")?;
-        writeln!(f)?;
-        writeln_cfg_ge(&mut f, v, false)?;
-        writeln!(f, "#[doc(hidden)] #[macro_export] macro_rules! _k8s_match_ge_1_{} {{", v)?;
-        writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ ($($arm:tt)*), $($rest:tt)* }}) => {{")?;
-        writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($rest)* }})")?;
-        writeln!(f, "    }};")?;
-        writeln!(f, "}}")?;
-        writeln!(f)?;
-        writeln_cfg_le(&mut f, v, true)?;
-        writeln!(f, "#[doc(hidden)] #[macro_export] macro_rules! _k8s_match_le_1_{} {{", v)?;
-        writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ ($($arm:tt)*), $($rest:tt)* }}) => {{")?;
-        writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($arm)*, $($rest)* }})")?;
-        writeln!(f, "    }};")?;
-        writeln!(f, "}}")?;
-        writeln!(f)?;
-        writeln_cfg_le(&mut f, v, false)?;
-        writeln!(f, "#[doc(hidden)] #[macro_export] macro_rules! _k8s_match_le_1_{} {{", v)?;
-        writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ ($($arm:tt)*), $($rest:tt)* }}) => {{")?;
-        writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($rest)* }})")?;
-        writeln!(f, "    }};")?;
-        writeln!(f, "}}")?;
-    }
-
     Ok(())
 }
 
-fn writeln_cfg_ge<W>(mut f: W, v: usize, yes: bool) -> std::io::Result<()> where W: std::io::Write {
-    if yes {
-        write!(f, "#[cfg(any(")?;
-    }
-    else {
-        write!(f, "#[cfg(not(any(")?;
-    }
-
-    for (i, v_ge) in (v..=MAX).enumerate() {
-        if i == 0 {
-            write!(f, r#"feature = "v1_{}""#, v_ge)?;
-        }
-        else {
-            write!(f, r#", feature = "v1_{}""#, v_ge)?;
+fn cfg_ge(v: usize, versions: &std::collections::HashSet<usize>) -> bool {
+    for v in v..=MAX {
+        if versions.contains(&v) {
+            return true;
         }
     }
 
-    if yes {
-        writeln!(f, "))]")?;
-    }
-    else {
-        writeln!(f, ")))]")?;
-    }
-
-    Ok(())
+    false
 }
 
-fn writeln_cfg_le<W>(mut f: W, v: usize, yes: bool) -> std::io::Result<()> where W: std::io::Write {
-    if yes {
-        write!(f, "#[cfg(any(")?;
-    }
-    else {
-        write!(f, "#[cfg(not(any(")?;
-    }
-
-    for (i, v_le) in (MIN..=v).enumerate() {
-        if i == 0 {
-            write!(f, r#"feature = "v1_{}""#, v_le)?;
-        }
-        else {
-            write!(f, r#", feature = "v1_{}""#, v_le)?;
+fn cfg_le(v: usize, versions: &std::collections::HashSet<usize>) -> bool {
+    for v in MIN..=v {
+        if versions.contains(&v) {
+            return true;
         }
     }
 
-    if yes {
-        writeln!(f, "))]")?;
-    }
-    else {
-        writeln!(f, ")))]")?;
-    }
-
-    Ok(())
+    false
 }
