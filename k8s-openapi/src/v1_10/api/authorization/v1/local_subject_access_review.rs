@@ -46,7 +46,7 @@ impl LocalSubjectAccessReview {
         let __url = format!("/apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews?", namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 

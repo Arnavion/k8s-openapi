@@ -41,7 +41,7 @@ impl APIService {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices?");
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -140,10 +140,10 @@ impl APIService {
             __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(propagation_policy) = propagation_policy {
-            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+            __query_pairs.append_pair("propagationPolicy", propagation_policy);
         }
         let __url = __query_pairs.finish();
 
@@ -252,25 +252,25 @@ impl APIService {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices?");
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", &continue_);
+            __query_pairs.append_pair("continue", continue_);
         }
         if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", &field_selector);
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
         if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", &label_selector);
+            __query_pairs.append_pair("labelSelector", label_selector);
         }
         if let Some(limit) = limit {
             __query_pairs.append_pair("limit", &limit.to_string());
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", &resource_version);
+            __query_pairs.append_pair("resourceVersion", resource_version);
         }
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
@@ -385,25 +385,25 @@ impl APIService {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices?");
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", &continue_);
+            __query_pairs.append_pair("continue", continue_);
         }
         if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", &field_selector);
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
         if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", &label_selector);
+            __query_pairs.append_pair("labelSelector", label_selector);
         }
         if let Some(limit) = limit {
             __query_pairs.append_pair("limit", &limit.to_string());
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", &resource_version);
+            __query_pairs.append_pair("resourceVersion", resource_version);
         }
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
@@ -470,7 +470,7 @@ impl APIService {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}?", name = name);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -544,7 +544,7 @@ impl APIService {
             __query_pairs.append_pair("export", &export.to_string());
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -605,7 +605,7 @@ impl APIService {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}?", name = name);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -675,7 +675,7 @@ impl APIService {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}/status?", name = name);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -784,25 +784,25 @@ impl APIService {
         let __url = format!("/apis/apiregistration.k8s.io/v1/watch/apiservices/{name}?", name = name);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", &continue_);
+            __query_pairs.append_pair("continue", continue_);
         }
         if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", &field_selector);
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
         if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", &label_selector);
+            __query_pairs.append_pair("labelSelector", label_selector);
         }
         if let Some(limit) = limit {
             __query_pairs.append_pair("limit", &limit.to_string());
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", &resource_version);
+            __query_pairs.append_pair("resourceVersion", resource_version);
         }
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
@@ -905,25 +905,25 @@ impl APIService {
         let __url = format!("/apis/apiregistration.k8s.io/v1/watch/apiservices?");
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", &continue_);
+            __query_pairs.append_pair("continue", continue_);
         }
         if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", &field_selector);
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
         if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", &label_selector);
+            __query_pairs.append_pair("labelSelector", label_selector);
         }
         if let Some(limit) = limit {
             __query_pairs.append_pair("limit", &limit.to_string());
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", &resource_version);
+            __query_pairs.append_pair("resourceVersion", resource_version);
         }
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());

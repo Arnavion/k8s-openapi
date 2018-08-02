@@ -44,7 +44,7 @@ impl Binding {
         let __url = format!("/api/v1/namespaces/{namespace}/bindings?", namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -128,7 +128,7 @@ impl Binding {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/binding?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 

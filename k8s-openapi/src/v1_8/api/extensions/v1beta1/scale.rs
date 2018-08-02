@@ -52,7 +52,7 @@ impl Scale {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -118,7 +118,7 @@ impl Scale {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -184,7 +184,7 @@ impl Scale {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -247,7 +247,7 @@ impl Scale {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -310,7 +310,7 @@ impl Scale {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -373,7 +373,7 @@ impl Scale {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -439,7 +439,7 @@ impl Scale {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -505,7 +505,7 @@ impl Scale {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -571,7 +571,7 @@ impl Scale {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 

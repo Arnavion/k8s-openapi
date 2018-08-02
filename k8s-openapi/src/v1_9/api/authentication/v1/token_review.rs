@@ -41,7 +41,7 @@ impl TokenReview {
         let __url = format!("/apis/authentication.k8s.io/v1/tokenreviews?");
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 

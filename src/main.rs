@@ -1080,7 +1080,7 @@ fn write_operation(
 							writeln!(file, r#"{}        __query_pairs.append_pair("{}", &{}.to_string());"#, indent, parameter.name, parameter_name)?,
 
 						swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
-							writeln!(file, r#"{}        __query_pairs.append_pair("{}", &{});"#, indent, parameter.name, parameter_name)?,
+							writeln!(file, r#"{}        __query_pairs.append_pair("{}", {});"#, indent, parameter.name, parameter_name)?,
 
 						_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter_name, parameter_type).into()),
 					}

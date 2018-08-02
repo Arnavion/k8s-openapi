@@ -44,7 +44,7 @@ impl PodTemplate {
         let __url = format!("/api/v1/namespaces/{namespace}/podtemplates?", namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -132,19 +132,19 @@ impl PodTemplate {
         let __url = format!("/api/v1/namespaces/{namespace}/podtemplates?", namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", &field_selector);
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
         if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", &label_selector);
+            __query_pairs.append_pair("labelSelector", label_selector);
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", &resource_version);
+            __query_pairs.append_pair("resourceVersion", resource_version);
         }
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
@@ -250,10 +250,10 @@ impl PodTemplate {
             __query_pairs.append_pair("orphanDependents", &orphan_dependents.to_string());
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(propagation_policy) = propagation_policy {
-            __query_pairs.append_pair("propagationPolicy", &propagation_policy);
+            __query_pairs.append_pair("propagationPolicy", propagation_policy);
         }
         let __url = __query_pairs.finish();
 
@@ -355,19 +355,19 @@ impl PodTemplate {
         let __url = format!("/api/v1/namespaces/{namespace}/podtemplates?", namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", &field_selector);
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
         if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", &label_selector);
+            __query_pairs.append_pair("labelSelector", label_selector);
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", &resource_version);
+            __query_pairs.append_pair("resourceVersion", resource_version);
         }
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
@@ -456,19 +456,19 @@ impl PodTemplate {
         let __url = format!("/api/v1/podtemplates?");
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", &field_selector);
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
         if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", &label_selector);
+            __query_pairs.append_pair("labelSelector", label_selector);
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", &resource_version);
+            __query_pairs.append_pair("resourceVersion", resource_version);
         }
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
@@ -540,7 +540,7 @@ impl PodTemplate {
         let __url = format!("/api/v1/namespaces/{namespace}/podtemplates/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -619,7 +619,7 @@ impl PodTemplate {
             __query_pairs.append_pair("export", &export.to_string());
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -685,7 +685,7 @@ impl PodTemplate {
         let __url = format!("/api/v1/namespaces/{namespace}/podtemplates/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
@@ -778,19 +778,19 @@ impl PodTemplate {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/podtemplates/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", &field_selector);
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
         if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", &label_selector);
+            __query_pairs.append_pair("labelSelector", label_selector);
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", &resource_version);
+            __query_pairs.append_pair("resourceVersion", resource_version);
         }
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
@@ -886,19 +886,19 @@ impl PodTemplate {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/podtemplates?", namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", &field_selector);
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
         if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", &label_selector);
+            __query_pairs.append_pair("labelSelector", label_selector);
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", &resource_version);
+            __query_pairs.append_pair("resourceVersion", resource_version);
         }
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
@@ -989,19 +989,19 @@ impl PodTemplate {
         let __url = format!("/api/v1/watch/podtemplates?");
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", &field_selector);
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
         if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", &label_selector);
+            __query_pairs.append_pair("labelSelector", label_selector);
         }
         if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", &pretty);
+            __query_pairs.append_pair("pretty", pretty);
         }
         if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", &resource_version);
+            __query_pairs.append_pair("resourceVersion", resource_version);
         }
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
