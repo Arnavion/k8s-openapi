@@ -52,6 +52,7 @@ impl SupportedVersion {
 				::fixups::apiservicev1beta1_gkv,
 				::fixups::crd_gkv,
 				::fixups::crdstatus_optional_properties,
+				::fixups::deployment_rollback_create_response_type,
 				::fixups::json_ty,
 				::fixups::json_schema_props_or_array_ty,
 				::fixups::json_schema_props_or_bool_ty,
@@ -67,6 +68,7 @@ impl SupportedVersion {
 				::fixups::apiservicev1beta1_gkv,
 				::fixups::crd_gkv,
 				::fixups::crdstatus_optional_properties,
+				::fixups::deployment_rollback_create_response_type,
 				::fixups::json_ty,
 				::fixups::json_schema_props_or_array_ty,
 				::fixups::json_schema_props_or_bool_ty,
@@ -83,6 +85,7 @@ impl SupportedVersion {
 				::fixups::apiservicev1_gkv,
 				::fixups::crd_gkv,
 				::fixups::crdstatus_optional_properties,
+				::fixups::deployment_rollback_create_response_type,
 				::fixups::json_ty,
 				::fixups::json_schema_props_or_array_ty,
 				::fixups::json_schema_props_or_bool_ty,
@@ -94,6 +97,7 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_11 => &[
 				::fixups::crdstatus_optional_properties,
+				::fixups::deployment_rollback_create_response_type,
 				::fixups::json_ty,
 				::fixups::json_schema_props_or_array_ty,
 				::fixups::json_schema_props_or_bool_ty,

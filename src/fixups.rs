@@ -120,6 +120,35 @@ pub(crate) fn crdstatus_optional_properties(spec: &mut ::swagger20::Spec) -> Res
 	Err("never applied CustomResourceDefinitionStatus optional properties override".into())
 }
 
+// The spec says that `createAppsV1beta1NamespacedDeploymentRollback` returns `DeploymentRollback`, but it returns `DeploymentStatus`.
+//
+// Ref: https://github.com/kubernetes/kubernetes/pull/63837
+pub(crate) fn deployment_rollback_create_response_type(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+	let mut found = false;
+
+	if let Some(path_item) = spec.paths.get_mut(&::swagger20::Path("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/rollback".to_string())) {
+		for operation in &mut path_item.operations {
+			if operation.id == "createAppsV1beta1NamespacedDeploymentRollback" {
+				for response in operation.responses.values_mut() {
+					if let Some(::swagger20::Schema { kind: ::swagger20::SchemaKind::Ref(::swagger20::RefPath(ref_path)), .. }) = response {
+						if ref_path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
+							::std::mem::replace(ref_path, "io.k8s.api.apps.v1beta1.DeploymentStatus".to_string());
+							found = true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if found {
+		Ok(())
+	}
+	else {
+		Err("never applied createAppsV1beta1NamespacedDeploymentRollback response type override".into())
+	}
+}
+
 // The spec says that `JSON` is an object with a property `Raw` that's a byte-formatted string.
 // While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
 // The value of that field is itself a JSON-serialized value.
