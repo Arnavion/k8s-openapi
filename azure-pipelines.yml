@@ -1,0 +1,33 @@
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+strategy:
+  matrix:
+    v1_7:
+      feature: v1_7
+      k8sVersion: v1.7.16
+      minikubeVersion: v0.28.0
+    v1_8:
+      feature: v1_8
+      k8sVersion: v1.8.15
+      minikubeVersion: v0.28.0
+    v1_9:
+      feature: v1_9
+      k8sVersion: v1.9.10
+      minikubeVersion: v0.28.0
+    v1_10:
+      feature: v1_10
+      k8sVersion: v1.10.8
+      minikubeVersion: v0.28.2
+    v1_11:
+      feature: v1_11
+      k8sVersion: v1.11.3
+      minikubeVersion: v0.28.2
+  maxParallel: 10
+
+steps:
+- bash: bash ./ci/ci.sh
+  env:
+    FEATURE: "$(feature)"
+    K8S_VERSION: "$(k8sVersion)"
+    MINIKUBE_VERSION: "$(minikubeVersion)"

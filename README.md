@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/Arnavion/k8s-openapi-codegen.svg?branch=master)](https://travis-ci.com/Arnavion/k8s-openapi-codegen)
+[![Build Status](https://dev.azure.com/arnavion/k8s-openapi-codegen/_apis/build/status/Arnavion.k8s-openapi-codegen?branchName=master)](https://dev.azure.com/arnavion/k8s-openapi-codegen/_build/latest?definitionId=1)
 
 This binary generates Rust types for the resources and API in the Kubernetes OpenAPI spec.
 
