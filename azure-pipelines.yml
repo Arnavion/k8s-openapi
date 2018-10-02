@@ -13,7 +13,7 @@ strategy:
       minikubeVersion: v0.28.0
     v1_9:
       feature: v1_9
-      k8sVersion: v1.9.10
+      k8sVersion: v1.9.11
       minikubeVersion: v0.28.0
     v1_10:
       feature: v1_10
