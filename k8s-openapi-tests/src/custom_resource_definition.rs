@@ -145,25 +145,43 @@ fn create() {
 		..Default::default()
 	};
 
-	let request =
-		apiextensions::CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition(&custom_resource_definition, None)
-		.expect("couldn't create custom resource definition");
-	let response = client.execute(request).expect("couldn't create custom resource definition");
-	let custom_resource_definition: apiextensions::CustomResourceDefinition =
-		::get_single_value(response, |response, status_code, _response_body| k8s_match!(response, {
-			k8s_if_le_1_8!(apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == ::http::StatusCode::CREATED =>
-				match ::serde_json::from_slice(_response_body) {
-					Ok(custom_resource_definition) => Ok(::ValueResult::GotValue(custom_resource_definition)),
-					Err(ref err) if err.is_eof() => Ok(::ValueResult::NeedMoreData),
-					Err(err) => Err(err.into()),
-				}),
-			k8s_if_ge_1_9!(apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Created(custom_resource_definition) =>
-				Ok(::ValueResult::GotValue(custom_resource_definition))),
-			other => Err(format!("{:?} {}", other, status_code).into()),
-		})).expect("couldn't create custom resource definition");
+	loop {
+		enum Result {
+			Ok(apiextensions::CustomResourceDefinition),
+			Conflict,
+			Retry,
+		}
+
+		let request =
+			apiextensions::CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition(&custom_resource_definition, None)
+			.expect("couldn't create custom resource definition");
+		let response = client.execute(request).expect("couldn't create custom resource definition");
+
+		let custom_resource_definition =
+			::get_single_value(response, |response, status_code, _response_body| k8s_match!(response, {
+				k8s_if_le_1_8!(apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == ::http::StatusCode::CREATED =>
+					match ::serde_json::from_slice(_response_body) {
+						Ok(custom_resource_definition) => Ok(::ValueResult::GotValue(Result::Ok(custom_resource_definition))),
+						Err(ref err) if err.is_eof() => Ok(::ValueResult::NeedMoreData),
+						Err(err) => Err(err.into()),
+					}),
+				k8s_if_ge_1_9!(apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Created(custom_resource_definition) =>
+					Ok(::ValueResult::GotValue(Result::Ok(custom_resource_definition)))),
+				apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == ::http::StatusCode::CONFLICT =>
+					Ok(::ValueResult::GotValue(Result::Conflict)),
+				apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == ::http::StatusCode::INTERNAL_SERVER_ERROR =>
+					Ok(::ValueResult::GotValue(Result::Retry)),
+				other => Err(format!("{:?} {}", other, status_code).into()),
+			})).expect("couldn't create custom resource definition");
+
+		match custom_resource_definition {
+			Result::Ok(_) | Result::Conflict => break,
+			Result::Retry => (),
+		}
+	}
 
 	// Wait for CRD to be registered
-	loop {
+	let custom_resource_definition = loop {
 		let request = apiextensions::CustomResourceDefinition::read_apiextensions_v1beta1_custom_resource_definition(
 			"foobars.k8s-openapi-tests-custom-resource-definition.com", None, None, None)
 			.expect("couldn't get custom resource definition");
@@ -174,12 +192,12 @@ fn create() {
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't get custom resource definition");
 
-		if custom_resource_definition.status.map_or(false, |status| status.accepted_names.kind == "FooBar") {
-			break;
+		if custom_resource_definition.status.as_ref().map_or(false, |status| status.accepted_names.kind == "FooBar") {
+			break custom_resource_definition;
 		}
 
 		::std::thread::sleep(::std::time::Duration::from_secs(1));
-	}
+	};
 
 	let fb1 = FooBar {
 		api_version: Some("k8s-openapi-tests-custom-resource-definition.com/v1".to_string()),
