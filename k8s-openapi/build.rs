@@ -1,5 +1,5 @@
 const MIN: usize = 7;
-const MAX: usize = 11;
+const MAX: usize = 12;
 
 fn main() -> Result<(), Box<std::error::Error>> {
     use std::io::Write;
@@ -96,6 +96,9 @@ fn main() -> Result<(), Box<std::error::Error>> {
     writeln!(f, "/// # }}")?;
     writeln!(f, "/// # k8s_if_1_11! {{")?;
     writeln!(f, "/// #     use k8s_openapi::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
+    writeln!(f, "/// # }}")?;
+    writeln!(f, "/// # k8s_if_1_12! {{")?;
+    writeln!(f, "/// #     use k8s_openapi::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
     writeln!(f, "/// # }}")?;
     writeln!(f, "/// #")?;
     writeln!(f, "/// # fn main() -> Result<(), Box<std::error::Error>> {{")?;

@@ -29,6 +29,12 @@ fn special_idents() {
 		use ::k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
 		use ::k8s_openapi::v1_11::api::rbac::v1beta1 as rbac;
 	}
+	k8s_if_1_12! {
+		use ::k8s_openapi::v1_12::api::core::v1 as api;
+		use ::k8s_openapi::v1_12::api::authorization::v1 as authorization;
+		use ::k8s_openapi::v1_12::apimachinery::pkg::apis::meta::v1 as meta;
+		use ::k8s_openapi::v1_12::api::rbac::v1beta1 as rbac;
+	}
 
 	let _ = api::FCVolumeSource { target_wwns: Default::default(), ..Default::default() };
 

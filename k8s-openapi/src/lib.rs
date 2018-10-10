@@ -25,6 +25,9 @@
 //! k8s_if_1_11! {
 //!     use k8s_openapi::v1_11::api::core::v1 as api;
 //! }
+//! k8s_if_1_12! {
+//!     use k8s_openapi::v1_12::api::core::v1 as api;
+//! }
 //!
 //! fn main() {
 //!     let pod_spec: api::PodSpec = Default::default();
@@ -54,6 +57,9 @@
 //! }
 //! k8s_if_1_11! {
 //!     use k8s_openapi::v1_11::api::core::v1 as api;
+//! }
+//! k8s_if_1_12! {
+//!     use k8s_openapi::v1_12::api::core::v1 as api;
 //! }
 //!
 //! # struct Response;
@@ -344,5 +350,8 @@ pub mod v1_10;
 
 #[cfg(feature = "v1_11")]
 pub mod v1_11;
+
+#[cfg(feature = "v1_12")]
+pub mod v1_12;
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));

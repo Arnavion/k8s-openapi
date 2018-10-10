@@ -228,6 +228,52 @@ pub(crate) fn json_schema_props_or_string_array_ty(spec: &mut ::swagger20::Spec)
 	Err("never applied JSONSchemaPropsOrStringArray override".into())
 }
 
+// Path operation annotated with a "x-kubernetes-group-version-kind" that references a type that doesn't exist in the schema.
+//
+// Ref: https://github.com/kubernetes/kubernetes/pull/66807
+#[cfg_attr(feature = "cargo-clippy", allow(if_same_then_else))]
+pub(crate) fn connect_options_gvk(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+	let mut found = false;
+
+	for path_item in spec.paths.values_mut() {
+		for operation in &mut path_item.operations {
+			if let Some(kubernetes_group_kind_version) = &mut operation.kubernetes_group_kind_version {
+				if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "NodeProxyOptions" && kubernetes_group_kind_version.version == "v1" {
+					kubernetes_group_kind_version.kind = "Node".to_string();
+					found = true;
+				}
+				else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodAttachOptions" && kubernetes_group_kind_version.version == "v1" {
+					kubernetes_group_kind_version.kind = "Pod".to_string();
+					found = true;
+				}
+				else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodExecOptions" && kubernetes_group_kind_version.version == "v1" {
+					kubernetes_group_kind_version.kind = "Pod".to_string();
+					found = true;
+				}
+				else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodPortForwardOptions" && kubernetes_group_kind_version.version == "v1" {
+					kubernetes_group_kind_version.kind = "Pod".to_string();
+					found = true;
+				}
+				else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodProxyOptions" && kubernetes_group_kind_version.version == "v1" {
+					kubernetes_group_kind_version.kind = "Pod".to_string();
+					found = true;
+				}
+				else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "ServiceProxyOptions" && kubernetes_group_kind_version.version == "v1" {
+					kubernetes_group_kind_version.kind = "Service".to_string();
+					found = true;
+				}
+			}
+		}
+	}
+
+	if found {
+		Ok(())
+	}
+	else {
+		Err("never applied connect options kubernetes_group_kind_version override".into())
+	}
+}
+
 // The spec says that `PodDisruptionBudgetStatus::disruptedPods` is an array, but it can be null.
 //
 // Override it to be optional to achieve the same effect.

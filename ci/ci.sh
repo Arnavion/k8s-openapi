@@ -25,8 +25,8 @@ set -euo pipefail
 	curl -Lo ~/minikube "https://storage.googleapis.com/minikube/releases/$MINIKUBE_VERSION/minikube-linux-amd64"
 	chmod +x ~/minikube
 
-	curl -LO 'https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.11.1/crictl-v1.11.1-linux-amd64.tar.gz'
-	tar xf ./crictl-v1.11.1-linux-amd64.tar.gz
+	curl -LO "https://github.com/kubernetes-sigs/cri-tools/releases/download/$CRICTL_VERSION/crictl-$CRICTL_VERSION-linux-amd64.tar.gz"
+	tar xf "./crictl-$CRICTL_VERSION-linux-amd64.tar.gz"
 	sudo mv ./crictl /usr/local/bin
 
 	sudo CHANGE_MINIKUBE_NONE_USER=true ~/minikube start --vm-driver=none "--kubernetes-version=$K8S_VERSION"

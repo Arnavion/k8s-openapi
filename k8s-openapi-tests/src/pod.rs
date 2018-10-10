@@ -15,6 +15,9 @@ fn list() {
 	k8s_if_1_11! {
 		use ::k8s_openapi::v1_11::api::core::v1 as api;
 	}
+	k8s_if_1_12! {
+		use ::k8s_openapi::v1_12::api::core::v1 as api;
+	}
 
 	let client = ::Client::new().expect("couldn't create client");
 

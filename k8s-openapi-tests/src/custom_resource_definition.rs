@@ -16,6 +16,10 @@ fn create() {
 		use ::k8s_openapi::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
 		use ::k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
 	}
+	k8s_if_1_12! {
+		use ::k8s_openapi::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+		use ::k8s_openapi::v1_12::apimachinery::pkg::apis::meta::v1 as meta;
+	}
 
 	#[derive(Debug, Default, Deserialize, Serialize)]
 	struct FooBar {
@@ -141,7 +145,7 @@ fn create() {
 			name: Some("foobars.k8s-openapi-tests-custom-resource-definition.com".to_string()),
 			..Default::default()
 		}),
-		spec: Some(custom_resource_definition_spec),
+		spec: custom_resource_definition_spec.into(),
 		..Default::default()
 	};
 

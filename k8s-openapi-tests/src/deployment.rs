@@ -20,6 +20,10 @@ fn list() {
 		use ::k8s_openapi::v1_11::api::apps::v1 as apps;
 		use ::k8s_openapi::v1_11::apimachinery::pkg::util as util;
 	}
+	k8s_if_1_12! {
+		use ::k8s_openapi::v1_12::api::apps::v1 as apps;
+		use ::k8s_openapi::v1_12::apimachinery::pkg::util as util;
+	}
 
 	let client = ::Client::new().expect("couldn't create client");
 
@@ -116,10 +120,5 @@ fn list() {
 	}
 
 	let dns_deployment_status = dns_deployment.status.expect("couldn't get dns deployment status");
-	k8s_if_le_1_10! {
-		assert_eq!(dns_deployment_status.replicas, Some(1));
-	}
-	k8s_if_ge_1_11! {
-		assert_eq!(dns_deployment_status.replicas, Some(2));
-	}
+	assert!(dns_deployment_status.replicas > Some(0));
 }

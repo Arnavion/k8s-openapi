@@ -25,6 +25,11 @@ fn create() {
 		use ::k8s_openapi::v1_11::api::batch::v1 as batch;
 		use ::k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
 	}
+	k8s_if_1_12! {
+		use ::k8s_openapi::v1_12::api::core::v1 as api;
+		use ::k8s_openapi::v1_12::api::batch::v1 as batch;
+		use ::k8s_openapi::v1_12::apimachinery::pkg::apis::meta::v1 as meta;
+	}
 
 	let client = ::Client::new().expect("couldn't create client");
 
