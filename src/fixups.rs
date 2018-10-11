@@ -120,7 +120,7 @@ pub(crate) fn crdstatus_optional_properties(spec: &mut ::swagger20::Spec) -> Res
 	Err("never applied CustomResourceDefinitionStatus optional properties override".into())
 }
 
-// The spec says that `createAppsV1beta1NamespacedDeploymentRollback` returns `DeploymentRollback`, but it returns `DeploymentStatus`.
+// The spec says that `createAppsV1beta1NamespacedDeploymentRollback` returns `DeploymentRollback`, but it returns `Status`.
 //
 // Ref: https://github.com/kubernetes/kubernetes/pull/63837
 pub(crate) fn deployment_rollback_create_response_type(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
@@ -132,7 +132,7 @@ pub(crate) fn deployment_rollback_create_response_type(spec: &mut ::swagger20::S
 				for response in operation.responses.values_mut() {
 					if let Some(::swagger20::Schema { kind: ::swagger20::SchemaKind::Ref(::swagger20::RefPath(ref_path)), .. }) = response {
 						if ref_path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
-							::std::mem::replace(ref_path, "io.k8s.api.apps.v1beta1.DeploymentStatus".to_string());
+							::std::mem::replace(ref_path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_string());
 							found = true;
 						}
 					}

@@ -65,9 +65,9 @@ impl DeploymentRollback {
 /// Parses the HTTP response of [`DeploymentRollback::create_apps_v1beta1_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_apps_v1beta1_namespaced_deployment_rollback)
 #[derive(Debug)]
 pub enum CreateAppsV1beta1NamespacedDeploymentRollbackResponse {
-    Ok(::v1_11::api::apps::v1beta1::DeploymentStatus),
-    Created(::v1_11::api::apps::v1beta1::DeploymentStatus),
-    Accepted(::v1_11::api::apps::v1beta1::DeploymentStatus),
+    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
+    Created(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
+    Accepted(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
