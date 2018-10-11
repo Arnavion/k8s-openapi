@@ -81,11 +81,12 @@ impl Client {
 
 		let client_key = client::pkcs12(&client_certificate, &client_key)?;
 
-		let mut inner = reqwest::Client::builder();
-		inner.danger_disable_hostname_verification();
-		inner.add_root_certificate(reqwest::Certificate::from_der(&certificate_authority)?);
-		inner.identity(reqwest::Identity::from_pkcs12_der(&client_key, "")?);
-		let inner = inner.build()?;
+		let inner =
+			reqwest::Client::builder()
+			.danger_accept_invalid_hostnames(true)
+			.add_root_certificate(reqwest::Certificate::from_der(&certificate_authority)?)
+			.identity(reqwest::Identity::from_pkcs12_der(&client_key, "")?)
+			.build()?;
 
 		Ok(Client {
 			inner,
@@ -100,21 +101,12 @@ impl Client {
 			let path = url.path_and_query.take().expect("request doesn't have path and query");
 			let mut url: http::uri::Parts = self.server.clone().into();
 			url.path_and_query = Some(path);
-			let url = http::Uri::from_parts(url)?.to_string();
+			let url = http::Uri::from_parts(url)?;
 
 			(parts.method, url.to_string(), body)
 		};
 
-		let mut request = match method {
-			http::Method::DELETE => self.inner.delete(&url),
-			http::Method::GET => self.inner.get(&url),
-			http::Method::POST => self.inner.post(&url),
-			other => panic!("{}", other),
-		};
-
-		request.body(body);
-
-		Ok(request.send()?)
+		Ok(self.inner.request(method, &url).body(body).send()?)
 	}
 }
 
@@ -135,9 +127,6 @@ fn get_multiple_values<R, F, T>(response: reqwest::Response, f: F) -> Result<Mul
 	F: FnMut(R, http::StatusCode, &[u8]) -> Result<ValueResult<T>, Error>,
 {
 	let status_code = response.status();
-	let status_code =
-		http::StatusCode::from_u16(status_code.into())
-		.map_err(|err| format!("couldn't convert reqwest::StatusCode {} to http::StatusCode: {}", status_code, err))?;
 
 	let response_body = k8s_openapi::ResponseBody::new(status_code);
 

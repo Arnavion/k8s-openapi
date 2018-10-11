@@ -234,8 +234,6 @@ impl<'de> ::serde::Deserialize<'de> for PathItem {
 				.map(|(status_code_str, response)| {
 					let status_code = status_code_str.parse().map_err(|_|
 						::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&status_code_str), &"string representation of an HTTP status code"))?;
-					let status_code = ::reqwest::StatusCode::try_from(status_code).map_err(|_|
-						::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&status_code_str), &"string representation of an HTTP status code"))?;
 					Ok((status_code, response.schema))
 				})
 				.collect();

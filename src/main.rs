@@ -82,7 +82,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 		info!(target: "", "Parsing spec file at {} ...", spec_url);
 		let mut response = client.get(spec_url).send()?;
 		let status = response.status();
-		if status != reqwest::StatusCode::Ok {
+		if status != reqwest::StatusCode::OK {
 			return Err(status.to_string().into());
 		}
 		response.json()?
@@ -912,18 +912,18 @@ fn write_operation(
 		operation.responses.iter()
 		.map(|(&status_code, schema)| {
 			let http_status_code = match status_code {
-				reqwest::StatusCode::Accepted => "ACCEPTED",
-				reqwest::StatusCode::Created => "CREATED",
-				reqwest::StatusCode::Ok => "OK",
-				reqwest::StatusCode::Unauthorized => "UNAUTHORIZED",
+				reqwest::StatusCode::ACCEPTED => "ACCEPTED",
+				reqwest::StatusCode::CREATED => "CREATED",
+				reqwest::StatusCode::OK => "OK",
+				reqwest::StatusCode::UNAUTHORIZED => "UNAUTHORIZED",
 				_ => return Err(format!("unrecognized status code {}", status_code)),
 			};
 
 			let variant_name = match status_code {
-				reqwest::StatusCode::Accepted => "Accepted",
-				reqwest::StatusCode::Created => "Created",
-				reqwest::StatusCode::Ok => "Ok",
-				reqwest::StatusCode::Unauthorized => "Unauthorized",
+				reqwest::StatusCode::ACCEPTED => "Accepted",
+				reqwest::StatusCode::CREATED => "Created",
+				reqwest::StatusCode::OK => "Ok",
+				reqwest::StatusCode::UNAUTHORIZED => "Unauthorized",
 				_ => return Err(format!("unrecognized status code {}", status_code)),
 			};
 
@@ -934,7 +934,7 @@ fn write_operation(
 					swagger20::SchemaKind::Ref(ref_path) if
 						&**ref_path == "io.k8s.apimachinery.pkg.apis.meta.v1.Status" &&
 						operation.method == swagger20::Method::Delete &&
-						status_code == reqwest::StatusCode::Ok => true,
+						status_code == reqwest::StatusCode::OK => true,
 
 					_ => false,
 				}
