@@ -1,214 +1,5 @@
 #![deny(unused)]
 
-// The spec says that `APIGroup::serverAddressByClientCIDRs` is an array, but it can be null.
-//
-// Override it to be optional to achieve the same effect.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/61963
-pub(crate) fn apigroup_optional_properties(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if &**definition_path == "io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup" {
-			if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-				if let Some(property) = properties.get_mut(&::swagger20::PropertyName("serverAddressByClientCIDRs".to_string())) {
-					if property.1 {
-						property.1 = false;
-						return Ok(());
-					}
-				}
-			}
-		}
-	}
-
-	Err("never applied APIGroups optional properties override".into())
-}
-
-// Type not annotated with "x-kubernetes-group-kind-versions", which would make its associated functions end up in the mod root
-//
-// Ref: https://github.com/kubernetes/kubernetes/issues/49465
-// Ref: https://github.com/kubernetes/kubernetes/pull/64174
-pub(crate) fn apiservicev1beta1_gkv(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIService" {
-			definition.kubernetes_group_kind_versions = Some(vec![::swagger20::KubernetesGroupKindVersion {
-				group: "apiregistration.k8s.io".to_string(),
-				kind: "APIService".to_string(),
-				version: "v1beta1".to_string(),
-			}]);
-			return Ok(());
-		}
-	}
-
-	Err("never applied APIService v1beta1 kubernetes_group_kind_version override".into())
-}
-
-// Type not annotated with "x-kubernetes-group-kind-versions", which would make its associated functions end up in the mod root
-//
-// Ref: https://github.com/kubernetes/kubernetes/issues/49465
-// Ref: https://github.com/kubernetes/kubernetes/pull/64174
-pub(crate) fn apiservicev1_gkv(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService" {
-			definition.kubernetes_group_kind_versions = Some(vec![::swagger20::KubernetesGroupKindVersion {
-				group: "apiregistration.k8s.io".to_string(),
-				kind: "APIService".to_string(),
-				version: "v1".to_string(),
-			}]);
-			return Ok(());
-		}
-	}
-
-	Err("never applied APIService v1 kubernetes_group_kind_version override".into())
-}
-
-// Type not annotated with "x-kubernetes-group-kind-versions", which would make its associated functions end up in the mod root
-//
-// Ref: https://github.com/kubernetes/kubernetes/issues/49465
-// Ref: https://github.com/kubernetes/kubernetes/pull/64174
-pub(crate) fn crd_gkv(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinition" {
-			definition.kubernetes_group_kind_versions = Some(vec![::swagger20::KubernetesGroupKindVersion {
-				group: "apiextensions.k8s.io".to_string(),
-				kind: "CustomResourceDefinition".to_string(),
-				version: "v1beta1".to_string(),
-			}]);
-			return Ok(());
-		}
-	}
-
-	Err("never applied CustomResourceDefinition kubernetes_group_kind_version override".into())
-}
-
-// The spec says that `CustomResourceDefinitionStatus::conditions` is an array, but it can be null.
-//
-// Override it to be optional to achieve the same effect.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/64996
-pub(crate) fn crdstatus_optional_properties(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionStatus" {
-			if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-				if let Some(property) = properties.get_mut(&::swagger20::PropertyName("conditions".to_string())) {
-					if property.1 {
-						property.1 = false;
-						return Ok(());
-					}
-				}
-			}
-		}
-	}
-
-	Err("never applied CustomResourceDefinitionStatus optional properties override".into())
-}
-
-// The spec says that `createAppsV1beta1NamespacedDeploymentRollback` returns `DeploymentRollback`, but it returns `Status`.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/63837
-pub(crate) fn deployment_rollback_create_response_type(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	let mut found = false;
-
-	if let Some(path_item) = spec.paths.get_mut(&::swagger20::Path("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/rollback".to_string())) {
-		for operation in &mut path_item.operations {
-			if operation.id == "createAppsV1beta1NamespacedDeploymentRollback" {
-				for response in operation.responses.values_mut() {
-					if let Some(::swagger20::Schema { kind: ::swagger20::SchemaKind::Ref(::swagger20::RefPath(ref_path)), .. }) = response {
-						if ref_path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
-							::std::mem::replace(ref_path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_string());
-							found = true;
-						}
-					}
-				}
-			}
-		}
-	}
-
-	if found {
-		Ok(())
-	}
-	else {
-		Err("never applied createAppsV1beta1NamespacedDeploymentRollback response type override".into())
-	}
-}
-
-// The spec says that `JSON` is an object with a property `Raw` that's a byte-formatted string.
-// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
-// The value of that field is itself a JSON-serialized value.
-//
-// Thus `JSON` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/65256
-pub(crate) fn json_ty(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON" {
-			if let ::swagger20::SchemaKind::Ty(::swagger20::Type::Any) = definition.kind {
-			}
-			else {
-				definition.kind = ::swagger20::SchemaKind::Ty(::swagger20::Type::Any);
-				return Ok(());
-			}
-		}
-	}
-
-	Err("never applied JSON override".into())
-}
-
-// The spec says that `JSONSchemaPropsOrArray` is an object with properties `JSONSchemas` and `Schema`.
-// In fact this type is either a `JSONSchemaProps` or an array of `JSONSchemaProps`.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/65256
-pub(crate) fn json_schema_props_or_array_ty(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray" {
-			if let ::swagger20::SchemaKind::Ty(::swagger20::Type::Any) = definition.kind {
-			}
-			else {
-				definition.kind = ::swagger20::SchemaKind::Ty(::swagger20::Type::JSONSchemaPropsOrArray);
-				return Ok(());
-			}
-		}
-	}
-
-	Err("never applied JSONSchemaPropsOrArray override".into())
-}
-
-// The spec says that `JSONSchemaPropsOrBool` is an object with properties `Allows` and `Schema`.
-// In fact this type is either a `bool` or a `JSONSchemaProps`.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/65256
-pub(crate) fn json_schema_props_or_bool_ty(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool" {
-			if let ::swagger20::SchemaKind::Ty(::swagger20::Type::Any) = definition.kind {
-			}
-			else {
-				definition.kind = ::swagger20::SchemaKind::Ty(::swagger20::Type::JSONSchemaPropsOrBool);
-				return Ok(());
-			}
-		}
-	}
-
-	Err("never applied JSONSchemaPropsOrBool override".into())
-}
-
-// The spec says that `JSONSchemaPropsOrStringArray` is an object with properties `Property` and `Schema`.
-// In fact this type is either a `bool` or a `JSONSchemaProps`.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/65256
-pub(crate) fn json_schema_props_or_string_array_ty(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray" {
-			if let ::swagger20::SchemaKind::Ty(::swagger20::Type::Any) = definition.kind {
-			}
-			else {
-				definition.kind = ::swagger20::SchemaKind::Ty(::swagger20::Type::JSONSchemaPropsOrStringArray);
-				return Ok(());
-			}
-		}
-	}
-
-	Err("never applied JSONSchemaPropsOrStringArray override".into())
-}
-
 // Path operation annotated with a "x-kubernetes-group-version-kind" that references a type that doesn't exist in the schema.
 //
 // Ref: https://github.com/kubernetes/kubernetes/pull/66807
@@ -255,26 +46,223 @@ pub(crate) fn connect_options_gvk(spec: &mut ::swagger20::Spec) -> Result<(), ::
 	}
 }
 
-// The spec says that `PodDisruptionBudgetStatus::disruptedPods` is an array, but it can be null.
+// The spec says that `createAppsV1beta1NamespacedDeploymentRollback` returns `DeploymentRollback`, but it returns `Status`.
 //
-// Override it to be optional to achieve the same effect.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/65041
-pub(crate) fn poddisruptionbudgetstatus_optional_properties(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if &**definition_path == "io.k8s.api.policy.v1beta1.PodDisruptionBudgetStatus" {
-			if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-				if let Some(property) = properties.get_mut(&::swagger20::PropertyName("disruptedPods".to_string())) {
-					if property.1 {
-						property.1 = false;
-						return Ok(());
+// Ref: https://github.com/kubernetes/kubernetes/pull/63837
+pub(crate) fn deployment_rollback_create_response_type(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+	let mut found = false;
+
+	if let Some(path_item) = spec.paths.get_mut(&::swagger20::Path("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/rollback".to_string())) {
+		for operation in &mut path_item.operations {
+			if operation.id == "createAppsV1beta1NamespacedDeploymentRollback" {
+				for response in operation.responses.values_mut() {
+					if let Some(::swagger20::Schema { kind: ::swagger20::SchemaKind::Ref(::swagger20::RefPath(ref_path)), .. }) = response {
+						if ref_path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
+							::std::mem::replace(ref_path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_string());
+							found = true;
+						}
 					}
 				}
 			}
 		}
 	}
 
-	Err("never applied PodDisruptionBudgetStatus optional properties override".into())
+	if found {
+		Ok(())
+	}
+	else {
+		Err("never applied createAppsV1beta1NamespacedDeploymentRollback response type override".into())
+	}
+}
+
+// This type not annotated with "x-kubernetes-group-version-kind", which would make its associated functions end up in the mod root
+//
+// Ref: https://github.com/kubernetes/kubernetes/issues/49465
+// Ref: https://github.com/kubernetes/kubernetes/pull/64174
+pub(crate) mod gvk {
+	pub(crate) fn api_service_v1(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService" {
+				definition.kubernetes_group_kind_versions = Some(vec![::swagger20::KubernetesGroupKindVersion {
+					group: "apiregistration.k8s.io".to_string(),
+					kind: "APIService".to_string(),
+					version: "v1".to_string(),
+				}]);
+				return Ok(());
+			}
+		}
+
+		Err("never applied APIService v1 kubernetes_group_kind_version override".into())
+	}
+
+	pub(crate) fn api_service_v1beta1(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIService" {
+				definition.kubernetes_group_kind_versions = Some(vec![::swagger20::KubernetesGroupKindVersion {
+					group: "apiregistration.k8s.io".to_string(),
+					kind: "APIService".to_string(),
+					version: "v1beta1".to_string(),
+				}]);
+				return Ok(());
+			}
+		}
+
+		Err("never applied APIService v1beta1 kubernetes_group_kind_version override".into())
+	}
+
+	pub(crate) fn crd(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinition" {
+				definition.kubernetes_group_kind_versions = Some(vec![::swagger20::KubernetesGroupKindVersion {
+					group: "apiextensions.k8s.io".to_string(),
+					kind: "CustomResourceDefinition".to_string(),
+					version: "v1beta1".to_string(),
+				}]);
+				return Ok(());
+			}
+		}
+
+		Err("never applied CustomResourceDefinition kubernetes_group_kind_version override".into())
+	}
+}
+
+// The spec says that this property is an array, but it can be null.
+//
+// Override it to be optional to achieve the same effect.
+//
+// Ref: https://github.com/kubernetes/kubernetes/pull/61963
+// Ref: https://github.com/kubernetes/kubernetes/pull/64996
+// Ref: https://github.com/kubernetes/kubernetes/pull/65041
+pub(crate) mod optional_properties {
+	// `APIGroup::serverAddressByClientCIDRs`
+	pub(crate) fn apigroup(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup" {
+				if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+					if let Some(property) = properties.get_mut(&::swagger20::PropertyName("serverAddressByClientCIDRs".to_string())) {
+						if property.1 {
+							property.1 = false;
+							return Ok(());
+						}
+					}
+				}
+			}
+		}
+
+		Err("never applied APIGroups optional properties override".into())
+	}
+
+	// `CustomResourceDefinitionStatus::conditions`
+	pub(crate) fn crdstatus(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionStatus" {
+				if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+					if let Some(property) = properties.get_mut(&::swagger20::PropertyName("conditions".to_string())) {
+						if property.1 {
+							property.1 = false;
+							return Ok(());
+						}
+					}
+				}
+			}
+		}
+
+		Err("never applied CustomResourceDefinitionStatus optional properties override".into())
+	}
+
+	// `PodDisruptionBudgetStatus::disruptedPods`
+	pub(crate) fn poddisruptionbudgetstatus(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.api.policy.v1beta1.PodDisruptionBudgetStatus" {
+				if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+					if let Some(property) = properties.get_mut(&::swagger20::PropertyName("disruptedPods".to_string())) {
+						if property.1 {
+							property.1 = false;
+							return Ok(());
+						}
+					}
+				}
+			}
+		}
+
+		Err("never applied PodDisruptionBudgetStatus optional properties override".into())
+	}
+}
+
+// Fixes to the JSON types used in CRD validation
+//
+// Ref: https://github.com/kubernetes/kubernetes/pull/65256
+pub(crate) mod json_ty {
+	// The spec says that `JSON` is an object with a property `Raw` that's a byte-formatted string.
+	// While the golang type is indeed a struct with a `Raw []byte` field, the type is serialized by just emitting the value of that field.
+	// The value of that field is itself a JSON-serialized value.
+	//
+	// Thus `JSON` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
+	pub(crate) fn json(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON" {
+				if let ::swagger20::SchemaKind::Ty(::swagger20::Type::Any) = definition.kind {
+				}
+				else {
+					definition.kind = ::swagger20::SchemaKind::Ty(::swagger20::Type::Any);
+					return Ok(());
+				}
+			}
+		}
+
+		Err("never applied JSON override".into())
+	}
+
+	// The spec says that `JSONSchemaPropsOrArray` is an object with properties `JSONSchemas` and `Schema`.
+	// In fact this type is either a `JSONSchemaProps` or an array of `JSONSchemaProps`.
+	pub(crate) fn json_schema_props_or_array(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray" {
+				if let ::swagger20::SchemaKind::Ty(::swagger20::Type::Any) = definition.kind {
+				}
+				else {
+					definition.kind = ::swagger20::SchemaKind::Ty(::swagger20::Type::JSONSchemaPropsOrArray);
+					return Ok(());
+				}
+			}
+		}
+
+		Err("never applied JSONSchemaPropsOrArray override".into())
+	}
+
+	// The spec says that `JSONSchemaPropsOrBool` is an object with properties `Allows` and `Schema`.
+	// In fact this type is either a `bool` or a `JSONSchemaProps`.
+	pub(crate) fn json_schema_props_or_bool(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool" {
+				if let ::swagger20::SchemaKind::Ty(::swagger20::Type::Any) = definition.kind {
+				}
+				else {
+					definition.kind = ::swagger20::SchemaKind::Ty(::swagger20::Type::JSONSchemaPropsOrBool);
+					return Ok(());
+				}
+			}
+		}
+
+		Err("never applied JSONSchemaPropsOrBool override".into())
+	}
+
+	// The spec says that `JSONSchemaPropsOrStringArray` is an object with properties `Property` and `Schema`.
+	// In fact this type is either a `bool` or a `JSONSchemaProps`.
+	pub(crate) fn json_schema_props_or_string_array(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray" {
+				if let ::swagger20::SchemaKind::Ty(::swagger20::Type::Any) = definition.kind {
+				}
+				else {
+					definition.kind = ::swagger20::SchemaKind::Ty(::swagger20::Type::JSONSchemaPropsOrStringArray);
+					return Ok(());
+				}
+			}
+		}
+
+		Err("never applied JSONSchemaPropsOrStringArray override".into())
+	}
 }
 
 // The spec says that `RawExtension` is an object with a property `raw` that's a byte-formatted string.
