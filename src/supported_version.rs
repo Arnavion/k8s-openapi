@@ -45,14 +45,17 @@ impl SupportedVersion {
 		let fixups: &[fn(&mut ::swagger20::Spec) -> Result<(), ::Error>] = match self {
 			SupportedVersion::V1_7 => &[
 				::fixups::optional_properties::apigroup,
+				::fixups::gvk::api_service_list_v1beta1,
 				::fixups::gvk::api_service_v1beta1,
 				::fixups::raw_extension_ty,
 			],
 
 			SupportedVersion::V1_8 => &[
 				::fixups::deployment_rollback_create_response_type,
+				::fixups::gvk::api_service_list_v1beta1,
 				::fixups::gvk::api_service_v1beta1,
 				::fixups::gvk::crd,
+				::fixups::gvk::crd_list_v1beta1,
 				::fixups::json_ty::json,
 				::fixups::json_ty::json_schema_props_or_array,
 				::fixups::json_ty::json_schema_props_or_bool,
@@ -66,8 +69,10 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_9 => &[
 				::fixups::deployment_rollback_create_response_type,
+				::fixups::gvk::api_service_list_v1beta1,
 				::fixups::gvk::api_service_v1beta1,
 				::fixups::gvk::crd,
+				::fixups::gvk::crd_list_v1beta1,
 				::fixups::json_ty::json,
 				::fixups::json_ty::json_schema_props_or_array,
 				::fixups::json_ty::json_schema_props_or_bool,
@@ -81,9 +86,12 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_10 => &[
 				::fixups::deployment_rollback_create_response_type,
+				::fixups::gvk::api_service_list_v1,
+				::fixups::gvk::api_service_list_v1beta1,
 				::fixups::gvk::api_service_v1beta1,
 				::fixups::gvk::api_service_v1,
 				::fixups::gvk::crd,
+				::fixups::gvk::crd_list_v1beta1,
 				::fixups::json_ty::json,
 				::fixups::json_ty::json_schema_props_or_array,
 				::fixups::json_ty::json_schema_props_or_bool,

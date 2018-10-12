@@ -80,6 +80,36 @@ pub(crate) fn deployment_rollback_create_response_type(spec: &mut ::swagger20::S
 // Ref: https://github.com/kubernetes/kubernetes/issues/49465
 // Ref: https://github.com/kubernetes/kubernetes/pull/64174
 pub(crate) mod gvk {
+	pub(crate) fn api_service_list_v1(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIServiceList" {
+				definition.kubernetes_group_kind_versions = Some(vec![::swagger20::KubernetesGroupKindVersion {
+					group: "apiregistration.k8s.io".to_string(),
+					kind: "APIServiceList".to_string(),
+					version: "v1".to_string(),
+				}]);
+				return Ok(());
+			}
+		}
+
+		Err("never applied APIServiceList v1 kubernetes_group_kind_version override".into())
+	}
+
+	pub(crate) fn api_service_list_v1beta1(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIServiceList" {
+				definition.kubernetes_group_kind_versions = Some(vec![::swagger20::KubernetesGroupKindVersion {
+					group: "apiregistration.k8s.io".to_string(),
+					kind: "APIServiceList".to_string(),
+					version: "v1beta1".to_string(),
+				}]);
+				return Ok(());
+			}
+		}
+
+		Err("never applied APIServiceList v1beta1 kubernetes_group_kind_version override".into())
+	}
+
 	pub(crate) fn api_service_v1(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
 		for (definition_path, definition) in &mut spec.definitions {
 			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService" {
@@ -124,68 +154,20 @@ pub(crate) mod gvk {
 
 		Err("never applied CustomResourceDefinition kubernetes_group_kind_version override".into())
 	}
-}
 
-// The spec says that this property is an array, but it can be null.
-//
-// Override it to be optional to achieve the same effect.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/61963
-// Ref: https://github.com/kubernetes/kubernetes/pull/64996
-// Ref: https://github.com/kubernetes/kubernetes/pull/65041
-pub(crate) mod optional_properties {
-	// `APIGroup::serverAddressByClientCIDRs`
-	pub(crate) fn apigroup(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+	pub(crate) fn crd_list_v1beta1(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
 		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup" {
-				if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-					if let Some(property) = properties.get_mut(&::swagger20::PropertyName("serverAddressByClientCIDRs".to_string())) {
-						if property.1 {
-							property.1 = false;
-							return Ok(());
-						}
-					}
-				}
+			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionList" {
+				definition.kubernetes_group_kind_versions = Some(vec![::swagger20::KubernetesGroupKindVersion {
+					group: "apiextensions.k8s.io".to_string(),
+					kind: "CustomResourceDefinitionList".to_string(),
+					version: "v1beta1".to_string(),
+				}]);
+				return Ok(());
 			}
 		}
 
-		Err("never applied APIGroups optional properties override".into())
-	}
-
-	// `CustomResourceDefinitionStatus::conditions`
-	pub(crate) fn crdstatus(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionStatus" {
-				if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-					if let Some(property) = properties.get_mut(&::swagger20::PropertyName("conditions".to_string())) {
-						if property.1 {
-							property.1 = false;
-							return Ok(());
-						}
-					}
-				}
-			}
-		}
-
-		Err("never applied CustomResourceDefinitionStatus optional properties override".into())
-	}
-
-	// `PodDisruptionBudgetStatus::disruptedPods`
-	pub(crate) fn poddisruptionbudgetstatus(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.api.policy.v1beta1.PodDisruptionBudgetStatus" {
-				if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-					if let Some(property) = properties.get_mut(&::swagger20::PropertyName("disruptedPods".to_string())) {
-						if property.1 {
-							property.1 = false;
-							return Ok(());
-						}
-					}
-				}
-			}
-		}
-
-		Err("never applied PodDisruptionBudgetStatus optional properties override".into())
+		Err("never applied CustomResourceDefinitionList v1beta1 kubernetes_group_kind_version override".into())
 	}
 }
 
@@ -262,6 +244,69 @@ pub(crate) mod json_ty {
 		}
 
 		Err("never applied JSONSchemaPropsOrStringArray override".into())
+	}
+}
+
+// The spec says that this property is an array, but it can be null.
+//
+// Override it to be optional to achieve the same effect.
+//
+// Ref: https://github.com/kubernetes/kubernetes/pull/61963
+// Ref: https://github.com/kubernetes/kubernetes/pull/64996
+// Ref: https://github.com/kubernetes/kubernetes/pull/65041
+pub(crate) mod optional_properties {
+	// `APIGroup::serverAddressByClientCIDRs`
+	pub(crate) fn apigroup(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup" {
+				if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+					if let Some(property) = properties.get_mut(&::swagger20::PropertyName("serverAddressByClientCIDRs".to_string())) {
+						if property.1 {
+							property.1 = false;
+							return Ok(());
+						}
+					}
+				}
+			}
+		}
+
+		Err("never applied APIGroups optional properties override".into())
+	}
+
+	// `CustomResourceDefinitionStatus::conditions`
+	pub(crate) fn crdstatus(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionStatus" {
+				if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+					if let Some(property) = properties.get_mut(&::swagger20::PropertyName("conditions".to_string())) {
+						if property.1 {
+							property.1 = false;
+							return Ok(());
+						}
+					}
+				}
+			}
+		}
+
+		Err("never applied CustomResourceDefinitionStatus optional properties override".into())
+	}
+
+	// `PodDisruptionBudgetStatus::disruptedPods`
+	pub(crate) fn poddisruptionbudgetstatus(spec: &mut ::swagger20::Spec) -> Result<(), ::Error> {
+		for (definition_path, definition) in &mut spec.definitions {
+			if &**definition_path == "io.k8s.api.policy.v1beta1.PodDisruptionBudgetStatus" {
+				if let ::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+					if let Some(property) = properties.get_mut(&::swagger20::PropertyName("disruptedPods".to_string())) {
+						if property.1 {
+							property.1 = false;
+							return Ok(());
+						}
+					}
+				}
+			}
+		}
+
+		Err("never applied PodDisruptionBudgetStatus optional properties override".into())
 	}
 }
 
