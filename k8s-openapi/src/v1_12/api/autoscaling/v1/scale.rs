@@ -40,6 +40,10 @@ impl Scale {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -47,10 +51,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -106,6 +114,10 @@ impl Scale {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -113,10 +125,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -172,6 +188,10 @@ impl Scale {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -179,10 +199,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -238,6 +262,10 @@ impl Scale {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -245,10 +273,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -556,6 +588,10 @@ impl Scale {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -563,10 +599,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &::v1_12::api::autoscaling::v1::Scale,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -631,6 +671,10 @@ impl Scale {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -638,10 +682,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &::v1_12::api::autoscaling::v1::Scale,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -706,6 +754,10 @@ impl Scale {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -713,10 +765,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &::v1_12::api::autoscaling::v1::Scale,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -781,6 +837,10 @@ impl Scale {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -788,10 +848,14 @@ impl Scale {
         name: &str,
         namespace: &str,
         body: &::v1_12::api::autoscaling::v1::Scale,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }

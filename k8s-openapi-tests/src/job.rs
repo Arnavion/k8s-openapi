@@ -78,9 +78,16 @@ fn create() {
 		..Default::default()
 	};
 
-	let request =
-		batch::Job::create_batch_v1_namespaced_job("default", &job, None)
-		.expect("couldn't create job");
+	k8s_if_le_1_11! {
+		let request =
+			batch::Job::create_batch_v1_namespaced_job("default", &job, None)
+			.expect("couldn't create job");
+	}
+	k8s_if_ge_1_12! {
+		let request =
+			batch::Job::create_batch_v1_namespaced_job("default", &job, None, None, None)
+			.expect("couldn't create job");
+	}
 	let response = client.execute(request).expect("couldn't create job");
 	let job: batch::Job =
 		::get_single_value(response, |response, status_code, _response_body| k8s_match!(response, {

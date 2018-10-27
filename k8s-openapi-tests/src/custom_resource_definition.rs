@@ -156,9 +156,16 @@ fn create() {
 			Retry,
 		}
 
-		let request =
-			apiextensions::CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition(&custom_resource_definition, None)
-			.expect("couldn't create custom resource definition");
+		k8s_if_le_1_11! {
+			let request =
+				apiextensions::CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition(&custom_resource_definition, None)
+				.expect("couldn't create custom resource definition");
+		}
+		k8s_if_ge_1_12! {
+			let request =
+				apiextensions::CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition(&custom_resource_definition, None, None, None)
+				.expect("couldn't create custom resource definition");
+		}
 		let response = client.execute(request).expect("couldn't create custom resource definition");
 
 		let custom_resource_definition =

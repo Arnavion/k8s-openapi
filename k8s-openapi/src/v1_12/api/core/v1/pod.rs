@@ -1293,16 +1293,32 @@ impl Pod {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
+    /// * `include_uninitialized`
+    ///
+    ///     If true, partially initialized resources are included in the response.
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_pod(
         namespace: &str,
         body: &::v1_12::api::core::v1::Pod,
+        dry_run: Option<&str>,
+        include_uninitialized: Option<bool>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -1883,6 +1899,10 @@ impl Pod {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -1890,10 +1910,14 @@ impl Pod {
         name: &str,
         namespace: &str,
         body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -1949,6 +1973,10 @@ impl Pod {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -1956,10 +1984,14 @@ impl Pod {
         name: &str,
         namespace: &str,
         body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -2281,6 +2313,10 @@ impl Pod {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -2288,10 +2324,14 @@ impl Pod {
         name: &str,
         namespace: &str,
         body: &::v1_12::api::core::v1::Pod,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
@@ -2356,6 +2396,10 @@ impl Pod {
     ///
     /// * `body`
     ///
+    /// * `dry_run`
+    ///
+    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    ///
     /// * `pretty`
     ///
     ///     If 'true', then the output is pretty printed.
@@ -2363,10 +2407,14 @@ impl Pod {
         name: &str,
         namespace: &str,
         body: &::v1_12::api::core::v1::Pod,
+        dry_run: Option<&str>,
         pretty: Option<&str>,
     ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        if let Some(dry_run) = dry_run {
+            __query_pairs.append_pair("dryRun", dry_run);
+        }
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
