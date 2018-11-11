@@ -238,7 +238,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "}}")?;
 
 				if let Some(kubernetes_group_kind_versions) = &definition.kubernetes_group_kind_versions {
-					let mut kubernetes_group_kind_versions: Vec<_> = kubernetes_group_kind_versions.into_iter().collect();
+					let mut kubernetes_group_kind_versions: Vec<_> = kubernetes_group_kind_versions.iter().collect();
 					kubernetes_group_kind_versions.sort();
 					for kubernetes_group_kind_version in kubernetes_group_kind_versions {
 						if let Some(operations) = operations.remove(&Some(kubernetes_group_kind_version)) {
