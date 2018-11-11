@@ -11,12 +11,6 @@ pub struct StorageClass {
     /// Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is alpha-level and is only honored by servers that enable the DynamicProvisioningScheduling feature.
     pub allowed_topologies: Option<Vec<::v1_11::api::core::v1::TopologySelectorTerm>>,
 
-    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-    pub api_version: Option<String>,
-
-    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub kind: Option<String>,
-
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: Option<::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
@@ -916,14 +910,32 @@ impl ::Response for WatchStorageV1StorageClassListResponse {
 
 // End storage.k8s.io/v1/StorageClass
 
+impl ::Resource for StorageClass {
+    fn api_version() -> &'static str {
+        "storage.k8s.io/v1"
+    }
+
+    fn group() -> &'static str {
+        "storage.k8s.io"
+    }
+
+    fn kind() -> &'static str {
+        "StorageClass"
+    }
+
+    fn version() -> &'static str {
+        "v1"
+    }
+}
+
 impl<'de> ::serde::Deserialize<'de> for StorageClass {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
-            Key_allow_volume_expansion,
-            Key_allowed_topologies,
             Key_api_version,
             Key_kind,
+            Key_allow_volume_expansion,
+            Key_allowed_topologies,
             Key_metadata,
             Key_mount_options,
             Key_parameters,
@@ -946,10 +958,10 @@ impl<'de> ::serde::Deserialize<'de> for StorageClass {
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
                         Ok(match v {
-                            "allowVolumeExpansion" => Field::Key_allow_volume_expansion,
-                            "allowedTopologies" => Field::Key_allowed_topologies,
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
+                            "allowVolumeExpansion" => Field::Key_allow_volume_expansion,
+                            "allowedTopologies" => Field::Key_allowed_topologies,
                             "metadata" => Field::Key_metadata,
                             "mountOptions" => Field::Key_mount_options,
                             "parameters" => Field::Key_parameters,
@@ -977,8 +989,6 @@ impl<'de> ::serde::Deserialize<'de> for StorageClass {
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
                 let mut value_allow_volume_expansion: Option<bool> = None;
                 let mut value_allowed_topologies: Option<Vec<::v1_11::api::core::v1::TopologySelectorTerm>> = None;
-                let mut value_api_version: Option<String> = None;
-                let mut value_kind: Option<String> = None;
                 let mut value_metadata: Option<::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_mount_options: Option<Vec<String>> = None;
                 let mut value_parameters: Option<::std::collections::BTreeMap<String, String>> = None;
@@ -988,10 +998,20 @@ impl<'de> ::serde::Deserialize<'de> for StorageClass {
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
+                        Field::Key_api_version => {
+                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as ::Resource>::api_version() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as ::Resource>::kind() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            }
+                        },
                         Field::Key_allow_volume_expansion => value_allow_volume_expansion = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_allowed_topologies => value_allowed_topologies = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_mount_options => value_mount_options = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_parameters => value_parameters = ::serde::de::MapAccess::next_value(&mut map)?,
@@ -1005,8 +1025,6 @@ impl<'de> ::serde::Deserialize<'de> for StorageClass {
                 Ok(StorageClass {
                     allow_volume_expansion: value_allow_volume_expansion,
                     allowed_topologies: value_allowed_topologies,
-                    api_version: value_api_version,
-                    kind: value_kind,
                     metadata: value_metadata,
                     mount_options: value_mount_options,
                     parameters: value_parameters,
@@ -1020,10 +1038,10 @@ impl<'de> ::serde::Deserialize<'de> for StorageClass {
         deserializer.deserialize_struct(
             "StorageClass",
             &[
-                "allowVolumeExpansion",
-                "allowedTopologies",
                 "apiVersion",
                 "kind",
+                "allowVolumeExpansion",
+                "allowedTopologies",
                 "metadata",
                 "mountOptions",
                 "parameters",
@@ -1041,10 +1059,9 @@ impl ::serde::Serialize for StorageClass {
         let mut state = serializer.serialize_struct(
             "StorageClass",
             0 +
+            2 +
             self.allow_volume_expansion.as_ref().map_or(0, |_| 1) +
             self.allowed_topologies.as_ref().map_or(0, |_| 1) +
-            self.api_version.as_ref().map_or(0, |_| 1) +
-            self.kind.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.mount_options.as_ref().map_or(0, |_| 1) +
             self.parameters.as_ref().map_or(0, |_| 1) +
@@ -1052,17 +1069,13 @@ impl ::serde::Serialize for StorageClass {
             self.reclaim_policy.as_ref().map_or(0, |_| 1) +
             self.volume_binding_mode.as_ref().map_or(0, |_| 1),
         )?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
         if let Some(value) = &self.allow_volume_expansion {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowVolumeExpansion", value)?;
         }
         if let Some(value) = &self.allowed_topologies {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedTopologies", value)?;
-        }
-        if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
-        }
-        if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         if let Some(value) = &self.metadata {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;

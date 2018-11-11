@@ -3,12 +3,6 @@
 /// APIGroup contains the name, the supported versions, and the preferred version of a group.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIGroup {
-    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-    pub api_version: Option<String>,
-
-    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub kind: Option<String>,
-
     /// name is the name of the group.
     pub name: String,
 
@@ -20,6 +14,24 @@ pub struct APIGroup {
 
     /// versions are the versions supported in this group.
     pub versions: Vec<::v1_8::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery>,
+}
+
+impl ::Resource for APIGroup {
+    fn api_version() -> &'static str {
+        "v1"
+    }
+
+    fn group() -> &'static str {
+        ""
+    }
+
+    fn kind() -> &'static str {
+        "APIGroup"
+    }
+
+    fn version() -> &'static str {
+        "v1"
+    }
 }
 
 impl<'de> ::serde::Deserialize<'de> for APIGroup {
@@ -73,8 +85,6 @@ impl<'de> ::serde::Deserialize<'de> for APIGroup {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_api_version: Option<String> = None;
-                let mut value_kind: Option<String> = None;
                 let mut value_name: Option<String> = None;
                 let mut value_preferred_version: Option<::v1_8::apimachinery::pkg::apis::meta::v1::GroupVersionForDiscovery> = None;
                 let mut value_server_address_by_client_cidrs: Option<Vec<::v1_8::apimachinery::pkg::apis::meta::v1::ServerAddressByClientCIDR>> = None;
@@ -82,8 +92,18 @@ impl<'de> ::serde::Deserialize<'de> for APIGroup {
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_api_version => {
+                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as ::Resource>::api_version() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as ::Resource>::kind() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            }
+                        },
                         Field::Key_name => value_name = Some(::serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_preferred_version => value_preferred_version = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_server_address_by_client_cidrs => value_server_address_by_client_cidrs = ::serde::de::MapAccess::next_value(&mut map)?,
@@ -93,8 +113,6 @@ impl<'de> ::serde::Deserialize<'de> for APIGroup {
                 }
 
                 Ok(APIGroup {
-                    api_version: value_api_version,
-                    kind: value_kind,
                     name: value_name.ok_or_else(|| ::serde::de::Error::missing_field("name"))?,
                     preferred_version: value_preferred_version,
                     server_address_by_client_cidrs: value_server_address_by_client_cidrs,
@@ -123,19 +141,14 @@ impl ::serde::Serialize for APIGroup {
         let mut state = serializer.serialize_struct(
             "APIGroup",
             0 +
-            self.api_version.as_ref().map_or(0, |_| 1) +
-            self.kind.as_ref().map_or(0, |_| 1) +
+            2 +
             1 +
             self.preferred_version.as_ref().map_or(0, |_| 1) +
             self.server_address_by_client_cidrs.as_ref().map_or(0, |_| 1) +
             1,
         )?;
-        if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
-        }
-        if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
-        }
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.preferred_version {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "preferredVersion", value)?;

@@ -160,12 +160,35 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					field_type_name: String,
 				}
 
-				let properties = {
+				let (properties, resource_metadata) = {
 					use std::fmt::Write;
 
 					let mut result = Vec::with_capacity(properties.len());
 
+					let single_group_version_kind =
+						definition.kubernetes_group_kind_versions.as_ref()
+						.and_then(|group_version_kinds| {
+							if group_version_kinds.len() == 1 {
+								Some(&group_version_kinds[0])
+							}
+							else {
+								None
+							}
+						});
+					let mut has_api_version = false;
+					let mut has_kind = false;
+
 					for (name, (schema, required)) in properties {
+						if name.0 == "apiVersion" && single_group_version_kind.is_some() {
+							has_api_version = true;
+							continue;
+						}
+
+						if name.0 == "kind" && single_group_version_kind.is_some() {
+							has_kind = true;
+							continue;
+						}
+
 						let field_name = get_rust_ident(&name);
 
 						let mut field_type_name = String::new();
@@ -205,7 +228,32 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 						});
 					}
 
-					result
+					let resource_metadata = match (has_api_version, has_kind) {
+						(true, true) => {
+							let single_group_version_kind = single_group_version_kind.unwrap();
+							if single_group_version_kind.group == "" {
+								Some((
+									std::borrow::Cow::Borrowed(&*single_group_version_kind.version),
+									"",
+									&*single_group_version_kind.kind,
+									&*single_group_version_kind.version,
+								))
+							}
+							else {
+								Some((
+									std::borrow::Cow::Owned(format!("{}/{}", single_group_version_kind.group, single_group_version_kind.version)),
+									&*single_group_version_kind.group,
+									&*single_group_version_kind.kind,
+									&*single_group_version_kind.version,
+								))
+							}
+						},
+						(false, false) => None,
+						(true, false) => return Err(format!("{} has an apiVersion property but not a kind property", definition_path).into()),
+						(false, true) => return Err(format!("{} has a kind property but not an apiVersion property", definition_path).into()),
+					};
+
+					(result, resource_metadata)
 				};
 
 				write!(file, "#[derive(Clone, Debug")?;
@@ -258,11 +306,36 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					}
 				}
 
+				if let Some(resource_metadata) = &resource_metadata {
+					writeln!(file)?;
+					writeln!(file, "impl ::Resource for {} {{", type_name)?;
+					writeln!(file, "    fn api_version() -> &'static str {{")?;
+					writeln!(file, r#"        "{}""#, resource_metadata.0)?;
+					writeln!(file, "    }}")?;
+					writeln!(file)?;
+					writeln!(file, "    fn group() -> &'static str {{")?;
+					writeln!(file, r#"        "{}""#, resource_metadata.1)?;
+					writeln!(file, "    }}")?;
+					writeln!(file)?;
+					writeln!(file, "    fn kind() -> &'static str {{")?;
+					writeln!(file, r#"        "{}""#, resource_metadata.2)?;
+					writeln!(file, "    }}")?;
+					writeln!(file)?;
+					writeln!(file, "    fn version() -> &'static str {{")?;
+					writeln!(file, r#"        "{}""#, resource_metadata.3)?;
+					writeln!(file, "    }}")?;
+					writeln!(file, "}}")?;
+				}
+
 				writeln!(file)?;
 				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
 				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
 				writeln!(file, "        #[allow(non_camel_case_types)]")?;
 				writeln!(file, "        enum Field {{")?;
+				if resource_metadata.is_some() {
+					writeln!(file, "            Key_api_version,")?;
+					writeln!(file, "            Key_kind,")?;
+				}
 				for Property { field_name, .. } in &properties {
 					writeln!(file, "            Key_{},", field_name)?;
 				}
@@ -282,6 +355,10 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file)?;
 				writeln!(file, "                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
 				writeln!(file, "                        Ok(match v {{")?;
+				if resource_metadata.is_some() {
+					writeln!(file, r#"                            "apiVersion" => Field::Key_api_version,"#)?;
+					writeln!(file, r#"                            "kind" => Field::Key_kind,"#)?;
+				}
 				for Property { name, field_name, .. } in &properties {
 					writeln!(file, r#"                            "{}" => Field::Key_{},"#, name, field_name)?;
 				}
@@ -315,6 +392,21 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file)?;
 				writeln!(file, "                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {{")?;
 				writeln!(file, "                    match key {{")?;
+				if resource_metadata.is_some() {
+						writeln!(file, r#"                        Field::Key_api_version => {{"#)?;
+						writeln!(file, r#"                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;"#)?;
+						writeln!(file, r#"                            if value_api_version != <Self::Value as ::Resource>::api_version() {{"#)?;
+						writeln!(file, r#"                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));"#)?;
+						writeln!(file, r#"                            }}"#)?;
+						writeln!(file, r#"                        }},"#)?;
+
+						writeln!(file, r#"                        Field::Key_kind => {{"#)?;
+						writeln!(file, r#"                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;"#)?;
+						writeln!(file, r#"                            if value_kind != <Self::Value as ::Resource>::kind() {{"#)?;
+						writeln!(file, r#"                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));"#)?;
+						writeln!(file, r#"                            }}"#)?;
+						writeln!(file, r#"                        }},"#)?;
+				}
 				for Property { required, field_name, .. } in &properties {
 					if *required {
 						writeln!(file, r#"                        Field::Key_{} => value_{} = Some(::serde::de::MapAccess::next_value(&mut map)?),"#, field_name, field_name)?;
@@ -343,6 +435,10 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "        deserializer.deserialize_struct(")?;
 				writeln!(file, r#"            "{}","#, type_name)?;
 				writeln!(file, "            &[")?;
+				if resource_metadata.is_some() {
+					writeln!(file, r#"                "apiVersion","#)?;
+					writeln!(file, r#"                "kind","#)?;
+				}
 				for Property { name, .. } in &properties {
 					writeln!(file, r#"                "{}","#, name)?;
 				}
@@ -355,7 +451,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 				writeln!(file, "impl ::serde::Serialize for {} {{", type_name)?;
 				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {{")?;
-				if properties.is_empty() {
+				if properties.is_empty() && resource_metadata.is_none() {
 					writeln!(file, "        let state = serializer.serialize_struct(")?;
 				}
 				else {
@@ -363,6 +459,10 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				}
 				writeln!(file, r#"            "{}","#, type_name)?;
 				write!(file, "            0")?;
+				if resource_metadata.is_some() {
+					writeln!(file, " +")?;
+					write!(file, "            2")?;
+				}
 				for Property { required, field_name, .. } in &properties {
 					writeln!(file, " +")?;
 					if *required {
@@ -374,6 +474,10 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				}
 				writeln!(file, ",")?;
 				writeln!(file, "        )?;")?;
+				if resource_metadata.is_some() {
+					writeln!(file, r#"        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;"#)?;
+					writeln!(file, r#"        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;"#)?;
+				}
 				for Property { name, required, field_name, .. } in &properties {
 					if *required {
 						writeln!(file, r#"        ::serde::ser::SerializeStruct::serialize_field(&mut state, "{}", &self.{})?;"#, name, field_name)?;

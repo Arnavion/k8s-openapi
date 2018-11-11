@@ -3,12 +3,6 @@
 /// ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ClusterRoleBinding {
-    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-    pub api_version: Option<String>,
-
-    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub kind: Option<String>,
-
     /// Standard object's metadata.
     pub metadata: Option<::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
@@ -883,6 +877,24 @@ impl ::Response for WatchRbacAuthorizationV1beta1ClusterRoleBindingListResponse 
 
 // End rbac.authorization.k8s.io/v1beta1/ClusterRoleBinding
 
+impl ::Resource for ClusterRoleBinding {
+    fn api_version() -> &'static str {
+        "rbac.authorization.k8s.io/v1beta1"
+    }
+
+    fn group() -> &'static str {
+        "rbac.authorization.k8s.io"
+    }
+
+    fn kind() -> &'static str {
+        "ClusterRoleBinding"
+    }
+
+    fn version() -> &'static str {
+        "v1beta1"
+    }
+}
+
 impl<'de> ::serde::Deserialize<'de> for ClusterRoleBinding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
@@ -932,16 +944,24 @@ impl<'de> ::serde::Deserialize<'de> for ClusterRoleBinding {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_api_version: Option<String> = None;
-                let mut value_kind: Option<String> = None;
                 let mut value_metadata: Option<::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_role_ref: Option<::v1_10::api::rbac::v1beta1::RoleRef> = None;
                 let mut value_subjects: Option<Vec<::v1_10::api::rbac::v1beta1::Subject>> = None;
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_api_version => {
+                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as ::Resource>::api_version() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as ::Resource>::kind() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            }
+                        },
                         Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_role_ref => value_role_ref = Some(::serde::de::MapAccess::next_value(&mut map)?),
                         Field::Key_subjects => value_subjects = Some(::serde::de::MapAccess::next_value(&mut map)?),
@@ -950,8 +970,6 @@ impl<'de> ::serde::Deserialize<'de> for ClusterRoleBinding {
                 }
 
                 Ok(ClusterRoleBinding {
-                    api_version: value_api_version,
-                    kind: value_kind,
                     metadata: value_metadata,
                     role_ref: value_role_ref.ok_or_else(|| ::serde::de::Error::missing_field("roleRef"))?,
                     subjects: value_subjects.ok_or_else(|| ::serde::de::Error::missing_field("subjects"))?,
@@ -978,18 +996,13 @@ impl ::serde::Serialize for ClusterRoleBinding {
         let mut state = serializer.serialize_struct(
             "ClusterRoleBinding",
             0 +
-            self.api_version.as_ref().map_or(0, |_| 1) +
-            self.kind.as_ref().map_or(0, |_| 1) +
+            2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             1 +
             1,
         )?;
-        if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
-        }
-        if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
-        }
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
         if let Some(value) = &self.metadata {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }

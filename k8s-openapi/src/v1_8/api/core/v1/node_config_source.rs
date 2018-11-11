@@ -3,13 +3,25 @@
 /// NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NodeConfigSource {
-    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-    pub api_version: Option<String>,
-
     pub config_map_ref: Option<::v1_8::api::core::v1::ObjectReference>,
+}
 
-    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub kind: Option<String>,
+impl ::Resource for NodeConfigSource {
+    fn api_version() -> &'static str {
+        "v1"
+    }
+
+    fn group() -> &'static str {
+        ""
+    }
+
+    fn kind() -> &'static str {
+        "NodeConfigSource"
+    }
+
+    fn version() -> &'static str {
+        "v1"
+    }
 }
 
 impl<'de> ::serde::Deserialize<'de> for NodeConfigSource {
@@ -17,8 +29,8 @@ impl<'de> ::serde::Deserialize<'de> for NodeConfigSource {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
-            Key_config_map_ref,
             Key_kind,
+            Key_config_map_ref,
             Other,
         }
 
@@ -36,8 +48,8 @@ impl<'de> ::serde::Deserialize<'de> for NodeConfigSource {
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
-                            "configMapRef" => Field::Key_config_map_ref,
                             "kind" => Field::Key_kind,
+                            "configMapRef" => Field::Key_config_map_ref,
                             _ => Field::Other,
                         })
                     }
@@ -57,23 +69,29 @@ impl<'de> ::serde::Deserialize<'de> for NodeConfigSource {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_api_version: Option<String> = None;
                 let mut value_config_map_ref: Option<::v1_8::api::core::v1::ObjectReference> = None;
-                let mut value_kind: Option<String> = None;
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_api_version => {
+                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as ::Resource>::api_version() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as ::Resource>::kind() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            }
+                        },
                         Field::Key_config_map_ref => value_config_map_ref = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(NodeConfigSource {
-                    api_version: value_api_version,
                     config_map_ref: value_config_map_ref,
-                    kind: value_kind,
                 })
             }
         }
@@ -82,8 +100,8 @@ impl<'de> ::serde::Deserialize<'de> for NodeConfigSource {
             "NodeConfigSource",
             &[
                 "apiVersion",
-                "configMapRef",
                 "kind",
+                "configMapRef",
             ],
             Visitor,
         )
@@ -95,18 +113,13 @@ impl ::serde::Serialize for NodeConfigSource {
         let mut state = serializer.serialize_struct(
             "NodeConfigSource",
             0 +
-            self.api_version.as_ref().map_or(0, |_| 1) +
-            self.config_map_ref.as_ref().map_or(0, |_| 1) +
-            self.kind.as_ref().map_or(0, |_| 1),
+            2 +
+            self.config_map_ref.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
-        }
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
         if let Some(value) = &self.config_map_ref {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "configMapRef", value)?;
-        }
-        if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         ::serde::ser::SerializeStruct::end(state)
     }

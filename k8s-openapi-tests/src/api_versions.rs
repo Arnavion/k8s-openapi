@@ -29,5 +29,5 @@ fn list() {
 			other => Err(format!("{:?} {}", other, status_code).into()),
 		}).expect("couldn't get API versions");
 
-	assert_eq!(api_versions.kind, Some("APIGroupList".to_string()));
+	assert_eq!(::k8s_openapi::kind(&api_versions), "APIGroupList");
 }

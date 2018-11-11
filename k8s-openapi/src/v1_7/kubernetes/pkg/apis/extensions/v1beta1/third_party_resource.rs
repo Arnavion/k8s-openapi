@@ -3,14 +3,8 @@
 /// A ThirdPartyResource is a generic representation of a resource, it is used by add-ons and plugins to add new resource types to the API.  It consists of one or more Versions of the api.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ThirdPartyResource {
-    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-    pub api_version: Option<String>,
-
     /// Description is the description of this object.
     pub description: Option<String>,
-
-    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub kind: Option<String>,
 
     /// Standard object metadata
     pub metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
@@ -800,13 +794,31 @@ impl ::Response for WatchExtensionsV1beta1ThirdPartyResourceListResponse {
 
 // End extensions/v1beta1/ThirdPartyResource
 
+impl ::Resource for ThirdPartyResource {
+    fn api_version() -> &'static str {
+        "extensions/v1beta1"
+    }
+
+    fn group() -> &'static str {
+        "extensions"
+    }
+
+    fn kind() -> &'static str {
+        "ThirdPartyResource"
+    }
+
+    fn version() -> &'static str {
+        "v1beta1"
+    }
+}
+
 impl<'de> ::serde::Deserialize<'de> for ThirdPartyResource {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
-            Key_description,
             Key_kind,
+            Key_description,
             Key_metadata,
             Key_versions,
             Other,
@@ -826,8 +838,8 @@ impl<'de> ::serde::Deserialize<'de> for ThirdPartyResource {
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
-                            "description" => Field::Key_description,
                             "kind" => Field::Key_kind,
+                            "description" => Field::Key_description,
                             "metadata" => Field::Key_metadata,
                             "versions" => Field::Key_versions,
                             _ => Field::Other,
@@ -849,17 +861,25 @@ impl<'de> ::serde::Deserialize<'de> for ThirdPartyResource {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_api_version: Option<String> = None;
                 let mut value_description: Option<String> = None;
-                let mut value_kind: Option<String> = None;
                 let mut value_metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_versions: Option<Vec<::v1_7::kubernetes::pkg::apis::extensions::v1beta1::APIVersion>> = None;
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_api_version => {
+                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as ::Resource>::api_version() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as ::Resource>::kind() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            }
+                        },
                         Field::Key_description => value_description = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_versions => value_versions = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
@@ -867,9 +887,7 @@ impl<'de> ::serde::Deserialize<'de> for ThirdPartyResource {
                 }
 
                 Ok(ThirdPartyResource {
-                    api_version: value_api_version,
                     description: value_description,
-                    kind: value_kind,
                     metadata: value_metadata,
                     versions: value_versions,
                 })
@@ -880,8 +898,8 @@ impl<'de> ::serde::Deserialize<'de> for ThirdPartyResource {
             "ThirdPartyResource",
             &[
                 "apiVersion",
-                "description",
                 "kind",
+                "description",
                 "metadata",
                 "versions",
             ],
@@ -895,20 +913,15 @@ impl ::serde::Serialize for ThirdPartyResource {
         let mut state = serializer.serialize_struct(
             "ThirdPartyResource",
             0 +
-            self.api_version.as_ref().map_or(0, |_| 1) +
+            2 +
             self.description.as_ref().map_or(0, |_| 1) +
-            self.kind.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.versions.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
-        }
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
         if let Some(value) = &self.description {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
-        }
-        if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         if let Some(value) = &self.metadata {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;

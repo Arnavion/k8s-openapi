@@ -52,7 +52,7 @@ fn list() {
 			other => Err(format!("{:?} {}", other, status_code).into()),
 		})).expect("couldn't list deployments");
 
-	assert_eq!(deployment_list.kind, Some("DeploymentList".to_string()));
+	assert_eq!(::k8s_openapi::kind(&deployment_list), "DeploymentList");
 
 	k8s_if_le_1_10! {
 		let dns_deployment_name = "kube-dns";

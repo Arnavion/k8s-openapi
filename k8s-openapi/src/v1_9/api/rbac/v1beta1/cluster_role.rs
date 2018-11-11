@@ -6,12 +6,6 @@ pub struct ClusterRole {
     /// AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller.
     pub aggregation_rule: Option<::v1_9::api::rbac::v1beta1::AggregationRule>,
 
-    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-    pub api_version: Option<String>,
-
-    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub kind: Option<String>,
-
     /// Standard object's metadata.
     pub metadata: Option<::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
@@ -883,13 +877,31 @@ impl ::Response for WatchRbacAuthorizationV1beta1ClusterRoleListResponse {
 
 // End rbac.authorization.k8s.io/v1beta1/ClusterRole
 
+impl ::Resource for ClusterRole {
+    fn api_version() -> &'static str {
+        "rbac.authorization.k8s.io/v1beta1"
+    }
+
+    fn group() -> &'static str {
+        "rbac.authorization.k8s.io"
+    }
+
+    fn kind() -> &'static str {
+        "ClusterRole"
+    }
+
+    fn version() -> &'static str {
+        "v1beta1"
+    }
+}
+
 impl<'de> ::serde::Deserialize<'de> for ClusterRole {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
-            Key_aggregation_rule,
             Key_api_version,
             Key_kind,
+            Key_aggregation_rule,
             Key_metadata,
             Key_rules,
             Other,
@@ -908,9 +920,9 @@ impl<'de> ::serde::Deserialize<'de> for ClusterRole {
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
                         Ok(match v {
-                            "aggregationRule" => Field::Key_aggregation_rule,
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
+                            "aggregationRule" => Field::Key_aggregation_rule,
                             "metadata" => Field::Key_metadata,
                             "rules" => Field::Key_rules,
                             _ => Field::Other,
@@ -933,16 +945,24 @@ impl<'de> ::serde::Deserialize<'de> for ClusterRole {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
                 let mut value_aggregation_rule: Option<::v1_9::api::rbac::v1beta1::AggregationRule> = None;
-                let mut value_api_version: Option<String> = None;
-                let mut value_kind: Option<String> = None;
                 let mut value_metadata: Option<::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_rules: Option<Vec<::v1_9::api::rbac::v1beta1::PolicyRule>> = None;
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
+                        Field::Key_api_version => {
+                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as ::Resource>::api_version() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as ::Resource>::kind() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            }
+                        },
                         Field::Key_aggregation_rule => value_aggregation_rule = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_rules => value_rules = Some(::serde::de::MapAccess::next_value(&mut map)?),
                         Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
@@ -951,8 +971,6 @@ impl<'de> ::serde::Deserialize<'de> for ClusterRole {
 
                 Ok(ClusterRole {
                     aggregation_rule: value_aggregation_rule,
-                    api_version: value_api_version,
-                    kind: value_kind,
                     metadata: value_metadata,
                     rules: value_rules.ok_or_else(|| ::serde::de::Error::missing_field("rules"))?,
                 })
@@ -962,9 +980,9 @@ impl<'de> ::serde::Deserialize<'de> for ClusterRole {
         deserializer.deserialize_struct(
             "ClusterRole",
             &[
-                "aggregationRule",
                 "apiVersion",
                 "kind",
+                "aggregationRule",
                 "metadata",
                 "rules",
             ],
@@ -978,20 +996,15 @@ impl ::serde::Serialize for ClusterRole {
         let mut state = serializer.serialize_struct(
             "ClusterRole",
             0 +
+            2 +
             self.aggregation_rule.as_ref().map_or(0, |_| 1) +
-            self.api_version.as_ref().map_or(0, |_| 1) +
-            self.kind.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1) +
             1,
         )?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
         if let Some(value) = &self.aggregation_rule {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "aggregationRule", value)?;
-        }
-        if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
-        }
-        if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         if let Some(value) = &self.metadata {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;

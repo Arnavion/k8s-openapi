@@ -3,12 +3,6 @@
 /// Binding ties one object to another; for example, a pod is bound to a node by a scheduler. Deprecated in 1.7, please use the bindings subresource of pods instead.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Binding {
-    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-    pub api_version: Option<String>,
-
-    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub kind: Option<String>,
-
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
@@ -147,6 +141,24 @@ impl ::Response for CreateCoreV1NamespacedPodBindingResponse {
 
 // End /v1/Binding
 
+impl ::Resource for Binding {
+    fn api_version() -> &'static str {
+        "v1"
+    }
+
+    fn group() -> &'static str {
+        ""
+    }
+
+    fn kind() -> &'static str {
+        "Binding"
+    }
+
+    fn version() -> &'static str {
+        "v1"
+    }
+}
+
 impl<'de> ::serde::Deserialize<'de> for Binding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
@@ -194,15 +206,23 @@ impl<'de> ::serde::Deserialize<'de> for Binding {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_api_version: Option<String> = None;
-                let mut value_kind: Option<String> = None;
                 let mut value_metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_target: Option<::v1_7::kubernetes::pkg::api::v1::ObjectReference> = None;
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_api_version => {
+                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as ::Resource>::api_version() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as ::Resource>::kind() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            }
+                        },
                         Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_target => value_target = Some(::serde::de::MapAccess::next_value(&mut map)?),
                         Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
@@ -210,8 +230,6 @@ impl<'de> ::serde::Deserialize<'de> for Binding {
                 }
 
                 Ok(Binding {
-                    api_version: value_api_version,
-                    kind: value_kind,
                     metadata: value_metadata,
                     target: value_target.ok_or_else(|| ::serde::de::Error::missing_field("target"))?,
                 })
@@ -236,17 +254,12 @@ impl ::serde::Serialize for Binding {
         let mut state = serializer.serialize_struct(
             "Binding",
             0 +
-            self.api_version.as_ref().map_or(0, |_| 1) +
-            self.kind.as_ref().map_or(0, |_| 1) +
+            2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             1,
         )?;
-        if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
-        }
-        if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
-        }
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
         if let Some(value) = &self.metadata {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }

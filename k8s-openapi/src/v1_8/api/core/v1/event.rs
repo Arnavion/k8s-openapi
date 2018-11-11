@@ -3,9 +3,6 @@
 /// Event is a report of an event somewhere in the cluster.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Event {
-    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-    pub api_version: Option<String>,
-
     /// The number of times this event has occurred.
     pub count: Option<i32>,
 
@@ -14,9 +11,6 @@ pub struct Event {
 
     /// The object that this event is about.
     pub involved_object: ::v1_8::api::core::v1::ObjectReference,
-
-    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub kind: Option<String>,
 
     /// The time at which the most recent occurrence of this event was recorded.
     pub last_timestamp: Option<::v1_8::apimachinery::pkg::apis::meta::v1::Time>,
@@ -1175,15 +1169,33 @@ impl ::Response for WatchCoreV1NamespacedEventListResponse {
 
 // End /v1/Event
 
+impl ::Resource for Event {
+    fn api_version() -> &'static str {
+        "v1"
+    }
+
+    fn group() -> &'static str {
+        ""
+    }
+
+    fn kind() -> &'static str {
+        "Event"
+    }
+
+    fn version() -> &'static str {
+        "v1"
+    }
+}
+
 impl<'de> ::serde::Deserialize<'de> for Event {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
+            Key_kind,
             Key_count,
             Key_first_timestamp,
             Key_involved_object,
-            Key_kind,
             Key_last_timestamp,
             Key_message,
             Key_metadata,
@@ -1207,10 +1219,10 @@ impl<'de> ::serde::Deserialize<'de> for Event {
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
+                            "kind" => Field::Key_kind,
                             "count" => Field::Key_count,
                             "firstTimestamp" => Field::Key_first_timestamp,
                             "involvedObject" => Field::Key_involved_object,
-                            "kind" => Field::Key_kind,
                             "lastTimestamp" => Field::Key_last_timestamp,
                             "message" => Field::Key_message,
                             "metadata" => Field::Key_metadata,
@@ -1236,11 +1248,9 @@ impl<'de> ::serde::Deserialize<'de> for Event {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_api_version: Option<String> = None;
                 let mut value_count: Option<i32> = None;
                 let mut value_first_timestamp: Option<::v1_8::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_involved_object: Option<::v1_8::api::core::v1::ObjectReference> = None;
-                let mut value_kind: Option<String> = None;
                 let mut value_last_timestamp: Option<::v1_8::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_message: Option<String> = None;
                 let mut value_metadata: Option<::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
@@ -1250,11 +1260,21 @@ impl<'de> ::serde::Deserialize<'de> for Event {
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_api_version => {
+                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as ::Resource>::api_version() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as ::Resource>::kind() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            }
+                        },
                         Field::Key_count => value_count = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_first_timestamp => value_first_timestamp = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_involved_object => value_involved_object = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_last_timestamp => value_last_timestamp = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_message => value_message = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_metadata => value_metadata = Some(::serde::de::MapAccess::next_value(&mut map)?),
@@ -1266,11 +1286,9 @@ impl<'de> ::serde::Deserialize<'de> for Event {
                 }
 
                 Ok(Event {
-                    api_version: value_api_version,
                     count: value_count,
                     first_timestamp: value_first_timestamp,
                     involved_object: value_involved_object.ok_or_else(|| ::serde::de::Error::missing_field("involvedObject"))?,
-                    kind: value_kind,
                     last_timestamp: value_last_timestamp,
                     message: value_message,
                     metadata: value_metadata.ok_or_else(|| ::serde::de::Error::missing_field("metadata"))?,
@@ -1285,10 +1303,10 @@ impl<'de> ::serde::Deserialize<'de> for Event {
             "Event",
             &[
                 "apiVersion",
+                "kind",
                 "count",
                 "firstTimestamp",
                 "involvedObject",
-                "kind",
                 "lastTimestamp",
                 "message",
                 "metadata",
@@ -1306,11 +1324,10 @@ impl ::serde::Serialize for Event {
         let mut state = serializer.serialize_struct(
             "Event",
             0 +
-            self.api_version.as_ref().map_or(0, |_| 1) +
+            2 +
             self.count.as_ref().map_or(0, |_| 1) +
             self.first_timestamp.as_ref().map_or(0, |_| 1) +
             1 +
-            self.kind.as_ref().map_or(0, |_| 1) +
             self.last_timestamp.as_ref().map_or(0, |_| 1) +
             self.message.as_ref().map_or(0, |_| 1) +
             1 +
@@ -1318,9 +1335,8 @@ impl ::serde::Serialize for Event {
             self.source.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
-        }
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
         if let Some(value) = &self.count {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "count", value)?;
         }
@@ -1328,9 +1344,6 @@ impl ::serde::Serialize for Event {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "firstTimestamp", value)?;
         }
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "involvedObject", &self.involved_object)?;
-        if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
-        }
         if let Some(value) = &self.last_timestamp {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "lastTimestamp", value)?;
         }

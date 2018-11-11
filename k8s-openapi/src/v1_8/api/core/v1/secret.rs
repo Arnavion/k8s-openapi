@@ -3,14 +3,8 @@
 /// Secret holds secret data of a certain type. The total bytes of the values in the Data field must be less than MaxSecretSize bytes.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Secret {
-    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-    pub api_version: Option<String>,
-
     /// Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_' or '.'. The serialized form of the secret data is a base64 encoded string, representing the arbitrary (possibly non-string) data value here. Described in https://tools.ietf.org/html/rfc4648#section-4
     pub data: Option<::std::collections::BTreeMap<String, ::ByteString>>,
-
-    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub kind: Option<String>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
     pub metadata: Option<::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
@@ -1160,13 +1154,31 @@ impl ::Response for WatchCoreV1SecretListForAllNamespacesResponse {
 
 // End /v1/Secret
 
+impl ::Resource for Secret {
+    fn api_version() -> &'static str {
+        "v1"
+    }
+
+    fn group() -> &'static str {
+        ""
+    }
+
+    fn kind() -> &'static str {
+        "Secret"
+    }
+
+    fn version() -> &'static str {
+        "v1"
+    }
+}
+
 impl<'de> ::serde::Deserialize<'de> for Secret {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
-            Key_data,
             Key_kind,
+            Key_data,
             Key_metadata,
             Key_string_data,
             Key_type_,
@@ -1187,8 +1199,8 @@ impl<'de> ::serde::Deserialize<'de> for Secret {
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
-                            "data" => Field::Key_data,
                             "kind" => Field::Key_kind,
+                            "data" => Field::Key_data,
                             "metadata" => Field::Key_metadata,
                             "stringData" => Field::Key_string_data,
                             "type" => Field::Key_type_,
@@ -1211,18 +1223,26 @@ impl<'de> ::serde::Deserialize<'de> for Secret {
             }
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_api_version: Option<String> = None;
                 let mut value_data: Option<::std::collections::BTreeMap<String, ::ByteString>> = None;
-                let mut value_kind: Option<String> = None;
                 let mut value_metadata: Option<::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_string_data: Option<::std::collections::BTreeMap<String, String>> = None;
                 let mut value_type_: Option<String> = None;
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_api_version => {
+                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as ::Resource>::api_version() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as ::Resource>::kind() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            }
+                        },
                         Field::Key_data => value_data = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_string_data => value_string_data = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_type_ => value_type_ = ::serde::de::MapAccess::next_value(&mut map)?,
@@ -1231,9 +1251,7 @@ impl<'de> ::serde::Deserialize<'de> for Secret {
                 }
 
                 Ok(Secret {
-                    api_version: value_api_version,
                     data: value_data,
-                    kind: value_kind,
                     metadata: value_metadata,
                     string_data: value_string_data,
                     type_: value_type_,
@@ -1245,8 +1263,8 @@ impl<'de> ::serde::Deserialize<'de> for Secret {
             "Secret",
             &[
                 "apiVersion",
-                "data",
                 "kind",
+                "data",
                 "metadata",
                 "stringData",
                 "type",
@@ -1261,21 +1279,16 @@ impl ::serde::Serialize for Secret {
         let mut state = serializer.serialize_struct(
             "Secret",
             0 +
-            self.api_version.as_ref().map_or(0, |_| 1) +
+            2 +
             self.data.as_ref().map_or(0, |_| 1) +
-            self.kind.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.string_data.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
-        if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
-        }
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
         if let Some(value) = &self.data {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "data", value)?;
-        }
-        if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         if let Some(value) = &self.metadata {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;

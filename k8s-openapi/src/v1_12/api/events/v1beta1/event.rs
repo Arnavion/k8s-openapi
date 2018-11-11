@@ -6,9 +6,6 @@ pub struct Event {
     /// What action was taken/failed regarding to the regarding object.
     pub action: Option<String>,
 
-    /// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
-    pub api_version: Option<String>,
-
     /// Deprecated field assuring backward compatibility with core.v1 Event type
     pub deprecated_count: Option<i32>,
 
@@ -23,9 +20,6 @@ pub struct Event {
 
     /// Required. Time when this Event was first observed.
     pub event_time: ::v1_12::apimachinery::pkg::apis::meta::v1::MicroTime,
-
-    /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
-    pub kind: Option<String>,
 
     pub metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
@@ -1280,18 +1274,36 @@ impl ::Response for WatchEventsV1beta1NamespacedEventListResponse {
 
 // End events.k8s.io/v1beta1/Event
 
+impl ::Resource for Event {
+    fn api_version() -> &'static str {
+        "events.k8s.io/v1beta1"
+    }
+
+    fn group() -> &'static str {
+        "events.k8s.io"
+    }
+
+    fn kind() -> &'static str {
+        "Event"
+    }
+
+    fn version() -> &'static str {
+        "v1beta1"
+    }
+}
+
 impl<'de> ::serde::Deserialize<'de> for Event {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
-            Key_action,
             Key_api_version,
+            Key_kind,
+            Key_action,
             Key_deprecated_count,
             Key_deprecated_first_timestamp,
             Key_deprecated_last_timestamp,
             Key_deprecated_source,
             Key_event_time,
-            Key_kind,
             Key_metadata,
             Key_note,
             Key_reason,
@@ -1317,14 +1329,14 @@ impl<'de> ::serde::Deserialize<'de> for Event {
 
                     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
                         Ok(match v {
-                            "action" => Field::Key_action,
                             "apiVersion" => Field::Key_api_version,
+                            "kind" => Field::Key_kind,
+                            "action" => Field::Key_action,
                             "deprecatedCount" => Field::Key_deprecated_count,
                             "deprecatedFirstTimestamp" => Field::Key_deprecated_first_timestamp,
                             "deprecatedLastTimestamp" => Field::Key_deprecated_last_timestamp,
                             "deprecatedSource" => Field::Key_deprecated_source,
                             "eventTime" => Field::Key_event_time,
-                            "kind" => Field::Key_kind,
                             "metadata" => Field::Key_metadata,
                             "note" => Field::Key_note,
                             "reason" => Field::Key_reason,
@@ -1354,13 +1366,11 @@ impl<'de> ::serde::Deserialize<'de> for Event {
 
             fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
                 let mut value_action: Option<String> = None;
-                let mut value_api_version: Option<String> = None;
                 let mut value_deprecated_count: Option<i32> = None;
                 let mut value_deprecated_first_timestamp: Option<::v1_12::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_deprecated_last_timestamp: Option<::v1_12::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_deprecated_source: Option<::v1_12::api::core::v1::EventSource> = None;
                 let mut value_event_time: Option<::v1_12::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
-                let mut value_kind: Option<String> = None;
                 let mut value_metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_note: Option<String> = None;
                 let mut value_reason: Option<String> = None;
@@ -1373,14 +1383,24 @@ impl<'de> ::serde::Deserialize<'de> for Event {
 
                 while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
+                        Field::Key_api_version => {
+                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as ::Resource>::api_version() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            }
+                        },
+                        Field::Key_kind => {
+                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as ::Resource>::kind() {
+                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            }
+                        },
                         Field::Key_action => value_action = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_deprecated_count => value_deprecated_count = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_deprecated_first_timestamp => value_deprecated_first_timestamp = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_deprecated_last_timestamp => value_deprecated_last_timestamp = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_deprecated_source => value_deprecated_source = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_event_time => value_event_time = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_note => value_note = ::serde::de::MapAccess::next_value(&mut map)?,
                         Field::Key_reason => value_reason = ::serde::de::MapAccess::next_value(&mut map)?,
@@ -1396,13 +1416,11 @@ impl<'de> ::serde::Deserialize<'de> for Event {
 
                 Ok(Event {
                     action: value_action,
-                    api_version: value_api_version,
                     deprecated_count: value_deprecated_count,
                     deprecated_first_timestamp: value_deprecated_first_timestamp,
                     deprecated_last_timestamp: value_deprecated_last_timestamp,
                     deprecated_source: value_deprecated_source,
                     event_time: value_event_time.ok_or_else(|| ::serde::de::Error::missing_field("eventTime"))?,
-                    kind: value_kind,
                     metadata: value_metadata,
                     note: value_note,
                     reason: value_reason,
@@ -1419,14 +1437,14 @@ impl<'de> ::serde::Deserialize<'de> for Event {
         deserializer.deserialize_struct(
             "Event",
             &[
-                "action",
                 "apiVersion",
+                "kind",
+                "action",
                 "deprecatedCount",
                 "deprecatedFirstTimestamp",
                 "deprecatedLastTimestamp",
                 "deprecatedSource",
                 "eventTime",
-                "kind",
                 "metadata",
                 "note",
                 "reason",
@@ -1447,14 +1465,13 @@ impl ::serde::Serialize for Event {
         let mut state = serializer.serialize_struct(
             "Event",
             0 +
+            2 +
             self.action.as_ref().map_or(0, |_| 1) +
-            self.api_version.as_ref().map_or(0, |_| 1) +
             self.deprecated_count.as_ref().map_or(0, |_| 1) +
             self.deprecated_first_timestamp.as_ref().map_or(0, |_| 1) +
             self.deprecated_last_timestamp.as_ref().map_or(0, |_| 1) +
             self.deprecated_source.as_ref().map_or(0, |_| 1) +
             1 +
-            self.kind.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.note.as_ref().map_or(0, |_| 1) +
             self.reason.as_ref().map_or(0, |_| 1) +
@@ -1465,11 +1482,10 @@ impl ::serde::Serialize for Event {
             self.series.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
+        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
         if let Some(value) = &self.action {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "action", value)?;
-        }
-        if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
         }
         if let Some(value) = &self.deprecated_count {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "deprecatedCount", value)?;
@@ -1484,9 +1500,6 @@ impl ::serde::Serialize for Event {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "deprecatedSource", value)?;
         }
         ::serde::ser::SerializeStruct::serialize_field(&mut state, "eventTime", &self.event_time)?;
-        if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
-        }
         if let Some(value) = &self.metadata {
             ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
