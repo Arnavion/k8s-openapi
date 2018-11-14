@@ -22,7 +22,7 @@ jobs:
         crictlVersion: v1.11.1
       v1_10:
         feature: v1_10
-        k8sVersion: v1.10.9
+        k8sVersion: v1.10.10
         minikubeVersion: v0.28.2
         crictlVersion: v1.11.1
       v1_11:
