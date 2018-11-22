@@ -220,7 +220,7 @@ pub trait Resource {
     /// The group of the resource, or the empty string if the resource doesn't have a group.
     fn group() -> &'static str;
 
-    /// The kind of the resource, or the empty string if the resource doesn't have a group.
+    /// The kind of the resource.
     ///
     /// This is the string used in the `kind` field of the resource's serialized form.
     fn kind() -> &'static str;
