@@ -32,7 +32,7 @@ jobs:
         crictlVersion: v1.11.1
       v1_12:
         feature: v1_12
-        k8sVersion: v1.12.2
+        k8sVersion: v1.12.3
         minikubeVersion: v0.30.0
         crictlVersion: v1.12.0
     maxParallel: 10
