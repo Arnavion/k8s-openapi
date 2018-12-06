@@ -8,7 +8,6 @@
 ))]
 
 extern crate backtrace;
-extern crate bytes;
 extern crate dirs;
 #[macro_use] extern crate k8s_openapi;
 extern crate reqwest;
