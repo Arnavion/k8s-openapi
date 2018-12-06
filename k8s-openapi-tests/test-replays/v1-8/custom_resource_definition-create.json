@@ -1,0 +1,32 @@
+[
+  {
+    "request_url": "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?",
+    "request_body": "{\"apiVersion\":\"apiextensions.k8s.io/v1beta1\",\"kind\":\"CustomResourceDefinition\",\"metadata\":{\"name\":\"foobars.k8s-openapi-tests-custom-resource-definition.com\"},\"spec\":{\"group\":\"k8s-openapi-tests-custom-resource-definition.com\",\"names\":{\"kind\":\"FooBar\",\"plural\":\"foobars\",\"shortNames\":[\"fb\"],\"singular\":\"foobar\"},\"scope\":\"Namespaced\",\"version\":\"v1\"}}",
+    "response_status_code": 201,
+    "response_body": "{\"kind\":\"CustomResourceDefinition\",\"apiVersion\":\"apiextensions.k8s.io/v1beta1\",\"metadata\":{\"name\":\"foobars.k8s-openapi-tests-custom-resource-definition.com\",\"selfLink\":\"/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/foobars.k8s-openapi-tests-custom-resource-definition.com\",\"uid\":\"e8a259ac-f93d-11e8-a98d-080027df2f33\",\"resourceVersion\":\"3311\",\"generation\":1,\"creationTimestamp\":\"2018-12-06T10:01:32Z\"},\"spec\":{\"group\":\"k8s-openapi-tests-custom-resource-definition.com\",\"version\":\"v1\",\"names\":{\"plural\":\"foobars\",\"singular\":\"foobar\",\"shortNames\":[\"fb\"],\"kind\":\"FooBar\",\"listKind\":\"FooBarList\"},\"scope\":\"Namespaced\"},\"status\":{\"conditions\":null,\"acceptedNames\":{\"plural\":\"\",\"kind\":\"\"}}}\n"
+  },
+  {
+    "request_url": "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/foobars.k8s-openapi-tests-custom-resource-definition.com?",
+    "request_body": "",
+    "response_status_code": 200,
+    "response_body": "{\"kind\":\"CustomResourceDefinition\",\"apiVersion\":\"apiextensions.k8s.io/v1beta1\",\"metadata\":{\"name\":\"foobars.k8s-openapi-tests-custom-resource-definition.com\",\"selfLink\":\"/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/foobars.k8s-openapi-tests-custom-resource-definition.com\",\"uid\":\"e8a259ac-f93d-11e8-a98d-080027df2f33\",\"resourceVersion\":\"3313\",\"generation\":1,\"creationTimestamp\":\"2018-12-06T10:01:32Z\"},\"spec\":{\"group\":\"k8s-openapi-tests-custom-resource-definition.com\",\"version\":\"v1\",\"names\":{\"plural\":\"foobars\",\"singular\":\"foobar\",\"shortNames\":[\"fb\"],\"kind\":\"FooBar\",\"listKind\":\"FooBarList\"},\"scope\":\"Namespaced\"},\"status\":{\"conditions\":[{\"type\":\"NamesAccepted\",\"status\":\"True\",\"lastTransitionTime\":\"2018-12-06T10:01:32Z\",\"reason\":\"NoConflicts\",\"message\":\"no conflicts found\"},{\"type\":\"Established\",\"status\":\"True\",\"lastTransitionTime\":\"2018-12-06T10:01:32Z\",\"reason\":\"InitialNamesAccepted\",\"message\":\"the initial names have been accepted\"}],\"acceptedNames\":{\"plural\":\"foobars\",\"singular\":\"foobar\",\"shortNames\":[\"fb\"],\"kind\":\"FooBar\",\"listKind\":\"FooBarList\"}}}\n"
+  },
+  {
+    "request_url": "/apis/k8s-openapi-tests-custom-resource-definition.com/v1/namespaces/default/foobars",
+    "request_body": "{\"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\"kind\":\"FooBar\",\"metadata\":{\"name\":\"fb1\"},\"spec\":{\"prop1\":\"value1\",\"prop2\":[true,false,true]}}",
+    "response_status_code": 201,
+    "response_body": "{\"apiVersion\":\"k8s-openapi-tests-custom-resource-definition.com/v1\",\"kind\":\"FooBar\",\"metadata\":{\"clusterName\":\"\",\"creationTimestamp\":\"2018-12-06T10:01:32Z\",\"name\":\"fb1\",\"namespace\":\"default\",\"resourceVersion\":\"3316\",\"selfLink\":\"/apis/k8s-openapi-tests-custom-resource-definition.com/v1/namespaces/default/foobars/fb1\",\"uid\":\"e8a800e6-f93d-11e8-a98d-080027df2f33\"},\"spec\":{\"prop1\":\"value1\",\"prop2\":[true,false,true]}}\n"
+  },
+  {
+    "request_url": "/apis/k8s-openapi-tests-custom-resource-definition.com/v1/namespaces/default/foobars/fb1",
+    "request_body": "",
+    "response_status_code": 200,
+    "response_body": "{\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Success\",\"details\":{\"name\":\"fb1\",\"group\":\"k8s-openapi-tests-custom-resource-definition.com\",\"kind\":\"foobars\",\"uid\":\"e8a800e6-f93d-11e8-a98d-080027df2f33\"}}\n"
+  },
+  {
+    "request_url": "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/foobars.k8s-openapi-tests-custom-resource-definition.com",
+    "request_body": "",
+    "response_status_code": 200,
+    "response_body": "{\"kind\":\"CustomResourceDefinition\",\"apiVersion\":\"apiextensions.k8s.io/v1beta1\",\"metadata\":{\"name\":\"foobars.k8s-openapi-tests-custom-resource-definition.com\",\"selfLink\":\"/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/foobars.k8s-openapi-tests-custom-resource-definition.com\",\"uid\":\"e8a259ac-f93d-11e8-a98d-080027df2f33\",\"resourceVersion\":\"3323\",\"generation\":1,\"creationTimestamp\":\"2018-12-06T10:01:32Z\",\"deletionTimestamp\":\"2018-12-06T10:01:32Z\",\"finalizers\":[\"customresourcecleanup.apiextensions.k8s.io\"]},\"spec\":{\"group\":\"k8s-openapi-tests-custom-resource-definition.com\",\"version\":\"v1\",\"names\":{\"plural\":\"foobars\",\"singular\":\"foobar\",\"shortNames\":[\"fb\"],\"kind\":\"FooBar\",\"listKind\":\"FooBarList\"},\"scope\":\"Namespaced\"},\"status\":{\"conditions\":[{\"type\":\"NamesAccepted\",\"status\":\"True\",\"lastTransitionTime\":\"2018-12-06T10:01:32Z\",\"reason\":\"NoConflicts\",\"message\":\"no conflicts found\"},{\"type\":\"Established\",\"status\":\"True\",\"lastTransitionTime\":\"2018-12-06T10:01:32Z\",\"reason\":\"InitialNamesAccepted\",\"message\":\"the initial names have been accepted\"},{\"type\":\"Terminating\",\"status\":\"True\",\"lastTransitionTime\":\"2018-12-06T10:01:32Z\",\"reason\":\"InstanceDeletionPending\",\"message\":\"CustomResourceDefinition marked for deletion; CustomResource deletion will begin soon\"}],\"acceptedNames\":{\"plural\":\"foobars\",\"singular\":\"foobar\",\"shortNames\":[\"fb\"],\"kind\":\"FooBar\",\"listKind\":\"FooBarList\"}}}\n"
+  }
+]

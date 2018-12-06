@@ -324,10 +324,8 @@ impl ResponseBody {
         self.buf.extend_from_slice(buf);
     }
 
-    /// Append a slice of data from the HTTP response, and try to parse all the data buffered so far into a response type.
-    pub fn append_slice_and_parse<T>(&mut self, buf: &[u8]) -> Result<T, ResponseError> where T: Response {
-        self.append_slice(buf);
-
+    /// Try to parse all the data buffered so far into a response type.
+    pub fn parse<T>(&mut self) -> Result<T, ResponseError> where T: Response {
         match T::try_from_parts(self.status_code, &*self.buf) {
             Ok((result, read)) => {
                 self.buf.advance(read);
@@ -336,6 +334,13 @@ impl ResponseBody {
 
             Err(err) => Err(err),
         }
+    }
+
+    /// Append a slice of data from the HTTP response, and try to parse all the data buffered so far into a response type.
+    #[deprecated(since = "0.4.0", note = "Use append_slice() and parse()")]
+    pub fn append_slice_and_parse<T>(&mut self, buf: &[u8]) -> Result<T, ResponseError> where T: Response {
+        self.append_slice(buf);
+        self.parse()
     }
 }
 

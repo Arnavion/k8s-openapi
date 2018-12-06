@@ -19,15 +19,15 @@ fn list() {
 		use ::k8s_openapi::v1_12 as k8s;
 	}
 
-	let client = ::Client::new().expect("couldn't create client");
+	::Client::with("api_versions-list", |client| {
+		let request = k8s::get_api_versions().expect("couldn't get API versions");
+		let response = client.execute(request).expect("couldn't get API versions");
+		let api_versions =
+			::get_single_value(response, |response, status_code, _| match response {
+				k8s::GetAPIVersionsResponse::Ok(api_versions) => Ok(::ValueResult::GotValue(api_versions)),
+				other => Err(format!("{:?} {}", other, status_code).into()),
+			}).expect("couldn't get API versions");
 
-	let request = k8s::get_api_versions().expect("couldn't get API versions");
-	let response = client.execute(request).expect("couldn't get API versions");
-	let api_versions =
-		::get_single_value(response, |response, status_code, _| match response {
-			k8s::GetAPIVersionsResponse::Ok(api_versions) => Ok(::ValueResult::GotValue(api_versions)),
-			other => Err(format!("{:?} {}", other, status_code).into()),
-		}).expect("couldn't get API versions");
-
-	assert_eq!(::k8s_openapi::kind(&api_versions), "APIGroupList");
+		assert_eq!(::k8s_openapi::kind(&api_versions), "APIGroupList");
+	});
 }

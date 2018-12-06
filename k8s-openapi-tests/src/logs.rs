@@ -19,56 +19,64 @@ fn get() {
 		use ::k8s_openapi::v1_12::api::core::v1 as api;
 	}
 
-	let client = ::Client::new().expect("couldn't create client");
-
-	k8s_if_le_1_7! {
-		let request =
-			api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None);
-	}
-	k8s_if_ge_1_8! {
-		let request =
-			api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None, None, None);
-	}
-	let request = request.expect("couldn't list pods");
-	let response = client.execute(request).expect("couldn't list pods");;
-	let pod_list =
-		::get_single_value(response, |response, status_code, _| match response {
-			api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(::ValueResult::GotValue(pod_list)),
-			other => Err(format!("{:?} {}", other, status_code).into()),
-		}).expect("couldn't list pods");
-
-	let addon_manager_pod =
-		pod_list
-		.items.into_iter()
-		.find(|pod| pod.metadata.as_ref().and_then(|metadata| metadata.name.as_ref()).map_or(false, |name| name.starts_with("kube-addon-manager-")))
-		.expect("couldn't find addon-manager pod");
-
-	let addon_manager_pod_name =
-		addon_manager_pod
-		.metadata.as_ref().expect("couldn't get addon-manager pod metadata")
-		.name.as_ref().expect("couldn't get addon-manager pod name");
-
-	let request =
-		api::Pod::read_core_v1_namespaced_pod_log(
-			addon_manager_pod_name, "kube-system", Some("kube-addon-manager"), None, None, None, None, None, None, None)
-		.expect("couldn't get addon-manager pod logs");
-	let response = client.execute(request).expect("couldn't get addon-manager pod logs");
-	let mut addon_manager_logs = String::new();
-	let strings = ::get_multiple_values(response, |response, status_code, _| match response {
-		api::ReadCoreV1NamespacedPodLogResponse::Ok(s) => Ok(::ValueResult::GotValue(s)),
-		other => Err(format!("{:?} {}", other, status_code).into()),
-	}).expect("couldn't get addon-manager pod logs");
-	for s in strings {
-		let s = s.expect("couldn't get addon-manager pod logs");
-
-		addon_manager_logs.push_str(&s);
-
-		if addon_manager_logs.contains("INFO: == Kubernetes addon manager started at") {
-			break;
+	::Client::with("logs-get", |client| {
+		k8s_if_le_1_7! {
+			let request =
+				api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None);
 		}
+		k8s_if_ge_1_8! {
+			let request =
+				api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None, None, None);
+		}
+		let request = request.expect("couldn't list pods");
+		let pod_list = {
+			let response = client.execute(request).expect("couldn't list pods");;
+			::get_single_value(response, |response, status_code, _| match response {
+				api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(::ValueResult::GotValue(pod_list)),
+				other => Err(format!("{:?} {}", other, status_code).into()),
+			}).expect("couldn't list pods")
+		};
 
-		if addon_manager_logs.len() > 4096 {
+		let addon_manager_pod =
+			pod_list
+			.items.into_iter()
+			.find(|pod| pod.metadata.as_ref().and_then(|metadata| metadata.name.as_ref()).map_or(false, |name| name.starts_with("kube-addon-manager-")))
+			.expect("couldn't find addon-manager pod");
+
+		let addon_manager_pod_name =
+			addon_manager_pod
+			.metadata.as_ref().expect("couldn't get addon-manager pod metadata")
+			.name.as_ref().expect("couldn't get addon-manager pod name");
+
+		let request =
+			api::Pod::read_core_v1_namespaced_pod_log(
+				addon_manager_pod_name, "kube-system", Some("kube-addon-manager"), None, None, None, None, None, None, None)
+			.expect("couldn't get addon-manager pod logs");
+		let mut addon_manager_logs = String::new();
+		let strings = {
+			let response = client.execute(request).expect("couldn't get addon-manager pod logs");
+			::get_multiple_values(response, |response, status_code, _| match response {
+				api::ReadCoreV1NamespacedPodLogResponse::Ok(s) => Ok(::ValueResult::GotValue(s)),
+				other => Err(format!("{:?} {}", other, status_code).into()),
+			}).expect("couldn't get addon-manager pod logs")
+		};
+		let mut found_line = false;
+		for s in strings {
+			let s = s.expect("couldn't get addon-manager pod logs");
+
+			addon_manager_logs.push_str(&s);
+
+			if addon_manager_logs.contains("INFO: == Kubernetes addon manager started at") {
+				found_line = true;
+				break;
+			}
+
+			if addon_manager_logs.len() > 4096 {
+				panic!("did not find expected text in addon-manager pod logs: {}", addon_manager_logs);
+			}
+		}
+		if !found_line {
 			panic!("did not find expected text in addon-manager pod logs: {}", addon_manager_logs);
 		}
-	}
+	});
 }
