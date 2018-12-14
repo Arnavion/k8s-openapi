@@ -24,6 +24,10 @@ fn list() {
 		use ::k8s_openapi::v1_12::api::apps::v1 as apps;
 		use ::k8s_openapi::v1_12::apimachinery::pkg::util as util;
 	}
+	k8s_if_1_13! {
+		use ::k8s_openapi::v1_13::api::apps::v1 as apps;
+		use ::k8s_openapi::v1_13::apimachinery::pkg::util as util;
+	}
 
 	::Client::with("deployment-list", |client| {
 		k8s_if_1_7! {

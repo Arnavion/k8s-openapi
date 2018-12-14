@@ -18,6 +18,9 @@ fn list() {
 	k8s_if_1_12! {
 		use ::k8s_openapi::v1_12 as k8s;
 	}
+	k8s_if_1_13! {
+		use ::k8s_openapi::v1_13 as k8s;
+	}
 
 	::Client::with("api_versions-list", |client| {
 		let request = k8s::get_api_versions().expect("couldn't get API versions");

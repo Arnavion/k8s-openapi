@@ -30,6 +30,11 @@ fn create() {
 		use ::k8s_openapi::v1_12::api::batch::v1 as batch;
 		use ::k8s_openapi::v1_12::apimachinery::pkg::apis::meta::v1 as meta;
 	}
+	k8s_if_1_13! {
+		use ::k8s_openapi::v1_13::api::core::v1 as api;
+		use ::k8s_openapi::v1_13::api::batch::v1 as batch;
+		use ::k8s_openapi::v1_13::apimachinery::pkg::apis::meta::v1 as meta;
+	}
 
 	::Client::with("job-create", |client| {
 		let job_spec = batch::JobSpec {

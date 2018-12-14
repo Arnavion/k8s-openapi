@@ -20,6 +20,10 @@ fn create() {
 		use ::k8s_openapi::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
 		use ::k8s_openapi::v1_12::apimachinery::pkg::apis::meta::v1 as meta;
 	}
+	k8s_if_1_13! {
+		use ::k8s_openapi::v1_13::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+		use ::k8s_openapi::v1_13::apimachinery::pkg::apis::meta::v1 as meta;
+	}
 
 	#[derive(Debug, Default, Deserialize, Serialize)]
 	struct FooBar {

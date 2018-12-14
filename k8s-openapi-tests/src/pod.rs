@@ -18,6 +18,9 @@ fn list() {
 	k8s_if_1_12! {
 		use ::k8s_openapi::v1_12::api::core::v1 as api;
 	}
+	k8s_if_1_13! {
+		use ::k8s_openapi::v1_13::api::core::v1 as api;
+	}
 
 	::Client::with("pod-list", |client| {
 		k8s_if_le_1_7! {

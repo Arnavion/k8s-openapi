@@ -5,6 +5,7 @@ pub(crate) const ALL: &[SupportedVersion] = &[
 	SupportedVersion::V1_10,
 	SupportedVersion::V1_11,
 	SupportedVersion::V1_12,
+	SupportedVersion::V1_13,
 ];
 
 #[derive(Clone, Copy, Debug)]
@@ -15,6 +16,7 @@ pub(crate) enum SupportedVersion {
 	V1_10,
 	V1_11,
 	V1_12,
+	V1_13,
 }
 
 impl SupportedVersion {
@@ -26,6 +28,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_10 => "v1_10",
 			SupportedVersion::V1_11 => "v1_11",
 			SupportedVersion::V1_12 => "v1_12",
+			SupportedVersion::V1_13 => "v1_13",
 		}
 	}
 
@@ -37,6 +40,7 @@ impl SupportedVersion {
 			SupportedVersion::V1_10 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.10.11/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_11 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.5/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_12 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.12.3/api/openapi-spec/swagger.json",
+			SupportedVersion::V1_13 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.13.1/api/openapi-spec/swagger.json",
 		}
 	}
 
@@ -116,6 +120,17 @@ impl SupportedVersion {
 			],
 
 			SupportedVersion::V1_12 => &[
+				::fixups::connect_options_gvk,
+				::fixups::json_ty::json,
+				::fixups::json_ty::json_schema_props_or_array,
+				::fixups::json_ty::json_schema_props_or_bool,
+				::fixups::json_ty::json_schema_props_or_string_array,
+				::fixups::optional_properties::crdstatus,
+				::fixups::raw_extension_ty,
+				::fixups::remove_compat_refs,
+			],
+
+			SupportedVersion::V1_13 => &[
 				::fixups::connect_options_gvk,
 				::fixups::json_ty::json,
 				::fixups::json_ty::json_schema_props_or_array,

@@ -36,5 +36,6 @@ To generate these test files:
 		<tr><td>1.10.11</td><td>0.28.2</td></tr>
 		<tr><td>1.11.5</td><td>0.28.2</td></tr>
 		<tr><td>1.12.3</td><td>0.30.0</td></tr>
+		<tr><td>1.13.1</td><td>0.31.0</td></tr>
 	</tbody>
 </table>
