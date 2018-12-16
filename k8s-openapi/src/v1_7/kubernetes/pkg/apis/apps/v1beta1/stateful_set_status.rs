@@ -25,8 +25,8 @@ pub struct StatefulSetStatus {
     pub updated_replicas: Option<i32>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for StatefulSetStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for StatefulSetStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_current_replicas,
@@ -39,18 +39,18 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSetStatus {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "currentReplicas" => Field::Key_current_replicas,
                             "currentRevision" => Field::Key_current_revision,
@@ -70,14 +70,14 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSetStatus {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = StatefulSetStatus;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct StatefulSetStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_current_replicas: Option<i32> = None;
                 let mut value_current_revision: Option<String> = None;
                 let mut value_observed_generation: Option<i64> = None;
@@ -86,16 +86,16 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSetStatus {
                 let mut value_update_revision: Option<String> = None;
                 let mut value_updated_replicas: Option<i32> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_current_replicas => value_current_replicas = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_current_revision => value_current_revision = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_observed_generation => value_observed_generation = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ready_replicas => value_ready_replicas = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_replicas => value_replicas = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_update_revision => value_update_revision = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_updated_replicas => value_updated_replicas = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_current_replicas => value_current_replicas = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_current_revision => value_current_revision = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_observed_generation => value_observed_generation = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ready_replicas => value_ready_replicas = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_replicas => value_replicas = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_update_revision => value_update_revision = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_updated_replicas => value_updated_replicas = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -104,7 +104,7 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSetStatus {
                     current_revision: value_current_revision,
                     observed_generation: value_observed_generation,
                     ready_replicas: value_ready_replicas,
-                    replicas: value_replicas.ok_or_else(|| ::serde::de::Error::missing_field("replicas"))?,
+                    replicas: value_replicas.ok_or_else(|| serde::de::Error::missing_field("replicas"))?,
                     update_revision: value_update_revision,
                     updated_replicas: value_updated_replicas,
                 })
@@ -127,8 +127,8 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSetStatus {
     }
 }
 
-impl ::serde::Serialize for StatefulSetStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for StatefulSetStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatefulSetStatus",
             0 +
@@ -141,24 +141,24 @@ impl ::serde::Serialize for StatefulSetStatus {
             self.updated_replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.current_replicas {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "currentReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "currentReplicas", value)?;
         }
         if let Some(value) = &self.current_revision {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "currentRevision", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "currentRevision", value)?;
         }
         if let Some(value) = &self.observed_generation {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
         }
         if let Some(value) = &self.ready_replicas {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readyReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readyReplicas", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &self.replicas)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &self.replicas)?;
         if let Some(value) = &self.update_revision {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "updateRevision", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "updateRevision", value)?;
         }
         if let Some(value) = &self.updated_replicas {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "updatedReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "updatedReplicas", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

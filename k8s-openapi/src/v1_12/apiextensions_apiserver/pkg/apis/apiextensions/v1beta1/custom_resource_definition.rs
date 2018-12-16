@@ -3,13 +3,13 @@
 /// CustomResourceDefinition represents a resource that should be exposed on the API server.  Its name MUST be in the format <.spec.name>.<.spec.group>.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CustomResourceDefinition {
-    pub metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec describes how the user wants the resources to appear
-    pub spec: ::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionSpec,
+    pub spec: crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionSpec,
 
     /// Status indicates the actual state of the CustomResourceDefinition
-    pub status: Option<::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus>,
+    pub status: Option<crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus>,
 }
 
 // Begin apiextensions.k8s.io/v1beta1/CustomResourceDefinition
@@ -37,13 +37,13 @@ impl CustomResourceDefinition {
     ///
     ///     If 'true', then the output is pretty printed.
     pub fn create_apiextensions_v1beta1_custom_resource_definition(
-        body: &::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
+        body: &crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -55,50 +55,50 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.create_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum CreateApiextensionsV1beta1CustomResourceDefinitionResponse {
-    Ok(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Created(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Accepted(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Created(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Accepted(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateApiextensionsV1beta1CustomResourceDefinitionResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateApiextensionsV1beta1CustomResourceDefinitionResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
             _ => Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
         }
     }
@@ -162,9 +162,9 @@ impl CustomResourceDefinition {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -194,46 +194,46 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::delete_apiextensions_v1beta1_collection_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_apiextensions_v1beta1_collection_custom_resource_definition)
 #[derive(Debug)]
 pub enum DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::Unauthorized, 0)),
             _ => Ok((DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::Other, 0)),
         }
     }
@@ -280,9 +280,9 @@ impl CustomResourceDefinition {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -300,55 +300,55 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::delete_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum DeleteApiextensionsV1beta1CustomResourceDefinitionResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Accepted(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteApiextensionsV1beta1CustomResourceDefinitionResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteApiextensionsV1beta1CustomResourceDefinitionResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
             _ => Ok((DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
         }
     }
@@ -412,9 +412,9 @@ impl CustomResourceDefinition {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -444,32 +444,32 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::list_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.list_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum ListApiextensionsV1beta1CustomResourceDefinitionResponse {
-    Ok(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
+    Ok(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListApiextensionsV1beta1CustomResourceDefinitionResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListApiextensionsV1beta1CustomResourceDefinitionResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
             _ => Ok((ListApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
         }
     }
@@ -499,12 +499,12 @@ impl CustomResourceDefinition {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_apiextensions_v1beta1_custom_resource_definition(
         name: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -513,32 +513,32 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::patch_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.patch_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum PatchApiextensionsV1beta1CustomResourceDefinitionResponse {
-    Ok(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchApiextensionsV1beta1CustomResourceDefinitionResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchApiextensionsV1beta1CustomResourceDefinitionResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
             _ => Ok((PatchApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
         }
     }
@@ -568,12 +568,12 @@ impl CustomResourceDefinition {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_apiextensions_v1beta1_custom_resource_definition_status(
         name: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}/status?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -582,32 +582,32 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::patch_apiextensions_v1beta1_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.patch_apiextensions_v1beta1_custom_resource_definition_status)
 #[derive(Debug)]
 pub enum PatchApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
-    Ok(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Other, 0)),
         }
     }
@@ -642,9 +642,9 @@ impl CustomResourceDefinition {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -656,32 +656,32 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::read_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.read_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum ReadApiextensionsV1beta1CustomResourceDefinitionResponse {
-    Ok(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadApiextensionsV1beta1CustomResourceDefinitionResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadApiextensionsV1beta1CustomResourceDefinitionResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
             _ => Ok((ReadApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
         }
     }
@@ -706,40 +706,40 @@ impl CustomResourceDefinition {
     pub fn read_apiextensions_v1beta1_custom_resource_definition_status(
         name: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}/status?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::read_apiextensions_v1beta1_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.read_apiextensions_v1beta1_custom_resource_definition_status)
 #[derive(Debug)]
 pub enum ReadApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
-    Ok(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Other, 0)),
         }
     }
@@ -769,12 +769,12 @@ impl CustomResourceDefinition {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_apiextensions_v1beta1_custom_resource_definition(
         name: &str,
-        body: &::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
+        body: &crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -783,41 +783,41 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::replace_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.replace_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse {
-    Ok(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Created(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Created(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
             _ => Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
         }
     }
@@ -847,12 +847,12 @@ impl CustomResourceDefinition {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_apiextensions_v1beta1_custom_resource_definition_status(
         name: &str,
-        body: &::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
+        body: &crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}/status?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -861,41 +861,41 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::replace_apiextensions_v1beta1_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.replace_apiextensions_v1beta1_custom_resource_definition_status)
 #[derive(Debug)]
 pub enum ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
-    Ok(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
-    Created(::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Ok(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
+    Created(crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Other, 0)),
         }
     }
@@ -964,9 +964,9 @@ impl CustomResourceDefinition {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/watch/customresourcedefinitions/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -996,34 +996,34 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::watch_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.watch_apiextensions_v1beta1_custom_resource_definition)
 #[derive(Debug)]
 pub enum WatchApiextensionsV1beta1CustomResourceDefinitionResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchApiextensionsV1beta1CustomResourceDefinitionResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchApiextensionsV1beta1CustomResourceDefinitionResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
             _ => Ok((WatchApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
         }
     }
@@ -1087,9 +1087,9 @@ impl CustomResourceDefinition {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/watch/customresourcedefinitions?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1119,34 +1119,34 @@ impl CustomResourceDefinition {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CustomResourceDefinition::watch_apiextensions_v1beta1_custom_resource_definition_list`](./struct.CustomResourceDefinition.html#method.watch_apiextensions_v1beta1_custom_resource_definition_list)
 #[derive(Debug)]
 pub enum WatchApiextensionsV1beta1CustomResourceDefinitionListResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchApiextensionsV1beta1CustomResourceDefinitionListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchApiextensionsV1beta1CustomResourceDefinitionListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchApiextensionsV1beta1CustomResourceDefinitionListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchApiextensionsV1beta1CustomResourceDefinitionListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchApiextensionsV1beta1CustomResourceDefinitionListResponse::Unauthorized, 0)),
             _ => Ok((WatchApiextensionsV1beta1CustomResourceDefinitionListResponse::Other, 0)),
         }
     }
@@ -1154,7 +1154,7 @@ impl ::Response for WatchApiextensionsV1beta1CustomResourceDefinitionListRespons
 
 // End apiextensions.k8s.io/v1beta1/CustomResourceDefinition
 
-impl ::Resource for CustomResourceDefinition {
+impl crate::Resource for CustomResourceDefinition {
     fn api_version() -> &'static str {
         "apiextensions.k8s.io/v1beta1"
     }
@@ -1172,8 +1172,8 @@ impl ::Resource for CustomResourceDefinition {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinition {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for CustomResourceDefinition {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1184,18 +1184,18 @@ impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinition {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1213,42 +1213,42 @@ impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinition {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = CustomResourceDefinition;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct CustomResourceDefinition")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionSpec> = None;
-                let mut value_status: Option<::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionSpec> = None;
+                let mut value_status: Option<crate::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CustomResourceDefinition {
                     metadata: value_metadata,
-                    spec: value_spec.ok_or_else(|| ::serde::de::Error::missing_field("spec"))?,
+                    spec: value_spec.ok_or_else(|| serde::de::Error::missing_field("spec"))?,
                     status: value_status,
                 })
             }
@@ -1268,8 +1268,8 @@ impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinition {
     }
 }
 
-impl ::serde::Serialize for CustomResourceDefinition {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for CustomResourceDefinition {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinition",
             0 +
@@ -1278,15 +1278,15 @@ impl ::serde::Serialize for CustomResourceDefinition {
             1 +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", &self.spec)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "spec", &self.spec)?;
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

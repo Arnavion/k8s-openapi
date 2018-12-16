@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodCondition {
     /// Last time we probed the condition.
-    pub last_probe_time: Option<::v1_8::apimachinery::pkg::apis::meta::v1::Time>,
+    pub last_probe_time: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Last time the condition transitioned from one status to another.
-    pub last_transition_time: Option<::v1_8::apimachinery::pkg::apis::meta::v1::Time>,
+    pub last_transition_time: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Human-readable message indicating details about last transition.
     pub message: Option<String>,
@@ -22,8 +22,8 @@ pub struct PodCondition {
     pub type_: String,
 }
 
-impl<'de> ::serde::Deserialize<'de> for PodCondition {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PodCondition {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_last_probe_time,
@@ -35,18 +35,18 @@ impl<'de> ::serde::Deserialize<'de> for PodCondition {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "lastProbeTime" => Field::Key_last_probe_time,
                             "lastTransitionTime" => Field::Key_last_transition_time,
@@ -65,30 +65,30 @@ impl<'de> ::serde::Deserialize<'de> for PodCondition {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PodCondition;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PodCondition")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_last_probe_time: Option<::v1_8::apimachinery::pkg::apis::meta::v1::Time> = None;
-                let mut value_last_transition_time: Option<::v1_8::apimachinery::pkg::apis::meta::v1::Time> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_last_probe_time: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_last_transition_time: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_message: Option<String> = None;
                 let mut value_reason: Option<String> = None;
                 let mut value_status: Option<String> = None;
                 let mut value_type_: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_last_probe_time => value_last_probe_time = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_last_transition_time => value_last_transition_time = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_message => value_message = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_reason => value_reason = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_type_ => value_type_ = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_last_probe_time => value_last_probe_time = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_last_transition_time => value_last_transition_time = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_message => value_message = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_reason => value_reason = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_type_ => value_type_ = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -97,8 +97,8 @@ impl<'de> ::serde::Deserialize<'de> for PodCondition {
                     last_transition_time: value_last_transition_time,
                     message: value_message,
                     reason: value_reason,
-                    status: value_status.ok_or_else(|| ::serde::de::Error::missing_field("status"))?,
-                    type_: value_type_.ok_or_else(|| ::serde::de::Error::missing_field("type"))?,
+                    status: value_status.ok_or_else(|| serde::de::Error::missing_field("status"))?,
+                    type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
                 })
             }
         }
@@ -118,8 +118,8 @@ impl<'de> ::serde::Deserialize<'de> for PodCondition {
     }
 }
 
-impl ::serde::Serialize for PodCondition {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PodCondition {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodCondition",
             0 +
@@ -131,19 +131,19 @@ impl ::serde::Serialize for PodCondition {
             1,
         )?;
         if let Some(value) = &self.last_probe_time {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "lastProbeTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lastProbeTime", value)?;
         }
         if let Some(value) = &self.last_transition_time {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "lastTransitionTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lastTransitionTime", value)?;
         }
         if let Some(value) = &self.message {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
         }
         if let Some(value) = &self.reason {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", &self.status)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "status", &self.status)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

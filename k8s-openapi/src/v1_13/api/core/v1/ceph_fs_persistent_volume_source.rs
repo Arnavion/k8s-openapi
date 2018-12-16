@@ -16,14 +16,14 @@ pub struct CephFSPersistentVolumeSource {
     pub secret_file: Option<String>,
 
     /// Optional: SecretRef is reference to the authentication secret for User, default is empty. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it
-    pub secret_ref: Option<::v1_13::api::core::v1::SecretReference>,
+    pub secret_ref: Option<crate::v1_13::api::core::v1::SecretReference>,
 
     /// Optional: User is the rados user name, default is admin More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it
     pub user: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for CephFSPersistentVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for CephFSPersistentVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_monitors,
@@ -35,18 +35,18 @@ impl<'de> ::serde::Deserialize<'de> for CephFSPersistentVolumeSource {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "monitors" => Field::Key_monitors,
                             "path" => Field::Key_path,
@@ -65,35 +65,35 @@ impl<'de> ::serde::Deserialize<'de> for CephFSPersistentVolumeSource {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = CephFSPersistentVolumeSource;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct CephFSPersistentVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_monitors: Option<Vec<String>> = None;
                 let mut value_path: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
                 let mut value_secret_file: Option<String> = None;
-                let mut value_secret_ref: Option<::v1_13::api::core::v1::SecretReference> = None;
+                let mut value_secret_ref: Option<crate::v1_13::api::core::v1::SecretReference> = None;
                 let mut value_user: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_monitors => value_monitors = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_path => value_path = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only => value_read_only = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret_file => value_secret_file = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret_ref => value_secret_ref = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_user => value_user = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_monitors => value_monitors = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_path => value_path = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_file => value_secret_file = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_ref => value_secret_ref = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_user => value_user = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CephFSPersistentVolumeSource {
-                    monitors: value_monitors.ok_or_else(|| ::serde::de::Error::missing_field("monitors"))?,
+                    monitors: value_monitors.ok_or_else(|| serde::de::Error::missing_field("monitors"))?,
                     path: value_path,
                     read_only: value_read_only,
                     secret_file: value_secret_file,
@@ -118,8 +118,8 @@ impl<'de> ::serde::Deserialize<'de> for CephFSPersistentVolumeSource {
     }
 }
 
-impl ::serde::Serialize for CephFSPersistentVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for CephFSPersistentVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CephFSPersistentVolumeSource",
             0 +
@@ -130,22 +130,22 @@ impl ::serde::Serialize for CephFSPersistentVolumeSource {
             self.secret_ref.as_ref().map_or(0, |_| 1) +
             self.user.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "monitors", &self.monitors)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "monitors", &self.monitors)?;
         if let Some(value) = &self.path {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "path", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "path", value)?;
         }
         if let Some(value) = &self.read_only {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
         if let Some(value) = &self.secret_file {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "secretFile", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretFile", value)?;
         }
         if let Some(value) = &self.secret_ref {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
         }
         if let Some(value) = &self.user {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

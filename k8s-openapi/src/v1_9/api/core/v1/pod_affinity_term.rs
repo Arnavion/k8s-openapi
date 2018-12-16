@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodAffinityTerm {
     /// A label query over a set of resources, in this case pods.
-    pub label_selector: Option<::v1_9::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub label_selector: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means "this pod's namespace"
     pub namespaces: Option<Vec<String>>,
@@ -13,8 +13,8 @@ pub struct PodAffinityTerm {
     pub topology_key: String,
 }
 
-impl<'de> ::serde::Deserialize<'de> for PodAffinityTerm {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PodAffinityTerm {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_label_selector,
@@ -23,18 +23,18 @@ impl<'de> ::serde::Deserialize<'de> for PodAffinityTerm {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "labelSelector" => Field::Key_label_selector,
                             "namespaces" => Field::Key_namespaces,
@@ -50,31 +50,31 @@ impl<'de> ::serde::Deserialize<'de> for PodAffinityTerm {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PodAffinityTerm;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PodAffinityTerm")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_label_selector: Option<::v1_9::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_label_selector: Option<crate::v1_9::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_namespaces: Option<Vec<String>> = None;
                 let mut value_topology_key: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_label_selector => value_label_selector = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_namespaces => value_namespaces = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_topology_key => value_topology_key = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_label_selector => value_label_selector = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_namespaces => value_namespaces = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_topology_key => value_topology_key = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(PodAffinityTerm {
                     label_selector: value_label_selector,
                     namespaces: value_namespaces,
-                    topology_key: value_topology_key.ok_or_else(|| ::serde::de::Error::missing_field("topologyKey"))?,
+                    topology_key: value_topology_key.ok_or_else(|| serde::de::Error::missing_field("topologyKey"))?,
                 })
             }
         }
@@ -91,8 +91,8 @@ impl<'de> ::serde::Deserialize<'de> for PodAffinityTerm {
     }
 }
 
-impl ::serde::Serialize for PodAffinityTerm {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PodAffinityTerm {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodAffinityTerm",
             0 +
@@ -101,12 +101,12 @@ impl ::serde::Serialize for PodAffinityTerm {
             1,
         )?;
         if let Some(value) = &self.label_selector {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelector", value)?;
         }
         if let Some(value) = &self.namespaces {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "namespaces", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKey", &self.topology_key)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "topologyKey", &self.topology_key)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

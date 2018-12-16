@@ -22,8 +22,8 @@ pub struct OwnerReference {
     pub uid: String,
 }
 
-impl<'de> ::serde::Deserialize<'de> for OwnerReference {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for OwnerReference {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -35,18 +35,18 @@ impl<'de> ::serde::Deserialize<'de> for OwnerReference {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "blockOwnerDeletion" => Field::Key_block_owner_deletion,
@@ -65,14 +65,14 @@ impl<'de> ::serde::Deserialize<'de> for OwnerReference {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = OwnerReference;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct OwnerReference")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_api_version: Option<String> = None;
                 let mut value_block_owner_deletion: Option<bool> = None;
                 let mut value_controller: Option<bool> = None;
@@ -80,25 +80,25 @@ impl<'de> ::serde::Deserialize<'de> for OwnerReference {
                 let mut value_name: Option<String> = None;
                 let mut value_uid: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_block_owner_deletion => value_block_owner_deletion = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_controller => value_controller = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_name => value_name = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_uid => value_uid = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_api_version => value_api_version = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_block_owner_deletion => value_block_owner_deletion = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_controller => value_controller = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kind => value_kind = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_name => value_name = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_uid => value_uid = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(OwnerReference {
-                    api_version: value_api_version.ok_or_else(|| ::serde::de::Error::missing_field("apiVersion"))?,
+                    api_version: value_api_version.ok_or_else(|| serde::de::Error::missing_field("apiVersion"))?,
                     block_owner_deletion: value_block_owner_deletion,
                     controller: value_controller,
-                    kind: value_kind.ok_or_else(|| ::serde::de::Error::missing_field("kind"))?,
-                    name: value_name.ok_or_else(|| ::serde::de::Error::missing_field("name"))?,
-                    uid: value_uid.ok_or_else(|| ::serde::de::Error::missing_field("uid"))?,
+                    kind: value_kind.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
+                    name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
+                    uid: value_uid.ok_or_else(|| serde::de::Error::missing_field("uid"))?,
                 })
             }
         }
@@ -118,8 +118,8 @@ impl<'de> ::serde::Deserialize<'de> for OwnerReference {
     }
 }
 
-impl ::serde::Serialize for OwnerReference {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for OwnerReference {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "OwnerReference",
             0 +
@@ -130,16 +130,16 @@ impl ::serde::Serialize for OwnerReference {
             1 +
             1,
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", &self.api_version)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", &self.api_version)?;
         if let Some(value) = &self.block_owner_deletion {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "blockOwnerDeletion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "blockOwnerDeletion", value)?;
         }
         if let Some(value) = &self.controller {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "controller", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "controller", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", &self.uid)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "uid", &self.uid)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

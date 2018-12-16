@@ -12,8 +12,8 @@ pub struct AllowedHostPath {
     pub read_only: Option<bool>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for AllowedHostPath {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for AllowedHostPath {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_path_prefix,
@@ -21,18 +21,18 @@ impl<'de> ::serde::Deserialize<'de> for AllowedHostPath {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "pathPrefix" => Field::Key_path_prefix,
                             "readOnly" => Field::Key_read_only,
@@ -47,22 +47,22 @@ impl<'de> ::serde::Deserialize<'de> for AllowedHostPath {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = AllowedHostPath;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct AllowedHostPath")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_path_prefix: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_path_prefix => value_path_prefix = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only => value_read_only = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_path_prefix => value_path_prefix = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -84,8 +84,8 @@ impl<'de> ::serde::Deserialize<'de> for AllowedHostPath {
     }
 }
 
-impl ::serde::Serialize for AllowedHostPath {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for AllowedHostPath {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "AllowedHostPath",
             0 +
@@ -93,11 +93,11 @@ impl ::serde::Serialize for AllowedHostPath {
             self.read_only.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.path_prefix {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "pathPrefix", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "pathPrefix", value)?;
         }
         if let Some(value) = &self.read_only {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

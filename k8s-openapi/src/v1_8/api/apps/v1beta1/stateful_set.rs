@@ -6,13 +6,13 @@
 /// The StatefulSet guarantees that a given network identity will always map to the same storage identity.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct StatefulSet {
-    pub metadata: Option<::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the desired identities of pods in this set.
-    pub spec: Option<::v1_8::api::apps::v1beta1::StatefulSetSpec>,
+    pub spec: Option<crate::v1_8::api::apps::v1beta1::StatefulSetSpec>,
 
     /// Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time.
-    pub status: Option<::v1_8::api::apps::v1beta1::StatefulSetStatus>,
+    pub status: Option<crate::v1_8::api::apps::v1beta1::StatefulSetStatus>,
 }
 
 // Begin apps/v1beta1/StatefulSet
@@ -37,42 +37,42 @@ impl StatefulSet {
     ///     If 'true', then the output is pretty printed.
     pub fn create_apps_v1beta1_namespaced_stateful_set(
         namespace: &str,
-        body: &::v1_8::api::apps::v1beta1::StatefulSet,
+        body: &crate::v1_8::api::apps::v1beta1::StatefulSet,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/statefulsets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::create_apps_v1beta1_namespaced_stateful_set`](./struct.StatefulSet.html#method.create_apps_v1beta1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum CreateAppsV1beta1NamespacedStatefulSetResponse {
-    Ok(::v1_8::api::apps::v1beta1::StatefulSet),
+    Ok(crate::v1_8::api::apps::v1beta1::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateAppsV1beta1NamespacedStatefulSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateAppsV1beta1NamespacedStatefulSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateAppsV1beta1NamespacedStatefulSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
             _ => Ok((CreateAppsV1beta1NamespacedStatefulSetResponse::Other, 0)),
         }
     }
@@ -139,9 +139,9 @@ impl StatefulSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/statefulsets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -171,46 +171,46 @@ impl StatefulSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::delete_apps_v1beta1_collection_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_apps_v1beta1_collection_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum DeleteAppsV1beta1CollectionNamespacedStatefulSetResponse {
-    OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_8::api::apps::v1beta1::StatefulSet),
+    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_8::api::apps::v1beta1::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteAppsV1beta1CollectionNamespacedStatefulSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteAppsV1beta1CollectionNamespacedStatefulSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAppsV1beta1CollectionNamespacedStatefulSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAppsV1beta1CollectionNamespacedStatefulSetResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta1CollectionNamespacedStatefulSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta1CollectionNamespacedStatefulSetResponse::Unauthorized, 0)),
             _ => Ok((DeleteAppsV1beta1CollectionNamespacedStatefulSetResponse::Other, 0)),
         }
     }
@@ -257,9 +257,9 @@ impl StatefulSet {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -274,46 +274,46 @@ impl StatefulSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::delete_apps_v1beta1_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_apps_v1beta1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum DeleteAppsV1beta1NamespacedStatefulSetResponse {
-    OkStatus(::v1_8::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_8::api::apps::v1beta1::StatefulSet),
+    OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_8::api::apps::v1beta1::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteAppsV1beta1NamespacedStatefulSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteAppsV1beta1NamespacedStatefulSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAppsV1beta1NamespacedStatefulSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAppsV1beta1NamespacedStatefulSetResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
             _ => Ok((DeleteAppsV1beta1NamespacedStatefulSetResponse::Other, 0)),
         }
     }
@@ -380,9 +380,9 @@ impl StatefulSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/statefulsets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -412,32 +412,32 @@ impl StatefulSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::list_apps_v1beta1_namespaced_stateful_set`](./struct.StatefulSet.html#method.list_apps_v1beta1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum ListAppsV1beta1NamespacedStatefulSetResponse {
-    Ok(::v1_8::api::apps::v1beta1::StatefulSetList),
+    Ok(crate::v1_8::api::apps::v1beta1::StatefulSetList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListAppsV1beta1NamespacedStatefulSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListAppsV1beta1NamespacedStatefulSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListAppsV1beta1NamespacedStatefulSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
             _ => Ok((ListAppsV1beta1NamespacedStatefulSetResponse::Other, 0)),
         }
     }
@@ -499,9 +499,9 @@ impl StatefulSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/statefulsets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -531,32 +531,32 @@ impl StatefulSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::list_apps_v1beta1_stateful_set_for_all_namespaces`](./struct.StatefulSet.html#method.list_apps_v1beta1_stateful_set_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListAppsV1beta1StatefulSetForAllNamespacesResponse {
-    Ok(::v1_8::api::apps::v1beta1::StatefulSetList),
+    Ok(crate::v1_8::api::apps::v1beta1::StatefulSetList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListAppsV1beta1StatefulSetForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListAppsV1beta1StatefulSetForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListAppsV1beta1StatefulSetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta1StatefulSetForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta1StatefulSetForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListAppsV1beta1StatefulSetForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -587,42 +587,42 @@ impl StatefulSet {
     pub fn patch_apps_v1beta1_namespaced_stateful_set(
         name: &str,
         namespace: &str,
-        body: &::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::patch_apps_v1beta1_namespaced_stateful_set`](./struct.StatefulSet.html#method.patch_apps_v1beta1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum PatchAppsV1beta1NamespacedStatefulSetResponse {
-    Ok(::v1_8::api::apps::v1beta1::StatefulSet),
+    Ok(crate::v1_8::api::apps::v1beta1::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchAppsV1beta1NamespacedStatefulSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchAppsV1beta1NamespacedStatefulSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchAppsV1beta1NamespacedStatefulSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
             _ => Ok((PatchAppsV1beta1NamespacedStatefulSetResponse::Other, 0)),
         }
     }
@@ -653,42 +653,42 @@ impl StatefulSet {
     pub fn patch_apps_v1beta1_namespaced_stateful_set_status(
         name: &str,
         namespace: &str,
-        body: &::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::patch_apps_v1beta1_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.patch_apps_v1beta1_namespaced_stateful_set_status)
 #[derive(Debug)]
 pub enum PatchAppsV1beta1NamespacedStatefulSetStatusResponse {
-    Ok(::v1_8::api::apps::v1beta1::StatefulSet),
+    Ok(crate::v1_8::api::apps::v1beta1::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchAppsV1beta1NamespacedStatefulSetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchAppsV1beta1NamespacedStatefulSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchAppsV1beta1NamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta1NamespacedStatefulSetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta1NamespacedStatefulSetStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchAppsV1beta1NamespacedStatefulSetStatusResponse::Other, 0)),
         }
     }
@@ -728,9 +728,9 @@ impl StatefulSet {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -742,32 +742,32 @@ impl StatefulSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::read_apps_v1beta1_namespaced_stateful_set`](./struct.StatefulSet.html#method.read_apps_v1beta1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum ReadAppsV1beta1NamespacedStatefulSetResponse {
-    Ok(::v1_8::api::apps::v1beta1::StatefulSet),
+    Ok(crate::v1_8::api::apps::v1beta1::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadAppsV1beta1NamespacedStatefulSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadAppsV1beta1NamespacedStatefulSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadAppsV1beta1NamespacedStatefulSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
             _ => Ok((ReadAppsV1beta1NamespacedStatefulSetResponse::Other, 0)),
         }
     }
@@ -797,40 +797,40 @@ impl StatefulSet {
         name: &str,
         namespace: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::read_apps_v1beta1_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.read_apps_v1beta1_namespaced_stateful_set_status)
 #[derive(Debug)]
 pub enum ReadAppsV1beta1NamespacedStatefulSetStatusResponse {
-    Ok(::v1_8::api::apps::v1beta1::StatefulSet),
+    Ok(crate::v1_8::api::apps::v1beta1::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadAppsV1beta1NamespacedStatefulSetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadAppsV1beta1NamespacedStatefulSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadAppsV1beta1NamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta1NamespacedStatefulSetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta1NamespacedStatefulSetStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadAppsV1beta1NamespacedStatefulSetStatusResponse::Other, 0)),
         }
     }
@@ -861,42 +861,42 @@ impl StatefulSet {
     pub fn replace_apps_v1beta1_namespaced_stateful_set(
         name: &str,
         namespace: &str,
-        body: &::v1_8::api::apps::v1beta1::StatefulSet,
+        body: &crate::v1_8::api::apps::v1beta1::StatefulSet,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::replace_apps_v1beta1_namespaced_stateful_set`](./struct.StatefulSet.html#method.replace_apps_v1beta1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta1NamespacedStatefulSetResponse {
-    Ok(::v1_8::api::apps::v1beta1::StatefulSet),
+    Ok(crate::v1_8::api::apps::v1beta1::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceAppsV1beta1NamespacedStatefulSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceAppsV1beta1NamespacedStatefulSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceAppsV1beta1NamespacedStatefulSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
             _ => Ok((ReplaceAppsV1beta1NamespacedStatefulSetResponse::Other, 0)),
         }
     }
@@ -927,42 +927,42 @@ impl StatefulSet {
     pub fn replace_apps_v1beta1_namespaced_stateful_set_status(
         name: &str,
         namespace: &str,
-        body: &::v1_8::api::apps::v1beta1::StatefulSet,
+        body: &crate::v1_8::api::apps::v1beta1::StatefulSet,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::replace_apps_v1beta1_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.replace_apps_v1beta1_namespaced_stateful_set_status)
 #[derive(Debug)]
 pub enum ReplaceAppsV1beta1NamespacedStatefulSetStatusResponse {
-    Ok(::v1_8::api::apps::v1beta1::StatefulSet),
+    Ok(crate::v1_8::api::apps::v1beta1::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceAppsV1beta1NamespacedStatefulSetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceAppsV1beta1NamespacedStatefulSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceAppsV1beta1NamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta1NamespacedStatefulSetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta1NamespacedStatefulSetStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplaceAppsV1beta1NamespacedStatefulSetStatusResponse::Other, 0)),
         }
     }
@@ -1034,9 +1034,9 @@ impl StatefulSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/watch/namespaces/{namespace}/statefulsets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1066,34 +1066,34 @@ impl StatefulSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::watch_apps_v1beta1_namespaced_stateful_set`](./struct.StatefulSet.html#method.watch_apps_v1beta1_namespaced_stateful_set)
 #[derive(Debug)]
 pub enum WatchAppsV1beta1NamespacedStatefulSetResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchAppsV1beta1NamespacedStatefulSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchAppsV1beta1NamespacedStatefulSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchAppsV1beta1NamespacedStatefulSetResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta1NamespacedStatefulSetResponse::Unauthorized, 0)),
             _ => Ok((WatchAppsV1beta1NamespacedStatefulSetResponse::Other, 0)),
         }
     }
@@ -1160,9 +1160,9 @@ impl StatefulSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/watch/namespaces/{namespace}/statefulsets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1192,34 +1192,34 @@ impl StatefulSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::watch_apps_v1beta1_namespaced_stateful_set_list`](./struct.StatefulSet.html#method.watch_apps_v1beta1_namespaced_stateful_set_list)
 #[derive(Debug)]
 pub enum WatchAppsV1beta1NamespacedStatefulSetListResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchAppsV1beta1NamespacedStatefulSetListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchAppsV1beta1NamespacedStatefulSetListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchAppsV1beta1NamespacedStatefulSetListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta1NamespacedStatefulSetListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta1NamespacedStatefulSetListResponse::Unauthorized, 0)),
             _ => Ok((WatchAppsV1beta1NamespacedStatefulSetListResponse::Other, 0)),
         }
     }
@@ -1281,9 +1281,9 @@ impl StatefulSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1beta1/watch/statefulsets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1313,34 +1313,34 @@ impl StatefulSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StatefulSet::watch_apps_v1beta1_stateful_set_list_for_all_namespaces`](./struct.StatefulSet.html#method.watch_apps_v1beta1_stateful_set_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchAppsV1beta1StatefulSetListForAllNamespacesResponse {
-    Ok(::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchAppsV1beta1StatefulSetListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchAppsV1beta1StatefulSetListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchAppsV1beta1StatefulSetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta1StatefulSetListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta1StatefulSetListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchAppsV1beta1StatefulSetListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1348,7 +1348,7 @@ impl ::Response for WatchAppsV1beta1StatefulSetListForAllNamespacesResponse {
 
 // End apps/v1beta1/StatefulSet
 
-impl ::Resource for StatefulSet {
+impl crate::Resource for StatefulSet {
     fn api_version() -> &'static str {
         "apps/v1beta1"
     }
@@ -1366,8 +1366,8 @@ impl ::Resource for StatefulSet {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for StatefulSet {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for StatefulSet {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1378,18 +1378,18 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSet {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1407,36 +1407,36 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSet {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = StatefulSet;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct StatefulSet")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_8::api::apps::v1beta1::StatefulSetSpec> = None;
-                let mut value_status: Option<::v1_8::api::apps::v1beta1::StatefulSetStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_8::api::apps::v1beta1::StatefulSetSpec> = None;
+                let mut value_status: Option<crate::v1_8::api::apps::v1beta1::StatefulSetStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1462,8 +1462,8 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSet {
     }
 }
 
-impl ::serde::Serialize for StatefulSet {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for StatefulSet {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatefulSet",
             0 +
@@ -1472,17 +1472,17 @@ impl ::serde::Serialize for StatefulSet {
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

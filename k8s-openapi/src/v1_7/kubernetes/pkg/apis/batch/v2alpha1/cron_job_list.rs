@@ -7,17 +7,17 @@ pub struct CronJobList {
     pub api_version: Option<String>,
 
     /// items is the list of CronJobs.
-    pub items: Vec<::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob>,
+    pub items: Vec<crate::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob>,
 
     /// Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
     pub kind: Option<String>,
 
     /// Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ListMeta>,
+    pub metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ListMeta>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for CronJobList {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for CronJobList {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -27,18 +27,18 @@ impl<'de> ::serde::Deserialize<'de> for CronJobList {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "items" => Field::Key_items,
@@ -55,32 +55,32 @@ impl<'de> ::serde::Deserialize<'de> for CronJobList {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = CronJobList;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct CronJobList")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_api_version: Option<String> = None;
-                let mut value_items: Option<Vec<::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob>> = None;
+                let mut value_items: Option<Vec<crate::v1_7::kubernetes::pkg::apis::batch::v2alpha1::CronJob>> = None;
                 let mut value_kind: Option<String> = None;
-                let mut value_metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
+                let mut value_metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ListMeta> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_items => value_items = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_api_version => value_api_version = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_items => value_items = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_kind => value_kind = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CronJobList {
                     api_version: value_api_version,
-                    items: value_items.ok_or_else(|| ::serde::de::Error::missing_field("items"))?,
+                    items: value_items.ok_or_else(|| serde::de::Error::missing_field("items"))?,
                     kind: value_kind,
                     metadata: value_metadata,
                 })
@@ -100,8 +100,8 @@ impl<'de> ::serde::Deserialize<'de> for CronJobList {
     }
 }
 
-impl ::serde::Serialize for CronJobList {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for CronJobList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CronJobList",
             0 +
@@ -111,15 +111,15 @@ impl ::serde::Serialize for CronJobList {
             self.metadata.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "items", &self.items)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "items", &self.items)?;
         if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

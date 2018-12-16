@@ -4,29 +4,29 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct DownwardAPIProjection {
     /// Items is a list of DownwardAPIVolume file
-    pub items: Option<Vec<::v1_9::api::core::v1::DownwardAPIVolumeFile>>,
+    pub items: Option<Vec<crate::v1_9::api::core::v1::DownwardAPIVolumeFile>>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for DownwardAPIProjection {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for DownwardAPIProjection {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_items,
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "items" => Field::Key_items,
                             _ => Field::Other,
@@ -40,20 +40,20 @@ impl<'de> ::serde::Deserialize<'de> for DownwardAPIProjection {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = DownwardAPIProjection;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct DownwardAPIProjection")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_items: Option<Vec<::v1_9::api::core::v1::DownwardAPIVolumeFile>> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_items: Option<Vec<crate::v1_9::api::core::v1::DownwardAPIVolumeFile>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_items => value_items = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_items => value_items = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -73,16 +73,16 @@ impl<'de> ::serde::Deserialize<'de> for DownwardAPIProjection {
     }
 }
 
-impl ::serde::Serialize for DownwardAPIProjection {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for DownwardAPIProjection {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DownwardAPIProjection",
             0 +
             self.items.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.items {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

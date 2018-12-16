@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PersistentVolumeClaim {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the desired characteristics of a volume requested by a pod author. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
-    pub spec: Option<::v1_11::api::core::v1::PersistentVolumeClaimSpec>,
+    pub spec: Option<crate::v1_11::api::core::v1::PersistentVolumeClaimSpec>,
 
     /// Status represents the current information/status of a persistent volume claim. Read-only. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
-    pub status: Option<::v1_11::api::core::v1::PersistentVolumeClaimStatus>,
+    pub status: Option<crate::v1_11::api::core::v1::PersistentVolumeClaimStatus>,
 }
 
 // Begin /v1/PersistentVolumeClaim
@@ -35,60 +35,60 @@ impl PersistentVolumeClaim {
     ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_persistent_volume_claim(
         namespace: &str,
-        body: &::v1_11::api::core::v1::PersistentVolumeClaim,
+        body: &crate::v1_11::api::core::v1::PersistentVolumeClaim,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::create_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.create_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedPersistentVolumeClaimResponse {
-    Ok(::v1_11::api::core::v1::PersistentVolumeClaim),
-    Created(::v1_11::api::core::v1::PersistentVolumeClaim),
-    Accepted(::v1_11::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::v1_11::api::core::v1::PersistentVolumeClaim),
+    Created(crate::v1_11::api::core::v1::PersistentVolumeClaim),
+    Accepted(crate::v1_11::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateCoreV1NamespacedPersistentVolumeClaimResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateCoreV1NamespacedPersistentVolumeClaimResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedPersistentVolumeClaimResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedPersistentVolumeClaimResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
             _ => Ok((CreateCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
@@ -155,9 +155,9 @@ impl PersistentVolumeClaim {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -187,46 +187,46 @@ impl PersistentVolumeClaim {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::delete_core_v1_collection_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_collection_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse {
-    OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_11::api::core::v1::PersistentVolumeClaim),
+    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_11::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
@@ -273,9 +273,9 @@ impl PersistentVolumeClaim {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -290,46 +290,46 @@ impl PersistentVolumeClaim {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::delete_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
-    OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_11::api::core::v1::PersistentVolumeClaim),
+    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_11::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
@@ -396,9 +396,9 @@ impl PersistentVolumeClaim {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -428,32 +428,32 @@ impl PersistentVolumeClaim {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::list_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.list_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedPersistentVolumeClaimResponse {
-    Ok(::v1_11::api::core::v1::PersistentVolumeClaimList),
+    Ok(crate::v1_11::api::core::v1::PersistentVolumeClaimList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1NamespacedPersistentVolumeClaimResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1NamespacedPersistentVolumeClaimResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
@@ -515,9 +515,9 @@ impl PersistentVolumeClaim {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/persistentvolumeclaims?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -547,32 +547,32 @@ impl PersistentVolumeClaim {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::list_core_v1_persistent_volume_claim_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.list_core_v1_persistent_volume_claim_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1PersistentVolumeClaimForAllNamespacesResponse {
-    Ok(::v1_11::api::core::v1::PersistentVolumeClaimList),
+    Ok(crate::v1_11::api::core::v1::PersistentVolumeClaimList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1PersistentVolumeClaimForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1PersistentVolumeClaimForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1PersistentVolumeClaimForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1PersistentVolumeClaimForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1PersistentVolumeClaimForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1PersistentVolumeClaimForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -603,42 +603,42 @@ impl PersistentVolumeClaim {
     pub fn patch_core_v1_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        body: &::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedPersistentVolumeClaimResponse {
-    Ok(::v1_11::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::v1_11::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NamespacedPersistentVolumeClaimResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NamespacedPersistentVolumeClaimResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
@@ -669,42 +669,42 @@ impl PersistentVolumeClaim {
     pub fn patch_core_v1_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
-        body: &::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse {
-    Ok(::v1_11::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::v1_11::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
         }
     }
@@ -744,9 +744,9 @@ impl PersistentVolumeClaim {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -758,32 +758,32 @@ impl PersistentVolumeClaim {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPersistentVolumeClaimResponse {
-    Ok(::v1_11::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::v1_11::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NamespacedPersistentVolumeClaimResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NamespacedPersistentVolumeClaimResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
@@ -813,40 +813,40 @@ impl PersistentVolumeClaim {
         name: &str,
         namespace: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse {
-    Ok(::v1_11::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::v1_11::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
         }
     }
@@ -877,51 +877,51 @@ impl PersistentVolumeClaim {
     pub fn replace_core_v1_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        body: &::v1_11::api::core::v1::PersistentVolumeClaim,
+        body: &crate::v1_11::api::core::v1::PersistentVolumeClaim,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedPersistentVolumeClaimResponse {
-    Ok(::v1_11::api::core::v1::PersistentVolumeClaim),
-    Created(::v1_11::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::v1_11::api::core::v1::PersistentVolumeClaim),
+    Created(crate::v1_11::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
@@ -952,51 +952,51 @@ impl PersistentVolumeClaim {
     pub fn replace_core_v1_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
-        body: &::v1_11::api::core::v1::PersistentVolumeClaim,
+        body: &crate::v1_11::api::core::v1::PersistentVolumeClaim,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse {
-    Ok(::v1_11::api::core::v1::PersistentVolumeClaim),
-    Created(::v1_11::api::core::v1::PersistentVolumeClaim),
+    Ok(crate::v1_11::api::core::v1::PersistentVolumeClaim),
+    Created(crate::v1_11::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
         }
     }
@@ -1068,9 +1068,9 @@ impl PersistentVolumeClaim {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1100,34 +1100,34 @@ impl PersistentVolumeClaim {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedPersistentVolumeClaimResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedPersistentVolumeClaimResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedPersistentVolumeClaimResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
@@ -1194,9 +1194,9 @@ impl PersistentVolumeClaim {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/persistentvolumeclaims?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1226,34 +1226,34 @@ impl PersistentVolumeClaim {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim_list`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedPersistentVolumeClaimListResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedPersistentVolumeClaimListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedPersistentVolumeClaimListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedPersistentVolumeClaimListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPersistentVolumeClaimListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPersistentVolumeClaimListResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedPersistentVolumeClaimListResponse::Other, 0)),
         }
     }
@@ -1315,9 +1315,9 @@ impl PersistentVolumeClaim {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/persistentvolumeclaims?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1347,34 +1347,34 @@ impl PersistentVolumeClaim {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_persistent_volume_claim_list_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_persistent_volume_claim_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1382,7 +1382,7 @@ impl ::Response for WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse
 
 // End /v1/PersistentVolumeClaim
 
-impl ::Resource for PersistentVolumeClaim {
+impl crate::Resource for PersistentVolumeClaim {
     fn api_version() -> &'static str {
         "v1"
     }
@@ -1400,8 +1400,8 @@ impl ::Resource for PersistentVolumeClaim {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for PersistentVolumeClaim {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PersistentVolumeClaim {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1412,18 +1412,18 @@ impl<'de> ::serde::Deserialize<'de> for PersistentVolumeClaim {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1441,36 +1441,36 @@ impl<'de> ::serde::Deserialize<'de> for PersistentVolumeClaim {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PersistentVolumeClaim;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PersistentVolumeClaim")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_11::api::core::v1::PersistentVolumeClaimSpec> = None;
-                let mut value_status: Option<::v1_11::api::core::v1::PersistentVolumeClaimStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_11::api::core::v1::PersistentVolumeClaimSpec> = None;
+                let mut value_status: Option<crate::v1_11::api::core::v1::PersistentVolumeClaimStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1496,8 +1496,8 @@ impl<'de> ::serde::Deserialize<'de> for PersistentVolumeClaim {
     }
 }
 
-impl ::serde::Serialize for PersistentVolumeClaim {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PersistentVolumeClaim {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeClaim",
             0 +
@@ -1506,17 +1506,17 @@ impl ::serde::Serialize for PersistentVolumeClaim {
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

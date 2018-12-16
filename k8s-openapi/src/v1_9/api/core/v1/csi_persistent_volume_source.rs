@@ -13,8 +13,8 @@ pub struct CSIPersistentVolumeSource {
     pub volume_handle: String,
 }
 
-impl<'de> ::serde::Deserialize<'de> for CSIPersistentVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for CSIPersistentVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_driver,
@@ -23,18 +23,18 @@ impl<'de> ::serde::Deserialize<'de> for CSIPersistentVolumeSource {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "driver" => Field::Key_driver,
                             "readOnly" => Field::Key_read_only,
@@ -50,31 +50,31 @@ impl<'de> ::serde::Deserialize<'de> for CSIPersistentVolumeSource {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = CSIPersistentVolumeSource;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct CSIPersistentVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_driver: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
                 let mut value_volume_handle: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_driver => value_driver = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_read_only => value_read_only = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_handle => value_volume_handle = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_driver => value_driver = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_handle => value_volume_handle = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CSIPersistentVolumeSource {
-                    driver: value_driver.ok_or_else(|| ::serde::de::Error::missing_field("driver"))?,
+                    driver: value_driver.ok_or_else(|| serde::de::Error::missing_field("driver"))?,
                     read_only: value_read_only,
-                    volume_handle: value_volume_handle.ok_or_else(|| ::serde::de::Error::missing_field("volumeHandle"))?,
+                    volume_handle: value_volume_handle.ok_or_else(|| serde::de::Error::missing_field("volumeHandle"))?,
                 })
             }
         }
@@ -91,8 +91,8 @@ impl<'de> ::serde::Deserialize<'de> for CSIPersistentVolumeSource {
     }
 }
 
-impl ::serde::Serialize for CSIPersistentVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for CSIPersistentVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CSIPersistentVolumeSource",
             0 +
@@ -100,11 +100,11 @@ impl ::serde::Serialize for CSIPersistentVolumeSource {
             self.read_only.as_ref().map_or(0, |_| 1) +
             1,
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "driver", &self.driver)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "driver", &self.driver)?;
         if let Some(value) = &self.read_only {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeHandle", &self.volume_handle)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "volumeHandle", &self.volume_handle)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ComponentStatus {
     /// List of component conditions observed
-    pub conditions: Option<Vec<::v1_13::api::core::v1::ComponentCondition>>,
+    pub conditions: Option<Vec<crate::v1_13::api::core::v1::ComponentCondition>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
 // Begin /v1/ComponentStatus
@@ -70,9 +70,9 @@ impl ComponentStatus {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/componentstatuses?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -102,32 +102,32 @@ impl ComponentStatus {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ComponentStatus::list_core_v1_component_status`](./struct.ComponentStatus.html#method.list_core_v1_component_status)
 #[derive(Debug)]
 pub enum ListCoreV1ComponentStatusResponse {
-    Ok(::v1_13::api::core::v1::ComponentStatusList),
+    Ok(crate::v1_13::api::core::v1::ComponentStatusList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1ComponentStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1ComponentStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1ComponentStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ComponentStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ComponentStatusResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1ComponentStatusResponse::Other, 0)),
         }
     }
@@ -152,40 +152,40 @@ impl ComponentStatus {
     pub fn read_core_v1_component_status(
         name: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/componentstatuses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ComponentStatus::read_core_v1_component_status`](./struct.ComponentStatus.html#method.read_core_v1_component_status)
 #[derive(Debug)]
 pub enum ReadCoreV1ComponentStatusResponse {
-    Ok(::v1_13::api::core::v1::ComponentStatus),
+    Ok(crate::v1_13::api::core::v1::ComponentStatus),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1ComponentStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1ComponentStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1ComponentStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1ComponentStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1ComponentStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1ComponentStatusResponse::Other, 0)),
         }
     }
@@ -193,7 +193,7 @@ impl ::Response for ReadCoreV1ComponentStatusResponse {
 
 // End /v1/ComponentStatus
 
-impl ::Resource for ComponentStatus {
+impl crate::Resource for ComponentStatus {
     fn api_version() -> &'static str {
         "v1"
     }
@@ -211,8 +211,8 @@ impl ::Resource for ComponentStatus {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for ComponentStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ComponentStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -222,18 +222,18 @@ impl<'de> ::serde::Deserialize<'de> for ComponentStatus {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -250,34 +250,34 @@ impl<'de> ::serde::Deserialize<'de> for ComponentStatus {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ComponentStatus;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ComponentStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_conditions: Option<Vec<::v1_13::api::core::v1::ComponentCondition>> = None;
-                let mut value_metadata: Option<::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_conditions: Option<Vec<crate::v1_13::api::core::v1::ComponentCondition>> = None;
+                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_conditions => value_conditions = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_conditions => value_conditions = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -301,8 +301,8 @@ impl<'de> ::serde::Deserialize<'de> for ComponentStatus {
     }
 }
 
-impl ::serde::Serialize for ComponentStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ComponentStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ComponentStatus",
             0 +
@@ -310,14 +310,14 @@ impl ::serde::Serialize for ComponentStatus {
             self.conditions.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.conditions {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

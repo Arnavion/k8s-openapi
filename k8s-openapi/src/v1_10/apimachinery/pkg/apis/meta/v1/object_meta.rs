@@ -4,7 +4,7 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ObjectMeta {
     /// Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations
-    pub annotations: Option<::std::collections::BTreeMap<String, String>>,
+    pub annotations: Option<std::collections::BTreeMap<String, String>>,
 
     /// The name of the cluster which the object belongs to. This is used to distinguish resources with same name and namespace in different clusters. This field is not set anywhere right now and apiserver is going to ignore it if set in create or update request.
     pub cluster_name: Option<String>,
@@ -12,7 +12,7 @@ pub struct ObjectMeta {
     /// CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
     ///
     /// Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub creation_timestamp: Option<::v1_10::apimachinery::pkg::apis::meta::v1::Time>,
+    pub creation_timestamp: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.
     pub deletion_grace_period_seconds: Option<i64>,
@@ -20,7 +20,7 @@ pub struct ObjectMeta {
     /// DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.
     ///
     /// Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub deletion_timestamp: Option<::v1_10::apimachinery::pkg::apis::meta::v1::Time>,
+    pub deletion_timestamp: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed.
     pub finalizers: Option<Vec<String>>,
@@ -38,10 +38,10 @@ pub struct ObjectMeta {
     /// An initializer is a controller which enforces some system invariant at object creation time. This field is a list of initializers that have not yet acted on this object. If nil or empty, this object has been completely initialized. Otherwise, the object is considered uninitialized and is hidden (in list/watch and get calls) from clients that haven't explicitly asked to observe uninitialized objects.
     ///
     /// When an object is created, the system will populate this list with the current set of initializers. Only privileged users may set or modify this list. Once it is empty, it may not be modified further by any user.
-    pub initializers: Option<::v1_10::apimachinery::pkg::apis::meta::v1::Initializers>,
+    pub initializers: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::Initializers>,
 
     /// Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels
-    pub labels: Option<::std::collections::BTreeMap<String, String>>,
+    pub labels: Option<std::collections::BTreeMap<String, String>>,
 
     /// Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names
     pub name: Option<String>,
@@ -52,7 +52,7 @@ pub struct ObjectMeta {
     pub namespace: Option<String>,
 
     /// List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller.
-    pub owner_references: Option<Vec<::v1_10::apimachinery::pkg::apis::meta::v1::OwnerReference>>,
+    pub owner_references: Option<Vec<crate::v1_10::apimachinery::pkg::apis::meta::v1::OwnerReference>>,
 
     /// An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.
     ///
@@ -68,8 +68,8 @@ pub struct ObjectMeta {
     pub uid: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for ObjectMeta {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ObjectMeta {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_annotations,
@@ -91,18 +91,18 @@ impl<'de> ::serde::Deserialize<'de> for ObjectMeta {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "annotations" => Field::Key_annotations,
                             "clusterName" => Field::Key_cluster_name,
@@ -131,50 +131,50 @@ impl<'de> ::serde::Deserialize<'de> for ObjectMeta {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ObjectMeta;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ObjectMeta")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_annotations: Option<::std::collections::BTreeMap<String, String>> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_annotations: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_cluster_name: Option<String> = None;
-                let mut value_creation_timestamp: Option<::v1_10::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_creation_timestamp: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_deletion_grace_period_seconds: Option<i64> = None;
-                let mut value_deletion_timestamp: Option<::v1_10::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_deletion_timestamp: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_finalizers: Option<Vec<String>> = None;
                 let mut value_generate_name: Option<String> = None;
                 let mut value_generation: Option<i64> = None;
-                let mut value_initializers: Option<::v1_10::apimachinery::pkg::apis::meta::v1::Initializers> = None;
-                let mut value_labels: Option<::std::collections::BTreeMap<String, String>> = None;
+                let mut value_initializers: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::Initializers> = None;
+                let mut value_labels: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_name: Option<String> = None;
                 let mut value_namespace: Option<String> = None;
-                let mut value_owner_references: Option<Vec<::v1_10::apimachinery::pkg::apis::meta::v1::OwnerReference>> = None;
+                let mut value_owner_references: Option<Vec<crate::v1_10::apimachinery::pkg::apis::meta::v1::OwnerReference>> = None;
                 let mut value_resource_version: Option<String> = None;
                 let mut value_self_link: Option<String> = None;
                 let mut value_uid: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_annotations => value_annotations = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_cluster_name => value_cluster_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_creation_timestamp => value_creation_timestamp = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_deletion_grace_period_seconds => value_deletion_grace_period_seconds = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_deletion_timestamp => value_deletion_timestamp = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_finalizers => value_finalizers = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_generate_name => value_generate_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_generation => value_generation = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_initializers => value_initializers = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_labels => value_labels = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_namespace => value_namespace = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_owner_references => value_owner_references = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource_version => value_resource_version = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_self_link => value_self_link = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_uid => value_uid = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_annotations => value_annotations = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_cluster_name => value_cluster_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_creation_timestamp => value_creation_timestamp = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_deletion_grace_period_seconds => value_deletion_grace_period_seconds = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_deletion_timestamp => value_deletion_timestamp = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_finalizers => value_finalizers = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_generate_name => value_generate_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_generation => value_generation = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_initializers => value_initializers = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_labels => value_labels = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_namespace => value_namespace = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_owner_references => value_owner_references = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_version => value_resource_version = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_self_link => value_self_link = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_uid => value_uid = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -224,8 +224,8 @@ impl<'de> ::serde::Deserialize<'de> for ObjectMeta {
     }
 }
 
-impl ::serde::Serialize for ObjectMeta {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ObjectMeta {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectMeta",
             0 +
@@ -247,53 +247,53 @@ impl ::serde::Serialize for ObjectMeta {
             self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.annotations {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "annotations", value)?;
         }
         if let Some(value) = &self.cluster_name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterName", value)?;
         }
         if let Some(value) = &self.creation_timestamp {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "creationTimestamp", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "creationTimestamp", value)?;
         }
         if let Some(value) = &self.deletion_grace_period_seconds {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "deletionGracePeriodSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "deletionGracePeriodSeconds", value)?;
         }
         if let Some(value) = &self.deletion_timestamp {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "deletionTimestamp", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "deletionTimestamp", value)?;
         }
         if let Some(value) = &self.finalizers {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "finalizers", value)?;
         }
         if let Some(value) = &self.generate_name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "generateName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "generateName", value)?;
         }
         if let Some(value) = &self.generation {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "generation", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "generation", value)?;
         }
         if let Some(value) = &self.initializers {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "initializers", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "initializers", value)?;
         }
         if let Some(value) = &self.labels {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "labels", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "labels", value)?;
         }
         if let Some(value) = &self.name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
         }
         if let Some(value) = &self.namespace {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
         }
         if let Some(value) = &self.owner_references {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "ownerReferences", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ownerReferences", value)?;
         }
         if let Some(value) = &self.resource_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
         }
         if let Some(value) = &self.self_link {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "selfLink", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selfLink", value)?;
         }
         if let Some(value) = &self.uid {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

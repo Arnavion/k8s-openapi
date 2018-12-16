@@ -16,14 +16,14 @@ pub struct JobSpec {
     pub parallelism: Option<i32>,
 
     /// A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-    pub selector: Option<::v1_7::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// Describes the pod that will be created when executing a job. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
-    pub template: ::v1_7::kubernetes::pkg::api::v1::PodTemplateSpec,
+    pub template: crate::v1_7::kubernetes::pkg::api::v1::PodTemplateSpec,
 }
 
-impl<'de> ::serde::Deserialize<'de> for JobSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for JobSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_active_deadline_seconds,
@@ -35,18 +35,18 @@ impl<'de> ::serde::Deserialize<'de> for JobSpec {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "activeDeadlineSeconds" => Field::Key_active_deadline_seconds,
                             "completions" => Field::Key_completions,
@@ -65,30 +65,30 @@ impl<'de> ::serde::Deserialize<'de> for JobSpec {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = JobSpec;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct JobSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_active_deadline_seconds: Option<i64> = None;
                 let mut value_completions: Option<i32> = None;
                 let mut value_manual_selector: Option<bool> = None;
                 let mut value_parallelism: Option<i32> = None;
-                let mut value_selector: Option<::v1_7::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_template: Option<::v1_7::kubernetes::pkg::api::v1::PodTemplateSpec> = None;
+                let mut value_selector: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_template: Option<crate::v1_7::kubernetes::pkg::api::v1::PodTemplateSpec> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_active_deadline_seconds => value_active_deadline_seconds = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_completions => value_completions = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_manual_selector => value_manual_selector = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_parallelism => value_parallelism = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_selector => value_selector = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_template => value_template = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_active_deadline_seconds => value_active_deadline_seconds = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_completions => value_completions = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_manual_selector => value_manual_selector = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_parallelism => value_parallelism = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_selector => value_selector = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_template => value_template = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -98,7 +98,7 @@ impl<'de> ::serde::Deserialize<'de> for JobSpec {
                     manual_selector: value_manual_selector,
                     parallelism: value_parallelism,
                     selector: value_selector,
-                    template: value_template.ok_or_else(|| ::serde::de::Error::missing_field("template"))?,
+                    template: value_template.ok_or_else(|| serde::de::Error::missing_field("template"))?,
                 })
             }
         }
@@ -118,8 +118,8 @@ impl<'de> ::serde::Deserialize<'de> for JobSpec {
     }
 }
 
-impl ::serde::Serialize for JobSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for JobSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "JobSpec",
             0 +
@@ -131,21 +131,21 @@ impl ::serde::Serialize for JobSpec {
             1,
         )?;
         if let Some(value) = &self.active_deadline_seconds {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
         }
         if let Some(value) = &self.completions {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "completions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "completions", value)?;
         }
         if let Some(value) = &self.manual_selector {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "manualSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "manualSelector", value)?;
         }
         if let Some(value) = &self.parallelism {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "parallelism", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "parallelism", value)?;
         }
         if let Some(value) = &self.selector {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

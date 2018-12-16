@@ -7,11 +7,11 @@ pub struct DownwardAPIVolumeSource {
     pub default_mode: Option<i32>,
 
     /// Items is a list of downward API volume file
-    pub items: Option<Vec<::v1_9::api::core::v1::DownwardAPIVolumeFile>>,
+    pub items: Option<Vec<crate::v1_9::api::core::v1::DownwardAPIVolumeFile>>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for DownwardAPIVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for DownwardAPIVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_default_mode,
@@ -19,18 +19,18 @@ impl<'de> ::serde::Deserialize<'de> for DownwardAPIVolumeSource {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "defaultMode" => Field::Key_default_mode,
                             "items" => Field::Key_items,
@@ -45,22 +45,22 @@ impl<'de> ::serde::Deserialize<'de> for DownwardAPIVolumeSource {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = DownwardAPIVolumeSource;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct DownwardAPIVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_default_mode: Option<i32> = None;
-                let mut value_items: Option<Vec<::v1_9::api::core::v1::DownwardAPIVolumeFile>> = None;
+                let mut value_items: Option<Vec<crate::v1_9::api::core::v1::DownwardAPIVolumeFile>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_default_mode => value_default_mode = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_items => value_items = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_default_mode => value_default_mode = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_items => value_items = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,8 +82,8 @@ impl<'de> ::serde::Deserialize<'de> for DownwardAPIVolumeSource {
     }
 }
 
-impl ::serde::Serialize for DownwardAPIVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for DownwardAPIVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DownwardAPIVolumeSource",
             0 +
@@ -91,11 +91,11 @@ impl ::serde::Serialize for DownwardAPIVolumeSource {
             self.items.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.default_mode {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultMode", value)?;
         }
         if let Some(value) = &self.items {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

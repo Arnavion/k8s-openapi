@@ -7,10 +7,10 @@ pub struct PersistentVolumeClaimSpec {
     pub access_modes: Option<Vec<String>>,
 
     /// Resources represents the minimum resources the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
-    pub resources: Option<::v1_10::api::core::v1::ResourceRequirements>,
+    pub resources: Option<crate::v1_10::api::core::v1::ResourceRequirements>,
 
     /// A label query over volumes to consider for binding.
-    pub selector: Option<::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
     pub storage_class_name: Option<String>,
@@ -22,8 +22,8 @@ pub struct PersistentVolumeClaimSpec {
     pub volume_name: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for PersistentVolumeClaimSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PersistentVolumeClaimSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_access_modes,
@@ -35,18 +35,18 @@ impl<'de> ::serde::Deserialize<'de> for PersistentVolumeClaimSpec {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "accessModes" => Field::Key_access_modes,
                             "resources" => Field::Key_resources,
@@ -65,30 +65,30 @@ impl<'de> ::serde::Deserialize<'de> for PersistentVolumeClaimSpec {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PersistentVolumeClaimSpec;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PersistentVolumeClaimSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_access_modes: Option<Vec<String>> = None;
-                let mut value_resources: Option<::v1_10::api::core::v1::ResourceRequirements> = None;
-                let mut value_selector: Option<::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_resources: Option<crate::v1_10::api::core::v1::ResourceRequirements> = None;
+                let mut value_selector: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_storage_class_name: Option<String> = None;
                 let mut value_volume_mode: Option<String> = None;
                 let mut value_volume_name: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_access_modes => value_access_modes = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resources => value_resources = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_selector => value_selector = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_storage_class_name => value_storage_class_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_mode => value_volume_mode = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_name => value_volume_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_access_modes => value_access_modes = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resources => value_resources = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_selector => value_selector = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_storage_class_name => value_storage_class_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_mode => value_volume_mode = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_name => value_volume_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -118,8 +118,8 @@ impl<'de> ::serde::Deserialize<'de> for PersistentVolumeClaimSpec {
     }
 }
 
-impl ::serde::Serialize for PersistentVolumeClaimSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PersistentVolumeClaimSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeClaimSpec",
             0 +
@@ -131,23 +131,23 @@ impl ::serde::Serialize for PersistentVolumeClaimSpec {
             self.volume_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.access_modes {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "accessModes", value)?;
         }
         if let Some(value) = &self.resources {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
         }
         if let Some(value) = &self.selector {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
         }
         if let Some(value) = &self.storage_class_name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "storageClassName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storageClassName", value)?;
         }
         if let Some(value) = &self.volume_mode {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMode", value)?;
         }
         if let Some(value) = &self.volume_name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeName", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

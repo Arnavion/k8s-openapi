@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ExternalAdmissionHookConfiguration {
     /// ExternalAdmissionHooks is a list of external admission webhooks and the affected resources and operations.
-    pub external_admission_hooks: Option<Vec<::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHook>>,
+    pub external_admission_hooks: Option<Vec<crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHook>>,
 
     /// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
-    pub metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 }
 
 // Begin admissionregistration.k8s.io/v1alpha1/ExternalAdmissionHookConfiguration
@@ -27,42 +27,42 @@ impl ExternalAdmissionHookConfiguration {
     ///
     ///     If 'true', then the output is pretty printed.
     pub fn create_admissionregistration_v1alpha1_external_admission_hook_configuration(
-        body: &::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
+        body: &crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::create_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.create_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Ok(crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
             _ => Ok((CreateAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
         }
     }
@@ -112,9 +112,9 @@ impl ExternalAdmissionHookConfiguration {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -138,46 +138,46 @@ impl ExternalAdmissionHookConfiguration {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::delete_admissionregistration_v1alpha1_collection_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.delete_admissionregistration_v1alpha1_collection_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse {
-    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    OkStatus(crate::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
             _ => Ok((DeleteAdmissionregistrationV1alpha1CollectionExternalAdmissionHookConfigurationResponse::Other, 0)),
         }
     }
@@ -219,9 +219,9 @@ impl ExternalAdmissionHookConfiguration {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -236,46 +236,46 @@ impl ExternalAdmissionHookConfiguration {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::delete_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.delete_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    OkStatus(crate::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
             _ => Ok((DeleteAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
         }
     }
@@ -325,9 +325,9 @@ impl ExternalAdmissionHookConfiguration {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -351,32 +351,32 @@ impl ExternalAdmissionHookConfiguration {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::list_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.list_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
+    Ok(crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
             _ => Ok((ListAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
         }
     }
@@ -402,42 +402,42 @@ impl ExternalAdmissionHookConfiguration {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_admissionregistration_v1alpha1_external_admission_hook_configuration(
         name: &str,
-        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::patch_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.patch_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Ok(crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
             _ => Ok((PatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
         }
     }
@@ -472,9 +472,9 @@ impl ExternalAdmissionHookConfiguration {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -486,32 +486,32 @@ impl ExternalAdmissionHookConfiguration {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::read_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.read_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Ok(crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
             _ => Ok((ReadAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
         }
     }
@@ -537,42 +537,42 @@ impl ExternalAdmissionHookConfiguration {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_admissionregistration_v1alpha1_external_admission_hook_configuration(
         name: &str,
-        body: &::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
+        body: &crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::replace_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.replace_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
+    Ok(crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
             _ => Ok((ReplaceAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
         }
     }
@@ -627,9 +627,9 @@ impl ExternalAdmissionHookConfiguration {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/watch/externaladmissionhookconfigurations/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -653,34 +653,34 @@ impl ExternalAdmissionHookConfiguration {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::watch_admissionregistration_v1alpha1_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.watch_admissionregistration_v1alpha1_external_admission_hook_configuration)
 #[derive(Debug)]
 pub enum WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Unauthorized, 0)),
             _ => Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationResponse::Other, 0)),
         }
     }
@@ -730,9 +730,9 @@ impl ExternalAdmissionHookConfiguration {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/watch/externaladmissionhookconfigurations?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -756,34 +756,34 @@ impl ExternalAdmissionHookConfiguration {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::watch_admissionregistration_v1alpha1_external_admission_hook_configuration_list`](./struct.ExternalAdmissionHookConfiguration.html#method.watch_admissionregistration_v1alpha1_external_admission_hook_configuration_list)
 #[derive(Debug)]
 pub enum WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Unauthorized, 0)),
             _ => Ok((WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfigurationListResponse::Other, 0)),
         }
     }
@@ -791,7 +791,7 @@ impl ::Response for WatchAdmissionregistrationV1alpha1ExternalAdmissionHookConfi
 
 // End admissionregistration.k8s.io/v1alpha1/ExternalAdmissionHookConfiguration
 
-impl ::Resource for ExternalAdmissionHookConfiguration {
+impl crate::Resource for ExternalAdmissionHookConfiguration {
     fn api_version() -> &'static str {
         "admissionregistration.k8s.io/v1alpha1"
     }
@@ -809,8 +809,8 @@ impl ::Resource for ExternalAdmissionHookConfiguration {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -820,18 +820,18 @@ impl<'de> ::serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -848,34 +848,34 @@ impl<'de> ::serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ExternalAdmissionHookConfiguration;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ExternalAdmissionHookConfiguration")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_external_admission_hooks: Option<Vec<::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHook>> = None;
-                let mut value_metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_external_admission_hooks: Option<Vec<crate::v1_7::kubernetes::pkg::apis::admissionregistration::v1alpha1::ExternalAdmissionHook>> = None;
+                let mut value_metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_external_admission_hooks => value_external_admission_hooks = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_external_admission_hooks => value_external_admission_hooks = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -899,8 +899,8 @@ impl<'de> ::serde::Deserialize<'de> for ExternalAdmissionHookConfiguration {
     }
 }
 
-impl ::serde::Serialize for ExternalAdmissionHookConfiguration {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ExternalAdmissionHookConfiguration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ExternalAdmissionHookConfiguration",
             0 +
@@ -908,14 +908,14 @@ impl ::serde::Serialize for ExternalAdmissionHookConfiguration {
             self.external_admission_hooks.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.external_admission_hooks {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "externalAdmissionHooks", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "externalAdmissionHooks", value)?;
         }
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

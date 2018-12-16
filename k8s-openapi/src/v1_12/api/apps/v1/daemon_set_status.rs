@@ -7,7 +7,7 @@ pub struct DaemonSetStatus {
     pub collision_count: Option<i32>,
 
     /// Represents the latest available observations of a DaemonSet's current state.
-    pub conditions: Option<Vec<::v1_12::api::apps::v1::DaemonSetCondition>>,
+    pub conditions: Option<Vec<crate::v1_12::api::apps::v1::DaemonSetCondition>>,
 
     /// The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
     pub current_number_scheduled: i32,
@@ -34,8 +34,8 @@ pub struct DaemonSetStatus {
     pub updated_number_scheduled: Option<i32>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for DaemonSetStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for DaemonSetStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_collision_count,
@@ -51,18 +51,18 @@ impl<'de> ::serde::Deserialize<'de> for DaemonSetStatus {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "collisionCount" => Field::Key_collision_count,
                             "conditions" => Field::Key_conditions,
@@ -85,16 +85,16 @@ impl<'de> ::serde::Deserialize<'de> for DaemonSetStatus {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = DaemonSetStatus;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct DaemonSetStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_collision_count: Option<i32> = None;
-                let mut value_conditions: Option<Vec<::v1_12::api::apps::v1::DaemonSetCondition>> = None;
+                let mut value_conditions: Option<Vec<crate::v1_12::api::apps::v1::DaemonSetCondition>> = None;
                 let mut value_current_number_scheduled: Option<i32> = None;
                 let mut value_desired_number_scheduled: Option<i32> = None;
                 let mut value_number_available: Option<i32> = None;
@@ -104,30 +104,30 @@ impl<'de> ::serde::Deserialize<'de> for DaemonSetStatus {
                 let mut value_observed_generation: Option<i64> = None;
                 let mut value_updated_number_scheduled: Option<i32> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_collision_count => value_collision_count = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_conditions => value_conditions = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_current_number_scheduled => value_current_number_scheduled = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_desired_number_scheduled => value_desired_number_scheduled = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_number_available => value_number_available = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_number_misscheduled => value_number_misscheduled = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_number_ready => value_number_ready = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_number_unavailable => value_number_unavailable = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_observed_generation => value_observed_generation = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_updated_number_scheduled => value_updated_number_scheduled = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_collision_count => value_collision_count = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_conditions => value_conditions = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_current_number_scheduled => value_current_number_scheduled = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_desired_number_scheduled => value_desired_number_scheduled = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_number_available => value_number_available = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_number_misscheduled => value_number_misscheduled = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_number_ready => value_number_ready = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_number_unavailable => value_number_unavailable = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_observed_generation => value_observed_generation = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_updated_number_scheduled => value_updated_number_scheduled = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(DaemonSetStatus {
                     collision_count: value_collision_count,
                     conditions: value_conditions,
-                    current_number_scheduled: value_current_number_scheduled.ok_or_else(|| ::serde::de::Error::missing_field("currentNumberScheduled"))?,
-                    desired_number_scheduled: value_desired_number_scheduled.ok_or_else(|| ::serde::de::Error::missing_field("desiredNumberScheduled"))?,
+                    current_number_scheduled: value_current_number_scheduled.ok_or_else(|| serde::de::Error::missing_field("currentNumberScheduled"))?,
+                    desired_number_scheduled: value_desired_number_scheduled.ok_or_else(|| serde::de::Error::missing_field("desiredNumberScheduled"))?,
                     number_available: value_number_available,
-                    number_misscheduled: value_number_misscheduled.ok_or_else(|| ::serde::de::Error::missing_field("numberMisscheduled"))?,
-                    number_ready: value_number_ready.ok_or_else(|| ::serde::de::Error::missing_field("numberReady"))?,
+                    number_misscheduled: value_number_misscheduled.ok_or_else(|| serde::de::Error::missing_field("numberMisscheduled"))?,
+                    number_ready: value_number_ready.ok_or_else(|| serde::de::Error::missing_field("numberReady"))?,
                     number_unavailable: value_number_unavailable,
                     observed_generation: value_observed_generation,
                     updated_number_scheduled: value_updated_number_scheduled,
@@ -154,8 +154,8 @@ impl<'de> ::serde::Deserialize<'de> for DaemonSetStatus {
     }
 }
 
-impl ::serde::Serialize for DaemonSetStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for DaemonSetStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DaemonSetStatus",
             0 +
@@ -171,27 +171,27 @@ impl ::serde::Serialize for DaemonSetStatus {
             self.updated_number_scheduled.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.collision_count {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "collisionCount", value)?;
         }
         if let Some(value) = &self.conditions {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "currentNumberScheduled", &self.current_number_scheduled)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "desiredNumberScheduled", &self.desired_number_scheduled)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "currentNumberScheduled", &self.current_number_scheduled)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "desiredNumberScheduled", &self.desired_number_scheduled)?;
         if let Some(value) = &self.number_available {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "numberAvailable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "numberAvailable", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "numberMisscheduled", &self.number_misscheduled)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "numberReady", &self.number_ready)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "numberMisscheduled", &self.number_misscheduled)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "numberReady", &self.number_ready)?;
         if let Some(value) = &self.number_unavailable {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "numberUnavailable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "numberUnavailable", value)?;
         }
         if let Some(value) = &self.observed_generation {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
         }
         if let Some(value) = &self.updated_number_scheduled {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "updatedNumberScheduled", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "updatedNumberScheduled", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

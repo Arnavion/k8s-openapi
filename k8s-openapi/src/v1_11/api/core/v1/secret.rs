@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Secret {
     /// Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_' or '.'. The serialized form of the secret data is a base64 encoded string, representing the arbitrary (possibly non-string) data value here. Described in https://tools.ietf.org/html/rfc4648#section-4
-    pub data: Option<::std::collections::BTreeMap<String, ::ByteString>>,
+    pub data: Option<std::collections::BTreeMap<String, crate::ByteString>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// stringData allows specifying non-binary secret data in string form. It is provided as a write-only convenience method. All keys and values are merged into the data field on write, overwriting any existing values. It is never output when reading from the API.
-    pub string_data: Option<::std::collections::BTreeMap<String, String>>,
+    pub string_data: Option<std::collections::BTreeMap<String, String>>,
 
     /// Used to facilitate programmatic handling of secret data.
     pub type_: Option<String>,
@@ -38,60 +38,60 @@ impl Secret {
     ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_secret(
         namespace: &str,
-        body: &::v1_11::api::core::v1::Secret,
+        body: &crate::v1_11::api::core::v1::Secret,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::create_core_v1_namespaced_secret`](./struct.Secret.html#method.create_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedSecretResponse {
-    Ok(::v1_11::api::core::v1::Secret),
-    Created(::v1_11::api::core::v1::Secret),
-    Accepted(::v1_11::api::core::v1::Secret),
+    Ok(crate::v1_11::api::core::v1::Secret),
+    Created(crate::v1_11::api::core::v1::Secret),
+    Accepted(crate::v1_11::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateCoreV1NamespacedSecretResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateCoreV1NamespacedSecretResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedSecretResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedSecretResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedSecretResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedSecretResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedSecretResponse::Unauthorized, 0)),
             _ => Ok((CreateCoreV1NamespacedSecretResponse::Other, 0)),
         }
     }
@@ -158,9 +158,9 @@ impl Secret {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -190,46 +190,46 @@ impl Secret {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::delete_core_v1_collection_namespaced_secret`](./struct.Secret.html#method.delete_core_v1_collection_namespaced_secret)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedSecretResponse {
-    OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_11::api::core::v1::Secret),
+    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_11::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1CollectionNamespacedSecretResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1CollectionNamespacedSecretResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNamespacedSecretResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNamespacedSecretResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedSecretResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedSecretResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1CollectionNamespacedSecretResponse::Other, 0)),
         }
     }
@@ -276,9 +276,9 @@ impl Secret {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -293,46 +293,46 @@ impl Secret {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::delete_core_v1_namespaced_secret`](./struct.Secret.html#method.delete_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedSecretResponse {
-    OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_11::api::core::v1::Secret),
+    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_11::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1NamespacedSecretResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1NamespacedSecretResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedSecretResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedSecretResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedSecretResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedSecretResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1NamespacedSecretResponse::Other, 0)),
         }
     }
@@ -399,9 +399,9 @@ impl Secret {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -431,32 +431,32 @@ impl Secret {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::list_core_v1_namespaced_secret`](./struct.Secret.html#method.list_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedSecretResponse {
-    Ok(::v1_11::api::core::v1::SecretList),
+    Ok(crate::v1_11::api::core::v1::SecretList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1NamespacedSecretResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1NamespacedSecretResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1NamespacedSecretResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedSecretResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedSecretResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1NamespacedSecretResponse::Other, 0)),
         }
     }
@@ -518,9 +518,9 @@ impl Secret {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/secrets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -550,32 +550,32 @@ impl Secret {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::list_core_v1_secret_for_all_namespaces`](./struct.Secret.html#method.list_core_v1_secret_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1SecretForAllNamespacesResponse {
-    Ok(::v1_11::api::core::v1::SecretList),
+    Ok(crate::v1_11::api::core::v1::SecretList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1SecretForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1SecretForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1SecretForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1SecretForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1SecretForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1SecretForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -606,42 +606,42 @@ impl Secret {
     pub fn patch_core_v1_namespaced_secret(
         name: &str,
         namespace: &str,
-        body: &::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::patch_core_v1_namespaced_secret`](./struct.Secret.html#method.patch_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedSecretResponse {
-    Ok(::v1_11::api::core::v1::Secret),
+    Ok(crate::v1_11::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NamespacedSecretResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NamespacedSecretResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NamespacedSecretResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedSecretResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedSecretResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NamespacedSecretResponse::Other, 0)),
         }
     }
@@ -681,9 +681,9 @@ impl Secret {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -695,32 +695,32 @@ impl Secret {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::read_core_v1_namespaced_secret`](./struct.Secret.html#method.read_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedSecretResponse {
-    Ok(::v1_11::api::core::v1::Secret),
+    Ok(crate::v1_11::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NamespacedSecretResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NamespacedSecretResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NamespacedSecretResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedSecretResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedSecretResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NamespacedSecretResponse::Other, 0)),
         }
     }
@@ -751,51 +751,51 @@ impl Secret {
     pub fn replace_core_v1_namespaced_secret(
         name: &str,
         namespace: &str,
-        body: &::v1_11::api::core::v1::Secret,
+        body: &crate::v1_11::api::core::v1::Secret,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/secrets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::replace_core_v1_namespaced_secret`](./struct.Secret.html#method.replace_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedSecretResponse {
-    Ok(::v1_11::api::core::v1::Secret),
-    Created(::v1_11::api::core::v1::Secret),
+    Ok(crate::v1_11::api::core::v1::Secret),
+    Created(crate::v1_11::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NamespacedSecretResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NamespacedSecretResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedSecretResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedSecretResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedSecretResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedSecretResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NamespacedSecretResponse::Other, 0)),
         }
     }
@@ -867,9 +867,9 @@ impl Secret {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/secrets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -899,34 +899,34 @@ impl Secret {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::watch_core_v1_namespaced_secret`](./struct.Secret.html#method.watch_core_v1_namespaced_secret)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedSecretResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedSecretResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedSecretResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedSecretResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedSecretResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedSecretResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedSecretResponse::Other, 0)),
         }
     }
@@ -993,9 +993,9 @@ impl Secret {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/secrets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1025,34 +1025,34 @@ impl Secret {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::watch_core_v1_namespaced_secret_list`](./struct.Secret.html#method.watch_core_v1_namespaced_secret_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedSecretListResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedSecretListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedSecretListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedSecretListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedSecretListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedSecretListResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedSecretListResponse::Other, 0)),
         }
     }
@@ -1114,9 +1114,9 @@ impl Secret {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/secrets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1146,34 +1146,34 @@ impl Secret {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Secret::watch_core_v1_secret_list_for_all_namespaces`](./struct.Secret.html#method.watch_core_v1_secret_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1SecretListForAllNamespacesResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1SecretListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1SecretListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1SecretListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1SecretListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1SecretListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1SecretListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1181,7 +1181,7 @@ impl ::Response for WatchCoreV1SecretListForAllNamespacesResponse {
 
 // End /v1/Secret
 
-impl ::Resource for Secret {
+impl crate::Resource for Secret {
     fn api_version() -> &'static str {
         "v1"
     }
@@ -1199,8 +1199,8 @@ impl ::Resource for Secret {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for Secret {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for Secret {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1212,18 +1212,18 @@ impl<'de> ::serde::Deserialize<'de> for Secret {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1242,38 +1242,38 @@ impl<'de> ::serde::Deserialize<'de> for Secret {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = Secret;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct Secret")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_data: Option<::std::collections::BTreeMap<String, ::ByteString>> = None;
-                let mut value_metadata: Option<::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_string_data: Option<::std::collections::BTreeMap<String, String>> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_data: Option<std::collections::BTreeMap<String, crate::ByteString>> = None;
+                let mut value_metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_string_data: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_type_: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_data => value_data = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_string_data => value_string_data = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_data => value_data = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_string_data => value_string_data = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1301,8 +1301,8 @@ impl<'de> ::serde::Deserialize<'de> for Secret {
     }
 }
 
-impl ::serde::Serialize for Secret {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for Secret {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Secret",
             0 +
@@ -1312,20 +1312,20 @@ impl ::serde::Serialize for Secret {
             self.string_data.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.data {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "data", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "data", value)?;
         }
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.string_data {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "stringData", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "stringData", value)?;
         }
         if let Some(value) = &self.type_ {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

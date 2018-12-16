@@ -20,14 +20,14 @@ pub struct PodSecurityContext {
     pub run_as_user: Option<i64>,
 
     /// The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    pub se_linux_options: Option<::v1_10::api::core::v1::SELinuxOptions>,
+    pub se_linux_options: Option<crate::v1_10::api::core::v1::SELinuxOptions>,
 
     /// A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
     pub supplemental_groups: Option<Vec<i64>>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for PodSecurityContext {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PodSecurityContext {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_fs_group,
@@ -39,18 +39,18 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityContext {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "fsGroup" => Field::Key_fs_group,
                             "runAsGroup" => Field::Key_run_as_group,
@@ -69,30 +69,30 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityContext {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PodSecurityContext;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PodSecurityContext")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_fs_group: Option<i64> = None;
                 let mut value_run_as_group: Option<i64> = None;
                 let mut value_run_as_non_root: Option<bool> = None;
                 let mut value_run_as_user: Option<i64> = None;
-                let mut value_se_linux_options: Option<::v1_10::api::core::v1::SELinuxOptions> = None;
+                let mut value_se_linux_options: Option<crate::v1_10::api::core::v1::SELinuxOptions> = None;
                 let mut value_supplemental_groups: Option<Vec<i64>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_fs_group => value_fs_group = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_run_as_group => value_run_as_group = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_run_as_non_root => value_run_as_non_root = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_run_as_user => value_run_as_user = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_se_linux_options => value_se_linux_options = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_supplemental_groups => value_supplemental_groups = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_fs_group => value_fs_group = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_group => value_run_as_group = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_non_root => value_run_as_non_root = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_user => value_run_as_user = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_se_linux_options => value_se_linux_options = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_supplemental_groups => value_supplemental_groups = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -122,8 +122,8 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityContext {
     }
 }
 
-impl ::serde::Serialize for PodSecurityContext {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PodSecurityContext {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodSecurityContext",
             0 +
@@ -135,23 +135,23 @@ impl ::serde::Serialize for PodSecurityContext {
             self.supplemental_groups.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_group {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", value)?;
         }
         if let Some(value) = &self.run_as_group {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsGroup", value)?;
         }
         if let Some(value) = &self.run_as_non_root {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsNonRoot", value)?;
         }
         if let Some(value) = &self.run_as_user {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", value)?;
         }
         if let Some(value) = &self.se_linux_options {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "seLinuxOptions", value)?;
         }
         if let Some(value) = &self.supplemental_groups {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

@@ -13,23 +13,23 @@ pub struct StatefulSetSpec {
     pub revision_history_limit: Option<i32>,
 
     /// selector is a label query over pods that should match the replica count. It must match the pod template's labels. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
-    pub selector: ::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector,
+    pub selector: crate::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector,
 
     /// serviceName is the name of the service that governs this StatefulSet. This service must exist before the StatefulSet, and is responsible for the network identity of the set. Pods get DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.
     pub service_name: String,
 
     /// template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet.
-    pub template: ::v1_10::api::core::v1::PodTemplateSpec,
+    pub template: crate::v1_10::api::core::v1::PodTemplateSpec,
 
     /// updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
-    pub update_strategy: Option<::v1_10::api::apps::v1::StatefulSetUpdateStrategy>,
+    pub update_strategy: Option<crate::v1_10::api::apps::v1::StatefulSetUpdateStrategy>,
 
     /// volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.
-    pub volume_claim_templates: Option<Vec<::v1_10::api::core::v1::PersistentVolumeClaim>>,
+    pub volume_claim_templates: Option<Vec<crate::v1_10::api::core::v1::PersistentVolumeClaim>>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for StatefulSetSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for StatefulSetSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_pod_management_policy,
@@ -43,18 +43,18 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSetSpec {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "podManagementPolicy" => Field::Key_pod_management_policy,
                             "replicas" => Field::Key_replicas,
@@ -75,34 +75,34 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSetSpec {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = StatefulSetSpec;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct StatefulSetSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_pod_management_policy: Option<String> = None;
                 let mut value_replicas: Option<i32> = None;
                 let mut value_revision_history_limit: Option<i32> = None;
-                let mut value_selector: Option<::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_selector: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
                 let mut value_service_name: Option<String> = None;
-                let mut value_template: Option<::v1_10::api::core::v1::PodTemplateSpec> = None;
-                let mut value_update_strategy: Option<::v1_10::api::apps::v1::StatefulSetUpdateStrategy> = None;
-                let mut value_volume_claim_templates: Option<Vec<::v1_10::api::core::v1::PersistentVolumeClaim>> = None;
+                let mut value_template: Option<crate::v1_10::api::core::v1::PodTemplateSpec> = None;
+                let mut value_update_strategy: Option<crate::v1_10::api::apps::v1::StatefulSetUpdateStrategy> = None;
+                let mut value_volume_claim_templates: Option<Vec<crate::v1_10::api::core::v1::PersistentVolumeClaim>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_pod_management_policy => value_pod_management_policy = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_replicas => value_replicas = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_revision_history_limit => value_revision_history_limit = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_selector => value_selector = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_service_name => value_service_name = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_template => value_template = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_update_strategy => value_update_strategy = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_claim_templates => value_volume_claim_templates = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_pod_management_policy => value_pod_management_policy = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_replicas => value_replicas = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_revision_history_limit => value_revision_history_limit = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_selector => value_selector = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_service_name => value_service_name = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_template => value_template = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_update_strategy => value_update_strategy = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_claim_templates => value_volume_claim_templates = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -110,9 +110,9 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSetSpec {
                     pod_management_policy: value_pod_management_policy,
                     replicas: value_replicas,
                     revision_history_limit: value_revision_history_limit,
-                    selector: value_selector.ok_or_else(|| ::serde::de::Error::missing_field("selector"))?,
-                    service_name: value_service_name.ok_or_else(|| ::serde::de::Error::missing_field("serviceName"))?,
-                    template: value_template.ok_or_else(|| ::serde::de::Error::missing_field("template"))?,
+                    selector: value_selector.ok_or_else(|| serde::de::Error::missing_field("selector"))?,
+                    service_name: value_service_name.ok_or_else(|| serde::de::Error::missing_field("serviceName"))?,
+                    template: value_template.ok_or_else(|| serde::de::Error::missing_field("template"))?,
                     update_strategy: value_update_strategy,
                     volume_claim_templates: value_volume_claim_templates,
                 })
@@ -136,8 +136,8 @@ impl<'de> ::serde::Deserialize<'de> for StatefulSetSpec {
     }
 }
 
-impl ::serde::Serialize for StatefulSetSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for StatefulSetSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatefulSetSpec",
             0 +
@@ -151,23 +151,23 @@ impl ::serde::Serialize for StatefulSetSpec {
             self.volume_claim_templates.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.pod_management_policy {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "podManagementPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "podManagementPolicy", value)?;
         }
         if let Some(value) = &self.replicas {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
         }
         if let Some(value) = &self.revision_history_limit {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &self.selector)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", &self.service_name)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "selector", &self.selector)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", &self.service_name)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
         if let Some(value) = &self.update_strategy {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "updateStrategy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "updateStrategy", value)?;
         }
         if let Some(value) = &self.volume_claim_templates {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeClaimTemplates", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeClaimTemplates", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

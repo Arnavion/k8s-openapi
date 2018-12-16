@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct NetworkPolicy {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired behavior for this NetworkPolicy.
-    pub spec: Option<::v1_12::api::networking::v1::NetworkPolicySpec>,
+    pub spec: Option<crate::v1_12::api::networking::v1::NetworkPolicySpec>,
 }
 
 // Begin networking.k8s.io/v1/NetworkPolicy
@@ -40,13 +40,13 @@ impl NetworkPolicy {
     ///     If 'true', then the output is pretty printed.
     pub fn create_networking_v1_namespaced_network_policy(
         namespace: &str,
-        body: &::v1_12::api::networking::v1::NetworkPolicy,
+        body: &crate::v1_12::api::networking::v1::NetworkPolicy,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -58,50 +58,50 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::create_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.create_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum CreateNetworkingV1NamespacedNetworkPolicyResponse {
-    Ok(::v1_12::api::networking::v1::NetworkPolicy),
-    Created(::v1_12::api::networking::v1::NetworkPolicy),
-    Accepted(::v1_12::api::networking::v1::NetworkPolicy),
+    Ok(crate::v1_12::api::networking::v1::NetworkPolicy),
+    Created(crate::v1_12::api::networking::v1::NetworkPolicy),
+    Accepted(crate::v1_12::api::networking::v1::NetworkPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateNetworkingV1NamespacedNetworkPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
             _ => Ok((CreateNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
@@ -170,9 +170,9 @@ impl NetworkPolicy {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -202,46 +202,46 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::delete_networking_v1_collection_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_networking_v1_collection_namespaced_network_policy)
 #[derive(Debug)]
 pub enum DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::api::networking::v1::NetworkPolicy),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::api::networking::v1::NetworkPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::Unauthorized, 0)),
             _ => Ok((DeleteNetworkingV1CollectionNamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
@@ -293,9 +293,9 @@ impl NetworkPolicy {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -313,55 +313,55 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::delete_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum DeleteNetworkingV1NamespacedNetworkPolicyResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::api::networking::v1::NetworkPolicy),
-    Accepted(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::api::networking::v1::NetworkPolicy),
+    Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteNetworkingV1NamespacedNetworkPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteNetworkingV1NamespacedNetworkPolicyResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteNetworkingV1NamespacedNetworkPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteNetworkingV1NamespacedNetworkPolicyResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
             _ => Ok((DeleteNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
@@ -430,9 +430,9 @@ impl NetworkPolicy {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -462,32 +462,32 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::list_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.list_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum ListNetworkingV1NamespacedNetworkPolicyResponse {
-    Ok(::v1_12::api::networking::v1::NetworkPolicyList),
+    Ok(crate::v1_12::api::networking::v1::NetworkPolicyList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListNetworkingV1NamespacedNetworkPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
             _ => Ok((ListNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
@@ -551,9 +551,9 @@ impl NetworkPolicy {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/networkpolicies?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -583,32 +583,32 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::list_networking_v1_network_policy_for_all_namespaces`](./struct.NetworkPolicy.html#method.list_networking_v1_network_policy_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListNetworkingV1NetworkPolicyForAllNamespacesResponse {
-    Ok(::v1_12::api::networking::v1::NetworkPolicyList),
+    Ok(crate::v1_12::api::networking::v1::NetworkPolicyList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListNetworkingV1NetworkPolicyForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListNetworkingV1NetworkPolicyForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListNetworkingV1NetworkPolicyForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -643,12 +643,12 @@ impl NetworkPolicy {
     pub fn patch_networking_v1_namespaced_network_policy(
         name: &str,
         namespace: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -657,32 +657,32 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::patch_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.patch_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum PatchNetworkingV1NamespacedNetworkPolicyResponse {
-    Ok(::v1_12::api::networking::v1::NetworkPolicy),
+    Ok(crate::v1_12::api::networking::v1::NetworkPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchNetworkingV1NamespacedNetworkPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
             _ => Ok((PatchNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
@@ -722,9 +722,9 @@ impl NetworkPolicy {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -736,32 +736,32 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::read_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.read_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum ReadNetworkingV1NamespacedNetworkPolicyResponse {
-    Ok(::v1_12::api::networking::v1::NetworkPolicy),
+    Ok(crate::v1_12::api::networking::v1::NetworkPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadNetworkingV1NamespacedNetworkPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
             _ => Ok((ReadNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
@@ -796,12 +796,12 @@ impl NetworkPolicy {
     pub fn replace_networking_v1_namespaced_network_policy(
         name: &str,
         namespace: &str,
-        body: &::v1_12::api::networking::v1::NetworkPolicy,
+        body: &crate::v1_12::api::networking::v1::NetworkPolicy,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -810,41 +810,41 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::replace_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.replace_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum ReplaceNetworkingV1NamespacedNetworkPolicyResponse {
-    Ok(::v1_12::api::networking::v1::NetworkPolicy),
-    Created(::v1_12::api::networking::v1::NetworkPolicy),
+    Ok(crate::v1_12::api::networking::v1::NetworkPolicy),
+    Created(crate::v1_12::api::networking::v1::NetworkPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceNetworkingV1NamespacedNetworkPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
             _ => Ok((ReplaceNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
@@ -918,9 +918,9 @@ impl NetworkPolicy {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/watch/namespaces/{namespace}/networkpolicies/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -950,34 +950,34 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::watch_networking_v1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.watch_networking_v1_namespaced_network_policy)
 #[derive(Debug)]
 pub enum WatchNetworkingV1NamespacedNetworkPolicyResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchNetworkingV1NamespacedNetworkPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchNetworkingV1NamespacedNetworkPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchNetworkingV1NamespacedNetworkPolicyResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkingV1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
             _ => Ok((WatchNetworkingV1NamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
@@ -1046,9 +1046,9 @@ impl NetworkPolicy {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/watch/namespaces/{namespace}/networkpolicies?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1078,34 +1078,34 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::watch_networking_v1_namespaced_network_policy_list`](./struct.NetworkPolicy.html#method.watch_networking_v1_namespaced_network_policy_list)
 #[derive(Debug)]
 pub enum WatchNetworkingV1NamespacedNetworkPolicyListResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchNetworkingV1NamespacedNetworkPolicyListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchNetworkingV1NamespacedNetworkPolicyListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchNetworkingV1NamespacedNetworkPolicyListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkingV1NamespacedNetworkPolicyListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkingV1NamespacedNetworkPolicyListResponse::Unauthorized, 0)),
             _ => Ok((WatchNetworkingV1NamespacedNetworkPolicyListResponse::Other, 0)),
         }
     }
@@ -1169,9 +1169,9 @@ impl NetworkPolicy {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/networking.k8s.io/v1/watch/networkpolicies?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1201,34 +1201,34 @@ impl NetworkPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`NetworkPolicy::watch_networking_v1_network_policy_list_for_all_namespaces`](./struct.NetworkPolicy.html#method.watch_networking_v1_network_policy_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1236,7 +1236,7 @@ impl ::Response for WatchNetworkingV1NetworkPolicyListForAllNamespacesResponse {
 
 // End networking.k8s.io/v1/NetworkPolicy
 
-impl ::Resource for NetworkPolicy {
+impl crate::Resource for NetworkPolicy {
     fn api_version() -> &'static str {
         "networking.k8s.io/v1"
     }
@@ -1254,8 +1254,8 @@ impl ::Resource for NetworkPolicy {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for NetworkPolicy {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for NetworkPolicy {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1265,18 +1265,18 @@ impl<'de> ::serde::Deserialize<'de> for NetworkPolicy {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1293,34 +1293,34 @@ impl<'de> ::serde::Deserialize<'de> for NetworkPolicy {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = NetworkPolicy;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct NetworkPolicy")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_12::api::networking::v1::NetworkPolicySpec> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_12::api::networking::v1::NetworkPolicySpec> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1344,8 +1344,8 @@ impl<'de> ::serde::Deserialize<'de> for NetworkPolicy {
     }
 }
 
-impl ::serde::Serialize for NetworkPolicy {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for NetworkPolicy {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicy",
             0 +
@@ -1353,14 +1353,14 @@ impl ::serde::Serialize for NetworkPolicy {
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

@@ -22,8 +22,8 @@ pub struct RuleWithOperations {
     pub resources: Option<Vec<String>>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for RuleWithOperations {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for RuleWithOperations {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_groups,
@@ -33,18 +33,18 @@ impl<'de> ::serde::Deserialize<'de> for RuleWithOperations {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiGroups" => Field::Key_api_groups,
                             "apiVersions" => Field::Key_api_versions,
@@ -61,26 +61,26 @@ impl<'de> ::serde::Deserialize<'de> for RuleWithOperations {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = RuleWithOperations;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct RuleWithOperations")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_api_groups: Option<Vec<String>> = None;
                 let mut value_api_versions: Option<Vec<String>> = None;
                 let mut value_operations: Option<Vec<String>> = None;
                 let mut value_resources: Option<Vec<String>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_groups => value_api_groups = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_api_versions => value_api_versions = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_operations => value_operations = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resources => value_resources = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_api_groups => value_api_groups = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_api_versions => value_api_versions = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_operations => value_operations = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resources => value_resources = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -106,8 +106,8 @@ impl<'de> ::serde::Deserialize<'de> for RuleWithOperations {
     }
 }
 
-impl ::serde::Serialize for RuleWithOperations {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for RuleWithOperations {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "RuleWithOperations",
             0 +
@@ -117,17 +117,17 @@ impl ::serde::Serialize for RuleWithOperations {
             self.resources.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_groups {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", value)?;
         }
         if let Some(value) = &self.api_versions {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersions", value)?;
         }
         if let Some(value) = &self.operations {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "operations", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "operations", value)?;
         }
         if let Some(value) = &self.resources {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

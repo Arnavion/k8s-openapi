@@ -10,28 +10,28 @@ pub struct Event {
     pub count: Option<i32>,
 
     /// Time when this Event was first observed.
-    pub event_time: Option<::v1_11::apimachinery::pkg::apis::meta::v1::MicroTime>,
+    pub event_time: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::MicroTime>,
 
     /// The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)
-    pub first_timestamp: Option<::v1_11::apimachinery::pkg::apis::meta::v1::Time>,
+    pub first_timestamp: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// The object that this event is about.
-    pub involved_object: ::v1_11::api::core::v1::ObjectReference,
+    pub involved_object: crate::v1_11::api::core::v1::ObjectReference,
 
     /// The time at which the most recent occurrence of this event was recorded.
-    pub last_timestamp: Option<::v1_11::apimachinery::pkg::apis::meta::v1::Time>,
+    pub last_timestamp: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::Time>,
 
     /// A human-readable description of the status of this operation.
     pub message: Option<String>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: ::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta,
+    pub metadata: crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta,
 
     /// This should be a short, machine understandable string that gives the reason for the transition into the object's current status.
     pub reason: Option<String>,
 
     /// Optional secondary object for more complex actions.
-    pub related: Option<::v1_11::api::core::v1::ObjectReference>,
+    pub related: Option<crate::v1_11::api::core::v1::ObjectReference>,
 
     /// Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`.
     pub reporting_component: Option<String>,
@@ -40,10 +40,10 @@ pub struct Event {
     pub reporting_instance: Option<String>,
 
     /// Data about the Event series this event represents or nil if it's a singleton Event.
-    pub series: Option<::v1_11::api::core::v1::EventSeries>,
+    pub series: Option<crate::v1_11::api::core::v1::EventSeries>,
 
     /// The component reporting this event. Should be a short machine understandable string.
-    pub source: Option<::v1_11::api::core::v1::EventSource>,
+    pub source: Option<crate::v1_11::api::core::v1::EventSource>,
 
     /// Type of this event (Normal, Warning), new types could be added in the future
     pub type_: Option<String>,
@@ -71,60 +71,60 @@ impl Event {
     ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_event(
         namespace: &str,
-        body: &::v1_11::api::core::v1::Event,
+        body: &crate::v1_11::api::core::v1::Event,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::create_core_v1_namespaced_event`](./struct.Event.html#method.create_core_v1_namespaced_event)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedEventResponse {
-    Ok(::v1_11::api::core::v1::Event),
-    Created(::v1_11::api::core::v1::Event),
-    Accepted(::v1_11::api::core::v1::Event),
+    Ok(crate::v1_11::api::core::v1::Event),
+    Created(crate::v1_11::api::core::v1::Event),
+    Accepted(crate::v1_11::api::core::v1::Event),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateCoreV1NamespacedEventResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateCoreV1NamespacedEventResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedEventResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedEventResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedEventResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedEventResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedEventResponse::Unauthorized, 0)),
             _ => Ok((CreateCoreV1NamespacedEventResponse::Other, 0)),
         }
     }
@@ -191,9 +191,9 @@ impl Event {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -223,46 +223,46 @@ impl Event {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::delete_core_v1_collection_namespaced_event`](./struct.Event.html#method.delete_core_v1_collection_namespaced_event)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedEventResponse {
-    OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_11::api::core::v1::Event),
+    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_11::api::core::v1::Event),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1CollectionNamespacedEventResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1CollectionNamespacedEventResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNamespacedEventResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNamespacedEventResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedEventResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedEventResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1CollectionNamespacedEventResponse::Other, 0)),
         }
     }
@@ -309,9 +309,9 @@ impl Event {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -326,46 +326,46 @@ impl Event {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::delete_core_v1_namespaced_event`](./struct.Event.html#method.delete_core_v1_namespaced_event)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedEventResponse {
-    OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_11::api::core::v1::Event),
+    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_11::api::core::v1::Event),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1NamespacedEventResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1NamespacedEventResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedEventResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedEventResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedEventResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedEventResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1NamespacedEventResponse::Other, 0)),
         }
     }
@@ -427,9 +427,9 @@ impl Event {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/events?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -459,32 +459,32 @@ impl Event {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::list_core_v1_event_for_all_namespaces`](./struct.Event.html#method.list_core_v1_event_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1EventForAllNamespacesResponse {
-    Ok(::v1_11::api::core::v1::EventList),
+    Ok(crate::v1_11::api::core::v1::EventList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1EventForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1EventForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1EventForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1EventForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1EventForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1EventForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -551,9 +551,9 @@ impl Event {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -583,32 +583,32 @@ impl Event {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::list_core_v1_namespaced_event`](./struct.Event.html#method.list_core_v1_namespaced_event)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedEventResponse {
-    Ok(::v1_11::api::core::v1::EventList),
+    Ok(crate::v1_11::api::core::v1::EventList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1NamespacedEventResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1NamespacedEventResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1NamespacedEventResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedEventResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedEventResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1NamespacedEventResponse::Other, 0)),
         }
     }
@@ -639,42 +639,42 @@ impl Event {
     pub fn patch_core_v1_namespaced_event(
         name: &str,
         namespace: &str,
-        body: &::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::patch_core_v1_namespaced_event`](./struct.Event.html#method.patch_core_v1_namespaced_event)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedEventResponse {
-    Ok(::v1_11::api::core::v1::Event),
+    Ok(crate::v1_11::api::core::v1::Event),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NamespacedEventResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NamespacedEventResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NamespacedEventResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedEventResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedEventResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NamespacedEventResponse::Other, 0)),
         }
     }
@@ -714,9 +714,9 @@ impl Event {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -728,32 +728,32 @@ impl Event {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::read_core_v1_namespaced_event`](./struct.Event.html#method.read_core_v1_namespaced_event)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedEventResponse {
-    Ok(::v1_11::api::core::v1::Event),
+    Ok(crate::v1_11::api::core::v1::Event),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NamespacedEventResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NamespacedEventResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NamespacedEventResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedEventResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedEventResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NamespacedEventResponse::Other, 0)),
         }
     }
@@ -784,51 +784,51 @@ impl Event {
     pub fn replace_core_v1_namespaced_event(
         name: &str,
         namespace: &str,
-        body: &::v1_11::api::core::v1::Event,
+        body: &crate::v1_11::api::core::v1::Event,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/events/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::replace_core_v1_namespaced_event`](./struct.Event.html#method.replace_core_v1_namespaced_event)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedEventResponse {
-    Ok(::v1_11::api::core::v1::Event),
-    Created(::v1_11::api::core::v1::Event),
+    Ok(crate::v1_11::api::core::v1::Event),
+    Created(crate::v1_11::api::core::v1::Event),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NamespacedEventResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NamespacedEventResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedEventResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedEventResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedEventResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedEventResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NamespacedEventResponse::Other, 0)),
         }
     }
@@ -890,9 +890,9 @@ impl Event {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/events?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -922,34 +922,34 @@ impl Event {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::watch_core_v1_event_list_for_all_namespaces`](./struct.Event.html#method.watch_core_v1_event_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1EventListForAllNamespacesResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1EventListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1EventListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1EventListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1EventListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1EventListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1EventListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1021,9 +1021,9 @@ impl Event {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/events/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1053,34 +1053,34 @@ impl Event {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::watch_core_v1_namespaced_event`](./struct.Event.html#method.watch_core_v1_namespaced_event)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedEventResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedEventResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedEventResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedEventResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedEventResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedEventResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedEventResponse::Other, 0)),
         }
     }
@@ -1147,9 +1147,9 @@ impl Event {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/events?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1179,34 +1179,34 @@ impl Event {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Event::watch_core_v1_namespaced_event_list`](./struct.Event.html#method.watch_core_v1_namespaced_event_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedEventListResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedEventListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedEventListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedEventListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedEventListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedEventListResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedEventListResponse::Other, 0)),
         }
     }
@@ -1214,7 +1214,7 @@ impl ::Response for WatchCoreV1NamespacedEventListResponse {
 
 // End /v1/Event
 
-impl ::Resource for Event {
+impl crate::Resource for Event {
     fn api_version() -> &'static str {
         "v1"
     }
@@ -1232,8 +1232,8 @@ impl ::Resource for Event {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for Event {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for Event {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1256,18 +1256,18 @@ impl<'de> ::serde::Deserialize<'de> for Event {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1297,60 +1297,60 @@ impl<'de> ::serde::Deserialize<'de> for Event {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = Event;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct Event")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_action: Option<String> = None;
                 let mut value_count: Option<i32> = None;
-                let mut value_event_time: Option<::v1_11::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
-                let mut value_first_timestamp: Option<::v1_11::apimachinery::pkg::apis::meta::v1::Time> = None;
-                let mut value_involved_object: Option<::v1_11::api::core::v1::ObjectReference> = None;
-                let mut value_last_timestamp: Option<::v1_11::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_event_time: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::MicroTime> = None;
+                let mut value_first_timestamp: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::Time> = None;
+                let mut value_involved_object: Option<crate::v1_11::api::core::v1::ObjectReference> = None;
+                let mut value_last_timestamp: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::Time> = None;
                 let mut value_message: Option<String> = None;
-                let mut value_metadata: Option<::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_reason: Option<String> = None;
-                let mut value_related: Option<::v1_11::api::core::v1::ObjectReference> = None;
+                let mut value_related: Option<crate::v1_11::api::core::v1::ObjectReference> = None;
                 let mut value_reporting_component: Option<String> = None;
                 let mut value_reporting_instance: Option<String> = None;
-                let mut value_series: Option<::v1_11::api::core::v1::EventSeries> = None;
-                let mut value_source: Option<::v1_11::api::core::v1::EventSource> = None;
+                let mut value_series: Option<crate::v1_11::api::core::v1::EventSeries> = None;
+                let mut value_source: Option<crate::v1_11::api::core::v1::EventSource> = None;
                 let mut value_type_: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_action => value_action = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_count => value_count = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_event_time => value_event_time = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_first_timestamp => value_first_timestamp = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_involved_object => value_involved_object = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_last_timestamp => value_last_timestamp = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_message => value_message = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_reason => value_reason = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_related => value_related = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_reporting_component => value_reporting_component = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_reporting_instance => value_reporting_instance = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_series => value_series = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_source => value_source = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_action => value_action = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_count => value_count = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_event_time => value_event_time = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_first_timestamp => value_first_timestamp = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_involved_object => value_involved_object = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_last_timestamp => value_last_timestamp = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_message => value_message = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_reason => value_reason = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_related => value_related = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_reporting_component => value_reporting_component = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_reporting_instance => value_reporting_instance = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_series => value_series = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_source => value_source = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1359,10 +1359,10 @@ impl<'de> ::serde::Deserialize<'de> for Event {
                     count: value_count,
                     event_time: value_event_time,
                     first_timestamp: value_first_timestamp,
-                    involved_object: value_involved_object.ok_or_else(|| ::serde::de::Error::missing_field("involvedObject"))?,
+                    involved_object: value_involved_object.ok_or_else(|| serde::de::Error::missing_field("involvedObject"))?,
                     last_timestamp: value_last_timestamp,
                     message: value_message,
-                    metadata: value_metadata.ok_or_else(|| ::serde::de::Error::missing_field("metadata"))?,
+                    metadata: value_metadata.ok_or_else(|| serde::de::Error::missing_field("metadata"))?,
                     reason: value_reason,
                     related: value_related,
                     reporting_component: value_reporting_component,
@@ -1400,8 +1400,8 @@ impl<'de> ::serde::Deserialize<'de> for Event {
     }
 }
 
-impl ::serde::Serialize for Event {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for Event {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Event",
             0 +
@@ -1422,49 +1422,49 @@ impl ::serde::Serialize for Event {
             self.source.as_ref().map_or(0, |_| 1) +
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.action {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "action", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "action", value)?;
         }
         if let Some(value) = &self.count {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "count", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "count", value)?;
         }
         if let Some(value) = &self.event_time {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "eventTime", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "eventTime", value)?;
         }
         if let Some(value) = &self.first_timestamp {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "firstTimestamp", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "firstTimestamp", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "involvedObject", &self.involved_object)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "involvedObject", &self.involved_object)?;
         if let Some(value) = &self.last_timestamp {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "lastTimestamp", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lastTimestamp", value)?;
         }
         if let Some(value) = &self.message {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "message", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", &self.metadata)?;
         if let Some(value) = &self.reason {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reason", value)?;
         }
         if let Some(value) = &self.related {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "related", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "related", value)?;
         }
         if let Some(value) = &self.reporting_component {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "reportingComponent", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reportingComponent", value)?;
         }
         if let Some(value) = &self.reporting_instance {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "reportingInstance", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reportingInstance", value)?;
         }
         if let Some(value) = &self.series {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "series", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "series", value)?;
         }
         if let Some(value) = &self.source {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "source", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "source", value)?;
         }
         if let Some(value) = &self.type_ {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

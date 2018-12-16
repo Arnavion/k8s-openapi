@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ReplicaSet {
     /// If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the specification of the desired behavior of the ReplicaSet. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<::v1_13::api::apps::v1::ReplicaSetSpec>,
+    pub spec: Option<crate::v1_13::api::apps::v1::ReplicaSetSpec>,
 
     /// Status is the most recently observed status of the ReplicaSet. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<::v1_13::api::apps::v1::ReplicaSetStatus>,
+    pub status: Option<crate::v1_13::api::apps::v1::ReplicaSetStatus>,
 }
 
 // Begin apps/v1/ReplicaSet
@@ -43,13 +43,13 @@ impl ReplicaSet {
     ///     If 'true', then the output is pretty printed.
     pub fn create_apps_v1_namespaced_replica_set(
         namespace: &str,
-        body: &::v1_13::api::apps::v1::ReplicaSet,
+        body: &crate::v1_13::api::apps::v1::ReplicaSet,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -61,50 +61,50 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::create_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.create_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum CreateAppsV1NamespacedReplicaSetResponse {
-    Ok(::v1_13::api::apps::v1::ReplicaSet),
-    Created(::v1_13::api::apps::v1::ReplicaSet),
-    Accepted(::v1_13::api::apps::v1::ReplicaSet),
+    Ok(crate::v1_13::api::apps::v1::ReplicaSet),
+    Created(crate::v1_13::api::apps::v1::ReplicaSet),
+    Accepted(crate::v1_13::api::apps::v1::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateAppsV1NamespacedReplicaSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateAppsV1NamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateAppsV1NamespacedReplicaSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateAppsV1NamespacedReplicaSetResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateAppsV1NamespacedReplicaSetResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
             _ => Ok((CreateAppsV1NamespacedReplicaSetResponse::Other, 0)),
         }
     }
@@ -173,9 +173,9 @@ impl ReplicaSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -205,46 +205,46 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::delete_apps_v1_collection_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_apps_v1_collection_namespaced_replica_set)
 #[derive(Debug)]
 pub enum DeleteAppsV1CollectionNamespacedReplicaSetResponse {
-    OkStatus(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_13::api::apps::v1::ReplicaSet),
+    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_13::api::apps::v1::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteAppsV1CollectionNamespacedReplicaSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteAppsV1CollectionNamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAppsV1CollectionNamespacedReplicaSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAppsV1CollectionNamespacedReplicaSetResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1CollectionNamespacedReplicaSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1CollectionNamespacedReplicaSetResponse::Unauthorized, 0)),
             _ => Ok((DeleteAppsV1CollectionNamespacedReplicaSetResponse::Other, 0)),
         }
     }
@@ -296,9 +296,9 @@ impl ReplicaSet {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -316,55 +316,55 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::delete_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum DeleteAppsV1NamespacedReplicaSetResponse {
-    OkStatus(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_13::api::apps::v1::ReplicaSet),
-    Accepted(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_13::api::apps::v1::ReplicaSet),
+    Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteAppsV1NamespacedReplicaSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteAppsV1NamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAppsV1NamespacedReplicaSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteAppsV1NamespacedReplicaSetResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteAppsV1NamespacedReplicaSetResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
             _ => Ok((DeleteAppsV1NamespacedReplicaSetResponse::Other, 0)),
         }
     }
@@ -433,9 +433,9 @@ impl ReplicaSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -465,32 +465,32 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::list_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.list_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum ListAppsV1NamespacedReplicaSetResponse {
-    Ok(::v1_13::api::apps::v1::ReplicaSetList),
+    Ok(crate::v1_13::api::apps::v1::ReplicaSetList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListAppsV1NamespacedReplicaSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListAppsV1NamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListAppsV1NamespacedReplicaSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
             _ => Ok((ListAppsV1NamespacedReplicaSetResponse::Other, 0)),
         }
     }
@@ -554,9 +554,9 @@ impl ReplicaSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/replicasets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -586,32 +586,32 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::list_apps_v1_replica_set_for_all_namespaces`](./struct.ReplicaSet.html#method.list_apps_v1_replica_set_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListAppsV1ReplicaSetForAllNamespacesResponse {
-    Ok(::v1_13::api::apps::v1::ReplicaSetList),
+    Ok(crate::v1_13::api::apps::v1::ReplicaSetList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListAppsV1ReplicaSetForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListAppsV1ReplicaSetForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListAppsV1ReplicaSetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1ReplicaSetForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1ReplicaSetForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListAppsV1ReplicaSetForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -646,12 +646,12 @@ impl ReplicaSet {
     pub fn patch_apps_v1_namespaced_replica_set(
         name: &str,
         namespace: &str,
-        body: &::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -660,32 +660,32 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::patch_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.patch_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum PatchAppsV1NamespacedReplicaSetResponse {
-    Ok(::v1_13::api::apps::v1::ReplicaSet),
+    Ok(crate::v1_13::api::apps::v1::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchAppsV1NamespacedReplicaSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchAppsV1NamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchAppsV1NamespacedReplicaSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
             _ => Ok((PatchAppsV1NamespacedReplicaSetResponse::Other, 0)),
         }
     }
@@ -720,12 +720,12 @@ impl ReplicaSet {
     pub fn patch_apps_v1_namespaced_replica_set_status(
         name: &str,
         namespace: &str,
-        body: &::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -734,32 +734,32 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::patch_apps_v1_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.patch_apps_v1_namespaced_replica_set_status)
 #[derive(Debug)]
 pub enum PatchAppsV1NamespacedReplicaSetStatusResponse {
-    Ok(::v1_13::api::apps::v1::ReplicaSet),
+    Ok(crate::v1_13::api::apps::v1::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchAppsV1NamespacedReplicaSetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchAppsV1NamespacedReplicaSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchAppsV1NamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1NamespacedReplicaSetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1NamespacedReplicaSetStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchAppsV1NamespacedReplicaSetStatusResponse::Other, 0)),
         }
     }
@@ -799,9 +799,9 @@ impl ReplicaSet {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -813,32 +813,32 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::read_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.read_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum ReadAppsV1NamespacedReplicaSetResponse {
-    Ok(::v1_13::api::apps::v1::ReplicaSet),
+    Ok(crate::v1_13::api::apps::v1::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadAppsV1NamespacedReplicaSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadAppsV1NamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadAppsV1NamespacedReplicaSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
             _ => Ok((ReadAppsV1NamespacedReplicaSetResponse::Other, 0)),
         }
     }
@@ -868,40 +868,40 @@ impl ReplicaSet {
         name: &str,
         namespace: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::read_apps_v1_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.read_apps_v1_namespaced_replica_set_status)
 #[derive(Debug)]
 pub enum ReadAppsV1NamespacedReplicaSetStatusResponse {
-    Ok(::v1_13::api::apps::v1::ReplicaSet),
+    Ok(crate::v1_13::api::apps::v1::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadAppsV1NamespacedReplicaSetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadAppsV1NamespacedReplicaSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadAppsV1NamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1NamespacedReplicaSetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1NamespacedReplicaSetStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadAppsV1NamespacedReplicaSetStatusResponse::Other, 0)),
         }
     }
@@ -936,12 +936,12 @@ impl ReplicaSet {
     pub fn replace_apps_v1_namespaced_replica_set(
         name: &str,
         namespace: &str,
-        body: &::v1_13::api::apps::v1::ReplicaSet,
+        body: &crate::v1_13::api::apps::v1::ReplicaSet,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -950,41 +950,41 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::replace_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.replace_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum ReplaceAppsV1NamespacedReplicaSetResponse {
-    Ok(::v1_13::api::apps::v1::ReplicaSet),
-    Created(::v1_13::api::apps::v1::ReplicaSet),
+    Ok(crate::v1_13::api::apps::v1::ReplicaSet),
+    Created(crate::v1_13::api::apps::v1::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceAppsV1NamespacedReplicaSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceAppsV1NamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceAppsV1NamespacedReplicaSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceAppsV1NamespacedReplicaSetResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
             _ => Ok((ReplaceAppsV1NamespacedReplicaSetResponse::Other, 0)),
         }
     }
@@ -1019,12 +1019,12 @@ impl ReplicaSet {
     pub fn replace_apps_v1_namespaced_replica_set_status(
         name: &str,
         namespace: &str,
-        body: &::v1_13::api::apps::v1::ReplicaSet,
+        body: &crate::v1_13::api::apps::v1::ReplicaSet,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -1033,41 +1033,41 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::replace_apps_v1_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.replace_apps_v1_namespaced_replica_set_status)
 #[derive(Debug)]
 pub enum ReplaceAppsV1NamespacedReplicaSetStatusResponse {
-    Ok(::v1_13::api::apps::v1::ReplicaSet),
-    Created(::v1_13::api::apps::v1::ReplicaSet),
+    Ok(crate::v1_13::api::apps::v1::ReplicaSet),
+    Created(crate::v1_13::api::apps::v1::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceAppsV1NamespacedReplicaSetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceAppsV1NamespacedReplicaSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceAppsV1NamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceAppsV1NamespacedReplicaSetStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1NamespacedReplicaSetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1NamespacedReplicaSetStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplaceAppsV1NamespacedReplicaSetStatusResponse::Other, 0)),
         }
     }
@@ -1141,9 +1141,9 @@ impl ReplicaSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/watch/namespaces/{namespace}/replicasets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1173,34 +1173,34 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::watch_apps_v1_namespaced_replica_set`](./struct.ReplicaSet.html#method.watch_apps_v1_namespaced_replica_set)
 #[derive(Debug)]
 pub enum WatchAppsV1NamespacedReplicaSetResponse {
-    Ok(::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchAppsV1NamespacedReplicaSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchAppsV1NamespacedReplicaSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchAppsV1NamespacedReplicaSetResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1NamespacedReplicaSetResponse::Unauthorized, 0)),
             _ => Ok((WatchAppsV1NamespacedReplicaSetResponse::Other, 0)),
         }
     }
@@ -1269,9 +1269,9 @@ impl ReplicaSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/watch/namespaces/{namespace}/replicasets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1301,34 +1301,34 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::watch_apps_v1_namespaced_replica_set_list`](./struct.ReplicaSet.html#method.watch_apps_v1_namespaced_replica_set_list)
 #[derive(Debug)]
 pub enum WatchAppsV1NamespacedReplicaSetListResponse {
-    Ok(::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchAppsV1NamespacedReplicaSetListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchAppsV1NamespacedReplicaSetListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchAppsV1NamespacedReplicaSetListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1NamespacedReplicaSetListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1NamespacedReplicaSetListResponse::Unauthorized, 0)),
             _ => Ok((WatchAppsV1NamespacedReplicaSetListResponse::Other, 0)),
         }
     }
@@ -1392,9 +1392,9 @@ impl ReplicaSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apps/v1/watch/replicasets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1424,34 +1424,34 @@ impl ReplicaSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ReplicaSet::watch_apps_v1_replica_set_list_for_all_namespaces`](./struct.ReplicaSet.html#method.watch_apps_v1_replica_set_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchAppsV1ReplicaSetListForAllNamespacesResponse {
-    Ok(::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchAppsV1ReplicaSetListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchAppsV1ReplicaSetListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchAppsV1ReplicaSetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1ReplicaSetListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1ReplicaSetListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchAppsV1ReplicaSetListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1459,7 +1459,7 @@ impl ::Response for WatchAppsV1ReplicaSetListForAllNamespacesResponse {
 
 // End apps/v1/ReplicaSet
 
-impl ::Resource for ReplicaSet {
+impl crate::Resource for ReplicaSet {
     fn api_version() -> &'static str {
         "apps/v1"
     }
@@ -1477,8 +1477,8 @@ impl ::Resource for ReplicaSet {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for ReplicaSet {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ReplicaSet {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1489,18 +1489,18 @@ impl<'de> ::serde::Deserialize<'de> for ReplicaSet {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1518,36 +1518,36 @@ impl<'de> ::serde::Deserialize<'de> for ReplicaSet {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ReplicaSet;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ReplicaSet")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_13::api::apps::v1::ReplicaSetSpec> = None;
-                let mut value_status: Option<::v1_13::api::apps::v1::ReplicaSetStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_13::api::apps::v1::ReplicaSetSpec> = None;
+                let mut value_status: Option<crate::v1_13::api::apps::v1::ReplicaSetStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1573,8 +1573,8 @@ impl<'de> ::serde::Deserialize<'de> for ReplicaSet {
     }
 }
 
-impl ::serde::Serialize for ReplicaSet {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ReplicaSet {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ReplicaSet",
             0 +
@@ -1583,17 +1583,17 @@ impl ::serde::Serialize for ReplicaSet {
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

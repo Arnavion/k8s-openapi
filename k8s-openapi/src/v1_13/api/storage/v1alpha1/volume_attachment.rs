@@ -6,13 +6,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct VolumeAttachment {
     /// Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired attach/detach volume behavior. Populated by the Kubernetes system.
-    pub spec: ::v1_13::api::storage::v1alpha1::VolumeAttachmentSpec,
+    pub spec: crate::v1_13::api::storage::v1alpha1::VolumeAttachmentSpec,
 
     /// Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher.
-    pub status: Option<::v1_13::api::storage::v1alpha1::VolumeAttachmentStatus>,
+    pub status: Option<crate::v1_13::api::storage::v1alpha1::VolumeAttachmentStatus>,
 }
 
 // Begin storage.k8s.io/v1alpha1/VolumeAttachment
@@ -40,13 +40,13 @@ impl VolumeAttachment {
     ///
     ///     If 'true', then the output is pretty printed.
     pub fn create_storage_v1alpha1_volume_attachment(
-        body: &::v1_13::api::storage::v1alpha1::VolumeAttachment,
+        body: &crate::v1_13::api::storage::v1alpha1::VolumeAttachment,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -58,50 +58,50 @@ impl VolumeAttachment {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`VolumeAttachment::create_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.create_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum CreateStorageV1alpha1VolumeAttachmentResponse {
-    Ok(::v1_13::api::storage::v1alpha1::VolumeAttachment),
-    Created(::v1_13::api::storage::v1alpha1::VolumeAttachment),
-    Accepted(::v1_13::api::storage::v1alpha1::VolumeAttachment),
+    Ok(crate::v1_13::api::storage::v1alpha1::VolumeAttachment),
+    Created(crate::v1_13::api::storage::v1alpha1::VolumeAttachment),
+    Accepted(crate::v1_13::api::storage::v1alpha1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateStorageV1alpha1VolumeAttachmentResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateStorageV1alpha1VolumeAttachmentResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateStorageV1alpha1VolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateStorageV1alpha1VolumeAttachmentResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateStorageV1alpha1VolumeAttachmentResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
             _ => Ok((CreateStorageV1alpha1VolumeAttachmentResponse::Other, 0)),
         }
     }
@@ -165,9 +165,9 @@ impl VolumeAttachment {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -197,46 +197,46 @@ impl VolumeAttachment {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`VolumeAttachment::delete_storage_v1alpha1_collection_volume_attachment`](./struct.VolumeAttachment.html#method.delete_storage_v1alpha1_collection_volume_attachment)
 #[derive(Debug)]
 pub enum DeleteStorageV1alpha1CollectionVolumeAttachmentResponse {
-    OkStatus(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_13::api::storage::v1alpha1::VolumeAttachment),
+    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_13::api::storage::v1alpha1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteStorageV1alpha1CollectionVolumeAttachmentResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteStorageV1alpha1CollectionVolumeAttachmentResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteStorageV1alpha1CollectionVolumeAttachmentResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteStorageV1alpha1CollectionVolumeAttachmentResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1alpha1CollectionVolumeAttachmentResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1alpha1CollectionVolumeAttachmentResponse::Unauthorized, 0)),
             _ => Ok((DeleteStorageV1alpha1CollectionVolumeAttachmentResponse::Other, 0)),
         }
     }
@@ -283,9 +283,9 @@ impl VolumeAttachment {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -303,55 +303,55 @@ impl VolumeAttachment {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`VolumeAttachment::delete_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.delete_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum DeleteStorageV1alpha1VolumeAttachmentResponse {
-    OkStatus(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_13::api::storage::v1alpha1::VolumeAttachment),
-    Accepted(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_13::api::storage::v1alpha1::VolumeAttachment),
+    Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteStorageV1alpha1VolumeAttachmentResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteStorageV1alpha1VolumeAttachmentResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteStorageV1alpha1VolumeAttachmentResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteStorageV1alpha1VolumeAttachmentResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteStorageV1alpha1VolumeAttachmentResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
             _ => Ok((DeleteStorageV1alpha1VolumeAttachmentResponse::Other, 0)),
         }
     }
@@ -415,9 +415,9 @@ impl VolumeAttachment {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -447,32 +447,32 @@ impl VolumeAttachment {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`VolumeAttachment::list_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.list_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum ListStorageV1alpha1VolumeAttachmentResponse {
-    Ok(::v1_13::api::storage::v1alpha1::VolumeAttachmentList),
+    Ok(crate::v1_13::api::storage::v1alpha1::VolumeAttachmentList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListStorageV1alpha1VolumeAttachmentResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListStorageV1alpha1VolumeAttachmentResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListStorageV1alpha1VolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
             _ => Ok((ListStorageV1alpha1VolumeAttachmentResponse::Other, 0)),
         }
     }
@@ -502,12 +502,12 @@ impl VolumeAttachment {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_storage_v1alpha1_volume_attachment(
         name: &str,
-        body: &::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -516,32 +516,32 @@ impl VolumeAttachment {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`VolumeAttachment::patch_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.patch_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum PatchStorageV1alpha1VolumeAttachmentResponse {
-    Ok(::v1_13::api::storage::v1alpha1::VolumeAttachment),
+    Ok(crate::v1_13::api::storage::v1alpha1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchStorageV1alpha1VolumeAttachmentResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchStorageV1alpha1VolumeAttachmentResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchStorageV1alpha1VolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
             _ => Ok((PatchStorageV1alpha1VolumeAttachmentResponse::Other, 0)),
         }
     }
@@ -576,9 +576,9 @@ impl VolumeAttachment {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -590,32 +590,32 @@ impl VolumeAttachment {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`VolumeAttachment::read_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.read_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum ReadStorageV1alpha1VolumeAttachmentResponse {
-    Ok(::v1_13::api::storage::v1alpha1::VolumeAttachment),
+    Ok(crate::v1_13::api::storage::v1alpha1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadStorageV1alpha1VolumeAttachmentResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadStorageV1alpha1VolumeAttachmentResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadStorageV1alpha1VolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
             _ => Ok((ReadStorageV1alpha1VolumeAttachmentResponse::Other, 0)),
         }
     }
@@ -645,12 +645,12 @@ impl VolumeAttachment {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_storage_v1alpha1_volume_attachment(
         name: &str,
-        body: &::v1_13::api::storage::v1alpha1::VolumeAttachment,
+        body: &crate::v1_13::api::storage::v1alpha1::VolumeAttachment,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -659,41 +659,41 @@ impl VolumeAttachment {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`VolumeAttachment::replace_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.replace_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum ReplaceStorageV1alpha1VolumeAttachmentResponse {
-    Ok(::v1_13::api::storage::v1alpha1::VolumeAttachment),
-    Created(::v1_13::api::storage::v1alpha1::VolumeAttachment),
+    Ok(crate::v1_13::api::storage::v1alpha1::VolumeAttachment),
+    Created(crate::v1_13::api::storage::v1alpha1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceStorageV1alpha1VolumeAttachmentResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceStorageV1alpha1VolumeAttachmentResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceStorageV1alpha1VolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceStorageV1alpha1VolumeAttachmentResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
             _ => Ok((ReplaceStorageV1alpha1VolumeAttachmentResponse::Other, 0)),
         }
     }
@@ -762,9 +762,9 @@ impl VolumeAttachment {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/watch/volumeattachments/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -794,34 +794,34 @@ impl VolumeAttachment {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`VolumeAttachment::watch_storage_v1alpha1_volume_attachment`](./struct.VolumeAttachment.html#method.watch_storage_v1alpha1_volume_attachment)
 #[derive(Debug)]
 pub enum WatchStorageV1alpha1VolumeAttachmentResponse {
-    Ok(::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchStorageV1alpha1VolumeAttachmentResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchStorageV1alpha1VolumeAttachmentResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchStorageV1alpha1VolumeAttachmentResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchStorageV1alpha1VolumeAttachmentResponse::Unauthorized, 0)),
             _ => Ok((WatchStorageV1alpha1VolumeAttachmentResponse::Other, 0)),
         }
     }
@@ -885,9 +885,9 @@ impl VolumeAttachment {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1alpha1/watch/volumeattachments?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -917,34 +917,34 @@ impl VolumeAttachment {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`VolumeAttachment::watch_storage_v1alpha1_volume_attachment_list`](./struct.VolumeAttachment.html#method.watch_storage_v1alpha1_volume_attachment_list)
 #[derive(Debug)]
 pub enum WatchStorageV1alpha1VolumeAttachmentListResponse {
-    Ok(::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchStorageV1alpha1VolumeAttachmentListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchStorageV1alpha1VolumeAttachmentListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchStorageV1alpha1VolumeAttachmentListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchStorageV1alpha1VolumeAttachmentListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchStorageV1alpha1VolumeAttachmentListResponse::Unauthorized, 0)),
             _ => Ok((WatchStorageV1alpha1VolumeAttachmentListResponse::Other, 0)),
         }
     }
@@ -952,7 +952,7 @@ impl ::Response for WatchStorageV1alpha1VolumeAttachmentListResponse {
 
 // End storage.k8s.io/v1alpha1/VolumeAttachment
 
-impl ::Resource for VolumeAttachment {
+impl crate::Resource for VolumeAttachment {
     fn api_version() -> &'static str {
         "storage.k8s.io/v1alpha1"
     }
@@ -970,8 +970,8 @@ impl ::Resource for VolumeAttachment {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for VolumeAttachment {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for VolumeAttachment {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -982,18 +982,18 @@ impl<'de> ::serde::Deserialize<'de> for VolumeAttachment {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1011,42 +1011,42 @@ impl<'de> ::serde::Deserialize<'de> for VolumeAttachment {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = VolumeAttachment;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct VolumeAttachment")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_13::api::storage::v1alpha1::VolumeAttachmentSpec> = None;
-                let mut value_status: Option<::v1_13::api::storage::v1alpha1::VolumeAttachmentStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_13::api::storage::v1alpha1::VolumeAttachmentSpec> = None;
+                let mut value_status: Option<crate::v1_13::api::storage::v1alpha1::VolumeAttachmentStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(VolumeAttachment {
                     metadata: value_metadata,
-                    spec: value_spec.ok_or_else(|| ::serde::de::Error::missing_field("spec"))?,
+                    spec: value_spec.ok_or_else(|| serde::de::Error::missing_field("spec"))?,
                     status: value_status,
                 })
             }
@@ -1066,8 +1066,8 @@ impl<'de> ::serde::Deserialize<'de> for VolumeAttachment {
     }
 }
 
-impl ::serde::Serialize for VolumeAttachment {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for VolumeAttachment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "VolumeAttachment",
             0 +
@@ -1076,15 +1076,15 @@ impl ::serde::Serialize for VolumeAttachment {
             1 +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", &self.spec)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "spec", &self.spec)?;
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

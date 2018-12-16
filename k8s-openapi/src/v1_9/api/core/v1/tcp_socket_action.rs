@@ -7,11 +7,11 @@ pub struct TCPSocketAction {
     pub host: Option<String>,
 
     /// Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-    pub port: ::v1_9::apimachinery::pkg::util::intstr::IntOrString,
+    pub port: crate::v1_9::apimachinery::pkg::util::intstr::IntOrString,
 }
 
-impl<'de> ::serde::Deserialize<'de> for TCPSocketAction {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for TCPSocketAction {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_host,
@@ -19,18 +19,18 @@ impl<'de> ::serde::Deserialize<'de> for TCPSocketAction {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "host" => Field::Key_host,
                             "port" => Field::Key_port,
@@ -45,28 +45,28 @@ impl<'de> ::serde::Deserialize<'de> for TCPSocketAction {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = TCPSocketAction;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct TCPSocketAction")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_host: Option<String> = None;
-                let mut value_port: Option<::v1_9::apimachinery::pkg::util::intstr::IntOrString> = None;
+                let mut value_port: Option<crate::v1_9::apimachinery::pkg::util::intstr::IntOrString> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_host => value_host = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_port => value_port = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_host => value_host = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_port => value_port = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(TCPSocketAction {
                     host: value_host,
-                    port: value_port.ok_or_else(|| ::serde::de::Error::missing_field("port"))?,
+                    port: value_port.ok_or_else(|| serde::de::Error::missing_field("port"))?,
                 })
             }
         }
@@ -82,8 +82,8 @@ impl<'de> ::serde::Deserialize<'de> for TCPSocketAction {
     }
 }
 
-impl ::serde::Serialize for TCPSocketAction {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for TCPSocketAction {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TCPSocketAction",
             0 +
@@ -91,9 +91,9 @@ impl ::serde::Serialize for TCPSocketAction {
             1,
         )?;
         if let Some(value) = &self.host {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "host", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "host", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "port", &self.port)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "port", &self.port)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

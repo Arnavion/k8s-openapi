@@ -7,13 +7,13 @@ pub struct ServiceAccount {
     pub automount_service_account_token: Option<bool>,
 
     /// ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet. More info: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
-    pub image_pull_secrets: Option<Vec<::v1_7::kubernetes::pkg::api::v1::LocalObjectReference>>,
+    pub image_pull_secrets: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::LocalObjectReference>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret
-    pub secrets: Option<Vec<::v1_7::kubernetes::pkg::api::v1::ObjectReference>>,
+    pub secrets: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::ObjectReference>>,
 }
 
 // Begin /v1/ServiceAccount
@@ -38,42 +38,42 @@ impl ServiceAccount {
     ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_service_account(
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::api::v1::ServiceAccount,
+        body: &crate::v1_7::kubernetes::pkg::api::v1::ServiceAccount,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::create_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.create_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedServiceAccountResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateCoreV1NamespacedServiceAccountResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateCoreV1NamespacedServiceAccountResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedServiceAccountResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
             _ => Ok((CreateCoreV1NamespacedServiceAccountResponse::Other, 0)),
         }
     }
@@ -128,9 +128,9 @@ impl ServiceAccount {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -154,46 +154,46 @@ impl ServiceAccount {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::delete_core_v1_collection_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_core_v1_collection_namespaced_service_account)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedServiceAccountResponse {
-    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
+    OkStatus(crate::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1CollectionNamespacedServiceAccountResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1CollectionNamespacedServiceAccountResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNamespacedServiceAccountResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNamespacedServiceAccountResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedServiceAccountResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedServiceAccountResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1CollectionNamespacedServiceAccountResponse::Other, 0)),
         }
     }
@@ -240,9 +240,9 @@ impl ServiceAccount {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -257,46 +257,46 @@ impl ServiceAccount {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::delete_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedServiceAccountResponse {
-    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
+    OkStatus(crate::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1NamespacedServiceAccountResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1NamespacedServiceAccountResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedServiceAccountResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedServiceAccountResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1NamespacedServiceAccountResponse::Other, 0)),
         }
     }
@@ -351,9 +351,9 @@ impl ServiceAccount {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -377,32 +377,32 @@ impl ServiceAccount {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::list_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.list_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedServiceAccountResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccountList),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::ServiceAccountList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1NamespacedServiceAccountResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1NamespacedServiceAccountResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1NamespacedServiceAccountResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1NamespacedServiceAccountResponse::Other, 0)),
         }
     }
@@ -452,9 +452,9 @@ impl ServiceAccount {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/serviceaccounts?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -478,32 +478,32 @@ impl ServiceAccount {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::list_core_v1_service_account_for_all_namespaces`](./struct.ServiceAccount.html#method.list_core_v1_service_account_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1ServiceAccountForAllNamespacesResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccountList),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::ServiceAccountList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1ServiceAccountForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1ServiceAccountForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1ServiceAccountForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ServiceAccountForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ServiceAccountForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1ServiceAccountForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -534,42 +534,42 @@ impl ServiceAccount {
     pub fn patch_core_v1_namespaced_service_account(
         name: &str,
         namespace: &str,
-        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::patch_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.patch_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedServiceAccountResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NamespacedServiceAccountResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NamespacedServiceAccountResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NamespacedServiceAccountResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NamespacedServiceAccountResponse::Other, 0)),
         }
     }
@@ -609,9 +609,9 @@ impl ServiceAccount {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -623,32 +623,32 @@ impl ServiceAccount {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::read_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.read_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedServiceAccountResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NamespacedServiceAccountResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NamespacedServiceAccountResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NamespacedServiceAccountResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NamespacedServiceAccountResponse::Other, 0)),
         }
     }
@@ -679,42 +679,42 @@ impl ServiceAccount {
     pub fn replace_core_v1_namespaced_service_account(
         name: &str,
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::api::v1::ServiceAccount,
+        body: &crate::v1_7::kubernetes::pkg::api::v1::ServiceAccount,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::replace_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.replace_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedServiceAccountResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NamespacedServiceAccountResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NamespacedServiceAccountResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedServiceAccountResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NamespacedServiceAccountResponse::Other, 0)),
         }
     }
@@ -774,9 +774,9 @@ impl ServiceAccount {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/serviceaccounts/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -800,34 +800,34 @@ impl ServiceAccount {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::watch_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.watch_core_v1_namespaced_service_account)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedServiceAccountResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedServiceAccountResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedServiceAccountResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedServiceAccountResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedServiceAccountResponse::Other, 0)),
         }
     }
@@ -882,9 +882,9 @@ impl ServiceAccount {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/serviceaccounts?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -908,34 +908,34 @@ impl ServiceAccount {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::watch_core_v1_namespaced_service_account_list`](./struct.ServiceAccount.html#method.watch_core_v1_namespaced_service_account_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedServiceAccountListResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedServiceAccountListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedServiceAccountListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedServiceAccountListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceAccountListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceAccountListResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedServiceAccountListResponse::Other, 0)),
         }
     }
@@ -985,9 +985,9 @@ impl ServiceAccount {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/serviceaccounts?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -1011,34 +1011,34 @@ impl ServiceAccount {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ServiceAccount::watch_core_v1_service_account_list_for_all_namespaces`](./struct.ServiceAccount.html#method.watch_core_v1_service_account_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1ServiceAccountListForAllNamespacesResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1ServiceAccountListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1ServiceAccountListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1ServiceAccountListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1ServiceAccountListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1ServiceAccountListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1ServiceAccountListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1046,7 +1046,7 @@ impl ::Response for WatchCoreV1ServiceAccountListForAllNamespacesResponse {
 
 // End /v1/ServiceAccount
 
-impl ::Resource for ServiceAccount {
+impl crate::Resource for ServiceAccount {
     fn api_version() -> &'static str {
         "v1"
     }
@@ -1064,8 +1064,8 @@ impl ::Resource for ServiceAccount {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for ServiceAccount {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ServiceAccount {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1077,18 +1077,18 @@ impl<'de> ::serde::Deserialize<'de> for ServiceAccount {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1107,38 +1107,38 @@ impl<'de> ::serde::Deserialize<'de> for ServiceAccount {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ServiceAccount;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ServiceAccount")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_automount_service_account_token: Option<bool> = None;
-                let mut value_image_pull_secrets: Option<Vec<::v1_7::kubernetes::pkg::api::v1::LocalObjectReference>> = None;
-                let mut value_metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_secrets: Option<Vec<::v1_7::kubernetes::pkg::api::v1::ObjectReference>> = None;
+                let mut value_image_pull_secrets: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::LocalObjectReference>> = None;
+                let mut value_metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_secrets: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::ObjectReference>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_automount_service_account_token => value_automount_service_account_token = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_image_pull_secrets => value_image_pull_secrets = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secrets => value_secrets = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_automount_service_account_token => value_automount_service_account_token = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_image_pull_secrets => value_image_pull_secrets = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secrets => value_secrets = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1166,8 +1166,8 @@ impl<'de> ::serde::Deserialize<'de> for ServiceAccount {
     }
 }
 
-impl ::serde::Serialize for ServiceAccount {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ServiceAccount {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ServiceAccount",
             0 +
@@ -1177,20 +1177,20 @@ impl ::serde::Serialize for ServiceAccount {
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.secrets.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.automount_service_account_token {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "automountServiceAccountToken", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "automountServiceAccountToken", value)?;
         }
         if let Some(value) = &self.image_pull_secrets {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", value)?;
         }
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.secrets {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "secrets", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secrets", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

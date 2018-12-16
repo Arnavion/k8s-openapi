@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct DaemonSet {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// The desired behavior of this daemon set. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetSpec>,
+    pub spec: Option<crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetSpec>,
 
     /// The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetStatus>,
+    pub status: Option<crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetStatus>,
 }
 
 // Begin extensions/v1beta1/DaemonSet
@@ -35,42 +35,42 @@ impl DaemonSet {
     ///     If 'true', then the output is pretty printed.
     pub fn create_extensions_v1beta1_namespaced_daemon_set(
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet,
+        body: &crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::create_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum CreateExtensionsV1beta1NamespacedDaemonSetResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
+    Ok(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateExtensionsV1beta1NamespacedDaemonSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
             _ => Ok((CreateExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
         }
     }
@@ -125,9 +125,9 @@ impl DaemonSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -151,46 +151,46 @@ impl DaemonSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::delete_extensions_v1beta1_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_extensions_v1beta1_collection_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse {
-    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
+    OkStatus(crate::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::Unauthorized, 0)),
             _ => Ok((DeleteExtensionsV1beta1CollectionNamespacedDaemonSetResponse::Other, 0)),
         }
     }
@@ -237,9 +237,9 @@ impl DaemonSet {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -254,46 +254,46 @@ impl DaemonSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::delete_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum DeleteExtensionsV1beta1NamespacedDaemonSetResponse {
-    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
+    OkStatus(crate::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteExtensionsV1beta1NamespacedDaemonSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteExtensionsV1beta1NamespacedDaemonSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteExtensionsV1beta1NamespacedDaemonSetResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
             _ => Ok((DeleteExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
         }
     }
@@ -343,9 +343,9 @@ impl DaemonSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/daemonsets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -369,32 +369,32 @@ impl DaemonSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::list_extensions_v1beta1_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_extensions_v1beta1_daemon_set_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1DaemonSetForAllNamespacesResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetList),
+    Ok(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListExtensionsV1beta1DaemonSetForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListExtensionsV1beta1DaemonSetForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListExtensionsV1beta1DaemonSetForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -449,9 +449,9 @@ impl DaemonSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -475,32 +475,32 @@ impl DaemonSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::list_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum ListExtensionsV1beta1NamespacedDaemonSetResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetList),
+    Ok(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListExtensionsV1beta1NamespacedDaemonSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
             _ => Ok((ListExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
         }
     }
@@ -531,42 +531,42 @@ impl DaemonSet {
     pub fn patch_extensions_v1beta1_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::patch_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedDaemonSetResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
+    Ok(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchExtensionsV1beta1NamespacedDaemonSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
             _ => Ok((PatchExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
         }
     }
@@ -597,42 +597,42 @@ impl DaemonSet {
     pub fn patch_extensions_v1beta1_namespaced_daemon_set_status(
         name: &str,
         namespace: &str,
-        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::patch_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_extensions_v1beta1_namespaced_daemon_set_status)
 #[derive(Debug)]
 pub enum PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
+    Ok(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other, 0)),
         }
     }
@@ -672,9 +672,9 @@ impl DaemonSet {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -686,32 +686,32 @@ impl DaemonSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::read_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedDaemonSetResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
+    Ok(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadExtensionsV1beta1NamespacedDaemonSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
             _ => Ok((ReadExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
         }
     }
@@ -741,40 +741,40 @@ impl DaemonSet {
         name: &str,
         namespace: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::read_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_extensions_v1beta1_namespaced_daemon_set_status)
 #[derive(Debug)]
 pub enum ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
+    Ok(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other, 0)),
         }
     }
@@ -805,42 +805,42 @@ impl DaemonSet {
     pub fn replace_extensions_v1beta1_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet,
+        body: &crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::replace_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedDaemonSetResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
+    Ok(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceExtensionsV1beta1NamespacedDaemonSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
             _ => Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
         }
     }
@@ -871,42 +871,42 @@ impl DaemonSet {
     pub fn replace_extensions_v1beta1_namespaced_daemon_set_status(
         name: &str,
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet,
+        body: &crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::replace_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_extensions_v1beta1_namespaced_daemon_set_status)
 #[derive(Debug)]
 pub enum ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
+    Ok(crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplaceExtensionsV1beta1NamespacedDaemonSetStatusResponse::Other, 0)),
         }
     }
@@ -956,9 +956,9 @@ impl DaemonSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/watch/daemonsets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -982,34 +982,34 @@ impl DaemonSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::watch_extensions_v1beta1_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_daemon_set_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchExtensionsV1beta1DaemonSetListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1069,9 +1069,9 @@ impl DaemonSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -1095,34 +1095,34 @@ impl DaemonSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::watch_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_namespaced_daemon_set)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NamespacedDaemonSetResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchExtensionsV1beta1NamespacedDaemonSetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchExtensionsV1beta1NamespacedDaemonSetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchExtensionsV1beta1NamespacedDaemonSetResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedDaemonSetResponse::Unauthorized, 0)),
             _ => Ok((WatchExtensionsV1beta1NamespacedDaemonSetResponse::Other, 0)),
         }
     }
@@ -1177,9 +1177,9 @@ impl DaemonSet {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/daemonsets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -1203,34 +1203,34 @@ impl DaemonSet {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`DaemonSet::watch_extensions_v1beta1_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_namespaced_daemon_set_list)
 #[derive(Debug)]
 pub enum WatchExtensionsV1beta1NamespacedDaemonSetListResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchExtensionsV1beta1NamespacedDaemonSetListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchExtensionsV1beta1NamespacedDaemonSetListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Unauthorized, 0)),
             _ => Ok((WatchExtensionsV1beta1NamespacedDaemonSetListResponse::Other, 0)),
         }
     }
@@ -1238,7 +1238,7 @@ impl ::Response for WatchExtensionsV1beta1NamespacedDaemonSetListResponse {
 
 // End extensions/v1beta1/DaemonSet
 
-impl ::Resource for DaemonSet {
+impl crate::Resource for DaemonSet {
     fn api_version() -> &'static str {
         "extensions/v1beta1"
     }
@@ -1256,8 +1256,8 @@ impl ::Resource for DaemonSet {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for DaemonSet {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for DaemonSet {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1268,18 +1268,18 @@ impl<'de> ::serde::Deserialize<'de> for DaemonSet {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1297,36 +1297,36 @@ impl<'de> ::serde::Deserialize<'de> for DaemonSet {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = DaemonSet;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct DaemonSet")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetSpec> = None;
-                let mut value_status: Option<::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetSpec> = None;
+                let mut value_status: Option<crate::v1_7::kubernetes::pkg::apis::extensions::v1beta1::DaemonSetStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1352,8 +1352,8 @@ impl<'de> ::serde::Deserialize<'de> for DaemonSet {
     }
 }
 
-impl ::serde::Serialize for DaemonSet {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for DaemonSet {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DaemonSet",
             0 +
@@ -1362,17 +1362,17 @@ impl ::serde::Serialize for DaemonSet {
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

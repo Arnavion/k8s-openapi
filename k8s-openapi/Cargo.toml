@@ -6,6 +6,7 @@ authors = ["Arnavion <arnavion@gmail.com>"]
 categories = ["api-bindings", "web-programming::http-client"]
 description = "Bindings for the Kubernetes client API"
 documentation = "https://docs.rs/k8s-openapi"
+edition = "2018"
 keywords = ["client", "kubernetes", "k8s", "http"]
 readme = "README.md"
 repository = "https://github.com/Arnavion/k8s-openapi-codegen"

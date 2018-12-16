@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CronJob {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired behavior of a cron job, including the schedule. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<::v1_12::api::batch::v2alpha1::CronJobSpec>,
+    pub spec: Option<crate::v1_12::api::batch::v2alpha1::CronJobSpec>,
 
     /// Current status of a cron job. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<::v1_12::api::batch::v2alpha1::CronJobStatus>,
+    pub status: Option<crate::v1_12::api::batch::v2alpha1::CronJobStatus>,
 }
 
 // Begin batch/v2alpha1/CronJob
@@ -43,13 +43,13 @@ impl CronJob {
     ///     If 'true', then the output is pretty printed.
     pub fn create_batch_v2alpha1_namespaced_cron_job(
         namespace: &str,
-        body: &::v1_12::api::batch::v2alpha1::CronJob,
+        body: &crate::v1_12::api::batch::v2alpha1::CronJob,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -61,50 +61,50 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::create_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.create_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum CreateBatchV2alpha1NamespacedCronJobResponse {
-    Ok(::v1_12::api::batch::v2alpha1::CronJob),
-    Created(::v1_12::api::batch::v2alpha1::CronJob),
-    Accepted(::v1_12::api::batch::v2alpha1::CronJob),
+    Ok(crate::v1_12::api::batch::v2alpha1::CronJob),
+    Created(crate::v1_12::api::batch::v2alpha1::CronJob),
+    Accepted(crate::v1_12::api::batch::v2alpha1::CronJob),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateBatchV2alpha1NamespacedCronJobResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateBatchV2alpha1NamespacedCronJobResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateBatchV2alpha1NamespacedCronJobResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateBatchV2alpha1NamespacedCronJobResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateBatchV2alpha1NamespacedCronJobResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
             _ => Ok((CreateBatchV2alpha1NamespacedCronJobResponse::Other, 0)),
         }
     }
@@ -173,9 +173,9 @@ impl CronJob {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -205,46 +205,46 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::delete_batch_v2alpha1_collection_namespaced_cron_job`](./struct.CronJob.html#method.delete_batch_v2alpha1_collection_namespaced_cron_job)
 #[derive(Debug)]
 pub enum DeleteBatchV2alpha1CollectionNamespacedCronJobResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::api::batch::v2alpha1::CronJob),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::api::batch::v2alpha1::CronJob),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteBatchV2alpha1CollectionNamespacedCronJobResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteBatchV2alpha1CollectionNamespacedCronJobResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteBatchV2alpha1CollectionNamespacedCronJobResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteBatchV2alpha1CollectionNamespacedCronJobResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteBatchV2alpha1CollectionNamespacedCronJobResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteBatchV2alpha1CollectionNamespacedCronJobResponse::Unauthorized, 0)),
             _ => Ok((DeleteBatchV2alpha1CollectionNamespacedCronJobResponse::Other, 0)),
         }
     }
@@ -296,9 +296,9 @@ impl CronJob {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -316,55 +316,55 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::delete_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.delete_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum DeleteBatchV2alpha1NamespacedCronJobResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::api::batch::v2alpha1::CronJob),
-    Accepted(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::api::batch::v2alpha1::CronJob),
+    Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteBatchV2alpha1NamespacedCronJobResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteBatchV2alpha1NamespacedCronJobResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteBatchV2alpha1NamespacedCronJobResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteBatchV2alpha1NamespacedCronJobResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteBatchV2alpha1NamespacedCronJobResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
             _ => Ok((DeleteBatchV2alpha1NamespacedCronJobResponse::Other, 0)),
         }
     }
@@ -428,9 +428,9 @@ impl CronJob {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/cronjobs?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -460,32 +460,32 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::list_batch_v2alpha1_cron_job_for_all_namespaces`](./struct.CronJob.html#method.list_batch_v2alpha1_cron_job_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListBatchV2alpha1CronJobForAllNamespacesResponse {
-    Ok(::v1_12::api::batch::v2alpha1::CronJobList),
+    Ok(crate::v1_12::api::batch::v2alpha1::CronJobList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListBatchV2alpha1CronJobForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListBatchV2alpha1CronJobForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListBatchV2alpha1CronJobForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListBatchV2alpha1CronJobForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListBatchV2alpha1CronJobForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListBatchV2alpha1CronJobForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -554,9 +554,9 @@ impl CronJob {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -586,32 +586,32 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::list_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.list_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum ListBatchV2alpha1NamespacedCronJobResponse {
-    Ok(::v1_12::api::batch::v2alpha1::CronJobList),
+    Ok(crate::v1_12::api::batch::v2alpha1::CronJobList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListBatchV2alpha1NamespacedCronJobResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListBatchV2alpha1NamespacedCronJobResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListBatchV2alpha1NamespacedCronJobResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
             _ => Ok((ListBatchV2alpha1NamespacedCronJobResponse::Other, 0)),
         }
     }
@@ -646,12 +646,12 @@ impl CronJob {
     pub fn patch_batch_v2alpha1_namespaced_cron_job(
         name: &str,
         namespace: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -660,32 +660,32 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::patch_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.patch_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum PatchBatchV2alpha1NamespacedCronJobResponse {
-    Ok(::v1_12::api::batch::v2alpha1::CronJob),
+    Ok(crate::v1_12::api::batch::v2alpha1::CronJob),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchBatchV2alpha1NamespacedCronJobResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchBatchV2alpha1NamespacedCronJobResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchBatchV2alpha1NamespacedCronJobResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
             _ => Ok((PatchBatchV2alpha1NamespacedCronJobResponse::Other, 0)),
         }
     }
@@ -720,12 +720,12 @@ impl CronJob {
     pub fn patch_batch_v2alpha1_namespaced_cron_job_status(
         name: &str,
         namespace: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -734,32 +734,32 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::patch_batch_v2alpha1_namespaced_cron_job_status`](./struct.CronJob.html#method.patch_batch_v2alpha1_namespaced_cron_job_status)
 #[derive(Debug)]
 pub enum PatchBatchV2alpha1NamespacedCronJobStatusResponse {
-    Ok(::v1_12::api::batch::v2alpha1::CronJob),
+    Ok(crate::v1_12::api::batch::v2alpha1::CronJob),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchBatchV2alpha1NamespacedCronJobStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchBatchV2alpha1NamespacedCronJobStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchBatchV2alpha1NamespacedCronJobStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchBatchV2alpha1NamespacedCronJobStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchBatchV2alpha1NamespacedCronJobStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchBatchV2alpha1NamespacedCronJobStatusResponse::Other, 0)),
         }
     }
@@ -799,9 +799,9 @@ impl CronJob {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -813,32 +813,32 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::read_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.read_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum ReadBatchV2alpha1NamespacedCronJobResponse {
-    Ok(::v1_12::api::batch::v2alpha1::CronJob),
+    Ok(crate::v1_12::api::batch::v2alpha1::CronJob),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadBatchV2alpha1NamespacedCronJobResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadBatchV2alpha1NamespacedCronJobResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadBatchV2alpha1NamespacedCronJobResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
             _ => Ok((ReadBatchV2alpha1NamespacedCronJobResponse::Other, 0)),
         }
     }
@@ -868,40 +868,40 @@ impl CronJob {
         name: &str,
         namespace: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::read_batch_v2alpha1_namespaced_cron_job_status`](./struct.CronJob.html#method.read_batch_v2alpha1_namespaced_cron_job_status)
 #[derive(Debug)]
 pub enum ReadBatchV2alpha1NamespacedCronJobStatusResponse {
-    Ok(::v1_12::api::batch::v2alpha1::CronJob),
+    Ok(crate::v1_12::api::batch::v2alpha1::CronJob),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadBatchV2alpha1NamespacedCronJobStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadBatchV2alpha1NamespacedCronJobStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadBatchV2alpha1NamespacedCronJobStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadBatchV2alpha1NamespacedCronJobStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadBatchV2alpha1NamespacedCronJobStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadBatchV2alpha1NamespacedCronJobStatusResponse::Other, 0)),
         }
     }
@@ -936,12 +936,12 @@ impl CronJob {
     pub fn replace_batch_v2alpha1_namespaced_cron_job(
         name: &str,
         namespace: &str,
-        body: &::v1_12::api::batch::v2alpha1::CronJob,
+        body: &crate::v1_12::api::batch::v2alpha1::CronJob,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -950,41 +950,41 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::replace_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.replace_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum ReplaceBatchV2alpha1NamespacedCronJobResponse {
-    Ok(::v1_12::api::batch::v2alpha1::CronJob),
-    Created(::v1_12::api::batch::v2alpha1::CronJob),
+    Ok(crate::v1_12::api::batch::v2alpha1::CronJob),
+    Created(crate::v1_12::api::batch::v2alpha1::CronJob),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceBatchV2alpha1NamespacedCronJobResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceBatchV2alpha1NamespacedCronJobResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceBatchV2alpha1NamespacedCronJobResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceBatchV2alpha1NamespacedCronJobResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
             _ => Ok((ReplaceBatchV2alpha1NamespacedCronJobResponse::Other, 0)),
         }
     }
@@ -1019,12 +1019,12 @@ impl CronJob {
     pub fn replace_batch_v2alpha1_namespaced_cron_job_status(
         name: &str,
         namespace: &str,
-        body: &::v1_12::api::batch::v2alpha1::CronJob,
+        body: &crate::v1_12::api::batch::v2alpha1::CronJob,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/namespaces/{namespace}/cronjobs/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -1033,41 +1033,41 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::replace_batch_v2alpha1_namespaced_cron_job_status`](./struct.CronJob.html#method.replace_batch_v2alpha1_namespaced_cron_job_status)
 #[derive(Debug)]
 pub enum ReplaceBatchV2alpha1NamespacedCronJobStatusResponse {
-    Ok(::v1_12::api::batch::v2alpha1::CronJob),
-    Created(::v1_12::api::batch::v2alpha1::CronJob),
+    Ok(crate::v1_12::api::batch::v2alpha1::CronJob),
+    Created(crate::v1_12::api::batch::v2alpha1::CronJob),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceBatchV2alpha1NamespacedCronJobStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceBatchV2alpha1NamespacedCronJobStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceBatchV2alpha1NamespacedCronJobStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceBatchV2alpha1NamespacedCronJobStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceBatchV2alpha1NamespacedCronJobStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceBatchV2alpha1NamespacedCronJobStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplaceBatchV2alpha1NamespacedCronJobStatusResponse::Other, 0)),
         }
     }
@@ -1131,9 +1131,9 @@ impl CronJob {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/watch/cronjobs?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1163,34 +1163,34 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::watch_batch_v2alpha1_cron_job_list_for_all_namespaces`](./struct.CronJob.html#method.watch_batch_v2alpha1_cron_job_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchBatchV2alpha1CronJobListForAllNamespacesResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchBatchV2alpha1CronJobListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchBatchV2alpha1CronJobListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchBatchV2alpha1CronJobListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchBatchV2alpha1CronJobListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchBatchV2alpha1CronJobListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchBatchV2alpha1CronJobListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1264,9 +1264,9 @@ impl CronJob {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/watch/namespaces/{namespace}/cronjobs/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1296,34 +1296,34 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::watch_batch_v2alpha1_namespaced_cron_job`](./struct.CronJob.html#method.watch_batch_v2alpha1_namespaced_cron_job)
 #[derive(Debug)]
 pub enum WatchBatchV2alpha1NamespacedCronJobResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchBatchV2alpha1NamespacedCronJobResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchBatchV2alpha1NamespacedCronJobResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchBatchV2alpha1NamespacedCronJobResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchBatchV2alpha1NamespacedCronJobResponse::Unauthorized, 0)),
             _ => Ok((WatchBatchV2alpha1NamespacedCronJobResponse::Other, 0)),
         }
     }
@@ -1392,9 +1392,9 @@ impl CronJob {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/batch/v2alpha1/watch/namespaces/{namespace}/cronjobs?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1424,34 +1424,34 @@ impl CronJob {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`CronJob::watch_batch_v2alpha1_namespaced_cron_job_list`](./struct.CronJob.html#method.watch_batch_v2alpha1_namespaced_cron_job_list)
 #[derive(Debug)]
 pub enum WatchBatchV2alpha1NamespacedCronJobListResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchBatchV2alpha1NamespacedCronJobListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchBatchV2alpha1NamespacedCronJobListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchBatchV2alpha1NamespacedCronJobListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchBatchV2alpha1NamespacedCronJobListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchBatchV2alpha1NamespacedCronJobListResponse::Unauthorized, 0)),
             _ => Ok((WatchBatchV2alpha1NamespacedCronJobListResponse::Other, 0)),
         }
     }
@@ -1459,7 +1459,7 @@ impl ::Response for WatchBatchV2alpha1NamespacedCronJobListResponse {
 
 // End batch/v2alpha1/CronJob
 
-impl ::Resource for CronJob {
+impl crate::Resource for CronJob {
     fn api_version() -> &'static str {
         "batch/v2alpha1"
     }
@@ -1477,8 +1477,8 @@ impl ::Resource for CronJob {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for CronJob {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for CronJob {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1489,18 +1489,18 @@ impl<'de> ::serde::Deserialize<'de> for CronJob {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1518,36 +1518,36 @@ impl<'de> ::serde::Deserialize<'de> for CronJob {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = CronJob;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct CronJob")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_12::api::batch::v2alpha1::CronJobSpec> = None;
-                let mut value_status: Option<::v1_12::api::batch::v2alpha1::CronJobStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_12::api::batch::v2alpha1::CronJobSpec> = None;
+                let mut value_status: Option<crate::v1_12::api::batch::v2alpha1::CronJobStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1573,8 +1573,8 @@ impl<'de> ::serde::Deserialize<'de> for CronJob {
     }
 }
 
-impl ::serde::Serialize for CronJob {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for CronJob {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CronJob",
             0 +
@@ -1583,17 +1583,17 @@ impl ::serde::Serialize for CronJob {
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

@@ -7,7 +7,7 @@ pub struct ReplicaSetStatus {
     pub available_replicas: Option<i32>,
 
     /// Represents the latest available observations of a replica set's current state.
-    pub conditions: Option<Vec<::v1_12::api::extensions::v1beta1::ReplicaSetCondition>>,
+    pub conditions: Option<Vec<crate::v1_12::api::extensions::v1beta1::ReplicaSetCondition>>,
 
     /// The number of pods that have labels matching the labels of the pod template of the replicaset.
     pub fully_labeled_replicas: Option<i32>,
@@ -22,8 +22,8 @@ pub struct ReplicaSetStatus {
     pub replicas: i32,
 }
 
-impl<'de> ::serde::Deserialize<'de> for ReplicaSetStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ReplicaSetStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_available_replicas,
@@ -35,18 +35,18 @@ impl<'de> ::serde::Deserialize<'de> for ReplicaSetStatus {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "availableReplicas" => Field::Key_available_replicas,
                             "conditions" => Field::Key_conditions,
@@ -65,30 +65,30 @@ impl<'de> ::serde::Deserialize<'de> for ReplicaSetStatus {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ReplicaSetStatus;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ReplicaSetStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_available_replicas: Option<i32> = None;
-                let mut value_conditions: Option<Vec<::v1_12::api::extensions::v1beta1::ReplicaSetCondition>> = None;
+                let mut value_conditions: Option<Vec<crate::v1_12::api::extensions::v1beta1::ReplicaSetCondition>> = None;
                 let mut value_fully_labeled_replicas: Option<i32> = None;
                 let mut value_observed_generation: Option<i64> = None;
                 let mut value_ready_replicas: Option<i32> = None;
                 let mut value_replicas: Option<i32> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_available_replicas => value_available_replicas = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_conditions => value_conditions = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_fully_labeled_replicas => value_fully_labeled_replicas = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_observed_generation => value_observed_generation = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ready_replicas => value_ready_replicas = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_replicas => value_replicas = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_available_replicas => value_available_replicas = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_conditions => value_conditions = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_fully_labeled_replicas => value_fully_labeled_replicas = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_observed_generation => value_observed_generation = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ready_replicas => value_ready_replicas = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_replicas => value_replicas = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -98,7 +98,7 @@ impl<'de> ::serde::Deserialize<'de> for ReplicaSetStatus {
                     fully_labeled_replicas: value_fully_labeled_replicas,
                     observed_generation: value_observed_generation,
                     ready_replicas: value_ready_replicas,
-                    replicas: value_replicas.ok_or_else(|| ::serde::de::Error::missing_field("replicas"))?,
+                    replicas: value_replicas.ok_or_else(|| serde::de::Error::missing_field("replicas"))?,
                 })
             }
         }
@@ -118,8 +118,8 @@ impl<'de> ::serde::Deserialize<'de> for ReplicaSetStatus {
     }
 }
 
-impl ::serde::Serialize for ReplicaSetStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ReplicaSetStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ReplicaSetStatus",
             0 +
@@ -131,21 +131,21 @@ impl ::serde::Serialize for ReplicaSetStatus {
             1,
         )?;
         if let Some(value) = &self.available_replicas {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", value)?;
         }
         if let Some(value) = &self.conditions {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "conditions", value)?;
         }
         if let Some(value) = &self.fully_labeled_replicas {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "fullyLabeledReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fullyLabeledReplicas", value)?;
         }
         if let Some(value) = &self.observed_generation {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "observedGeneration", value)?;
         }
         if let Some(value) = &self.ready_replicas {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readyReplicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readyReplicas", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &self.replicas)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", &self.replicas)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

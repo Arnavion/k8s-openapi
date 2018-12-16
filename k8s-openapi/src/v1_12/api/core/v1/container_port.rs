@@ -19,8 +19,8 @@ pub struct ContainerPort {
     pub protocol: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for ContainerPort {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ContainerPort {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_container_port,
@@ -31,18 +31,18 @@ impl<'de> ::serde::Deserialize<'de> for ContainerPort {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "containerPort" => Field::Key_container_port,
                             "hostIP" => Field::Key_host_ip,
@@ -60,33 +60,33 @@ impl<'de> ::serde::Deserialize<'de> for ContainerPort {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ContainerPort;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ContainerPort")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_container_port: Option<i32> = None;
                 let mut value_host_ip: Option<String> = None;
                 let mut value_host_port: Option<i32> = None;
                 let mut value_name: Option<String> = None;
                 let mut value_protocol: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_container_port => value_container_port = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_host_ip => value_host_ip = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_port => value_host_port = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_protocol => value_protocol = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_container_port => value_container_port = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_host_ip => value_host_ip = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_port => value_host_port = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_protocol => value_protocol = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ContainerPort {
-                    container_port: value_container_port.ok_or_else(|| ::serde::de::Error::missing_field("containerPort"))?,
+                    container_port: value_container_port.ok_or_else(|| serde::de::Error::missing_field("containerPort"))?,
                     host_ip: value_host_ip,
                     host_port: value_host_port,
                     name: value_name,
@@ -109,8 +109,8 @@ impl<'de> ::serde::Deserialize<'de> for ContainerPort {
     }
 }
 
-impl ::serde::Serialize for ContainerPort {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ContainerPort {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ContainerPort",
             0 +
@@ -120,19 +120,19 @@ impl ::serde::Serialize for ContainerPort {
             self.name.as_ref().map_or(0, |_| 1) +
             self.protocol.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "containerPort", &self.container_port)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "containerPort", &self.container_port)?;
         if let Some(value) = &self.host_ip {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostIP", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIP", value)?;
         }
         if let Some(value) = &self.host_port {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostPort", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPort", value)?;
         }
         if let Some(value) = &self.name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
         }
         if let Some(value) = &self.protocol {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "protocol", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "protocol", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

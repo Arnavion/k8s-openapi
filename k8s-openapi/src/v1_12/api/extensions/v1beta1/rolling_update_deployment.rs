@@ -4,14 +4,14 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RollingUpdateDeployment {
     /// The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. By default, a value of 1 is used. Example: when this is set to 30%, the new RC can be scaled up immediately when the rolling update starts, such that the total number of old and new pods do not exceed 130% of desired pods. Once old pods have been killed, new RC can be scaled up further, ensuring that total number of pods running at any time during the update is atmost 130% of desired pods.
-    pub max_surge: Option<::v1_12::apimachinery::pkg::util::intstr::IntOrString>,
+    pub max_surge: Option<crate::v1_12::apimachinery::pkg::util::intstr::IntOrString>,
 
     /// The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. By default, a fixed value of 1 is used. Example: when this is set to 30%, the old RC can be scaled down to 70% of desired pods immediately when the rolling update starts. Once new pods are ready, old RC can be scaled down further, followed by scaling up the new RC, ensuring that the total number of pods available at all times during the update is at least 70% of desired pods.
-    pub max_unavailable: Option<::v1_12::apimachinery::pkg::util::intstr::IntOrString>,
+    pub max_unavailable: Option<crate::v1_12::apimachinery::pkg::util::intstr::IntOrString>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for RollingUpdateDeployment {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for RollingUpdateDeployment {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_max_surge,
@@ -19,18 +19,18 @@ impl<'de> ::serde::Deserialize<'de> for RollingUpdateDeployment {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "maxSurge" => Field::Key_max_surge,
                             "maxUnavailable" => Field::Key_max_unavailable,
@@ -45,22 +45,22 @@ impl<'de> ::serde::Deserialize<'de> for RollingUpdateDeployment {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = RollingUpdateDeployment;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct RollingUpdateDeployment")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_max_surge: Option<::v1_12::apimachinery::pkg::util::intstr::IntOrString> = None;
-                let mut value_max_unavailable: Option<::v1_12::apimachinery::pkg::util::intstr::IntOrString> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_max_surge: Option<crate::v1_12::apimachinery::pkg::util::intstr::IntOrString> = None;
+                let mut value_max_unavailable: Option<crate::v1_12::apimachinery::pkg::util::intstr::IntOrString> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_max_surge => value_max_surge = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_max_unavailable => value_max_unavailable = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_max_surge => value_max_surge = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_max_unavailable => value_max_unavailable = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,8 +82,8 @@ impl<'de> ::serde::Deserialize<'de> for RollingUpdateDeployment {
     }
 }
 
-impl ::serde::Serialize for RollingUpdateDeployment {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for RollingUpdateDeployment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "RollingUpdateDeployment",
             0 +
@@ -91,11 +91,11 @@ impl ::serde::Serialize for RollingUpdateDeployment {
             self.max_unavailable.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.max_surge {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "maxSurge", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxSurge", value)?;
         }
         if let Some(value) = &self.max_unavailable {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "maxUnavailable", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxUnavailable", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

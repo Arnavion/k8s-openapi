@@ -3,9 +3,9 @@
 /// PodPreset is a policy resource that defines additional runtime requirements for a Pod.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodPreset {
-    pub metadata: Option<::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
-    pub spec: Option<::v1_13::api::settings::v1alpha1::PodPresetSpec>,
+    pub spec: Option<crate::v1_13::api::settings::v1alpha1::PodPresetSpec>,
 }
 
 // Begin settings.k8s.io/v1alpha1/PodPreset
@@ -38,13 +38,13 @@ impl PodPreset {
     ///     If 'true', then the output is pretty printed.
     pub fn create_settings_v1alpha1_namespaced_pod_preset(
         namespace: &str,
-        body: &::v1_13::api::settings::v1alpha1::PodPreset,
+        body: &crate::v1_13::api::settings::v1alpha1::PodPreset,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -56,50 +56,50 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::create_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.create_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum CreateSettingsV1alpha1NamespacedPodPresetResponse {
-    Ok(::v1_13::api::settings::v1alpha1::PodPreset),
-    Created(::v1_13::api::settings::v1alpha1::PodPreset),
-    Accepted(::v1_13::api::settings::v1alpha1::PodPreset),
+    Ok(crate::v1_13::api::settings::v1alpha1::PodPreset),
+    Created(crate::v1_13::api::settings::v1alpha1::PodPreset),
+    Accepted(crate::v1_13::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateSettingsV1alpha1NamespacedPodPresetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
             _ => Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
         }
     }
@@ -168,9 +168,9 @@ impl PodPreset {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -200,46 +200,46 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::delete_settings_v1alpha1_collection_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_settings_v1alpha1_collection_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse {
-    OkStatus(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_13::api::settings::v1alpha1::PodPreset),
+    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_13::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Unauthorized, 0)),
             _ => Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Other, 0)),
         }
     }
@@ -291,9 +291,9 @@ impl PodPreset {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -311,55 +311,55 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::delete_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum DeleteSettingsV1alpha1NamespacedPodPresetResponse {
-    OkStatus(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_13::api::settings::v1alpha1::PodPreset),
-    Accepted(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_13::api::settings::v1alpha1::PodPreset),
+    Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteSettingsV1alpha1NamespacedPodPresetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
             _ => Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
         }
     }
@@ -428,9 +428,9 @@ impl PodPreset {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -460,32 +460,32 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::list_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.list_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum ListSettingsV1alpha1NamespacedPodPresetResponse {
-    Ok(::v1_13::api::settings::v1alpha1::PodPresetList),
+    Ok(crate::v1_13::api::settings::v1alpha1::PodPresetList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListSettingsV1alpha1NamespacedPodPresetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
             _ => Ok((ListSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
         }
     }
@@ -549,9 +549,9 @@ impl PodPreset {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/podpresets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -581,32 +581,32 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::list_settings_v1alpha1_pod_preset_for_all_namespaces`](./struct.PodPreset.html#method.list_settings_v1alpha1_pod_preset_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
-    Ok(::v1_13::api::settings::v1alpha1::PodPresetList),
+    Ok(crate::v1_13::api::settings::v1alpha1::PodPresetList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -641,12 +641,12 @@ impl PodPreset {
     pub fn patch_settings_v1alpha1_namespaced_pod_preset(
         name: &str,
         namespace: &str,
-        body: &::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -655,32 +655,32 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::patch_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.patch_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum PatchSettingsV1alpha1NamespacedPodPresetResponse {
-    Ok(::v1_13::api::settings::v1alpha1::PodPreset),
+    Ok(crate::v1_13::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchSettingsV1alpha1NamespacedPodPresetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
             _ => Ok((PatchSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
         }
     }
@@ -720,9 +720,9 @@ impl PodPreset {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -734,32 +734,32 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::read_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.read_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum ReadSettingsV1alpha1NamespacedPodPresetResponse {
-    Ok(::v1_13::api::settings::v1alpha1::PodPreset),
+    Ok(crate::v1_13::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadSettingsV1alpha1NamespacedPodPresetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
             _ => Ok((ReadSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
         }
     }
@@ -794,12 +794,12 @@ impl PodPreset {
     pub fn replace_settings_v1alpha1_namespaced_pod_preset(
         name: &str,
         namespace: &str,
-        body: &::v1_13::api::settings::v1alpha1::PodPreset,
+        body: &crate::v1_13::api::settings::v1alpha1::PodPreset,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -808,41 +808,41 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::replace_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.replace_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
-    Ok(::v1_13::api::settings::v1alpha1::PodPreset),
-    Created(::v1_13::api::settings::v1alpha1::PodPreset),
+    Ok(crate::v1_13::api::settings::v1alpha1::PodPreset),
+    Created(crate::v1_13::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
             _ => Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
         }
     }
@@ -916,9 +916,9 @@ impl PodPreset {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/watch/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -948,34 +948,34 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::watch_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.watch_settings_v1alpha1_namespaced_pod_preset)
 #[derive(Debug)]
 pub enum WatchSettingsV1alpha1NamespacedPodPresetResponse {
-    Ok(::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchSettingsV1alpha1NamespacedPodPresetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchSettingsV1alpha1NamespacedPodPresetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
             _ => Ok((WatchSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
         }
     }
@@ -1044,9 +1044,9 @@ impl PodPreset {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/watch/namespaces/{namespace}/podpresets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1076,34 +1076,34 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::watch_settings_v1alpha1_namespaced_pod_preset_list`](./struct.PodPreset.html#method.watch_settings_v1alpha1_namespaced_pod_preset_list)
 #[derive(Debug)]
 pub enum WatchSettingsV1alpha1NamespacedPodPresetListResponse {
-    Ok(::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchSettingsV1alpha1NamespacedPodPresetListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchSettingsV1alpha1NamespacedPodPresetListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchSettingsV1alpha1NamespacedPodPresetListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1NamespacedPodPresetListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1NamespacedPodPresetListResponse::Unauthorized, 0)),
             _ => Ok((WatchSettingsV1alpha1NamespacedPodPresetListResponse::Other, 0)),
         }
     }
@@ -1167,9 +1167,9 @@ impl PodPreset {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/settings.k8s.io/v1alpha1/watch/podpresets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1199,34 +1199,34 @@ impl PodPreset {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodPreset::watch_settings_v1alpha1_pod_preset_list_for_all_namespaces`](./struct.PodPreset.html#method.watch_settings_v1alpha1_pod_preset_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse {
-    Ok(::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1234,7 +1234,7 @@ impl ::Response for WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse {
 
 // End settings.k8s.io/v1alpha1/PodPreset
 
-impl ::Resource for PodPreset {
+impl crate::Resource for PodPreset {
     fn api_version() -> &'static str {
         "settings.k8s.io/v1alpha1"
     }
@@ -1252,8 +1252,8 @@ impl ::Resource for PodPreset {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for PodPreset {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PodPreset {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1263,18 +1263,18 @@ impl<'de> ::serde::Deserialize<'de> for PodPreset {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1291,34 +1291,34 @@ impl<'de> ::serde::Deserialize<'de> for PodPreset {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PodPreset;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PodPreset")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_13::api::settings::v1alpha1::PodPresetSpec> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_13::api::settings::v1alpha1::PodPresetSpec> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1342,8 +1342,8 @@ impl<'de> ::serde::Deserialize<'de> for PodPreset {
     }
 }
 
-impl ::serde::Serialize for PodPreset {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PodPreset {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodPreset",
             0 +
@@ -1351,14 +1351,14 @@ impl ::serde::Serialize for PodPreset {
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

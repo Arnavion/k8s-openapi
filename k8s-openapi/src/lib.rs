@@ -84,7 +84,7 @@
 //! // absolute URL with the API server's authority.
 //! fn execute(req: http::Request<Vec<u8>>) -> Response { unimplemented!(); }
 //!
-//! fn main() -> Result<(), Box<std::error::Error>> {
+//! fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     // Create a `http::Request` to list all the pods in the
 //!     // "kube-system" namespace.
 //!     k8s_if_le_1_7! {
@@ -305,7 +305,7 @@ impl std::error::Error for RequestError {
 /// A trait implemented by all response types corresponding to Kubernetes API functions.
 pub trait Response: Sized {
     /// Tries to parse the response from the given status code and response body.
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ResponseError>;
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ResponseError>;
 }
 
 /// A helper that holds a growable buffer that can be parsed into a Kubernetes API function's response.

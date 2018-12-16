@@ -19,8 +19,8 @@ pub struct Toleration {
     pub value: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for Toleration {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for Toleration {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_effect,
@@ -31,18 +31,18 @@ impl<'de> ::serde::Deserialize<'de> for Toleration {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "effect" => Field::Key_effect,
                             "key" => Field::Key_key,
@@ -60,28 +60,28 @@ impl<'de> ::serde::Deserialize<'de> for Toleration {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = Toleration;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct Toleration")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_effect: Option<String> = None;
                 let mut value_key: Option<String> = None;
                 let mut value_operator: Option<String> = None;
                 let mut value_toleration_seconds: Option<i64> = None;
                 let mut value_value: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_effect => value_effect = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_key => value_key = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_operator => value_operator = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_toleration_seconds => value_toleration_seconds = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_value => value_value = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_effect => value_effect = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_key => value_key = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_operator => value_operator = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_toleration_seconds => value_toleration_seconds = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_value => value_value = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -109,8 +109,8 @@ impl<'de> ::serde::Deserialize<'de> for Toleration {
     }
 }
 
-impl ::serde::Serialize for Toleration {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for Toleration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Toleration",
             0 +
@@ -121,20 +121,20 @@ impl ::serde::Serialize for Toleration {
             self.value.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.effect {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "effect", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "effect", value)?;
         }
         if let Some(value) = &self.key {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "key", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "key", value)?;
         }
         if let Some(value) = &self.operator {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "operator", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "operator", value)?;
         }
         if let Some(value) = &self.toleration_seconds {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "tolerationSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "tolerationSeconds", value)?;
         }
         if let Some(value) = &self.value {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "value", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "value", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

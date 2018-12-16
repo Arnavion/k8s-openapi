@@ -4,92 +4,92 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Volume {
     /// AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
-    pub aws_elastic_block_store: Option<::v1_9::api::core::v1::AWSElasticBlockStoreVolumeSource>,
+    pub aws_elastic_block_store: Option<crate::v1_9::api::core::v1::AWSElasticBlockStoreVolumeSource>,
 
     /// AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
-    pub azure_disk: Option<::v1_9::api::core::v1::AzureDiskVolumeSource>,
+    pub azure_disk: Option<crate::v1_9::api::core::v1::AzureDiskVolumeSource>,
 
     /// AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
-    pub azure_file: Option<::v1_9::api::core::v1::AzureFileVolumeSource>,
+    pub azure_file: Option<crate::v1_9::api::core::v1::AzureFileVolumeSource>,
 
     /// CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
-    pub cephfs: Option<::v1_9::api::core::v1::CephFSVolumeSource>,
+    pub cephfs: Option<crate::v1_9::api::core::v1::CephFSVolumeSource>,
 
     /// Cinder represents a cinder volume attached and mounted on kubelets host machine More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md
-    pub cinder: Option<::v1_9::api::core::v1::CinderVolumeSource>,
+    pub cinder: Option<crate::v1_9::api::core::v1::CinderVolumeSource>,
 
     /// ConfigMap represents a configMap that should populate this volume
-    pub config_map: Option<::v1_9::api::core::v1::ConfigMapVolumeSource>,
+    pub config_map: Option<crate::v1_9::api::core::v1::ConfigMapVolumeSource>,
 
     /// DownwardAPI represents downward API about the pod that should populate this volume
-    pub downward_api: Option<::v1_9::api::core::v1::DownwardAPIVolumeSource>,
+    pub downward_api: Option<crate::v1_9::api::core::v1::DownwardAPIVolumeSource>,
 
     /// EmptyDir represents a temporary directory that shares a pod's lifetime. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
-    pub empty_dir: Option<::v1_9::api::core::v1::EmptyDirVolumeSource>,
+    pub empty_dir: Option<crate::v1_9::api::core::v1::EmptyDirVolumeSource>,
 
     /// FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.
-    pub fc: Option<::v1_9::api::core::v1::FCVolumeSource>,
+    pub fc: Option<crate::v1_9::api::core::v1::FCVolumeSource>,
 
     /// FlexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.
-    pub flex_volume: Option<::v1_9::api::core::v1::FlexVolumeSource>,
+    pub flex_volume: Option<crate::v1_9::api::core::v1::FlexVolumeSource>,
 
     /// Flocker represents a Flocker volume attached to a kubelet's host machine. This depends on the Flocker control service being running
-    pub flocker: Option<::v1_9::api::core::v1::FlockerVolumeSource>,
+    pub flocker: Option<crate::v1_9::api::core::v1::FlockerVolumeSource>,
 
     /// GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
-    pub gce_persistent_disk: Option<::v1_9::api::core::v1::GCEPersistentDiskVolumeSource>,
+    pub gce_persistent_disk: Option<crate::v1_9::api::core::v1::GCEPersistentDiskVolumeSource>,
 
     /// GitRepo represents a git repository at a particular revision.
-    pub git_repo: Option<::v1_9::api::core::v1::GitRepoVolumeSource>,
+    pub git_repo: Option<crate::v1_9::api::core::v1::GitRepoVolumeSource>,
 
     /// Glusterfs represents a Glusterfs mount on the host that shares a pod's lifetime. More info: https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md
-    pub glusterfs: Option<::v1_9::api::core::v1::GlusterfsVolumeSource>,
+    pub glusterfs: Option<crate::v1_9::api::core::v1::GlusterfsVolumeSource>,
 
     /// HostPath represents a pre-existing file or directory on the host machine that is directly exposed to the container. This is generally used for system agents or other privileged things that are allowed to see the host machine. Most containers will NOT need this. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
-    pub host_path: Option<::v1_9::api::core::v1::HostPathVolumeSource>,
+    pub host_path: Option<crate::v1_9::api::core::v1::HostPathVolumeSource>,
 
     /// ISCSI represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://releases.k8s.io/HEAD/examples/volumes/iscsi/README.md
-    pub iscsi: Option<::v1_9::api::core::v1::ISCSIVolumeSource>,
+    pub iscsi: Option<crate::v1_9::api::core::v1::ISCSIVolumeSource>,
 
     /// Volume's name. Must be a DNS_LABEL and unique within the pod. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
     pub name: String,
 
     /// NFS represents an NFS mount on the host that shares a pod's lifetime More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
-    pub nfs: Option<::v1_9::api::core::v1::NFSVolumeSource>,
+    pub nfs: Option<crate::v1_9::api::core::v1::NFSVolumeSource>,
 
     /// PersistentVolumeClaimVolumeSource represents a reference to a PersistentVolumeClaim in the same namespace. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
-    pub persistent_volume_claim: Option<::v1_9::api::core::v1::PersistentVolumeClaimVolumeSource>,
+    pub persistent_volume_claim: Option<crate::v1_9::api::core::v1::PersistentVolumeClaimVolumeSource>,
 
     /// PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine
-    pub photon_persistent_disk: Option<::v1_9::api::core::v1::PhotonPersistentDiskVolumeSource>,
+    pub photon_persistent_disk: Option<crate::v1_9::api::core::v1::PhotonPersistentDiskVolumeSource>,
 
     /// PortworxVolume represents a portworx volume attached and mounted on kubelets host machine
-    pub portworx_volume: Option<::v1_9::api::core::v1::PortworxVolumeSource>,
+    pub portworx_volume: Option<crate::v1_9::api::core::v1::PortworxVolumeSource>,
 
     /// Items for all in one resources secrets, configmaps, and downward API
-    pub projected: Option<::v1_9::api::core::v1::ProjectedVolumeSource>,
+    pub projected: Option<crate::v1_9::api::core::v1::ProjectedVolumeSource>,
 
     /// Quobyte represents a Quobyte mount on the host that shares a pod's lifetime
-    pub quobyte: Option<::v1_9::api::core::v1::QuobyteVolumeSource>,
+    pub quobyte: Option<crate::v1_9::api::core::v1::QuobyteVolumeSource>,
 
     /// RBD represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md
-    pub rbd: Option<::v1_9::api::core::v1::RBDVolumeSource>,
+    pub rbd: Option<crate::v1_9::api::core::v1::RBDVolumeSource>,
 
     /// ScaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.
-    pub scale_io: Option<::v1_9::api::core::v1::ScaleIOVolumeSource>,
+    pub scale_io: Option<crate::v1_9::api::core::v1::ScaleIOVolumeSource>,
 
     /// Secret represents a secret that should populate this volume. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
-    pub secret: Option<::v1_9::api::core::v1::SecretVolumeSource>,
+    pub secret: Option<crate::v1_9::api::core::v1::SecretVolumeSource>,
 
     /// StorageOS represents a StorageOS volume attached and mounted on Kubernetes nodes.
-    pub storageos: Option<::v1_9::api::core::v1::StorageOSVolumeSource>,
+    pub storageos: Option<crate::v1_9::api::core::v1::StorageOSVolumeSource>,
 
     /// VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine
-    pub vsphere_volume: Option<::v1_9::api::core::v1::VsphereVirtualDiskVolumeSource>,
+    pub vsphere_volume: Option<crate::v1_9::api::core::v1::VsphereVirtualDiskVolumeSource>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for Volume {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for Volume {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_aws_elastic_block_store,
@@ -123,18 +123,18 @@ impl<'de> ::serde::Deserialize<'de> for Volume {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "awsElasticBlockStore" => Field::Key_aws_elastic_block_store,
                             "azureDisk" => Field::Key_azure_disk,
@@ -175,74 +175,74 @@ impl<'de> ::serde::Deserialize<'de> for Volume {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = Volume;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct Volume")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_aws_elastic_block_store: Option<::v1_9::api::core::v1::AWSElasticBlockStoreVolumeSource> = None;
-                let mut value_azure_disk: Option<::v1_9::api::core::v1::AzureDiskVolumeSource> = None;
-                let mut value_azure_file: Option<::v1_9::api::core::v1::AzureFileVolumeSource> = None;
-                let mut value_cephfs: Option<::v1_9::api::core::v1::CephFSVolumeSource> = None;
-                let mut value_cinder: Option<::v1_9::api::core::v1::CinderVolumeSource> = None;
-                let mut value_config_map: Option<::v1_9::api::core::v1::ConfigMapVolumeSource> = None;
-                let mut value_downward_api: Option<::v1_9::api::core::v1::DownwardAPIVolumeSource> = None;
-                let mut value_empty_dir: Option<::v1_9::api::core::v1::EmptyDirVolumeSource> = None;
-                let mut value_fc: Option<::v1_9::api::core::v1::FCVolumeSource> = None;
-                let mut value_flex_volume: Option<::v1_9::api::core::v1::FlexVolumeSource> = None;
-                let mut value_flocker: Option<::v1_9::api::core::v1::FlockerVolumeSource> = None;
-                let mut value_gce_persistent_disk: Option<::v1_9::api::core::v1::GCEPersistentDiskVolumeSource> = None;
-                let mut value_git_repo: Option<::v1_9::api::core::v1::GitRepoVolumeSource> = None;
-                let mut value_glusterfs: Option<::v1_9::api::core::v1::GlusterfsVolumeSource> = None;
-                let mut value_host_path: Option<::v1_9::api::core::v1::HostPathVolumeSource> = None;
-                let mut value_iscsi: Option<::v1_9::api::core::v1::ISCSIVolumeSource> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_aws_elastic_block_store: Option<crate::v1_9::api::core::v1::AWSElasticBlockStoreVolumeSource> = None;
+                let mut value_azure_disk: Option<crate::v1_9::api::core::v1::AzureDiskVolumeSource> = None;
+                let mut value_azure_file: Option<crate::v1_9::api::core::v1::AzureFileVolumeSource> = None;
+                let mut value_cephfs: Option<crate::v1_9::api::core::v1::CephFSVolumeSource> = None;
+                let mut value_cinder: Option<crate::v1_9::api::core::v1::CinderVolumeSource> = None;
+                let mut value_config_map: Option<crate::v1_9::api::core::v1::ConfigMapVolumeSource> = None;
+                let mut value_downward_api: Option<crate::v1_9::api::core::v1::DownwardAPIVolumeSource> = None;
+                let mut value_empty_dir: Option<crate::v1_9::api::core::v1::EmptyDirVolumeSource> = None;
+                let mut value_fc: Option<crate::v1_9::api::core::v1::FCVolumeSource> = None;
+                let mut value_flex_volume: Option<crate::v1_9::api::core::v1::FlexVolumeSource> = None;
+                let mut value_flocker: Option<crate::v1_9::api::core::v1::FlockerVolumeSource> = None;
+                let mut value_gce_persistent_disk: Option<crate::v1_9::api::core::v1::GCEPersistentDiskVolumeSource> = None;
+                let mut value_git_repo: Option<crate::v1_9::api::core::v1::GitRepoVolumeSource> = None;
+                let mut value_glusterfs: Option<crate::v1_9::api::core::v1::GlusterfsVolumeSource> = None;
+                let mut value_host_path: Option<crate::v1_9::api::core::v1::HostPathVolumeSource> = None;
+                let mut value_iscsi: Option<crate::v1_9::api::core::v1::ISCSIVolumeSource> = None;
                 let mut value_name: Option<String> = None;
-                let mut value_nfs: Option<::v1_9::api::core::v1::NFSVolumeSource> = None;
-                let mut value_persistent_volume_claim: Option<::v1_9::api::core::v1::PersistentVolumeClaimVolumeSource> = None;
-                let mut value_photon_persistent_disk: Option<::v1_9::api::core::v1::PhotonPersistentDiskVolumeSource> = None;
-                let mut value_portworx_volume: Option<::v1_9::api::core::v1::PortworxVolumeSource> = None;
-                let mut value_projected: Option<::v1_9::api::core::v1::ProjectedVolumeSource> = None;
-                let mut value_quobyte: Option<::v1_9::api::core::v1::QuobyteVolumeSource> = None;
-                let mut value_rbd: Option<::v1_9::api::core::v1::RBDVolumeSource> = None;
-                let mut value_scale_io: Option<::v1_9::api::core::v1::ScaleIOVolumeSource> = None;
-                let mut value_secret: Option<::v1_9::api::core::v1::SecretVolumeSource> = None;
-                let mut value_storageos: Option<::v1_9::api::core::v1::StorageOSVolumeSource> = None;
-                let mut value_vsphere_volume: Option<::v1_9::api::core::v1::VsphereVirtualDiskVolumeSource> = None;
+                let mut value_nfs: Option<crate::v1_9::api::core::v1::NFSVolumeSource> = None;
+                let mut value_persistent_volume_claim: Option<crate::v1_9::api::core::v1::PersistentVolumeClaimVolumeSource> = None;
+                let mut value_photon_persistent_disk: Option<crate::v1_9::api::core::v1::PhotonPersistentDiskVolumeSource> = None;
+                let mut value_portworx_volume: Option<crate::v1_9::api::core::v1::PortworxVolumeSource> = None;
+                let mut value_projected: Option<crate::v1_9::api::core::v1::ProjectedVolumeSource> = None;
+                let mut value_quobyte: Option<crate::v1_9::api::core::v1::QuobyteVolumeSource> = None;
+                let mut value_rbd: Option<crate::v1_9::api::core::v1::RBDVolumeSource> = None;
+                let mut value_scale_io: Option<crate::v1_9::api::core::v1::ScaleIOVolumeSource> = None;
+                let mut value_secret: Option<crate::v1_9::api::core::v1::SecretVolumeSource> = None;
+                let mut value_storageos: Option<crate::v1_9::api::core::v1::StorageOSVolumeSource> = None;
+                let mut value_vsphere_volume: Option<crate::v1_9::api::core::v1::VsphereVirtualDiskVolumeSource> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_aws_elastic_block_store => value_aws_elastic_block_store = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_azure_disk => value_azure_disk = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_azure_file => value_azure_file = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_cephfs => value_cephfs = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_cinder => value_cinder = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_config_map => value_config_map = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_downward_api => value_downward_api = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_empty_dir => value_empty_dir = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_fc => value_fc = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_flex_volume => value_flex_volume = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_flocker => value_flocker = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_gce_persistent_disk => value_gce_persistent_disk = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_git_repo => value_git_repo = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_glusterfs => value_glusterfs = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_path => value_host_path = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_iscsi => value_iscsi = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_nfs => value_nfs = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_persistent_volume_claim => value_persistent_volume_claim = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_photon_persistent_disk => value_photon_persistent_disk = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_portworx_volume => value_portworx_volume = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_projected => value_projected = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_quobyte => value_quobyte = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_rbd => value_rbd = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_scale_io => value_scale_io = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret => value_secret = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_storageos => value_storageos = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_vsphere_volume => value_vsphere_volume = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_aws_elastic_block_store => value_aws_elastic_block_store = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_azure_disk => value_azure_disk = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_azure_file => value_azure_file = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_cephfs => value_cephfs = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_cinder => value_cinder = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_config_map => value_config_map = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_downward_api => value_downward_api = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_empty_dir => value_empty_dir = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_fc => value_fc = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_flex_volume => value_flex_volume = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_flocker => value_flocker = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_gce_persistent_disk => value_gce_persistent_disk = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_git_repo => value_git_repo = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_glusterfs => value_glusterfs = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_path => value_host_path = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_iscsi => value_iscsi = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_nfs => value_nfs = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_persistent_volume_claim => value_persistent_volume_claim = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_photon_persistent_disk => value_photon_persistent_disk = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_portworx_volume => value_portworx_volume = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_projected => value_projected = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_quobyte => value_quobyte = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_rbd => value_rbd = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_scale_io => value_scale_io = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret => value_secret = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_storageos => value_storageos = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_vsphere_volume => value_vsphere_volume = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -263,7 +263,7 @@ impl<'de> ::serde::Deserialize<'de> for Volume {
                     glusterfs: value_glusterfs,
                     host_path: value_host_path,
                     iscsi: value_iscsi,
-                    name: value_name.ok_or_else(|| ::serde::de::Error::missing_field("name"))?,
+                    name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
                     nfs: value_nfs,
                     persistent_volume_claim: value_persistent_volume_claim,
                     photon_persistent_disk: value_photon_persistent_disk,
@@ -316,8 +316,8 @@ impl<'de> ::serde::Deserialize<'de> for Volume {
     }
 }
 
-impl ::serde::Serialize for Volume {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for Volume {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Volume",
             0 +
@@ -351,87 +351,87 @@ impl ::serde::Serialize for Volume {
             self.vsphere_volume.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.aws_elastic_block_store {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "awsElasticBlockStore", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "awsElasticBlockStore", value)?;
         }
         if let Some(value) = &self.azure_disk {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "azureDisk", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "azureDisk", value)?;
         }
         if let Some(value) = &self.azure_file {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "azureFile", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "azureFile", value)?;
         }
         if let Some(value) = &self.cephfs {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "cephfs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "cephfs", value)?;
         }
         if let Some(value) = &self.cinder {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "cinder", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "cinder", value)?;
         }
         if let Some(value) = &self.config_map {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "configMap", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "configMap", value)?;
         }
         if let Some(value) = &self.downward_api {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "downwardAPI", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "downwardAPI", value)?;
         }
         if let Some(value) = &self.empty_dir {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "emptyDir", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "emptyDir", value)?;
         }
         if let Some(value) = &self.fc {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "fc", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fc", value)?;
         }
         if let Some(value) = &self.flex_volume {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "flexVolume", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "flexVolume", value)?;
         }
         if let Some(value) = &self.flocker {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "flocker", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "flocker", value)?;
         }
         if let Some(value) = &self.gce_persistent_disk {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "gcePersistentDisk", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "gcePersistentDisk", value)?;
         }
         if let Some(value) = &self.git_repo {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "gitRepo", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "gitRepo", value)?;
         }
         if let Some(value) = &self.glusterfs {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "glusterfs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "glusterfs", value)?;
         }
         if let Some(value) = &self.host_path {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostPath", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPath", value)?;
         }
         if let Some(value) = &self.iscsi {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "iscsi", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "iscsi", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.nfs {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "nfs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nfs", value)?;
         }
         if let Some(value) = &self.persistent_volume_claim {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "persistentVolumeClaim", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "persistentVolumeClaim", value)?;
         }
         if let Some(value) = &self.photon_persistent_disk {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "photonPersistentDisk", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "photonPersistentDisk", value)?;
         }
         if let Some(value) = &self.portworx_volume {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "portworxVolume", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "portworxVolume", value)?;
         }
         if let Some(value) = &self.projected {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "projected", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "projected", value)?;
         }
         if let Some(value) = &self.quobyte {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "quobyte", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "quobyte", value)?;
         }
         if let Some(value) = &self.rbd {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "rbd", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "rbd", value)?;
         }
         if let Some(value) = &self.scale_io {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "scaleIO", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "scaleIO", value)?;
         }
         if let Some(value) = &self.secret {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "secret", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secret", value)?;
         }
         if let Some(value) = &self.storageos {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "storageos", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "storageos", value)?;
         }
         if let Some(value) = &self.vsphere_volume {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "vsphereVolume", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "vsphereVolume", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

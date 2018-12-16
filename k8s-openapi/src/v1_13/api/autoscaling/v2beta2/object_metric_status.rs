@@ -4,16 +4,16 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ObjectMetricStatus {
     /// current contains the current value for the given metric
-    pub current: ::v1_13::api::autoscaling::v2beta2::MetricValueStatus,
+    pub current: crate::v1_13::api::autoscaling::v2beta2::MetricValueStatus,
 
-    pub described_object: ::v1_13::api::autoscaling::v2beta2::CrossVersionObjectReference,
+    pub described_object: crate::v1_13::api::autoscaling::v2beta2::CrossVersionObjectReference,
 
     /// metric identifies the target metric by name and selector
-    pub metric: ::v1_13::api::autoscaling::v2beta2::MetricIdentifier,
+    pub metric: crate::v1_13::api::autoscaling::v2beta2::MetricIdentifier,
 }
 
-impl<'de> ::serde::Deserialize<'de> for ObjectMetricStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ObjectMetricStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_current,
@@ -22,18 +22,18 @@ impl<'de> ::serde::Deserialize<'de> for ObjectMetricStatus {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "current" => Field::Key_current,
                             "describedObject" => Field::Key_described_object,
@@ -49,31 +49,31 @@ impl<'de> ::serde::Deserialize<'de> for ObjectMetricStatus {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ObjectMetricStatus;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ObjectMetricStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_current: Option<::v1_13::api::autoscaling::v2beta2::MetricValueStatus> = None;
-                let mut value_described_object: Option<::v1_13::api::autoscaling::v2beta2::CrossVersionObjectReference> = None;
-                let mut value_metric: Option<::v1_13::api::autoscaling::v2beta2::MetricIdentifier> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_current: Option<crate::v1_13::api::autoscaling::v2beta2::MetricValueStatus> = None;
+                let mut value_described_object: Option<crate::v1_13::api::autoscaling::v2beta2::CrossVersionObjectReference> = None;
+                let mut value_metric: Option<crate::v1_13::api::autoscaling::v2beta2::MetricIdentifier> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_current => value_current = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_described_object => value_described_object = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_metric => value_metric = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_current => value_current = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_described_object => value_described_object = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_metric => value_metric = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ObjectMetricStatus {
-                    current: value_current.ok_or_else(|| ::serde::de::Error::missing_field("current"))?,
-                    described_object: value_described_object.ok_or_else(|| ::serde::de::Error::missing_field("describedObject"))?,
-                    metric: value_metric.ok_or_else(|| ::serde::de::Error::missing_field("metric"))?,
+                    current: value_current.ok_or_else(|| serde::de::Error::missing_field("current"))?,
+                    described_object: value_described_object.ok_or_else(|| serde::de::Error::missing_field("describedObject"))?,
+                    metric: value_metric.ok_or_else(|| serde::de::Error::missing_field("metric"))?,
                 })
             }
         }
@@ -90,8 +90,8 @@ impl<'de> ::serde::Deserialize<'de> for ObjectMetricStatus {
     }
 }
 
-impl ::serde::Serialize for ObjectMetricStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ObjectMetricStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectMetricStatus",
             0 +
@@ -99,9 +99,9 @@ impl ::serde::Serialize for ObjectMetricStatus {
             1 +
             1,
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "current", &self.current)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "describedObject", &self.described_object)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "metric", &self.metric)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "current", &self.current)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "describedObject", &self.described_object)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metric", &self.metric)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

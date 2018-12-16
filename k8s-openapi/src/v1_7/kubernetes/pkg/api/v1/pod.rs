@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Pod {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired behavior of the pod. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<::v1_7::kubernetes::pkg::api::v1::PodSpec>,
+    pub spec: Option<crate::v1_7::kubernetes::pkg::api::v1::PodSpec>,
 
     /// Most recently observed status of the pod. This data may not be up to date. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<::v1_7::kubernetes::pkg::api::v1::PodStatus>,
+    pub status: Option<crate::v1_7::kubernetes::pkg::api::v1::PodStatus>,
 }
 
 // Begin /v1/Pod
@@ -39,17 +39,17 @@ impl Pod {
         name: &str,
         namespace: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -61,23 +61,23 @@ pub enum ConnectCoreV1DeleteNamespacedPodProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1DeleteNamespacedPodProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1DeleteNamespacedPodProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1DeleteNamespacedPodProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedPodProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedPodProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1DeleteNamespacedPodProxyResponse::Other, 0)),
         }
     }
@@ -112,17 +112,17 @@ impl Pod {
         namespace: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -134,23 +134,23 @@ pub enum ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse::Other, 0)),
         }
     }
@@ -200,9 +200,9 @@ impl Pod {
         stdin: Option<bool>,
         stdout: Option<bool>,
         tty: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
             __query_pairs.append_pair("container", container);
         }
@@ -220,9 +220,9 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -234,23 +234,23 @@ pub enum ConnectCoreV1GetNamespacedPodAttachResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1GetNamespacedPodAttachResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1GetNamespacedPodAttachResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1GetNamespacedPodAttachResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodAttachResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodAttachResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1GetNamespacedPodAttachResponse::Other, 0)),
         }
     }
@@ -305,9 +305,9 @@ impl Pod {
         stdin: Option<bool>,
         stdout: Option<bool>,
         tty: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(command) = command {
             __query_pairs.append_pair("command", command);
         }
@@ -328,9 +328,9 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -342,23 +342,23 @@ pub enum ConnectCoreV1GetNamespacedPodExecResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1GetNamespacedPodExecResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1GetNamespacedPodExecResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1GetNamespacedPodExecResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodExecResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodExecResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1GetNamespacedPodExecResponse::Other, 0)),
         }
     }
@@ -388,17 +388,17 @@ impl Pod {
         name: &str,
         namespace: &str,
         ports: Option<i64>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(ports) = ports {
             __query_pairs.append_pair("ports", &ports.to_string());
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -410,23 +410,23 @@ pub enum ConnectCoreV1GetNamespacedPodPortforwardResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1GetNamespacedPodPortforwardResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1GetNamespacedPodPortforwardResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1GetNamespacedPodPortforwardResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodPortforwardResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodPortforwardResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1GetNamespacedPodPortforwardResponse::Other, 0)),
         }
     }
@@ -456,17 +456,17 @@ impl Pod {
         name: &str,
         namespace: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -478,23 +478,23 @@ pub enum ConnectCoreV1GetNamespacedPodProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1GetNamespacedPodProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1GetNamespacedPodProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1GetNamespacedPodProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1GetNamespacedPodProxyResponse::Other, 0)),
         }
     }
@@ -529,17 +529,17 @@ impl Pod {
         namespace: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -551,23 +551,23 @@ pub enum ConnectCoreV1GetNamespacedPodProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1GetNamespacedPodProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1GetNamespacedPodProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1GetNamespacedPodProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1GetNamespacedPodProxyWithPathResponse::Other, 0)),
         }
     }
@@ -597,17 +597,17 @@ impl Pod {
         name: &str,
         namespace: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
+        let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -619,23 +619,23 @@ pub enum ConnectCoreV1PatchNamespacedPodProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PatchNamespacedPodProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PatchNamespacedPodProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PatchNamespacedPodProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedPodProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedPodProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PatchNamespacedPodProxyResponse::Other, 0)),
         }
     }
@@ -670,17 +670,17 @@ impl Pod {
         namespace: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
+        let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -692,23 +692,23 @@ pub enum ConnectCoreV1PatchNamespacedPodProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PatchNamespacedPodProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PatchNamespacedPodProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PatchNamespacedPodProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PatchNamespacedPodProxyWithPathResponse::Other, 0)),
         }
     }
@@ -758,9 +758,9 @@ impl Pod {
         stdin: Option<bool>,
         stdout: Option<bool>,
         tty: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
             __query_pairs.append_pair("container", container);
         }
@@ -778,9 +778,9 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -792,23 +792,23 @@ pub enum ConnectCoreV1PostNamespacedPodAttachResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PostNamespacedPodAttachResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PostNamespacedPodAttachResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PostNamespacedPodAttachResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodAttachResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodAttachResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PostNamespacedPodAttachResponse::Other, 0)),
         }
     }
@@ -863,9 +863,9 @@ impl Pod {
         stdin: Option<bool>,
         stdout: Option<bool>,
         tty: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(command) = command {
             __query_pairs.append_pair("command", command);
         }
@@ -886,9 +886,9 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -900,23 +900,23 @@ pub enum ConnectCoreV1PostNamespacedPodExecResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PostNamespacedPodExecResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PostNamespacedPodExecResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PostNamespacedPodExecResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodExecResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodExecResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PostNamespacedPodExecResponse::Other, 0)),
         }
     }
@@ -946,17 +946,17 @@ impl Pod {
         name: &str,
         namespace: &str,
         ports: Option<i64>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(ports) = ports {
             __query_pairs.append_pair("ports", &ports.to_string());
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -968,23 +968,23 @@ pub enum ConnectCoreV1PostNamespacedPodPortforwardResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PostNamespacedPodPortforwardResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PostNamespacedPodPortforwardResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PostNamespacedPodPortforwardResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodPortforwardResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodPortforwardResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PostNamespacedPodPortforwardResponse::Other, 0)),
         }
     }
@@ -1014,17 +1014,17 @@ impl Pod {
         name: &str,
         namespace: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1036,23 +1036,23 @@ pub enum ConnectCoreV1PostNamespacedPodProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PostNamespacedPodProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PostNamespacedPodProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PostNamespacedPodProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PostNamespacedPodProxyResponse::Other, 0)),
         }
     }
@@ -1087,17 +1087,17 @@ impl Pod {
         namespace: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1109,23 +1109,23 @@ pub enum ConnectCoreV1PostNamespacedPodProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PostNamespacedPodProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PostNamespacedPodProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PostNamespacedPodProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PostNamespacedPodProxyWithPathResponse::Other, 0)),
         }
     }
@@ -1155,17 +1155,17 @@ impl Pod {
         name: &str,
         namespace: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
+        let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1177,23 +1177,23 @@ pub enum ConnectCoreV1PutNamespacedPodProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PutNamespacedPodProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PutNamespacedPodProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PutNamespacedPodProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedPodProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedPodProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PutNamespacedPodProxyResponse::Other, 0)),
         }
     }
@@ -1228,17 +1228,17 @@ impl Pod {
         namespace: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
+        let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1250,23 +1250,23 @@ pub enum ConnectCoreV1PutNamespacedPodProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PutNamespacedPodProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PutNamespacedPodProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PutNamespacedPodProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PutNamespacedPodProxyWithPathResponse::Other, 0)),
         }
     }
@@ -1292,42 +1292,42 @@ impl Pod {
     ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_pod(
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::api::v1::Pod,
+        body: &crate::v1_7::kubernetes::pkg::api::v1::Pod,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::create_core_v1_namespaced_pod`](./struct.Pod.html#method.create_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedPodResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateCoreV1NamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateCoreV1NamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedPodResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((CreateCoreV1NamespacedPodResponse::Other, 0)),
         }
     }
@@ -1382,9 +1382,9 @@ impl Pod {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -1408,46 +1408,46 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::delete_core_v1_collection_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_collection_namespaced_pod)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNamespacedPodResponse {
-    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_7::kubernetes::pkg::api::v1::Pod),
+    OkStatus(crate::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1CollectionNamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1CollectionNamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNamespacedPodResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNamespacedPodResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1CollectionNamespacedPodResponse::Other, 0)),
         }
     }
@@ -1494,9 +1494,9 @@ impl Pod {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -1511,46 +1511,46 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::delete_core_v1_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedPodResponse {
-    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_7::kubernetes::pkg::api::v1::Pod),
+    OkStatus(crate::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1NamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1NamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedPodResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedPodResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1NamespacedPodResponse::Other, 0)),
         }
     }
@@ -1605,9 +1605,9 @@ impl Pod {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -1631,32 +1631,32 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::list_core_v1_namespaced_pod`](./struct.Pod.html#method.list_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedPodResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::PodList),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::PodList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1NamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1NamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1NamespacedPodResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1NamespacedPodResponse::Other, 0)),
         }
     }
@@ -1706,9 +1706,9 @@ impl Pod {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/pods?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -1732,32 +1732,32 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::list_core_v1_pod_for_all_namespaces`](./struct.Pod.html#method.list_core_v1_pod_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1PodForAllNamespacesResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::PodList),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::PodList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1PodForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1PodForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1PodForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1PodForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1PodForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1PodForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1788,42 +1788,42 @@ impl Pod {
     pub fn patch_core_v1_namespaced_pod(
         name: &str,
         namespace: &str,
-        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::patch_core_v1_namespaced_pod`](./struct.Pod.html#method.patch_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedPodResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NamespacedPodResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NamespacedPodResponse::Other, 0)),
         }
     }
@@ -1854,42 +1854,42 @@ impl Pod {
     pub fn patch_core_v1_namespaced_pod_status(
         name: &str,
         namespace: &str,
-        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::patch_core_v1_namespaced_pod_status`](./struct.Pod.html#method.patch_core_v1_namespaced_pod_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedPodStatusResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NamespacedPodStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NamespacedPodStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NamespacedPodStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPodStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPodStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NamespacedPodStatusResponse::Other, 0)),
         }
     }
@@ -1914,12 +1914,12 @@ impl Pod {
     pub fn proxy_core_v1_delete_namespaced_pod(
         name: &str,
         namespace: &str,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}", name = name, namespace = namespace);
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1931,23 +1931,23 @@ pub enum ProxyCoreV1DELETENamespacedPodResponse {
     Other,
 }
 
-impl ::Response for ProxyCoreV1DELETENamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ProxyCoreV1DELETENamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ProxyCoreV1DELETENamespacedPodResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1DELETENamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1DELETENamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ProxyCoreV1DELETENamespacedPodResponse::Other, 0)),
         }
     }
@@ -1977,12 +1977,12 @@ impl Pod {
         name: &str,
         namespace: &str,
         path: &str,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}", name = name, namespace = namespace, path = path);
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -1994,23 +1994,23 @@ pub enum ProxyCoreV1DELETENamespacedPodWithPathResponse {
     Other,
 }
 
-impl ::Response for ProxyCoreV1DELETENamespacedPodWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ProxyCoreV1DELETENamespacedPodWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ProxyCoreV1DELETENamespacedPodWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1DELETENamespacedPodWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1DELETENamespacedPodWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyCoreV1DELETENamespacedPodWithPathResponse::Other, 0)),
         }
     }
@@ -2035,12 +2035,12 @@ impl Pod {
     pub fn proxy_core_v1_get_namespaced_pod(
         name: &str,
         namespace: &str,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}", name = name, namespace = namespace);
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -2052,23 +2052,23 @@ pub enum ProxyCoreV1GETNamespacedPodResponse {
     Other,
 }
 
-impl ::Response for ProxyCoreV1GETNamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ProxyCoreV1GETNamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ProxyCoreV1GETNamespacedPodResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1GETNamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1GETNamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ProxyCoreV1GETNamespacedPodResponse::Other, 0)),
         }
     }
@@ -2098,12 +2098,12 @@ impl Pod {
         name: &str,
         namespace: &str,
         path: &str,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}", name = name, namespace = namespace, path = path);
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -2115,23 +2115,23 @@ pub enum ProxyCoreV1GETNamespacedPodWithPathResponse {
     Other,
 }
 
-impl ::Response for ProxyCoreV1GETNamespacedPodWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ProxyCoreV1GETNamespacedPodWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ProxyCoreV1GETNamespacedPodWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1GETNamespacedPodWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1GETNamespacedPodWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyCoreV1GETNamespacedPodWithPathResponse::Other, 0)),
         }
     }
@@ -2156,12 +2156,12 @@ impl Pod {
     pub fn proxy_core_v1_patch_namespaced_pod(
         name: &str,
         namespace: &str,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}", name = name, namespace = namespace);
 
-        let mut __request = ::http::Request::patch(__url);
+        let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -2173,23 +2173,23 @@ pub enum ProxyCoreV1PATCHNamespacedPodResponse {
     Other,
 }
 
-impl ::Response for ProxyCoreV1PATCHNamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ProxyCoreV1PATCHNamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ProxyCoreV1PATCHNamespacedPodResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PATCHNamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PATCHNamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ProxyCoreV1PATCHNamespacedPodResponse::Other, 0)),
         }
     }
@@ -2219,12 +2219,12 @@ impl Pod {
         name: &str,
         namespace: &str,
         path: &str,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}", name = name, namespace = namespace, path = path);
 
-        let mut __request = ::http::Request::patch(__url);
+        let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -2236,23 +2236,23 @@ pub enum ProxyCoreV1PATCHNamespacedPodWithPathResponse {
     Other,
 }
 
-impl ::Response for ProxyCoreV1PATCHNamespacedPodWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ProxyCoreV1PATCHNamespacedPodWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ProxyCoreV1PATCHNamespacedPodWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PATCHNamespacedPodWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PATCHNamespacedPodWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyCoreV1PATCHNamespacedPodWithPathResponse::Other, 0)),
         }
     }
@@ -2277,12 +2277,12 @@ impl Pod {
     pub fn proxy_core_v1_post_namespaced_pod(
         name: &str,
         namespace: &str,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}", name = name, namespace = namespace);
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -2294,23 +2294,23 @@ pub enum ProxyCoreV1POSTNamespacedPodResponse {
     Other,
 }
 
-impl ::Response for ProxyCoreV1POSTNamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ProxyCoreV1POSTNamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ProxyCoreV1POSTNamespacedPodResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1POSTNamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1POSTNamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ProxyCoreV1POSTNamespacedPodResponse::Other, 0)),
         }
     }
@@ -2340,12 +2340,12 @@ impl Pod {
         name: &str,
         namespace: &str,
         path: &str,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}", name = name, namespace = namespace, path = path);
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -2357,23 +2357,23 @@ pub enum ProxyCoreV1POSTNamespacedPodWithPathResponse {
     Other,
 }
 
-impl ::Response for ProxyCoreV1POSTNamespacedPodWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ProxyCoreV1POSTNamespacedPodWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ProxyCoreV1POSTNamespacedPodWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1POSTNamespacedPodWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1POSTNamespacedPodWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyCoreV1POSTNamespacedPodWithPathResponse::Other, 0)),
         }
     }
@@ -2398,12 +2398,12 @@ impl Pod {
     pub fn proxy_core_v1_put_namespaced_pod(
         name: &str,
         namespace: &str,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}", name = name, namespace = namespace);
 
-        let mut __request = ::http::Request::put(__url);
+        let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -2415,23 +2415,23 @@ pub enum ProxyCoreV1PUTNamespacedPodResponse {
     Other,
 }
 
-impl ::Response for ProxyCoreV1PUTNamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ProxyCoreV1PUTNamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ProxyCoreV1PUTNamespacedPodResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PUTNamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PUTNamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ProxyCoreV1PUTNamespacedPodResponse::Other, 0)),
         }
     }
@@ -2461,12 +2461,12 @@ impl Pod {
         name: &str,
         namespace: &str,
         path: &str,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/proxy/namespaces/{namespace}/pods/{name}/{path}", name = name, namespace = namespace, path = path);
 
-        let mut __request = ::http::Request::put(__url);
+        let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -2478,23 +2478,23 @@ pub enum ProxyCoreV1PUTNamespacedPodWithPathResponse {
     Other,
 }
 
-impl ::Response for ProxyCoreV1PUTNamespacedPodWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ProxyCoreV1PUTNamespacedPodWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ProxyCoreV1PUTNamespacedPodWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PUTNamespacedPodWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PUTNamespacedPodWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyCoreV1PUTNamespacedPodWithPathResponse::Other, 0)),
         }
     }
@@ -2534,9 +2534,9 @@ impl Pod {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -2548,32 +2548,32 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod`](./struct.Pod.html#method.read_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPodResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NamespacedPodResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NamespacedPodResponse::Other, 0)),
         }
     }
@@ -2638,9 +2638,9 @@ impl Pod {
         since_seconds: Option<i64>,
         tail_lines: Option<i64>,
         timestamps: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/log?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
             __query_pairs.append_pair("container", container);
         }
@@ -2667,9 +2667,9 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -2681,23 +2681,23 @@ pub enum ReadCoreV1NamespacedPodLogResponse {
     Other,
 }
 
-impl ::Response for ReadCoreV1NamespacedPodLogResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NamespacedPodLogResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ReadCoreV1NamespacedPodLogResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPodLogResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPodLogResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NamespacedPodLogResponse::Other, 0)),
         }
     }
@@ -2727,40 +2727,40 @@ impl Pod {
         name: &str,
         namespace: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod_status`](./struct.Pod.html#method.read_core_v1_namespaced_pod_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedPodStatusResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NamespacedPodStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NamespacedPodStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NamespacedPodStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPodStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPodStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NamespacedPodStatusResponse::Other, 0)),
         }
     }
@@ -2791,42 +2791,42 @@ impl Pod {
     pub fn replace_core_v1_namespaced_pod(
         name: &str,
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::api::v1::Pod,
+        body: &crate::v1_7::kubernetes::pkg::api::v1::Pod,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::replace_core_v1_namespaced_pod`](./struct.Pod.html#method.replace_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedPodResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedPodResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NamespacedPodResponse::Other, 0)),
         }
     }
@@ -2857,42 +2857,42 @@ impl Pod {
     pub fn replace_core_v1_namespaced_pod_status(
         name: &str,
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::api::v1::Pod,
+        body: &crate::v1_7::kubernetes::pkg::api::v1::Pod,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::replace_core_v1_namespaced_pod_status`](./struct.Pod.html#method.replace_core_v1_namespaced_pod_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedPodStatusResponse {
-    Ok(::v1_7::kubernetes::pkg::api::v1::Pod),
+    Ok(crate::v1_7::kubernetes::pkg::api::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NamespacedPodStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NamespacedPodStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedPodStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPodStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPodStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NamespacedPodStatusResponse::Other, 0)),
         }
     }
@@ -2952,9 +2952,9 @@ impl Pod {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -2978,34 +2978,34 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::watch_core_v1_namespaced_pod`](./struct.Pod.html#method.watch_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedPodResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedPodResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedPodResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedPodResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPodResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedPodResponse::Other, 0)),
         }
     }
@@ -3060,9 +3060,9 @@ impl Pod {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/pods?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -3086,34 +3086,34 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::watch_core_v1_namespaced_pod_list`](./struct.Pod.html#method.watch_core_v1_namespaced_pod_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedPodListResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedPodListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedPodListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedPodListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPodListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPodListResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedPodListResponse::Other, 0)),
         }
     }
@@ -3163,9 +3163,9 @@ impl Pod {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/pods?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -3189,34 +3189,34 @@ impl Pod {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Pod::watch_core_v1_pod_list_for_all_namespaces`](./struct.Pod.html#method.watch_core_v1_pod_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1PodListForAllNamespacesResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1PodListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1PodListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1PodListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1PodListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1PodListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1PodListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -3224,7 +3224,7 @@ impl ::Response for WatchCoreV1PodListForAllNamespacesResponse {
 
 // End /v1/Pod
 
-impl ::Resource for Pod {
+impl crate::Resource for Pod {
     fn api_version() -> &'static str {
         "v1"
     }
@@ -3242,8 +3242,8 @@ impl ::Resource for Pod {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for Pod {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for Pod {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -3254,18 +3254,18 @@ impl<'de> ::serde::Deserialize<'de> for Pod {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -3283,36 +3283,36 @@ impl<'de> ::serde::Deserialize<'de> for Pod {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = Pod;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct Pod")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_7::kubernetes::pkg::api::v1::PodSpec> = None;
-                let mut value_status: Option<::v1_7::kubernetes::pkg::api::v1::PodStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_7::kubernetes::pkg::api::v1::PodSpec> = None;
+                let mut value_status: Option<crate::v1_7::kubernetes::pkg::api::v1::PodStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -3338,8 +3338,8 @@ impl<'de> ::serde::Deserialize<'de> for Pod {
     }
 }
 
-impl ::serde::Serialize for Pod {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for Pod {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Pod",
             0 +
@@ -3348,17 +3348,17 @@ impl ::serde::Serialize for Pod {
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

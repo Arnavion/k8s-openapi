@@ -7,19 +7,19 @@ pub struct PodSpec {
     pub active_deadline_seconds: Option<i64>,
 
     /// If specified, the pod's scheduling constraints
-    pub affinity: Option<::v1_7::kubernetes::pkg::api::v1::Affinity>,
+    pub affinity: Option<crate::v1_7::kubernetes::pkg::api::v1::Affinity>,
 
     /// AutomountServiceAccountToken indicates whether a service account token should be automatically mounted.
     pub automount_service_account_token: Option<bool>,
 
     /// List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.
-    pub containers: Vec<::v1_7::kubernetes::pkg::api::v1::Container>,
+    pub containers: Vec<crate::v1_7::kubernetes::pkg::api::v1::Container>,
 
     /// Set DNS policy for containers within the pod. One of 'ClusterFirstWithHostNet', 'ClusterFirst' or 'Default'. Defaults to "ClusterFirst". To have DNS options set along with hostNetwork, you have to specify DNS policy explicitly to 'ClusterFirstWithHostNet'.
     pub dns_policy: Option<String>,
 
     /// HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified. This is only valid for non-hostNetwork pods.
-    pub host_aliases: Option<Vec<::v1_7::kubernetes::pkg::api::v1::HostAlias>>,
+    pub host_aliases: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::HostAlias>>,
 
     /// Use the host's ipc namespace. Optional: Default to false.
     pub host_ipc: Option<bool>,
@@ -34,16 +34,16 @@ pub struct PodSpec {
     pub hostname: Option<String>,
 
     /// ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. For example, in the case of docker, only DockerConfig type secrets are honored. More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
-    pub image_pull_secrets: Option<Vec<::v1_7::kubernetes::pkg::api::v1::LocalObjectReference>>,
+    pub image_pull_secrets: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::LocalObjectReference>>,
 
     /// List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, or Liveness probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-    pub init_containers: Option<Vec<::v1_7::kubernetes::pkg::api::v1::Container>>,
+    pub init_containers: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::Container>>,
 
     /// NodeName is a request to schedule this pod onto a specific node. If it is non-empty, the scheduler simply schedules this pod onto that node, assuming that it fits resource requirements.
     pub node_name: Option<String>,
 
     /// NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-    pub node_selector: Option<::std::collections::BTreeMap<String, String>>,
+    pub node_selector: Option<std::collections::BTreeMap<String, String>>,
 
     /// Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
     pub restart_policy: Option<String>,
@@ -52,7 +52,7 @@ pub struct PodSpec {
     pub scheduler_name: Option<String>,
 
     /// SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty.  See type description for default values of each field.
-    pub security_context: Option<::v1_7::kubernetes::pkg::api::v1::PodSecurityContext>,
+    pub security_context: Option<crate::v1_7::kubernetes::pkg::api::v1::PodSecurityContext>,
 
     /// DeprecatedServiceAccount is a depreciated alias for ServiceAccountName. Deprecated: Use serviceAccountName instead.
     pub service_account: Option<String>,
@@ -67,14 +67,14 @@ pub struct PodSpec {
     pub termination_grace_period_seconds: Option<i64>,
 
     /// If specified, the pod's tolerations.
-    pub tolerations: Option<Vec<::v1_7::kubernetes::pkg::api::v1::Toleration>>,
+    pub tolerations: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::Toleration>>,
 
     /// List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
-    pub volumes: Option<Vec<::v1_7::kubernetes::pkg::api::v1::Volume>>,
+    pub volumes: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::Volume>>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for PodSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PodSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_active_deadline_seconds,
@@ -103,18 +103,18 @@ impl<'de> ::serde::Deserialize<'de> for PodSpec {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "activeDeadlineSeconds" => Field::Key_active_deadline_seconds,
                             "affinity" => Field::Key_affinity,
@@ -150,64 +150,64 @@ impl<'de> ::serde::Deserialize<'de> for PodSpec {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PodSpec;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PodSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_active_deadline_seconds: Option<i64> = None;
-                let mut value_affinity: Option<::v1_7::kubernetes::pkg::api::v1::Affinity> = None;
+                let mut value_affinity: Option<crate::v1_7::kubernetes::pkg::api::v1::Affinity> = None;
                 let mut value_automount_service_account_token: Option<bool> = None;
-                let mut value_containers: Option<Vec<::v1_7::kubernetes::pkg::api::v1::Container>> = None;
+                let mut value_containers: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::Container>> = None;
                 let mut value_dns_policy: Option<String> = None;
-                let mut value_host_aliases: Option<Vec<::v1_7::kubernetes::pkg::api::v1::HostAlias>> = None;
+                let mut value_host_aliases: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::HostAlias>> = None;
                 let mut value_host_ipc: Option<bool> = None;
                 let mut value_host_network: Option<bool> = None;
                 let mut value_host_pid: Option<bool> = None;
                 let mut value_hostname: Option<String> = None;
-                let mut value_image_pull_secrets: Option<Vec<::v1_7::kubernetes::pkg::api::v1::LocalObjectReference>> = None;
-                let mut value_init_containers: Option<Vec<::v1_7::kubernetes::pkg::api::v1::Container>> = None;
+                let mut value_image_pull_secrets: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::LocalObjectReference>> = None;
+                let mut value_init_containers: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::Container>> = None;
                 let mut value_node_name: Option<String> = None;
-                let mut value_node_selector: Option<::std::collections::BTreeMap<String, String>> = None;
+                let mut value_node_selector: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_restart_policy: Option<String> = None;
                 let mut value_scheduler_name: Option<String> = None;
-                let mut value_security_context: Option<::v1_7::kubernetes::pkg::api::v1::PodSecurityContext> = None;
+                let mut value_security_context: Option<crate::v1_7::kubernetes::pkg::api::v1::PodSecurityContext> = None;
                 let mut value_service_account: Option<String> = None;
                 let mut value_service_account_name: Option<String> = None;
                 let mut value_subdomain: Option<String> = None;
                 let mut value_termination_grace_period_seconds: Option<i64> = None;
-                let mut value_tolerations: Option<Vec<::v1_7::kubernetes::pkg::api::v1::Toleration>> = None;
-                let mut value_volumes: Option<Vec<::v1_7::kubernetes::pkg::api::v1::Volume>> = None;
+                let mut value_tolerations: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::Toleration>> = None;
+                let mut value_volumes: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::Volume>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_active_deadline_seconds => value_active_deadline_seconds = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_affinity => value_affinity = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_automount_service_account_token => value_automount_service_account_token = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_containers => value_containers = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_dns_policy => value_dns_policy = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_aliases => value_host_aliases = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_ipc => value_host_ipc = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_network => value_host_network = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_pid => value_host_pid = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_hostname => value_hostname = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_image_pull_secrets => value_image_pull_secrets = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_init_containers => value_init_containers = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_node_name => value_node_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_node_selector => value_node_selector = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_restart_policy => value_restart_policy = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_scheduler_name => value_scheduler_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_security_context => value_security_context = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_service_account => value_service_account = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_service_account_name => value_service_account_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_subdomain => value_subdomain = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_termination_grace_period_seconds => value_termination_grace_period_seconds = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_tolerations => value_tolerations = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volumes => value_volumes = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_active_deadline_seconds => value_active_deadline_seconds = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_affinity => value_affinity = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_automount_service_account_token => value_automount_service_account_token = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_containers => value_containers = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_dns_policy => value_dns_policy = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_aliases => value_host_aliases = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_ipc => value_host_ipc = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_network => value_host_network = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_pid => value_host_pid = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_hostname => value_hostname = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_image_pull_secrets => value_image_pull_secrets = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_init_containers => value_init_containers = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_node_name => value_node_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_node_selector => value_node_selector = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_restart_policy => value_restart_policy = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_scheduler_name => value_scheduler_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_security_context => value_security_context = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_service_account => value_service_account = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_service_account_name => value_service_account_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_subdomain => value_subdomain = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_termination_grace_period_seconds => value_termination_grace_period_seconds = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_tolerations => value_tolerations = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volumes => value_volumes = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -215,7 +215,7 @@ impl<'de> ::serde::Deserialize<'de> for PodSpec {
                     active_deadline_seconds: value_active_deadline_seconds,
                     affinity: value_affinity,
                     automount_service_account_token: value_automount_service_account_token,
-                    containers: value_containers.ok_or_else(|| ::serde::de::Error::missing_field("containers"))?,
+                    containers: value_containers.ok_or_else(|| serde::de::Error::missing_field("containers"))?,
                     dns_policy: value_dns_policy,
                     host_aliases: value_host_aliases,
                     host_ipc: value_host_ipc,
@@ -271,8 +271,8 @@ impl<'de> ::serde::Deserialize<'de> for PodSpec {
     }
 }
 
-impl ::serde::Serialize for PodSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PodSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodSpec",
             0 +
@@ -301,72 +301,72 @@ impl ::serde::Serialize for PodSpec {
             self.volumes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active_deadline_seconds {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "activeDeadlineSeconds", value)?;
         }
         if let Some(value) = &self.affinity {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "affinity", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "affinity", value)?;
         }
         if let Some(value) = &self.automount_service_account_token {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "automountServiceAccountToken", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "automountServiceAccountToken", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "containers", &self.containers)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "containers", &self.containers)?;
         if let Some(value) = &self.dns_policy {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "dnsPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "dnsPolicy", value)?;
         }
         if let Some(value) = &self.host_aliases {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostAliases", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostAliases", value)?;
         }
         if let Some(value) = &self.host_ipc {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", value)?;
         }
         if let Some(value) = &self.host_network {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostNetwork", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostNetwork", value)?;
         }
         if let Some(value) = &self.host_pid {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", value)?;
         }
         if let Some(value) = &self.hostname {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostname", value)?;
         }
         if let Some(value) = &self.image_pull_secrets {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullSecrets", value)?;
         }
         if let Some(value) = &self.init_containers {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "initContainers", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "initContainers", value)?;
         }
         if let Some(value) = &self.node_name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", value)?;
         }
         if let Some(value) = &self.node_selector {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelector", value)?;
         }
         if let Some(value) = &self.restart_policy {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "restartPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "restartPolicy", value)?;
         }
         if let Some(value) = &self.scheduler_name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "schedulerName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "schedulerName", value)?;
         }
         if let Some(value) = &self.security_context {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", value)?;
         }
         if let Some(value) = &self.service_account {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccount", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccount", value)?;
         }
         if let Some(value) = &self.service_account_name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccountName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "serviceAccountName", value)?;
         }
         if let Some(value) = &self.subdomain {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "subdomain", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "subdomain", value)?;
         }
         if let Some(value) = &self.termination_grace_period_seconds {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "terminationGracePeriodSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationGracePeriodSeconds", value)?;
         }
         if let Some(value) = &self.tolerations {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "tolerations", value)?;
         }
         if let Some(value) = &self.volumes {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

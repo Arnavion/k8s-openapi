@@ -10,11 +10,11 @@ pub struct EnvVar {
     pub value: Option<String>,
 
     /// Source for the environment variable's value. Cannot be used if value is not empty.
-    pub value_from: Option<::v1_10::api::core::v1::EnvVarSource>,
+    pub value_from: Option<crate::v1_10::api::core::v1::EnvVarSource>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for EnvVar {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for EnvVar {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_name,
@@ -23,18 +23,18 @@ impl<'de> ::serde::Deserialize<'de> for EnvVar {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "name" => Field::Key_name,
                             "value" => Field::Key_value,
@@ -50,29 +50,29 @@ impl<'de> ::serde::Deserialize<'de> for EnvVar {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = EnvVar;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct EnvVar")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_name: Option<String> = None;
                 let mut value_value: Option<String> = None;
-                let mut value_value_from: Option<::v1_10::api::core::v1::EnvVarSource> = None;
+                let mut value_value_from: Option<crate::v1_10::api::core::v1::EnvVarSource> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_name => value_name = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_value => value_value = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_value_from => value_value_from = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_name => value_name = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_value => value_value = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_value_from => value_value_from = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(EnvVar {
-                    name: value_name.ok_or_else(|| ::serde::de::Error::missing_field("name"))?,
+                    name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
                     value: value_value,
                     value_from: value_value_from,
                 })
@@ -91,8 +91,8 @@ impl<'de> ::serde::Deserialize<'de> for EnvVar {
     }
 }
 
-impl ::serde::Serialize for EnvVar {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for EnvVar {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EnvVar",
             0 +
@@ -100,13 +100,13 @@ impl ::serde::Serialize for EnvVar {
             self.value.as_ref().map_or(0, |_| 1) +
             self.value_from.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.value {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "value", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "value", value)?;
         }
         if let Some(value) = &self.value_from {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "valueFrom", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "valueFrom", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

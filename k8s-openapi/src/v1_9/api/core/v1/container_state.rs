@@ -4,17 +4,17 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ContainerState {
     /// Details about a running container
-    pub running: Option<::v1_9::api::core::v1::ContainerStateRunning>,
+    pub running: Option<crate::v1_9::api::core::v1::ContainerStateRunning>,
 
     /// Details about a terminated container
-    pub terminated: Option<::v1_9::api::core::v1::ContainerStateTerminated>,
+    pub terminated: Option<crate::v1_9::api::core::v1::ContainerStateTerminated>,
 
     /// Details about a waiting container
-    pub waiting: Option<::v1_9::api::core::v1::ContainerStateWaiting>,
+    pub waiting: Option<crate::v1_9::api::core::v1::ContainerStateWaiting>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for ContainerState {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ContainerState {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_running,
@@ -23,18 +23,18 @@ impl<'de> ::serde::Deserialize<'de> for ContainerState {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "running" => Field::Key_running,
                             "terminated" => Field::Key_terminated,
@@ -50,24 +50,24 @@ impl<'de> ::serde::Deserialize<'de> for ContainerState {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ContainerState;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ContainerState")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_running: Option<::v1_9::api::core::v1::ContainerStateRunning> = None;
-                let mut value_terminated: Option<::v1_9::api::core::v1::ContainerStateTerminated> = None;
-                let mut value_waiting: Option<::v1_9::api::core::v1::ContainerStateWaiting> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_running: Option<crate::v1_9::api::core::v1::ContainerStateRunning> = None;
+                let mut value_terminated: Option<crate::v1_9::api::core::v1::ContainerStateTerminated> = None;
+                let mut value_waiting: Option<crate::v1_9::api::core::v1::ContainerStateWaiting> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_running => value_running = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_terminated => value_terminated = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_waiting => value_waiting = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_running => value_running = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_terminated => value_terminated = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_waiting => value_waiting = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -91,8 +91,8 @@ impl<'de> ::serde::Deserialize<'de> for ContainerState {
     }
 }
 
-impl ::serde::Serialize for ContainerState {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ContainerState {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ContainerState",
             0 +
@@ -101,14 +101,14 @@ impl ::serde::Serialize for ContainerState {
             self.waiting.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.running {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "running", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "running", value)?;
         }
         if let Some(value) = &self.terminated {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "terminated", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "terminated", value)?;
         }
         if let Some(value) = &self.waiting {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "waiting", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "waiting", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

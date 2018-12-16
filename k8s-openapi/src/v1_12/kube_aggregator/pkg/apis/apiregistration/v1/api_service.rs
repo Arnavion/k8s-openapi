@@ -3,13 +3,13 @@
 /// APIService represents a server for a particular GroupVersion. Name must be "version.group".
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct APIService {
-    pub metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec contains information for locating and communicating with a server
-    pub spec: Option<::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec>,
+    pub spec: Option<crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec>,
 
     /// Status contains derived information about an API server
-    pub status: Option<::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus>,
+    pub status: Option<crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus>,
 }
 
 // Begin apiregistration.k8s.io/v1/APIService
@@ -37,13 +37,13 @@ impl APIService {
     ///
     ///     If 'true', then the output is pretty printed.
     pub fn create_apiregistration_v1_api_service(
-        body: &::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
+        body: &crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -55,50 +55,50 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::create_apiregistration_v1_api_service`](./struct.APIService.html#method.create_apiregistration_v1_api_service)
 #[derive(Debug)]
 pub enum CreateApiregistrationV1APIServiceResponse {
-    Ok(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
-    Created(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
-    Accepted(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Created(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Accepted(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateApiregistrationV1APIServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateApiregistrationV1APIServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateApiregistrationV1APIServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateApiregistrationV1APIServiceResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateApiregistrationV1APIServiceResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateApiregistrationV1APIServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateApiregistrationV1APIServiceResponse::Unauthorized, 0)),
             _ => Ok((CreateApiregistrationV1APIServiceResponse::Other, 0)),
         }
     }
@@ -145,9 +145,9 @@ impl APIService {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -165,55 +165,55 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::delete_apiregistration_v1_api_service`](./struct.APIService.html#method.delete_apiregistration_v1_api_service)
 #[derive(Debug)]
 pub enum DeleteApiregistrationV1APIServiceResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
-    Accepted(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteApiregistrationV1APIServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteApiregistrationV1APIServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteApiregistrationV1APIServiceResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteApiregistrationV1APIServiceResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteApiregistrationV1APIServiceResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteApiregistrationV1APIServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteApiregistrationV1APIServiceResponse::Unauthorized, 0)),
             _ => Ok((DeleteApiregistrationV1APIServiceResponse::Other, 0)),
         }
     }
@@ -277,9 +277,9 @@ impl APIService {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -309,46 +309,46 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::delete_apiregistration_v1_collection_api_service`](./struct.APIService.html#method.delete_apiregistration_v1_collection_api_service)
 #[derive(Debug)]
 pub enum DeleteApiregistrationV1CollectionAPIServiceResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteApiregistrationV1CollectionAPIServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteApiregistrationV1CollectionAPIServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteApiregistrationV1CollectionAPIServiceResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteApiregistrationV1CollectionAPIServiceResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteApiregistrationV1CollectionAPIServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteApiregistrationV1CollectionAPIServiceResponse::Unauthorized, 0)),
             _ => Ok((DeleteApiregistrationV1CollectionAPIServiceResponse::Other, 0)),
         }
     }
@@ -412,9 +412,9 @@ impl APIService {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -444,32 +444,32 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::list_apiregistration_v1_api_service`](./struct.APIService.html#method.list_apiregistration_v1_api_service)
 #[derive(Debug)]
 pub enum ListApiregistrationV1APIServiceResponse {
-    Ok(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceList),
+    Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListApiregistrationV1APIServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListApiregistrationV1APIServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListApiregistrationV1APIServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListApiregistrationV1APIServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListApiregistrationV1APIServiceResponse::Unauthorized, 0)),
             _ => Ok((ListApiregistrationV1APIServiceResponse::Other, 0)),
         }
     }
@@ -499,12 +499,12 @@ impl APIService {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_apiregistration_v1_api_service(
         name: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -513,32 +513,32 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::patch_apiregistration_v1_api_service`](./struct.APIService.html#method.patch_apiregistration_v1_api_service)
 #[derive(Debug)]
 pub enum PatchApiregistrationV1APIServiceResponse {
-    Ok(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchApiregistrationV1APIServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchApiregistrationV1APIServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchApiregistrationV1APIServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchApiregistrationV1APIServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchApiregistrationV1APIServiceResponse::Unauthorized, 0)),
             _ => Ok((PatchApiregistrationV1APIServiceResponse::Other, 0)),
         }
     }
@@ -568,12 +568,12 @@ impl APIService {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_apiregistration_v1_api_service_status(
         name: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}/status?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -582,32 +582,32 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::patch_apiregistration_v1_api_service_status`](./struct.APIService.html#method.patch_apiregistration_v1_api_service_status)
 #[derive(Debug)]
 pub enum PatchApiregistrationV1APIServiceStatusResponse {
-    Ok(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchApiregistrationV1APIServiceStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchApiregistrationV1APIServiceStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchApiregistrationV1APIServiceStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchApiregistrationV1APIServiceStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchApiregistrationV1APIServiceStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchApiregistrationV1APIServiceStatusResponse::Other, 0)),
         }
     }
@@ -642,9 +642,9 @@ impl APIService {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -656,32 +656,32 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::read_apiregistration_v1_api_service`](./struct.APIService.html#method.read_apiregistration_v1_api_service)
 #[derive(Debug)]
 pub enum ReadApiregistrationV1APIServiceResponse {
-    Ok(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadApiregistrationV1APIServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadApiregistrationV1APIServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadApiregistrationV1APIServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadApiregistrationV1APIServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadApiregistrationV1APIServiceResponse::Unauthorized, 0)),
             _ => Ok((ReadApiregistrationV1APIServiceResponse::Other, 0)),
         }
     }
@@ -706,40 +706,40 @@ impl APIService {
     pub fn read_apiregistration_v1_api_service_status(
         name: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}/status?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::read_apiregistration_v1_api_service_status`](./struct.APIService.html#method.read_apiregistration_v1_api_service_status)
 #[derive(Debug)]
 pub enum ReadApiregistrationV1APIServiceStatusResponse {
-    Ok(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadApiregistrationV1APIServiceStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadApiregistrationV1APIServiceStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadApiregistrationV1APIServiceStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadApiregistrationV1APIServiceStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadApiregistrationV1APIServiceStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadApiregistrationV1APIServiceStatusResponse::Other, 0)),
         }
     }
@@ -769,12 +769,12 @@ impl APIService {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_apiregistration_v1_api_service(
         name: &str,
-        body: &::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
+        body: &crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -783,41 +783,41 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::replace_apiregistration_v1_api_service`](./struct.APIService.html#method.replace_apiregistration_v1_api_service)
 #[derive(Debug)]
 pub enum ReplaceApiregistrationV1APIServiceResponse {
-    Ok(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
-    Created(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Created(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceApiregistrationV1APIServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceApiregistrationV1APIServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceApiregistrationV1APIServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceApiregistrationV1APIServiceResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiregistrationV1APIServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiregistrationV1APIServiceResponse::Unauthorized, 0)),
             _ => Ok((ReplaceApiregistrationV1APIServiceResponse::Other, 0)),
         }
     }
@@ -847,12 +847,12 @@ impl APIService {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_apiregistration_v1_api_service_status(
         name: &str,
-        body: &::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
+        body: &crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}/status?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -861,41 +861,41 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::replace_apiregistration_v1_api_service_status`](./struct.APIService.html#method.replace_apiregistration_v1_api_service_status)
 #[derive(Debug)]
 pub enum ReplaceApiregistrationV1APIServiceStatusResponse {
-    Ok(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
-    Created(::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
+    Created(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceApiregistrationV1APIServiceStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceApiregistrationV1APIServiceStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceApiregistrationV1APIServiceStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceApiregistrationV1APIServiceStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiregistrationV1APIServiceStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiregistrationV1APIServiceStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplaceApiregistrationV1APIServiceStatusResponse::Other, 0)),
         }
     }
@@ -964,9 +964,9 @@ impl APIService {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/watch/apiservices/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -996,34 +996,34 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::watch_apiregistration_v1_api_service`](./struct.APIService.html#method.watch_apiregistration_v1_api_service)
 #[derive(Debug)]
 pub enum WatchApiregistrationV1APIServiceResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchApiregistrationV1APIServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchApiregistrationV1APIServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchApiregistrationV1APIServiceResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchApiregistrationV1APIServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchApiregistrationV1APIServiceResponse::Unauthorized, 0)),
             _ => Ok((WatchApiregistrationV1APIServiceResponse::Other, 0)),
         }
     }
@@ -1087,9 +1087,9 @@ impl APIService {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/apiregistration.k8s.io/v1/watch/apiservices?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1119,34 +1119,34 @@ impl APIService {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`APIService::watch_apiregistration_v1_api_service_list`](./struct.APIService.html#method.watch_apiregistration_v1_api_service_list)
 #[derive(Debug)]
 pub enum WatchApiregistrationV1APIServiceListResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchApiregistrationV1APIServiceListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchApiregistrationV1APIServiceListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchApiregistrationV1APIServiceListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchApiregistrationV1APIServiceListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchApiregistrationV1APIServiceListResponse::Unauthorized, 0)),
             _ => Ok((WatchApiregistrationV1APIServiceListResponse::Other, 0)),
         }
     }
@@ -1154,7 +1154,7 @@ impl ::Response for WatchApiregistrationV1APIServiceListResponse {
 
 // End apiregistration.k8s.io/v1/APIService
 
-impl ::Resource for APIService {
+impl crate::Resource for APIService {
     fn api_version() -> &'static str {
         "apiregistration.k8s.io/v1"
     }
@@ -1172,8 +1172,8 @@ impl ::Resource for APIService {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for APIService {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for APIService {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1184,18 +1184,18 @@ impl<'de> ::serde::Deserialize<'de> for APIService {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1213,36 +1213,36 @@ impl<'de> ::serde::Deserialize<'de> for APIService {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = APIService;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct APIService")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec> = None;
-                let mut value_status: Option<::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceSpec> = None;
+                let mut value_status: Option<crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1268,8 +1268,8 @@ impl<'de> ::serde::Deserialize<'de> for APIService {
     }
 }
 
-impl ::serde::Serialize for APIService {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for APIService {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "APIService",
             0 +
@@ -1278,17 +1278,17 @@ impl ::serde::Serialize for APIService {
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

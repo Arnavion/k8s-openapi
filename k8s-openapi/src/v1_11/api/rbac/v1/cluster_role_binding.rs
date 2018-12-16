@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct ClusterRoleBinding {
     /// Standard object's metadata.
-    pub metadata: Option<::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
-    pub role_ref: ::v1_11::api::rbac::v1::RoleRef,
+    pub role_ref: crate::v1_11::api::rbac::v1::RoleRef,
 
     /// Subjects holds references to the objects the role applies to.
-    pub subjects: Option<Vec<::v1_11::api::rbac::v1::Subject>>,
+    pub subjects: Option<Vec<crate::v1_11::api::rbac::v1::Subject>>,
 }
 
 // Begin rbac.authorization.k8s.io/v1/ClusterRoleBinding
@@ -30,60 +30,60 @@ impl ClusterRoleBinding {
     ///
     ///     If 'true', then the output is pretty printed.
     pub fn create_rbac_authorization_v1_cluster_role_binding(
-        body: &::v1_11::api::rbac::v1::ClusterRoleBinding,
+        body: &crate::v1_11::api::rbac::v1::ClusterRoleBinding,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/clusterrolebindings?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ClusterRoleBinding::create_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.create_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum CreateRbacAuthorizationV1ClusterRoleBindingResponse {
-    Ok(::v1_11::api::rbac::v1::ClusterRoleBinding),
-    Created(::v1_11::api::rbac::v1::ClusterRoleBinding),
-    Accepted(::v1_11::api::rbac::v1::ClusterRoleBinding),
+    Ok(crate::v1_11::api::rbac::v1::ClusterRoleBinding),
+    Created(crate::v1_11::api::rbac::v1::ClusterRoleBinding),
+    Accepted(crate::v1_11::api::rbac::v1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateRbacAuthorizationV1ClusterRoleBindingResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateRbacAuthorizationV1ClusterRoleBindingResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateRbacAuthorizationV1ClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateRbacAuthorizationV1ClusterRoleBindingResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateRbacAuthorizationV1ClusterRoleBindingResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
             _ => Ok((CreateRbacAuthorizationV1ClusterRoleBindingResponse::Other, 0)),
         }
     }
@@ -125,9 +125,9 @@ impl ClusterRoleBinding {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/clusterrolebindings/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -142,46 +142,46 @@ impl ClusterRoleBinding {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ClusterRoleBinding::delete_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1ClusterRoleBindingResponse {
-    OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_11::api::rbac::v1::ClusterRoleBinding),
+    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_11::api::rbac::v1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteRbacAuthorizationV1ClusterRoleBindingResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteRbacAuthorizationV1ClusterRoleBindingResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteRbacAuthorizationV1ClusterRoleBindingResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteRbacAuthorizationV1ClusterRoleBindingResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
             _ => Ok((DeleteRbacAuthorizationV1ClusterRoleBindingResponse::Other, 0)),
         }
     }
@@ -243,9 +243,9 @@ impl ClusterRoleBinding {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/clusterrolebindings?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -275,46 +275,46 @@ impl ClusterRoleBinding {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ClusterRoleBinding::delete_rbac_authorization_v1_collection_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_rbac_authorization_v1_collection_cluster_role_binding)
 #[derive(Debug)]
 pub enum DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse {
-    OkStatus(::v1_11::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_11::api::rbac::v1::ClusterRoleBinding),
+    OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_11::api::rbac::v1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse::Unauthorized, 0)),
             _ => Ok((DeleteRbacAuthorizationV1CollectionClusterRoleBindingResponse::Other, 0)),
         }
     }
@@ -376,9 +376,9 @@ impl ClusterRoleBinding {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/clusterrolebindings?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -408,32 +408,32 @@ impl ClusterRoleBinding {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ClusterRoleBinding::list_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.list_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum ListRbacAuthorizationV1ClusterRoleBindingResponse {
-    Ok(::v1_11::api::rbac::v1::ClusterRoleBindingList),
+    Ok(crate::v1_11::api::rbac::v1::ClusterRoleBindingList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListRbacAuthorizationV1ClusterRoleBindingResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListRbacAuthorizationV1ClusterRoleBindingResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListRbacAuthorizationV1ClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
             _ => Ok((ListRbacAuthorizationV1ClusterRoleBindingResponse::Other, 0)),
         }
     }
@@ -459,42 +459,42 @@ impl ClusterRoleBinding {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_rbac_authorization_v1_cluster_role_binding(
         name: &str,
-        body: &::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/clusterrolebindings/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ClusterRoleBinding::patch_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.patch_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum PatchRbacAuthorizationV1ClusterRoleBindingResponse {
-    Ok(::v1_11::api::rbac::v1::ClusterRoleBinding),
+    Ok(crate::v1_11::api::rbac::v1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchRbacAuthorizationV1ClusterRoleBindingResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchRbacAuthorizationV1ClusterRoleBindingResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchRbacAuthorizationV1ClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
             _ => Ok((PatchRbacAuthorizationV1ClusterRoleBindingResponse::Other, 0)),
         }
     }
@@ -519,40 +519,40 @@ impl ClusterRoleBinding {
     pub fn read_rbac_authorization_v1_cluster_role_binding(
         name: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/clusterrolebindings/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ClusterRoleBinding::read_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.read_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum ReadRbacAuthorizationV1ClusterRoleBindingResponse {
-    Ok(::v1_11::api::rbac::v1::ClusterRoleBinding),
+    Ok(crate::v1_11::api::rbac::v1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadRbacAuthorizationV1ClusterRoleBindingResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadRbacAuthorizationV1ClusterRoleBindingResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadRbacAuthorizationV1ClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
             _ => Ok((ReadRbacAuthorizationV1ClusterRoleBindingResponse::Other, 0)),
         }
     }
@@ -578,51 +578,51 @@ impl ClusterRoleBinding {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_rbac_authorization_v1_cluster_role_binding(
         name: &str,
-        body: &::v1_11::api::rbac::v1::ClusterRoleBinding,
+        body: &crate::v1_11::api::rbac::v1::ClusterRoleBinding,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/clusterrolebindings/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ClusterRoleBinding::replace_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.replace_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum ReplaceRbacAuthorizationV1ClusterRoleBindingResponse {
-    Ok(::v1_11::api::rbac::v1::ClusterRoleBinding),
-    Created(::v1_11::api::rbac::v1::ClusterRoleBinding),
+    Ok(crate::v1_11::api::rbac::v1::ClusterRoleBinding),
+    Created(crate::v1_11::api::rbac::v1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceRbacAuthorizationV1ClusterRoleBindingResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceRbacAuthorizationV1ClusterRoleBindingResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceRbacAuthorizationV1ClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceRbacAuthorizationV1ClusterRoleBindingResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
             _ => Ok((ReplaceRbacAuthorizationV1ClusterRoleBindingResponse::Other, 0)),
         }
     }
@@ -689,9 +689,9 @@ impl ClusterRoleBinding {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/watch/clusterrolebindings/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -721,34 +721,34 @@ impl ClusterRoleBinding {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ClusterRoleBinding::watch_rbac_authorization_v1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.watch_rbac_authorization_v1_cluster_role_binding)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1ClusterRoleBindingResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchRbacAuthorizationV1ClusterRoleBindingResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchRbacAuthorizationV1ClusterRoleBindingResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchRbacAuthorizationV1ClusterRoleBindingResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1ClusterRoleBindingResponse::Unauthorized, 0)),
             _ => Ok((WatchRbacAuthorizationV1ClusterRoleBindingResponse::Other, 0)),
         }
     }
@@ -810,9 +810,9 @@ impl ClusterRoleBinding {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/watch/clusterrolebindings?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -842,34 +842,34 @@ impl ClusterRoleBinding {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`ClusterRoleBinding::watch_rbac_authorization_v1_cluster_role_binding_list`](./struct.ClusterRoleBinding.html#method.watch_rbac_authorization_v1_cluster_role_binding_list)
 #[derive(Debug)]
 pub enum WatchRbacAuthorizationV1ClusterRoleBindingListResponse {
-    Ok(::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchRbacAuthorizationV1ClusterRoleBindingListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchRbacAuthorizationV1ClusterRoleBindingListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchRbacAuthorizationV1ClusterRoleBindingListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1ClusterRoleBindingListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1ClusterRoleBindingListResponse::Unauthorized, 0)),
             _ => Ok((WatchRbacAuthorizationV1ClusterRoleBindingListResponse::Other, 0)),
         }
     }
@@ -877,7 +877,7 @@ impl ::Response for WatchRbacAuthorizationV1ClusterRoleBindingListResponse {
 
 // End rbac.authorization.k8s.io/v1/ClusterRoleBinding
 
-impl ::Resource for ClusterRoleBinding {
+impl crate::Resource for ClusterRoleBinding {
     fn api_version() -> &'static str {
         "rbac.authorization.k8s.io/v1"
     }
@@ -895,8 +895,8 @@ impl ::Resource for ClusterRoleBinding {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for ClusterRoleBinding {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ClusterRoleBinding {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -907,18 +907,18 @@ impl<'de> ::serde::Deserialize<'de> for ClusterRoleBinding {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -936,42 +936,42 @@ impl<'de> ::serde::Deserialize<'de> for ClusterRoleBinding {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ClusterRoleBinding;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ClusterRoleBinding")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_role_ref: Option<::v1_11::api::rbac::v1::RoleRef> = None;
-                let mut value_subjects: Option<Vec<::v1_11::api::rbac::v1::Subject>> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_role_ref: Option<crate::v1_11::api::rbac::v1::RoleRef> = None;
+                let mut value_subjects: Option<Vec<crate::v1_11::api::rbac::v1::Subject>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_role_ref => value_role_ref = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_subjects => value_subjects = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_role_ref => value_role_ref = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_subjects => value_subjects = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(ClusterRoleBinding {
                     metadata: value_metadata,
-                    role_ref: value_role_ref.ok_or_else(|| ::serde::de::Error::missing_field("roleRef"))?,
+                    role_ref: value_role_ref.ok_or_else(|| serde::de::Error::missing_field("roleRef"))?,
                     subjects: value_subjects,
                 })
             }
@@ -991,8 +991,8 @@ impl<'de> ::serde::Deserialize<'de> for ClusterRoleBinding {
     }
 }
 
-impl ::serde::Serialize for ClusterRoleBinding {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ClusterRoleBinding {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ClusterRoleBinding",
             0 +
@@ -1001,15 +1001,15 @@ impl ::serde::Serialize for ClusterRoleBinding {
             1 +
             self.subjects.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "roleRef", &self.role_ref)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "roleRef", &self.role_ref)?;
         if let Some(value) = &self.subjects {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "subjects", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "subjects", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

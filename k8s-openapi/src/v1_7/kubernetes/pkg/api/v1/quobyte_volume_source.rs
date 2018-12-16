@@ -19,8 +19,8 @@ pub struct QuobyteVolumeSource {
     pub volume: String,
 }
 
-impl<'de> ::serde::Deserialize<'de> for QuobyteVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for QuobyteVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_group,
@@ -31,18 +31,18 @@ impl<'de> ::serde::Deserialize<'de> for QuobyteVolumeSource {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "group" => Field::Key_group,
                             "readOnly" => Field::Key_read_only,
@@ -60,37 +60,37 @@ impl<'de> ::serde::Deserialize<'de> for QuobyteVolumeSource {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = QuobyteVolumeSource;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct QuobyteVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_group: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
                 let mut value_registry: Option<String> = None;
                 let mut value_user: Option<String> = None;
                 let mut value_volume: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_group => value_group = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only => value_read_only = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_registry => value_registry = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_user => value_user = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume => value_volume = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_group => value_group = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_registry => value_registry = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_user => value_user = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume => value_volume = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(QuobyteVolumeSource {
                     group: value_group,
                     read_only: value_read_only,
-                    registry: value_registry.ok_or_else(|| ::serde::de::Error::missing_field("registry"))?,
+                    registry: value_registry.ok_or_else(|| serde::de::Error::missing_field("registry"))?,
                     user: value_user,
-                    volume: value_volume.ok_or_else(|| ::serde::de::Error::missing_field("volume"))?,
+                    volume: value_volume.ok_or_else(|| serde::de::Error::missing_field("volume"))?,
                 })
             }
         }
@@ -109,8 +109,8 @@ impl<'de> ::serde::Deserialize<'de> for QuobyteVolumeSource {
     }
 }
 
-impl ::serde::Serialize for QuobyteVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for QuobyteVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "QuobyteVolumeSource",
             0 +
@@ -121,16 +121,16 @@ impl ::serde::Serialize for QuobyteVolumeSource {
             1,
         )?;
         if let Some(value) = &self.group {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;
         }
         if let Some(value) = &self.read_only {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "registry", &self.registry)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "registry", &self.registry)?;
         if let Some(value) = &self.user {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "volume", &self.volume)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "volume", &self.volume)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

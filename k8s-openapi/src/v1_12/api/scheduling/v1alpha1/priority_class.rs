@@ -10,7 +10,7 @@ pub struct PriorityClass {
     pub global_default: Option<bool>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// The value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec.
     pub value: i32,
@@ -41,13 +41,13 @@ impl PriorityClass {
     ///
     ///     If 'true', then the output is pretty printed.
     pub fn create_scheduling_v1alpha1_priority_class(
-        body: &::v1_12::api::scheduling::v1alpha1::PriorityClass,
+        body: &crate::v1_12::api::scheduling::v1alpha1::PriorityClass,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -59,50 +59,50 @@ impl PriorityClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PriorityClass::create_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.create_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum CreateSchedulingV1alpha1PriorityClassResponse {
-    Ok(::v1_12::api::scheduling::v1alpha1::PriorityClass),
-    Created(::v1_12::api::scheduling::v1alpha1::PriorityClass),
-    Accepted(::v1_12::api::scheduling::v1alpha1::PriorityClass),
+    Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
+    Created(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
+    Accepted(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateSchedulingV1alpha1PriorityClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateSchedulingV1alpha1PriorityClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateSchedulingV1alpha1PriorityClassResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateSchedulingV1alpha1PriorityClassResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateSchedulingV1alpha1PriorityClassResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
             _ => Ok((CreateSchedulingV1alpha1PriorityClassResponse::Other, 0)),
         }
     }
@@ -166,9 +166,9 @@ impl PriorityClass {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -198,46 +198,46 @@ impl PriorityClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PriorityClass::delete_scheduling_v1alpha1_collection_priority_class`](./struct.PriorityClass.html#method.delete_scheduling_v1alpha1_collection_priority_class)
 #[derive(Debug)]
 pub enum DeleteSchedulingV1alpha1CollectionPriorityClassResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::api::scheduling::v1alpha1::PriorityClass),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteSchedulingV1alpha1CollectionPriorityClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteSchedulingV1alpha1CollectionPriorityClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteSchedulingV1alpha1CollectionPriorityClassResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteSchedulingV1alpha1CollectionPriorityClassResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteSchedulingV1alpha1CollectionPriorityClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteSchedulingV1alpha1CollectionPriorityClassResponse::Unauthorized, 0)),
             _ => Ok((DeleteSchedulingV1alpha1CollectionPriorityClassResponse::Other, 0)),
         }
     }
@@ -284,9 +284,9 @@ impl PriorityClass {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -304,55 +304,55 @@ impl PriorityClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PriorityClass::delete_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.delete_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum DeleteSchedulingV1alpha1PriorityClassResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::api::scheduling::v1alpha1::PriorityClass),
-    Accepted(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
+    Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteSchedulingV1alpha1PriorityClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteSchedulingV1alpha1PriorityClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteSchedulingV1alpha1PriorityClassResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteSchedulingV1alpha1PriorityClassResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteSchedulingV1alpha1PriorityClassResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
             _ => Ok((DeleteSchedulingV1alpha1PriorityClassResponse::Other, 0)),
         }
     }
@@ -416,9 +416,9 @@ impl PriorityClass {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -448,32 +448,32 @@ impl PriorityClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PriorityClass::list_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.list_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum ListSchedulingV1alpha1PriorityClassResponse {
-    Ok(::v1_12::api::scheduling::v1alpha1::PriorityClassList),
+    Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClassList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListSchedulingV1alpha1PriorityClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListSchedulingV1alpha1PriorityClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListSchedulingV1alpha1PriorityClassResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
             _ => Ok((ListSchedulingV1alpha1PriorityClassResponse::Other, 0)),
         }
     }
@@ -503,12 +503,12 @@ impl PriorityClass {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_scheduling_v1alpha1_priority_class(
         name: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -517,32 +517,32 @@ impl PriorityClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PriorityClass::patch_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.patch_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum PatchSchedulingV1alpha1PriorityClassResponse {
-    Ok(::v1_12::api::scheduling::v1alpha1::PriorityClass),
+    Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchSchedulingV1alpha1PriorityClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchSchedulingV1alpha1PriorityClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchSchedulingV1alpha1PriorityClassResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
             _ => Ok((PatchSchedulingV1alpha1PriorityClassResponse::Other, 0)),
         }
     }
@@ -577,9 +577,9 @@ impl PriorityClass {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -591,32 +591,32 @@ impl PriorityClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PriorityClass::read_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.read_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum ReadSchedulingV1alpha1PriorityClassResponse {
-    Ok(::v1_12::api::scheduling::v1alpha1::PriorityClass),
+    Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadSchedulingV1alpha1PriorityClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadSchedulingV1alpha1PriorityClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadSchedulingV1alpha1PriorityClassResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
             _ => Ok((ReadSchedulingV1alpha1PriorityClassResponse::Other, 0)),
         }
     }
@@ -646,12 +646,12 @@ impl PriorityClass {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_scheduling_v1alpha1_priority_class(
         name: &str,
-        body: &::v1_12::api::scheduling::v1alpha1::PriorityClass,
+        body: &crate::v1_12::api::scheduling::v1alpha1::PriorityClass,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -660,41 +660,41 @@ impl PriorityClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PriorityClass::replace_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.replace_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum ReplaceSchedulingV1alpha1PriorityClassResponse {
-    Ok(::v1_12::api::scheduling::v1alpha1::PriorityClass),
-    Created(::v1_12::api::scheduling::v1alpha1::PriorityClass),
+    Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
+    Created(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceSchedulingV1alpha1PriorityClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceSchedulingV1alpha1PriorityClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceSchedulingV1alpha1PriorityClassResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceSchedulingV1alpha1PriorityClassResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
             _ => Ok((ReplaceSchedulingV1alpha1PriorityClassResponse::Other, 0)),
         }
     }
@@ -763,9 +763,9 @@ impl PriorityClass {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/watch/priorityclasses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -795,34 +795,34 @@ impl PriorityClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PriorityClass::watch_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.watch_scheduling_v1alpha1_priority_class)
 #[derive(Debug)]
 pub enum WatchSchedulingV1alpha1PriorityClassResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchSchedulingV1alpha1PriorityClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchSchedulingV1alpha1PriorityClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchSchedulingV1alpha1PriorityClassResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
             _ => Ok((WatchSchedulingV1alpha1PriorityClassResponse::Other, 0)),
         }
     }
@@ -886,9 +886,9 @@ impl PriorityClass {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/watch/priorityclasses?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -918,34 +918,34 @@ impl PriorityClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PriorityClass::watch_scheduling_v1alpha1_priority_class_list`](./struct.PriorityClass.html#method.watch_scheduling_v1alpha1_priority_class_list)
 #[derive(Debug)]
 pub enum WatchSchedulingV1alpha1PriorityClassListResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchSchedulingV1alpha1PriorityClassListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchSchedulingV1alpha1PriorityClassListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchSchedulingV1alpha1PriorityClassListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchSchedulingV1alpha1PriorityClassListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchSchedulingV1alpha1PriorityClassListResponse::Unauthorized, 0)),
             _ => Ok((WatchSchedulingV1alpha1PriorityClassListResponse::Other, 0)),
         }
     }
@@ -953,7 +953,7 @@ impl ::Response for WatchSchedulingV1alpha1PriorityClassListResponse {
 
 // End scheduling.k8s.io/v1alpha1/PriorityClass
 
-impl ::Resource for PriorityClass {
+impl crate::Resource for PriorityClass {
     fn api_version() -> &'static str {
         "scheduling.k8s.io/v1alpha1"
     }
@@ -971,8 +971,8 @@ impl ::Resource for PriorityClass {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for PriorityClass {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PriorityClass {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -984,18 +984,18 @@ impl<'de> ::serde::Deserialize<'de> for PriorityClass {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1014,38 +1014,38 @@ impl<'de> ::serde::Deserialize<'de> for PriorityClass {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PriorityClass;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PriorityClass")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_description: Option<String> = None;
                 let mut value_global_default: Option<bool> = None;
-                let mut value_metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_value: Option<i32> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_description => value_description = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_global_default => value_global_default = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_value => value_value = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_description => value_description = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_global_default => value_global_default = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_value => value_value = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1053,7 +1053,7 @@ impl<'de> ::serde::Deserialize<'de> for PriorityClass {
                     description: value_description,
                     global_default: value_global_default,
                     metadata: value_metadata,
-                    value: value_value.ok_or_else(|| ::serde::de::Error::missing_field("value"))?,
+                    value: value_value.ok_or_else(|| serde::de::Error::missing_field("value"))?,
                 })
             }
         }
@@ -1073,8 +1073,8 @@ impl<'de> ::serde::Deserialize<'de> for PriorityClass {
     }
 }
 
-impl ::serde::Serialize for PriorityClass {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PriorityClass {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PriorityClass",
             0 +
@@ -1084,18 +1084,18 @@ impl ::serde::Serialize for PriorityClass {
             self.metadata.as_ref().map_or(0, |_| 1) +
             1,
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.description {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
         }
         if let Some(value) = &self.global_default {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "globalDefault", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "globalDefault", value)?;
         }
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "value", &self.value)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "value", &self.value)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

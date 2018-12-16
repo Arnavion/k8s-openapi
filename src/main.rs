@@ -300,7 +300,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 				if let Some(resource_metadata) = &resource_metadata {
 					writeln!(file)?;
-					writeln!(file, "impl ::Resource for {} {{", type_name)?;
+					writeln!(file, "impl crate::Resource for {} {{", type_name)?;
 					writeln!(file, "    fn api_version() -> &'static str {{")?;
 					writeln!(file, r#"        "{}""#, resource_metadata.0)?;
 					writeln!(file, "    }}")?;
@@ -320,8 +320,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				}
 
 				writeln!(file)?;
-				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
-				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "impl<'de> serde::Deserialize<'de> for {} {{", type_name)?;
+				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
 				writeln!(file, "        #[allow(non_camel_case_types)]")?;
 				writeln!(file, "        enum Field {{")?;
 				if resource_metadata.is_some() {
@@ -334,18 +334,18 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "            Other,")?;
 				writeln!(file, "        }}")?;
 				writeln!(file)?;
-				writeln!(file, "        impl<'de> ::serde::Deserialize<'de> for Field {{")?;
-				writeln!(file, "            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "        impl<'de> serde::Deserialize<'de> for Field {{")?;
+				writeln!(file, "            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
 				writeln!(file, "                struct Visitor;")?;
 				writeln!(file)?;
-				writeln!(file, "                impl<'de> ::serde::de::Visitor<'de> for Visitor {{")?;
+				writeln!(file, "                impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
 				writeln!(file, "                    type Value = Field;")?;
 				writeln!(file)?;
-				writeln!(file, "                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {{")?;
+				writeln!(file, "                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
 				writeln!(file, r#"                        write!(f, "field identifier")"#)?;
 				writeln!(file, "                    }}")?;
 				writeln!(file)?;
-				writeln!(file, "                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+				writeln!(file, "                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
 				writeln!(file, "                        Ok(match v {{")?;
 				if resource_metadata.is_some() {
 					writeln!(file, r#"                            "apiVersion" => Field::Key_api_version,"#)?;
@@ -365,14 +365,14 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file)?;
 				writeln!(file, "        struct Visitor;")?;
 				writeln!(file)?;
-				writeln!(file, "        impl<'de> ::serde::de::Visitor<'de> for Visitor {{")?;
+				writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
 				writeln!(file, "            type Value = {};", type_name)?;
 				writeln!(file)?;
-				writeln!(file, "            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {{")?;
+				writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
 				writeln!(file, r#"                write!(f, "struct {}")"#, type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
-				writeln!(file, "            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {{")?;
+				writeln!(file, "            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {{")?;
 				for Property { required, field_name, field_type_name, .. } in &properties {
 					if *required {
 						writeln!(file, r#"                let mut value_{}: Option<{}> = None;"#, field_name, field_type_name)?;
@@ -382,39 +382,39 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					}
 				}
 				writeln!(file)?;
-				writeln!(file, "                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {{")?;
+				writeln!(file, "                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {{")?;
 				writeln!(file, "                    match key {{")?;
 				if resource_metadata.is_some() {
 						writeln!(file, r#"                        Field::Key_api_version => {{"#)?;
-						writeln!(file, r#"                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;"#)?;
-						writeln!(file, r#"                            if value_api_version != <Self::Value as ::Resource>::api_version() {{"#)?;
-						writeln!(file, r#"                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));"#)?;
+						writeln!(file, r#"                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;"#)?;
+						writeln!(file, r#"                            if value_api_version != <Self::Value as crate::Resource>::api_version() {{"#)?;
+						writeln!(file, r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));"#)?;
 						writeln!(file, r#"                            }}"#)?;
 						writeln!(file, r#"                        }},"#)?;
 
 						writeln!(file, r#"                        Field::Key_kind => {{"#)?;
-						writeln!(file, r#"                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;"#)?;
-						writeln!(file, r#"                            if value_kind != <Self::Value as ::Resource>::kind() {{"#)?;
-						writeln!(file, r#"                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));"#)?;
+						writeln!(file, r#"                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;"#)?;
+						writeln!(file, r#"                            if value_kind != <Self::Value as crate::Resource>::kind() {{"#)?;
+						writeln!(file, r#"                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));"#)?;
 						writeln!(file, r#"                            }}"#)?;
 						writeln!(file, r#"                        }},"#)?;
 				}
 				for Property { required, field_name, .. } in &properties {
 					if *required {
-						writeln!(file, r#"                        Field::Key_{} => value_{} = Some(::serde::de::MapAccess::next_value(&mut map)?),"#, field_name, field_name)?;
+						writeln!(file, r#"                        Field::Key_{} => value_{} = Some(serde::de::MapAccess::next_value(&mut map)?),"#, field_name, field_name)?;
 					}
 					else {
-						writeln!(file, r#"                        Field::Key_{} => value_{} = ::serde::de::MapAccess::next_value(&mut map)?,"#, field_name, field_name)?;
+						writeln!(file, r#"                        Field::Key_{} => value_{} = serde::de::MapAccess::next_value(&mut map)?,"#, field_name, field_name)?;
 					}
 				}
-				writeln!(file, "                        Field::Other => {{ let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; }},")?;
+				writeln!(file, "                        Field::Other => {{ let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; }},")?;
 				writeln!(file, "                    }}")?;
 				writeln!(file, "                }}")?;
 				writeln!(file)?;
 				writeln!(file, "                Ok({} {{", type_name)?;
 				for Property { name, required, field_name, .. } in &properties {
 					if *required {
-						writeln!(file, r#"                    {}: value_{}.ok_or_else(|| ::serde::de::Error::missing_field("{}"))?,"#, field_name, field_name, name)?;
+						writeln!(file, r#"                    {}: value_{}.ok_or_else(|| serde::de::Error::missing_field("{}"))?,"#, field_name, field_name, name)?;
 					}
 					else {
 						writeln!(file, "                    {}: value_{},", field_name, field_name)?;
@@ -441,8 +441,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "}}")?;
 				writeln!(file)?;
 
-				writeln!(file, "impl ::serde::Serialize for {} {{", type_name)?;
-				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {{")?;
+				writeln!(file, "impl serde::Serialize for {} {{", type_name)?;
+				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
 				if properties.is_empty() && resource_metadata.is_none() {
 					writeln!(file, "        let state = serializer.serialize_struct(")?;
 				}
@@ -467,20 +467,20 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, ",")?;
 				writeln!(file, "        )?;")?;
 				if resource_metadata.is_some() {
-					writeln!(file, r#"        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;"#)?;
-					writeln!(file, r#"        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;"#)?;
+					writeln!(file, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;"#)?;
+					writeln!(file, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;"#)?;
 				}
 				for Property { name, required, field_name, .. } in &properties {
 					if *required {
-						writeln!(file, r#"        ::serde::ser::SerializeStruct::serialize_field(&mut state, "{}", &self.{})?;"#, name, field_name)?;
+						writeln!(file, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "{}", &self.{})?;"#, name, field_name)?;
 					}
 					else {
 						writeln!(file, "        if let Some(value) = &self.{} {{", field_name)?;
-						writeln!(file, r#"            ::serde::ser::SerializeStruct::serialize_field(&mut state, "{}", value)?;"#, name)?;
+						writeln!(file, r#"            serde::ser::SerializeStruct::serialize_field(&mut state, "{}", value)?;"#, name)?;
 						writeln!(file, "        }}")?;
 					}
 				}
-				writeln!(file, "        ::serde::ser::SerializeStruct::end(state)")?;
+				writeln!(file, "        serde::ser::SerializeStruct::end(state)")?;
 				writeln!(file, "    }}")?;
 				writeln!(file, "}}")?;
 
@@ -502,42 +502,42 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "    }}")?;
 				writeln!(file, "}}")?;
 				writeln!(file)?;
-				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
-				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "impl<'de> serde::Deserialize<'de> for {} {{", type_name)?;
+				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
 				writeln!(file, "        struct Visitor;")?;
 				writeln!(file)?;
-				writeln!(file, "        impl<'de> ::serde::de::Visitor<'de> for Visitor {{")?;
+				writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
 				writeln!(file, "            type Value = {};", type_name)?;
 				writeln!(file)?;
-				writeln!(file, "            fn expecting(&self, formatter: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {{")?;
+				writeln!(file, "            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
 				writeln!(file, r#"                write!(formatter, "enum {}")"#, type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
-				writeln!(file, "            fn visit_i32<E>(self, v: i32) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+				writeln!(file, "            fn visit_i32<E>(self, v: i32) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
 				writeln!(file, "                Ok({}::Int(v))", type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
-				writeln!(file, "            fn visit_i64<E>(self, v: i64) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
-				writeln!(file, "                if v < ::std::i32::MIN as i64 || v > ::std::i32::MAX as i64 {{")?;
-				writeln!(file, r#"                    return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Signed(v), &"a 32-bit integer"));"#)?;
+				writeln!(file, "            fn visit_i64<E>(self, v: i64) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
+				writeln!(file, "                if v < std::i32::MIN as i64 || v > std::i32::MAX as i64 {{")?;
+				writeln!(file, r#"                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &"a 32-bit integer"));"#)?;
 				writeln!(file, "                }}")?;
 				writeln!(file)?;
 				writeln!(file, "                Ok({}::Int(v as i32))", type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
-				writeln!(file, "            fn visit_u64<E>(self, v: u64) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
-				writeln!(file, "                if v > ::std::i32::MAX as u64 {{")?;
-				writeln!(file, r#"                    return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Unsigned(v), &"a 32-bit integer"));"#)?;
+				writeln!(file, "            fn visit_u64<E>(self, v: u64) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
+				writeln!(file, "                if v > std::i32::MAX as u64 {{")?;
+				writeln!(file, r#"                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &"a 32-bit integer"));"#)?;
 				writeln!(file, "                }}")?;
 				writeln!(file)?;
 				writeln!(file, "                Ok({}::Int(v as i32))", type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
-				writeln!(file, "            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+				writeln!(file, "            fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
 				writeln!(file, "                self.visit_string(v.to_string())")?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
-				writeln!(file, "            fn visit_string<E>(self, v: String) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+				writeln!(file, "            fn visit_string<E>(self, v: String) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
 				writeln!(file, "                Ok({}::String(v))", type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file, "        }}")?;
@@ -546,8 +546,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "    }}")?;
 				writeln!(file, "}}")?;
 				writeln!(file)?;
-				writeln!(file, "impl ::serde::Serialize for {} {{", type_name)?;
-				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {{")?;
+				writeln!(file, "impl serde::Serialize for {} {{", type_name)?;
+				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
 				writeln!(file, "        match self {{")?;
 				writeln!(file, "            {}::Int(i) => i.serialize(serializer),", type_name)?;
 				writeln!(file, "            {}::String(s) => s.serialize(serializer),", type_name)?;
@@ -578,38 +578,38 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				}
 				writeln!(file, "}}")?;
 				writeln!(file)?;
-				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
-				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "impl<'de> serde::Deserialize<'de> for {} {{", type_name)?;
+				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
 				writeln!(file, "        struct Visitor;")?;
 				writeln!(file)?;
-				writeln!(file, "        impl<'de> ::serde::de::Visitor<'de> for Visitor {{")?;
+				writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
 				writeln!(file, "            type Value = {};", type_name)?;
 				writeln!(file)?;
-				writeln!(file, "            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {{")?;
+				writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
 				writeln!(file, r#"                write!(f, "enum {}")"#, type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
-				writeln!(file, "            fn visit_map<A>(self, map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {{")?;
-				writeln!(file, "                Ok({}::Schema(::serde::de::Deserialize::deserialize(::serde::de::value::MapAccessDeserializer::new(map))?))", type_name)?;
+				writeln!(file, "            fn visit_map<A>(self, map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {{")?;
+				writeln!(file, "                Ok({}::Schema(serde::de::Deserialize::deserialize(serde::de::value::MapAccessDeserializer::new(map))?))", type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
 
 				match ty {
 					swagger20::Type::JSONSchemaPropsOrArray => {
-						writeln!(file, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: ::serde::de::SeqAccess<'de> {{")?;
-						writeln!(file, "                Ok({}::Schemas(::serde::de::Deserialize::deserialize(::serde::de::value::SeqAccessDeserializer::new(seq))?))", type_name)?;
+						writeln!(file, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {{")?;
+						writeln!(file, "                Ok({}::Schemas(serde::de::Deserialize::deserialize(serde::de::value::SeqAccessDeserializer::new(seq))?))", type_name)?;
 						writeln!(file, "            }}")?;
 					},
 
 					swagger20::Type::JSONSchemaPropsOrBool => {
-						writeln!(file, "            fn visit_bool<E>(self, v: bool) -> Result<Self::Value, E> where E: ::serde::de::Error {{")?;
+						writeln!(file, "            fn visit_bool<E>(self, v: bool) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
 						writeln!(file, "                Ok({}::Bool(v))", type_name)?;
 						writeln!(file, "            }}")?;
 					},
 
 					swagger20::Type::JSONSchemaPropsOrStringArray => {
-						writeln!(file, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: ::serde::de::SeqAccess<'de> {{")?;
-						writeln!(file, "                Ok({}::Strings(::serde::de::Deserialize::deserialize(::serde::de::value::SeqAccessDeserializer::new(seq))?))", type_name)?;
+						writeln!(file, "            fn visit_seq<A>(self, seq: A) -> Result<Self::Value, A::Error> where A: serde::de::SeqAccess<'de> {{")?;
+						writeln!(file, "                Ok({}::Strings(serde::de::Deserialize::deserialize(serde::de::value::SeqAccessDeserializer::new(seq))?))", type_name)?;
 						writeln!(file, "            }}")?;
 					},
 
@@ -622,8 +622,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "    }}")?;
 				writeln!(file, "}}")?;
 				writeln!(file)?;
-				writeln!(file, "impl ::serde::Serialize for {} {{", type_name)?;
-				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {{")?;
+				writeln!(file, "impl serde::Serialize for {} {{", type_name)?;
+				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
 				writeln!(file, "        match self {{")?;
 				writeln!(file, "            {}::Schema(value) => value.serialize(serializer),", type_name)?;
 
@@ -650,19 +650,19 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 				writeln!(file, "pub struct {}(pub {});", type_name, get_rust_type(&definition.kind, &replace_namespaces, mod_root)?)?;
 				writeln!(file)?;
-				writeln!(file, "impl<'de> ::serde::Deserialize<'de> for {} {{", type_name)?;
-				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {{")?;
+				writeln!(file, "impl<'de> serde::Deserialize<'de> for {} {{", type_name)?;
+				writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
 				writeln!(file, "        struct Visitor;")?;
 				writeln!(file)?;
-				writeln!(file, "        impl<'de> ::serde::de::Visitor<'de> for Visitor {{")?;
+				writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
 				writeln!(file, "            type Value = {};", type_name)?;
 				writeln!(file)?;
-				writeln!(file, "            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {{")?;
+				writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
 				writeln!(file, r#"                write!(f, "{}")"#, type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
-				writeln!(file, "            fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: ::serde::Deserializer<'de> {{")?;
-				writeln!(file, "                Ok({}(::serde::Deserialize::deserialize(deserializer)?))", type_name)?;
+				writeln!(file, "            fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {{")?;
+				writeln!(file, "                Ok({}(serde::Deserialize::deserialize(deserializer)?))", type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file, "        }}")?;
 				writeln!(file)?;
@@ -670,8 +670,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "    }}")?;
 				writeln!(file, "}}")?;
 				writeln!(file)?;
-				writeln!(file, "impl ::serde::Serialize for {} {{", type_name)?;
-				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {{")?;
+				writeln!(file, "impl serde::Serialize for {} {{", type_name)?;
+				writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
 				writeln!(file, r#"        serializer.serialize_newtype_struct("{}", &self.0)"#, type_name)?;
 				writeln!(file, "    }}")?;
 				writeln!(file, "}}")?;
@@ -827,7 +827,7 @@ fn get_fully_qualified_type_name(
 ) -> Result<String, Error> {
 	use std::fmt::Write;
 
-	let mut result = format!("::{}", mod_root);
+	let mut result = format!("crate::{}", mod_root);
 
 	let parts = replace_namespace(ref_path.split('.'), replace_namespaces);
 
@@ -900,7 +900,7 @@ fn get_rust_borrow_type(
 
 		swagger20::SchemaKind::Ref(ref ref_path) => Ok(format!("&{}", get_fully_qualified_type_name(ref_path, replace_namespaces, mod_root)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("&::serde_json::Value".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("&serde_json::Value".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => Ok(format!("&[{}]", get_rust_type(&items.kind, replace_namespaces, mod_root)?).into()),
 
@@ -912,10 +912,10 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) =>
-			Ok(format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, mod_root)?).into()),
+			Ok(format!("std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, mod_root)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok("&::ByteString".into()),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("&::chrono::DateTime<::chrono::Utc>".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok("&crate::ByteString".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("&chrono::DateTime<chrono::Utc>".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("&str".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
@@ -936,7 +936,7 @@ fn get_rust_type(
 
 		swagger20::SchemaKind::Ref(ref ref_path) => Ok(get_fully_qualified_type_name(ref_path, replace_namespaces, mod_root)?.into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("::serde_json::Value".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::Any) => Ok("serde_json::Value".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Array { ref items }) => Ok(format!("Vec<{}>", get_rust_type(&items.kind, replace_namespaces, mod_root)?).into()),
 
@@ -948,10 +948,10 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::Number { format: swagger20::NumberFormat::Double }) => Ok("f64".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::Object { ref additional_properties }) =>
-			Ok(format!("::std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, mod_root)?).into()),
+			Ok(format!("std::collections::BTreeMap<String, {}>", get_rust_type(&additional_properties.kind, replace_namespaces, mod_root)?).into()),
 
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok("::ByteString".into()),
-		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("::chrono::DateTime<::chrono::Utc>".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::Byte) }) => Ok("crate::ByteString".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok("chrono::DateTime<chrono::Utc>".into()),
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: None }) => Ok("String".into()),
 
 		swagger20::SchemaKind::Ty(swagger20::Type::IntOrString) => Err("nothing should be trying to refer to IntOrString".into()),
@@ -1134,7 +1134,7 @@ fn write_operation(
 			writeln!(file, "{}    {}: Option<{}>,", indent, parameter_name, parameter_type)?;
 		}
 	}
-	writeln!(file, "{}) -> Result<::http::Request<Vec<u8>>, ::RequestError> {{", indent)?;
+	writeln!(file, "{}) -> Result<http::Request<Vec<u8>>, crate::RequestError> {{", indent)?;
 
 	let have_query_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Query);
 
@@ -1151,7 +1151,7 @@ fn write_operation(
 	writeln!(file, ");")?;
 
 	if have_query_parameters {
-		writeln!(file, "{}    let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);", indent)?;
+		writeln!(file, "{}    let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);", indent)?;
 		for (parameter_name, parameter_type, parameter) in &parameters {
 			if parameter.location == swagger20::ParameterLocation::Query {
 				if parameter.required {
@@ -1196,7 +1196,7 @@ fn write_operation(
 		swagger20::Method::Put => "put",
 	};
 
-	writeln!(file, "{}    let mut __request = ::http::Request::{}(__url);", indent, method)?;
+	writeln!(file, "{}    let mut __request = http::Request::{}(__url);", indent, method)?;
 
 	let body_parameter = match operation.method {
 		swagger20::Method::Delete | swagger20::Method::Get => None,
@@ -1209,18 +1209,18 @@ fn write_operation(
 	write!(file, "{}    let __body = ", indent)?;
 	if let Some((parameter_name, _, parameter)) = body_parameter {
 		if parameter.required {
-			writeln!(file, "::serde_json::to_vec(&{}).map_err(::RequestError::Json)?;", parameter_name)?;
+			writeln!(file, "serde_json::to_vec(&{}).map_err(crate::RequestError::Json)?;", parameter_name)?;
 		}
 		else {
 			writeln!(file)?;
-			writeln!(file, "{}.unwrap_or(Ok(vec![]), |value| ::serde_json::to_vec(value).map_err(::RequestError::Json))?;", parameter_name)?;
+			writeln!(file, "{}.unwrap_or(Ok(vec![]), |value| serde_json::to_vec(value).map_err(crate::RequestError::Json))?;", parameter_name)?;
 		}
 	}
 	else {
 		writeln!(file, "vec![];")?;
 	}
 
-	writeln!(file, "{}    __request.body(__body).map_err(::RequestError::Http)", indent)?;
+	writeln!(file, "{}    __request.body(__body).map_err(crate::RequestError::Http)", indent)?;
 	writeln!(file, "{}}}", indent)?;
 
 	if type_name.is_some() {
@@ -1263,15 +1263,15 @@ fn write_operation(
 	writeln!(file, "}}")?;
 	writeln!(file)?;
 
-	writeln!(file, "impl ::Response for {} {{", operation_result_name)?;
+	writeln!(file, "impl crate::Response for {} {{", operation_result_name)?;
 
 	let uses_buf = operation_responses.iter().any(|&(_, _, schema, _)| schema.is_some());
 
 	if uses_buf {
-		writeln!(file, "    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {{")?;
+		writeln!(file, "    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {{")?;
 	}
 	else {
-		writeln!(file, "    fn try_from_parts(status_code: ::http::StatusCode, _: &[u8]) -> Result<(Self, usize), ::ResponseError> {{")?;
+		writeln!(file, "    fn try_from_parts(status_code: http::StatusCode, _: &[u8]) -> Result<(Self, usize), crate::ResponseError> {{")?;
 	}
 
 	let is_watch = match operation.kubernetes_action {
@@ -1281,19 +1281,19 @@ fn write_operation(
 
 	writeln!(file, "        match status_code {{")?;
 	for &(http_status_code, variant_name, schema, is_delete_ok_status) in &operation_responses {
-		write!(file, "            ::http::StatusCode::{} => ", http_status_code)?;
+		write!(file, "            http::StatusCode::{} => ", http_status_code)?;
 		if let Some(schema) = schema {
 			writeln!(file, "{{")?;
 
 			match &schema.kind {
 				swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
-					writeln!(file, "                let result = match ::std::str::from_utf8(buf) {{")?;
+					writeln!(file, "                let result = match std::str::from_utf8(buf) {{")?;
 					writeln!(file, "                    Ok(s) => s,")?;
 					writeln!(file, "                    Err(err) if err.error_len().is_none() => {{")?;
 					writeln!(file, "                        let valid_up_to = err.valid_up_to();")?;
-					writeln!(file, "                        unsafe {{ ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }}")?;
+					writeln!(file, "                        unsafe {{ std::str::from_utf8_unchecked(&buf[..valid_up_to]) }}")?;
 					writeln!(file, "                    }},")?;
-					writeln!(file, "                    Err(err) => return Err(::ResponseError::Utf8(err)),")?;
+					writeln!(file, "                    Err(err) => return Err(crate::ResponseError::Utf8(err)),")?;
 					writeln!(file, "                }};")?;
 					writeln!(file, "                let result = result.to_string();")?;
 					writeln!(file, "                let len = result.len();")?;
@@ -1301,41 +1301,41 @@ fn write_operation(
 				},
 
 				swagger20::SchemaKind::Ref(_) => if is_watch {
-					writeln!(file, "                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();")?;
+					writeln!(file, "                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();")?;
 					writeln!(file, "                let (result, byte_offset) = match deserializer.next() {{")?;
 					writeln!(file, "                    Some(Ok(value)) => (value, deserializer.byte_offset()),")?;
-					writeln!(file, "                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),")?;
-					writeln!(file, "                    Some(Err(err)) => return Err(::ResponseError::Json(err)),")?;
-					writeln!(file, "                    None => return Err(::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),")?;
+					writeln!(file, "                    None => return Err(crate::ResponseError::NeedMoreData),")?;
 					writeln!(file, "                }};")?;
 					writeln!(file, "                Ok(({}::{}(result), byte_offset))", operation_result_name, variant_name)?;
 				}
 				else if is_delete_ok_status {
-					writeln!(file, "                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {{")?;
+					writeln!(file, "                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {{")?;
 					writeln!(file, "                    Ok(value) => value,")?;
-					writeln!(file, "                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),")?;
-					writeln!(file, "                    Err(err) => return Err(::ResponseError::Json(err)),")?;
+					writeln!(file, "                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                    Err(err) => return Err(crate::ResponseError::Json(err)),")?;
 					writeln!(file, "                }};")?;
 					writeln!(file, r#"                let is_status = match result.get("kind") {{"#)?;
-					writeln!(file, r#"                    Some(::serde_json::Value::String(s)) if s == "Status" => true,"#)?;
+					writeln!(file, r#"                    Some(serde_json::Value::String(s)) if s == "Status" => true,"#)?;
 					writeln!(file, "                    _ => false,")?;
 					writeln!(file, "                }};")?;
 					writeln!(file, "                if is_status {{")?;
-					writeln!(file, "                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));")?;
-					writeln!(file, "                    let result = result.map_err(::ResponseError::Json)?;")?;
+					writeln!(file, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
+					writeln!(file, "                    let result = result.map_err(crate::ResponseError::Json)?;")?;
 					writeln!(file, "                    Ok(({}::{}Status(result), buf.len()))", operation_result_name, variant_name)?;
 					writeln!(file, "                }}")?;
 					writeln!(file, "                else {{")?;
-					writeln!(file, "                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));")?;
-					writeln!(file, "                    let result = result.map_err(::ResponseError::Json)?;")?;
+					writeln!(file, "                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));")?;
+					writeln!(file, "                    let result = result.map_err(crate::ResponseError::Json)?;")?;
 					writeln!(file, "                    Ok(({}::{}Value(result), buf.len()))", operation_result_name, variant_name)?;
 					writeln!(file, "                }}")?;
 				}
 				else {
-					writeln!(file, "                let result = match ::serde_json::from_slice(buf) {{")?;
+					writeln!(file, "                let result = match serde_json::from_slice(buf) {{")?;
 					writeln!(file, "                    Ok(value) => value,")?;
-					writeln!(file, "                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),")?;
-					writeln!(file, "                    Err(err) => return Err(::ResponseError::Json(err)),")?;
+					writeln!(file, "                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                    Err(err) => return Err(crate::ResponseError::Json(err)),")?;
 					writeln!(file, "                }};")?;
 					writeln!(file, "                Ok(({}::{}(result), buf.len()))", operation_result_name, variant_name)?;
 				},

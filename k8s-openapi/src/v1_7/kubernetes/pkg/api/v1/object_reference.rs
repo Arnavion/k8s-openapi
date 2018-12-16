@@ -25,8 +25,8 @@ pub struct ObjectReference {
     pub uid: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for ObjectReference {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ObjectReference {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -39,18 +39,18 @@ impl<'de> ::serde::Deserialize<'de> for ObjectReference {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "fieldPath" => Field::Key_field_path,
@@ -70,14 +70,14 @@ impl<'de> ::serde::Deserialize<'de> for ObjectReference {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ObjectReference;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ObjectReference")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_api_version: Option<String> = None;
                 let mut value_field_path: Option<String> = None;
                 let mut value_kind: Option<String> = None;
@@ -86,16 +86,16 @@ impl<'de> ::serde::Deserialize<'de> for ObjectReference {
                 let mut value_resource_version: Option<String> = None;
                 let mut value_uid: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_field_path => value_field_path = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_namespace => value_namespace = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource_version => value_resource_version = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_uid => value_uid = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_api_version => value_api_version = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_field_path => value_field_path = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kind => value_kind = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_namespace => value_namespace = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_version => value_resource_version = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_uid => value_uid = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -127,8 +127,8 @@ impl<'de> ::serde::Deserialize<'de> for ObjectReference {
     }
 }
 
-impl ::serde::Serialize for ObjectReference {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ObjectReference {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectReference",
             0 +
@@ -141,26 +141,26 @@ impl ::serde::Serialize for ObjectReference {
             self.uid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
         }
         if let Some(value) = &self.field_path {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "fieldPath", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldPath", value)?;
         }
         if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         if let Some(value) = &self.name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "name", value)?;
         }
         if let Some(value) = &self.namespace {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "namespace", value)?;
         }
         if let Some(value) = &self.resource_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceVersion", value)?;
         }
         if let Some(value) = &self.uid {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

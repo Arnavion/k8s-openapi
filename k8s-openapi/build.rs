@@ -106,13 +106,13 @@ fn main() -> Result<(), Box<std::error::Error>> {
     writeln!(f, "/// #")?;
     writeln!(f, "/// # fn main() -> Result<(), Box<std::error::Error>> {{")?;
     writeln!(f, "/// #     k8s_if_ge_1_8! {{")?;
-    writeln!(f, "/// use apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse;")?;
+    writeln!(f, "/// use self::apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse;")?;
     writeln!(f, "///")?;
     writeln!(f, "/// let response: CreateApiextensionsV1beta1CustomResourceDefinitionResponse = unimplemented!();")?;
     writeln!(f, "/// let status_code: http::StatusCode = unimplemented!();")?;
     writeln!(f, "///")?;
-    writeln!(f, "/// let custom_resource_definition: apiextensions::CustomResourceDefinition = k8s_match!(response, {{")?;
-    writeln!(f, "///     k8s_if_le_1_8!(CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == ::http::StatusCode::CREATED => {{")?;
+    writeln!(f, "/// let custom_resource_definition: self::apiextensions::CustomResourceDefinition = k8s_match!(response, {{")?;
+    writeln!(f, "///     k8s_if_le_1_8!(CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == http::StatusCode::CREATED => {{")?;
     writeln!(f, "///         // Parse response body into a CustomResourceDefinition")?;
     writeln!(f, "///         Ok(unimplemented!())")?;
     writeln!(f, "///     }}),")?;

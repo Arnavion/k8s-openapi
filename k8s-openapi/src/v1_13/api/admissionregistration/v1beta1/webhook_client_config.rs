@@ -4,14 +4,14 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct WebhookClientConfig {
     /// `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used.
-    pub ca_bundle: Option<::ByteString>,
+    pub ca_bundle: Option<crate::ByteString>,
 
     /// `service` is a reference to the service for this webhook. Either `service` or `url` must be specified.
     ///
     /// If the webhook is running within the cluster, then you should use `service`.
     ///
     /// Port 443 will be used if it is open, otherwise it is an error.
-    pub service: Option<::v1_13::api::admissionregistration::v1beta1::ServiceReference>,
+    pub service: Option<crate::v1_13::api::admissionregistration::v1beta1::ServiceReference>,
 
     /// `url` gives the location of the webhook, in standard URL form (`scheme://host:port/path`). Exactly one of `url` or `service` must be specified.
     ///
@@ -27,8 +27,8 @@ pub struct WebhookClientConfig {
     pub url: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for WebhookClientConfig {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for WebhookClientConfig {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_ca_bundle,
@@ -37,18 +37,18 @@ impl<'de> ::serde::Deserialize<'de> for WebhookClientConfig {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "caBundle" => Field::Key_ca_bundle,
                             "service" => Field::Key_service,
@@ -64,24 +64,24 @@ impl<'de> ::serde::Deserialize<'de> for WebhookClientConfig {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = WebhookClientConfig;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct WebhookClientConfig")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_ca_bundle: Option<::ByteString> = None;
-                let mut value_service: Option<::v1_13::api::admissionregistration::v1beta1::ServiceReference> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_ca_bundle: Option<crate::ByteString> = None;
+                let mut value_service: Option<crate::v1_13::api::admissionregistration::v1beta1::ServiceReference> = None;
                 let mut value_url: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_ca_bundle => value_ca_bundle = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_service => value_service = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_url => value_url = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_ca_bundle => value_ca_bundle = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_service => value_service = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_url => value_url = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -105,8 +105,8 @@ impl<'de> ::serde::Deserialize<'de> for WebhookClientConfig {
     }
 }
 
-impl ::serde::Serialize for WebhookClientConfig {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for WebhookClientConfig {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "WebhookClientConfig",
             0 +
@@ -115,14 +115,14 @@ impl ::serde::Serialize for WebhookClientConfig {
             self.url.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ca_bundle {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", value)?;
         }
         if let Some(value) = &self.service {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "service", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "service", value)?;
         }
         if let Some(value) = &self.url {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "url", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "url", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

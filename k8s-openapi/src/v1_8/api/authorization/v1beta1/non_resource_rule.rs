@@ -10,8 +10,8 @@ pub struct NonResourceRule {
     pub verbs: Vec<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for NonResourceRule {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for NonResourceRule {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_non_resource_urls,
@@ -19,18 +19,18 @@ impl<'de> ::serde::Deserialize<'de> for NonResourceRule {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "nonResourceURLs" => Field::Key_non_resource_urls,
                             "verbs" => Field::Key_verbs,
@@ -45,28 +45,28 @@ impl<'de> ::serde::Deserialize<'de> for NonResourceRule {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = NonResourceRule;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct NonResourceRule")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_non_resource_urls: Option<Vec<String>> = None;
                 let mut value_verbs: Option<Vec<String>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_non_resource_urls => value_non_resource_urls = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_verbs => value_verbs = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_non_resource_urls => value_non_resource_urls = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_verbs => value_verbs = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(NonResourceRule {
                     non_resource_urls: value_non_resource_urls,
-                    verbs: value_verbs.ok_or_else(|| ::serde::de::Error::missing_field("verbs"))?,
+                    verbs: value_verbs.ok_or_else(|| serde::de::Error::missing_field("verbs"))?,
                 })
             }
         }
@@ -82,8 +82,8 @@ impl<'de> ::serde::Deserialize<'de> for NonResourceRule {
     }
 }
 
-impl ::serde::Serialize for NonResourceRule {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for NonResourceRule {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NonResourceRule",
             0 +
@@ -91,9 +91,9 @@ impl ::serde::Serialize for NonResourceRule {
             1,
         )?;
         if let Some(value) = &self.non_resource_urls {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceURLs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "nonResourceURLs", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "verbs", &self.verbs)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "verbs", &self.verbs)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

@@ -10,10 +10,10 @@ pub struct Container {
     pub command: Option<Vec<String>>,
 
     /// List of environment variables to set in the container. Cannot be updated.
-    pub env: Option<Vec<::v1_7::kubernetes::pkg::api::v1::EnvVar>>,
+    pub env: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::EnvVar>>,
 
     /// List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
-    pub env_from: Option<Vec<::v1_7::kubernetes::pkg::api::v1::EnvFromSource>>,
+    pub env_from: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::EnvFromSource>>,
 
     /// Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images
     pub image: String,
@@ -22,25 +22,25 @@ pub struct Container {
     pub image_pull_policy: Option<String>,
 
     /// Actions that the management system should take in response to container lifecycle events. Cannot be updated.
-    pub lifecycle: Option<::v1_7::kubernetes::pkg::api::v1::Lifecycle>,
+    pub lifecycle: Option<crate::v1_7::kubernetes::pkg::api::v1::Lifecycle>,
 
     /// Periodic probe of container liveness. Container will be restarted if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-    pub liveness_probe: Option<::v1_7::kubernetes::pkg::api::v1::Probe>,
+    pub liveness_probe: Option<crate::v1_7::kubernetes::pkg::api::v1::Probe>,
 
     /// Name of the container specified as a DNS_LABEL. Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.
     pub name: String,
 
     /// List of ports to expose from the container. Exposing a port here gives the system additional information about the network connections a container uses, but is primarily informational. Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default "0.0.0.0" address inside a container will be accessible from the network. Cannot be updated.
-    pub ports: Option<Vec<::v1_7::kubernetes::pkg::api::v1::ContainerPort>>,
+    pub ports: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::ContainerPort>>,
 
     /// Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
-    pub readiness_probe: Option<::v1_7::kubernetes::pkg::api::v1::Probe>,
+    pub readiness_probe: Option<crate::v1_7::kubernetes::pkg::api::v1::Probe>,
 
     /// Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
-    pub resources: Option<::v1_7::kubernetes::pkg::api::v1::ResourceRequirements>,
+    pub resources: Option<crate::v1_7::kubernetes::pkg::api::v1::ResourceRequirements>,
 
     /// Security options the pod should run with. More info: https://kubernetes.io/docs/concepts/policy/security-context/ More info: https://git.k8s.io/community/contributors/design-proposals/security_context.md
-    pub security_context: Option<::v1_7::kubernetes::pkg::api::v1::SecurityContext>,
+    pub security_context: Option<crate::v1_7::kubernetes::pkg::api::v1::SecurityContext>,
 
     /// Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.
     pub stdin: Option<bool>,
@@ -58,14 +58,14 @@ pub struct Container {
     pub tty: Option<bool>,
 
     /// Pod volumes to mount into the container's filesystem. Cannot be updated.
-    pub volume_mounts: Option<Vec<::v1_7::kubernetes::pkg::api::v1::VolumeMount>>,
+    pub volume_mounts: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::VolumeMount>>,
 
     /// Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
     pub working_dir: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for Container {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for Container {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_args,
@@ -91,18 +91,18 @@ impl<'de> ::serde::Deserialize<'de> for Container {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "args" => Field::Key_args,
                             "command" => Field::Key_command,
@@ -135,58 +135,58 @@ impl<'de> ::serde::Deserialize<'de> for Container {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = Container;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct Container")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_args: Option<Vec<String>> = None;
                 let mut value_command: Option<Vec<String>> = None;
-                let mut value_env: Option<Vec<::v1_7::kubernetes::pkg::api::v1::EnvVar>> = None;
-                let mut value_env_from: Option<Vec<::v1_7::kubernetes::pkg::api::v1::EnvFromSource>> = None;
+                let mut value_env: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::EnvVar>> = None;
+                let mut value_env_from: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::EnvFromSource>> = None;
                 let mut value_image: Option<String> = None;
                 let mut value_image_pull_policy: Option<String> = None;
-                let mut value_lifecycle: Option<::v1_7::kubernetes::pkg::api::v1::Lifecycle> = None;
-                let mut value_liveness_probe: Option<::v1_7::kubernetes::pkg::api::v1::Probe> = None;
+                let mut value_lifecycle: Option<crate::v1_7::kubernetes::pkg::api::v1::Lifecycle> = None;
+                let mut value_liveness_probe: Option<crate::v1_7::kubernetes::pkg::api::v1::Probe> = None;
                 let mut value_name: Option<String> = None;
-                let mut value_ports: Option<Vec<::v1_7::kubernetes::pkg::api::v1::ContainerPort>> = None;
-                let mut value_readiness_probe: Option<::v1_7::kubernetes::pkg::api::v1::Probe> = None;
-                let mut value_resources: Option<::v1_7::kubernetes::pkg::api::v1::ResourceRequirements> = None;
-                let mut value_security_context: Option<::v1_7::kubernetes::pkg::api::v1::SecurityContext> = None;
+                let mut value_ports: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::ContainerPort>> = None;
+                let mut value_readiness_probe: Option<crate::v1_7::kubernetes::pkg::api::v1::Probe> = None;
+                let mut value_resources: Option<crate::v1_7::kubernetes::pkg::api::v1::ResourceRequirements> = None;
+                let mut value_security_context: Option<crate::v1_7::kubernetes::pkg::api::v1::SecurityContext> = None;
                 let mut value_stdin: Option<bool> = None;
                 let mut value_stdin_once: Option<bool> = None;
                 let mut value_termination_message_path: Option<String> = None;
                 let mut value_termination_message_policy: Option<String> = None;
                 let mut value_tty: Option<bool> = None;
-                let mut value_volume_mounts: Option<Vec<::v1_7::kubernetes::pkg::api::v1::VolumeMount>> = None;
+                let mut value_volume_mounts: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::VolumeMount>> = None;
                 let mut value_working_dir: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_args => value_args = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_command => value_command = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_env => value_env = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_env_from => value_env_from = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_image => value_image = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_image_pull_policy => value_image_pull_policy = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_lifecycle => value_lifecycle = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_liveness_probe => value_liveness_probe = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_name => value_name = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_ports => value_ports = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_readiness_probe => value_readiness_probe = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resources => value_resources = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_security_context => value_security_context = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_stdin => value_stdin = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_stdin_once => value_stdin_once = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_termination_message_path => value_termination_message_path = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_termination_message_policy => value_termination_message_policy = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_tty => value_tty = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_mounts => value_volume_mounts = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_working_dir => value_working_dir = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_args => value_args = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_command => value_command = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_env => value_env = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_env_from => value_env_from = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_image => value_image = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_image_pull_policy => value_image_pull_policy = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_lifecycle => value_lifecycle = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_liveness_probe => value_liveness_probe = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_name => value_name = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_ports => value_ports = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_readiness_probe => value_readiness_probe = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resources => value_resources = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_security_context => value_security_context = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_stdin => value_stdin = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_stdin_once => value_stdin_once = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_termination_message_path => value_termination_message_path = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_termination_message_policy => value_termination_message_policy = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_tty => value_tty = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_mounts => value_volume_mounts = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_working_dir => value_working_dir = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -195,11 +195,11 @@ impl<'de> ::serde::Deserialize<'de> for Container {
                     command: value_command,
                     env: value_env,
                     env_from: value_env_from,
-                    image: value_image.ok_or_else(|| ::serde::de::Error::missing_field("image"))?,
+                    image: value_image.ok_or_else(|| serde::de::Error::missing_field("image"))?,
                     image_pull_policy: value_image_pull_policy,
                     lifecycle: value_lifecycle,
                     liveness_probe: value_liveness_probe,
-                    name: value_name.ok_or_else(|| ::serde::de::Error::missing_field("name"))?,
+                    name: value_name.ok_or_else(|| serde::de::Error::missing_field("name"))?,
                     ports: value_ports,
                     readiness_probe: value_readiness_probe,
                     resources: value_resources,
@@ -244,8 +244,8 @@ impl<'de> ::serde::Deserialize<'de> for Container {
     }
 }
 
-impl ::serde::Serialize for Container {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for Container {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Container",
             0 +
@@ -271,61 +271,61 @@ impl ::serde::Serialize for Container {
             self.working_dir.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.args {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "args", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "args", value)?;
         }
         if let Some(value) = &self.command {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "command", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "command", value)?;
         }
         if let Some(value) = &self.env {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "env", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "env", value)?;
         }
         if let Some(value) = &self.env_from {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "envFrom", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "image", &self.image)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "image", &self.image)?;
         if let Some(value) = &self.image_pull_policy {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "imagePullPolicy", value)?;
         }
         if let Some(value) = &self.lifecycle {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "lifecycle", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "lifecycle", value)?;
         }
         if let Some(value) = &self.liveness_probe {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "livenessProbe", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "livenessProbe", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         if let Some(value) = &self.ports {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
         }
         if let Some(value) = &self.readiness_probe {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readinessProbe", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readinessProbe", value)?;
         }
         if let Some(value) = &self.resources {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resources", value)?;
         }
         if let Some(value) = &self.security_context {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "securityContext", value)?;
         }
         if let Some(value) = &self.stdin {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "stdin", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "stdin", value)?;
         }
         if let Some(value) = &self.stdin_once {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "stdinOnce", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "stdinOnce", value)?;
         }
         if let Some(value) = &self.termination_message_path {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePath", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePath", value)?;
         }
         if let Some(value) = &self.termination_message_policy {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "terminationMessagePolicy", value)?;
         }
         if let Some(value) = &self.tty {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "tty", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "tty", value)?;
         }
         if let Some(value) = &self.volume_mounts {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeMounts", value)?;
         }
         if let Some(value) = &self.working_dir {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "workingDir", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "workingDir", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

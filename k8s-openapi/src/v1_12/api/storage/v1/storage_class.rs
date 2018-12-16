@@ -9,16 +9,16 @@ pub struct StorageClass {
     pub allow_volume_expansion: Option<bool>,
 
     /// Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.
-    pub allowed_topologies: Option<Vec<::v1_12::api::core::v1::TopologySelectorTerm>>,
+    pub allowed_topologies: Option<Vec<crate::v1_12::api::core::v1::TopologySelectorTerm>>,
 
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. \["ro", "soft"\]. Not validated - mount of the PVs will simply fail if one is invalid.
     pub mount_options: Option<Vec<String>>,
 
     /// Parameters holds the parameters for the provisioner that should create volumes of this storage class.
-    pub parameters: Option<::std::collections::BTreeMap<String, String>>,
+    pub parameters: Option<std::collections::BTreeMap<String, String>>,
 
     /// Provisioner indicates the type of the provisioner.
     pub provisioner: String,
@@ -55,13 +55,13 @@ impl StorageClass {
     ///
     ///     If 'true', then the output is pretty printed.
     pub fn create_storage_v1_storage_class(
-        body: &::v1_12::api::storage::v1::StorageClass,
+        body: &crate::v1_12::api::storage::v1::StorageClass,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -73,50 +73,50 @@ impl StorageClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StorageClass::create_storage_v1_storage_class`](./struct.StorageClass.html#method.create_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum CreateStorageV1StorageClassResponse {
-    Ok(::v1_12::api::storage::v1::StorageClass),
-    Created(::v1_12::api::storage::v1::StorageClass),
-    Accepted(::v1_12::api::storage::v1::StorageClass),
+    Ok(crate::v1_12::api::storage::v1::StorageClass),
+    Created(crate::v1_12::api::storage::v1::StorageClass),
+    Accepted(crate::v1_12::api::storage::v1::StorageClass),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateStorageV1StorageClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateStorageV1StorageClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateStorageV1StorageClassResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateStorageV1StorageClassResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateStorageV1StorageClassResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateStorageV1StorageClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateStorageV1StorageClassResponse::Unauthorized, 0)),
             _ => Ok((CreateStorageV1StorageClassResponse::Other, 0)),
         }
     }
@@ -180,9 +180,9 @@ impl StorageClass {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -212,46 +212,46 @@ impl StorageClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StorageClass::delete_storage_v1_collection_storage_class`](./struct.StorageClass.html#method.delete_storage_v1_collection_storage_class)
 #[derive(Debug)]
 pub enum DeleteStorageV1CollectionStorageClassResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::api::storage::v1::StorageClass),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::api::storage::v1::StorageClass),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteStorageV1CollectionStorageClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteStorageV1CollectionStorageClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteStorageV1CollectionStorageClassResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteStorageV1CollectionStorageClassResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1CollectionStorageClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1CollectionStorageClassResponse::Unauthorized, 0)),
             _ => Ok((DeleteStorageV1CollectionStorageClassResponse::Other, 0)),
         }
     }
@@ -298,9 +298,9 @@ impl StorageClass {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -318,55 +318,55 @@ impl StorageClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StorageClass::delete_storage_v1_storage_class`](./struct.StorageClass.html#method.delete_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum DeleteStorageV1StorageClassResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::api::storage::v1::StorageClass),
-    Accepted(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::api::storage::v1::StorageClass),
+    Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteStorageV1StorageClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteStorageV1StorageClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteStorageV1StorageClassResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteStorageV1StorageClassResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteStorageV1StorageClassResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1StorageClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1StorageClassResponse::Unauthorized, 0)),
             _ => Ok((DeleteStorageV1StorageClassResponse::Other, 0)),
         }
     }
@@ -430,9 +430,9 @@ impl StorageClass {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -462,32 +462,32 @@ impl StorageClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StorageClass::list_storage_v1_storage_class`](./struct.StorageClass.html#method.list_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum ListStorageV1StorageClassResponse {
-    Ok(::v1_12::api::storage::v1::StorageClassList),
+    Ok(crate::v1_12::api::storage::v1::StorageClassList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListStorageV1StorageClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListStorageV1StorageClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListStorageV1StorageClassResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListStorageV1StorageClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListStorageV1StorageClassResponse::Unauthorized, 0)),
             _ => Ok((ListStorageV1StorageClassResponse::Other, 0)),
         }
     }
@@ -517,12 +517,12 @@ impl StorageClass {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_storage_v1_storage_class(
         name: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -531,32 +531,32 @@ impl StorageClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StorageClass::patch_storage_v1_storage_class`](./struct.StorageClass.html#method.patch_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum PatchStorageV1StorageClassResponse {
-    Ok(::v1_12::api::storage::v1::StorageClass),
+    Ok(crate::v1_12::api::storage::v1::StorageClass),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchStorageV1StorageClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchStorageV1StorageClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchStorageV1StorageClassResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchStorageV1StorageClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchStorageV1StorageClassResponse::Unauthorized, 0)),
             _ => Ok((PatchStorageV1StorageClassResponse::Other, 0)),
         }
     }
@@ -591,9 +591,9 @@ impl StorageClass {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -605,32 +605,32 @@ impl StorageClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StorageClass::read_storage_v1_storage_class`](./struct.StorageClass.html#method.read_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum ReadStorageV1StorageClassResponse {
-    Ok(::v1_12::api::storage::v1::StorageClass),
+    Ok(crate::v1_12::api::storage::v1::StorageClass),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadStorageV1StorageClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadStorageV1StorageClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadStorageV1StorageClassResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadStorageV1StorageClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadStorageV1StorageClassResponse::Unauthorized, 0)),
             _ => Ok((ReadStorageV1StorageClassResponse::Other, 0)),
         }
     }
@@ -660,12 +660,12 @@ impl StorageClass {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_storage_v1_storage_class(
         name: &str,
-        body: &::v1_12::api::storage::v1::StorageClass,
+        body: &crate::v1_12::api::storage::v1::StorageClass,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -674,41 +674,41 @@ impl StorageClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StorageClass::replace_storage_v1_storage_class`](./struct.StorageClass.html#method.replace_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum ReplaceStorageV1StorageClassResponse {
-    Ok(::v1_12::api::storage::v1::StorageClass),
-    Created(::v1_12::api::storage::v1::StorageClass),
+    Ok(crate::v1_12::api::storage::v1::StorageClass),
+    Created(crate::v1_12::api::storage::v1::StorageClass),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceStorageV1StorageClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceStorageV1StorageClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceStorageV1StorageClassResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceStorageV1StorageClassResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceStorageV1StorageClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceStorageV1StorageClassResponse::Unauthorized, 0)),
             _ => Ok((ReplaceStorageV1StorageClassResponse::Other, 0)),
         }
     }
@@ -777,9 +777,9 @@ impl StorageClass {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/watch/storageclasses/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -809,34 +809,34 @@ impl StorageClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StorageClass::watch_storage_v1_storage_class`](./struct.StorageClass.html#method.watch_storage_v1_storage_class)
 #[derive(Debug)]
 pub enum WatchStorageV1StorageClassResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchStorageV1StorageClassResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchStorageV1StorageClassResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchStorageV1StorageClassResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchStorageV1StorageClassResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchStorageV1StorageClassResponse::Unauthorized, 0)),
             _ => Ok((WatchStorageV1StorageClassResponse::Other, 0)),
         }
     }
@@ -900,9 +900,9 @@ impl StorageClass {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/storage.k8s.io/v1/watch/storageclasses?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -932,34 +932,34 @@ impl StorageClass {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`StorageClass::watch_storage_v1_storage_class_list`](./struct.StorageClass.html#method.watch_storage_v1_storage_class_list)
 #[derive(Debug)]
 pub enum WatchStorageV1StorageClassListResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchStorageV1StorageClassListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchStorageV1StorageClassListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchStorageV1StorageClassListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchStorageV1StorageClassListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchStorageV1StorageClassListResponse::Unauthorized, 0)),
             _ => Ok((WatchStorageV1StorageClassListResponse::Other, 0)),
         }
     }
@@ -967,7 +967,7 @@ impl ::Response for WatchStorageV1StorageClassListResponse {
 
 // End storage.k8s.io/v1/StorageClass
 
-impl ::Resource for StorageClass {
+impl crate::Resource for StorageClass {
     fn api_version() -> &'static str {
         "storage.k8s.io/v1"
     }
@@ -985,8 +985,8 @@ impl ::Resource for StorageClass {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for StorageClass {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for StorageClass {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1002,18 +1002,18 @@ impl<'de> ::serde::Deserialize<'de> for StorageClass {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1036,46 +1036,46 @@ impl<'de> ::serde::Deserialize<'de> for StorageClass {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = StorageClass;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct StorageClass")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_allow_volume_expansion: Option<bool> = None;
-                let mut value_allowed_topologies: Option<Vec<::v1_12::api::core::v1::TopologySelectorTerm>> = None;
-                let mut value_metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_allowed_topologies: Option<Vec<crate::v1_12::api::core::v1::TopologySelectorTerm>> = None;
+                let mut value_metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
                 let mut value_mount_options: Option<Vec<String>> = None;
-                let mut value_parameters: Option<::std::collections::BTreeMap<String, String>> = None;
+                let mut value_parameters: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_provisioner: Option<String> = None;
                 let mut value_reclaim_policy: Option<String> = None;
                 let mut value_volume_binding_mode: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_allow_volume_expansion => value_allow_volume_expansion = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_allowed_topologies => value_allowed_topologies = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_mount_options => value_mount_options = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_parameters => value_parameters = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_provisioner => value_provisioner = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_reclaim_policy => value_reclaim_policy = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_volume_binding_mode => value_volume_binding_mode = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_allow_volume_expansion => value_allow_volume_expansion = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_allowed_topologies => value_allowed_topologies = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_mount_options => value_mount_options = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_parameters => value_parameters = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_provisioner => value_provisioner = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_reclaim_policy => value_reclaim_policy = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_volume_binding_mode => value_volume_binding_mode = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1085,7 +1085,7 @@ impl<'de> ::serde::Deserialize<'de> for StorageClass {
                     metadata: value_metadata,
                     mount_options: value_mount_options,
                     parameters: value_parameters,
-                    provisioner: value_provisioner.ok_or_else(|| ::serde::de::Error::missing_field("provisioner"))?,
+                    provisioner: value_provisioner.ok_or_else(|| serde::de::Error::missing_field("provisioner"))?,
                     reclaim_policy: value_reclaim_policy,
                     volume_binding_mode: value_volume_binding_mode,
                 })
@@ -1111,8 +1111,8 @@ impl<'de> ::serde::Deserialize<'de> for StorageClass {
     }
 }
 
-impl ::serde::Serialize for StorageClass {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for StorageClass {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StorageClass",
             0 +
@@ -1126,30 +1126,30 @@ impl ::serde::Serialize for StorageClass {
             self.reclaim_policy.as_ref().map_or(0, |_| 1) +
             self.volume_binding_mode.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.allow_volume_expansion {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowVolumeExpansion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowVolumeExpansion", value)?;
         }
         if let Some(value) = &self.allowed_topologies {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedTopologies", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedTopologies", value)?;
         }
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.mount_options {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "mountOptions", value)?;
         }
         if let Some(value) = &self.parameters {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "parameters", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "parameters", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "provisioner", &self.provisioner)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "provisioner", &self.provisioner)?;
         if let Some(value) = &self.reclaim_policy {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "reclaimPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "reclaimPolicy", value)?;
         }
         if let Some(value) = &self.volume_binding_mode {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "volumeBindingMode", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumeBindingMode", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

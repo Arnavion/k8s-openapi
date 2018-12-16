@@ -3,13 +3,13 @@
 /// PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodDisruptionBudget {
-    pub metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Specification of the desired behavior of the PodDisruptionBudget.
-    pub spec: Option<::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetSpec>,
+    pub spec: Option<crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetSpec>,
 
     /// Most recently observed status of the PodDisruptionBudget.
-    pub status: Option<::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetStatus>,
+    pub status: Option<crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetStatus>,
 }
 
 // Begin policy/v1beta1/PodDisruptionBudget
@@ -34,42 +34,42 @@ impl PodDisruptionBudget {
     ///     If 'true', then the output is pretty printed.
     pub fn create_policy_v1beta1_namespaced_pod_disruption_budget(
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget,
+        body: &crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::create_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.create_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
             _ => Ok((CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
@@ -124,9 +124,9 @@ impl PodDisruptionBudget {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -150,46 +150,46 @@ impl PodDisruptionBudget {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::delete_policy_v1beta1_collection_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_policy_v1beta1_collection_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse {
-    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
+    OkStatus(crate::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
             _ => Ok((DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
@@ -236,9 +236,9 @@ impl PodDisruptionBudget {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -253,46 +253,46 @@ impl PodDisruptionBudget {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::delete_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    OkStatus(::v1_7::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
+    OkStatus(crate::v1_7::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
             _ => Ok((DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
@@ -347,9 +347,9 @@ impl PodDisruptionBudget {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -373,32 +373,32 @@ impl PodDisruptionBudget {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::list_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.list_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetList),
+    Ok(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
             _ => Ok((ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
@@ -448,9 +448,9 @@ impl PodDisruptionBudget {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/poddisruptionbudgets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -474,32 +474,32 @@ impl PodDisruptionBudget {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::list_policy_v1beta1_pod_disruption_budget_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.list_policy_v1beta1_pod_disruption_budget_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetList),
+    Ok(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -530,42 +530,42 @@ impl PodDisruptionBudget {
     pub fn patch_policy_v1beta1_namespaced_pod_disruption_budget(
         name: &str,
         namespace: &str,
-        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::patch_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.patch_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
             _ => Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
@@ -596,42 +596,42 @@ impl PodDisruptionBudget {
     pub fn patch_policy_v1beta1_namespaced_pod_disruption_budget_status(
         name: &str,
         namespace: &str,
-        body: &::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::patch_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.patch_policy_v1beta1_namespaced_pod_disruption_budget_status)
 #[derive(Debug)]
 pub enum PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
         }
     }
@@ -671,9 +671,9 @@ impl PodDisruptionBudget {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -685,32 +685,32 @@ impl PodDisruptionBudget {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::read_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.read_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
             _ => Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
@@ -740,40 +740,40 @@ impl PodDisruptionBudget {
         name: &str,
         namespace: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::read_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.read_policy_v1beta1_namespaced_pod_disruption_budget_status)
 #[derive(Debug)]
 pub enum ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
         }
     }
@@ -804,42 +804,42 @@ impl PodDisruptionBudget {
     pub fn replace_policy_v1beta1_namespaced_pod_disruption_budget(
         name: &str,
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget,
+        body: &crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::replace_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.replace_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
             _ => Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
@@ -870,42 +870,42 @@ impl PodDisruptionBudget {
     pub fn replace_policy_v1beta1_namespaced_pod_disruption_budget_status(
         name: &str,
         namespace: &str,
-        body: &::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget,
+        body: &crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::replace_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.replace_policy_v1beta1_namespaced_pod_disruption_budget_status)
 #[derive(Debug)]
 pub enum ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
-    Ok(::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
+    Ok(crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
         }
     }
@@ -965,9 +965,9 @@ impl PodDisruptionBudget {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/watch/namespaces/{namespace}/poddisruptionbudgets/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -991,34 +991,34 @@ impl PodDisruptionBudget {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::watch_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_namespaced_pod_disruption_budget)
 #[derive(Debug)]
 pub enum WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
             _ => Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
@@ -1073,9 +1073,9 @@ impl PodDisruptionBudget {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/watch/namespaces/{namespace}/poddisruptionbudgets?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -1099,34 +1099,34 @@ impl PodDisruptionBudget {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::watch_policy_v1beta1_namespaced_pod_disruption_budget_list`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_namespaced_pod_disruption_budget_list)
 #[derive(Debug)]
 pub enum WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse::Unauthorized, 0)),
             _ => Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse::Other, 0)),
         }
     }
@@ -1176,9 +1176,9 @@ impl PodDisruptionBudget {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/watch/poddisruptionbudgets?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -1202,34 +1202,34 @@ impl PodDisruptionBudget {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodDisruptionBudget::watch_policy_v1beta1_pod_disruption_budget_list_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_pod_disruption_budget_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse {
-    Ok(::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_7::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1237,7 +1237,7 @@ impl ::Response for WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesRes
 
 // End policy/v1beta1/PodDisruptionBudget
 
-impl ::Resource for PodDisruptionBudget {
+impl crate::Resource for PodDisruptionBudget {
     fn api_version() -> &'static str {
         "policy/v1beta1"
     }
@@ -1255,8 +1255,8 @@ impl ::Resource for PodDisruptionBudget {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for PodDisruptionBudget {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PodDisruptionBudget {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1267,18 +1267,18 @@ impl<'de> ::serde::Deserialize<'de> for PodDisruptionBudget {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1296,36 +1296,36 @@ impl<'de> ::serde::Deserialize<'de> for PodDisruptionBudget {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PodDisruptionBudget;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PodDisruptionBudget")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetSpec> = None;
-                let mut value_status: Option<::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetSpec> = None;
+                let mut value_status: Option<crate::v1_7::kubernetes::pkg::apis::policy::v1beta1::PodDisruptionBudgetStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1351,8 +1351,8 @@ impl<'de> ::serde::Deserialize<'de> for PodDisruptionBudget {
     }
 }
 
-impl ::serde::Serialize for PodDisruptionBudget {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PodDisruptionBudget {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodDisruptionBudget",
             0 +
@@ -1361,17 +1361,17 @@ impl ::serde::Serialize for PodDisruptionBudget {
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

@@ -7,37 +7,37 @@ pub struct JSONSchemaProps {
 
     pub schema: Option<String>,
 
-    pub additional_items: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool>,
+    pub additional_items: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool>,
 
-    pub additional_properties: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool>,
+    pub additional_properties: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool>,
 
-    pub all_of: Option<Vec<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
+    pub all_of: Option<Vec<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
-    pub any_of: Option<Vec<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
+    pub any_of: Option<Vec<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
-    pub default: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
+    pub default: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
 
-    pub definitions: Option<::std::collections::BTreeMap<String, ::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
+    pub definitions: Option<std::collections::BTreeMap<String, crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
-    pub dependencies: Option<::std::collections::BTreeMap<String, ::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrStringArray>>,
+    pub dependencies: Option<std::collections::BTreeMap<String, crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrStringArray>>,
 
     pub description: Option<String>,
 
-    pub enum_: Option<Vec<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>>,
+    pub enum_: Option<Vec<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>>,
 
-    pub example: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
+    pub example: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>,
 
     pub exclusive_maximum: Option<bool>,
 
     pub exclusive_minimum: Option<bool>,
 
-    pub external_docs: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::ExternalDocumentation>,
+    pub external_docs: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::ExternalDocumentation>,
 
     pub format: Option<String>,
 
     pub id: Option<String>,
 
-    pub items: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrArray>,
+    pub items: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrArray>,
 
     pub max_items: Option<i64>,
 
@@ -57,15 +57,15 @@ pub struct JSONSchemaProps {
 
     pub multiple_of: Option<f64>,
 
-    pub not: Option<Box<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
+    pub not: Option<Box<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
-    pub one_of: Option<Vec<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
+    pub one_of: Option<Vec<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
     pub pattern: Option<String>,
 
-    pub pattern_properties: Option<::std::collections::BTreeMap<String, ::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
+    pub pattern_properties: Option<std::collections::BTreeMap<String, crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
-    pub properties: Option<::std::collections::BTreeMap<String, ::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
+    pub properties: Option<std::collections::BTreeMap<String, crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>>,
 
     pub required: Option<Vec<String>>,
 
@@ -76,8 +76,8 @@ pub struct JSONSchemaProps {
     pub unique_items: Option<bool>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for JSONSchemaProps {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for JSONSchemaProps {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_ref_path,
@@ -119,18 +119,18 @@ impl<'de> ::serde::Deserialize<'de> for JSONSchemaProps {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "$ref" => Field::Key_ref_path,
                             "$schema" => Field::Key_schema,
@@ -179,32 +179,32 @@ impl<'de> ::serde::Deserialize<'de> for JSONSchemaProps {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = JSONSchemaProps;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct JSONSchemaProps")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_ref_path: Option<String> = None;
                 let mut value_schema: Option<String> = None;
-                let mut value_additional_items: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool> = None;
-                let mut value_additional_properties: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool> = None;
-                let mut value_all_of: Option<Vec<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
-                let mut value_any_of: Option<Vec<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
-                let mut value_default: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON> = None;
-                let mut value_definitions: Option<::std::collections::BTreeMap<String, ::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
-                let mut value_dependencies: Option<::std::collections::BTreeMap<String, ::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrStringArray>> = None;
+                let mut value_additional_items: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool> = None;
+                let mut value_additional_properties: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrBool> = None;
+                let mut value_all_of: Option<Vec<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
+                let mut value_any_of: Option<Vec<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
+                let mut value_default: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON> = None;
+                let mut value_definitions: Option<std::collections::BTreeMap<String, crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
+                let mut value_dependencies: Option<std::collections::BTreeMap<String, crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrStringArray>> = None;
                 let mut value_description: Option<String> = None;
-                let mut value_enum_: Option<Vec<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>> = None;
-                let mut value_example: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON> = None;
+                let mut value_enum_: Option<Vec<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON>> = None;
+                let mut value_example: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSON> = None;
                 let mut value_exclusive_maximum: Option<bool> = None;
                 let mut value_exclusive_minimum: Option<bool> = None;
-                let mut value_external_docs: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::ExternalDocumentation> = None;
+                let mut value_external_docs: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::ExternalDocumentation> = None;
                 let mut value_format: Option<String> = None;
                 let mut value_id: Option<String> = None;
-                let mut value_items: Option<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrArray> = None;
+                let mut value_items: Option<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaPropsOrArray> = None;
                 let mut value_max_items: Option<i64> = None;
                 let mut value_max_length: Option<i64> = None;
                 let mut value_max_properties: Option<i64> = None;
@@ -214,55 +214,55 @@ impl<'de> ::serde::Deserialize<'de> for JSONSchemaProps {
                 let mut value_min_properties: Option<i64> = None;
                 let mut value_minimum: Option<f64> = None;
                 let mut value_multiple_of: Option<f64> = None;
-                let mut value_not: Option<Box<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
-                let mut value_one_of: Option<Vec<::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
+                let mut value_not: Option<Box<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
+                let mut value_one_of: Option<Vec<crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
                 let mut value_pattern: Option<String> = None;
-                let mut value_pattern_properties: Option<::std::collections::BTreeMap<String, ::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
-                let mut value_properties: Option<::std::collections::BTreeMap<String, ::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
+                let mut value_pattern_properties: Option<std::collections::BTreeMap<String, crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
+                let mut value_properties: Option<std::collections::BTreeMap<String, crate::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::JSONSchemaProps>> = None;
                 let mut value_required: Option<Vec<String>> = None;
                 let mut value_title: Option<String> = None;
                 let mut value_type_: Option<String> = None;
                 let mut value_unique_items: Option<bool> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_ref_path => value_ref_path = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_schema => value_schema = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_additional_items => value_additional_items = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_additional_properties => value_additional_properties = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_all_of => value_all_of = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_any_of => value_any_of = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_default => value_default = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_definitions => value_definitions = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_dependencies => value_dependencies = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_description => value_description = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_enum_ => value_enum_ = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_example => value_example = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_exclusive_maximum => value_exclusive_maximum = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_exclusive_minimum => value_exclusive_minimum = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_external_docs => value_external_docs = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_format => value_format = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_id => value_id = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_items => value_items = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_max_items => value_max_items = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_max_length => value_max_length = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_max_properties => value_max_properties = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_maximum => value_maximum = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_min_items => value_min_items = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_min_length => value_min_length = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_min_properties => value_min_properties = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_minimum => value_minimum = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_multiple_of => value_multiple_of = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_not => value_not = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_one_of => value_one_of = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pattern => value_pattern = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_pattern_properties => value_pattern_properties = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_properties => value_properties = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_required => value_required = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_title => value_title = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_unique_items => value_unique_items = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_ref_path => value_ref_path = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_schema => value_schema = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_additional_items => value_additional_items = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_additional_properties => value_additional_properties = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_all_of => value_all_of = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_any_of => value_any_of = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_default => value_default = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_definitions => value_definitions = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_dependencies => value_dependencies = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_description => value_description = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_enum_ => value_enum_ = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_example => value_example = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_exclusive_maximum => value_exclusive_maximum = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_exclusive_minimum => value_exclusive_minimum = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_external_docs => value_external_docs = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_format => value_format = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_id => value_id = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_items => value_items = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_max_items => value_max_items = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_max_length => value_max_length = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_max_properties => value_max_properties = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_maximum => value_maximum = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_min_items => value_min_items = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_min_length => value_min_length = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_min_properties => value_min_properties = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_minimum => value_minimum = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_multiple_of => value_multiple_of = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_not => value_not = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_one_of => value_one_of = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pattern => value_pattern = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_pattern_properties => value_pattern_properties = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_properties => value_properties = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_required => value_required = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_title => value_title = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_unique_items => value_unique_items = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -352,8 +352,8 @@ impl<'de> ::serde::Deserialize<'de> for JSONSchemaProps {
     }
 }
 
-impl ::serde::Serialize for JSONSchemaProps {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for JSONSchemaProps {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "JSONSchemaProps",
             0 +
@@ -395,113 +395,113 @@ impl ::serde::Serialize for JSONSchemaProps {
             self.unique_items.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ref_path {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "$ref", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "$ref", value)?;
         }
         if let Some(value) = &self.schema {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "$schema", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "$schema", value)?;
         }
         if let Some(value) = &self.additional_items {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalItems", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalItems", value)?;
         }
         if let Some(value) = &self.additional_properties {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "additionalProperties", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "additionalProperties", value)?;
         }
         if let Some(value) = &self.all_of {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "allOf", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allOf", value)?;
         }
         if let Some(value) = &self.any_of {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "anyOf", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "anyOf", value)?;
         }
         if let Some(value) = &self.default {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "default", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "default", value)?;
         }
         if let Some(value) = &self.definitions {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "definitions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "definitions", value)?;
         }
         if let Some(value) = &self.dependencies {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "dependencies", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "dependencies", value)?;
         }
         if let Some(value) = &self.description {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "description", value)?;
         }
         if let Some(value) = &self.enum_ {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "enum", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "enum", value)?;
         }
         if let Some(value) = &self.example {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "example", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "example", value)?;
         }
         if let Some(value) = &self.exclusive_maximum {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMaximum", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMaximum", value)?;
         }
         if let Some(value) = &self.exclusive_minimum {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMinimum", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "exclusiveMinimum", value)?;
         }
         if let Some(value) = &self.external_docs {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "externalDocs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "externalDocs", value)?;
         }
         if let Some(value) = &self.format {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "format", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "format", value)?;
         }
         if let Some(value) = &self.id {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "id", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "id", value)?;
         }
         if let Some(value) = &self.items {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "items", value)?;
         }
         if let Some(value) = &self.max_items {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "maxItems", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxItems", value)?;
         }
         if let Some(value) = &self.max_length {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "maxLength", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxLength", value)?;
         }
         if let Some(value) = &self.max_properties {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "maxProperties", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maxProperties", value)?;
         }
         if let Some(value) = &self.maximum {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "maximum", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "maximum", value)?;
         }
         if let Some(value) = &self.min_items {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "minItems", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minItems", value)?;
         }
         if let Some(value) = &self.min_length {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "minLength", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minLength", value)?;
         }
         if let Some(value) = &self.min_properties {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "minProperties", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minProperties", value)?;
         }
         if let Some(value) = &self.minimum {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "minimum", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minimum", value)?;
         }
         if let Some(value) = &self.multiple_of {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "multipleOf", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "multipleOf", value)?;
         }
         if let Some(value) = &self.not {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "not", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "not", value)?;
         }
         if let Some(value) = &self.one_of {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "oneOf", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "oneOf", value)?;
         }
         if let Some(value) = &self.pattern {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "pattern", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "pattern", value)?;
         }
         if let Some(value) = &self.pattern_properties {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "patternProperties", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "patternProperties", value)?;
         }
         if let Some(value) = &self.properties {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "properties", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "properties", value)?;
         }
         if let Some(value) = &self.required {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "required", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "required", value)?;
         }
         if let Some(value) = &self.title {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "title", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "title", value)?;
         }
         if let Some(value) = &self.type_ {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
         }
         if let Some(value) = &self.unique_items {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "uniqueItems", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uniqueItems", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

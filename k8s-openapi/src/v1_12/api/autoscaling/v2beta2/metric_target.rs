@@ -7,17 +7,17 @@ pub struct MetricTarget {
     pub average_utilization: Option<i32>,
 
     /// averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
-    pub average_value: Option<::v1_12::apimachinery::pkg::api::resource::Quantity>,
+    pub average_value: Option<crate::v1_12::apimachinery::pkg::api::resource::Quantity>,
 
     /// type represents whether the metric type is Utilization, Value, or AverageValue
     pub type_: String,
 
     /// value is the target value of the metric (as a quantity).
-    pub value: Option<::v1_12::apimachinery::pkg::api::resource::Quantity>,
+    pub value: Option<crate::v1_12::apimachinery::pkg::api::resource::Quantity>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for MetricTarget {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for MetricTarget {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_average_utilization,
@@ -27,18 +27,18 @@ impl<'de> ::serde::Deserialize<'de> for MetricTarget {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "averageUtilization" => Field::Key_average_utilization,
                             "averageValue" => Field::Key_average_value,
@@ -55,33 +55,33 @@ impl<'de> ::serde::Deserialize<'de> for MetricTarget {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = MetricTarget;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct MetricTarget")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_average_utilization: Option<i32> = None;
-                let mut value_average_value: Option<::v1_12::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_average_value: Option<crate::v1_12::apimachinery::pkg::api::resource::Quantity> = None;
                 let mut value_type_: Option<String> = None;
-                let mut value_value: Option<::v1_12::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_value: Option<crate::v1_12::apimachinery::pkg::api::resource::Quantity> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_average_utilization => value_average_utilization = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_average_value => value_average_value = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_value => value_value = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_average_utilization => value_average_utilization = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_average_value => value_average_value = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_value => value_value = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(MetricTarget {
                     average_utilization: value_average_utilization,
                     average_value: value_average_value,
-                    type_: value_type_.ok_or_else(|| ::serde::de::Error::missing_field("type"))?,
+                    type_: value_type_.ok_or_else(|| serde::de::Error::missing_field("type"))?,
                     value: value_value,
                 })
             }
@@ -100,8 +100,8 @@ impl<'de> ::serde::Deserialize<'de> for MetricTarget {
     }
 }
 
-impl ::serde::Serialize for MetricTarget {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for MetricTarget {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "MetricTarget",
             0 +
@@ -111,15 +111,15 @@ impl ::serde::Serialize for MetricTarget {
             self.value.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.average_utilization {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "averageUtilization", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "averageUtilization", value)?;
         }
         if let Some(value) = &self.average_value {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "averageValue", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "averageValue", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "type", &self.type_)?;
         if let Some(value) = &self.value {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "value", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "value", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

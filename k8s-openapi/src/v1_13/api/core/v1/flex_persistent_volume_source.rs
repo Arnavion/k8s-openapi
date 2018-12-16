@@ -10,17 +10,17 @@ pub struct FlexPersistentVolumeSource {
     pub fs_type: Option<String>,
 
     /// Optional: Extra command options if any.
-    pub options: Option<::std::collections::BTreeMap<String, String>>,
+    pub options: Option<std::collections::BTreeMap<String, String>>,
 
     /// Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
     pub read_only: Option<bool>,
 
     /// Optional: SecretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts.
-    pub secret_ref: Option<::v1_13::api::core::v1::SecretReference>,
+    pub secret_ref: Option<crate::v1_13::api::core::v1::SecretReference>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for FlexPersistentVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for FlexPersistentVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_driver,
@@ -31,18 +31,18 @@ impl<'de> ::serde::Deserialize<'de> for FlexPersistentVolumeSource {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "driver" => Field::Key_driver,
                             "fsType" => Field::Key_fs_type,
@@ -60,33 +60,33 @@ impl<'de> ::serde::Deserialize<'de> for FlexPersistentVolumeSource {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = FlexPersistentVolumeSource;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct FlexPersistentVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_driver: Option<String> = None;
                 let mut value_fs_type: Option<String> = None;
-                let mut value_options: Option<::std::collections::BTreeMap<String, String>> = None;
+                let mut value_options: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_read_only: Option<bool> = None;
-                let mut value_secret_ref: Option<::v1_13::api::core::v1::SecretReference> = None;
+                let mut value_secret_ref: Option<crate::v1_13::api::core::v1::SecretReference> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_driver => value_driver = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_fs_type => value_fs_type = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_options => value_options = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only => value_read_only = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret_ref => value_secret_ref = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_driver => value_driver = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_fs_type => value_fs_type = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_options => value_options = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_ref => value_secret_ref = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(FlexPersistentVolumeSource {
-                    driver: value_driver.ok_or_else(|| ::serde::de::Error::missing_field("driver"))?,
+                    driver: value_driver.ok_or_else(|| serde::de::Error::missing_field("driver"))?,
                     fs_type: value_fs_type,
                     options: value_options,
                     read_only: value_read_only,
@@ -109,8 +109,8 @@ impl<'de> ::serde::Deserialize<'de> for FlexPersistentVolumeSource {
     }
 }
 
-impl ::serde::Serialize for FlexPersistentVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for FlexPersistentVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "FlexPersistentVolumeSource",
             0 +
@@ -120,19 +120,19 @@ impl ::serde::Serialize for FlexPersistentVolumeSource {
             self.read_only.as_ref().map_or(0, |_| 1) +
             self.secret_ref.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "driver", &self.driver)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "driver", &self.driver)?;
         if let Some(value) = &self.fs_type {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;
         }
         if let Some(value) = &self.options {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "options", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "options", value)?;
         }
         if let Some(value) = &self.read_only {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
         if let Some(value) = &self.secret_ref {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretRef", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

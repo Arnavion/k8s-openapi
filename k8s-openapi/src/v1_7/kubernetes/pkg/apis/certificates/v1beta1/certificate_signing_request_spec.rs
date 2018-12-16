@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct CertificateSigningRequestSpec {
     /// Extra information about the requesting user. See user.Info interface for details.
-    pub extra: Option<::std::collections::BTreeMap<String, Vec<String>>>,
+    pub extra: Option<std::collections::BTreeMap<String, Vec<String>>>,
 
     /// Group information about the requesting user. See user.Info interface for details.
     pub groups: Option<Vec<String>>,
 
     /// Base64-encoded PKCS#10 CSR data
-    pub request: ::ByteString,
+    pub request: crate::ByteString,
 
     /// UID information about the requesting user. See user.Info interface for details.
     pub uid: Option<String>,
@@ -23,8 +23,8 @@ pub struct CertificateSigningRequestSpec {
     pub username: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for CertificateSigningRequestSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for CertificateSigningRequestSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_extra,
@@ -36,18 +36,18 @@ impl<'de> ::serde::Deserialize<'de> for CertificateSigningRequestSpec {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "extra" => Field::Key_extra,
                             "groups" => Field::Key_groups,
@@ -66,37 +66,37 @@ impl<'de> ::serde::Deserialize<'de> for CertificateSigningRequestSpec {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = CertificateSigningRequestSpec;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct CertificateSigningRequestSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_extra: Option<::std::collections::BTreeMap<String, Vec<String>>> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_extra: Option<std::collections::BTreeMap<String, Vec<String>>> = None;
                 let mut value_groups: Option<Vec<String>> = None;
-                let mut value_request: Option<::ByteString> = None;
+                let mut value_request: Option<crate::ByteString> = None;
                 let mut value_uid: Option<String> = None;
                 let mut value_usages: Option<Vec<String>> = None;
                 let mut value_username: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_extra => value_extra = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_groups => value_groups = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_request => value_request = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_uid => value_uid = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_usages => value_usages = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_username => value_username = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_extra => value_extra = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_groups => value_groups = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_request => value_request = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_uid => value_uid = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_usages => value_usages = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_username => value_username = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CertificateSigningRequestSpec {
                     extra: value_extra,
                     groups: value_groups,
-                    request: value_request.ok_or_else(|| ::serde::de::Error::missing_field("request"))?,
+                    request: value_request.ok_or_else(|| serde::de::Error::missing_field("request"))?,
                     uid: value_uid,
                     usages: value_usages,
                     username: value_username,
@@ -119,8 +119,8 @@ impl<'de> ::serde::Deserialize<'de> for CertificateSigningRequestSpec {
     }
 }
 
-impl ::serde::Serialize for CertificateSigningRequestSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for CertificateSigningRequestSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CertificateSigningRequestSpec",
             0 +
@@ -132,21 +132,21 @@ impl ::serde::Serialize for CertificateSigningRequestSpec {
             self.username.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.extra {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "extra", value)?;
         }
         if let Some(value) = &self.groups {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "groups", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "groups", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "request", &self.request)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "request", &self.request)?;
         if let Some(value) = &self.uid {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "uid", value)?;
         }
         if let Some(value) = &self.usages {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "usages", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "usages", value)?;
         }
         if let Some(value) = &self.username {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "username", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "username", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

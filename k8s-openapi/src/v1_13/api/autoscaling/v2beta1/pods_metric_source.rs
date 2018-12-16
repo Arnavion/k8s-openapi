@@ -7,14 +7,14 @@ pub struct PodsMetricSource {
     pub metric_name: String,
 
     /// selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping When unset, just the metricName will be used to gather metrics.
-    pub selector: Option<::v1_13::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)
-    pub target_average_value: ::v1_13::apimachinery::pkg::api::resource::Quantity,
+    pub target_average_value: crate::v1_13::apimachinery::pkg::api::resource::Quantity,
 }
 
-impl<'de> ::serde::Deserialize<'de> for PodsMetricSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PodsMetricSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_metric_name,
@@ -23,18 +23,18 @@ impl<'de> ::serde::Deserialize<'de> for PodsMetricSource {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "metricName" => Field::Key_metric_name,
                             "selector" => Field::Key_selector,
@@ -50,31 +50,31 @@ impl<'de> ::serde::Deserialize<'de> for PodsMetricSource {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PodsMetricSource;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PodsMetricSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_metric_name: Option<String> = None;
-                let mut value_selector: Option<::v1_13::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_target_average_value: Option<::v1_13::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_selector: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_target_average_value: Option<crate::v1_13::apimachinery::pkg::api::resource::Quantity> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_metric_name => value_metric_name = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_selector => value_selector = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_target_average_value => value_target_average_value = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metric_name => value_metric_name = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_selector => value_selector = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_target_average_value => value_target_average_value = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(PodsMetricSource {
-                    metric_name: value_metric_name.ok_or_else(|| ::serde::de::Error::missing_field("metricName"))?,
+                    metric_name: value_metric_name.ok_or_else(|| serde::de::Error::missing_field("metricName"))?,
                     selector: value_selector,
-                    target_average_value: value_target_average_value.ok_or_else(|| ::serde::de::Error::missing_field("targetAverageValue"))?,
+                    target_average_value: value_target_average_value.ok_or_else(|| serde::de::Error::missing_field("targetAverageValue"))?,
                 })
             }
         }
@@ -91,8 +91,8 @@ impl<'de> ::serde::Deserialize<'de> for PodsMetricSource {
     }
 }
 
-impl ::serde::Serialize for PodsMetricSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PodsMetricSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodsMetricSource",
             0 +
@@ -100,11 +100,11 @@ impl ::serde::Serialize for PodsMetricSource {
             self.selector.as_ref().map_or(0, |_| 1) +
             1,
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "metricName", &self.metric_name)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "metricName", &self.metric_name)?;
         if let Some(value) = &self.selector {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "targetAverageValue", &self.target_average_value)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "targetAverageValue", &self.target_average_value)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

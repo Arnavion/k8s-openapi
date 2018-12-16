@@ -7,10 +7,10 @@ pub struct APIResourceList {
     pub group_version: String,
 
     /// resources contains the name of the resources and if they are namespaced.
-    pub resources: Vec<::v1_12::apimachinery::pkg::apis::meta::v1::APIResource>,
+    pub resources: Vec<crate::v1_12::apimachinery::pkg::apis::meta::v1::APIResource>,
 }
 
-impl ::Resource for APIResourceList {
+impl crate::Resource for APIResourceList {
     fn api_version() -> &'static str {
         "v1"
     }
@@ -28,8 +28,8 @@ impl ::Resource for APIResourceList {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for APIResourceList {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for APIResourceList {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -39,18 +39,18 @@ impl<'de> ::serde::Deserialize<'de> for APIResourceList {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -67,40 +67,40 @@ impl<'de> ::serde::Deserialize<'de> for APIResourceList {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = APIResourceList;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct APIResourceList")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_group_version: Option<String> = None;
-                let mut value_resources: Option<Vec<::v1_12::apimachinery::pkg::apis::meta::v1::APIResource>> = None;
+                let mut value_resources: Option<Vec<crate::v1_12::apimachinery::pkg::apis::meta::v1::APIResource>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_group_version => value_group_version = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_resources => value_resources = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_group_version => value_group_version = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_resources => value_resources = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(APIResourceList {
-                    group_version: value_group_version.ok_or_else(|| ::serde::de::Error::missing_field("groupVersion"))?,
-                    resources: value_resources.ok_or_else(|| ::serde::de::Error::missing_field("resources"))?,
+                    group_version: value_group_version.ok_or_else(|| serde::de::Error::missing_field("groupVersion"))?,
+                    resources: value_resources.ok_or_else(|| serde::de::Error::missing_field("resources"))?,
                 })
             }
         }
@@ -118,8 +118,8 @@ impl<'de> ::serde::Deserialize<'de> for APIResourceList {
     }
 }
 
-impl ::serde::Serialize for APIResourceList {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for APIResourceList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "APIResourceList",
             0 +
@@ -127,10 +127,10 @@ impl ::serde::Serialize for APIResourceList {
             1 +
             1,
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "groupVersion", &self.group_version)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &self.resources)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "groupVersion", &self.group_version)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "resources", &self.resources)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

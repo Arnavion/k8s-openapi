@@ -10,11 +10,11 @@ pub struct TokenReviewStatus {
     pub error: Option<String>,
 
     /// User is the UserInfo associated with the provided token.
-    pub user: Option<::v1_7::kubernetes::pkg::apis::authentication::v1::UserInfo>,
+    pub user: Option<crate::v1_7::kubernetes::pkg::apis::authentication::v1::UserInfo>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for TokenReviewStatus {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for TokenReviewStatus {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_authenticated,
@@ -23,18 +23,18 @@ impl<'de> ::serde::Deserialize<'de> for TokenReviewStatus {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "authenticated" => Field::Key_authenticated,
                             "error" => Field::Key_error,
@@ -50,24 +50,24 @@ impl<'de> ::serde::Deserialize<'de> for TokenReviewStatus {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = TokenReviewStatus;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct TokenReviewStatus")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_authenticated: Option<bool> = None;
                 let mut value_error: Option<String> = None;
-                let mut value_user: Option<::v1_7::kubernetes::pkg::apis::authentication::v1::UserInfo> = None;
+                let mut value_user: Option<crate::v1_7::kubernetes::pkg::apis::authentication::v1::UserInfo> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_authenticated => value_authenticated = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_error => value_error = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_user => value_user = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_authenticated => value_authenticated = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_error => value_error = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_user => value_user = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -91,8 +91,8 @@ impl<'de> ::serde::Deserialize<'de> for TokenReviewStatus {
     }
 }
 
-impl ::serde::Serialize for TokenReviewStatus {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for TokenReviewStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TokenReviewStatus",
             0 +
@@ -101,14 +101,14 @@ impl ::serde::Serialize for TokenReviewStatus {
             self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.authenticated {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "authenticated", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "authenticated", value)?;
         }
         if let Some(value) = &self.error {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "error", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "error", value)?;
         }
         if let Some(value) = &self.user {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "user", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

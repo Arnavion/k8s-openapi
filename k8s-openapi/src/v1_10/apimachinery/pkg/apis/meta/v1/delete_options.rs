@@ -16,14 +16,14 @@ pub struct DeleteOptions {
     pub orphan_dependents: Option<bool>,
 
     /// Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.
-    pub preconditions: Option<::v1_10::apimachinery::pkg::apis::meta::v1::Preconditions>,
+    pub preconditions: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::Preconditions>,
 
     /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
     pub propagation_policy: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for DeleteOptions {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for DeleteOptions {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -35,18 +35,18 @@ impl<'de> ::serde::Deserialize<'de> for DeleteOptions {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "gracePeriodSeconds" => Field::Key_grace_period_seconds,
@@ -65,30 +65,30 @@ impl<'de> ::serde::Deserialize<'de> for DeleteOptions {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = DeleteOptions;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct DeleteOptions")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_api_version: Option<String> = None;
                 let mut value_grace_period_seconds: Option<i64> = None;
                 let mut value_kind: Option<String> = None;
                 let mut value_orphan_dependents: Option<bool> = None;
-                let mut value_preconditions: Option<::v1_10::apimachinery::pkg::apis::meta::v1::Preconditions> = None;
+                let mut value_preconditions: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::Preconditions> = None;
                 let mut value_propagation_policy: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_api_version => value_api_version = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_grace_period_seconds => value_grace_period_seconds = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_orphan_dependents => value_orphan_dependents = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_preconditions => value_preconditions = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_propagation_policy => value_propagation_policy = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_api_version => value_api_version = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_grace_period_seconds => value_grace_period_seconds = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kind => value_kind = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_orphan_dependents => value_orphan_dependents = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_preconditions => value_preconditions = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_propagation_policy => value_propagation_policy = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -118,8 +118,8 @@ impl<'de> ::serde::Deserialize<'de> for DeleteOptions {
     }
 }
 
-impl ::serde::Serialize for DeleteOptions {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for DeleteOptions {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DeleteOptions",
             0 +
@@ -131,23 +131,23 @@ impl ::serde::Serialize for DeleteOptions {
             self.propagation_policy.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;
         }
         if let Some(value) = &self.grace_period_seconds {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "gracePeriodSeconds", value)?;
         }
         if let Some(value) = &self.kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "kind", value)?;
         }
         if let Some(value) = &self.orphan_dependents {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "orphanDependents", value)?;
         }
         if let Some(value) = &self.preconditions {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "preconditions", value)?;
         }
         if let Some(value) = &self.propagation_policy {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "propagationPolicy", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

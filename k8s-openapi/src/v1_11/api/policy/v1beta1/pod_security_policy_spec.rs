@@ -10,10 +10,10 @@ pub struct PodSecurityPolicySpec {
     pub allowed_capabilities: Option<Vec<String>>,
 
     /// allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the "volumes" field.
-    pub allowed_flex_volumes: Option<Vec<::v1_11::api::policy::v1beta1::AllowedFlexVolume>>,
+    pub allowed_flex_volumes: Option<Vec<crate::v1_11::api::policy::v1beta1::AllowedFlexVolume>>,
 
     /// allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths may be used.
-    pub allowed_host_paths: Option<Vec<::v1_11::api::policy::v1beta1::AllowedHostPath>>,
+    pub allowed_host_paths: Option<Vec<crate::v1_11::api::policy::v1beta1::AllowedHostPath>>,
 
     /// allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to whitelist all allowed unsafe sysctls explicitly to avoid rejection.
     ///
@@ -32,7 +32,7 @@ pub struct PodSecurityPolicySpec {
     pub forbidden_sysctls: Option<Vec<String>>,
 
     /// fsGroup is the strategy that will dictate what fs group is used by the SecurityContext.
-    pub fs_group: ::v1_11::api::policy::v1beta1::FSGroupStrategyOptions,
+    pub fs_group: crate::v1_11::api::policy::v1beta1::FSGroupStrategyOptions,
 
     /// hostIPC determines if the policy allows the use of HostIPC in the pod spec.
     pub host_ipc: Option<bool>,
@@ -44,7 +44,7 @@ pub struct PodSecurityPolicySpec {
     pub host_pid: Option<bool>,
 
     /// hostPorts determines which host port ranges are allowed to be exposed.
-    pub host_ports: Option<Vec<::v1_11::api::policy::v1beta1::HostPortRange>>,
+    pub host_ports: Option<Vec<crate::v1_11::api::policy::v1beta1::HostPortRange>>,
 
     /// privileged determines if a pod can request to be run as privileged.
     pub privileged: Option<bool>,
@@ -56,20 +56,20 @@ pub struct PodSecurityPolicySpec {
     pub required_drop_capabilities: Option<Vec<String>>,
 
     /// runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set.
-    pub run_as_user: ::v1_11::api::policy::v1beta1::RunAsUserStrategyOptions,
+    pub run_as_user: crate::v1_11::api::policy::v1beta1::RunAsUserStrategyOptions,
 
     /// seLinux is the strategy that will dictate the allowable labels that may be set.
-    pub se_linux: ::v1_11::api::policy::v1beta1::SELinuxStrategyOptions,
+    pub se_linux: crate::v1_11::api::policy::v1beta1::SELinuxStrategyOptions,
 
     /// supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext.
-    pub supplemental_groups: ::v1_11::api::policy::v1beta1::SupplementalGroupsStrategyOptions,
+    pub supplemental_groups: crate::v1_11::api::policy::v1beta1::SupplementalGroupsStrategyOptions,
 
     /// volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.
     pub volumes: Option<Vec<String>>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicySpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PodSecurityPolicySpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_allow_privilege_escalation,
@@ -95,18 +95,18 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicySpec {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "allowPrivilegeEscalation" => Field::Key_allow_privilege_escalation,
                             "allowedCapabilities" => Field::Key_allowed_capabilities,
@@ -139,58 +139,58 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicySpec {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PodSecurityPolicySpec;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PodSecurityPolicySpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_allow_privilege_escalation: Option<bool> = None;
                 let mut value_allowed_capabilities: Option<Vec<String>> = None;
-                let mut value_allowed_flex_volumes: Option<Vec<::v1_11::api::policy::v1beta1::AllowedFlexVolume>> = None;
-                let mut value_allowed_host_paths: Option<Vec<::v1_11::api::policy::v1beta1::AllowedHostPath>> = None;
+                let mut value_allowed_flex_volumes: Option<Vec<crate::v1_11::api::policy::v1beta1::AllowedFlexVolume>> = None;
+                let mut value_allowed_host_paths: Option<Vec<crate::v1_11::api::policy::v1beta1::AllowedHostPath>> = None;
                 let mut value_allowed_unsafe_sysctls: Option<Vec<String>> = None;
                 let mut value_default_add_capabilities: Option<Vec<String>> = None;
                 let mut value_default_allow_privilege_escalation: Option<bool> = None;
                 let mut value_forbidden_sysctls: Option<Vec<String>> = None;
-                let mut value_fs_group: Option<::v1_11::api::policy::v1beta1::FSGroupStrategyOptions> = None;
+                let mut value_fs_group: Option<crate::v1_11::api::policy::v1beta1::FSGroupStrategyOptions> = None;
                 let mut value_host_ipc: Option<bool> = None;
                 let mut value_host_network: Option<bool> = None;
                 let mut value_host_pid: Option<bool> = None;
-                let mut value_host_ports: Option<Vec<::v1_11::api::policy::v1beta1::HostPortRange>> = None;
+                let mut value_host_ports: Option<Vec<crate::v1_11::api::policy::v1beta1::HostPortRange>> = None;
                 let mut value_privileged: Option<bool> = None;
                 let mut value_read_only_root_filesystem: Option<bool> = None;
                 let mut value_required_drop_capabilities: Option<Vec<String>> = None;
-                let mut value_run_as_user: Option<::v1_11::api::policy::v1beta1::RunAsUserStrategyOptions> = None;
-                let mut value_se_linux: Option<::v1_11::api::policy::v1beta1::SELinuxStrategyOptions> = None;
-                let mut value_supplemental_groups: Option<::v1_11::api::policy::v1beta1::SupplementalGroupsStrategyOptions> = None;
+                let mut value_run_as_user: Option<crate::v1_11::api::policy::v1beta1::RunAsUserStrategyOptions> = None;
+                let mut value_se_linux: Option<crate::v1_11::api::policy::v1beta1::SELinuxStrategyOptions> = None;
+                let mut value_supplemental_groups: Option<crate::v1_11::api::policy::v1beta1::SupplementalGroupsStrategyOptions> = None;
                 let mut value_volumes: Option<Vec<String>> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_allow_privilege_escalation => value_allow_privilege_escalation = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_allowed_capabilities => value_allowed_capabilities = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_allowed_flex_volumes => value_allowed_flex_volumes = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_allowed_host_paths => value_allowed_host_paths = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_allowed_unsafe_sysctls => value_allowed_unsafe_sysctls = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_default_add_capabilities => value_default_add_capabilities = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_default_allow_privilege_escalation => value_default_allow_privilege_escalation = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_forbidden_sysctls => value_forbidden_sysctls = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_fs_group => value_fs_group = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_host_ipc => value_host_ipc = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_network => value_host_network = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_pid => value_host_pid = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_host_ports => value_host_ports = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_privileged => value_privileged = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_read_only_root_filesystem => value_read_only_root_filesystem = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_required_drop_capabilities => value_required_drop_capabilities = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_run_as_user => value_run_as_user = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_se_linux => value_se_linux = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_supplemental_groups => value_supplemental_groups = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_volumes => value_volumes = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_allow_privilege_escalation => value_allow_privilege_escalation = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_allowed_capabilities => value_allowed_capabilities = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_allowed_flex_volumes => value_allowed_flex_volumes = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_allowed_host_paths => value_allowed_host_paths = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_allowed_unsafe_sysctls => value_allowed_unsafe_sysctls = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_default_add_capabilities => value_default_add_capabilities = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_default_allow_privilege_escalation => value_default_allow_privilege_escalation = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_forbidden_sysctls => value_forbidden_sysctls = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_fs_group => value_fs_group = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_host_ipc => value_host_ipc = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_network => value_host_network = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_pid => value_host_pid = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_host_ports => value_host_ports = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_privileged => value_privileged = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_read_only_root_filesystem => value_read_only_root_filesystem = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_required_drop_capabilities => value_required_drop_capabilities = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_run_as_user => value_run_as_user = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_se_linux => value_se_linux = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_supplemental_groups => value_supplemental_groups = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_volumes => value_volumes = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -203,7 +203,7 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicySpec {
                     default_add_capabilities: value_default_add_capabilities,
                     default_allow_privilege_escalation: value_default_allow_privilege_escalation,
                     forbidden_sysctls: value_forbidden_sysctls,
-                    fs_group: value_fs_group.ok_or_else(|| ::serde::de::Error::missing_field("fsGroup"))?,
+                    fs_group: value_fs_group.ok_or_else(|| serde::de::Error::missing_field("fsGroup"))?,
                     host_ipc: value_host_ipc,
                     host_network: value_host_network,
                     host_pid: value_host_pid,
@@ -211,9 +211,9 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicySpec {
                     privileged: value_privileged,
                     read_only_root_filesystem: value_read_only_root_filesystem,
                     required_drop_capabilities: value_required_drop_capabilities,
-                    run_as_user: value_run_as_user.ok_or_else(|| ::serde::de::Error::missing_field("runAsUser"))?,
-                    se_linux: value_se_linux.ok_or_else(|| ::serde::de::Error::missing_field("seLinux"))?,
-                    supplemental_groups: value_supplemental_groups.ok_or_else(|| ::serde::de::Error::missing_field("supplementalGroups"))?,
+                    run_as_user: value_run_as_user.ok_or_else(|| serde::de::Error::missing_field("runAsUser"))?,
+                    se_linux: value_se_linux.ok_or_else(|| serde::de::Error::missing_field("seLinux"))?,
+                    supplemental_groups: value_supplemental_groups.ok_or_else(|| serde::de::Error::missing_field("supplementalGroups"))?,
                     volumes: value_volumes,
                 })
             }
@@ -248,8 +248,8 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicySpec {
     }
 }
 
-impl ::serde::Serialize for PodSecurityPolicySpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PodSecurityPolicySpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodSecurityPolicySpec",
             0 +
@@ -275,57 +275,57 @@ impl ::serde::Serialize for PodSecurityPolicySpec {
             self.volumes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.allow_privilege_escalation {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowPrivilegeEscalation", value)?;
         }
         if let Some(value) = &self.allowed_capabilities {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedCapabilities", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedCapabilities", value)?;
         }
         if let Some(value) = &self.allowed_flex_volumes {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedFlexVolumes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedFlexVolumes", value)?;
         }
         if let Some(value) = &self.allowed_host_paths {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedHostPaths", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedHostPaths", value)?;
         }
         if let Some(value) = &self.allowed_unsafe_sysctls {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "allowedUnsafeSysctls", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "allowedUnsafeSysctls", value)?;
         }
         if let Some(value) = &self.default_add_capabilities {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAddCapabilities", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAddCapabilities", value)?;
         }
         if let Some(value) = &self.default_allow_privilege_escalation {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAllowPrivilegeEscalation", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "defaultAllowPrivilegeEscalation", value)?;
         }
         if let Some(value) = &self.forbidden_sysctls {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "forbiddenSysctls", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "forbiddenSysctls", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", &self.fs_group)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "fsGroup", &self.fs_group)?;
         if let Some(value) = &self.host_ipc {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostIPC", value)?;
         }
         if let Some(value) = &self.host_network {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostNetwork", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostNetwork", value)?;
         }
         if let Some(value) = &self.host_pid {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPID", value)?;
         }
         if let Some(value) = &self.host_ports {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "hostPorts", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "hostPorts", value)?;
         }
         if let Some(value) = &self.privileged {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "privileged", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "privileged", value)?;
         }
         if let Some(value) = &self.read_only_root_filesystem {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnlyRootFilesystem", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnlyRootFilesystem", value)?;
         }
         if let Some(value) = &self.required_drop_capabilities {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "requiredDropCapabilities", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "requiredDropCapabilities", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", &self.run_as_user)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "seLinux", &self.se_linux)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", &self.supplemental_groups)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "runAsUser", &self.run_as_user)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "seLinux", &self.se_linux)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "supplementalGroups", &self.supplemental_groups)?;
         if let Some(value) = &self.volumes {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "volumes", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

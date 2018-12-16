@@ -16,8 +16,8 @@ pub struct GlusterfsPersistentVolumeSource {
     pub read_only: Option<bool>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for GlusterfsPersistentVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for GlusterfsPersistentVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_endpoints,
@@ -27,18 +27,18 @@ impl<'de> ::serde::Deserialize<'de> for GlusterfsPersistentVolumeSource {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "endpoints" => Field::Key_endpoints,
                             "endpointsNamespace" => Field::Key_endpoints_namespace,
@@ -55,33 +55,33 @@ impl<'de> ::serde::Deserialize<'de> for GlusterfsPersistentVolumeSource {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = GlusterfsPersistentVolumeSource;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct GlusterfsPersistentVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_endpoints: Option<String> = None;
                 let mut value_endpoints_namespace: Option<String> = None;
                 let mut value_path: Option<String> = None;
                 let mut value_read_only: Option<bool> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_endpoints => value_endpoints = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_endpoints_namespace => value_endpoints_namespace = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_path => value_path = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_read_only => value_read_only = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_endpoints => value_endpoints = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_endpoints_namespace => value_endpoints_namespace = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_path => value_path = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_read_only => value_read_only = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(GlusterfsPersistentVolumeSource {
-                    endpoints: value_endpoints.ok_or_else(|| ::serde::de::Error::missing_field("endpoints"))?,
+                    endpoints: value_endpoints.ok_or_else(|| serde::de::Error::missing_field("endpoints"))?,
                     endpoints_namespace: value_endpoints_namespace,
-                    path: value_path.ok_or_else(|| ::serde::de::Error::missing_field("path"))?,
+                    path: value_path.ok_or_else(|| serde::de::Error::missing_field("path"))?,
                     read_only: value_read_only,
                 })
             }
@@ -100,8 +100,8 @@ impl<'de> ::serde::Deserialize<'de> for GlusterfsPersistentVolumeSource {
     }
 }
 
-impl ::serde::Serialize for GlusterfsPersistentVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for GlusterfsPersistentVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "GlusterfsPersistentVolumeSource",
             0 +
@@ -110,14 +110,14 @@ impl ::serde::Serialize for GlusterfsPersistentVolumeSource {
             1 +
             self.read_only.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "endpoints", &self.endpoints)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "endpoints", &self.endpoints)?;
         if let Some(value) = &self.endpoints_namespace {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "endpointsNamespace", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "endpointsNamespace", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
         if let Some(value) = &self.read_only {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "readOnly", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

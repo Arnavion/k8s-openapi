@@ -19,20 +19,20 @@ pub struct DeploymentSpec {
     pub revision_history_limit: Option<i32>,
 
     /// DEPRECATED. The config this deployment is rolling back to. Will be cleared after rollback is done.
-    pub rollback_to: Option<::v1_10::api::apps::v1beta1::RollbackConfig>,
+    pub rollback_to: Option<crate::v1_10::api::apps::v1beta1::RollbackConfig>,
 
     /// Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment.
-    pub selector: Option<::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector>,
+    pub selector: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector>,
 
     /// The deployment strategy to use to replace existing pods with new ones.
-    pub strategy: Option<::v1_10::api::apps::v1beta1::DeploymentStrategy>,
+    pub strategy: Option<crate::v1_10::api::apps::v1beta1::DeploymentStrategy>,
 
     /// Template describes the pods that will be created.
-    pub template: ::v1_10::api::core::v1::PodTemplateSpec,
+    pub template: crate::v1_10::api::core::v1::PodTemplateSpec,
 }
 
-impl<'de> ::serde::Deserialize<'de> for DeploymentSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for DeploymentSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_min_ready_seconds,
@@ -47,18 +47,18 @@ impl<'de> ::serde::Deserialize<'de> for DeploymentSpec {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "minReadySeconds" => Field::Key_min_ready_seconds,
                             "paused" => Field::Key_paused,
@@ -80,36 +80,36 @@ impl<'de> ::serde::Deserialize<'de> for DeploymentSpec {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = DeploymentSpec;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct DeploymentSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_min_ready_seconds: Option<i32> = None;
                 let mut value_paused: Option<bool> = None;
                 let mut value_progress_deadline_seconds: Option<i32> = None;
                 let mut value_replicas: Option<i32> = None;
                 let mut value_revision_history_limit: Option<i32> = None;
-                let mut value_rollback_to: Option<::v1_10::api::apps::v1beta1::RollbackConfig> = None;
-                let mut value_selector: Option<::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
-                let mut value_strategy: Option<::v1_10::api::apps::v1beta1::DeploymentStrategy> = None;
-                let mut value_template: Option<::v1_10::api::core::v1::PodTemplateSpec> = None;
+                let mut value_rollback_to: Option<crate::v1_10::api::apps::v1beta1::RollbackConfig> = None;
+                let mut value_selector: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::LabelSelector> = None;
+                let mut value_strategy: Option<crate::v1_10::api::apps::v1beta1::DeploymentStrategy> = None;
+                let mut value_template: Option<crate::v1_10::api::core::v1::PodTemplateSpec> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_min_ready_seconds => value_min_ready_seconds = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_paused => value_paused = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_progress_deadline_seconds => value_progress_deadline_seconds = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_replicas => value_replicas = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_revision_history_limit => value_revision_history_limit = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_rollback_to => value_rollback_to = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_selector => value_selector = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_strategy => value_strategy = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_template => value_template = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_min_ready_seconds => value_min_ready_seconds = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_paused => value_paused = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_progress_deadline_seconds => value_progress_deadline_seconds = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_replicas => value_replicas = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_revision_history_limit => value_revision_history_limit = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_rollback_to => value_rollback_to = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_selector => value_selector = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_strategy => value_strategy = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_template => value_template = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -122,7 +122,7 @@ impl<'de> ::serde::Deserialize<'de> for DeploymentSpec {
                     rollback_to: value_rollback_to,
                     selector: value_selector,
                     strategy: value_strategy,
-                    template: value_template.ok_or_else(|| ::serde::de::Error::missing_field("template"))?,
+                    template: value_template.ok_or_else(|| serde::de::Error::missing_field("template"))?,
                 })
             }
         }
@@ -145,8 +145,8 @@ impl<'de> ::serde::Deserialize<'de> for DeploymentSpec {
     }
 }
 
-impl ::serde::Serialize for DeploymentSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for DeploymentSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DeploymentSpec",
             0 +
@@ -161,30 +161,30 @@ impl ::serde::Serialize for DeploymentSpec {
             1,
         )?;
         if let Some(value) = &self.min_ready_seconds {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", value)?;
         }
         if let Some(value) = &self.paused {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "paused", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "paused", value)?;
         }
         if let Some(value) = &self.progress_deadline_seconds {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "progressDeadlineSeconds", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "progressDeadlineSeconds", value)?;
         }
         if let Some(value) = &self.replicas {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "replicas", value)?;
         }
         if let Some(value) = &self.revision_history_limit {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "revisionHistoryLimit", value)?;
         }
         if let Some(value) = &self.rollback_to {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "rollbackTo", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "rollbackTo", value)?;
         }
         if let Some(value) = &self.selector {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
         }
         if let Some(value) = &self.strategy {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "strategy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "strategy", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "template", &self.template)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

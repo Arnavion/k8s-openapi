@@ -4,10 +4,10 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodSecurityPolicy {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// spec defines the policy enforced.
-    pub spec: Option<::v1_10::api::policy::v1beta1::PodSecurityPolicySpec>,
+    pub spec: Option<crate::v1_10::api::policy::v1beta1::PodSecurityPolicySpec>,
 }
 
 // Begin policy/v1beta1/PodSecurityPolicy
@@ -27,60 +27,60 @@ impl PodSecurityPolicy {
     ///
     ///     If 'true', then the output is pretty printed.
     pub fn create_policy_v1beta1_pod_security_policy(
-        body: &::v1_10::api::policy::v1beta1::PodSecurityPolicy,
+        body: &crate::v1_10::api::policy::v1beta1::PodSecurityPolicy,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/podsecuritypolicies?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodSecurityPolicy::create_policy_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.create_policy_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum CreatePolicyV1beta1PodSecurityPolicyResponse {
-    Ok(::v1_10::api::policy::v1beta1::PodSecurityPolicy),
-    Created(::v1_10::api::policy::v1beta1::PodSecurityPolicy),
-    Accepted(::v1_10::api::policy::v1beta1::PodSecurityPolicy),
+    Ok(crate::v1_10::api::policy::v1beta1::PodSecurityPolicy),
+    Created(crate::v1_10::api::policy::v1beta1::PodSecurityPolicy),
+    Accepted(crate::v1_10::api::policy::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreatePolicyV1beta1PodSecurityPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreatePolicyV1beta1PodSecurityPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreatePolicyV1beta1PodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreatePolicyV1beta1PodSecurityPolicyResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreatePolicyV1beta1PodSecurityPolicyResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreatePolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreatePolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
             _ => Ok((CreatePolicyV1beta1PodSecurityPolicyResponse::Other, 0)),
         }
     }
@@ -142,9 +142,9 @@ impl PodSecurityPolicy {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/podsecuritypolicies?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -174,46 +174,46 @@ impl PodSecurityPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodSecurityPolicy::delete_policy_v1beta1_collection_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_policy_v1beta1_collection_pod_security_policy)
 #[derive(Debug)]
 pub enum DeletePolicyV1beta1CollectionPodSecurityPolicyResponse {
-    OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_10::api::policy::v1beta1::PodSecurityPolicy),
+    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_10::api::policy::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeletePolicyV1beta1CollectionPodSecurityPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeletePolicyV1beta1CollectionPodSecurityPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeletePolicyV1beta1CollectionPodSecurityPolicyResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeletePolicyV1beta1CollectionPodSecurityPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeletePolicyV1beta1CollectionPodSecurityPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeletePolicyV1beta1CollectionPodSecurityPolicyResponse::Unauthorized, 0)),
             _ => Ok((DeletePolicyV1beta1CollectionPodSecurityPolicyResponse::Other, 0)),
         }
     }
@@ -255,9 +255,9 @@ impl PodSecurityPolicy {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/podsecuritypolicies/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
             __query_pairs.append_pair("gracePeriodSeconds", &grace_period_seconds.to_string());
         }
@@ -272,46 +272,46 @@ impl PodSecurityPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodSecurityPolicy::delete_policy_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_policy_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum DeletePolicyV1beta1PodSecurityPolicyResponse {
-    OkStatus(::v1_10::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_10::api::policy::v1beta1::PodSecurityPolicy),
+    OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_10::api::policy::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeletePolicyV1beta1PodSecurityPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeletePolicyV1beta1PodSecurityPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeletePolicyV1beta1PodSecurityPolicyResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeletePolicyV1beta1PodSecurityPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeletePolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeletePolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
             _ => Ok((DeletePolicyV1beta1PodSecurityPolicyResponse::Other, 0)),
         }
     }
@@ -373,9 +373,9 @@ impl PodSecurityPolicy {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/podsecuritypolicies?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -405,32 +405,32 @@ impl PodSecurityPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodSecurityPolicy::list_policy_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.list_policy_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum ListPolicyV1beta1PodSecurityPolicyResponse {
-    Ok(::v1_10::api::policy::v1beta1::PodSecurityPolicyList),
+    Ok(crate::v1_10::api::policy::v1beta1::PodSecurityPolicyList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListPolicyV1beta1PodSecurityPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListPolicyV1beta1PodSecurityPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListPolicyV1beta1PodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListPolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListPolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
             _ => Ok((ListPolicyV1beta1PodSecurityPolicyResponse::Other, 0)),
         }
     }
@@ -456,42 +456,42 @@ impl PodSecurityPolicy {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_policy_v1beta1_pod_security_policy(
         name: &str,
-        body: &::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/podsecuritypolicies/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodSecurityPolicy::patch_policy_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.patch_policy_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum PatchPolicyV1beta1PodSecurityPolicyResponse {
-    Ok(::v1_10::api::policy::v1beta1::PodSecurityPolicy),
+    Ok(crate::v1_10::api::policy::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchPolicyV1beta1PodSecurityPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchPolicyV1beta1PodSecurityPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchPolicyV1beta1PodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchPolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchPolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
             _ => Ok((PatchPolicyV1beta1PodSecurityPolicyResponse::Other, 0)),
         }
     }
@@ -526,9 +526,9 @@ impl PodSecurityPolicy {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/podsecuritypolicies/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -540,32 +540,32 @@ impl PodSecurityPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodSecurityPolicy::read_policy_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.read_policy_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum ReadPolicyV1beta1PodSecurityPolicyResponse {
-    Ok(::v1_10::api::policy::v1beta1::PodSecurityPolicy),
+    Ok(crate::v1_10::api::policy::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadPolicyV1beta1PodSecurityPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadPolicyV1beta1PodSecurityPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadPolicyV1beta1PodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadPolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadPolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
             _ => Ok((ReadPolicyV1beta1PodSecurityPolicyResponse::Other, 0)),
         }
     }
@@ -591,51 +591,51 @@ impl PodSecurityPolicy {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_policy_v1beta1_pod_security_policy(
         name: &str,
-        body: &::v1_10::api::policy::v1beta1::PodSecurityPolicy,
+        body: &crate::v1_10::api::policy::v1beta1::PodSecurityPolicy,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/podsecuritypolicies/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodSecurityPolicy::replace_policy_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.replace_policy_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum ReplacePolicyV1beta1PodSecurityPolicyResponse {
-    Ok(::v1_10::api::policy::v1beta1::PodSecurityPolicy),
-    Created(::v1_10::api::policy::v1beta1::PodSecurityPolicy),
+    Ok(crate::v1_10::api::policy::v1beta1::PodSecurityPolicy),
+    Created(crate::v1_10::api::policy::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplacePolicyV1beta1PodSecurityPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplacePolicyV1beta1PodSecurityPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplacePolicyV1beta1PodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplacePolicyV1beta1PodSecurityPolicyResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplacePolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplacePolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
             _ => Ok((ReplacePolicyV1beta1PodSecurityPolicyResponse::Other, 0)),
         }
     }
@@ -702,9 +702,9 @@ impl PodSecurityPolicy {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/watch/podsecuritypolicies/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -734,34 +734,34 @@ impl PodSecurityPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodSecurityPolicy::watch_policy_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.watch_policy_v1beta1_pod_security_policy)
 #[derive(Debug)]
 pub enum WatchPolicyV1beta1PodSecurityPolicyResponse {
-    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchPolicyV1beta1PodSecurityPolicyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchPolicyV1beta1PodSecurityPolicyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchPolicyV1beta1PodSecurityPolicyResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
             _ => Ok((WatchPolicyV1beta1PodSecurityPolicyResponse::Other, 0)),
         }
     }
@@ -823,9 +823,9 @@ impl PodSecurityPolicy {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/apis/policy/v1beta1/watch/podsecuritypolicies?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -855,34 +855,34 @@ impl PodSecurityPolicy {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`PodSecurityPolicy::watch_policy_v1beta1_pod_security_policy_list`](./struct.PodSecurityPolicy.html#method.watch_policy_v1beta1_pod_security_policy_list)
 #[derive(Debug)]
 pub enum WatchPolicyV1beta1PodSecurityPolicyListResponse {
-    Ok(::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchPolicyV1beta1PodSecurityPolicyListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchPolicyV1beta1PodSecurityPolicyListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchPolicyV1beta1PodSecurityPolicyListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1PodSecurityPolicyListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1PodSecurityPolicyListResponse::Unauthorized, 0)),
             _ => Ok((WatchPolicyV1beta1PodSecurityPolicyListResponse::Other, 0)),
         }
     }
@@ -890,7 +890,7 @@ impl ::Response for WatchPolicyV1beta1PodSecurityPolicyListResponse {
 
 // End policy/v1beta1/PodSecurityPolicy
 
-impl ::Resource for PodSecurityPolicy {
+impl crate::Resource for PodSecurityPolicy {
     fn api_version() -> &'static str {
         "policy/v1beta1"
     }
@@ -908,8 +908,8 @@ impl ::Resource for PodSecurityPolicy {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicy {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for PodSecurityPolicy {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -919,18 +919,18 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicy {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -947,34 +947,34 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicy {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = PodSecurityPolicy;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct PodSecurityPolicy")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_10::api::policy::v1beta1::PodSecurityPolicySpec> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_10::api::policy::v1beta1::PodSecurityPolicySpec> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -998,8 +998,8 @@ impl<'de> ::serde::Deserialize<'de> for PodSecurityPolicy {
     }
 }
 
-impl ::serde::Serialize for PodSecurityPolicy {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for PodSecurityPolicy {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodSecurityPolicy",
             0 +
@@ -1007,14 +1007,14 @@ impl ::serde::Serialize for PodSecurityPolicy {
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

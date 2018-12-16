@@ -25,10 +25,10 @@ pub struct ServiceSpec {
     pub load_balancer_source_ranges: Option<Vec<String>>,
 
     /// The list of ports that are exposed by this service. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
-    pub ports: Option<Vec<::v1_7::kubernetes::pkg::api::v1::ServicePort>>,
+    pub ports: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::ServicePort>>,
 
     /// Route service traffic to pods with label keys and values matching this selector. If empty or not present, the service is assumed to have an external process managing its endpoints, which Kubernetes will not modify. Only applies to types ClusterIP, NodePort, and LoadBalancer. Ignored if type is ExternalName. More info: https://kubernetes.io/docs/concepts/services-networking/service/
-    pub selector: Option<::std::collections::BTreeMap<String, String>>,
+    pub selector: Option<std::collections::BTreeMap<String, String>>,
 
     /// Supports "ClientIP" and "None". Used to maintain session affinity. Enable client IP based session affinity. Must be ClientIP or None. Defaults to None. More info: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
     pub session_affinity: Option<String>,
@@ -37,8 +37,8 @@ pub struct ServiceSpec {
     pub type_: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for ServiceSpec {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for ServiceSpec {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_cluster_ip,
@@ -55,18 +55,18 @@ impl<'de> ::serde::Deserialize<'de> for ServiceSpec {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "clusterIP" => Field::Key_cluster_ip,
                             "externalIPs" => Field::Key_external_ips,
@@ -90,14 +90,14 @@ impl<'de> ::serde::Deserialize<'de> for ServiceSpec {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ServiceSpec;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct ServiceSpec")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_cluster_ip: Option<String> = None;
                 let mut value_external_ips: Option<Vec<String>> = None;
                 let mut value_external_name: Option<String> = None;
@@ -105,25 +105,25 @@ impl<'de> ::serde::Deserialize<'de> for ServiceSpec {
                 let mut value_health_check_node_port: Option<i32> = None;
                 let mut value_load_balancer_ip: Option<String> = None;
                 let mut value_load_balancer_source_ranges: Option<Vec<String>> = None;
-                let mut value_ports: Option<Vec<::v1_7::kubernetes::pkg::api::v1::ServicePort>> = None;
-                let mut value_selector: Option<::std::collections::BTreeMap<String, String>> = None;
+                let mut value_ports: Option<Vec<crate::v1_7::kubernetes::pkg::api::v1::ServicePort>> = None;
+                let mut value_selector: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut value_session_affinity: Option<String> = None;
                 let mut value_type_: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_cluster_ip => value_cluster_ip = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_external_ips => value_external_ips = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_external_name => value_external_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_external_traffic_policy => value_external_traffic_policy = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_health_check_node_port => value_health_check_node_port = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_load_balancer_ip => value_load_balancer_ip = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_load_balancer_source_ranges => value_load_balancer_source_ranges = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_ports => value_ports = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_selector => value_selector = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_session_affinity => value_session_affinity = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_type_ => value_type_ = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_cluster_ip => value_cluster_ip = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_external_ips => value_external_ips = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_external_name => value_external_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_external_traffic_policy => value_external_traffic_policy = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_health_check_node_port => value_health_check_node_port = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_load_balancer_ip => value_load_balancer_ip = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_load_balancer_source_ranges => value_load_balancer_source_ranges = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_ports => value_ports = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_selector => value_selector = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_session_affinity => value_session_affinity = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_type_ => value_type_ = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -163,8 +163,8 @@ impl<'de> ::serde::Deserialize<'de> for ServiceSpec {
     }
 }
 
-impl ::serde::Serialize for ServiceSpec {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for ServiceSpec {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ServiceSpec",
             0 +
@@ -181,38 +181,38 @@ impl ::serde::Serialize for ServiceSpec {
             self.type_.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.cluster_ip {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIP", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "clusterIP", value)?;
         }
         if let Some(value) = &self.external_ips {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "externalIPs", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "externalIPs", value)?;
         }
         if let Some(value) = &self.external_name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "externalName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "externalName", value)?;
         }
         if let Some(value) = &self.external_traffic_policy {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "externalTrafficPolicy", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "externalTrafficPolicy", value)?;
         }
         if let Some(value) = &self.health_check_node_port {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "healthCheckNodePort", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "healthCheckNodePort", value)?;
         }
         if let Some(value) = &self.load_balancer_ip {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerIP", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerIP", value)?;
         }
         if let Some(value) = &self.load_balancer_source_ranges {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerSourceRanges", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "loadBalancerSourceRanges", value)?;
         }
         if let Some(value) = &self.ports {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "ports", value)?;
         }
         if let Some(value) = &self.selector {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "selector", value)?;
         }
         if let Some(value) = &self.session_affinity {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinity", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "sessionAffinity", value)?;
         }
         if let Some(value) = &self.type_ {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "type", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

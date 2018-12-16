@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Node {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the behavior of a node. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<::v1_13::api::core::v1::NodeSpec>,
+    pub spec: Option<crate::v1_13::api::core::v1::NodeSpec>,
 
     /// Most recently observed status of the node. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<::v1_13::api::core::v1::NodeStatus>,
+    pub status: Option<crate::v1_13::api::core::v1::NodeStatus>,
 }
 
 // Begin /v1/Node
@@ -34,17 +34,17 @@ impl Node {
     pub fn connect_core_v1_delete_node_proxy(
         name: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -56,23 +56,23 @@ pub enum ConnectCoreV1DeleteNodeProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1DeleteNodeProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1DeleteNodeProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1DeleteNodeProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNodeProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNodeProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1DeleteNodeProxyResponse::Other, 0)),
         }
     }
@@ -102,17 +102,17 @@ impl Node {
         name: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -124,23 +124,23 @@ pub enum ConnectCoreV1DeleteNodeProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1DeleteNodeProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1DeleteNodeProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1DeleteNodeProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNodeProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNodeProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1DeleteNodeProxyWithPathResponse::Other, 0)),
         }
     }
@@ -165,17 +165,17 @@ impl Node {
     pub fn connect_core_v1_get_node_proxy(
         name: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -187,23 +187,23 @@ pub enum ConnectCoreV1GetNodeProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1GetNodeProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1GetNodeProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1GetNodeProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNodeProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNodeProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1GetNodeProxyResponse::Other, 0)),
         }
     }
@@ -233,17 +233,17 @@ impl Node {
         name: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -255,23 +255,23 @@ pub enum ConnectCoreV1GetNodeProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1GetNodeProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1GetNodeProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1GetNodeProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNodeProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNodeProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1GetNodeProxyWithPathResponse::Other, 0)),
         }
     }
@@ -296,17 +296,17 @@ impl Node {
     pub fn connect_core_v1_patch_node_proxy(
         name: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
+        let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -318,23 +318,23 @@ pub enum ConnectCoreV1PatchNodeProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PatchNodeProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PatchNodeProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PatchNodeProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNodeProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNodeProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PatchNodeProxyResponse::Other, 0)),
         }
     }
@@ -364,17 +364,17 @@ impl Node {
         name: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
+        let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -386,23 +386,23 @@ pub enum ConnectCoreV1PatchNodeProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PatchNodeProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PatchNodeProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PatchNodeProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNodeProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNodeProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PatchNodeProxyWithPathResponse::Other, 0)),
         }
     }
@@ -427,17 +427,17 @@ impl Node {
     pub fn connect_core_v1_post_node_proxy(
         name: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -449,23 +449,23 @@ pub enum ConnectCoreV1PostNodeProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PostNodeProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PostNodeProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PostNodeProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNodeProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNodeProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PostNodeProxyResponse::Other, 0)),
         }
     }
@@ -495,17 +495,17 @@ impl Node {
         name: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -517,23 +517,23 @@ pub enum ConnectCoreV1PostNodeProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PostNodeProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PostNodeProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PostNodeProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNodeProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNodeProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PostNodeProxyWithPathResponse::Other, 0)),
         }
     }
@@ -558,17 +558,17 @@ impl Node {
     pub fn connect_core_v1_put_node_proxy(
         name: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
+        let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -580,23 +580,23 @@ pub enum ConnectCoreV1PutNodeProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PutNodeProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PutNodeProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PutNodeProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNodeProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNodeProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PutNodeProxyResponse::Other, 0)),
         }
     }
@@ -626,17 +626,17 @@ impl Node {
         name: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
+        let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -648,23 +648,23 @@ pub enum ConnectCoreV1PutNodeProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PutNodeProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PutNodeProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PutNodeProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNodeProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNodeProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PutNodeProxyWithPathResponse::Other, 0)),
         }
     }
@@ -693,13 +693,13 @@ impl Node {
     ///
     ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_node(
-        body: &::v1_13::api::core::v1::Node,
+        body: &crate::v1_13::api::core::v1::Node,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -711,50 +711,50 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::create_core_v1_node`](./struct.Node.html#method.create_core_v1_node)
 #[derive(Debug)]
 pub enum CreateCoreV1NodeResponse {
-    Ok(::v1_13::api::core::v1::Node),
-    Created(::v1_13::api::core::v1::Node),
-    Accepted(::v1_13::api::core::v1::Node),
+    Ok(crate::v1_13::api::core::v1::Node),
+    Created(crate::v1_13::api::core::v1::Node),
+    Accepted(crate::v1_13::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateCoreV1NodeResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateCoreV1NodeResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NodeResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NodeResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NodeResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NodeResponse::Unauthorized, 0)),
             _ => Ok((CreateCoreV1NodeResponse::Other, 0)),
         }
     }
@@ -818,9 +818,9 @@ impl Node {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -850,46 +850,46 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::delete_core_v1_collection_node`](./struct.Node.html#method.delete_core_v1_collection_node)
 #[derive(Debug)]
 pub enum DeleteCoreV1CollectionNodeResponse {
-    OkStatus(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_13::api::core::v1::Node),
+    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_13::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1CollectionNodeResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1CollectionNodeResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNodeResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1CollectionNodeResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNodeResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNodeResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1CollectionNodeResponse::Other, 0)),
         }
     }
@@ -936,9 +936,9 @@ impl Node {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -956,55 +956,55 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::delete_core_v1_node`](./struct.Node.html#method.delete_core_v1_node)
 #[derive(Debug)]
 pub enum DeleteCoreV1NodeResponse {
-    OkStatus(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_13::api::core::v1::Node),
-    Accepted(::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_13::api::core::v1::Node),
+    Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1NodeResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1NodeResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NodeResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NodeResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteCoreV1NodeResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NodeResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NodeResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1NodeResponse::Other, 0)),
         }
     }
@@ -1068,9 +1068,9 @@ impl Node {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1100,32 +1100,32 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::list_core_v1_node`](./struct.Node.html#method.list_core_v1_node)
 #[derive(Debug)]
 pub enum ListCoreV1NodeResponse {
-    Ok(::v1_13::api::core::v1::NodeList),
+    Ok(crate::v1_13::api::core::v1::NodeList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1NodeResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1NodeResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NodeResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NodeResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1NodeResponse::Other, 0)),
         }
     }
@@ -1155,12 +1155,12 @@ impl Node {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_core_v1_node(
         name: &str,
-        body: &::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -1169,32 +1169,32 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::patch_core_v1_node`](./struct.Node.html#method.patch_core_v1_node)
 #[derive(Debug)]
 pub enum PatchCoreV1NodeResponse {
-    Ok(::v1_13::api::core::v1::Node),
+    Ok(crate::v1_13::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NodeResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NodeResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NodeResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NodeResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NodeResponse::Other, 0)),
         }
     }
@@ -1224,12 +1224,12 @@ impl Node {
     ///     If 'true', then the output is pretty printed.
     pub fn patch_core_v1_node_status(
         name: &str,
-        body: &::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -1238,32 +1238,32 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::patch_core_v1_node_status`](./struct.Node.html#method.patch_core_v1_node_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NodeStatusResponse {
-    Ok(::v1_13::api::core::v1::Node),
+    Ok(crate::v1_13::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NodeStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NodeStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NodeStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NodeStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NodeStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NodeStatusResponse::Other, 0)),
         }
     }
@@ -1298,9 +1298,9 @@ impl Node {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -1312,32 +1312,32 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::read_core_v1_node`](./struct.Node.html#method.read_core_v1_node)
 #[derive(Debug)]
 pub enum ReadCoreV1NodeResponse {
-    Ok(::v1_13::api::core::v1::Node),
+    Ok(crate::v1_13::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NodeResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NodeResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NodeResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NodeResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NodeResponse::Other, 0)),
         }
     }
@@ -1362,40 +1362,40 @@ impl Node {
     pub fn read_core_v1_node_status(
         name: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::read_core_v1_node_status`](./struct.Node.html#method.read_core_v1_node_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NodeStatusResponse {
-    Ok(::v1_13::api::core::v1::Node),
+    Ok(crate::v1_13::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NodeStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NodeStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NodeStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NodeStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NodeStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NodeStatusResponse::Other, 0)),
         }
     }
@@ -1425,12 +1425,12 @@ impl Node {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_core_v1_node(
         name: &str,
-        body: &::v1_13::api::core::v1::Node,
+        body: &crate::v1_13::api::core::v1::Node,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -1439,41 +1439,41 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::replace_core_v1_node`](./struct.Node.html#method.replace_core_v1_node)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NodeResponse {
-    Ok(::v1_13::api::core::v1::Node),
-    Created(::v1_13::api::core::v1::Node),
+    Ok(crate::v1_13::api::core::v1::Node),
+    Created(crate::v1_13::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NodeResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NodeResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NodeResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NodeResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NodeResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NodeResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NodeResponse::Other, 0)),
         }
     }
@@ -1503,12 +1503,12 @@ impl Node {
     ///     If 'true', then the output is pretty printed.
     pub fn replace_core_v1_node_status(
         name: &str,
-        body: &::v1_13::api::core::v1::Node,
+        body: &crate::v1_13::api::core::v1::Node,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -1517,41 +1517,41 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::replace_core_v1_node_status`](./struct.Node.html#method.replace_core_v1_node_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NodeStatusResponse {
-    Ok(::v1_13::api::core::v1::Node),
-    Created(::v1_13::api::core::v1::Node),
+    Ok(crate::v1_13::api::core::v1::Node),
+    Created(crate::v1_13::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NodeStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NodeStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NodeStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NodeStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NodeStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NodeStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NodeStatusResponse::Other, 0)),
         }
     }
@@ -1620,9 +1620,9 @@ impl Node {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/nodes/{name}?", name = name);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1652,34 +1652,34 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::watch_core_v1_node`](./struct.Node.html#method.watch_core_v1_node)
 #[derive(Debug)]
 pub enum WatchCoreV1NodeResponse {
-    Ok(::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NodeResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NodeResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NodeResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NodeResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NodeResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NodeResponse::Other, 0)),
         }
     }
@@ -1743,9 +1743,9 @@ impl Node {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/nodes?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1775,34 +1775,34 @@ impl Node {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Node::watch_core_v1_node_list`](./struct.Node.html#method.watch_core_v1_node_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NodeListResponse {
-    Ok(::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NodeListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NodeListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NodeListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NodeListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NodeListResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NodeListResponse::Other, 0)),
         }
     }
@@ -1810,7 +1810,7 @@ impl ::Response for WatchCoreV1NodeListResponse {
 
 // End /v1/Node
 
-impl ::Resource for Node {
+impl crate::Resource for Node {
     fn api_version() -> &'static str {
         "v1"
     }
@@ -1828,8 +1828,8 @@ impl ::Resource for Node {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for Node {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for Node {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -1840,18 +1840,18 @@ impl<'de> ::serde::Deserialize<'de> for Node {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -1869,36 +1869,36 @@ impl<'de> ::serde::Deserialize<'de> for Node {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = Node;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct Node")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_13::api::core::v1::NodeSpec> = None;
-                let mut value_status: Option<::v1_13::api::core::v1::NodeStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_13::api::core::v1::NodeSpec> = None;
+                let mut value_status: Option<crate::v1_13::api::core::v1::NodeStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -1924,8 +1924,8 @@ impl<'de> ::serde::Deserialize<'de> for Node {
     }
 }
 
-impl ::serde::Serialize for Node {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for Node {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Node",
             0 +
@@ -1934,17 +1934,17 @@ impl ::serde::Serialize for Node {
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

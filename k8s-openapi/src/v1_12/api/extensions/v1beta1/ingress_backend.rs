@@ -7,11 +7,11 @@ pub struct IngressBackend {
     pub service_name: String,
 
     /// Specifies the port of the referenced service.
-    pub service_port: ::v1_12::apimachinery::pkg::util::intstr::IntOrString,
+    pub service_port: crate::v1_12::apimachinery::pkg::util::intstr::IntOrString,
 }
 
-impl<'de> ::serde::Deserialize<'de> for IngressBackend {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for IngressBackend {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_service_name,
@@ -19,18 +19,18 @@ impl<'de> ::serde::Deserialize<'de> for IngressBackend {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "serviceName" => Field::Key_service_name,
                             "servicePort" => Field::Key_service_port,
@@ -45,28 +45,28 @@ impl<'de> ::serde::Deserialize<'de> for IngressBackend {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = IngressBackend;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct IngressBackend")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_service_name: Option<String> = None;
-                let mut value_service_port: Option<::v1_12::apimachinery::pkg::util::intstr::IntOrString> = None;
+                let mut value_service_port: Option<crate::v1_12::apimachinery::pkg::util::intstr::IntOrString> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_service_name => value_service_name = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_service_port => value_service_port = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_service_name => value_service_name = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_service_port => value_service_port = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(IngressBackend {
-                    service_name: value_service_name.ok_or_else(|| ::serde::de::Error::missing_field("serviceName"))?,
-                    service_port: value_service_port.ok_or_else(|| ::serde::de::Error::missing_field("servicePort"))?,
+                    service_name: value_service_name.ok_or_else(|| serde::de::Error::missing_field("serviceName"))?,
+                    service_port: value_service_port.ok_or_else(|| serde::de::Error::missing_field("servicePort"))?,
                 })
             }
         }
@@ -82,16 +82,16 @@ impl<'de> ::serde::Deserialize<'de> for IngressBackend {
     }
 }
 
-impl ::serde::Serialize for IngressBackend {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for IngressBackend {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "IngressBackend",
             0 +
             1 +
             1,
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", &self.service_name)?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "servicePort", &self.service_port)?;
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", &self.service_name)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "servicePort", &self.service_port)?;
+        serde::ser::SerializeStruct::end(state)
     }
 }

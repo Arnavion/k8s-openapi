@@ -4,13 +4,13 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Service {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
-    pub metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
+    pub metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta>,
 
     /// Spec defines the behavior of a service. https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub spec: Option<::v1_12::api::core::v1::ServiceSpec>,
+    pub spec: Option<crate::v1_12::api::core::v1::ServiceSpec>,
 
     /// Most recently observed status of the service. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
-    pub status: Option<::v1_12::api::core::v1::ServiceStatus>,
+    pub status: Option<crate::v1_12::api::core::v1::ServiceStatus>,
 }
 
 // Begin /v1/Service
@@ -39,17 +39,17 @@ impl Service {
         name: &str,
         namespace: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -61,23 +61,23 @@ pub enum ConnectCoreV1DeleteNamespacedServiceProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1DeleteNamespacedServiceProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1DeleteNamespacedServiceProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1DeleteNamespacedServiceProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedServiceProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedServiceProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1DeleteNamespacedServiceProxyResponse::Other, 0)),
         }
     }
@@ -112,17 +112,17 @@ impl Service {
         namespace: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -134,23 +134,23 @@ pub enum ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Other, 0)),
         }
     }
@@ -180,17 +180,17 @@ impl Service {
         name: &str,
         namespace: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -202,23 +202,23 @@ pub enum ConnectCoreV1GetNamespacedServiceProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1GetNamespacedServiceProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1GetNamespacedServiceProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1GetNamespacedServiceProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedServiceProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedServiceProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1GetNamespacedServiceProxyResponse::Other, 0)),
         }
     }
@@ -253,17 +253,17 @@ impl Service {
         namespace: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -275,23 +275,23 @@ pub enum ConnectCoreV1GetNamespacedServiceProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1GetNamespacedServiceProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1GetNamespacedServiceProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Other, 0)),
         }
     }
@@ -321,17 +321,17 @@ impl Service {
         name: &str,
         namespace: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
+        let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -343,23 +343,23 @@ pub enum ConnectCoreV1PatchNamespacedServiceProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PatchNamespacedServiceProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PatchNamespacedServiceProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PatchNamespacedServiceProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedServiceProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedServiceProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PatchNamespacedServiceProxyResponse::Other, 0)),
         }
     }
@@ -394,17 +394,17 @@ impl Service {
         namespace: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
+        let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -416,23 +416,23 @@ pub enum ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Other, 0)),
         }
     }
@@ -462,17 +462,17 @@ impl Service {
         name: &str,
         namespace: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -484,23 +484,23 @@ pub enum ConnectCoreV1PostNamespacedServiceProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PostNamespacedServiceProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PostNamespacedServiceProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PostNamespacedServiceProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedServiceProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedServiceProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PostNamespacedServiceProxyResponse::Other, 0)),
         }
     }
@@ -535,17 +535,17 @@ impl Service {
         namespace: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
+        let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -557,23 +557,23 @@ pub enum ConnectCoreV1PostNamespacedServiceProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PostNamespacedServiceProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PostNamespacedServiceProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Other, 0)),
         }
     }
@@ -603,17 +603,17 @@ impl Service {
         name: &str,
         namespace: &str,
         path: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
             __query_pairs.append_pair("path", path);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
+        let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -625,23 +625,23 @@ pub enum ConnectCoreV1PutNamespacedServiceProxyResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PutNamespacedServiceProxyResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PutNamespacedServiceProxyResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PutNamespacedServiceProxyResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedServiceProxyResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedServiceProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PutNamespacedServiceProxyResponse::Other, 0)),
         }
     }
@@ -676,17 +676,17 @@ impl Service {
         namespace: &str,
         path: &str,
         path_: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
             __query_pairs.append_pair("path", path_);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
+        let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
@@ -698,23 +698,23 @@ pub enum ConnectCoreV1PutNamespacedServiceProxyWithPathResponse {
     Other,
 }
 
-impl ::Response for ConnectCoreV1PutNamespacedServiceProxyWithPathResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ConnectCoreV1PutNamespacedServiceProxyWithPathResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::std::str::from_utf8(buf) {
+            http::StatusCode::OK => {
+                let result = match std::str::from_utf8(buf) {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { ::std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
                     },
-                    Err(err) => return Err(::ResponseError::Utf8(err)),
+                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
                 let result = result.to_string();
                 let len = result.len();
                 Ok((ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Other, 0)),
         }
     }
@@ -748,13 +748,13 @@ impl Service {
     ///     If 'true', then the output is pretty printed.
     pub fn create_core_v1_namespaced_service(
         namespace: &str,
-        body: &::v1_12::api::core::v1::Service,
+        body: &crate::v1_12::api::core::v1::Service,
         dry_run: Option<&str>,
         include_uninitialized: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -766,50 +766,50 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::post(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::post(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::create_core_v1_namespaced_service`](./struct.Service.html#method.create_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum CreateCoreV1NamespacedServiceResponse {
-    Ok(::v1_12::api::core::v1::Service),
-    Created(::v1_12::api::core::v1::Service),
-    Accepted(::v1_12::api::core::v1::Service),
+    Ok(crate::v1_12::api::core::v1::Service),
+    Created(crate::v1_12::api::core::v1::Service),
+    Accepted(crate::v1_12::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl ::Response for CreateCoreV1NamespacedServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for CreateCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedServiceResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((CreateCoreV1NamespacedServiceResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedServiceResponse::Unauthorized, 0)),
             _ => Ok((CreateCoreV1NamespacedServiceResponse::Other, 0)),
         }
     }
@@ -861,9 +861,9 @@ impl Service {
         orphan_dependents: Option<bool>,
         pretty: Option<&str>,
         propagation_policy: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -881,55 +881,55 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::delete(__url);
+        let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::delete_core_v1_namespaced_service`](./struct.Service.html#method.delete_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum DeleteCoreV1NamespacedServiceResponse {
-    OkStatus(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
-    OkValue(::v1_12::api::core::v1::Service),
-    Accepted(::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
+    OkValue(crate::v1_12::api::core::v1::Service),
+    Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     Unauthorized,
     Other,
 }
 
-impl ::Response for DeleteCoreV1NamespacedServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for DeleteCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result: ::serde_json::Map<String, ::serde_json::Value> = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result: serde_json::Map<String, serde_json::Value> = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 let is_status = match result.get("kind") {
-                    Some(::serde_json::Value::String(s)) if s == "Status" => true,
+                    Some(serde_json::Value::String(s)) if s == "Status" => true,
                     _ => false,
                 };
                 if is_status {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedServiceResponse::OkStatus(result), buf.len()))
                 }
                 else {
-                    let result = ::serde::Deserialize::deserialize(::serde_json::Value::Object(result));
-                    let result = result.map_err(::ResponseError::Json)?;
+                    let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
+                    let result = result.map_err(crate::ResponseError::Json)?;
                     Ok((DeleteCoreV1NamespacedServiceResponse::OkValue(result), buf.len()))
                 }
             },
-            ::http::StatusCode::ACCEPTED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::ACCEPTED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((DeleteCoreV1NamespacedServiceResponse::Accepted(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedServiceResponse::Unauthorized, 0)),
             _ => Ok((DeleteCoreV1NamespacedServiceResponse::Other, 0)),
         }
     }
@@ -998,9 +998,9 @@ impl Service {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1030,32 +1030,32 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::list_core_v1_namespaced_service`](./struct.Service.html#method.list_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedServiceResponse {
-    Ok(::v1_12::api::core::v1::ServiceList),
+    Ok(crate::v1_12::api::core::v1::ServiceList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1NamespacedServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedServiceResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1NamespacedServiceResponse::Other, 0)),
         }
     }
@@ -1119,9 +1119,9 @@ impl Service {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/services?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1151,32 +1151,32 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::list_core_v1_service_for_all_namespaces`](./struct.Service.html#method.list_core_v1_service_for_all_namespaces)
 #[derive(Debug)]
 pub enum ListCoreV1ServiceForAllNamespacesResponse {
-    Ok(::v1_12::api::core::v1::ServiceList),
+    Ok(crate::v1_12::api::core::v1::ServiceList),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ListCoreV1ServiceForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ListCoreV1ServiceForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ListCoreV1ServiceForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ServiceForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ServiceForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((ListCoreV1ServiceForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -1211,12 +1211,12 @@ impl Service {
     pub fn patch_core_v1_namespaced_service(
         name: &str,
         namespace: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -1225,32 +1225,32 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::patch_core_v1_namespaced_service`](./struct.Service.html#method.patch_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedServiceResponse {
-    Ok(::v1_12::api::core::v1::Service),
+    Ok(crate::v1_12::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NamespacedServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NamespacedServiceResponse::Other, 0)),
         }
     }
@@ -1285,12 +1285,12 @@ impl Service {
     pub fn patch_core_v1_namespaced_service_status(
         name: &str,
         namespace: &str,
-        body: &::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
+        body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -1299,32 +1299,32 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::patch(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::patch(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::patch_core_v1_namespaced_service_status`](./struct.Service.html#method.patch_core_v1_namespaced_service_status)
 #[derive(Debug)]
 pub enum PatchCoreV1NamespacedServiceStatusResponse {
-    Ok(::v1_12::api::core::v1::Service),
+    Ok(crate::v1_12::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl ::Response for PatchCoreV1NamespacedServiceStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for PatchCoreV1NamespacedServiceStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((PatchCoreV1NamespacedServiceStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
             _ => Ok((PatchCoreV1NamespacedServiceStatusResponse::Other, 0)),
         }
     }
@@ -1364,9 +1364,9 @@ impl Service {
         exact: Option<bool>,
         export: Option<bool>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
             __query_pairs.append_pair("exact", &exact.to_string());
         }
@@ -1378,32 +1378,32 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::read_core_v1_namespaced_service`](./struct.Service.html#method.read_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedServiceResponse {
-    Ok(::v1_12::api::core::v1::Service),
+    Ok(crate::v1_12::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NamespacedServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NamespacedServiceResponse::Other, 0)),
         }
     }
@@ -1433,40 +1433,40 @@ impl Service {
         name: &str,
         namespace: &str,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::read_core_v1_namespaced_service_status`](./struct.Service.html#method.read_core_v1_namespaced_service_status)
 #[derive(Debug)]
 pub enum ReadCoreV1NamespacedServiceStatusResponse {
-    Ok(::v1_12::api::core::v1::Service),
+    Ok(crate::v1_12::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReadCoreV1NamespacedServiceStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReadCoreV1NamespacedServiceStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReadCoreV1NamespacedServiceStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
             _ => Ok((ReadCoreV1NamespacedServiceStatusResponse::Other, 0)),
         }
     }
@@ -1501,12 +1501,12 @@ impl Service {
     pub fn replace_core_v1_namespaced_service(
         name: &str,
         namespace: &str,
-        body: &::v1_12::api::core::v1::Service,
+        body: &crate::v1_12::api::core::v1::Service,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -1515,41 +1515,41 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::replace_core_v1_namespaced_service`](./struct.Service.html#method.replace_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedServiceResponse {
-    Ok(::v1_12::api::core::v1::Service),
-    Created(::v1_12::api::core::v1::Service),
+    Ok(crate::v1_12::api::core::v1::Service),
+    Created(crate::v1_12::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NamespacedServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedServiceResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NamespacedServiceResponse::Other, 0)),
         }
     }
@@ -1584,12 +1584,12 @@ impl Service {
     pub fn replace_core_v1_namespaced_service_status(
         name: &str,
         namespace: &str,
-        body: &::v1_12::api::core::v1::Service,
+        body: &crate::v1_12::api::core::v1::Service,
         dry_run: Option<&str>,
         pretty: Option<&str>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
         }
@@ -1598,41 +1598,41 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::put(__url);
-        let __body = ::serde_json::to_vec(&body).map_err(::RequestError::Json)?;
-        __request.body(__body).map_err(::RequestError::Http)
+        let mut __request = http::Request::put(__url);
+        let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::replace_core_v1_namespaced_service_status`](./struct.Service.html#method.replace_core_v1_namespaced_service_status)
 #[derive(Debug)]
 pub enum ReplaceCoreV1NamespacedServiceStatusResponse {
-    Ok(::v1_12::api::core::v1::Service),
-    Created(::v1_12::api::core::v1::Service),
+    Ok(crate::v1_12::api::core::v1::Service),
+    Created(crate::v1_12::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl ::Response for ReplaceCoreV1NamespacedServiceStatusResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for ReplaceCoreV1NamespacedServiceStatusResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::OK => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Ok(result), buf.len()))
             },
-            ::http::StatusCode::CREATED => {
-                let result = match ::serde_json::from_slice(buf) {
+            http::StatusCode::CREATED => {
+                let result = match serde_json::from_slice(buf) {
                     Ok(value) => value,
-                    Err(ref err) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Err(err) => return Err(::ResponseError::Json(err)),
+                    Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
                 Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Created(result), buf.len()))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
             _ => Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Other, 0)),
         }
     }
@@ -1706,9 +1706,9 @@ impl Service {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1738,34 +1738,34 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::watch_core_v1_namespaced_service`](./struct.Service.html#method.watch_core_v1_namespaced_service)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedServiceResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedServiceResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedServiceResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedServiceResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedServiceResponse::Other, 0)),
         }
     }
@@ -1834,9 +1834,9 @@ impl Service {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/namespaces/{namespace}/services?", namespace = namespace);
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1866,34 +1866,34 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::watch_core_v1_namespaced_service_list`](./struct.Service.html#method.watch_core_v1_namespaced_service_list)
 #[derive(Debug)]
 pub enum WatchCoreV1NamespacedServiceListResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1NamespacedServiceListResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1NamespacedServiceListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1NamespacedServiceListResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceListResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceListResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1NamespacedServiceListResponse::Other, 0)),
         }
     }
@@ -1957,9 +1957,9 @@ impl Service {
         resource_version: Option<&str>,
         timeout_seconds: Option<i64>,
         watch: Option<bool>,
-    ) -> Result<::http::Request<Vec<u8>>, ::RequestError> {
+    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
         let __url = format!("/api/v1/watch/services?");
-        let mut __query_pairs = ::url::form_urlencoded::Serializer::new(__url);
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
@@ -1989,34 +1989,34 @@ impl Service {
         }
         let __url = __query_pairs.finish();
 
-        let mut __request = ::http::Request::get(__url);
+        let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(::RequestError::Http)
+        __request.body(__body).map_err(crate::RequestError::Http)
     }
 }
 
 /// Parses the HTTP response of [`Service::watch_core_v1_service_list_for_all_namespaces`](./struct.Service.html#method.watch_core_v1_service_list_for_all_namespaces)
 #[derive(Debug)]
 pub enum WatchCoreV1ServiceListForAllNamespacesResponse {
-    Ok(::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl ::Response for WatchCoreV1ServiceListForAllNamespacesResponse {
-    fn try_from_parts(status_code: ::http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ::ResponseError> {
+impl crate::Response for WatchCoreV1ServiceListForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
-            ::http::StatusCode::OK => {
-                let mut deserializer = ::serde_json::Deserializer::from_slice(buf).into_iter();
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
                 let (result, byte_offset) = match deserializer.next() {
                     Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(::ResponseError::Json(err)),
-                    None => return Err(::ResponseError::NeedMoreData),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
                 };
                 Ok((WatchCoreV1ServiceListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            ::http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1ServiceListForAllNamespacesResponse::Unauthorized, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1ServiceListForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchCoreV1ServiceListForAllNamespacesResponse::Other, 0)),
         }
     }
@@ -2024,7 +2024,7 @@ impl ::Response for WatchCoreV1ServiceListForAllNamespacesResponse {
 
 // End /v1/Service
 
-impl ::Resource for Service {
+impl crate::Resource for Service {
     fn api_version() -> &'static str {
         "v1"
     }
@@ -2042,8 +2042,8 @@ impl ::Resource for Service {
     }
 }
 
-impl<'de> ::serde::Deserialize<'de> for Service {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for Service {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_api_version,
@@ -2054,18 +2054,18 @@ impl<'de> ::serde::Deserialize<'de> for Service {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "apiVersion" => Field::Key_api_version,
                             "kind" => Field::Key_kind,
@@ -2083,36 +2083,36 @@ impl<'de> ::serde::Deserialize<'de> for Service {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = Service;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct Service")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_metadata: Option<::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
-                let mut value_spec: Option<::v1_12::api::core::v1::ServiceSpec> = None;
-                let mut value_status: Option<::v1_12::api::core::v1::ServiceStatus> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_metadata: Option<crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta> = None;
+                let mut value_spec: Option<crate::v1_12::api::core::v1::ServiceSpec> = None;
+                let mut value_status: Option<crate::v1_12::api::core::v1::ServiceStatus> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
                         Field::Key_api_version => {
-                            let value_api_version: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_api_version != <Self::Value as ::Resource>::api_version() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_api_version), &<Self::Value as ::Resource>::api_version()));
+                            let value_api_version: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_api_version != <Self::Value as crate::Resource>::api_version() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_api_version), &<Self::Value as crate::Resource>::api_version()));
                             }
                         },
                         Field::Key_kind => {
-                            let value_kind: String = ::serde::de::MapAccess::next_value(&mut map)?;
-                            if value_kind != <Self::Value as ::Resource>::kind() {
-                                return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&value_kind), &<Self::Value as ::Resource>::kind()));
+                            let value_kind: String = serde::de::MapAccess::next_value(&mut map)?;
+                            if value_kind != <Self::Value as crate::Resource>::kind() {
+                                return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&value_kind), &<Self::Value as crate::Resource>::kind()));
                             }
                         },
-                        Field::Key_metadata => value_metadata = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_spec => value_spec = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_status => value_status = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_metadata => value_metadata = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_spec => value_spec = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_status => value_status = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -2138,8 +2138,8 @@ impl<'de> ::serde::Deserialize<'de> for Service {
     }
 }
 
-impl ::serde::Serialize for Service {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for Service {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Service",
             0 +
@@ -2148,17 +2148,17 @@ impl ::serde::Serialize for Service {
             self.spec.as_ref().map_or(0, |_| 1) +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as ::Resource>::api_version())?;
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as ::Resource>::kind())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;
         if let Some(value) = &self.metadata {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "metadata", value)?;
         }
         if let Some(value) = &self.spec {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "spec", value)?;
         }
         if let Some(value) = &self.status {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "status", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

@@ -4,20 +4,20 @@
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct EnvVarSource {
     /// Selects a key of a ConfigMap.
-    pub config_map_key_ref: Option<::v1_8::api::core::v1::ConfigMapKeySelector>,
+    pub config_map_key_ref: Option<crate::v1_8::api::core::v1::ConfigMapKeySelector>,
 
     /// Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP.
-    pub field_ref: Option<::v1_8::api::core::v1::ObjectFieldSelector>,
+    pub field_ref: Option<crate::v1_8::api::core::v1::ObjectFieldSelector>,
 
     /// Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
-    pub resource_field_ref: Option<::v1_8::api::core::v1::ResourceFieldSelector>,
+    pub resource_field_ref: Option<crate::v1_8::api::core::v1::ResourceFieldSelector>,
 
     /// Selects a key of a secret in the pod's namespace
-    pub secret_key_ref: Option<::v1_8::api::core::v1::SecretKeySelector>,
+    pub secret_key_ref: Option<crate::v1_8::api::core::v1::SecretKeySelector>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for EnvVarSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for EnvVarSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_config_map_key_ref,
@@ -27,18 +27,18 @@ impl<'de> ::serde::Deserialize<'de> for EnvVarSource {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "configMapKeyRef" => Field::Key_config_map_key_ref,
                             "fieldRef" => Field::Key_field_ref,
@@ -55,26 +55,26 @@ impl<'de> ::serde::Deserialize<'de> for EnvVarSource {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = EnvVarSource;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct EnvVarSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
-                let mut value_config_map_key_ref: Option<::v1_8::api::core::v1::ConfigMapKeySelector> = None;
-                let mut value_field_ref: Option<::v1_8::api::core::v1::ObjectFieldSelector> = None;
-                let mut value_resource_field_ref: Option<::v1_8::api::core::v1::ResourceFieldSelector> = None;
-                let mut value_secret_key_ref: Option<::v1_8::api::core::v1::SecretKeySelector> = None;
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
+                let mut value_config_map_key_ref: Option<crate::v1_8::api::core::v1::ConfigMapKeySelector> = None;
+                let mut value_field_ref: Option<crate::v1_8::api::core::v1::ObjectFieldSelector> = None;
+                let mut value_resource_field_ref: Option<crate::v1_8::api::core::v1::ResourceFieldSelector> = None;
+                let mut value_secret_key_ref: Option<crate::v1_8::api::core::v1::SecretKeySelector> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_config_map_key_ref => value_config_map_key_ref = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_field_ref => value_field_ref = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_resource_field_ref => value_resource_field_ref = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_secret_key_ref => value_secret_key_ref = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_config_map_key_ref => value_config_map_key_ref = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_field_ref => value_field_ref = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_resource_field_ref => value_resource_field_ref = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_secret_key_ref => value_secret_key_ref = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -100,8 +100,8 @@ impl<'de> ::serde::Deserialize<'de> for EnvVarSource {
     }
 }
 
-impl ::serde::Serialize for EnvVarSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for EnvVarSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EnvVarSource",
             0 +
@@ -111,17 +111,17 @@ impl ::serde::Serialize for EnvVarSource {
             self.secret_key_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.config_map_key_ref {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "configMapKeyRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "configMapKeyRef", value)?;
         }
         if let Some(value) = &self.field_ref {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "fieldRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "fieldRef", value)?;
         }
         if let Some(value) = &self.resource_field_ref {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "resourceFieldRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "resourceFieldRef", value)?;
         }
         if let Some(value) = &self.secret_key_ref {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "secretKeyRef", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "secretKeyRef", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

@@ -7,11 +7,11 @@ pub struct EmptyDirVolumeSource {
     pub medium: Option<String>,
 
     /// Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: http://kubernetes.io/docs/user-guide/volumes#emptydir
-    pub size_limit: Option<::v1_10::apimachinery::pkg::api::resource::Quantity>,
+    pub size_limit: Option<crate::v1_10::apimachinery::pkg::api::resource::Quantity>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for EmptyDirVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for EmptyDirVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_medium,
@@ -19,18 +19,18 @@ impl<'de> ::serde::Deserialize<'de> for EmptyDirVolumeSource {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "medium" => Field::Key_medium,
                             "sizeLimit" => Field::Key_size_limit,
@@ -45,22 +45,22 @@ impl<'de> ::serde::Deserialize<'de> for EmptyDirVolumeSource {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = EmptyDirVolumeSource;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct EmptyDirVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_medium: Option<String> = None;
-                let mut value_size_limit: Option<::v1_10::apimachinery::pkg::api::resource::Quantity> = None;
+                let mut value_size_limit: Option<crate::v1_10::apimachinery::pkg::api::resource::Quantity> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_medium => value_medium = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_size_limit => value_size_limit = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_medium => value_medium = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_size_limit => value_size_limit = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,8 +82,8 @@ impl<'de> ::serde::Deserialize<'de> for EmptyDirVolumeSource {
     }
 }
 
-impl ::serde::Serialize for EmptyDirVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for EmptyDirVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EmptyDirVolumeSource",
             0 +
@@ -91,11 +91,11 @@ impl ::serde::Serialize for EmptyDirVolumeSource {
             self.size_limit.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.medium {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "medium", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "medium", value)?;
         }
         if let Some(value) = &self.size_limit {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "sizeLimit", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "sizeLimit", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

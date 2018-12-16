@@ -22,8 +22,8 @@ pub struct CustomResourceDefinitionNames {
     pub singular: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinitionNames {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for CustomResourceDefinitionNames {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_categories,
@@ -35,18 +35,18 @@ impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinitionNames {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "categories" => Field::Key_categories,
                             "kind" => Field::Key_kind,
@@ -65,14 +65,14 @@ impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinitionNames {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = CustomResourceDefinitionNames;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct CustomResourceDefinitionNames")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_categories: Option<Vec<String>> = None;
                 let mut value_kind: Option<String> = None;
                 let mut value_list_kind: Option<String> = None;
@@ -80,23 +80,23 @@ impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinitionNames {
                 let mut value_short_names: Option<Vec<String>> = None;
                 let mut value_singular: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_categories => value_categories = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_kind => value_kind = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_list_kind => value_list_kind = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_plural => value_plural = Some(::serde::de::MapAccess::next_value(&mut map)?),
-                        Field::Key_short_names => value_short_names = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_singular => value_singular = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_categories => value_categories = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_kind => value_kind = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_list_kind => value_list_kind = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_plural => value_plural = Some(serde::de::MapAccess::next_value(&mut map)?),
+                        Field::Key_short_names => value_short_names = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_singular => value_singular = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
                 Ok(CustomResourceDefinitionNames {
                     categories: value_categories,
-                    kind: value_kind.ok_or_else(|| ::serde::de::Error::missing_field("kind"))?,
+                    kind: value_kind.ok_or_else(|| serde::de::Error::missing_field("kind"))?,
                     list_kind: value_list_kind,
-                    plural: value_plural.ok_or_else(|| ::serde::de::Error::missing_field("plural"))?,
+                    plural: value_plural.ok_or_else(|| serde::de::Error::missing_field("plural"))?,
                     short_names: value_short_names,
                     singular: value_singular,
                 })
@@ -118,8 +118,8 @@ impl<'de> ::serde::Deserialize<'de> for CustomResourceDefinitionNames {
     }
 }
 
-impl ::serde::Serialize for CustomResourceDefinitionNames {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for CustomResourceDefinitionNames {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionNames",
             0 +
@@ -131,19 +131,19 @@ impl ::serde::Serialize for CustomResourceDefinitionNames {
             self.singular.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.categories {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "categories", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "categories", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "kind", &self.kind)?;
         if let Some(value) = &self.list_kind {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "listKind", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "listKind", value)?;
         }
-        ::serde::ser::SerializeStruct::serialize_field(&mut state, "plural", &self.plural)?;
+        serde::ser::SerializeStruct::serialize_field(&mut state, "plural", &self.plural)?;
         if let Some(value) = &self.short_names {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "shortNames", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "shortNames", value)?;
         }
         if let Some(value) = &self.singular {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "singular", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "singular", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

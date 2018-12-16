@@ -11,11 +11,11 @@ pub struct IngressRule {
     /// Both these may change in the future. Incoming requests are matched against the host before the IngressRuleValue. If the host is unspecified, the Ingress routes all traffic based on the specified IngressRuleValue.
     pub host: Option<String>,
 
-    pub http: Option<::v1_10::api::extensions::v1beta1::HTTPIngressRuleValue>,
+    pub http: Option<crate::v1_10::api::extensions::v1beta1::HTTPIngressRuleValue>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for IngressRule {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for IngressRule {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_host,
@@ -23,18 +23,18 @@ impl<'de> ::serde::Deserialize<'de> for IngressRule {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "host" => Field::Key_host,
                             "http" => Field::Key_http,
@@ -49,22 +49,22 @@ impl<'de> ::serde::Deserialize<'de> for IngressRule {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = IngressRule;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct IngressRule")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_host: Option<String> = None;
-                let mut value_http: Option<::v1_10::api::extensions::v1beta1::HTTPIngressRuleValue> = None;
+                let mut value_http: Option<crate::v1_10::api::extensions::v1beta1::HTTPIngressRuleValue> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_host => value_host = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_http => value_http = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_host => value_host = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_http => value_http = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -86,8 +86,8 @@ impl<'de> ::serde::Deserialize<'de> for IngressRule {
     }
 }
 
-impl ::serde::Serialize for IngressRule {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for IngressRule {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "IngressRule",
             0 +
@@ -95,11 +95,11 @@ impl ::serde::Serialize for IngressRule {
             self.http.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.host {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "host", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "host", value)?;
         }
         if let Some(value) = &self.http {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "http", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "http", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }

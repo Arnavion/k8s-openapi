@@ -10,8 +10,8 @@ pub struct FlockerVolumeSource {
     pub dataset_uuid: Option<String>,
 }
 
-impl<'de> ::serde::Deserialize<'de> for FlockerVolumeSource {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+impl<'de> serde::Deserialize<'de> for FlockerVolumeSource {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
         enum Field {
             Key_dataset_name,
@@ -19,18 +19,18 @@ impl<'de> ::serde::Deserialize<'de> for FlockerVolumeSource {
             Other,
         }
 
-        impl<'de> ::serde::Deserialize<'de> for Field {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+        impl<'de> serde::Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
                 struct Visitor;
 
-                impl<'de> ::serde::de::Visitor<'de> for Visitor {
+                impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
-                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
                         Ok(match v {
                             "datasetName" => Field::Key_dataset_name,
                             "datasetUUID" => Field::Key_dataset_uuid,
@@ -45,22 +45,22 @@ impl<'de> ::serde::Deserialize<'de> for FlockerVolumeSource {
 
         struct Visitor;
 
-        impl<'de> ::serde::de::Visitor<'de> for Visitor {
+        impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = FlockerVolumeSource;
 
-            fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                 write!(f, "struct FlockerVolumeSource")
             }
 
-            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: ::serde::de::MapAccess<'de> {
+            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {
                 let mut value_dataset_name: Option<String> = None;
                 let mut value_dataset_uuid: Option<String> = None;
 
-                while let Some(key) = ::serde::de::MapAccess::next_key::<Field>(&mut map)? {
+                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {
                     match key {
-                        Field::Key_dataset_name => value_dataset_name = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Key_dataset_uuid => value_dataset_uuid = ::serde::de::MapAccess::next_value(&mut map)?,
-                        Field::Other => { let _: ::serde::de::IgnoredAny = ::serde::de::MapAccess::next_value(&mut map)?; },
+                        Field::Key_dataset_name => value_dataset_name = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Key_dataset_uuid => value_dataset_uuid = serde::de::MapAccess::next_value(&mut map)?,
+                        Field::Other => { let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; },
                     }
                 }
 
@@ -82,8 +82,8 @@ impl<'de> ::serde::Deserialize<'de> for FlockerVolumeSource {
     }
 }
 
-impl ::serde::Serialize for FlockerVolumeSource {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: ::serde::Serializer {
+impl serde::Serialize for FlockerVolumeSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "FlockerVolumeSource",
             0 +
@@ -91,11 +91,11 @@ impl ::serde::Serialize for FlockerVolumeSource {
             self.dataset_uuid.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.dataset_name {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "datasetName", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "datasetName", value)?;
         }
         if let Some(value) = &self.dataset_uuid {
-            ::serde::ser::SerializeStruct::serialize_field(&mut state, "datasetUUID", value)?;
+            serde::ser::SerializeStruct::serialize_field(&mut state, "datasetUUID", value)?;
         }
-        ::serde::ser::SerializeStruct::end(state)
+        serde::ser::SerializeStruct::end(state)
     }
 }
