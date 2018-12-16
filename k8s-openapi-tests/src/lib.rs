@@ -198,6 +198,13 @@ impl Client {
 			},
 		}
 	}
+
+	fn sleep(&self, duration: std::time::Duration) {
+		match self {
+			Client::Recording { .. } => std::thread::sleep(duration),
+			Client::Replaying(_) => (),
+		}
+	}
 }
 
 #[derive(Debug)]

@@ -143,7 +143,7 @@ fn create() {
 				break;
 			}
 
-			::std::thread::sleep(::std::time::Duration::from_secs(1));
+			client.sleep(::std::time::Duration::from_secs(1));
 		}
 
 		// Find a pod of the failed job using owner reference
@@ -181,7 +181,7 @@ fn create() {
 				}
 			}
 
-			::std::thread::sleep(::std::time::Duration::from_secs(1));
+			client.sleep(::std::time::Duration::from_secs(1));
 		};
 
 		let job_pod_container_state_terminated =

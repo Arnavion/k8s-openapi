@@ -1,7 +1,5 @@
 #[test]
 fn watch_pods() {
-	// std::thread::sleep(std::time::Duration::from_secs(10));
-
 	k8s_if_1_7! {
 		use ::k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
 	}

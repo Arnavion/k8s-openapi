@@ -199,18 +199,19 @@ fn create() {
 			let request = apiextensions::CustomResourceDefinition::read_apiextensions_v1beta1_custom_resource_definition(
 				"foobars.k8s-openapi-tests-custom-resource-definition.com", None, None, None)
 				.expect("couldn't get custom resource definition");
-			let response = client.execute(request).expect("couldn't get custom resource definition");
-			let custom_resource_definition =
+			let custom_resource_definition = {
+				let response = client.execute(request).expect("couldn't get custom resource definition");
 				::get_single_value(response, |response, status_code, _| match response {
 					apiextensions::ReadApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(custom_resource_definition) => Ok(::ValueResult::GotValue(custom_resource_definition)),
 					other => Err(format!("{:?} {}", other, status_code).into()),
-				}).expect("couldn't get custom resource definition");
+				}).expect("couldn't get custom resource definition")
+			};
 
 			if custom_resource_definition.status.as_ref().map_or(false, |status| status.accepted_names.kind == "FooBar") {
 				break custom_resource_definition;
 			}
 
-			::std::thread::sleep(::std::time::Duration::from_secs(1));
+			client.sleep(::std::time::Duration::from_secs(1));
 		};
 
 		let fb1 = FooBar {
