@@ -60,7 +60,6 @@ struct Replay {
 	response_body: Vec<u8>,
 }
 
-#[cfg_attr(feature = "cargo-clippy", allow(use_self))]
 impl Client {
 	fn with<F>(test_name: &'static str, f: F) where F: FnOnce(&mut Self) {
 		#[cfg(feature = "test_v1_7")] let replays_directory = "v1-7";

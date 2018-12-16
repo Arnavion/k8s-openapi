@@ -1,29 +1,21 @@
-#![cfg_attr(feature = "cargo-clippy", deny(clippy, clippy_pedantic))]
-#![cfg_attr(feature = "cargo-clippy", allow(
-	cyclomatic_complexity,
-	default_trait_access,
-	similar_names,
-	too_many_arguments,
-	type_complexity,
-	unseparated_literal_suffix,
-))]
-
-extern crate backtrace;
-extern crate env_logger;
-#[macro_use]
-extern crate log;
-extern crate reqwest;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
+#![deny(unused_extern_crates, warnings)]
+#![deny(clippy::all, clippy::pedantic)]
+#![allow(
+	clippy::cyclomatic_complexity,
+	clippy::default_trait_access,
+	clippy::similar_names,
+	clippy::too_many_arguments,
+	clippy::type_complexity,
+	clippy::unseparated_literal_suffix,
+)]
 
 mod fixups;
 mod supported_version;
 mod swagger20;
 
-struct Error(Box<std::error::Error>, backtrace::Backtrace);
+struct Error(Box<dyn std::error::Error>, backtrace::Backtrace);
 
-impl<E> From<E> for Error where E: Into<Box<std::error::Error>> {
+impl<E> From<E> for Error where E: Into<Box<dyn std::error::Error>> {
 	fn from(value: E) -> Self {
 		Error(value.into(), backtrace::Backtrace::new())
 	}
@@ -79,7 +71,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 	let mut spec: swagger20::Spec = {
 		let spec_url = supported_version.spec_url();
-		info!(target: "", "Parsing spec file at {} ...", spec_url);
+		log::info!(target: "", "Parsing spec file at {} ...", spec_url);
 		let mut response = client.get(spec_url).send()?;
 		let status = response.status();
 		if status != reqwest::StatusCode::OK {
@@ -93,7 +85,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	let expected_num_generated_types: usize = spec.definitions.len();
 	let expected_num_generated_apis: usize = spec.paths.iter().map(|(_, path_item)| path_item.operations.len()).sum();
 
-	info!(
+	log::info!(
 		"OK. Spec has {} definitions and {} paths containing {} operations",
 		spec.definitions.len(),
 		spec.paths.len(),
@@ -113,29 +105,29 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	}
 
 	loop {
-		info!("Removing output directory {} ...", out_dir.display());
+		log::info!("Removing output directory {} ...", out_dir.display());
 		match std::fs::remove_dir_all(&out_dir) {
-			Ok(()) => trace!("OK"),
+			Ok(()) => log::trace!("OK"),
 			Err(ref err) if err.kind() == std::io::ErrorKind::NotFound => {
-				trace!("OK. Directory doesn't exist");
+				log::trace!("OK. Directory doesn't exist");
 
-				info!("Creating output directory {} ...", out_dir.display());
+				log::info!("Creating output directory {} ...", out_dir.display());
 				match std::fs::create_dir(&out_dir) {
 					Ok(()) => {
-						trace!("OK");
+						log::trace!("OK");
 						break;
 					},
-					Err(err) => error!("Error: {}", err),
+					Err(err) => log::warn!("Error: {}", err),
 				}
 			},
-			Err(err) => error!("Error: {}", err),
+			Err(err) => log::warn!("Error: {}", err),
 		}
 	}
 
-	info!("Generating types...");
+	log::info!("Generating types...");
 
 	for (definition_path, definition) in &spec.definitions {
-		trace!("Working on {} ...", definition_path);
+		log::trace!("Working on {} ...", definition_path);
 
 		let (mut file, type_name, type_ref_path) = create_file_for_type(&definition_path, &out_dir, &replace_namespaces)?;
 
@@ -688,7 +680,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 			},
 		}
 
-		trace!("OK");
+		log::trace!("OK");
 	}
 
 	{
@@ -708,10 +700,10 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 		}
 	}
 
-	info!("OK");
-	info!("Generated {} structs", num_generated_structs);
-	info!("Generated {} type aliases", num_generated_type_aliases);
-	info!("Generated {} API functions", num_generated_apis);
+	log::info!("OK");
+	log::info!("Generated {} structs", num_generated_structs);
+	log::info!("Generated {} type aliases", num_generated_type_aliases);
+	log::info!("Generated {} API functions", num_generated_apis);
 
 	if num_generated_structs + num_generated_type_aliases != expected_num_generated_types {
 		return Err("Did not generate or skip expected number of types".into());
@@ -721,7 +713,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 		return Err("Did not generate expected number of API functions".into());
 	}
 
-	info!("");
+	log::info!("");
 
 	Ok(())
 }
@@ -769,16 +761,16 @@ fn create_file_for_type(
 	let mut current = out_dir.to_owned();
 
 	for part in parts.iter().rev().skip(1).rev() {
-		trace!("Current directory: {}", current.display());
+		log::trace!("Current directory: {}", current.display());
 
 		let mod_name = get_rust_ident(part);
 
 		current.push(&*mod_name);
 
-		trace!("Checking if subdirectory {} exists...", current.display());
+		log::trace!("Checking if subdirectory {} exists...", current.display());
 
 		if !current.is_dir() {
-			trace!("    Subdirectory does not exist. Creating mod.rs with a reference to it...");
+			log::trace!("    Subdirectory does not exist. Creating mod.rs with a reference to it...");
 
 			let current_mod_rs_path = current.with_file_name("mod.rs");
 			let append_newline = current_mod_rs_path.exists();
@@ -788,14 +780,14 @@ fn create_file_for_type(
 			}
 			writeln!(parent_mod_rs, "pub mod {};", mod_name)?;
 
-			trace!("    OK");
-			trace!("    Creating subdirectory...");
+			log::trace!("    OK");
+			log::trace!("    Creating subdirectory...");
 
 			std::fs::create_dir(&current)?;
-			trace!("    OK");
+			log::trace!("    OK");
 		}
 
-		trace!("OK");
+		log::trace!("OK");
 	}
 
 	let type_name = parts.last().ok_or_else(|| format!("path for {} has no parts", definition_path))?.to_string();
@@ -976,7 +968,7 @@ fn replace_namespace<'a, I>(
 ) -> Vec<std::borrow::Cow<'a, str>> where I: IntoIterator<Item = &'a str> {
 	let parts: Vec<_> = parts.into_iter().map(Into::into).collect();
 
-	trace!("parts = {:?}, replace_namespaces = {:?}", parts, replace_namespaces);
+	log::trace!("parts = {:?}, replace_namespaces = {:?}", parts, replace_namespaces);
 
 	for (from, to) in replace_namespaces {
 		if parts.starts_with(from) {

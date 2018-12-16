@@ -13,19 +13,19 @@ pub enum KubernetesAction {
 	WatchList,
 }
 
-#[cfg_attr(feature = "cargo-clippy", allow(use_self))]
-impl<'de> ::serde::Deserialize<'de> for KubernetesAction {
-	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+#[allow(clippy::use_self)]
+impl<'de> serde::Deserialize<'de> for KubernetesAction {
+	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
 		struct Visitor;
 
-		impl<'de> ::serde::de::Visitor<'de> for Visitor {
+		impl<'de> serde::de::Visitor<'de> for Visitor {
 			type Value = KubernetesAction;
 
-			fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+			fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 				write!(f, "x-kubernetes-action")
 			}
 
-			fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+			fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
 				Ok(match v {
 					"connect" => KubernetesAction::Connect,
 					"delete" => KubernetesAction::Delete,
@@ -38,7 +38,7 @@ impl<'de> ::serde::Deserialize<'de> for KubernetesAction {
 					"put" => KubernetesAction::Put,
 					"watch" => KubernetesAction::Watch,
 					"watchlist" => KubernetesAction::WatchList,
-					v => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(v), &self)),
+					v => return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(v), &self)),
 				})
 			}
 		}
@@ -56,26 +56,26 @@ pub enum Method {
 	Put,
 }
 
-#[cfg_attr(feature = "cargo-clippy", allow(use_self))]
-impl<'de> ::serde::Deserialize<'de> for Method {
-	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
+#[allow(clippy::use_self)]
+impl<'de> serde::Deserialize<'de> for Method {
+	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
 		struct Visitor;
 
-		impl<'de> ::serde::de::Visitor<'de> for Visitor {
+		impl<'de> serde::de::Visitor<'de> for Visitor {
 			type Value = Method;
 
-			fn expecting(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+			fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 				write!(f, "string representation of HTTP method")
 			}
 
-			fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: ::serde::de::Error {
+			fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
 				Ok(match v {
 					"delete" => Method::Delete,
 					"Get" => Method::Get,
 					"Patch" => Method::Patch,
 					"Post" => Method::Post,
 					"Put" => Method::Put,
-					v => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(v), &self)),
+					v => return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(v), &self)),
 				})
 			}
 		}
@@ -92,7 +92,7 @@ pub struct Operation {
 	pub kubernetes_action: Option<KubernetesAction>,
 	pub kubernetes_group_kind_version: Option<super::KubernetesGroupKindVersion>,
 	pub parameters: Vec<Parameter>,
-	pub responses: ::std::collections::BTreeMap<::reqwest::StatusCode, Option<super::Schema>>,
+	pub responses: std::collections::BTreeMap<reqwest::StatusCode, Option<super::Schema>>,
 }
 
 #[derive(Debug)]
@@ -103,10 +103,10 @@ pub struct Parameter {
 	pub schema: super::Schema,
 }
 
-#[cfg_attr(feature = "cargo-clippy", allow(use_self))]
-impl<'de> ::serde::Deserialize<'de> for Parameter {
-	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
-		#[derive(Debug, Deserialize)]
+#[allow(clippy::use_self)]
+impl<'de> serde::Deserialize<'de> for Parameter {
+	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+		#[derive(Debug, serde_derive::Deserialize)]
 		struct InnerParameter {
 			description: Option<String>,
 			#[serde(rename = "in")]
@@ -118,7 +118,7 @@ impl<'de> ::serde::Deserialize<'de> for Parameter {
 			schema: Option<super::Schema>,
 		}
 
-		let value: InnerParameter = ::serde::Deserialize::deserialize(deserializer)?;
+		let value: InnerParameter = serde::Deserialize::deserialize(deserializer)?;
 
 		let (location, schema) = match (&*value.location, value.ty, value.schema) {
 			("body", None, Some(schema)) => (
@@ -147,7 +147,7 @@ impl<'de> ::serde::Deserialize<'de> for Parameter {
 				},
 			),
 
-			_ => return Err(::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&*value.location), &"a parameter location")),
+			_ => return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&*value.location), &"a parameter location")),
 		};
 
 		let required = match (value.required, location) {
@@ -172,10 +172,10 @@ pub enum ParameterLocation {
 	Query,
 }
 
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, Deserialize)]
+#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, serde_derive::Deserialize)]
 pub struct Path(pub String);
 
-impl ::std::ops::Deref for Path {
+impl std::ops::Deref for Path {
 	type Target = str;
 
 	fn deref(&self) -> &Self::Target {
@@ -183,8 +183,8 @@ impl ::std::ops::Deref for Path {
 	}
 }
 
-impl ::std::fmt::Display for Path {
-	fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+impl std::fmt::Display for Path {
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 		self.0.fmt(f)
 	}
 }
@@ -195,10 +195,10 @@ pub struct PathItem {
 	pub parameters: Vec<Parameter>,
 }
 
-#[cfg_attr(feature = "cargo-clippy", allow(use_self))]
-impl<'de> ::serde::Deserialize<'de> for PathItem {
-	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: ::serde::Deserializer<'de> {
-		#[derive(Debug, Deserialize)]
+#[allow(clippy::use_self)]
+impl<'de> serde::Deserialize<'de> for PathItem {
+	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
+		#[derive(Debug, serde_derive::Deserialize)]
 		struct InnerPathItem {
 			delete: Option<InnerOperation>,
 			get: Option<InnerOperation>,
@@ -209,7 +209,7 @@ impl<'de> ::serde::Deserialize<'de> for PathItem {
 			parameters: Vec<Parameter>,
 		}
 
-		#[derive(Debug, Deserialize)]
+		#[derive(Debug, serde_derive::Deserialize)]
 		struct InnerOperation {
 			description: Option<String>,
 			#[serde(rename = "operationId")]
@@ -220,20 +220,20 @@ impl<'de> ::serde::Deserialize<'de> for PathItem {
 			kubernetes_group_kind_version: Option<super::KubernetesGroupKindVersion>,
 			#[serde(default)]
 			parameters: Vec<Parameter>,
-			responses: ::std::collections::BTreeMap<String, InnerResponse>,
+			responses: std::collections::BTreeMap<String, InnerResponse>,
 		}
 
-		#[derive(Debug, Deserialize)]
+		#[derive(Debug, serde_derive::Deserialize)]
 		struct InnerResponse {
 			schema: Option<super::Schema>,
 		}
 
-		fn parse_operation<'de, D>(value: InnerOperation, method: Method) -> Result<Operation, D::Error> where D: ::serde::Deserializer<'de> {
+		fn parse_operation<'de, D>(value: InnerOperation, method: Method) -> Result<Operation, D::Error> where D: serde::Deserializer<'de> {
 			let responses: Result<_, _> =
 				value.responses.into_iter()
 				.map(|(status_code_str, response)| {
 					let status_code = status_code_str.parse().map_err(|_|
-						::serde::de::Error::invalid_value(::serde::de::Unexpected::Str(&status_code_str), &"string representation of an HTTP status code"))?;
+						serde::de::Error::invalid_value(serde::de::Unexpected::Str(&status_code_str), &"string representation of an HTTP status code"))?;
 					Ok((status_code, response.schema))
 				})
 				.collect();
@@ -249,7 +249,7 @@ impl<'de> ::serde::Deserialize<'de> for PathItem {
 			})
 		}
 
-		let value: InnerPathItem = ::serde::Deserialize::deserialize(deserializer)?;
+		let value: InnerPathItem = serde::Deserialize::deserialize(deserializer)?;
 
 		let mut operations = vec![];
 
