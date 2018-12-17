@@ -1,35 +1,35 @@
 #[test]
 fn list() {
 	k8s_if_1_7! {
-		use ::k8s_openapi::v1_7::kubernetes::pkg::apis::apps::v1beta1 as apps;
-		use ::k8s_openapi::v1_7::apimachinery::pkg::util as util;
+		use k8s_openapi::v1_7::kubernetes::pkg::apis::apps::v1beta1 as apps;
+		use k8s_openapi::v1_7::apimachinery::pkg::util as util;
 	}
 	k8s_if_1_8! {
-		use ::k8s_openapi::v1_8::api::apps::v1beta2 as apps;
-		use ::k8s_openapi::v1_8::apimachinery::pkg::util as util;
+		use k8s_openapi::v1_8::api::apps::v1beta2 as apps;
+		use k8s_openapi::v1_8::apimachinery::pkg::util as util;
 	}
 	k8s_if_1_9! {
-		use ::k8s_openapi::v1_9::api::apps::v1 as apps;
-		use ::k8s_openapi::v1_9::apimachinery::pkg::util as util;
+		use k8s_openapi::v1_9::api::apps::v1 as apps;
+		use k8s_openapi::v1_9::apimachinery::pkg::util as util;
 	}
 	k8s_if_1_10! {
-		use ::k8s_openapi::v1_10::api::apps::v1 as apps;
-		use ::k8s_openapi::v1_10::apimachinery::pkg::util as util;
+		use k8s_openapi::v1_10::api::apps::v1 as apps;
+		use k8s_openapi::v1_10::apimachinery::pkg::util as util;
 	}
 	k8s_if_1_11! {
-		use ::k8s_openapi::v1_11::api::apps::v1 as apps;
-		use ::k8s_openapi::v1_11::apimachinery::pkg::util as util;
+		use k8s_openapi::v1_11::api::apps::v1 as apps;
+		use k8s_openapi::v1_11::apimachinery::pkg::util as util;
 	}
 	k8s_if_1_12! {
-		use ::k8s_openapi::v1_12::api::apps::v1 as apps;
-		use ::k8s_openapi::v1_12::apimachinery::pkg::util as util;
+		use k8s_openapi::v1_12::api::apps::v1 as apps;
+		use k8s_openapi::v1_12::apimachinery::pkg::util as util;
 	}
 	k8s_if_1_13! {
-		use ::k8s_openapi::v1_13::api::apps::v1 as apps;
-		use ::k8s_openapi::v1_13::apimachinery::pkg::util as util;
+		use k8s_openapi::v1_13::api::apps::v1 as apps;
+		use k8s_openapi::v1_13::apimachinery::pkg::util as util;
 	}
 
-	::Client::with("deployment-list", |client| {
+	crate::Client::with("deployment-list", |client| {
 		k8s_if_1_7! {
 			let request =
 				apps::Deployment::list_apps_v1beta1_namespaced_deployment("kube-system", None, None, None, None, None, None, None);
@@ -45,17 +45,17 @@ fn list() {
 		let request = request.expect("couldn't list deployments");
 		let response = client.execute(request).expect("couldn't list deployments");;
 		let deployment_list =
-			::get_single_value(response, |response, status_code, _| k8s_match!(response, {
+			crate::get_single_value(response, |response, status_code, _| k8s_match!(response, {
 				k8s_if_1_7!(apps::ListAppsV1beta1NamespacedDeploymentResponse::Ok(deployment_list) =>
-					Ok(::ValueResult::GotValue(deployment_list))),
+					Ok(crate::ValueResult::GotValue(deployment_list))),
 				k8s_if_1_8!(apps::ListAppsV1beta2NamespacedDeploymentResponse::Ok(deployment_list) =>
-					Ok(::ValueResult::GotValue(deployment_list))),
+					Ok(crate::ValueResult::GotValue(deployment_list))),
 				k8s_if_ge_1_9!(apps::ListAppsV1NamespacedDeploymentResponse::Ok(deployment_list) =>
-					Ok(::ValueResult::GotValue(deployment_list))),
+					Ok(crate::ValueResult::GotValue(deployment_list))),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			})).expect("couldn't list deployments");
 
-		assert_eq!(::k8s_openapi::kind(&deployment_list), "DeploymentList");
+		assert_eq!(k8s_openapi::kind(&deployment_list), "DeploymentList");
 
 		k8s_if_le_1_10! {
 			let dns_deployment_name = "kube-dns";

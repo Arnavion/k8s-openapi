@@ -3,16 +3,14 @@
 	unreadable_literal,
 ))]
 
-extern crate winapi;
-
-pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::Path) -> Result<Vec<u8>, ::Error> {
+pub(crate) fn pkcs12(public_key: &std::path::Path, private_key: &std::path::Path) -> Result<Vec<u8>, crate::Error> {
 	unsafe {
 		let public_key = parse_pem(public_key)?;
 
 		let private_key = parse_pem(private_key)?;
 
 		let cert_store = {
-			let cert_store = winapi::um::wincrypt::CertOpenStore(winapi::um::wincrypt::CERT_STORE_PROV_MEMORY, 0, 0, 0, ::std::ptr::null());
+			let cert_store = winapi::um::wincrypt::CertOpenStore(winapi::um::wincrypt::CERT_STORE_PROV_MEMORY, 0, 0, 0, std::ptr::null());
 			if cert_store.is_null() {
 				Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 			}
@@ -21,7 +19,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 		};
 
 		let public_key_context = {
-			let mut public_key_context = ::std::ptr::null();
+			let mut public_key_context = std::ptr::null();
 			if winapi::um::wincrypt::CertAddEncodedCertificateToStore(
 				cert_store.0,
 				winapi::um::wincrypt::X509_ASN_ENCODING,
@@ -44,8 +42,8 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 				private_key.as_ptr(),
 				private_key.len() as _,
 				0,
-				::std::ptr::null_mut(),
-				::std::ptr::null_mut(),
+				std::ptr::null_mut(),
+				std::ptr::null_mut(),
 				&mut private_key_decoded_buf_len,
 			) != winapi::shared::minwindef::TRUE {
 				Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
@@ -58,7 +56,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 				private_key.as_ptr(),
 				private_key.len() as _,
 				0,
-				::std::ptr::null_mut(),
+				std::ptr::null_mut(),
 				private_key_decoded_buf.as_mut_ptr() as _,
 				&mut private_key_decoded_buf_len,
 			) != winapi::shared::minwindef::TRUE {
@@ -89,7 +87,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 				crypto_provider.0,
 				0,
 				winapi2::shared::bcrypt::LEGACY_RSAPRIVATE_BLOB.as_ptr(),
-				::std::ptr::null(),
+				std::ptr::null(),
 				&mut private_key,
 				private_key_decoded_buf.as_ptr() as _,
 				private_key_decoded_buf.len() as _,
@@ -108,7 +106,7 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 				private_key.0,
 				winapi2::um::ncrypt::NCRYPT_EXPORT_POLICY_PROPERTY.as_ptr(),
 				&export_policy_property_value as *const _ as _,
-				::std::mem::size_of_val(&export_policy_property_value) as _,
+				std::mem::size_of_val(&export_policy_property_value) as _,
 				0,
 			);
 			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err) {
@@ -118,10 +116,10 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 
 		let mut private_key_context = winapi::um::wincrypt::CERT_KEY_CONTEXT {
 			cbSize: 0,
-			u: ::std::mem::zeroed(),
+			u: std::mem::zeroed(),
 			dwKeySpec: winapi::um::wincrypt::CERT_NCRYPT_KEY_SPEC,
 		};
-		private_key_context.cbSize = ::std::mem::size_of_val(&private_key_context) as _;
+		private_key_context.cbSize = std::mem::size_of_val(&private_key_context) as _;
 		*private_key_context.u.hNCryptKey_mut() = private_key.0;
 
 		if winapi::um::wincrypt::CertSetCertificateContextProperty(
@@ -135,14 +133,14 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 
 		let mut private_key_data = winapi::um::wincrypt::CRYPT_DATA_BLOB {
 			cbData: 0,
-			pbData: ::std::ptr::null_mut(),
+			pbData: std::ptr::null_mut(),
 		};
 
 		if winapi::um::wincrypt::PFXExportCertStoreEx(
 			cert_store.0,
 			&mut private_key_data,
-			::std::ptr::null(),
-			::std::ptr::null_mut(),
+			std::ptr::null(),
+			std::ptr::null_mut(),
 			winapi::um::wincrypt::EXPORT_PRIVATE_KEYS,
 		) != winapi::shared::minwindef::TRUE {
 			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
@@ -155,8 +153,8 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 		if winapi::um::wincrypt::PFXExportCertStoreEx(
 			cert_store.0,
 			&mut private_key_data,
-			::std::ptr::null(),
-			::std::ptr::null_mut(),
+			std::ptr::null(),
+			std::ptr::null_mut(),
 			winapi::um::wincrypt::EXPORT_PRIVATE_KEYS,
 		) != winapi::shared::minwindef::TRUE {
 			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
@@ -168,23 +166,23 @@ pub(crate) fn pkcs12(public_key: &::std::path::Path, private_key: &::std::path::
 	}
 }
 
-pub(crate) fn x509_from_pem(path: &::std::path::Path) -> Result<Vec<u8>, ::Error> {
+pub(crate) fn x509_from_pem(path: &std::path::Path) -> Result<Vec<u8>, crate::Error> {
 	parse_pem(path)
 }
 
-fn parse_pem(path: &::std::path::Path) -> Result<Vec<u8>, ::Error> {
+fn parse_pem(path: &std::path::Path) -> Result<Vec<u8>, crate::Error> {
 	unsafe {
-		let buf = ::std::fs::read(path)?;
+		let buf = std::fs::read(path)?;
 
 		let mut result_len = 0;
 		if winapi::um::wincrypt::CryptStringToBinaryA(
 			buf.as_ptr() as _,
 			buf.len() as _,
 			winapi::um::wincrypt::CRYPT_STRING_BASE64HEADER,
-			::std::ptr::null_mut(),
+			std::ptr::null_mut(),
 			&mut result_len,
-			::std::ptr::null_mut(),
-			::std::ptr::null_mut(),
+			std::ptr::null_mut(),
+			std::ptr::null_mut(),
 		) != winapi::shared::minwindef::TRUE {
 			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 		}
@@ -196,8 +194,8 @@ fn parse_pem(path: &::std::path::Path) -> Result<Vec<u8>, ::Error> {
 			winapi::um::wincrypt::CRYPT_STRING_BASE64HEADER,
 			result.as_mut_ptr(),
 			&mut result_len,
-			::std::ptr::null_mut(),
-			::std::ptr::null_mut(),
+			std::ptr::null_mut(),
+			std::ptr::null_mut(),
 		) != winapi::shared::minwindef::TRUE {
 			Err(format!("0x{:08X}", winapi::um::errhandlingapi::GetLastError()))?;
 		}
@@ -216,7 +214,7 @@ mod winapi2 {
 
 	pub mod shared {
 		pub mod bcrypt {
-			use ::client::winapi::um::winnt::{ WCHAR };
+			use winapi::um::winnt::{ WCHAR };
 
 			pub const LEGACY_RSAPRIVATE_BLOB: &[WCHAR] = wide!('C''A''P''I''P''R''I''V''A''T''E''B''L''O''B');
 		}
@@ -227,10 +225,10 @@ mod winapi2 {
 		pub mod ncrypt {
 			#![allow(non_camel_case_types)]
 
-			use ::client::winapi::shared::bcrypt::{ BCryptBufferDesc };
-			use ::client::winapi::shared::minwindef::{ DWORD, PBYTE };
-			use ::client::winapi::um::winnt::{ LONG, LPCWSTR, WCHAR };
-			use ::client::winapi::um::ncrypt::{ NCRYPT_HANDLE, NCRYPT_KEY_HANDLE, NCRYPT_PROV_HANDLE };
+			use winapi::shared::bcrypt::{ BCryptBufferDesc };
+			use winapi::shared::minwindef::{ DWORD, PBYTE };
+			use winapi::um::winnt::{ LONG, LPCWSTR, WCHAR };
+			use winapi::um::ncrypt::{ NCRYPT_HANDLE, NCRYPT_KEY_HANDLE, NCRYPT_PROV_HANDLE };
 
 			pub type SECURITY_STATUS = LONG;
 

@@ -3,6 +3,7 @@ name = "k8s-openapi-tests"
 version = "0.1.0"
 authors = ["Arnavion <arnavion@gmail.com>"]
 publish = false
+edition = "2018"
 
 [dependencies]
 backtrace = "0.3.x"

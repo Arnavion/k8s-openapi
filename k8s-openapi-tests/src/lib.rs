@@ -1,30 +1,24 @@
 #![cfg(test)]
 
-#![cfg_attr(feature = "cargo-clippy", deny(clippy, clippy_pedantic))]
-#![cfg_attr(feature = "cargo-clippy", allow(
-	default_trait_access,
-	indexing_slicing,
-	unseparated_literal_suffix,
-))]
+#![deny(unused_extern_crates, warnings)]
+#![deny(clippy::all, clippy::pedantic)]
+#![allow(
+	clippy::default_trait_access,
+	clippy::indexing_slicing,
+	clippy::unseparated_literal_suffix,
+)]
 
-extern crate backtrace;
-extern crate dirs;
 #[macro_use] extern crate k8s_openapi;
-extern crate reqwest;
-extern crate serde;
-#[macro_use] extern crate serde_derive;
-extern crate serde_yaml;
 
-use k8s_openapi::http;
-use k8s_openapi::serde_json;
+use k8s_openapi::{http, serde_json};
 
 #[cfg_attr(windows, path = "client_winapi.rs")]
 #[cfg_attr(not(windows), path = "client_openssl.rs")]
 mod client;
 
-struct Error(Box<std::error::Error>, backtrace::Backtrace);
+struct Error(Box<dyn std::error::Error>, backtrace::Backtrace);
 
-impl<E> From<E> for Error where E: Into<Box<std::error::Error>> {
+impl<E> From<E> for Error where E: Into<Box<dyn std::error::Error>> {
 	fn from(value: E) -> Self {
 		Error(value.into(), backtrace::Backtrace::new())
 	}
@@ -155,7 +149,7 @@ impl Client {
 
 	fn execute<'a>(&'a mut self, request: http::Request<Vec<u8>>) -> Result<ClientResponse<'a>, Error> {
 		let (method, path, body) = {
-			let (mut parts, body) = request.into_parts();
+			let (parts, body) = request.into_parts();
 			let mut url: http::uri::Parts = parts.uri.into();
 			let path = url.path_and_query.take().expect("request doesn't have path and query");
 
@@ -234,6 +228,8 @@ impl<'a> std::io::Read for ClientResponse<'a> {
 
 enum ValueResult<T> {
 	GotValue(T),
+
+	#[allow(dead_code)]
 	NeedMoreData,
 }
 
@@ -305,7 +301,7 @@ impl<'a, R, F, T> Iterator for MultipleValuesIterator<'a, R, F, T> where
 	}
 }
 
-#[derive(Deserialize)]
+#[derive(serde_derive::Deserialize)]
 struct KubeConfig {
 	clusters: Vec<KubeConfigClusterEntry>,
 	contexts: Vec<KubeConfigContextEntry>,
@@ -314,38 +310,38 @@ struct KubeConfig {
 	users: Vec<KubeConfigUserEntry>,
 }
 
-#[derive(Deserialize)]
+#[derive(serde_derive::Deserialize)]
 struct KubeConfigClusterEntry {
 	cluster: KubeConfigCluster,
 	name: String,
 }
 
-#[derive(Deserialize)]
+#[derive(serde_derive::Deserialize)]
 struct KubeConfigCluster {
 	#[serde(rename = "certificate-authority")]
 	certificate_authority: std::path::PathBuf,
 	server: String,
 }
 
-#[derive(Deserialize)]
+#[derive(serde_derive::Deserialize)]
 struct KubeConfigContextEntry {
 	context: KubeConfigContext,
 	name: String,
 }
 
-#[derive(Deserialize)]
+#[derive(serde_derive::Deserialize)]
 struct KubeConfigContext {
 	cluster: String,
 	user: String,
 }
 
-#[derive(Deserialize)]
+#[derive(serde_derive::Deserialize)]
 struct KubeConfigUserEntry {
 	name: String,
 	user: KubeConfigUser,
 }
 
-#[derive(Deserialize)]
+#[derive(serde_derive::Deserialize)]
 struct KubeConfigUser {
 	#[serde(rename = "client-certificate")]
 	client_certificate: std::path::PathBuf,

@@ -1,28 +1,28 @@
 #[test]
 fn list() {
 	k8s_if_1_7! {
-		use ::k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
+		use k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
 	}
 	k8s_if_1_8! {
-		use ::k8s_openapi::v1_8::api::core::v1 as api;
+		use k8s_openapi::v1_8::api::core::v1 as api;
 	}
 	k8s_if_1_9! {
-		use ::k8s_openapi::v1_9::api::core::v1 as api;
+		use k8s_openapi::v1_9::api::core::v1 as api;
 	}
 	k8s_if_1_10! {
-		use ::k8s_openapi::v1_10::api::core::v1 as api;
+		use k8s_openapi::v1_10::api::core::v1 as api;
 	}
 	k8s_if_1_11! {
-		use ::k8s_openapi::v1_11::api::core::v1 as api;
+		use k8s_openapi::v1_11::api::core::v1 as api;
 	}
 	k8s_if_1_12! {
-		use ::k8s_openapi::v1_12::api::core::v1 as api;
+		use k8s_openapi::v1_12::api::core::v1 as api;
 	}
 	k8s_if_1_13! {
-		use ::k8s_openapi::v1_13::api::core::v1 as api;
+		use k8s_openapi::v1_13::api::core::v1 as api;
 	}
 
-	::Client::with("pod-list", |client| {
+	crate::Client::with("pod-list", |client| {
 		k8s_if_le_1_7! {
 			let request =
 				api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None);
@@ -34,12 +34,12 @@ fn list() {
 		let request = request.expect("couldn't list pods");
 		let response = client.execute(request).expect("couldn't list pods");;
 		let pod_list =
-			::get_single_value(response, |response, status_code, _| match response {
-				api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(::ValueResult::GotValue(pod_list)),
+			crate::get_single_value(response, |response, status_code, _| match response {
+				api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't list pods");
 
-		assert_eq!(::k8s_openapi::kind(&pod_list), "PodList");
+		assert_eq!(k8s_openapi::kind(&pod_list), "PodList");
 
 		let addon_manager_pod =
 			pod_list

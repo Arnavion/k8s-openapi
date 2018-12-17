@@ -1,28 +1,28 @@
 #[test]
 fn get() {
 	k8s_if_1_7! {
-		use ::k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
+		use k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
 	}
 	k8s_if_1_8! {
-		use ::k8s_openapi::v1_8::api::core::v1 as api;
+		use k8s_openapi::v1_8::api::core::v1 as api;
 	}
 	k8s_if_1_9! {
-		use ::k8s_openapi::v1_9::api::core::v1 as api;
+		use k8s_openapi::v1_9::api::core::v1 as api;
 	}
 	k8s_if_1_10! {
-		use ::k8s_openapi::v1_10::api::core::v1 as api;
+		use k8s_openapi::v1_10::api::core::v1 as api;
 	}
 	k8s_if_1_11! {
-		use ::k8s_openapi::v1_11::api::core::v1 as api;
+		use k8s_openapi::v1_11::api::core::v1 as api;
 	}
 	k8s_if_1_12! {
-		use ::k8s_openapi::v1_12::api::core::v1 as api;
+		use k8s_openapi::v1_12::api::core::v1 as api;
 	}
 	k8s_if_1_13! {
-		use ::k8s_openapi::v1_13::api::core::v1 as api;
+		use k8s_openapi::v1_13::api::core::v1 as api;
 	}
 
-	::Client::with("logs-get", |client| {
+	crate::Client::with("logs-get", |client| {
 		k8s_if_le_1_7! {
 			let request =
 				api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None);
@@ -34,8 +34,8 @@ fn get() {
 		let request = request.expect("couldn't list pods");
 		let pod_list = {
 			let response = client.execute(request).expect("couldn't list pods");;
-			::get_single_value(response, |response, status_code, _| match response {
-				api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(::ValueResult::GotValue(pod_list)),
+			crate::get_single_value(response, |response, status_code, _| match response {
+				api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't list pods")
 		};
@@ -58,8 +58,8 @@ fn get() {
 		let mut addon_manager_logs = String::new();
 		let strings = {
 			let response = client.execute(request).expect("couldn't get addon-manager pod logs");
-			::get_multiple_values(response, |response, status_code, _| match response {
-				api::ReadCoreV1NamespacedPodLogResponse::Ok(s) => Ok(::ValueResult::GotValue(s)),
+			crate::get_multiple_values(response, |response, status_code, _| match response {
+				api::ReadCoreV1NamespacedPodLogResponse::Ok(s) => Ok(crate::ValueResult::GotValue(s)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't get addon-manager pod logs")
 		};
