@@ -1,6 +1,6 @@
 #![cfg(test)]
 
-#![deny(unused_extern_crates, warnings)]
+#![deny(rust_2018_idioms, warnings)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
 	clippy::default_trait_access,
@@ -25,7 +25,7 @@ impl<E> From<E> for Error where E: Into<Box<dyn std::error::Error>> {
 }
 
 impl std::fmt::Debug for Error {
-	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		writeln!(f, "{}", self.0)?;
 		write!(f, "{:?}", self.1)?;
 		Ok(())

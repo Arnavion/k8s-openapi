@@ -21,7 +21,7 @@ impl<'de> serde::Deserialize<'de> for KubernetesAction {
 		impl<'de> serde::de::Visitor<'de> for Visitor {
 			type Value = KubernetesAction;
 
-			fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 				write!(f, "x-kubernetes-action")
 			}
 
@@ -64,7 +64,7 @@ impl<'de> serde::Deserialize<'de> for Method {
 		impl<'de> serde::de::Visitor<'de> for Visitor {
 			type Value = Method;
 
-			fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 				write!(f, "string representation of HTTP method")
 			}
 
@@ -184,7 +184,7 @@ impl std::ops::Deref for Path {
 }
 
 impl std::fmt::Display for Path {
-	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		self.0.fmt(f)
 	}
 }

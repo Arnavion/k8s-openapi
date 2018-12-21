@@ -10,7 +10,7 @@ impl<'de> serde::Deserialize<'de> for Time {
         impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = Time;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(f, "Time")
             }
 

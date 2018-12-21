@@ -19,7 +19,7 @@ impl<'de> serde::Deserialize<'de> for IntOrString {
         impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = IntOrString;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(formatter, "enum IntOrString")
             }
 

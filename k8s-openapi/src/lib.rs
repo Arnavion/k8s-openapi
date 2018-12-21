@@ -1,3 +1,5 @@
+#![deny(rust_2018_idioms)]
+
 //! Bindings for the Kubernetes client API, generated from the OpenAPI spec.
 //!
 //! Each supported version of Kubernetes is represented by one top-level module (like `::v1_9`) and is enabled by a crate feature of the same name (like `v1_9`).
@@ -175,13 +177,9 @@
 //! See the `get_single_value` and `get_multiple_values` functions in the `k8s-openapi-tests/` directory in the repository for an example of how to use
 //! a synchronous client with this style of API.
 
-extern crate base64;
-extern crate bytes;
-pub extern crate chrono;
-pub extern crate http;
-extern crate serde;
-pub extern crate serde_json;
-extern crate url;
+pub use chrono;
+pub use http;
+pub use serde_json;
 
 /// A wrapper around a list of bytes.
 ///
@@ -196,7 +194,7 @@ impl<'de> serde::Deserialize<'de> for ByteString {
         impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ByteString;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(formatter, "a base64-encoded string")
             }
 
@@ -278,7 +276,7 @@ pub enum RequestError {
 }
 
 impl std::fmt::Display for RequestError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             RequestError::Http(err) => write!(f, "{}", err),
             RequestError::Json(err) => write!(f, "{}", err),
@@ -294,7 +292,7 @@ impl std::error::Error for RequestError {
         }
     }
 
-    fn cause(&self) -> Option<&std::error::Error> {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             RequestError::Http(err) => Some(err),
             RequestError::Json(err) => Some(err),
@@ -372,7 +370,7 @@ pub enum ResponseError {
 }
 
 impl std::fmt::Display for ResponseError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             ResponseError::NeedMoreData => write!(f, "need more response data"),
             ResponseError::Json(err) => write!(f, "{}", err),
@@ -390,7 +388,7 @@ impl std::error::Error for ResponseError {
         }
     }
 
-    fn cause(&self) -> Option<&std::error::Error> {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             ResponseError::NeedMoreData => None,
             ResponseError::Json(err) => Some(err),

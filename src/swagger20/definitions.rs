@@ -10,7 +10,7 @@ impl std::ops::Deref for DefinitionPath {
 }
 
 impl std::fmt::Display for DefinitionPath {
-	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		self.0.fmt(f)
 	}
 }
@@ -38,7 +38,7 @@ impl std::ops::Deref for PropertyName {
 }
 
 impl std::fmt::Display for PropertyName {
-	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		self.0.fmt(f)
 	}
 }
@@ -55,7 +55,7 @@ impl std::ops::Deref for RefPath {
 }
 
 impl std::fmt::Display for RefPath {
-	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		self.0.fmt(f)
 	}
 }

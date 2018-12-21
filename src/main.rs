@@ -1,4 +1,4 @@
-#![deny(unused_extern_crates, warnings)]
+#![deny(rust_2018_idioms, warnings)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
 	clippy::cyclomatic_complexity,
@@ -22,7 +22,7 @@ impl<E> From<E> for Error where E: Into<Box<dyn std::error::Error>> {
 }
 
 impl std::fmt::Debug for Error {
-	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		writeln!(f, "{}", self.0)?;
 		write!(f, "{:?}", self.1)?;
 		Ok(())
@@ -341,7 +341,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "                impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
 				writeln!(file, "                    type Value = Field;")?;
 				writeln!(file)?;
-				writeln!(file, "                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
+				writeln!(file, "                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
 				writeln!(file, r#"                        write!(f, "field identifier")"#)?;
 				writeln!(file, "                    }}")?;
 				writeln!(file)?;
@@ -368,7 +368,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
 				writeln!(file, "            type Value = {};", type_name)?;
 				writeln!(file)?;
-				writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
+				writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
 				writeln!(file, r#"                write!(f, "struct {}")"#, type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
@@ -509,7 +509,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
 				writeln!(file, "            type Value = {};", type_name)?;
 				writeln!(file)?;
-				writeln!(file, "            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
+				writeln!(file, "            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
 				writeln!(file, r#"                write!(formatter, "enum {}")"#, type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
@@ -585,7 +585,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
 				writeln!(file, "            type Value = {};", type_name)?;
 				writeln!(file)?;
-				writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
+				writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
 				writeln!(file, r#"                write!(f, "enum {}")"#, type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;
@@ -657,7 +657,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 				writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
 				writeln!(file, "            type Value = {};", type_name)?;
 				writeln!(file)?;
-				writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {{")?;
+				writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
 				writeln!(file, r#"                write!(f, "{}")"#, type_name)?;
 				writeln!(file, "            }}")?;
 				writeln!(file)?;

@@ -209,7 +209,7 @@ impl<'de> serde::Deserialize<'de> for ComponentStatus {
                 impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
@@ -233,7 +233,7 @@ impl<'de> serde::Deserialize<'de> for ComponentStatus {
         impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = ComponentStatus;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(f, "struct ComponentStatus")
             }
 

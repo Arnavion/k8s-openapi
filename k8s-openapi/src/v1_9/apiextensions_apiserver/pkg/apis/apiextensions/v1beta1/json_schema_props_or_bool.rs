@@ -14,7 +14,7 @@ impl<'de> serde::Deserialize<'de> for JSONSchemaPropsOrBool {
         impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = JSONSchemaPropsOrBool;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(f, "enum JSONSchemaPropsOrBool")
             }
 

@@ -11,7 +11,7 @@ impl<'de> serde::Deserialize<'de> for JSON {
         impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = JSON;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(f, "JSON")
             }
 

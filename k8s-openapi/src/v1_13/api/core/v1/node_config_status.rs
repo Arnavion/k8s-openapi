@@ -34,7 +34,7 @@ impl<'de> serde::Deserialize<'de> for NodeConfigStatus {
                 impl<'de> serde::de::Visitor<'de> for Visitor {
                     type Value = Field;
 
-                    fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                         write!(f, "field identifier")
                     }
 
@@ -58,7 +58,7 @@ impl<'de> serde::Deserialize<'de> for NodeConfigStatus {
         impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = NodeConfigStatus;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(f, "struct NodeConfigStatus")
             }
 

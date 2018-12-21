@@ -45,7 +45,7 @@ impl<'de> serde::Deserialize<'de> for Quantity {
         impl<'de> serde::de::Visitor<'de> for Visitor {
             type Value = Quantity;
 
-            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(f, "Quantity")
             }
 
