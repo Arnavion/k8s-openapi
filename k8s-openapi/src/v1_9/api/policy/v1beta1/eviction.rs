@@ -116,6 +116,14 @@ impl crate::Resource for Eviction {
     }
 }
 
+impl crate::Metadata for Eviction {
+    type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+
+    fn metadata(&self) -> Option<&Self::Ty> {
+        self.metadata.as_ref()
+    }
+}
+
 impl<'de> serde::Deserialize<'de> for Eviction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -28,6 +28,14 @@ impl crate::Resource for PodSecurityPolicyList {
     }
 }
 
+impl crate::Metadata for PodSecurityPolicyList {
+    type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ListMeta;
+
+    fn metadata(&self) -> Option<&Self::Ty> {
+        self.metadata.as_ref()
+    }
+}
+
 impl<'de> serde::Deserialize<'de> for PodSecurityPolicyList {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

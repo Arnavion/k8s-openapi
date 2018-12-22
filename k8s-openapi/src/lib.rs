@@ -219,18 +219,27 @@ pub trait Resource {
     /// or just the version for resources without a group (eg `"v1"`).
     ///
     /// This is the string used in the `apiVersion` field of the resource's serialized form.
-    fn api_version() -> &'static str;
+    fn api_version() -> &'static str where Self: Sized;
 
     /// The group of the resource, or the empty string if the resource doesn't have a group.
-    fn group() -> &'static str;
+    fn group() -> &'static str where Self: Sized;
 
     /// The kind of the resource.
     ///
     /// This is the string used in the `kind` field of the resource's serialized form.
-    fn kind() -> &'static str;
+    fn kind() -> &'static str where Self: Sized;
 
     /// The version of the resource.
-    fn version() -> &'static str;
+    fn version() -> &'static str where Self: Sized;
+}
+
+/// A trait applied to all Kubernetes resources that have metadata.
+pub trait Metadata: Resource {
+    /// The type of the metadata object.
+    type Ty;
+
+    /// Gets the metadata of this resource value.
+    fn metadata(&self) -> Option<&<Self as Metadata>::Ty>;
 }
 
 /// Extracts the API version of the given resource value.

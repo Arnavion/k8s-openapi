@@ -1193,6 +1193,14 @@ impl crate::Resource for LimitRange {
     }
 }
 
+impl crate::Metadata for LimitRange {
+    type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+
+    fn metadata(&self) -> Option<&Self::Ty> {
+        self.metadata.as_ref()
+    }
+}
+
 impl<'de> serde::Deserialize<'de> for LimitRange {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

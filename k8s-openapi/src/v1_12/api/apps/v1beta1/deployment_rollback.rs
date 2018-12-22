@@ -135,6 +135,7 @@ impl crate::Resource for DeploymentRollback {
     }
 }
 
+
 impl<'de> serde::Deserialize<'de> for DeploymentRollback {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

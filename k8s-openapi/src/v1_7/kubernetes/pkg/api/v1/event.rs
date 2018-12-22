@@ -1079,6 +1079,14 @@ impl crate::Resource for Event {
     }
 }
 
+impl crate::Metadata for Event {
+    type Ty = crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+
+    fn metadata(&self) -> Option<&Self::Ty> {
+        Some(&self.metadata)
+    }
+}
+
 impl<'de> serde::Deserialize<'de> for Event {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

@@ -152,7 +152,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					field_type_name: String,
 				}
 
-				let (properties, resource_metadata) = {
+				let (properties, resource_metadata, metadata_property_ty) = {
 					use std::fmt::Write;
 
 					let mut result = Vec::with_capacity(properties.len());
@@ -169,6 +169,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 						});
 					let mut has_api_version = false;
 					let mut has_kind = false;
+					let mut metadata_property_ty = None;
 
 					for (name, (schema, required)) in properties {
 						if name.0 == "apiVersion" && single_group_version_kind.is_some() {
@@ -190,6 +191,10 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 						}
 
 						let type_name = get_rust_type(&schema.kind, &replace_namespaces, mod_root)?;
+
+						if name.0 == "metadata" {
+							metadata_property_ty = Some((*required, type_name.clone()));
+						}
 
 						// Fix cases of infinite recursion
 						if let swagger20::SchemaKind::Ref(ref ref_path) = schema.kind {
@@ -245,7 +250,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 						(false, true) => return Err(format!("{} has a kind property but not an apiVersion property", definition_path).into()),
 					};
 
-					(result, resource_metadata)
+					(result, resource_metadata, metadata_property_ty)
 				};
 
 				write!(file, "#[derive(Clone, Debug")?;
@@ -317,6 +322,22 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					writeln!(file, r#"        "{}""#, resource_metadata.3)?;
 					writeln!(file, "    }}")?;
 					writeln!(file, "}}")?;
+					writeln!(file)?;
+
+					if let Some((required, ty)) = metadata_property_ty {
+						writeln!(file, "impl crate::Metadata for {} {{", type_name)?;
+						writeln!(file, "    type Ty = {};", ty)?;
+						writeln!(file)?;
+						writeln!(file, "    fn metadata(&self) -> Option<&Self::Ty> {{")?;
+						if required {
+							writeln!(file, "        Some(&self.metadata)")?;
+						}
+						else {
+							writeln!(file, "        self.metadata.as_ref()")?;
+						}
+						writeln!(file, "    }}")?;
+						writeln!(file, "}}")?;
+					}
 				}
 
 				writeln!(file)?;

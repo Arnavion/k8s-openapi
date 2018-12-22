@@ -25,6 +25,7 @@ impl crate::Resource for APIGroupList {
     }
 }
 
+
 impl<'de> serde::Deserialize<'de> for APIGroupList {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

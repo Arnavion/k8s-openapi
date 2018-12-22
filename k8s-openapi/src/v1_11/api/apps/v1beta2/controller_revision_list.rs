@@ -28,6 +28,14 @@ impl crate::Resource for ControllerRevisionList {
     }
 }
 
+impl crate::Metadata for ControllerRevisionList {
+    type Ty = crate::v1_11::apimachinery::pkg::apis::meta::v1::ListMeta;
+
+    fn metadata(&self) -> Option<&Self::Ty> {
+        self.metadata.as_ref()
+    }
+}
+
 impl<'de> serde::Deserialize<'de> for ControllerRevisionList {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

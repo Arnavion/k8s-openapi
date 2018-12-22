@@ -129,6 +129,14 @@ impl crate::Resource for LocalSubjectAccessReview {
     }
 }
 
+impl crate::Metadata for LocalSubjectAccessReview {
+    type Ty = crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+
+    fn metadata(&self) -> Option<&Self::Ty> {
+        self.metadata.as_ref()
+    }
+}
+
 impl<'de> serde::Deserialize<'de> for LocalSubjectAccessReview {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

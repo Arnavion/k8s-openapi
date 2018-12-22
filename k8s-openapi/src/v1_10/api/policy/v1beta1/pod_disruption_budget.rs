@@ -1399,6 +1399,14 @@ impl crate::Resource for PodDisruptionBudget {
     }
 }
 
+impl crate::Metadata for PodDisruptionBudget {
+    type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ObjectMeta;
+
+    fn metadata(&self) -> Option<&Self::Ty> {
+        self.metadata.as_ref()
+    }
+}
+
 impl<'de> serde::Deserialize<'de> for PodDisruptionBudget {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]
