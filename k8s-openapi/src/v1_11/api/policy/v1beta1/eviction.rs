@@ -31,15 +31,18 @@ impl Eviction {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_core_v1_namespaced_pod_eviction(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::api::policy::v1beta1::Eviction,
-        pretty: Option<&str>,
+        optional: CreateCoreV1NamespacedPodEvictionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateCoreV1NamespacedPodEvictionOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/eviction?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -51,6 +54,13 @@ impl Eviction {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Eviction::create_core_v1_namespaced_pod_eviction`](./struct.Eviction.html#method.create_core_v1_namespaced_pod_eviction)
+#[derive(Debug, Default)]
+pub struct CreateCoreV1NamespacedPodEvictionOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Eviction::create_core_v1_namespaced_pod_eviction`](./struct.Eviction.html#method.create_core_v1_namespaced_pod_eviction)
@@ -119,7 +129,7 @@ impl crate::Resource for Eviction {
 impl crate::Metadata for Eviction {
     type Ty = crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

@@ -25,15 +25,7 @@ fn watch_pods() {
 	}
 
 	crate::Client::with("watch_event-watch_pods", |client| {
-		k8s_if_le_1_7! {
-			let request =
-				api::Pod::watch_core_v1_namespaced_pod_list("kube-system", None, None, None, None, None, None, None);
-		}
-		k8s_if_ge_1_8! {
-			let request =
-				api::Pod::watch_core_v1_namespaced_pod_list("kube-system", None, None, None, None, None, None, None, None, None);
-		}
-		let request = request.expect("couldn't watch pods");
+		let request = api::Pod::watch_core_v1_namespaced_pod_list("kube-system", Default::default()).expect("couldn't watch pods");
 		let response = client.execute(request).expect("couldn't watch pods");
 		let pod_watch_events =
 			crate::get_multiple_values(response, |response, status_code, _| match response {

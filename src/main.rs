@@ -322,13 +322,13 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					writeln!(file, r#"        "{}""#, resource_metadata.3)?;
 					writeln!(file, "    }}")?;
 					writeln!(file, "}}")?;
-					writeln!(file)?;
 
 					if let Some((required, ty)) = metadata_property_ty {
+						writeln!(file)?;
 						writeln!(file, "impl crate::Metadata for {} {{", type_name)?;
 						writeln!(file, "    type Ty = {};", ty)?;
 						writeln!(file)?;
-						writeln!(file, "    fn metadata(&self) -> Option<&Self::Ty> {{")?;
+						writeln!(file, "    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {{")?;
 						if required {
 							writeln!(file, "        Some(&self.metadata)")?;
 						}
@@ -1018,11 +1018,14 @@ fn write_operation(
 
 	writeln!(file, "// Generated from operation {}", operation.id)?;
 
-	let operation_result_name = {
+	let (operation_result_name, operation_optional_parameters_name) = {
 		let mut operation_id_chars = operation.id.chars();
 		let first_operation_id_chars = operation_id_chars.next().ok_or_else(|| format!("operation has empty ID: {:?}", operation))?.to_uppercase();
 		let rest_operation_id_chars = operation_id_chars.as_str();
-		format!("{}{}Response", first_operation_id_chars, rest_operation_id_chars)
+		(
+			format!("{}{}Response", first_operation_id_chars, rest_operation_id_chars),
+			format!("{}{}Optional", first_operation_id_chars, rest_operation_id_chars),
+		)
 	};
 
 	let operation_responses: Result<Vec<_>, _> =
@@ -1087,16 +1090,27 @@ fn write_operation(
 	let mut previous_parameters: std::collections::HashSet<_> = Default::default();
 	let parameters: Result<Vec<_>, Error> =
 		parameters.into_iter()
-		.map(|parameter| {
+		.filter_map(|parameter| {
+			match (operation.method, parameter.location) {
+				// GET and DELETE appear to duplicate the parameters in the body and querystring, so just ignore the body
+				(swagger20::Method::Delete, swagger20::ParameterLocation::Body) |
+				(swagger20::Method::Get, swagger20::ParameterLocation::Body) => return None,
+
+				_ => (),
+			}
+
 			let mut parameter_name = get_rust_ident(&parameter.name);
 			while previous_parameters.contains(&parameter_name) {
 				parameter_name = format!("{}_", parameter_name).into();
 			}
 			previous_parameters.insert(parameter_name.clone());
 
-			let parameter_type = get_rust_borrow_type(&parameter.schema.kind, replace_namespaces, mod_root)?;
+			let parameter_type = match get_rust_borrow_type(&parameter.schema.kind, replace_namespaces, mod_root) {
+				Ok(parameter_type) => parameter_type,
+				Err(err) => return Some(Err(err)),
+			};
 
-			Ok((parameter_name, parameter_type, parameter))
+			Some(Ok((parameter_name, parameter_type, parameter)))
 		})
 		.collect();
 	let mut parameters = parameters?;
@@ -1110,6 +1124,8 @@ fn write_operation(
 		.then_with(|| parameter1.name.cmp(&parameter2.name))
 	});
 	let parameters = parameters;
+	let (required_parameters, optional_parameters): (Vec<_>, Vec<_>) = parameters.iter().partition(|(_, _, parameter)| parameter.required);
+	let any_optional_fields_have_lifetimes = optional_parameters.iter().any(|(_, parameter_type, _)| parameter_type.starts_with('&'));
 
 	let mut wrote_description = false;
 	if let Some(description) = operation.description.as_ref() {
@@ -1127,7 +1143,7 @@ fn write_operation(
 	if !parameters.is_empty() {
 		writeln!(file, "{}///", indent)?;
 		writeln!(file, "{}/// # Arguments", indent)?;
-		for (parameter_name, _, parameter) in &parameters {
+		for (parameter_name, _, parameter) in &required_parameters {
 			writeln!(file, "{}///", indent)?;
 			writeln!(file, "{}/// * `{}`", indent, parameter_name)?;
 			if let Some(description) = parameter.schema.description.as_ref() {
@@ -1137,27 +1153,37 @@ fn write_operation(
 				}
 			}
 		}
+		if !optional_parameters.is_empty() {
+			writeln!(file, "{}///", indent)?;
+			writeln!(file, "{}/// * `optional`", indent)?;
+			writeln!(file, "{}///", indent)?;
+			writeln!(file, "{}///     Optional parameters. Use `Default::default()` to not pass any.", indent)?;
+		}
 	}
 
 	writeln!(file, "{}pub fn {}(", indent, operation_fn_name)?;
-	for (parameter_name, parameter_type, parameter) in &parameters {
-		match (operation.method, parameter.location) {
-			(swagger20::Method::Delete, swagger20::ParameterLocation::Body) |
-			(swagger20::Method::Get, swagger20::ParameterLocation::Body) => continue,
-
-			_ => (),
+	for (parameter_name, parameter_type, _) in &required_parameters {
+		writeln!(file, "{}    {}: {},", indent, parameter_name, parameter_type)?;
+	}
+	if !optional_parameters.is_empty() {
+		write!(file, "{}    optional: {}", indent, operation_optional_parameters_name)?;
+		if any_optional_fields_have_lifetimes {
+			write!(file, "<'_>")?;
 		}
-
-		if parameter.required {
-			writeln!(file, "{}    {}: {},", indent, parameter_name, parameter_type)?;
-		}
-		else {
-			writeln!(file, "{}    {}: Option<{}>,", indent, parameter_name, parameter_type)?;
-		}
+		writeln!(file, ",")?;
 	}
 	writeln!(file, "{}) -> Result<http::Request<Vec<u8>>, crate::RequestError> {{", indent)?;
 
 	let have_query_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Query);
+
+	if !optional_parameters.is_empty() {
+		writeln!(file, "{}    let {} {{", indent, operation_optional_parameters_name)?;
+		for (parameter_name, _, _) in &optional_parameters {
+			writeln!(file, "{}        {},", indent, parameter_name)?;
+		}
+
+		writeln!(file, "{}    }} = optional;", indent)?;
+	}
 
 	write!(file, r#"{}    let __url = format!("{}"#, indent, path)?;
 	if have_query_parameters {
@@ -1219,13 +1245,7 @@ fn write_operation(
 
 	writeln!(file, "{}    let mut __request = http::Request::{}(__url);", indent, method)?;
 
-	let body_parameter = match operation.method {
-		swagger20::Method::Delete | swagger20::Method::Get => None,
-
-		swagger20::Method::Patch | swagger20::Method::Post | swagger20::Method::Put =>
-			parameters.iter()
-			.find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body),
-	};
+	let body_parameter = parameters.iter().find(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Body);
 
 	write!(file, "{}    let __body = ", indent)?;
 	if let Some((parameter_name, _, parameter)) = body_parameter {
@@ -1245,6 +1265,40 @@ fn write_operation(
 	writeln!(file, "{}}}", indent)?;
 
 	if type_name.is_some() {
+		writeln!(file, "}}")?;
+	}
+
+	if !optional_parameters.is_empty() {
+		writeln!(file)?;
+
+		if let Some(type_name) = type_name {
+			writeln!(file, "/// Optional parameters of [`{}::{}`](./struct.{}.html#method.{})", type_name, operation_fn_name, type_name, operation_fn_name)?;
+		}
+		else {
+			writeln!(file, "/// Optional parameters of [`{}`](./fn.{}.html)", operation_fn_name, operation_fn_name)?;
+		}
+
+		writeln!(file, "#[derive(Debug, Default)]")?;
+		write!(file, "pub struct {}", operation_optional_parameters_name)?;
+		if any_optional_fields_have_lifetimes {
+			write!(file, "<'a>")?;
+		}
+		writeln!(file, " {{")?;
+
+		for (parameter_name, parameter_type, parameter) in &optional_parameters {
+			if let Some(description) = parameter.schema.description.as_ref() {
+				for line in get_comment_text(description, "") {
+					writeln!(file, "    ///{}", line)?;
+				}
+			}
+			if parameter_type.starts_with('&') {
+				writeln!(file, "    pub {}: Option<&'a {}>,", parameter_name, &parameter_type[1..])?;
+			}
+			else {
+				writeln!(file, "    pub {}: Option<{}>,", parameter_name, parameter_type)?;
+			}
+		}
+
 		writeln!(file, "}}")?;
 	}
 

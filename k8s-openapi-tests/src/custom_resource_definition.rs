@@ -161,16 +161,9 @@ fn create() {
 				Retry,
 			}
 
-			k8s_if_le_1_11! {
-				let request =
-					apiextensions::CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition(&custom_resource_definition, None)
-					.expect("couldn't create custom resource definition");
-			}
-			k8s_if_ge_1_12! {
-				let request =
-					apiextensions::CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition(&custom_resource_definition, None, None, None)
-					.expect("couldn't create custom resource definition");
-			}
+			let request =
+				apiextensions::CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition(&custom_resource_definition, Default::default())
+				.expect("couldn't create custom resource definition");
 			let response = client.execute(request).expect("couldn't create custom resource definition");
 
 			let custom_resource_definition =
@@ -198,8 +191,9 @@ fn create() {
 
 		// Wait for CRD to be registered
 		let custom_resource_definition = loop {
-			let request = apiextensions::CustomResourceDefinition::read_apiextensions_v1beta1_custom_resource_definition(
-				"foobars.k8s-openapi-tests-custom-resource-definition.com", None, None, None)
+			let request =
+				apiextensions::CustomResourceDefinition::read_apiextensions_v1beta1_custom_resource_definition(
+					"foobars.k8s-openapi-tests-custom-resource-definition.com", Default::default())
 				.expect("couldn't get custom resource definition");
 			let custom_resource_definition = {
 				let response = client.execute(request).expect("couldn't get custom resource definition");

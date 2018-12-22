@@ -28,7 +28,6 @@ impl crate::Resource for APIVersions {
     }
 }
 
-
 impl<'de> serde::Deserialize<'de> for APIVersions {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
         #[allow(non_camel_case_types)]

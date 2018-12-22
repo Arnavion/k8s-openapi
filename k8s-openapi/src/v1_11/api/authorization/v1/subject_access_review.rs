@@ -25,13 +25,16 @@ impl SubjectAccessReview {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_authorization_v1_subject_access_review(
         body: &crate::v1_11::api::authorization::v1::SubjectAccessReview,
-        pretty: Option<&str>,
+        optional: CreateAuthorizationV1SubjectAccessReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateAuthorizationV1SubjectAccessReviewOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/authorization.k8s.io/v1/subjectaccessreviews?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -43,6 +46,13 @@ impl SubjectAccessReview {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`SubjectAccessReview::create_authorization_v1_subject_access_review`](./struct.SubjectAccessReview.html#method.create_authorization_v1_subject_access_review)
+#[derive(Debug, Default)]
+pub struct CreateAuthorizationV1SubjectAccessReviewOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`SubjectAccessReview::create_authorization_v1_subject_access_review`](./struct.SubjectAccessReview.html#method.create_authorization_v1_subject_access_review)
@@ -111,7 +121,7 @@ impl crate::Resource for SubjectAccessReview {
 impl crate::Metadata for SubjectAccessReview {
     type Ty = crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

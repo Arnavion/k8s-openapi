@@ -25,13 +25,16 @@ impl SelfSubjectRulesReview {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_authorization_v1_self_subject_rules_review(
         body: &crate::v1_8::api::authorization::v1::SelfSubjectRulesReview,
-        pretty: Option<&str>,
+        optional: CreateAuthorizationV1SelfSubjectRulesReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateAuthorizationV1SelfSubjectRulesReviewOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/authorization.k8s.io/v1/selfsubjectrulesreviews?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -43,6 +46,13 @@ impl SelfSubjectRulesReview {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`SelfSubjectRulesReview::create_authorization_v1_self_subject_rules_review`](./struct.SelfSubjectRulesReview.html#method.create_authorization_v1_self_subject_rules_review)
+#[derive(Debug, Default)]
+pub struct CreateAuthorizationV1SelfSubjectRulesReviewOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`SelfSubjectRulesReview::create_authorization_v1_self_subject_rules_review`](./struct.SelfSubjectRulesReview.html#method.create_authorization_v1_self_subject_rules_review)
@@ -93,7 +103,7 @@ impl crate::Resource for SelfSubjectRulesReview {
 impl crate::Metadata for SelfSubjectRulesReview {
     type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

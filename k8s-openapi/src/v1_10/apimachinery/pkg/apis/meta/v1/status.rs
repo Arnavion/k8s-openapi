@@ -43,7 +43,7 @@ impl crate::Resource for Status {
 impl crate::Metadata for Status {
     type Ty = crate::v1_10::apimachinery::pkg::apis::meta::v1::ListMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

@@ -29,14 +29,17 @@ impl LocalSubjectAccessReview {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_authorization_v1_namespaced_local_subject_access_review(
         namespace: &str,
         body: &crate::v1_8::api::authorization::v1::LocalSubjectAccessReview,
-        pretty: Option<&str>,
+        optional: CreateAuthorizationV1NamespacedLocalSubjectAccessReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateAuthorizationV1NamespacedLocalSubjectAccessReviewOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/authorization.k8s.io/v1/namespaces/{namespace}/localsubjectaccessreviews?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -48,6 +51,13 @@ impl LocalSubjectAccessReview {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`LocalSubjectAccessReview::create_authorization_v1_namespaced_local_subject_access_review`](./struct.LocalSubjectAccessReview.html#method.create_authorization_v1_namespaced_local_subject_access_review)
+#[derive(Debug, Default)]
+pub struct CreateAuthorizationV1NamespacedLocalSubjectAccessReviewOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`LocalSubjectAccessReview::create_authorization_v1_namespaced_local_subject_access_review`](./struct.LocalSubjectAccessReview.html#method.create_authorization_v1_namespaced_local_subject_access_review)
@@ -98,7 +108,7 @@ impl crate::Resource for LocalSubjectAccessReview {
 impl crate::Metadata for LocalSubjectAccessReview {
     type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

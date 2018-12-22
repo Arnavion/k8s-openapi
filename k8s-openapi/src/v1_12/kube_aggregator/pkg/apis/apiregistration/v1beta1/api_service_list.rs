@@ -29,7 +29,7 @@ impl crate::Resource for APIServiceList {
 impl crate::Metadata for APIServiceList {
     type Ty = crate::v1_12::apimachinery::pkg::apis::meta::v1::ListMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

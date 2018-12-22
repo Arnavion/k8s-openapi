@@ -30,14 +30,17 @@ impl RoleBinding {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_rbac_authorization_v1beta1_namespaced_role_binding(
         namespace: &str,
         body: &crate::v1_7::kubernetes::pkg::apis::rbac::v1beta1::RoleBinding,
-        pretty: Option<&str>,
+        optional: CreateRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateRbacAuthorizationV1beta1NamespacedRoleBindingOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -49,6 +52,13 @@ impl RoleBinding {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::create_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.create_rbac_authorization_v1beta1_namespaced_role_binding)
+#[derive(Debug, Default)]
+pub struct CreateRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::create_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.create_rbac_authorization_v1beta1_namespaced_role_binding)
@@ -89,43 +99,22 @@ impl RoleBinding {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_rbac_authorization_v1beta1_collection_namespaced_role_binding(
         namespace: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: DeleteRbacAuthorizationV1beta1CollectionNamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteRbacAuthorizationV1beta1CollectionNamespacedRoleBindingOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -155,6 +144,25 @@ impl RoleBinding {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::delete_rbac_authorization_v1beta1_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1beta1_collection_namespaced_role_binding)
+#[derive(Debug, Default)]
+pub struct DeleteRbacAuthorizationV1beta1CollectionNamespacedRoleBindingOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::delete_rbac_authorization_v1beta1_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1beta1_collection_namespaced_role_binding)
@@ -213,31 +221,20 @@ impl RoleBinding {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `body`
+    /// * `optional`
     ///
-    /// * `grace_period_seconds`
-    ///
-    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
-    ///
-    /// * `orphan_dependents`
-    ///
-    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `propagation_policy`
-    ///
-    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_rbac_authorization_v1beta1_namespaced_role_binding(
         name: &str,
         namespace: &str,
-        grace_period_seconds: Option<i64>,
-        orphan_dependents: Option<bool>,
-        pretty: Option<&str>,
-        propagation_policy: Option<&str>,
+        optional: DeleteRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteRbacAuthorizationV1beta1NamespacedRoleBindingOptional {
+            grace_period_seconds,
+            orphan_dependents,
+            pretty,
+            propagation_policy,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
@@ -258,6 +255,19 @@ impl RoleBinding {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::delete_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1beta1_namespaced_role_binding)
+#[derive(Debug, Default)]
+pub struct DeleteRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'a> {
+    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    pub grace_period_seconds: Option<i64>,
+    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    pub orphan_dependents: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+    pub propagation_policy: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::delete_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1beta1_namespaced_role_binding)
@@ -312,43 +322,22 @@ impl RoleBinding {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_rbac_authorization_v1beta1_namespaced_role_binding(
         namespace: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListRbacAuthorizationV1beta1NamespacedRoleBindingOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -378,6 +367,25 @@ impl RoleBinding {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::list_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.list_rbac_authorization_v1beta1_namespaced_role_binding)
+#[derive(Debug, Default)]
+pub struct ListRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::list_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.list_rbac_authorization_v1beta1_namespaced_role_binding)
@@ -414,42 +422,21 @@ impl RoleBinding {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_rbac_authorization_v1beta1_role_binding_for_all_namespaces(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListRbacAuthorizationV1beta1RoleBindingForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListRbacAuthorizationV1beta1RoleBindingForAllNamespacesOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/rolebindings?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -479,6 +466,25 @@ impl RoleBinding {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::list_rbac_authorization_v1beta1_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_rbac_authorization_v1beta1_role_binding_for_all_namespaces)
+#[derive(Debug, Default)]
+pub struct ListRbacAuthorizationV1beta1RoleBindingForAllNamespacesOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::list_rbac_authorization_v1beta1_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_rbac_authorization_v1beta1_role_binding_for_all_namespaces)
@@ -525,15 +531,18 @@ impl RoleBinding {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_rbac_authorization_v1beta1_namespaced_role_binding(
         name: &str,
         namespace: &str,
         body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchRbacAuthorizationV1beta1NamespacedRoleBindingOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -545,6 +554,13 @@ impl RoleBinding {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::patch_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_rbac_authorization_v1beta1_namespaced_role_binding)
+#[derive(Debug, Default)]
+pub struct PatchRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::patch_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_rbac_authorization_v1beta1_namespaced_role_binding)
@@ -589,14 +605,17 @@ impl RoleBinding {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_rbac_authorization_v1beta1_namespaced_role_binding(
         name: &str,
         namespace: &str,
-        pretty: Option<&str>,
+        optional: ReadRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadRbacAuthorizationV1beta1NamespacedRoleBindingOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -608,6 +627,13 @@ impl RoleBinding {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::read_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.read_rbac_authorization_v1beta1_namespaced_role_binding)
+#[derive(Debug, Default)]
+pub struct ReadRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::read_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.read_rbac_authorization_v1beta1_namespaced_role_binding)
@@ -654,15 +680,18 @@ impl RoleBinding {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_rbac_authorization_v1beta1_namespaced_role_binding(
         name: &str,
         namespace: &str,
         body: &crate::v1_7::kubernetes::pkg::apis::rbac::v1beta1::RoleBinding,
-        pretty: Option<&str>,
+        optional: ReplaceRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceRbacAuthorizationV1beta1NamespacedRoleBindingOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/namespaces/{namespace}/rolebindings/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -674,6 +703,13 @@ impl RoleBinding {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::replace_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_rbac_authorization_v1beta1_namespaced_role_binding)
+#[derive(Debug, Default)]
+pub struct ReplaceRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::replace_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_rbac_authorization_v1beta1_namespaced_role_binding)
@@ -718,44 +754,23 @@ impl RoleBinding {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_rbac_authorization_v1beta1_namespaced_role_binding(
         name: &str,
         namespace: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchRbacAuthorizationV1beta1NamespacedRoleBindingOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/watch/namespaces/{namespace}/rolebindings/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -785,6 +800,25 @@ impl RoleBinding {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::watch_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1beta1_namespaced_role_binding)
+#[derive(Debug, Default)]
+pub struct WatchRbacAuthorizationV1beta1NamespacedRoleBindingOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1beta1_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1beta1_namespaced_role_binding)
@@ -827,43 +861,22 @@ impl RoleBinding {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_rbac_authorization_v1beta1_namespaced_role_binding_list(
         namespace: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchRbacAuthorizationV1beta1NamespacedRoleBindingListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchRbacAuthorizationV1beta1NamespacedRoleBindingListOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/watch/namespaces/{namespace}/rolebindings?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -893,6 +906,25 @@ impl RoleBinding {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::watch_rbac_authorization_v1beta1_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1beta1_namespaced_role_binding_list)
+#[derive(Debug, Default)]
+pub struct WatchRbacAuthorizationV1beta1NamespacedRoleBindingListOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1beta1_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1beta1_namespaced_role_binding_list)
@@ -931,42 +963,21 @@ impl RoleBinding {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_rbac_authorization_v1beta1_role_binding_list_for_all_namespaces(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchRbacAuthorizationV1beta1RoleBindingListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchRbacAuthorizationV1beta1RoleBindingListForAllNamespacesOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/watch/rolebindings?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -996,6 +1007,25 @@ impl RoleBinding {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`RoleBinding::watch_rbac_authorization_v1beta1_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1beta1_role_binding_list_for_all_namespaces)
+#[derive(Debug, Default)]
+pub struct WatchRbacAuthorizationV1beta1RoleBindingListForAllNamespacesOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1beta1_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1beta1_role_binding_list_for_all_namespaces)
@@ -1048,7 +1078,7 @@ impl crate::Resource for RoleBinding {
 impl crate::Metadata for RoleBinding {
     type Ty = crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

@@ -26,13 +26,16 @@ impl Namespace {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_core_v1_namespace(
         body: &crate::v1_7::kubernetes::pkg::api::v1::Namespace,
-        pretty: Option<&str>,
+        optional: CreateCoreV1NamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateCoreV1NamespaceOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -44,6 +47,13 @@ impl Namespace {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::create_core_v1_namespace`](./struct.Namespace.html#method.create_core_v1_namespace)
+#[derive(Debug, Default)]
+pub struct CreateCoreV1NamespaceOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Namespace::create_core_v1_namespace`](./struct.Namespace.html#method.create_core_v1_namespace)
@@ -84,30 +94,19 @@ impl Namespace {
     ///
     ///     name of the Namespace
     ///
-    /// * `body`
+    /// * `optional`
     ///
-    /// * `grace_period_seconds`
-    ///
-    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
-    ///
-    /// * `orphan_dependents`
-    ///
-    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `propagation_policy`
-    ///
-    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_core_v1_namespace(
         name: &str,
-        grace_period_seconds: Option<i64>,
-        orphan_dependents: Option<bool>,
-        pretty: Option<&str>,
-        propagation_policy: Option<&str>,
+        optional: DeleteCoreV1NamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteCoreV1NamespaceOptional {
+            grace_period_seconds,
+            orphan_dependents,
+            pretty,
+            propagation_policy,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
@@ -128,6 +127,19 @@ impl Namespace {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::delete_core_v1_namespace`](./struct.Namespace.html#method.delete_core_v1_namespace)
+#[derive(Debug, Default)]
+pub struct DeleteCoreV1NamespaceOptional<'a> {
+    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    pub grace_period_seconds: Option<i64>,
+    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    pub orphan_dependents: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+    pub propagation_policy: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Namespace::delete_core_v1_namespace`](./struct.Namespace.html#method.delete_core_v1_namespace)
@@ -178,42 +190,21 @@ impl Namespace {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_core_v1_namespace(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListCoreV1NamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListCoreV1NamespaceOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/namespaces?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -243,6 +234,25 @@ impl Namespace {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::list_core_v1_namespace`](./struct.Namespace.html#method.list_core_v1_namespace)
+#[derive(Debug, Default)]
+pub struct ListCoreV1NamespaceOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Namespace::list_core_v1_namespace`](./struct.Namespace.html#method.list_core_v1_namespace)
@@ -285,14 +295,17 @@ impl Namespace {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_core_v1_namespace(
         name: &str,
         body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchCoreV1NamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchCoreV1NamespaceOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -304,6 +317,13 @@ impl Namespace {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::patch_core_v1_namespace`](./struct.Namespace.html#method.patch_core_v1_namespace)
+#[derive(Debug, Default)]
+pub struct PatchCoreV1NamespaceOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Namespace::patch_core_v1_namespace`](./struct.Namespace.html#method.patch_core_v1_namespace)
@@ -346,14 +366,17 @@ impl Namespace {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_core_v1_namespace_status(
         name: &str,
         body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchCoreV1NamespaceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchCoreV1NamespaceStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{name}/status?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -365,6 +388,13 @@ impl Namespace {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::patch_core_v1_namespace_status`](./struct.Namespace.html#method.patch_core_v1_namespace_status)
+#[derive(Debug, Default)]
+pub struct PatchCoreV1NamespaceStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Namespace::patch_core_v1_namespace_status`](./struct.Namespace.html#method.patch_core_v1_namespace_status)
@@ -405,23 +435,18 @@ impl Namespace {
     ///
     ///     name of the Namespace
     ///
-    /// * `exact`
+    /// * `optional`
     ///
-    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
-    ///
-    /// * `export`
-    ///
-    ///     Should this value be exported.  Export strips fields that a user can not specify.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_core_v1_namespace(
         name: &str,
-        exact: Option<bool>,
-        export: Option<bool>,
-        pretty: Option<&str>,
+        optional: ReadCoreV1NamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadCoreV1NamespaceOptional {
+            exact,
+            export,
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
@@ -439,6 +464,17 @@ impl Namespace {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::read_core_v1_namespace`](./struct.Namespace.html#method.read_core_v1_namespace)
+#[derive(Debug, Default)]
+pub struct ReadCoreV1NamespaceOptional<'a> {
+    /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    pub exact: Option<bool>,
+    /// Should this value be exported.  Export strips fields that a user can not specify.
+    pub export: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Namespace::read_core_v1_namespace`](./struct.Namespace.html#method.read_core_v1_namespace)
@@ -479,13 +515,16 @@ impl Namespace {
     ///
     ///     name of the Namespace
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_core_v1_namespace_status(
         name: &str,
-        pretty: Option<&str>,
+        optional: ReadCoreV1NamespaceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadCoreV1NamespaceStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{name}/status?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -497,6 +536,13 @@ impl Namespace {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::read_core_v1_namespace_status`](./struct.Namespace.html#method.read_core_v1_namespace_status)
+#[derive(Debug, Default)]
+pub struct ReadCoreV1NamespaceStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Namespace::read_core_v1_namespace_status`](./struct.Namespace.html#method.read_core_v1_namespace_status)
@@ -539,14 +585,17 @@ impl Namespace {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_core_v1_namespace(
         name: &str,
         body: &crate::v1_7::kubernetes::pkg::api::v1::Namespace,
-        pretty: Option<&str>,
+        optional: ReplaceCoreV1NamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceCoreV1NamespaceOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -558,6 +607,13 @@ impl Namespace {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::replace_core_v1_namespace`](./struct.Namespace.html#method.replace_core_v1_namespace)
+#[derive(Debug, Default)]
+pub struct ReplaceCoreV1NamespaceOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Namespace::replace_core_v1_namespace`](./struct.Namespace.html#method.replace_core_v1_namespace)
@@ -600,14 +656,17 @@ impl Namespace {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_core_v1_namespace_finalize(
         name: &str,
         body: &crate::v1_7::kubernetes::pkg::api::v1::Namespace,
-        pretty: Option<&str>,
+        optional: ReplaceCoreV1NamespaceFinalizeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceCoreV1NamespaceFinalizeOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{name}/finalize?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -619,6 +678,13 @@ impl Namespace {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::replace_core_v1_namespace_finalize`](./struct.Namespace.html#method.replace_core_v1_namespace_finalize)
+#[derive(Debug, Default)]
+pub struct ReplaceCoreV1NamespaceFinalizeOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Namespace::replace_core_v1_namespace_finalize`](./struct.Namespace.html#method.replace_core_v1_namespace_finalize)
@@ -661,14 +727,17 @@ impl Namespace {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_core_v1_namespace_status(
         name: &str,
         body: &crate::v1_7::kubernetes::pkg::api::v1::Namespace,
-        pretty: Option<&str>,
+        optional: ReplaceCoreV1NamespaceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceCoreV1NamespaceStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{name}/status?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -680,6 +749,13 @@ impl Namespace {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::replace_core_v1_namespace_status`](./struct.Namespace.html#method.replace_core_v1_namespace_status)
+#[derive(Debug, Default)]
+pub struct ReplaceCoreV1NamespaceStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Namespace::replace_core_v1_namespace_status`](./struct.Namespace.html#method.replace_core_v1_namespace_status)
@@ -720,43 +796,22 @@ impl Namespace {
     ///
     ///     name of the Namespace
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_core_v1_namespace(
         name: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchCoreV1NamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchCoreV1NamespaceOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/watch/namespaces/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -786,6 +841,25 @@ impl Namespace {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::watch_core_v1_namespace`](./struct.Namespace.html#method.watch_core_v1_namespace)
+#[derive(Debug, Default)]
+pub struct WatchCoreV1NamespaceOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Namespace::watch_core_v1_namespace`](./struct.Namespace.html#method.watch_core_v1_namespace)
@@ -824,42 +898,21 @@ impl Namespace {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_core_v1_namespace_list(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchCoreV1NamespaceListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchCoreV1NamespaceListOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/watch/namespaces?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -889,6 +942,25 @@ impl Namespace {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Namespace::watch_core_v1_namespace_list`](./struct.Namespace.html#method.watch_core_v1_namespace_list)
+#[derive(Debug, Default)]
+pub struct WatchCoreV1NamespaceListOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Namespace::watch_core_v1_namespace_list`](./struct.Namespace.html#method.watch_core_v1_namespace_list)
@@ -941,7 +1013,7 @@ impl crate::Resource for Namespace {
 impl crate::Metadata for Namespace {
     type Ty = crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

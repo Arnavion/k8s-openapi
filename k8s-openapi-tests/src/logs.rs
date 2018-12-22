@@ -23,15 +23,7 @@ fn get() {
 	}
 
 	crate::Client::with("logs-get", |client| {
-		k8s_if_le_1_7! {
-			let request =
-				api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None);
-		}
-		k8s_if_ge_1_8! {
-			let request =
-				api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None, None, None);
-		}
-		let request = request.expect("couldn't list pods");
+		let request = api::Pod::list_core_v1_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
 		let pod_list = {
 			let response = client.execute(request).expect("couldn't list pods");;
 			crate::get_single_value(response, |response, status_code, _| match response {
@@ -52,8 +44,10 @@ fn get() {
 			.name.as_ref().expect("couldn't get addon-manager pod name");
 
 		let request =
-			api::Pod::read_core_v1_namespaced_pod_log(
-				addon_manager_pod_name, "kube-system", Some("kube-addon-manager"), None, None, None, None, None, None, None)
+			api::Pod::read_core_v1_namespaced_pod_log(addon_manager_pod_name, "kube-system", api::ReadCoreV1NamespacedPodLogOptional {
+				container: Some("kube-addon-manager"),
+				..Default::default()
+			})
 			.expect("couldn't get addon-manager pod logs");
 		let mut addon_manager_logs = String::new();
 		let strings = {

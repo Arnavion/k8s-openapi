@@ -28,13 +28,16 @@ impl StorageClass {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_storage_v1_storage_class(
         body: &crate::v1_7::kubernetes::pkg::apis::storage::v1::StorageClass,
-        pretty: Option<&str>,
+        optional: CreateStorageV1StorageClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateStorageV1StorageClassOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -46,6 +49,13 @@ impl StorageClass {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`StorageClass::create_storage_v1_storage_class`](./struct.StorageClass.html#method.create_storage_v1_storage_class)
+#[derive(Debug, Default)]
+pub struct CreateStorageV1StorageClassOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`StorageClass::create_storage_v1_storage_class`](./struct.StorageClass.html#method.create_storage_v1_storage_class)
@@ -82,42 +92,21 @@ impl StorageClass {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_storage_v1_collection_storage_class(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: DeleteStorageV1CollectionStorageClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteStorageV1CollectionStorageClassOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -147,6 +136,25 @@ impl StorageClass {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`StorageClass::delete_storage_v1_collection_storage_class`](./struct.StorageClass.html#method.delete_storage_v1_collection_storage_class)
+#[derive(Debug, Default)]
+pub struct DeleteStorageV1CollectionStorageClassOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`StorageClass::delete_storage_v1_collection_storage_class`](./struct.StorageClass.html#method.delete_storage_v1_collection_storage_class)
@@ -201,30 +209,19 @@ impl StorageClass {
     ///
     ///     name of the StorageClass
     ///
-    /// * `body`
+    /// * `optional`
     ///
-    /// * `grace_period_seconds`
-    ///
-    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
-    ///
-    /// * `orphan_dependents`
-    ///
-    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `propagation_policy`
-    ///
-    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_storage_v1_storage_class(
         name: &str,
-        grace_period_seconds: Option<i64>,
-        orphan_dependents: Option<bool>,
-        pretty: Option<&str>,
-        propagation_policy: Option<&str>,
+        optional: DeleteStorageV1StorageClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteStorageV1StorageClassOptional {
+            grace_period_seconds,
+            orphan_dependents,
+            pretty,
+            propagation_policy,
+        } = optional;
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
@@ -245,6 +242,19 @@ impl StorageClass {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`StorageClass::delete_storage_v1_storage_class`](./struct.StorageClass.html#method.delete_storage_v1_storage_class)
+#[derive(Debug, Default)]
+pub struct DeleteStorageV1StorageClassOptional<'a> {
+    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    pub grace_period_seconds: Option<i64>,
+    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    pub orphan_dependents: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+    pub propagation_policy: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`StorageClass::delete_storage_v1_storage_class`](./struct.StorageClass.html#method.delete_storage_v1_storage_class)
@@ -295,42 +305,21 @@ impl StorageClass {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_storage_v1_storage_class(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListStorageV1StorageClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListStorageV1StorageClassOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -360,6 +349,25 @@ impl StorageClass {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`StorageClass::list_storage_v1_storage_class`](./struct.StorageClass.html#method.list_storage_v1_storage_class)
+#[derive(Debug, Default)]
+pub struct ListStorageV1StorageClassOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`StorageClass::list_storage_v1_storage_class`](./struct.StorageClass.html#method.list_storage_v1_storage_class)
@@ -402,14 +410,17 @@ impl StorageClass {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_storage_v1_storage_class(
         name: &str,
         body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchStorageV1StorageClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchStorageV1StorageClassOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -421,6 +432,13 @@ impl StorageClass {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`StorageClass::patch_storage_v1_storage_class`](./struct.StorageClass.html#method.patch_storage_v1_storage_class)
+#[derive(Debug, Default)]
+pub struct PatchStorageV1StorageClassOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`StorageClass::patch_storage_v1_storage_class`](./struct.StorageClass.html#method.patch_storage_v1_storage_class)
@@ -461,23 +479,18 @@ impl StorageClass {
     ///
     ///     name of the StorageClass
     ///
-    /// * `exact`
+    /// * `optional`
     ///
-    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
-    ///
-    /// * `export`
-    ///
-    ///     Should this value be exported.  Export strips fields that a user can not specify.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_storage_v1_storage_class(
         name: &str,
-        exact: Option<bool>,
-        export: Option<bool>,
-        pretty: Option<&str>,
+        optional: ReadStorageV1StorageClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadStorageV1StorageClassOptional {
+            exact,
+            export,
+            pretty,
+        } = optional;
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
@@ -495,6 +508,17 @@ impl StorageClass {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`StorageClass::read_storage_v1_storage_class`](./struct.StorageClass.html#method.read_storage_v1_storage_class)
+#[derive(Debug, Default)]
+pub struct ReadStorageV1StorageClassOptional<'a> {
+    /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    pub exact: Option<bool>,
+    /// Should this value be exported.  Export strips fields that a user can not specify.
+    pub export: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`StorageClass::read_storage_v1_storage_class`](./struct.StorageClass.html#method.read_storage_v1_storage_class)
@@ -537,14 +561,17 @@ impl StorageClass {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_storage_v1_storage_class(
         name: &str,
         body: &crate::v1_7::kubernetes::pkg::apis::storage::v1::StorageClass,
-        pretty: Option<&str>,
+        optional: ReplaceStorageV1StorageClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceStorageV1StorageClassOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/storage.k8s.io/v1/storageclasses/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -556,6 +583,13 @@ impl StorageClass {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`StorageClass::replace_storage_v1_storage_class`](./struct.StorageClass.html#method.replace_storage_v1_storage_class)
+#[derive(Debug, Default)]
+pub struct ReplaceStorageV1StorageClassOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`StorageClass::replace_storage_v1_storage_class`](./struct.StorageClass.html#method.replace_storage_v1_storage_class)
@@ -596,43 +630,22 @@ impl StorageClass {
     ///
     ///     name of the StorageClass
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_storage_v1_storage_class(
         name: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchStorageV1StorageClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchStorageV1StorageClassOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/storage.k8s.io/v1/watch/storageclasses/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -662,6 +675,25 @@ impl StorageClass {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`StorageClass::watch_storage_v1_storage_class`](./struct.StorageClass.html#method.watch_storage_v1_storage_class)
+#[derive(Debug, Default)]
+pub struct WatchStorageV1StorageClassOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`StorageClass::watch_storage_v1_storage_class`](./struct.StorageClass.html#method.watch_storage_v1_storage_class)
@@ -700,42 +732,21 @@ impl StorageClass {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_storage_v1_storage_class_list(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchStorageV1StorageClassListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchStorageV1StorageClassListOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/storage.k8s.io/v1/watch/storageclasses?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -765,6 +776,25 @@ impl StorageClass {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`StorageClass::watch_storage_v1_storage_class_list`](./struct.StorageClass.html#method.watch_storage_v1_storage_class_list)
+#[derive(Debug, Default)]
+pub struct WatchStorageV1StorageClassListOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`StorageClass::watch_storage_v1_storage_class_list`](./struct.StorageClass.html#method.watch_storage_v1_storage_class_list)
@@ -817,7 +847,7 @@ impl crate::Resource for StorageClass {
 impl crate::Metadata for StorageClass {
     type Ty = crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

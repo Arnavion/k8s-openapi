@@ -30,14 +30,17 @@ impl PersistentVolumeClaim {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_core_v1_namespaced_persistent_volume_claim(
         namespace: &str,
         body: &crate::v1_7::kubernetes::pkg::api::v1::PersistentVolumeClaim,
-        pretty: Option<&str>,
+        optional: CreateCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateCoreV1NamespacedPersistentVolumeClaimOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -49,6 +52,13 @@ impl PersistentVolumeClaim {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::create_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.create_core_v1_namespaced_persistent_volume_claim)
+#[derive(Debug, Default)]
+pub struct CreateCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::create_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.create_core_v1_namespaced_persistent_volume_claim)
@@ -89,43 +99,22 @@ impl PersistentVolumeClaim {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_core_v1_collection_namespaced_persistent_volume_claim(
         namespace: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: DeleteCoreV1CollectionNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteCoreV1CollectionNamespacedPersistentVolumeClaimOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -155,6 +144,25 @@ impl PersistentVolumeClaim {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::delete_core_v1_collection_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_collection_namespaced_persistent_volume_claim)
+#[derive(Debug, Default)]
+pub struct DeleteCoreV1CollectionNamespacedPersistentVolumeClaimOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::delete_core_v1_collection_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_collection_namespaced_persistent_volume_claim)
@@ -213,31 +221,20 @@ impl PersistentVolumeClaim {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `body`
+    /// * `optional`
     ///
-    /// * `grace_period_seconds`
-    ///
-    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
-    ///
-    /// * `orphan_dependents`
-    ///
-    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `propagation_policy`
-    ///
-    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_core_v1_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        grace_period_seconds: Option<i64>,
-        orphan_dependents: Option<bool>,
-        pretty: Option<&str>,
-        propagation_policy: Option<&str>,
+        optional: DeleteCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteCoreV1NamespacedPersistentVolumeClaimOptional {
+            grace_period_seconds,
+            orphan_dependents,
+            pretty,
+            propagation_policy,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
@@ -258,6 +255,19 @@ impl PersistentVolumeClaim {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::delete_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_namespaced_persistent_volume_claim)
+#[derive(Debug, Default)]
+pub struct DeleteCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    pub grace_period_seconds: Option<i64>,
+    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    pub orphan_dependents: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+    pub propagation_policy: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::delete_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_namespaced_persistent_volume_claim)
@@ -312,43 +322,22 @@ impl PersistentVolumeClaim {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_core_v1_namespaced_persistent_volume_claim(
         namespace: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListCoreV1NamespacedPersistentVolumeClaimOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -378,6 +367,25 @@ impl PersistentVolumeClaim {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::list_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.list_core_v1_namespaced_persistent_volume_claim)
+#[derive(Debug, Default)]
+pub struct ListCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::list_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.list_core_v1_namespaced_persistent_volume_claim)
@@ -414,42 +422,21 @@ impl PersistentVolumeClaim {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_core_v1_persistent_volume_claim_for_all_namespaces(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListCoreV1PersistentVolumeClaimForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListCoreV1PersistentVolumeClaimForAllNamespacesOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/persistentvolumeclaims?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -479,6 +466,25 @@ impl PersistentVolumeClaim {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::list_core_v1_persistent_volume_claim_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.list_core_v1_persistent_volume_claim_for_all_namespaces)
+#[derive(Debug, Default)]
+pub struct ListCoreV1PersistentVolumeClaimForAllNamespacesOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::list_core_v1_persistent_volume_claim_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.list_core_v1_persistent_volume_claim_for_all_namespaces)
@@ -525,15 +531,18 @@ impl PersistentVolumeClaim {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_core_v1_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
         body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchCoreV1NamespacedPersistentVolumeClaimOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -545,6 +554,13 @@ impl PersistentVolumeClaim {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim)
+#[derive(Debug, Default)]
+pub struct PatchCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim)
@@ -591,15 +607,18 @@ impl PersistentVolumeClaim {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_core_v1_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchCoreV1NamespacedPersistentVolumeClaimStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchCoreV1NamespacedPersistentVolumeClaimStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -611,6 +630,13 @@ impl PersistentVolumeClaim {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim_status)
+#[derive(Debug, Default)]
+pub struct PatchCoreV1NamespacedPersistentVolumeClaimStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim_status)
@@ -655,24 +681,19 @@ impl PersistentVolumeClaim {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `exact`
+    /// * `optional`
     ///
-    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
-    ///
-    /// * `export`
-    ///
-    ///     Should this value be exported.  Export strips fields that a user can not specify.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_core_v1_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        exact: Option<bool>,
-        export: Option<bool>,
-        pretty: Option<&str>,
+        optional: ReadCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadCoreV1NamespacedPersistentVolumeClaimOptional {
+            exact,
+            export,
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
@@ -690,6 +711,17 @@ impl PersistentVolumeClaim {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim)
+#[derive(Debug, Default)]
+pub struct ReadCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+    /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    pub exact: Option<bool>,
+    /// Should this value be exported.  Export strips fields that a user can not specify.
+    pub export: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim)
@@ -734,14 +766,17 @@ impl PersistentVolumeClaim {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_core_v1_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
-        pretty: Option<&str>,
+        optional: ReadCoreV1NamespacedPersistentVolumeClaimStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadCoreV1NamespacedPersistentVolumeClaimStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -753,6 +788,13 @@ impl PersistentVolumeClaim {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim_status)
+#[derive(Debug, Default)]
+pub struct ReadCoreV1NamespacedPersistentVolumeClaimStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim_status)
@@ -799,15 +841,18 @@ impl PersistentVolumeClaim {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_core_v1_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
         body: &crate::v1_7::kubernetes::pkg::api::v1::PersistentVolumeClaim,
-        pretty: Option<&str>,
+        optional: ReplaceCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceCoreV1NamespacedPersistentVolumeClaimOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -819,6 +864,13 @@ impl PersistentVolumeClaim {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim)
+#[derive(Debug, Default)]
+pub struct ReplaceCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim)
@@ -865,15 +917,18 @@ impl PersistentVolumeClaim {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_core_v1_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_7::kubernetes::pkg::api::v1::PersistentVolumeClaim,
-        pretty: Option<&str>,
+        optional: ReplaceCoreV1NamespacedPersistentVolumeClaimStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceCoreV1NamespacedPersistentVolumeClaimStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -885,6 +940,13 @@ impl PersistentVolumeClaim {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim_status)
+#[derive(Debug, Default)]
+pub struct ReplaceCoreV1NamespacedPersistentVolumeClaimStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim_status)
@@ -929,44 +991,23 @@ impl PersistentVolumeClaim {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_core_v1_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchCoreV1NamespacedPersistentVolumeClaimOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/watch/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -996,6 +1037,25 @@ impl PersistentVolumeClaim {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim)
+#[derive(Debug, Default)]
+pub struct WatchCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim)
@@ -1038,43 +1098,22 @@ impl PersistentVolumeClaim {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_core_v1_namespaced_persistent_volume_claim_list(
         namespace: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchCoreV1NamespacedPersistentVolumeClaimListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchCoreV1NamespacedPersistentVolumeClaimListOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/watch/namespaces/{namespace}/persistentvolumeclaims?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -1104,6 +1143,25 @@ impl PersistentVolumeClaim {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim_list`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim_list)
+#[derive(Debug, Default)]
+pub struct WatchCoreV1NamespacedPersistentVolumeClaimListOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim_list`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim_list)
@@ -1142,42 +1200,21 @@ impl PersistentVolumeClaim {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_core_v1_persistent_volume_claim_list_for_all_namespaces(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchCoreV1PersistentVolumeClaimListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchCoreV1PersistentVolumeClaimListForAllNamespacesOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/watch/persistentvolumeclaims?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -1207,6 +1244,25 @@ impl PersistentVolumeClaim {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`PersistentVolumeClaim::watch_core_v1_persistent_volume_claim_list_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_persistent_volume_claim_list_for_all_namespaces)
+#[derive(Debug, Default)]
+pub struct WatchCoreV1PersistentVolumeClaimListForAllNamespacesOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_persistent_volume_claim_list_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_persistent_volume_claim_list_for_all_namespaces)
@@ -1259,7 +1315,7 @@ impl crate::Resource for PersistentVolumeClaim {
 impl crate::Metadata for PersistentVolumeClaim {
     type Ty = crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

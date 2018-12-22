@@ -30,14 +30,17 @@ impl DaemonSet {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_extensions_v1beta1_namespaced_daemon_set(
         namespace: &str,
         body: &crate::v1_9::api::extensions::v1beta1::DaemonSet,
-        pretty: Option<&str>,
+        optional: CreateExtensionsV1beta1NamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateExtensionsV1beta1NamespacedDaemonSetOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -49,6 +52,13 @@ impl DaemonSet {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::create_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_extensions_v1beta1_namespaced_daemon_set)
+#[derive(Debug, Default)]
+pub struct CreateExtensionsV1beta1NamespacedDaemonSetOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::create_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_extensions_v1beta1_namespaced_daemon_set)
@@ -107,55 +117,24 @@ impl DaemonSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_extensions_v1beta1_collection_namespaced_daemon_set(
         namespace: &str,
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: DeleteExtensionsV1beta1CollectionNamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteExtensionsV1beta1CollectionNamespacedDaemonSetOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -191,6 +170,31 @@ impl DaemonSet {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::delete_extensions_v1beta1_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_extensions_v1beta1_collection_namespaced_daemon_set)
+#[derive(Debug, Default)]
+pub struct DeleteExtensionsV1beta1CollectionNamespacedDaemonSetOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::delete_extensions_v1beta1_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_extensions_v1beta1_collection_namespaced_daemon_set)
@@ -249,31 +253,20 @@ impl DaemonSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `body`
+    /// * `optional`
     ///
-    /// * `grace_period_seconds`
-    ///
-    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
-    ///
-    /// * `orphan_dependents`
-    ///
-    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `propagation_policy`
-    ///
-    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_extensions_v1beta1_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        grace_period_seconds: Option<i64>,
-        orphan_dependents: Option<bool>,
-        pretty: Option<&str>,
-        propagation_policy: Option<&str>,
+        optional: DeleteExtensionsV1beta1NamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteExtensionsV1beta1NamespacedDaemonSetOptional {
+            grace_period_seconds,
+            orphan_dependents,
+            pretty,
+            propagation_policy,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
@@ -294,6 +287,19 @@ impl DaemonSet {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::delete_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_extensions_v1beta1_namespaced_daemon_set)
+#[derive(Debug, Default)]
+pub struct DeleteExtensionsV1beta1NamespacedDaemonSetOptional<'a> {
+    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    pub grace_period_seconds: Option<i64>,
+    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    pub orphan_dependents: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
+    pub propagation_policy: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::delete_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_extensions_v1beta1_namespaced_daemon_set)
@@ -344,54 +350,23 @@ impl DaemonSet {
     ///
     /// # Arguments
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_extensions_v1beta1_daemon_set_for_all_namespaces(
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListExtensionsV1beta1DaemonSetForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListExtensionsV1beta1DaemonSetForAllNamespacesOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/daemonsets?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -427,6 +402,31 @@ impl DaemonSet {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::list_extensions_v1beta1_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_extensions_v1beta1_daemon_set_for_all_namespaces)
+#[derive(Debug, Default)]
+pub struct ListExtensionsV1beta1DaemonSetForAllNamespacesOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::list_extensions_v1beta1_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_extensions_v1beta1_daemon_set_for_all_namespaces)
@@ -467,55 +467,24 @@ impl DaemonSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_extensions_v1beta1_namespaced_daemon_set(
         namespace: &str,
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListExtensionsV1beta1NamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListExtensionsV1beta1NamespacedDaemonSetOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -551,6 +520,31 @@ impl DaemonSet {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::list_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_extensions_v1beta1_namespaced_daemon_set)
+#[derive(Debug, Default)]
+pub struct ListExtensionsV1beta1NamespacedDaemonSetOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::list_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_extensions_v1beta1_namespaced_daemon_set)
@@ -597,15 +591,18 @@ impl DaemonSet {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_extensions_v1beta1_namespaced_daemon_set(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchExtensionsV1beta1NamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchExtensionsV1beta1NamespacedDaemonSetOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -617,6 +614,13 @@ impl DaemonSet {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::patch_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_extensions_v1beta1_namespaced_daemon_set)
+#[derive(Debug, Default)]
+pub struct PatchExtensionsV1beta1NamespacedDaemonSetOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::patch_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_extensions_v1beta1_namespaced_daemon_set)
@@ -663,15 +667,18 @@ impl DaemonSet {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_extensions_v1beta1_namespaced_daemon_set_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchExtensionsV1beta1NamespacedDaemonSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchExtensionsV1beta1NamespacedDaemonSetStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -683,6 +690,13 @@ impl DaemonSet {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::patch_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_extensions_v1beta1_namespaced_daemon_set_status)
+#[derive(Debug, Default)]
+pub struct PatchExtensionsV1beta1NamespacedDaemonSetStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::patch_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_extensions_v1beta1_namespaced_daemon_set_status)
@@ -727,24 +741,19 @@ impl DaemonSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `exact`
+    /// * `optional`
     ///
-    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
-    ///
-    /// * `export`
-    ///
-    ///     Should this value be exported.  Export strips fields that a user can not specify.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_extensions_v1beta1_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        exact: Option<bool>,
-        export: Option<bool>,
-        pretty: Option<&str>,
+        optional: ReadExtensionsV1beta1NamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadExtensionsV1beta1NamespacedDaemonSetOptional {
+            exact,
+            export,
+            pretty,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
@@ -762,6 +771,17 @@ impl DaemonSet {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::read_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_extensions_v1beta1_namespaced_daemon_set)
+#[derive(Debug, Default)]
+pub struct ReadExtensionsV1beta1NamespacedDaemonSetOptional<'a> {
+    /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    pub exact: Option<bool>,
+    /// Should this value be exported.  Export strips fields that a user can not specify.
+    pub export: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::read_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_extensions_v1beta1_namespaced_daemon_set)
@@ -806,14 +826,17 @@ impl DaemonSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_extensions_v1beta1_namespaced_daemon_set_status(
         name: &str,
         namespace: &str,
-        pretty: Option<&str>,
+        optional: ReadExtensionsV1beta1NamespacedDaemonSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadExtensionsV1beta1NamespacedDaemonSetStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -825,6 +848,13 @@ impl DaemonSet {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::read_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_extensions_v1beta1_namespaced_daemon_set_status)
+#[derive(Debug, Default)]
+pub struct ReadExtensionsV1beta1NamespacedDaemonSetStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::read_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_extensions_v1beta1_namespaced_daemon_set_status)
@@ -871,15 +901,18 @@ impl DaemonSet {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_extensions_v1beta1_namespaced_daemon_set(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::api::extensions::v1beta1::DaemonSet,
-        pretty: Option<&str>,
+        optional: ReplaceExtensionsV1beta1NamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceExtensionsV1beta1NamespacedDaemonSetOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -891,6 +924,13 @@ impl DaemonSet {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::replace_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_extensions_v1beta1_namespaced_daemon_set)
+#[derive(Debug, Default)]
+pub struct ReplaceExtensionsV1beta1NamespacedDaemonSetOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::replace_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_extensions_v1beta1_namespaced_daemon_set)
@@ -946,15 +986,18 @@ impl DaemonSet {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_extensions_v1beta1_namespaced_daemon_set_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::api::extensions::v1beta1::DaemonSet,
-        pretty: Option<&str>,
+        optional: ReplaceExtensionsV1beta1NamespacedDaemonSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceExtensionsV1beta1NamespacedDaemonSetStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -966,6 +1009,13 @@ impl DaemonSet {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::replace_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_extensions_v1beta1_namespaced_daemon_set_status)
+#[derive(Debug, Default)]
+pub struct ReplaceExtensionsV1beta1NamespacedDaemonSetStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::replace_extensions_v1beta1_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_extensions_v1beta1_namespaced_daemon_set_status)
@@ -1011,54 +1061,23 @@ impl DaemonSet {
     ///
     /// # Arguments
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_extensions_v1beta1_daemon_set_list_for_all_namespaces(
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchExtensionsV1beta1DaemonSetListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchExtensionsV1beta1DaemonSetListForAllNamespacesOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/watch/daemonsets?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -1094,6 +1113,31 @@ impl DaemonSet {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::watch_extensions_v1beta1_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_daemon_set_list_for_all_namespaces)
+#[derive(Debug, Default)]
+pub struct WatchExtensionsV1beta1DaemonSetListForAllNamespacesOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::watch_extensions_v1beta1_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_daemon_set_list_for_all_namespaces)
@@ -1140,56 +1184,25 @@ impl DaemonSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_extensions_v1beta1_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchExtensionsV1beta1NamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchExtensionsV1beta1NamespacedDaemonSetOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/daemonsets/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -1225,6 +1238,31 @@ impl DaemonSet {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::watch_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_namespaced_daemon_set)
+#[derive(Debug, Default)]
+pub struct WatchExtensionsV1beta1NamespacedDaemonSetOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::watch_extensions_v1beta1_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_namespaced_daemon_set)
@@ -1267,55 +1305,24 @@ impl DaemonSet {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_extensions_v1beta1_namespaced_daemon_set_list(
         namespace: &str,
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchExtensionsV1beta1NamespacedDaemonSetListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchExtensionsV1beta1NamespacedDaemonSetListOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/apis/extensions/v1beta1/watch/namespaces/{namespace}/daemonsets?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -1351,6 +1358,31 @@ impl DaemonSet {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DaemonSet::watch_extensions_v1beta1_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_namespaced_daemon_set_list)
+#[derive(Debug, Default)]
+pub struct WatchExtensionsV1beta1NamespacedDaemonSetListOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`DaemonSet::watch_extensions_v1beta1_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_extensions_v1beta1_namespaced_daemon_set_list)
@@ -1403,7 +1435,7 @@ impl crate::Resource for DaemonSet {
 impl crate::Metadata for DaemonSet {
     type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

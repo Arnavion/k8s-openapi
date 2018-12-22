@@ -34,15 +34,18 @@ impl DeploymentRollback {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_apps_v1beta1_namespaced_deployment_rollback(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::api::apps::v1beta1::DeploymentRollback,
-        pretty: Option<&str>,
+        optional: CreateAppsV1beta1NamespacedDeploymentRollbackOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateAppsV1beta1NamespacedDeploymentRollbackOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/rollback?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -54,6 +57,13 @@ impl DeploymentRollback {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`DeploymentRollback::create_apps_v1beta1_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_apps_v1beta1_namespaced_deployment_rollback)
+#[derive(Debug, Default)]
+pub struct CreateAppsV1beta1NamespacedDeploymentRollbackOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`DeploymentRollback::create_apps_v1beta1_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_apps_v1beta1_namespaced_deployment_rollback)
@@ -118,7 +128,6 @@ impl crate::Resource for DeploymentRollback {
         "v1beta1"
     }
 }
-
 
 impl<'de> serde::Deserialize<'de> for DeploymentRollback {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {

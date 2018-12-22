@@ -31,7 +31,7 @@ impl crate::Resource for IngressList {
 impl crate::Metadata for IngressList {
     type Ty = crate::v1_11::apimachinery::pkg::apis::meta::v1::ListMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

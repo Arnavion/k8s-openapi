@@ -25,13 +25,16 @@ impl TokenReview {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_authentication_v1beta1_token_review(
         body: &crate::v1_9::api::authentication::v1beta1::TokenReview,
-        pretty: Option<&str>,
+        optional: CreateAuthenticationV1beta1TokenReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateAuthenticationV1beta1TokenReviewOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/authentication.k8s.io/v1beta1/tokenreviews?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -43,6 +46,13 @@ impl TokenReview {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`TokenReview::create_authentication_v1beta1_token_review`](./struct.TokenReview.html#method.create_authentication_v1beta1_token_review)
+#[derive(Debug, Default)]
+pub struct CreateAuthenticationV1beta1TokenReviewOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`TokenReview::create_authentication_v1beta1_token_review`](./struct.TokenReview.html#method.create_authentication_v1beta1_token_review)
@@ -111,7 +121,7 @@ impl crate::Resource for TokenReview {
 impl crate::Metadata for TokenReview {
     type Ty = crate::v1_9::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

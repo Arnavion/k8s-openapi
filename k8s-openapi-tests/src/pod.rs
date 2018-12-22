@@ -23,15 +23,7 @@ fn list() {
 	}
 
 	crate::Client::with("pod-list", |client| {
-		k8s_if_le_1_7! {
-			let request =
-				api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None);
-		}
-		k8s_if_ge_1_8! {
-			let request =
-				api::Pod::list_core_v1_namespaced_pod("kube-system", None, None, None, None, None, None, None, None, None);
-		}
-		let request = request.expect("couldn't list pods");
+		let request = api::Pod::list_core_v1_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
 		let response = client.execute(request).expect("couldn't list pods");;
 		let pod_list =
 			crate::get_single_value(response, |response, status_code, _| match response {

@@ -25,23 +25,18 @@ impl SelfSubjectAccessReview {
     ///
     /// * `body`
     ///
-    /// * `dry_run`
+    /// * `optional`
     ///
-    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If IncludeUninitialized is specified, the object may be returned without completing initialization.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_authorization_v1_self_subject_access_review(
         body: &crate::v1_12::api::authorization::v1::SelfSubjectAccessReview,
-        dry_run: Option<&str>,
-        include_uninitialized: Option<bool>,
-        pretty: Option<&str>,
+        optional: CreateAuthorizationV1SelfSubjectAccessReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateAuthorizationV1SelfSubjectAccessReviewOptional {
+            dry_run,
+            include_uninitialized,
+            pretty,
+        } = optional;
         let __url = format!("/apis/authorization.k8s.io/v1/selfsubjectaccessreviews?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
@@ -59,6 +54,17 @@ impl SelfSubjectAccessReview {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`SelfSubjectAccessReview::create_authorization_v1_self_subject_access_review`](./struct.SelfSubjectAccessReview.html#method.create_authorization_v1_self_subject_access_review)
+#[derive(Debug, Default)]
+pub struct CreateAuthorizationV1SelfSubjectAccessReviewOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// If IncludeUninitialized is specified, the object may be returned without completing initialization.
+    pub include_uninitialized: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`SelfSubjectAccessReview::create_authorization_v1_self_subject_access_review`](./struct.SelfSubjectAccessReview.html#method.create_authorization_v1_self_subject_access_review)
@@ -127,7 +133,7 @@ impl crate::Resource for SelfSubjectAccessReview {
 impl crate::Metadata for SelfSubjectAccessReview {
     type Ty = crate::v1_12::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

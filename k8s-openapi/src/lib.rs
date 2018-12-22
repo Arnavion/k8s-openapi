@@ -89,16 +89,7 @@
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     // Create a `http::Request` to list all the pods in the
 //!     // "kube-system" namespace.
-//!     k8s_if_le_1_7! {
-//!         let request = api::Pod::list_core_v1_namespaced_pod(
-//!             "kube-system",
-//!             None, None, None, None, None, None, None)?;
-//!     }
-//!     k8s_if_ge_1_8! {
-//!         let request = api::Pod::list_core_v1_namespaced_pod(
-//!             "kube-system",
-//!             None, None, None, None, None, None, None, None, None)?;
-//!     }
+//!     let request = api::Pod::list_core_v1_namespaced_pod("kube-system", Default::default())?;
 //!
 //!     // Execute the request and get a response.
 //!     // If this is an asynchronous operation, you would await
@@ -135,10 +126,11 @@
 //!         // For `Pod::list_core_v1_namespaced_pod` this is the
 //!         // `ListCoreV1NamespacedPodResponse` type.
 //!         //
-//!         // `ResponseBody::append_slice_and_parse` internally calls
+//!         // `ResponseBody::parse` internally calls
 //!         // `Response::try_from_parts` for the response type. So you would
 //!         // call that function directly if you were not using `ResponseBody`
-//!         let response = response_body.append_slice_and_parse(&buf[..read]);
+//!         response_body.append_slice(&buf[..read]);
+//!         let response = response_body.parse();
 //!         match response {
 //!             // Successful response (HTTP 200 and parsed successfully)
 //!             Ok(api::ListCoreV1NamespacedPodResponse::Ok(pod_list)) =>

@@ -87,16 +87,9 @@ fn create() {
 			..Default::default()
 		};
 
-		k8s_if_le_1_11! {
-			let request =
-				batch::Job::create_batch_v1_namespaced_job("default", &job, None)
-				.expect("couldn't create job");
-		}
-		k8s_if_ge_1_12! {
-			let request =
-				batch::Job::create_batch_v1_namespaced_job("default", &job, None, None, None)
-				.expect("couldn't create job");
-		}
+		let request =
+			batch::Job::create_batch_v1_namespaced_job("default", &job, Default::default())
+			.expect("couldn't create job");
 		let job: batch::Job = {
 			let response = client.execute(request).expect("couldn't create job");
 			crate::get_single_value(response, |response, status_code, _response_body| k8s_match!(response, {
@@ -153,15 +146,7 @@ fn create() {
 
 		// Find a pod of the failed job using owner reference
 		let job_pod_status = loop {
-			k8s_if_le_1_7! {
-				let request =
-					api::Pod::list_core_v1_namespaced_pod("default", None, None, None, None, None, None, None);
-			}
-			k8s_if_ge_1_8! {
-				let request =
-					api::Pod::list_core_v1_namespaced_pod("default", None, None, None, None, None, None, None, None, None);
-			}
-			let request = request.expect("couldn't list pods");
+			let request = api::Pod::list_core_v1_namespaced_pod("default", Default::default()).expect("couldn't list pods");
 			let pod_list = {
 				let response = client.execute(request).expect("couldn't list pods");;
 				crate::get_single_value(response, |response, status_code, _| match response {
@@ -207,15 +192,12 @@ fn create() {
 		}
 
 		// Delete all pods of the job using label selector
-		k8s_if_le_1_7! {
-			let request =
-				api::Pod::list_core_v1_namespaced_pod("default", None, None, Some("job-name=k8s-openapi-tests-create-job"), None, None, None, None);
-		}
-		k8s_if_ge_1_8! {
-			let request =
-				api::Pod::list_core_v1_namespaced_pod("default", None, None, None, Some("job-name=k8s-openapi-tests-create-job"), None, None, None, None, None);
-		}
-		let request = request.expect("couldn't list pods");
+		let request =
+			api::Pod::list_core_v1_namespaced_pod("default", api::ListCoreV1NamespacedPodOptional {
+				label_selector: Some("job-name=k8s-openapi-tests-create-job"),
+				..Default::default()
+			})
+			.expect("couldn't list pods");
 		let pod_list = {
 			let response = client.execute(request).expect("couldn't list pods");;
 			crate::get_single_value(response, |response, status_code, _| match response {

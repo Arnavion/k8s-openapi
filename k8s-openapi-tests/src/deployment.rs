@@ -31,16 +31,13 @@ fn list() {
 
 	crate::Client::with("deployment-list", |client| {
 		k8s_if_1_7! {
-			let request =
-				apps::Deployment::list_apps_v1beta1_namespaced_deployment("kube-system", None, None, None, None, None, None, None);
+			let request = apps::Deployment::list_apps_v1beta1_namespaced_deployment("kube-system", Default::default());
 		}
 		k8s_if_1_8! {
-			let request =
-				apps::Deployment::list_apps_v1beta2_namespaced_deployment("kube-system", None, None, None, None, None, None, None, None, None);
+			let request = apps::Deployment::list_apps_v1beta2_namespaced_deployment("kube-system", Default::default());
 		}
 		k8s_if_ge_1_9! {
-			let request =
-				apps::Deployment::list_apps_v1_namespaced_deployment("kube-system", None, None, None, None, None, None, None, None, None);
+			let request = apps::Deployment::list_apps_v1_namespaced_deployment("kube-system", Default::default());
 		}
 		let request = request.expect("couldn't list deployments");
 		let response = client.execute(request).expect("couldn't list deployments");;

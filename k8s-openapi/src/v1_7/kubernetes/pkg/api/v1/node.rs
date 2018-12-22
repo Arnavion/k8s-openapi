@@ -28,13 +28,16 @@ impl Node {
     ///
     ///     name of the Node
     ///
-    /// * `path`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to node.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_delete_node_proxy(
         name: &str,
-        path: Option<&str>,
+        optional: ConnectCoreV1DeleteNodeProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1DeleteNodeProxyOptional {
+            path,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -46,6 +49,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::connect_core_v1_delete_node_proxy`](./struct.Node.html#method.connect_core_v1_delete_node_proxy)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1DeleteNodeProxyOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to node.
+    pub path: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::connect_core_v1_delete_node_proxy`](./struct.Node.html#method.connect_core_v1_delete_node_proxy)
@@ -95,14 +105,17 @@ impl Node {
     ///
     ///     path to the resource
     ///
-    /// * `path_`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to node.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_delete_node_proxy_with_path(
         name: &str,
         path: &str,
-        path_: Option<&str>,
+        optional: ConnectCoreV1DeleteNodeProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1DeleteNodeProxyWithPathOptional {
+            path_,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -114,6 +127,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::connect_core_v1_delete_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_delete_node_proxy_with_path)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1DeleteNodeProxyWithPathOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to node.
+    pub path_: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::connect_core_v1_delete_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_delete_node_proxy_with_path)
@@ -159,13 +179,16 @@ impl Node {
     ///
     ///     name of the Node
     ///
-    /// * `path`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to node.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_get_node_proxy(
         name: &str,
-        path: Option<&str>,
+        optional: ConnectCoreV1GetNodeProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1GetNodeProxyOptional {
+            path,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -177,6 +200,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::connect_core_v1_get_node_proxy`](./struct.Node.html#method.connect_core_v1_get_node_proxy)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1GetNodeProxyOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to node.
+    pub path: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::connect_core_v1_get_node_proxy`](./struct.Node.html#method.connect_core_v1_get_node_proxy)
@@ -226,14 +256,17 @@ impl Node {
     ///
     ///     path to the resource
     ///
-    /// * `path_`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to node.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_get_node_proxy_with_path(
         name: &str,
         path: &str,
-        path_: Option<&str>,
+        optional: ConnectCoreV1GetNodeProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1GetNodeProxyWithPathOptional {
+            path_,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -245,6 +278,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::connect_core_v1_get_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_get_node_proxy_with_path)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1GetNodeProxyWithPathOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to node.
+    pub path_: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::connect_core_v1_get_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_get_node_proxy_with_path)
@@ -290,13 +330,16 @@ impl Node {
     ///
     ///     name of the Node
     ///
-    /// * `path`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to node.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_patch_node_proxy(
         name: &str,
-        path: Option<&str>,
+        optional: ConnectCoreV1PatchNodeProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PatchNodeProxyOptional {
+            path,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -308,6 +351,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::connect_core_v1_patch_node_proxy`](./struct.Node.html#method.connect_core_v1_patch_node_proxy)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PatchNodeProxyOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to node.
+    pub path: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::connect_core_v1_patch_node_proxy`](./struct.Node.html#method.connect_core_v1_patch_node_proxy)
@@ -357,14 +407,17 @@ impl Node {
     ///
     ///     path to the resource
     ///
-    /// * `path_`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to node.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_patch_node_proxy_with_path(
         name: &str,
         path: &str,
-        path_: Option<&str>,
+        optional: ConnectCoreV1PatchNodeProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PatchNodeProxyWithPathOptional {
+            path_,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -376,6 +429,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::connect_core_v1_patch_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_patch_node_proxy_with_path)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PatchNodeProxyWithPathOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to node.
+    pub path_: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::connect_core_v1_patch_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_patch_node_proxy_with_path)
@@ -421,13 +481,16 @@ impl Node {
     ///
     ///     name of the Node
     ///
-    /// * `path`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to node.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_post_node_proxy(
         name: &str,
-        path: Option<&str>,
+        optional: ConnectCoreV1PostNodeProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PostNodeProxyOptional {
+            path,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -439,6 +502,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::connect_core_v1_post_node_proxy`](./struct.Node.html#method.connect_core_v1_post_node_proxy)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PostNodeProxyOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to node.
+    pub path: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::connect_core_v1_post_node_proxy`](./struct.Node.html#method.connect_core_v1_post_node_proxy)
@@ -488,14 +558,17 @@ impl Node {
     ///
     ///     path to the resource
     ///
-    /// * `path_`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to node.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_post_node_proxy_with_path(
         name: &str,
         path: &str,
-        path_: Option<&str>,
+        optional: ConnectCoreV1PostNodeProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PostNodeProxyWithPathOptional {
+            path_,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -507,6 +580,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::connect_core_v1_post_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_post_node_proxy_with_path)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PostNodeProxyWithPathOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to node.
+    pub path_: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::connect_core_v1_post_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_post_node_proxy_with_path)
@@ -552,13 +632,16 @@ impl Node {
     ///
     ///     name of the Node
     ///
-    /// * `path`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to node.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_put_node_proxy(
         name: &str,
-        path: Option<&str>,
+        optional: ConnectCoreV1PutNodeProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PutNodeProxyOptional {
+            path,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -570,6 +653,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::connect_core_v1_put_node_proxy`](./struct.Node.html#method.connect_core_v1_put_node_proxy)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PutNodeProxyOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to node.
+    pub path: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::connect_core_v1_put_node_proxy`](./struct.Node.html#method.connect_core_v1_put_node_proxy)
@@ -619,14 +709,17 @@ impl Node {
     ///
     ///     path to the resource
     ///
-    /// * `path_`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to node.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_put_node_proxy_with_path(
         name: &str,
         path: &str,
-        path_: Option<&str>,
+        optional: ConnectCoreV1PutNodeProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PutNodeProxyWithPathOptional {
+            path_,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -638,6 +731,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::connect_core_v1_put_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_put_node_proxy_with_path)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PutNodeProxyWithPathOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to node.
+    pub path_: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::connect_core_v1_put_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_put_node_proxy_with_path)
@@ -681,13 +781,16 @@ impl Node {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_core_v1_node(
         body: &crate::v1_7::kubernetes::pkg::api::v1::Node,
-        pretty: Option<&str>,
+        optional: CreateCoreV1NodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateCoreV1NodeOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/nodes?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -699,6 +802,13 @@ impl Node {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::create_core_v1_node`](./struct.Node.html#method.create_core_v1_node)
+#[derive(Debug, Default)]
+pub struct CreateCoreV1NodeOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::create_core_v1_node`](./struct.Node.html#method.create_core_v1_node)
@@ -735,42 +845,21 @@ impl Node {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_core_v1_collection_node(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: DeleteCoreV1CollectionNodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteCoreV1CollectionNodeOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/nodes?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -800,6 +889,25 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::delete_core_v1_collection_node`](./struct.Node.html#method.delete_core_v1_collection_node)
+#[derive(Debug, Default)]
+pub struct DeleteCoreV1CollectionNodeOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Node::delete_core_v1_collection_node`](./struct.Node.html#method.delete_core_v1_collection_node)
@@ -854,30 +962,19 @@ impl Node {
     ///
     ///     name of the Node
     ///
-    /// * `body`
+    /// * `optional`
     ///
-    /// * `grace_period_seconds`
-    ///
-    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
-    ///
-    /// * `orphan_dependents`
-    ///
-    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `propagation_policy`
-    ///
-    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_core_v1_node(
         name: &str,
-        grace_period_seconds: Option<i64>,
-        orphan_dependents: Option<bool>,
-        pretty: Option<&str>,
-        propagation_policy: Option<&str>,
+        optional: DeleteCoreV1NodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteCoreV1NodeOptional {
+            grace_period_seconds,
+            orphan_dependents,
+            pretty,
+            propagation_policy,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
@@ -898,6 +995,19 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::delete_core_v1_node`](./struct.Node.html#method.delete_core_v1_node)
+#[derive(Debug, Default)]
+pub struct DeleteCoreV1NodeOptional<'a> {
+    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    pub grace_period_seconds: Option<i64>,
+    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    pub orphan_dependents: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy.
+    pub propagation_policy: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::delete_core_v1_node`](./struct.Node.html#method.delete_core_v1_node)
@@ -948,42 +1058,21 @@ impl Node {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_core_v1_node(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListCoreV1NodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListCoreV1NodeOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/nodes?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -1013,6 +1102,25 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::list_core_v1_node`](./struct.Node.html#method.list_core_v1_node)
+#[derive(Debug, Default)]
+pub struct ListCoreV1NodeOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Node::list_core_v1_node`](./struct.Node.html#method.list_core_v1_node)
@@ -1055,14 +1163,17 @@ impl Node {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_core_v1_node(
         name: &str,
         body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchCoreV1NodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchCoreV1NodeOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -1074,6 +1185,13 @@ impl Node {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::patch_core_v1_node`](./struct.Node.html#method.patch_core_v1_node)
+#[derive(Debug, Default)]
+pub struct PatchCoreV1NodeOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::patch_core_v1_node`](./struct.Node.html#method.patch_core_v1_node)
@@ -1116,14 +1234,17 @@ impl Node {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_core_v1_node_status(
         name: &str,
         body: &crate::v1_7::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchCoreV1NodeStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchCoreV1NodeStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -1135,6 +1256,13 @@ impl Node {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::patch_core_v1_node_status`](./struct.Node.html#method.patch_core_v1_node_status)
+#[derive(Debug, Default)]
+pub struct PatchCoreV1NodeStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::patch_core_v1_node_status`](./struct.Node.html#method.patch_core_v1_node_status)
@@ -1730,23 +1858,18 @@ impl Node {
     ///
     ///     name of the Node
     ///
-    /// * `exact`
+    /// * `optional`
     ///
-    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
-    ///
-    /// * `export`
-    ///
-    ///     Should this value be exported.  Export strips fields that a user can not specify.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_core_v1_node(
         name: &str,
-        exact: Option<bool>,
-        export: Option<bool>,
-        pretty: Option<&str>,
+        optional: ReadCoreV1NodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadCoreV1NodeOptional {
+            exact,
+            export,
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
@@ -1764,6 +1887,17 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::read_core_v1_node`](./struct.Node.html#method.read_core_v1_node)
+#[derive(Debug, Default)]
+pub struct ReadCoreV1NodeOptional<'a> {
+    /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    pub exact: Option<bool>,
+    /// Should this value be exported.  Export strips fields that a user can not specify.
+    pub export: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::read_core_v1_node`](./struct.Node.html#method.read_core_v1_node)
@@ -1804,13 +1938,16 @@ impl Node {
     ///
     ///     name of the Node
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_core_v1_node_status(
         name: &str,
-        pretty: Option<&str>,
+        optional: ReadCoreV1NodeStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadCoreV1NodeStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -1822,6 +1959,13 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::read_core_v1_node_status`](./struct.Node.html#method.read_core_v1_node_status)
+#[derive(Debug, Default)]
+pub struct ReadCoreV1NodeStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::read_core_v1_node_status`](./struct.Node.html#method.read_core_v1_node_status)
@@ -1864,14 +2008,17 @@ impl Node {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_core_v1_node(
         name: &str,
         body: &crate::v1_7::kubernetes::pkg::api::v1::Node,
-        pretty: Option<&str>,
+        optional: ReplaceCoreV1NodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceCoreV1NodeOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -1883,6 +2030,13 @@ impl Node {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::replace_core_v1_node`](./struct.Node.html#method.replace_core_v1_node)
+#[derive(Debug, Default)]
+pub struct ReplaceCoreV1NodeOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::replace_core_v1_node`](./struct.Node.html#method.replace_core_v1_node)
@@ -1925,14 +2079,17 @@ impl Node {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_core_v1_node_status(
         name: &str,
         body: &crate::v1_7::kubernetes::pkg::api::v1::Node,
-        pretty: Option<&str>,
+        optional: ReplaceCoreV1NodeStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceCoreV1NodeStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -1944,6 +2101,13 @@ impl Node {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::replace_core_v1_node_status`](./struct.Node.html#method.replace_core_v1_node_status)
+#[derive(Debug, Default)]
+pub struct ReplaceCoreV1NodeStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Node::replace_core_v1_node_status`](./struct.Node.html#method.replace_core_v1_node_status)
@@ -1984,43 +2148,22 @@ impl Node {
     ///
     ///     name of the Node
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_core_v1_node(
         name: &str,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchCoreV1NodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchCoreV1NodeOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/watch/nodes/{name}?", name = name);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -2050,6 +2193,25 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::watch_core_v1_node`](./struct.Node.html#method.watch_core_v1_node)
+#[derive(Debug, Default)]
+pub struct WatchCoreV1NodeOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Node::watch_core_v1_node`](./struct.Node.html#method.watch_core_v1_node)
@@ -2088,42 +2250,21 @@ impl Node {
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
+    /// * `optional`
     ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_core_v1_node_list(
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchCoreV1NodeListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchCoreV1NodeListOptional {
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/watch/nodes?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(field_selector) = field_selector {
@@ -2153,6 +2294,25 @@ impl Node {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Node::watch_core_v1_node_list`](./struct.Node.html#method.watch_core_v1_node_list)
+#[derive(Debug, Default)]
+pub struct WatchCoreV1NodeListOptional<'a> {
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Node::watch_core_v1_node_list`](./struct.Node.html#method.watch_core_v1_node_list)
@@ -2205,7 +2365,7 @@ impl crate::Resource for Node {
 impl crate::Metadata for Node {
     type Ty = crate::v1_7::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

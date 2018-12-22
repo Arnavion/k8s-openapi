@@ -32,14 +32,17 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `path`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to pod.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_delete_namespaced_pod_proxy(
         name: &str,
         namespace: &str,
-        path: Option<&str>,
+        optional: ConnectCoreV1DeleteNamespacedPodProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1DeleteNamespacedPodProxyOptional {
+            path,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -51,6 +54,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_delete_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_delete_namespaced_pod_proxy)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1DeleteNamespacedPodProxyOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to pod.
+    pub path: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_delete_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_delete_namespaced_pod_proxy)
@@ -104,15 +114,18 @@ impl Pod {
     ///
     ///     path to the resource
     ///
-    /// * `path_`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to pod.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_delete_namespaced_pod_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        path_: Option<&str>,
+        optional: ConnectCoreV1DeleteNamespacedPodProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1DeleteNamespacedPodProxyWithPathOptional {
+            path_,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -124,6 +137,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_delete_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_delete_namespaced_pod_proxy_with_path)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1DeleteNamespacedPodProxyWithPathOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to pod.
+    pub path_: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_delete_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_delete_namespaced_pod_proxy_with_path)
@@ -173,34 +193,21 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `container`
+    /// * `optional`
     ///
-    ///     The container in which to execute the command. Defaults to only container if there is only one container in the pod.
-    ///
-    /// * `stderr`
-    ///
-    ///     Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
-    ///
-    /// * `stdin`
-    ///
-    ///     Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false.
-    ///
-    /// * `stdout`
-    ///
-    ///     Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true.
-    ///
-    /// * `tty`
-    ///
-    ///     TTY if true indicates that a tty will be allocated for the attach call. This is passed through the container runtime so the tty is allocated on the worker node by the container runtime. Defaults to false.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_get_namespaced_pod_attach(
         name: &str,
         namespace: &str,
-        container: Option<&str>,
-        stderr: Option<bool>,
-        stdin: Option<bool>,
-        stdout: Option<bool>,
-        tty: Option<bool>,
+        optional: ConnectCoreV1GetNamespacedPodAttachOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1GetNamespacedPodAttachOptional {
+            container,
+            stderr,
+            stdin,
+            stdout,
+            tty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
@@ -224,6 +231,21 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_get_namespaced_pod_attach`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_attach)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1GetNamespacedPodAttachOptional<'a> {
+    /// The container in which to execute the command. Defaults to only container if there is only one container in the pod.
+    pub container: Option<&'a str>,
+    /// Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
+    pub stderr: Option<bool>,
+    /// Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false.
+    pub stdin: Option<bool>,
+    /// Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true.
+    pub stdout: Option<bool>,
+    /// TTY if true indicates that a tty will be allocated for the attach call. This is passed through the container runtime so the tty is allocated on the worker node by the container runtime. Defaults to false.
+    pub tty: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_attach`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_attach)
@@ -273,39 +295,22 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `command`
+    /// * `optional`
     ///
-    ///     Command is the remote command to execute. argv array. Not executed within a shell.
-    ///
-    /// * `container`
-    ///
-    ///     Container in which to execute the command. Defaults to only container if there is only one container in the pod.
-    ///
-    /// * `stderr`
-    ///
-    ///     Redirect the standard error stream of the pod for this call. Defaults to true.
-    ///
-    /// * `stdin`
-    ///
-    ///     Redirect the standard input stream of the pod for this call. Defaults to false.
-    ///
-    /// * `stdout`
-    ///
-    ///     Redirect the standard output stream of the pod for this call. Defaults to true.
-    ///
-    /// * `tty`
-    ///
-    ///     TTY if true indicates that a tty will be allocated for the exec call. Defaults to false.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_get_namespaced_pod_exec(
         name: &str,
         namespace: &str,
-        command: Option<&str>,
-        container: Option<&str>,
-        stderr: Option<bool>,
-        stdin: Option<bool>,
-        stdout: Option<bool>,
-        tty: Option<bool>,
+        optional: ConnectCoreV1GetNamespacedPodExecOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1GetNamespacedPodExecOptional {
+            command,
+            container,
+            stderr,
+            stdin,
+            stdout,
+            tty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(command) = command {
@@ -332,6 +337,23 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_get_namespaced_pod_exec`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_exec)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1GetNamespacedPodExecOptional<'a> {
+    /// Command is the remote command to execute. argv array. Not executed within a shell.
+    pub command: Option<&'a str>,
+    /// Container in which to execute the command. Defaults to only container if there is only one container in the pod.
+    pub container: Option<&'a str>,
+    /// Redirect the standard error stream of the pod for this call. Defaults to true.
+    pub stderr: Option<bool>,
+    /// Redirect the standard input stream of the pod for this call. Defaults to false.
+    pub stdin: Option<bool>,
+    /// Redirect the standard output stream of the pod for this call. Defaults to true.
+    pub stdout: Option<bool>,
+    /// TTY if true indicates that a tty will be allocated for the exec call. Defaults to false.
+    pub tty: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_exec`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_exec)
@@ -381,14 +403,17 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `ports`
+    /// * `optional`
     ///
-    ///     List of ports to forward Required when using WebSockets
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_get_namespaced_pod_portforward(
         name: &str,
         namespace: &str,
-        ports: Option<i64>,
+        optional: ConnectCoreV1GetNamespacedPodPortforwardOptional,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1GetNamespacedPodPortforwardOptional {
+            ports,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(ports) = ports {
@@ -400,6 +425,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_get_namespaced_pod_portforward`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_portforward)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1GetNamespacedPodPortforwardOptional {
+    /// List of ports to forward Required when using WebSockets
+    pub ports: Option<i64>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_portforward`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_portforward)
@@ -449,14 +481,17 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `path`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to pod.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_get_namespaced_pod_proxy(
         name: &str,
         namespace: &str,
-        path: Option<&str>,
+        optional: ConnectCoreV1GetNamespacedPodProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1GetNamespacedPodProxyOptional {
+            path,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -468,6 +503,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_get_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_proxy)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1GetNamespacedPodProxyOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to pod.
+    pub path: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_proxy)
@@ -521,15 +563,18 @@ impl Pod {
     ///
     ///     path to the resource
     ///
-    /// * `path_`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to pod.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_get_namespaced_pod_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        path_: Option<&str>,
+        optional: ConnectCoreV1GetNamespacedPodProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1GetNamespacedPodProxyWithPathOptional {
+            path_,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -541,6 +586,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_get_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_proxy_with_path)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1GetNamespacedPodProxyWithPathOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to pod.
+    pub path_: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_proxy_with_path)
@@ -590,14 +642,17 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `path`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to pod.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_patch_namespaced_pod_proxy(
         name: &str,
         namespace: &str,
-        path: Option<&str>,
+        optional: ConnectCoreV1PatchNamespacedPodProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PatchNamespacedPodProxyOptional {
+            path,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -609,6 +664,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_patch_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_patch_namespaced_pod_proxy)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PatchNamespacedPodProxyOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to pod.
+    pub path: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_patch_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_patch_namespaced_pod_proxy)
@@ -662,15 +724,18 @@ impl Pod {
     ///
     ///     path to the resource
     ///
-    /// * `path_`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to pod.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_patch_namespaced_pod_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        path_: Option<&str>,
+        optional: ConnectCoreV1PatchNamespacedPodProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PatchNamespacedPodProxyWithPathOptional {
+            path_,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -682,6 +747,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_patch_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_patch_namespaced_pod_proxy_with_path)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PatchNamespacedPodProxyWithPathOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to pod.
+    pub path_: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_patch_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_patch_namespaced_pod_proxy_with_path)
@@ -731,34 +803,21 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `container`
+    /// * `optional`
     ///
-    ///     The container in which to execute the command. Defaults to only container if there is only one container in the pod.
-    ///
-    /// * `stderr`
-    ///
-    ///     Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
-    ///
-    /// * `stdin`
-    ///
-    ///     Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false.
-    ///
-    /// * `stdout`
-    ///
-    ///     Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true.
-    ///
-    /// * `tty`
-    ///
-    ///     TTY if true indicates that a tty will be allocated for the attach call. This is passed through the container runtime so the tty is allocated on the worker node by the container runtime. Defaults to false.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_post_namespaced_pod_attach(
         name: &str,
         namespace: &str,
-        container: Option<&str>,
-        stderr: Option<bool>,
-        stdin: Option<bool>,
-        stdout: Option<bool>,
-        tty: Option<bool>,
+        optional: ConnectCoreV1PostNamespacedPodAttachOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PostNamespacedPodAttachOptional {
+            container,
+            stderr,
+            stdin,
+            stdout,
+            tty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/attach?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
@@ -782,6 +841,21 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_post_namespaced_pod_attach`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_attach)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PostNamespacedPodAttachOptional<'a> {
+    /// The container in which to execute the command. Defaults to only container if there is only one container in the pod.
+    pub container: Option<&'a str>,
+    /// Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
+    pub stderr: Option<bool>,
+    /// Stdin if true, redirects the standard input stream of the pod for this call. Defaults to false.
+    pub stdin: Option<bool>,
+    /// Stdout if true indicates that stdout is to be redirected for the attach call. Defaults to true.
+    pub stdout: Option<bool>,
+    /// TTY if true indicates that a tty will be allocated for the attach call. This is passed through the container runtime so the tty is allocated on the worker node by the container runtime. Defaults to false.
+    pub tty: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_attach`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_attach)
@@ -831,39 +905,22 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `command`
+    /// * `optional`
     ///
-    ///     Command is the remote command to execute. argv array. Not executed within a shell.
-    ///
-    /// * `container`
-    ///
-    ///     Container in which to execute the command. Defaults to only container if there is only one container in the pod.
-    ///
-    /// * `stderr`
-    ///
-    ///     Redirect the standard error stream of the pod for this call. Defaults to true.
-    ///
-    /// * `stdin`
-    ///
-    ///     Redirect the standard input stream of the pod for this call. Defaults to false.
-    ///
-    /// * `stdout`
-    ///
-    ///     Redirect the standard output stream of the pod for this call. Defaults to true.
-    ///
-    /// * `tty`
-    ///
-    ///     TTY if true indicates that a tty will be allocated for the exec call. Defaults to false.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_post_namespaced_pod_exec(
         name: &str,
         namespace: &str,
-        command: Option<&str>,
-        container: Option<&str>,
-        stderr: Option<bool>,
-        stdin: Option<bool>,
-        stdout: Option<bool>,
-        tty: Option<bool>,
+        optional: ConnectCoreV1PostNamespacedPodExecOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PostNamespacedPodExecOptional {
+            command,
+            container,
+            stderr,
+            stdin,
+            stdout,
+            tty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/exec?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(command) = command {
@@ -890,6 +947,23 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_post_namespaced_pod_exec`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_exec)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PostNamespacedPodExecOptional<'a> {
+    /// Command is the remote command to execute. argv array. Not executed within a shell.
+    pub command: Option<&'a str>,
+    /// Container in which to execute the command. Defaults to only container if there is only one container in the pod.
+    pub container: Option<&'a str>,
+    /// Redirect the standard error stream of the pod for this call. Defaults to true.
+    pub stderr: Option<bool>,
+    /// Redirect the standard input stream of the pod for this call. Defaults to false.
+    pub stdin: Option<bool>,
+    /// Redirect the standard output stream of the pod for this call. Defaults to true.
+    pub stdout: Option<bool>,
+    /// TTY if true indicates that a tty will be allocated for the exec call. Defaults to false.
+    pub tty: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_exec`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_exec)
@@ -939,14 +1013,17 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `ports`
+    /// * `optional`
     ///
-    ///     List of ports to forward Required when using WebSockets
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_post_namespaced_pod_portforward(
         name: &str,
         namespace: &str,
-        ports: Option<i64>,
+        optional: ConnectCoreV1PostNamespacedPodPortforwardOptional,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PostNamespacedPodPortforwardOptional {
+            ports,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(ports) = ports {
@@ -958,6 +1035,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_post_namespaced_pod_portforward`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_portforward)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PostNamespacedPodPortforwardOptional {
+    /// List of ports to forward Required when using WebSockets
+    pub ports: Option<i64>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_portforward`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_portforward)
@@ -1007,14 +1091,17 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `path`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to pod.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_post_namespaced_pod_proxy(
         name: &str,
         namespace: &str,
-        path: Option<&str>,
+        optional: ConnectCoreV1PostNamespacedPodProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PostNamespacedPodProxyOptional {
+            path,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -1026,6 +1113,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_post_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_proxy)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PostNamespacedPodProxyOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to pod.
+    pub path: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_proxy)
@@ -1079,15 +1173,18 @@ impl Pod {
     ///
     ///     path to the resource
     ///
-    /// * `path_`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to pod.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_post_namespaced_pod_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        path_: Option<&str>,
+        optional: ConnectCoreV1PostNamespacedPodProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PostNamespacedPodProxyWithPathOptional {
+            path_,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -1099,6 +1196,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_post_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_proxy_with_path)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PostNamespacedPodProxyWithPathOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to pod.
+    pub path_: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_proxy_with_path)
@@ -1148,14 +1252,17 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `path`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to pod.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_put_namespaced_pod_proxy(
         name: &str,
         namespace: &str,
-        path: Option<&str>,
+        optional: ConnectCoreV1PutNamespacedPodProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PutNamespacedPodProxyOptional {
+            path,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path) = path {
@@ -1167,6 +1274,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_put_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_put_namespaced_pod_proxy)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PutNamespacedPodProxyOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to pod.
+    pub path: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_put_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_put_namespaced_pod_proxy)
@@ -1220,15 +1334,18 @@ impl Pod {
     ///
     ///     path to the resource
     ///
-    /// * `path_`
+    /// * `optional`
     ///
-    ///     Path is the URL path to use for the current proxy request to pod.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn connect_core_v1_put_namespaced_pod_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        path_: Option<&str>,
+        optional: ConnectCoreV1PutNamespacedPodProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ConnectCoreV1PutNamespacedPodProxyWithPathOptional {
+            path_,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(path_) = path_ {
@@ -1240,6 +1357,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::connect_core_v1_put_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_put_namespaced_pod_proxy_with_path)
+#[derive(Debug, Default)]
+pub struct ConnectCoreV1PutNamespacedPodProxyWithPathOptional<'a> {
+    /// Path is the URL path to use for the current proxy request to pod.
+    pub path_: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::connect_core_v1_put_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_put_namespaced_pod_proxy_with_path)
@@ -1287,14 +1411,17 @@ impl Pod {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn create_core_v1_namespaced_pod(
         namespace: &str,
         body: &crate::v1_11::api::core::v1::Pod,
-        pretty: Option<&str>,
+        optional: CreateCoreV1NamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let CreateCoreV1NamespacedPodOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -1306,6 +1433,13 @@ impl Pod {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::create_core_v1_namespaced_pod`](./struct.Pod.html#method.create_core_v1_namespaced_pod)
+#[derive(Debug, Default)]
+pub struct CreateCoreV1NamespacedPodOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::create_core_v1_namespaced_pod`](./struct.Pod.html#method.create_core_v1_namespaced_pod)
@@ -1364,55 +1498,24 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_core_v1_collection_namespaced_pod(
         namespace: &str,
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: DeleteCoreV1CollectionNamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteCoreV1CollectionNamespacedPodOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -1448,6 +1551,31 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::delete_core_v1_collection_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_collection_namespaced_pod)
+#[derive(Debug, Default)]
+pub struct DeleteCoreV1CollectionNamespacedPodOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Pod::delete_core_v1_collection_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_collection_namespaced_pod)
@@ -1506,31 +1634,20 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `body`
+    /// * `optional`
     ///
-    /// * `grace_period_seconds`
-    ///
-    ///     The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
-    ///
-    /// * `orphan_dependents`
-    ///
-    ///     Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `propagation_policy`
-    ///
-    ///     Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_core_v1_namespaced_pod(
         name: &str,
         namespace: &str,
-        grace_period_seconds: Option<i64>,
-        orphan_dependents: Option<bool>,
-        pretty: Option<&str>,
-        propagation_policy: Option<&str>,
+        optional: DeleteCoreV1NamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let DeleteCoreV1NamespacedPodOptional {
+            grace_period_seconds,
+            orphan_dependents,
+            pretty,
+            propagation_policy,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(grace_period_seconds) = grace_period_seconds {
@@ -1551,6 +1668,19 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::delete_core_v1_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_namespaced_pod)
+#[derive(Debug, Default)]
+pub struct DeleteCoreV1NamespacedPodOptional<'a> {
+    /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    pub grace_period_seconds: Option<i64>,
+    /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+    pub orphan_dependents: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
+    pub propagation_policy: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::delete_core_v1_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_namespaced_pod)
@@ -1605,55 +1735,24 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_core_v1_namespaced_pod(
         namespace: &str,
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListCoreV1NamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListCoreV1NamespacedPodOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -1691,6 +1790,31 @@ impl Pod {
     }
 }
 
+/// Optional parameters of [`Pod::list_core_v1_namespaced_pod`](./struct.Pod.html#method.list_core_v1_namespaced_pod)
+#[derive(Debug, Default)]
+pub struct ListCoreV1NamespacedPodOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
+}
+
 /// Parses the HTTP response of [`Pod::list_core_v1_namespaced_pod`](./struct.Pod.html#method.list_core_v1_namespaced_pod)
 #[derive(Debug)]
 pub enum ListCoreV1NamespacedPodResponse {
@@ -1725,54 +1849,23 @@ impl Pod {
     ///
     /// # Arguments
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_core_v1_pod_for_all_namespaces(
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: ListCoreV1PodForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ListCoreV1PodForAllNamespacesOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/pods?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -1808,6 +1901,31 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::list_core_v1_pod_for_all_namespaces`](./struct.Pod.html#method.list_core_v1_pod_for_all_namespaces)
+#[derive(Debug, Default)]
+pub struct ListCoreV1PodForAllNamespacesOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Pod::list_core_v1_pod_for_all_namespaces`](./struct.Pod.html#method.list_core_v1_pod_for_all_namespaces)
@@ -1854,15 +1972,18 @@ impl Pod {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_core_v1_namespaced_pod(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchCoreV1NamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchCoreV1NamespacedPodOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -1874,6 +1995,13 @@ impl Pod {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::patch_core_v1_namespaced_pod`](./struct.Pod.html#method.patch_core_v1_namespaced_pod)
+#[derive(Debug, Default)]
+pub struct PatchCoreV1NamespacedPodOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::patch_core_v1_namespaced_pod`](./struct.Pod.html#method.patch_core_v1_namespaced_pod)
@@ -1920,15 +2048,18 @@ impl Pod {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_core_v1_namespaced_pod_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        pretty: Option<&str>,
+        optional: PatchCoreV1NamespacedPodStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchCoreV1NamespacedPodStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -1940,6 +2071,13 @@ impl Pod {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::patch_core_v1_namespaced_pod_status`](./struct.Pod.html#method.patch_core_v1_namespaced_pod_status)
+#[derive(Debug, Default)]
+pub struct PatchCoreV1NamespacedPodStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::patch_core_v1_namespaced_pod_status`](./struct.Pod.html#method.patch_core_v1_namespaced_pod_status)
@@ -1984,24 +2122,19 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `exact`
+    /// * `optional`
     ///
-    ///     Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
-    ///
-    /// * `export`
-    ///
-    ///     Should this value be exported.  Export strips fields that a user can not specify.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_core_v1_namespaced_pod(
         name: &str,
         namespace: &str,
-        exact: Option<bool>,
-        export: Option<bool>,
-        pretty: Option<&str>,
+        optional: ReadCoreV1NamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadCoreV1NamespacedPodOptional {
+            exact,
+            export,
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(exact) = exact {
@@ -2019,6 +2152,17 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::read_core_v1_namespaced_pod`](./struct.Pod.html#method.read_core_v1_namespaced_pod)
+#[derive(Debug, Default)]
+pub struct ReadCoreV1NamespacedPodOptional<'a> {
+    /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
+    pub exact: Option<bool>,
+    /// Should this value be exported.  Export strips fields that a user can not specify.
+    pub export: Option<bool>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod`](./struct.Pod.html#method.read_core_v1_namespaced_pod)
@@ -2063,49 +2207,24 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `container`
+    /// * `optional`
     ///
-    ///     The container for which to stream logs. Defaults to only container if there is one container in the pod.
-    ///
-    /// * `follow`
-    ///
-    ///     Follow the log stream of the pod. Defaults to false.
-    ///
-    /// * `limit_bytes`
-    ///
-    ///     If set, the number of bytes to read from the server before terminating the log output. This may not display a complete final line of logging, and may return slightly more or slightly less than the specified limit.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `previous`
-    ///
-    ///     Return previous terminated container logs. Defaults to false.
-    ///
-    /// * `since_seconds`
-    ///
-    ///     A relative time in seconds before the current time from which to show logs. If this value precedes the time a pod was started, only logs since the pod start will be returned. If this value is in the future, no logs will be returned. Only one of sinceSeconds or sinceTime may be specified.
-    ///
-    /// * `tail_lines`
-    ///
-    ///     If set, the number of lines from the end of the logs to show. If not specified, logs are shown from the creation of the container or sinceSeconds or sinceTime
-    ///
-    /// * `timestamps`
-    ///
-    ///     If true, add an RFC3339 or RFC3339Nano timestamp at the beginning of every line of log output. Defaults to false.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_core_v1_namespaced_pod_log(
         name: &str,
         namespace: &str,
-        container: Option<&str>,
-        follow: Option<bool>,
-        limit_bytes: Option<i64>,
-        pretty: Option<&str>,
-        previous: Option<bool>,
-        since_seconds: Option<i64>,
-        tail_lines: Option<i64>,
-        timestamps: Option<bool>,
+        optional: ReadCoreV1NamespacedPodLogOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadCoreV1NamespacedPodLogOptional {
+            container,
+            follow,
+            limit_bytes,
+            pretty,
+            previous,
+            since_seconds,
+            tail_lines,
+            timestamps,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/log?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(container) = container {
@@ -2138,6 +2257,27 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::read_core_v1_namespaced_pod_log`](./struct.Pod.html#method.read_core_v1_namespaced_pod_log)
+#[derive(Debug, Default)]
+pub struct ReadCoreV1NamespacedPodLogOptional<'a> {
+    /// The container for which to stream logs. Defaults to only container if there is one container in the pod.
+    pub container: Option<&'a str>,
+    /// Follow the log stream of the pod. Defaults to false.
+    pub follow: Option<bool>,
+    /// If set, the number of bytes to read from the server before terminating the log output. This may not display a complete final line of logging, and may return slightly more or slightly less than the specified limit.
+    pub limit_bytes: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// Return previous terminated container logs. Defaults to false.
+    pub previous: Option<bool>,
+    /// A relative time in seconds before the current time from which to show logs. If this value precedes the time a pod was started, only logs since the pod start will be returned. If this value is in the future, no logs will be returned. Only one of sinceSeconds or sinceTime may be specified.
+    pub since_seconds: Option<i64>,
+    /// If set, the number of lines from the end of the logs to show. If not specified, logs are shown from the creation of the container or sinceSeconds or sinceTime
+    pub tail_lines: Option<i64>,
+    /// If true, add an RFC3339 or RFC3339Nano timestamp at the beginning of every line of log output. Defaults to false.
+    pub timestamps: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod_log`](./struct.Pod.html#method.read_core_v1_namespaced_pod_log)
@@ -2187,14 +2327,17 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_core_v1_namespaced_pod_status(
         name: &str,
         namespace: &str,
-        pretty: Option<&str>,
+        optional: ReadCoreV1NamespacedPodStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadCoreV1NamespacedPodStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -2206,6 +2349,13 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::read_core_v1_namespaced_pod_status`](./struct.Pod.html#method.read_core_v1_namespaced_pod_status)
+#[derive(Debug, Default)]
+pub struct ReadCoreV1NamespacedPodStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod_status`](./struct.Pod.html#method.read_core_v1_namespaced_pod_status)
@@ -2252,15 +2402,18 @@ impl Pod {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_core_v1_namespaced_pod(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::api::core::v1::Pod,
-        pretty: Option<&str>,
+        optional: ReplaceCoreV1NamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceCoreV1NamespacedPodOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -2272,6 +2425,13 @@ impl Pod {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::replace_core_v1_namespaced_pod`](./struct.Pod.html#method.replace_core_v1_namespaced_pod)
+#[derive(Debug, Default)]
+pub struct ReplaceCoreV1NamespacedPodOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::replace_core_v1_namespaced_pod`](./struct.Pod.html#method.replace_core_v1_namespaced_pod)
@@ -2327,15 +2487,18 @@ impl Pod {
     ///
     /// * `body`
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_core_v1_namespaced_pod_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::api::core::v1::Pod,
-        pretty: Option<&str>,
+        optional: ReplaceCoreV1NamespacedPodStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceCoreV1NamespacedPodStatusOptional {
+            pretty,
+        } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -2347,6 +2510,13 @@ impl Pod {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::replace_core_v1_namespaced_pod_status`](./struct.Pod.html#method.replace_core_v1_namespaced_pod_status)
+#[derive(Debug, Default)]
+pub struct ReplaceCoreV1NamespacedPodStatusOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Pod::replace_core_v1_namespaced_pod_status`](./struct.Pod.html#method.replace_core_v1_namespaced_pod_status)
@@ -2400,56 +2570,25 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_core_v1_namespaced_pod(
         name: &str,
         namespace: &str,
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchCoreV1NamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchCoreV1NamespacedPodOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/watch/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -2485,6 +2624,31 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::watch_core_v1_namespaced_pod`](./struct.Pod.html#method.watch_core_v1_namespaced_pod)
+#[derive(Debug, Default)]
+pub struct WatchCoreV1NamespacedPodOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Pod::watch_core_v1_namespaced_pod`](./struct.Pod.html#method.watch_core_v1_namespaced_pod)
@@ -2527,55 +2691,24 @@ impl Pod {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_core_v1_namespaced_pod_list(
         namespace: &str,
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchCoreV1NamespacedPodListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchCoreV1NamespacedPodListOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/watch/namespaces/{namespace}/pods?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -2611,6 +2744,31 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::watch_core_v1_namespaced_pod_list`](./struct.Pod.html#method.watch_core_v1_namespaced_pod_list)
+#[derive(Debug, Default)]
+pub struct WatchCoreV1NamespacedPodListOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Pod::watch_core_v1_namespaced_pod_list`](./struct.Pod.html#method.watch_core_v1_namespaced_pod_list)
@@ -2649,54 +2807,23 @@ impl Pod {
     ///
     /// # Arguments
     ///
-    /// * `continue_`
+    /// * `optional`
     ///
-    ///     The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
-    /// * `include_uninitialized`
-    ///
-    ///     If true, partially initialized resources are included in the response.
-    ///
-    /// * `label_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    ///
-    /// * `limit`
-    ///
-    ///     limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    ///     The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
-    ///
-    /// * `resource_version`
-    ///
-    ///     When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    ///
-    /// * `timeout_seconds`
-    ///
-    ///     Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
-    ///
-    /// * `watch`
-    ///
-    ///     Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_core_v1_pod_list_for_all_namespaces(
-        continue_: Option<&str>,
-        field_selector: Option<&str>,
-        include_uninitialized: Option<bool>,
-        label_selector: Option<&str>,
-        limit: Option<i64>,
-        pretty: Option<&str>,
-        resource_version: Option<&str>,
-        timeout_seconds: Option<i64>,
-        watch: Option<bool>,
+        optional: WatchCoreV1PodListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let WatchCoreV1PodListForAllNamespacesOptional {
+            continue_,
+            field_selector,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+            watch,
+        } = optional;
         let __url = format!("/api/v1/watch/pods?");
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
@@ -2732,6 +2859,31 @@ impl Pod {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Pod::watch_core_v1_pod_list_for_all_namespaces`](./struct.Pod.html#method.watch_core_v1_pod_list_for_all_namespaces)
+#[derive(Debug, Default)]
+pub struct WatchCoreV1PodListForAllNamespacesOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
+    pub watch: Option<bool>,
 }
 
 /// Parses the HTTP response of [`Pod::watch_core_v1_pod_list_for_all_namespaces`](./struct.Pod.html#method.watch_core_v1_pod_list_for_all_namespaces)
@@ -2784,7 +2936,7 @@ impl crate::Resource for Pod {
 impl crate::Metadata for Pod {
     type Ty = crate::v1_11::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

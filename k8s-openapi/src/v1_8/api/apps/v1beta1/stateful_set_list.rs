@@ -29,7 +29,7 @@ impl crate::Resource for StatefulSetList {
 impl crate::Metadata for StatefulSetList {
     type Ty = crate::v1_8::apimachinery::pkg::apis::meta::v1::ListMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }

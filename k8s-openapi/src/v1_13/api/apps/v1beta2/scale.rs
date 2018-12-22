@@ -34,20 +34,19 @@ impl Scale {
     ///
     /// * `body`
     ///
-    /// * `dry_run`
+    /// * `optional`
     ///
-    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_apps_v1beta2_namespaced_deployment_scale(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        dry_run: Option<&str>,
-        pretty: Option<&str>,
+        optional: PatchAppsV1beta2NamespacedDeploymentScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchAppsV1beta2NamespacedDeploymentScaleOptional {
+            dry_run,
+            pretty,
+        } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
@@ -62,6 +61,15 @@ impl Scale {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Scale::patch_apps_v1beta2_namespaced_deployment_scale`](./struct.Scale.html#method.patch_apps_v1beta2_namespaced_deployment_scale)
+#[derive(Debug, Default)]
+pub struct PatchAppsV1beta2NamespacedDeploymentScaleOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Scale::patch_apps_v1beta2_namespaced_deployment_scale`](./struct.Scale.html#method.patch_apps_v1beta2_namespaced_deployment_scale)
@@ -108,20 +116,19 @@ impl Scale {
     ///
     /// * `body`
     ///
-    /// * `dry_run`
+    /// * `optional`
     ///
-    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_apps_v1beta2_namespaced_replica_set_scale(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        dry_run: Option<&str>,
-        pretty: Option<&str>,
+        optional: PatchAppsV1beta2NamespacedReplicaSetScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchAppsV1beta2NamespacedReplicaSetScaleOptional {
+            dry_run,
+            pretty,
+        } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
@@ -136,6 +143,15 @@ impl Scale {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Scale::patch_apps_v1beta2_namespaced_replica_set_scale`](./struct.Scale.html#method.patch_apps_v1beta2_namespaced_replica_set_scale)
+#[derive(Debug, Default)]
+pub struct PatchAppsV1beta2NamespacedReplicaSetScaleOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Scale::patch_apps_v1beta2_namespaced_replica_set_scale`](./struct.Scale.html#method.patch_apps_v1beta2_namespaced_replica_set_scale)
@@ -182,20 +198,19 @@ impl Scale {
     ///
     /// * `body`
     ///
-    /// * `dry_run`
+    /// * `optional`
     ///
-    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn patch_apps_v1beta2_namespaced_stateful_set_scale(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        dry_run: Option<&str>,
-        pretty: Option<&str>,
+        optional: PatchAppsV1beta2NamespacedStatefulSetScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let PatchAppsV1beta2NamespacedStatefulSetScaleOptional {
+            dry_run,
+            pretty,
+        } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
@@ -210,6 +225,15 @@ impl Scale {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Scale::patch_apps_v1beta2_namespaced_stateful_set_scale`](./struct.Scale.html#method.patch_apps_v1beta2_namespaced_stateful_set_scale)
+#[derive(Debug, Default)]
+pub struct PatchAppsV1beta2NamespacedStatefulSetScaleOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Scale::patch_apps_v1beta2_namespaced_stateful_set_scale`](./struct.Scale.html#method.patch_apps_v1beta2_namespaced_stateful_set_scale)
@@ -254,14 +278,17 @@ impl Scale {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_apps_v1beta2_namespaced_deployment_scale(
         name: &str,
         namespace: &str,
-        pretty: Option<&str>,
+        optional: ReadAppsV1beta2NamespacedDeploymentScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadAppsV1beta2NamespacedDeploymentScaleOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -273,6 +300,13 @@ impl Scale {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Scale::read_apps_v1beta2_namespaced_deployment_scale`](./struct.Scale.html#method.read_apps_v1beta2_namespaced_deployment_scale)
+#[derive(Debug, Default)]
+pub struct ReadAppsV1beta2NamespacedDeploymentScaleOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Scale::read_apps_v1beta2_namespaced_deployment_scale`](./struct.Scale.html#method.read_apps_v1beta2_namespaced_deployment_scale)
@@ -317,14 +351,17 @@ impl Scale {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_apps_v1beta2_namespaced_replica_set_scale(
         name: &str,
         namespace: &str,
-        pretty: Option<&str>,
+        optional: ReadAppsV1beta2NamespacedReplicaSetScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadAppsV1beta2NamespacedReplicaSetScaleOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -336,6 +373,13 @@ impl Scale {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Scale::read_apps_v1beta2_namespaced_replica_set_scale`](./struct.Scale.html#method.read_apps_v1beta2_namespaced_replica_set_scale)
+#[derive(Debug, Default)]
+pub struct ReadAppsV1beta2NamespacedReplicaSetScaleOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Scale::read_apps_v1beta2_namespaced_replica_set_scale`](./struct.Scale.html#method.read_apps_v1beta2_namespaced_replica_set_scale)
@@ -380,14 +424,17 @@ impl Scale {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `pretty`
+    /// * `optional`
     ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn read_apps_v1beta2_namespaced_stateful_set_scale(
         name: &str,
         namespace: &str,
-        pretty: Option<&str>,
+        optional: ReadAppsV1beta2NamespacedStatefulSetScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReadAppsV1beta2NamespacedStatefulSetScaleOptional {
+            pretty,
+        } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
@@ -399,6 +446,13 @@ impl Scale {
         let __body = vec![];
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Scale::read_apps_v1beta2_namespaced_stateful_set_scale`](./struct.Scale.html#method.read_apps_v1beta2_namespaced_stateful_set_scale)
+#[derive(Debug, Default)]
+pub struct ReadAppsV1beta2NamespacedStatefulSetScaleOptional<'a> {
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Scale::read_apps_v1beta2_namespaced_stateful_set_scale`](./struct.Scale.html#method.read_apps_v1beta2_namespaced_stateful_set_scale)
@@ -445,20 +499,19 @@ impl Scale {
     ///
     /// * `body`
     ///
-    /// * `dry_run`
+    /// * `optional`
     ///
-    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_apps_v1beta2_namespaced_deployment_scale(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::apps::v1beta2::Scale,
-        dry_run: Option<&str>,
-        pretty: Option<&str>,
+        optional: ReplaceAppsV1beta2NamespacedDeploymentScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceAppsV1beta2NamespacedDeploymentScaleOptional {
+            dry_run,
+            pretty,
+        } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/deployments/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
@@ -473,6 +526,15 @@ impl Scale {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Scale::replace_apps_v1beta2_namespaced_deployment_scale`](./struct.Scale.html#method.replace_apps_v1beta2_namespaced_deployment_scale)
+#[derive(Debug, Default)]
+pub struct ReplaceAppsV1beta2NamespacedDeploymentScaleOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Scale::replace_apps_v1beta2_namespaced_deployment_scale`](./struct.Scale.html#method.replace_apps_v1beta2_namespaced_deployment_scale)
@@ -528,20 +590,19 @@ impl Scale {
     ///
     /// * `body`
     ///
-    /// * `dry_run`
+    /// * `optional`
     ///
-    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_apps_v1beta2_namespaced_replica_set_scale(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::apps::v1beta2::Scale,
-        dry_run: Option<&str>,
-        pretty: Option<&str>,
+        optional: ReplaceAppsV1beta2NamespacedReplicaSetScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceAppsV1beta2NamespacedReplicaSetScaleOptional {
+            dry_run,
+            pretty,
+        } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
@@ -556,6 +617,15 @@ impl Scale {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Scale::replace_apps_v1beta2_namespaced_replica_set_scale`](./struct.Scale.html#method.replace_apps_v1beta2_namespaced_replica_set_scale)
+#[derive(Debug, Default)]
+pub struct ReplaceAppsV1beta2NamespacedReplicaSetScaleOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Scale::replace_apps_v1beta2_namespaced_replica_set_scale`](./struct.Scale.html#method.replace_apps_v1beta2_namespaced_replica_set_scale)
@@ -611,20 +681,19 @@ impl Scale {
     ///
     /// * `body`
     ///
-    /// * `dry_run`
+    /// * `optional`
     ///
-    ///     When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    ///
-    /// * `pretty`
-    ///
-    ///     If 'true', then the output is pretty printed.
+    ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn replace_apps_v1beta2_namespaced_stateful_set_scale(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::apps::v1beta2::Scale,
-        dry_run: Option<&str>,
-        pretty: Option<&str>,
+        optional: ReplaceAppsV1beta2NamespacedStatefulSetScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+        let ReplaceAppsV1beta2NamespacedStatefulSetScaleOptional {
+            dry_run,
+            pretty,
+        } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/scale?", name = name, namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
@@ -639,6 +708,15 @@ impl Scale {
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
         __request.body(__body).map_err(crate::RequestError::Http)
     }
+}
+
+/// Optional parameters of [`Scale::replace_apps_v1beta2_namespaced_stateful_set_scale`](./struct.Scale.html#method.replace_apps_v1beta2_namespaced_stateful_set_scale)
+#[derive(Debug, Default)]
+pub struct ReplaceAppsV1beta2NamespacedStatefulSetScaleOptional<'a> {
+    /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    pub dry_run: Option<&'a str>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
 }
 
 /// Parses the HTTP response of [`Scale::replace_apps_v1beta2_namespaced_stateful_set_scale`](./struct.Scale.html#method.replace_apps_v1beta2_namespaced_stateful_set_scale)
@@ -698,7 +776,7 @@ impl crate::Resource for Scale {
 impl crate::Metadata for Scale {
     type Ty = crate::v1_13::apimachinery::pkg::apis::meta::v1::ObjectMeta;
 
-    fn metadata(&self) -> Option<&Self::Ty> {
+    fn metadata(&self) -> Option<&<Self as crate::Metadata>::Ty> {
         self.metadata.as_ref()
     }
 }
