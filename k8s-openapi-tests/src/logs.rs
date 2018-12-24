@@ -1,25 +1,10 @@
 #[test]
 fn get() {
 	k8s_if_1_7! {
-		use k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
+		use k8s_openapi::kubernetes::pkg::api::v1 as api;
 	}
-	k8s_if_1_8! {
-		use k8s_openapi::v1_8::api::core::v1 as api;
-	}
-	k8s_if_1_9! {
-		use k8s_openapi::v1_9::api::core::v1 as api;
-	}
-	k8s_if_1_10! {
-		use k8s_openapi::v1_10::api::core::v1 as api;
-	}
-	k8s_if_1_11! {
-		use k8s_openapi::v1_11::api::core::v1 as api;
-	}
-	k8s_if_1_12! {
-		use k8s_openapi::v1_12::api::core::v1 as api;
-	}
-	k8s_if_1_13! {
-		use k8s_openapi::v1_13::api::core::v1 as api;
+	k8s_if_ge_1_8! {
+		use k8s_openapi::api::core::v1 as api;
 	}
 
 	crate::Client::with("logs-get", |client| {

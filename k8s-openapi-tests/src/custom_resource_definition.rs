@@ -2,30 +2,8 @@ use k8s_openapi::{http, serde_json};
 
 #[test]
 fn create() {
-	k8s_if_1_8! {
-		use k8s_openapi::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-		use k8s_openapi::v1_8::apimachinery::pkg::apis::meta::v1 as meta;
-	}
-	k8s_if_1_9! {
-		use k8s_openapi::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-		use k8s_openapi::v1_9::apimachinery::pkg::apis::meta::v1 as meta;
-	}
-	k8s_if_1_10! {
-		use k8s_openapi::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-		use k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
-	}
-	k8s_if_1_11! {
-		use k8s_openapi::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-		use k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
-	}
-	k8s_if_1_12! {
-		use k8s_openapi::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-		use k8s_openapi::v1_12::apimachinery::pkg::apis::meta::v1 as meta;
-	}
-	k8s_if_1_13! {
-		use k8s_openapi::v1_13::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
-		use k8s_openapi::v1_13::apimachinery::pkg::apis::meta::v1 as meta;
-	}
+	use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;
+	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
 	#[derive(Debug, Default, serde_derive::Deserialize, serde_derive::Serialize)]
 	struct FooBar {

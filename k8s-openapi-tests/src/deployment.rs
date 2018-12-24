@@ -1,33 +1,15 @@
 #[test]
 fn list() {
 	k8s_if_1_7! {
-		use k8s_openapi::v1_7::kubernetes::pkg::apis::apps::v1beta1 as apps;
-		use k8s_openapi::v1_7::apimachinery::pkg::util as util;
+		use k8s_openapi::kubernetes::pkg::apis::apps::v1beta1 as apps;
 	}
 	k8s_if_1_8! {
-		use k8s_openapi::v1_8::api::apps::v1beta2 as apps;
-		use k8s_openapi::v1_8::apimachinery::pkg::util as util;
+		use k8s_openapi::api::apps::v1beta2 as apps;
 	}
-	k8s_if_1_9! {
-		use k8s_openapi::v1_9::api::apps::v1 as apps;
-		use k8s_openapi::v1_9::apimachinery::pkg::util as util;
+	k8s_if_ge_1_9! {
+		use k8s_openapi::api::apps::v1 as apps;
 	}
-	k8s_if_1_10! {
-		use k8s_openapi::v1_10::api::apps::v1 as apps;
-		use k8s_openapi::v1_10::apimachinery::pkg::util as util;
-	}
-	k8s_if_1_11! {
-		use k8s_openapi::v1_11::api::apps::v1 as apps;
-		use k8s_openapi::v1_11::apimachinery::pkg::util as util;
-	}
-	k8s_if_1_12! {
-		use k8s_openapi::v1_12::api::apps::v1 as apps;
-		use k8s_openapi::v1_12::apimachinery::pkg::util as util;
-	}
-	k8s_if_1_13! {
-		use k8s_openapi::v1_13::api::apps::v1 as apps;
-		use k8s_openapi::v1_13::apimachinery::pkg::util as util;
-	}
+	use k8s_openapi::apimachinery::pkg::util as util;
 
 	crate::Client::with("deployment-list", |client| {
 		k8s_if_1_7! {

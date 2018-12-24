@@ -2,7 +2,26 @@
 
 //! Bindings for the Kubernetes client API, generated from the OpenAPI spec.
 //!
-//! Each supported version of Kubernetes is represented by one top-level module (like `::v1_9`) and is enabled by a crate feature of the same name (like `v1_9`).
+//! Each supported version of Kubernetes is represented by a feature name (like `v1_9`). Only one such feature can be enabled at a time.
+//!
+//! If you're writing a library crate that supports multiple versions of Kubernetes (eg >= v1.9), it's recommended that your crate does *not*
+//! enable the corresponding feature directly (eg `k8s-openapi = { features = ["v1_9"] }`). Instead, let the application crate that uses your library
+//! enable the feature corresponding to the version of Kubernetes that *it* supports. This ensures that the entire crate graph can use a common set
+//! of types from this crate.
+//!
+//! For things that differ between versions, such as the fully-qualified paths of imports, use the `k8s_*` macros to emit different code
+//! depending on which feature eventually gets enabled. See the docs of the macros and the `k8s-openapi-tests` directory in the repository
+//! for more details.
+//!
+//! Similarly, if your crate does not support some versions of Kubernetes (eg <= 1.8), you can put something like this at the top of your crate root:
+//!
+//! ```rust,ignore
+//! #[macro_use] extern crate k8s_openapi;
+//!
+//! k8s_if_le_1_8! {
+//!     compile_error!("This crate requires v1_9 or higher feature to be enabled in the k8s-openapi crate.");
+//! }
+//! ```
 //!
 //!
 //! # Examples
@@ -13,25 +32,10 @@
 //! #[macro_use] extern crate k8s_openapi;
 //!
 //! k8s_if_1_7! {
-//!     use k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
+//!     use k8s_openapi::kubernetes::pkg::api::v1 as api;
 //! }
-//! k8s_if_1_8! {
-//!     use k8s_openapi::v1_8::api::core::v1 as api;
-//! }
-//! k8s_if_1_9! {
-//!     use k8s_openapi::v1_9::api::core::v1 as api;
-//! }
-//! k8s_if_1_10! {
-//!     use k8s_openapi::v1_10::api::core::v1 as api;
-//! }
-//! k8s_if_1_11! {
-//!     use k8s_openapi::v1_11::api::core::v1 as api;
-//! }
-//! k8s_if_1_12! {
-//!     use k8s_openapi::v1_12::api::core::v1 as api;
-//! }
-//! k8s_if_1_13! {
-//!     use k8s_openapi::v1_13::api::core::v1 as api;
+//! k8s_if_ge_1_8! {
+//!     use k8s_openapi::api::core::v1 as api;
 //! }
 //!
 //! fn main() {
@@ -49,25 +53,10 @@
 //! use k8s_openapi::http;
 //!
 //! k8s_if_1_7! {
-//!     use k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
+//!     use k8s_openapi::kubernetes::pkg::api::v1 as api;
 //! }
-//! k8s_if_1_8! {
-//!     use k8s_openapi::v1_8::api::core::v1 as api;
-//! }
-//! k8s_if_1_9! {
-//!     use k8s_openapi::v1_9::api::core::v1 as api;
-//! }
-//! k8s_if_1_10! {
-//!     use k8s_openapi::v1_10::api::core::v1 as api;
-//! }
-//! k8s_if_1_11! {
-//!     use k8s_openapi::v1_11::api::core::v1 as api;
-//! }
-//! k8s_if_1_12! {
-//!     use k8s_openapi::v1_12::api::core::v1 as api;
-//! }
-//! k8s_if_1_13! {
-//!     use k8s_openapi::v1_13::api::core::v1 as api;
+//! k8s_if_ge_1_8! {
+//!     use k8s_openapi::api::core::v1 as api;
 //! }
 //!
 //! # struct Response;
@@ -398,25 +387,40 @@ impl std::error::Error for ResponseError {
     }
 }
 
-#[cfg(feature = "v1_7")]
-pub mod v1_7;
+#[cfg(feature = "dox")]
+macro_rules! mods {
+    () => {};
 
-#[cfg(feature = "v1_8")]
-pub mod v1_8;
+    ($name:ident $name_str:expr, $($rest:tt)*) => {
+        /// This module is only emitted because the `dox` feature was enabled for generating docs.
+        /// When the corresponding feature for this version is enabled instead, this mod will be private
+        /// and its contents will be re-exported from the crate root.
+        pub mod $name;
 
-#[cfg(feature = "v1_9")]
-pub mod v1_9;
+        mods! { $($rest)* }
+    };
+}
 
-#[cfg(feature = "v1_10")]
-pub mod v1_10;
+#[cfg(not(feature = "dox"))]
+macro_rules! mods {
+    () => {};
 
-#[cfg(feature = "v1_11")]
-pub mod v1_11;
+    ($name:ident $name_str:expr, $($rest:tt)*) => {
+        #[cfg(feature = $name_str)] mod $name;
+        #[cfg(feature = $name_str)] pub use self::$name::*;
 
-#[cfg(feature = "v1_12")]
-pub mod v1_12;
+        mods! { $($rest)* }
+    };
+}
 
-#[cfg(feature = "v1_13")]
-pub mod v1_13;
+mods! {
+    v1_7 "v1_7",
+    v1_8 "v1_8",
+    v1_9 "v1_9",
+    v1_10 "v1_10",
+    v1_11 "v1_11",
+    v1_12 "v1_12",
+    v1_13 "v1_13",
+}
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));

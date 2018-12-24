@@ -21,6 +21,7 @@ serde_json = "1.0.x"
 url = "1.7.x"
 
 [features]
+# Each feature corresponds to a supported version of Kubernetes
 v1_7 = []
 v1_8 = []
 v1_9 = []
@@ -29,5 +30,8 @@ v1_11 = []
 v1_12 = []
 v1_13 = []
 
+# Only used to build docs
+dox = []
+
 [package.metadata.docs.rs]
-features = ["v1_7", "v1_8", "v1_9", "v1_10", "v1_11", "v1_12", "v1_13"]
+features = ["dox"]

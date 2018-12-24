@@ -6,40 +6,14 @@ k8s_if_le_1_8! {
 #[test]
 fn create() {
 	k8s_if_1_7! {
-		use k8s_openapi::v1_7::kubernetes::pkg::api::v1 as api;
-		use k8s_openapi::v1_7::kubernetes::pkg::apis::batch::v1 as batch;
-		use k8s_openapi::v1_7::apimachinery::pkg::apis::meta::v1 as meta;
+		use k8s_openapi::kubernetes::pkg::api::v1 as api;
+		use k8s_openapi::kubernetes::pkg::apis::batch::v1 as batch;
 	}
-	k8s_if_1_8! {
-		use k8s_openapi::v1_8::api::core::v1 as api;
-		use k8s_openapi::v1_8::api::batch::v1 as batch;
-		use k8s_openapi::v1_8::apimachinery::pkg::apis::meta::v1 as meta;
+	k8s_if_ge_1_8! {
+		use k8s_openapi::api::core::v1 as api;
+		use k8s_openapi::api::batch::v1 as batch;
 	}
-	k8s_if_1_9! {
-		use k8s_openapi::v1_9::api::core::v1 as api;
-		use k8s_openapi::v1_9::api::batch::v1 as batch;
-		use k8s_openapi::v1_9::apimachinery::pkg::apis::meta::v1 as meta;
-	}
-	k8s_if_1_10! {
-		use k8s_openapi::v1_10::api::core::v1 as api;
-		use k8s_openapi::v1_10::api::batch::v1 as batch;
-		use k8s_openapi::v1_10::apimachinery::pkg::apis::meta::v1 as meta;
-	}
-	k8s_if_1_11! {
-		use k8s_openapi::v1_11::api::core::v1 as api;
-		use k8s_openapi::v1_11::api::batch::v1 as batch;
-		use k8s_openapi::v1_11::apimachinery::pkg::apis::meta::v1 as meta;
-	}
-	k8s_if_1_12! {
-		use k8s_openapi::v1_12::api::core::v1 as api;
-		use k8s_openapi::v1_12::api::batch::v1 as batch;
-		use k8s_openapi::v1_12::apimachinery::pkg::apis::meta::v1 as meta;
-	}
-	k8s_if_1_13! {
-		use k8s_openapi::v1_13::api::core::v1 as api;
-		use k8s_openapi::v1_13::api::batch::v1 as batch;
-		use k8s_openapi::v1_13::apimachinery::pkg::apis::meta::v1 as meta;
-	}
+	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
 	crate::Client::with("job-create", |client| {
 		let job_spec = batch::JobSpec {

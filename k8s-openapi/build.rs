@@ -4,17 +4,28 @@ const MAX: usize = 13;
 fn main() -> Result<(), Box<std::error::Error>> {
     use std::io::Write;
 
-    let versions = {
-        let mut versions: std::collections::HashSet<_> = Default::default();
-
-        for v in MIN..=MAX {
-            if std::env::var(format!("CARGO_FEATURE_V1_{}", v)).is_ok() {
-                versions.insert(v);
-            }
+    let version =
+        if std::env::var("CARGO_FEATURE_DOX").is_ok() {
+            None
         }
+        else {
+            let mut v1 = None;
 
-        versions
-    };
+            for v2 in MIN..=MAX {
+                if std::env::var(format!("CARGO_FEATURE_V1_{}", v2)).is_ok() {
+                    v1 = match v1 {
+                        Some(v1) => panic!(
+                            "Both v1_{} and v1_{} features are enabled on the k8s-openapi crate. Only one feature can be enabled at the same time.",
+                            v1,
+                            v2,
+                        ),
+                        None => Some(v2),
+                    };
+                }
+            }
+
+            Some(v1.expect("At least one v1_* feature must be enabled on the k8s-openapi crate."))
+        };
 
     let mut f = {
         let mut out_file: std::path::PathBuf = std::env::var_os("OUT_DIR").ok_or_else(|| "OUT_DIR not set")?.into();
@@ -31,15 +42,14 @@ fn main() -> Result<(), Box<std::error::Error>> {
         writeln!(f, "/// # #[macro_use] extern crate k8s_openapi;")?;
         writeln!(f, "/// k8s_if_1_{}! {{", v)?;
         if v == 7 {
-            writeln!(f, "///     use k8s_openapi::v1_{}::kubernetes::pkg::api::v1 as api;", v)?;
+            writeln!(f, "///     use k8s_openapi::kubernetes::pkg::api::v1 as api;")?;
         }
         else {
-            writeln!(f, "///     use k8s_openapi::v1_{}::api::core::v1 as api;", v)?;
+            writeln!(f, "///     use k8s_openapi::api::core::v1 as api;")?;
         }
-        writeln!(f, "///     use k8s_openapi::v1_{}::apimachinery::pkg::apis::meta::v1 as meta;", v)?;
         writeln!(f, "/// }}")?;
         writeln!(f, "/// ```")?;
-        if versions.contains(&v) {
+        if version == Some(v) {
             writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
         }
         else {
@@ -48,7 +58,7 @@ fn main() -> Result<(), Box<std::error::Error>> {
         writeln!(f)?;
 
         writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` or higher feature is enabled, otherwise it evaluates to nothing.", v)?;
-        if cfg_ge(v, &versions) {
+        if cfg_ge(v, version) {
             writeln!(f, "#[macro_export] macro_rules! k8s_if_ge_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
         }
         else {
@@ -57,7 +67,7 @@ fn main() -> Result<(), Box<std::error::Error>> {
         writeln!(f)?;
 
         writeln!(f, "/// This macro evaluates to its contents if the `v1_{}` or lower feature is enabled, otherwise it evaluates to nothing.", v)?;
-        if cfg_le(v, &versions) {
+        if cfg_le(v, version) {
             writeln!(f, "#[macro_export] macro_rules! k8s_if_le_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
         }
         else {
@@ -85,33 +95,19 @@ fn main() -> Result<(), Box<std::error::Error>> {
     writeln!(f, "/// # #[macro_use] extern crate k8s_openapi;")?;
     writeln!(f, "/// # use k8s_openapi::http;")?;
     writeln!(f, "/// #")?;
-    writeln!(f, "/// # k8s_if_1_8! {{")?;
-    writeln!(f, "/// #     use k8s_openapi::v1_8::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
-    writeln!(f, "/// # }}")?;
-    writeln!(f, "/// # k8s_if_1_9! {{")?;
-    writeln!(f, "/// #     use k8s_openapi::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
-    writeln!(f, "/// # }}")?;
-    writeln!(f, "/// # k8s_if_1_10! {{")?;
-    writeln!(f, "/// #     use k8s_openapi::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
-    writeln!(f, "/// # }}")?;
-    writeln!(f, "/// # k8s_if_1_11! {{")?;
-    writeln!(f, "/// #     use k8s_openapi::v1_11::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
-    writeln!(f, "/// # }}")?;
-    writeln!(f, "/// # k8s_if_1_12! {{")?;
-    writeln!(f, "/// #     use k8s_openapi::v1_12::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
-    writeln!(f, "/// # }}")?;
-    writeln!(f, "/// # k8s_if_1_13! {{")?;
-    writeln!(f, "/// #     use k8s_openapi::v1_13::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1 as apiextensions;")?;
+    writeln!(f, "/// # k8s_if_ge_1_8! {{")?;
+    writeln!(f, "/// use k8s_openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::{{")?;
+    writeln!(f, "///     CreateApiextensionsV1beta1CustomResourceDefinitionResponse,")?;
+    writeln!(f, "///     CustomResourceDefinition,")?;
+    writeln!(f, "/// }};")?;
     writeln!(f, "/// # }}")?;
     writeln!(f, "/// #")?;
     writeln!(f, "/// # fn main() -> Result<(), Box<std::error::Error>> {{")?;
     writeln!(f, "/// #     k8s_if_ge_1_8! {{")?;
-    writeln!(f, "/// use self::apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse;")?;
-    writeln!(f, "///")?;
     writeln!(f, "/// let response: CreateApiextensionsV1beta1CustomResourceDefinitionResponse = unimplemented!();")?;
     writeln!(f, "/// let status_code: http::StatusCode = unimplemented!();")?;
     writeln!(f, "///")?;
-    writeln!(f, "/// let custom_resource_definition: self::apiextensions::CustomResourceDefinition = k8s_match!(response, {{")?;
+    writeln!(f, "/// let custom_resource_definition: CustomResourceDefinition = k8s_match!(response, {{")?;
     writeln!(f, "///     k8s_if_le_1_8!(CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == http::StatusCode::CREATED => {{")?;
     writeln!(f, "///         // Parse response body into a CustomResourceDefinition")?;
     writeln!(f, "///         Ok(unimplemented!())")?;
@@ -135,7 +131,7 @@ fn main() -> Result<(), Box<std::error::Error>> {
     for v in MIN..=MAX {
         writeln!(f)?;
 
-        for (name, enabled) in &[("", versions.contains(&v)), ("_ge", cfg_ge(v, &versions)), ("_le", cfg_le(v, &versions))] {
+        for (name, enabled) in &[("", version == Some(v)), ("_ge", cfg_ge(v, version)), ("_le", cfg_le(v, version))] {
             writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ k8s_if{}_1_{}!($($arm:tt)*), $($rest:tt)* }}) => {{", name, v)?;
             if *enabled {
                 writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($arm)*, $($rest)* }})")?;
@@ -164,22 +160,20 @@ fn main() -> Result<(), Box<std::error::Error>> {
     Ok(())
 }
 
-fn cfg_ge(v: usize, versions: &std::collections::HashSet<usize>) -> bool {
-    for v in v..=MAX {
-        if versions.contains(&v) {
-            return true;
-        }
+fn cfg_ge(v: usize, version: Option<usize>) -> bool {
+    if let Some(version) = version {
+        v <= version
     }
-
-    false
+    else {
+        false
+    }
 }
 
-fn cfg_le(v: usize, versions: &std::collections::HashSet<usize>) -> bool {
-    for v in MIN..=v {
-        if versions.contains(&v) {
-            return true;
-        }
+fn cfg_le(v: usize, version: Option<usize>) -> bool {
+    if let Some(version) = version {
+        v >= version
     }
-
-    false
+    else {
+        false
+    }
 }
