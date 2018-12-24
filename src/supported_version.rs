@@ -1,5 +1,4 @@
 pub(crate) const ALL: &[SupportedVersion] = &[
-	SupportedVersion::V1_7,
 	SupportedVersion::V1_8,
 	SupportedVersion::V1_9,
 	SupportedVersion::V1_10,
@@ -10,7 +9,6 @@ pub(crate) const ALL: &[SupportedVersion] = &[
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) enum SupportedVersion {
-	V1_7,
 	V1_8,
 	V1_9,
 	V1_10,
@@ -22,7 +20,6 @@ pub(crate) enum SupportedVersion {
 impl SupportedVersion {
 	pub(crate) fn mod_root(self) -> &'static str {
 		match self {
-			SupportedVersion::V1_7 => "v1_7",
 			SupportedVersion::V1_8 => "v1_8",
 			SupportedVersion::V1_9 => "v1_9",
 			SupportedVersion::V1_10 => "v1_10",
@@ -34,7 +31,6 @@ impl SupportedVersion {
 
 	pub(crate) fn spec_url(self) -> &'static str {
 		match self {
-			SupportedVersion::V1_7 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.7.16/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_8 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.8.15/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_9 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.9.11/api/openapi-spec/swagger.json",
 			SupportedVersion::V1_10 => "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.10.12/api/openapi-spec/swagger.json",
@@ -47,13 +43,6 @@ impl SupportedVersion {
 	pub(crate) fn fixup(self, spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		#[allow(clippy::match_same_arms)]
 		let fixups: &[fn(&mut crate::swagger20::Spec) -> Result<(), crate::Error>] = match self {
-			SupportedVersion::V1_7 => &[
-				crate::fixups::optional_properties::apigroup,
-				crate::fixups::gvk::api_service_list_v1beta1,
-				crate::fixups::gvk::api_service_v1beta1,
-				crate::fixups::raw_extension_ty,
-			],
-
 			SupportedVersion::V1_8 => &[
 				crate::fixups::deployment_rollback_create_response_type,
 				crate::fixups::gvk::api_service_list_v1beta1,

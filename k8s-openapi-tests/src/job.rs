@@ -1,22 +1,17 @@
 use k8s_openapi::http;
-k8s_if_le_1_8! {
+k8s_if_1_8! {
 	use k8s_openapi::serde_json;
 }
 
 #[test]
 fn create() {
-	k8s_if_1_7! {
-		use k8s_openapi::kubernetes::pkg::api::v1 as api;
-		use k8s_openapi::kubernetes::pkg::apis::batch::v1 as batch;
-	}
-	k8s_if_ge_1_8! {
-		use k8s_openapi::api::core::v1 as api;
-		use k8s_openapi::api::batch::v1 as batch;
-	}
+	use k8s_openapi::api::core::v1 as api;
+	use k8s_openapi::api::batch::v1 as batch;
 	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
 	crate::Client::with("job-create", |client| {
 		let job_spec = batch::JobSpec {
+			backoff_limit: Some(0),
 			template: api::PodTemplateSpec {
 				spec: Some(api::PodSpec {
 					containers: vec![
@@ -45,12 +40,6 @@ fn create() {
 			},
 			..Default::default()
 		};
-		k8s_if_ge_1_8! {
-			let job_spec = batch::JobSpec {
-				backoff_limit: Some(0),
-				..job_spec
-			};
-		}
 
 		let job = batch::Job {
 			metadata: Some(meta::ObjectMeta {
@@ -67,7 +56,7 @@ fn create() {
 		let job: batch::Job = {
 			let response = client.execute(request).expect("couldn't create job");
 			crate::get_single_value(response, |response, status_code, _response_body| k8s_match!(response, {
-				k8s_if_le_1_8!(batch::CreateBatchV1NamespacedJobResponse::Other if status_code == http::StatusCode::CREATED =>
+				k8s_if_1_8!(batch::CreateBatchV1NamespacedJobResponse::Other if status_code == http::StatusCode::CREATED =>
 					match serde_json::from_slice(_response_body) {
 						Ok(job) => Ok(crate::ValueResult::GotValue(job)),
 						Err(ref err) if err.is_eof() => Ok(crate::ValueResult::NeedMoreData),
@@ -85,10 +74,7 @@ fn create() {
 			.template
 			.spec.expect("couldn't get job spec template spec")
 			.containers.into_iter().next().expect("couldn't get job container spec")
-			.image;
-		k8s_if_ge_1_8! {
-			let job_image = job_image.expect("couldn't get job container image");
-		}
+			.image.expect("couldn't get job container image");
 		assert_eq!(job_image, "alpine");
 
 		let (job_self_link, job_uid) = {

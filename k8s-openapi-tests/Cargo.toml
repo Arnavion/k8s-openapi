@@ -21,7 +21,6 @@ winapi = { version = "0.3.x", features = ["bcrypt", "errhandlingapi", "minwindef
 openssl = "0.10.x"
 
 [features]
-test_v1_7 = ["k8s-openapi/v1_7"]
 test_v1_8 = ["k8s-openapi/v1_8"]
 test_v1_9 = ["k8s-openapi/v1_9"]
 test_v1_10 = ["k8s-openapi/v1_10"]

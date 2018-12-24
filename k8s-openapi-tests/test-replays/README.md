@@ -30,7 +30,6 @@ To generate these test files:
 		<tr><th>k8s version</th><th>minikube version</th></tr>
 	</thead>
 	<tbody>
-		<tr><td>1.7.16</td><td>0.28.0</td></tr>
 		<tr><td>1.8.15</td><td>0.28.0</td></tr>
 		<tr><td>1.9.11</td><td>0.28.0</td></tr>
 		<tr><td>1.10.12</td><td>0.28.2</td></tr>

@@ -1,8 +1,5 @@
 #[test]
 fn list() {
-	k8s_if_1_7! {
-		use k8s_openapi::kubernetes::pkg::apis::apps::v1beta1 as apps;
-	}
 	k8s_if_1_8! {
 		use k8s_openapi::api::apps::v1beta2 as apps;
 	}
@@ -12,9 +9,6 @@ fn list() {
 	use k8s_openapi::apimachinery::pkg::util as util;
 
 	crate::Client::with("deployment-list", |client| {
-		k8s_if_1_7! {
-			let request = apps::Deployment::list_apps_v1beta1_namespaced_deployment("kube-system", Default::default());
-		}
 		k8s_if_1_8! {
 			let request = apps::Deployment::list_apps_v1beta2_namespaced_deployment("kube-system", Default::default());
 		}
@@ -25,8 +19,6 @@ fn list() {
 		let response = client.execute(request).expect("couldn't list deployments");;
 		let deployment_list =
 			crate::get_single_value(response, |response, status_code, _| k8s_match!(response, {
-				k8s_if_1_7!(apps::ListAppsV1beta1NamespacedDeploymentResponse::Ok(deployment_list) =>
-					Ok(crate::ValueResult::GotValue(deployment_list))),
 				k8s_if_1_8!(apps::ListAppsV1beta2NamespacedDeploymentResponse::Ok(deployment_list) =>
 					Ok(crate::ValueResult::GotValue(deployment_list))),
 				k8s_if_ge_1_9!(apps::ListAppsV1NamespacedDeploymentResponse::Ok(deployment_list) =>
@@ -55,17 +47,9 @@ fn list() {
 			dns_deployment
 			.spec.expect("couldn't get dns deployment spec");
 
-		let dns_deployment_spec_selector =
-			dns_deployment_spec.selector;
-
-		k8s_if_le_1_7! {
-			let dns_deployment_spec_selector =
-				dns_deployment_spec_selector
-				.expect("couldn't get dns deployment spec selector");
-		}
-
 		let mut dns_deployment_spec_selector_match_labels =
-			dns_deployment_spec_selector
+			dns_deployment_spec
+			.selector
 			.match_labels.expect("couldn't get dns deployment spec selector match labels");
 		assert_eq!(dns_deployment_spec_selector_match_labels.remove("k8s-app"), Some("kube-dns".to_string()));
 

@@ -13,13 +13,13 @@
 //! depending on which feature eventually gets enabled. See the docs of the macros and the `k8s-openapi-tests` directory in the repository
 //! for more details.
 //!
-//! Similarly, if your crate does not support some versions of Kubernetes (eg <= 1.8), you can put something like this at the top of your crate root:
+//! Similarly, if your crate does not support some versions of Kubernetes (eg <= 1.10), you can put something like this at the top of your crate root:
 //!
 //! ```rust,ignore
 //! #[macro_use] extern crate k8s_openapi;
 //!
-//! k8s_if_le_1_8! {
-//!     compile_error!("This crate requires v1_9 or higher feature to be enabled in the k8s-openapi crate.");
+//! k8s_if_le_1_10! {
+//!     compile_error!("This crate requires v1_11 or higher feature to be enabled in the k8s-openapi crate.");
 //! }
 //! ```
 //!
@@ -29,14 +29,7 @@
 //! ## Resources
 //!
 //! ```rust
-//! #[macro_use] extern crate k8s_openapi;
-//!
-//! k8s_if_1_7! {
-//!     use k8s_openapi::kubernetes::pkg::api::v1 as api;
-//! }
-//! k8s_if_ge_1_8! {
-//!     use k8s_openapi::api::core::v1 as api;
-//! }
+//! use k8s_openapi::api::core::v1 as api;
 //!
 //! fn main() {
 //!     let pod_spec: api::PodSpec = Default::default();
@@ -47,17 +40,10 @@
 //! ## Client API
 //!
 //! ```rust,no_run
-//! #[macro_use] extern crate k8s_openapi;
-//!
 //! // Re-export of the http crate since it's used in the public API
 //! use k8s_openapi::http;
 //!
-//! k8s_if_1_7! {
-//!     use k8s_openapi::kubernetes::pkg::api::v1 as api;
-//! }
-//! k8s_if_ge_1_8! {
-//!     use k8s_openapi::api::core::v1 as api;
-//! }
+//! use k8s_openapi::api::core::v1 as api;
 //!
 //! # struct Response;
 //! # impl Response {
@@ -414,7 +400,6 @@ macro_rules! mods {
 }
 
 mods! {
-    v1_7 "v1_7",
     v1_8 "v1_8",
     v1_9 "v1_9",
     v1_10 "v1_10",

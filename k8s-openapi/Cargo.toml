@@ -22,7 +22,6 @@ url = "1.7.x"
 
 [features]
 # Each feature corresponds to a supported version of Kubernetes
-v1_7 = []
 v1_8 = []
 v1_9 = []
 v1_10 = []

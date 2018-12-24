@@ -146,7 +146,7 @@ fn create() {
 
 			let custom_resource_definition =
 				crate::get_single_value(response, |response, status_code, _response_body| k8s_match!(response, {
-					k8s_if_le_1_8!(apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == http::StatusCode::CREATED =>
+					k8s_if_1_8!(apiextensions::CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other if status_code == http::StatusCode::CREATED =>
 						match serde_json::from_slice(_response_body) {
 							Ok(custom_resource_definition) => Ok(crate::ValueResult::GotValue(Result::Ok(custom_resource_definition))),
 							Err(ref err) if err.is_eof() => Ok(crate::ValueResult::NeedMoreData),

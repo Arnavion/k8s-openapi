@@ -2,12 +2,7 @@ use k8s_openapi::serde_json;
 
 #[test]
 fn watch_pods() {
-	k8s_if_1_7! {
-		use k8s_openapi::kubernetes::pkg::api::v1 as api;
-	}
-	k8s_if_ge_1_8! {
-		use k8s_openapi::api::core::v1 as api;
-	}
+	use k8s_openapi::api::core::v1 as api;
 
 	crate::Client::with("watch_event-watch_pods", |client| {
 		let request = api::Pod::watch_core_v1_namespaced_pod_list("kube-system", Default::default()).expect("couldn't watch pods");

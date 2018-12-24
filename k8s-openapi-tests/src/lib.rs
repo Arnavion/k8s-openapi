@@ -56,7 +56,6 @@ struct Replay {
 
 impl Client {
 	fn with<F>(test_name: &'static str, f: F) where F: FnOnce(&mut Self) {
-		#[cfg(feature = "test_v1_7")] let replays_directory = "v1-7";
 		#[cfg(feature = "test_v1_8")] let replays_directory = "v1-8";
 		#[cfg(feature = "test_v1_9")] let replays_directory = "v1-9";
 		#[cfg(feature = "test_v1_10")] let replays_directory = "v1-10";
@@ -363,10 +362,7 @@ mod bytestring {
 
 mod api_versions;
 
-k8s_if_ge_1_8! {
-	// CRDs not supported in v1.7
-	mod custom_resource_definition;
-}
+mod custom_resource_definition;
 
 mod deployment;
 
