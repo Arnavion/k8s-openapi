@@ -47,6 +47,8 @@ enum Client {
 #[derive(Debug, serde_derive::Deserialize, serde_derive::Serialize)]
 struct Replay {
 	request_url: String,
+	#[serde(with = "methodstring")]
+	request_method: http::Method,
 	#[serde(with = "bytestring")]
 	request_body: Vec<u8>,
 	response_status_code: u16,
@@ -159,6 +161,7 @@ impl Client {
 			Client::Recording { inner, server, replays, .. } => {
 				replays.push(Replay {
 					request_url: path.to_string(),
+					request_method: method.clone(),
 					request_body: body.clone(),
 					response_status_code: 0,
 					response_body: vec![],
@@ -182,6 +185,7 @@ impl Client {
 			Client::Replaying(replays) => {
 				let replay = replays.next().expect("no replay expected for this request");
 				assert_eq!(path.to_string(), replay.request_url);
+				assert_eq!(method, replay.request_method);
 				assert_eq!(body, replay.request_body);
 				Ok(ClientResponse {
 					status_code: http::StatusCode::from_u16(replay.response_status_code).unwrap(),
@@ -357,6 +361,32 @@ mod bytestring {
 	pub(super) fn serialize<S>(bytes: &[u8], serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
 		let s = std::str::from_utf8(bytes).expect("bytes are not valid utf-8");
 		serde::Serialize::serialize(&s, serializer)
+	}
+}
+
+mod methodstring {
+	use super::http;
+
+	pub(super) fn deserialize<'de, D>(deserializer: D) -> Result<http::Method, D::Error> where D: serde::Deserializer<'de> {
+		struct Visitor;
+
+		impl<'de> serde::de::Visitor<'de> for Visitor {
+			type Value = http::Method;
+
+			fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+				write!(formatter, "a base64-encoded string")
+			}
+
+			fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {
+				v.parse().map_err(serde::de::Error::custom)
+			}
+		}
+
+		deserializer.deserialize_str(Visitor)
+	}
+
+	pub(super) fn serialize<S>(method: &http::Method, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
+		serde::Serialize::serialize(&method.to_string(), serializer)
 	}
 }
 
