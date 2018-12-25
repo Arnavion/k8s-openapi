@@ -5,10 +5,15 @@ fn watch_pods() {
 	use k8s_openapi::api::core::v1 as api;
 
 	crate::Client::with("watch_event-watch_pods", |client| {
-		let request = api::Pod::watch_core_v1_namespaced_pod_list("kube-system", Default::default()).expect("couldn't watch pods");
+		let request = api::Pod::list_core_v1_namespaced_pod("kube-system", api::ListCoreV1NamespacedPodOptional {
+			watch: Some(true),
+			..Default::default()
+		}).expect("couldn't watch pods");
 		let response = client.execute(request).expect("couldn't watch pods");
 		let pod_watch_events =
 			crate::get_multiple_values(response, |response, status_code, _| match response {
+				// The response is a WatchCoreV1NamespacedPodListResponse, not a ListCoreV1NamespacedPodResponse,
+				// because of the watch=true parameter
 				api::WatchCoreV1NamespacedPodListResponse::Ok(pod_watch_event) =>
 					Ok(crate::ValueResult::GotValue(pod_watch_event)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
