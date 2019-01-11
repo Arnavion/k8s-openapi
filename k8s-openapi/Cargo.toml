@@ -12,7 +12,7 @@ readme = "README.md"
 repository = "https://github.com/Arnavion/k8s-openapi-codegen"
 
 [dependencies]
-base64 = "0.9.x"
+base64 = "0.10.x"
 bytes = "0.4.x"
 chrono = { version = "0.4.x", features = ["serde"] }
 http = "0.1.x"
