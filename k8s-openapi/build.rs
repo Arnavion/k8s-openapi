@@ -139,12 +139,8 @@ fn main() -> Result<(), Box<std::error::Error>> {
     }
 
     writeln!(f)?;
-    writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ $next_pat:pat => $next_expr:expr, $($rest:tt)* }}) => {{")?;
-    writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* $next_pat => $next_expr, }} {{ $($rest)* }})")?;
-    writeln!(f, "    }};")?;
-    writeln!(f)?;
-    writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ $next_pat:pat if $cond:expr => $next_expr:expr, $($rest:tt)* }}) => {{")?;
-    writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* $next_pat if $cond => $next_expr, }} {{ $($rest)* }})")?;
+    writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ $next_pat:pat $(if $cond:expr)? => $next_expr:expr, $($rest:tt)* }}) => {{")?;
+    writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* $next_pat $(if $cond)? => $next_expr, }} {{ $($rest)* }})")?;
     writeln!(f, "    }};")?;
     writeln!(f)?;
     writeln!(f, "    ($test:expr, {{ $($rest:tt)* }}) => {{")?;
