@@ -69,7 +69,7 @@ pub(crate) fn pkcs12(public_key: &std::path::Path, private_key: &std::path::Path
 
 		let crypto_provider = {
 			let mut crypto_provider = 0;
-			let err = winapi2::um::ncrypt::NCryptOpenStorageProvider(
+			let err = winapi::um::ncrypt::NCryptOpenStorageProvider(
 				&mut crypto_provider,
 				winapi2::um::ncrypt::MS_KEY_STORAGE_PROVIDER.as_ptr(),
 				0,
@@ -83,7 +83,7 @@ pub(crate) fn pkcs12(public_key: &std::path::Path, private_key: &std::path::Path
 
 		let private_key = {
 			let mut private_key = 0;
-			let err = winapi2::um::ncrypt::NCryptImportKey(
+			let err = winapi::um::ncrypt::NCryptImportKey(
 				crypto_provider.0,
 				0,
 				winapi2::shared::bcrypt::LEGACY_RSAPRIVATE_BLOB.as_ptr(),
@@ -91,7 +91,7 @@ pub(crate) fn pkcs12(public_key: &std::path::Path, private_key: &std::path::Path
 				&mut private_key,
 				private_key_decoded_buf.as_ptr() as _,
 				private_key_decoded_buf.len() as _,
-				winapi2::um::ncrypt::NCRYPT_SILENT_FLAG,
+				winapi::um::ncrypt::NCRYPT_SILENT_FLAG,
 			);
 			if !winapi::shared::bcrypt::BCRYPT_SUCCESS(err) {
 				Err(format!("0x{:08X}", err))?;
@@ -101,8 +101,8 @@ pub(crate) fn pkcs12(public_key: &std::path::Path, private_key: &std::path::Path
 		};
 
 		{
-			let export_policy_property_value = winapi2::um::ncrypt::NCRYPT_ALLOW_PLAINTEXT_EXPORT_FLAG;
-			let err = winapi2::um::ncrypt::NCryptSetProperty(
+			let export_policy_property_value = winapi::um::ncrypt::NCRYPT_ALLOW_PLAINTEXT_EXPORT_FLAG;
+			let err = winapi::um::ncrypt::NCryptSetProperty(
 				private_key.0,
 				winapi2::um::ncrypt::NCRYPT_EXPORT_POLICY_PROPERTY.as_ptr(),
 				&export_policy_property_value as *const _ as _,
@@ -214,62 +214,19 @@ mod winapi2 {
 
 	pub mod shared {
 		pub mod bcrypt {
-			use winapi::um::winnt::{ WCHAR };
+			use winapi::um::winnt::WCHAR;
 
 			pub const LEGACY_RSAPRIVATE_BLOB: &[WCHAR] = wide!('C''A''P''I''P''R''I''V''A''T''E''B''L''O''B');
 		}
 	}
 
 	pub mod um {
-		// TODO: https://github.com/retep998/winapi-rs/pull/630
 		pub mod ncrypt {
-			#![allow(non_camel_case_types)]
-
-			use winapi::shared::bcrypt::{ BCryptBufferDesc };
-			use winapi::shared::minwindef::{ DWORD, PBYTE };
-			use winapi::um::winnt::{ LONG, LPCWSTR, WCHAR };
-			use winapi::um::ncrypt::{ NCRYPT_HANDLE, NCRYPT_KEY_HANDLE, NCRYPT_PROV_HANDLE };
-
-			pub type SECURITY_STATUS = LONG;
+			use winapi::um::winnt::WCHAR;
 
 			pub const MS_KEY_STORAGE_PROVIDER: &[WCHAR] = wide!('M''i''c''r''o''s''o''f''t'' ''S''o''f''t''w''a''r''e'' ''K''e''y'' ''S''t''o''r''a''g''e'' ''P''r''o''v''i''d''e''r');
 
-			pub type NCryptBufferDesc = BCryptBufferDesc;
-
-			pub const NCRYPT_SILENT_FLAG: DWORD = 0x00000040;
-
-			extern "system" {
-				pub fn NCryptOpenStorageProvider(
-					phProvider: *mut NCRYPT_PROV_HANDLE,
-					pszProviderName: LPCWSTR,
-					dwFlags: DWORD,
-				) -> SECURITY_STATUS;
-			}
-
 			pub const NCRYPT_EXPORT_POLICY_PROPERTY: &[WCHAR] = wide!('E''x''p''o''r''t'' ''P''o''l''i''c''y');
-
-			pub const NCRYPT_ALLOW_PLAINTEXT_EXPORT_FLAG: DWORD = 0x00000002;
-
-			extern "system" {
-				pub fn NCryptSetProperty(
-					hObject: NCRYPT_HANDLE,
-					pszProperty: LPCWSTR,
-					pbInput: PBYTE,
-					cbInput: DWORD,
-					dwFlags: DWORD,
-				) -> SECURITY_STATUS;
-
-				pub fn NCryptImportKey(
-					hProvider: NCRYPT_PROV_HANDLE,
-					hImportKey: NCRYPT_KEY_HANDLE,
-					pszBlobType: LPCWSTR,
-					pParameterList: *const NCryptBufferDesc,
-					phKey: *mut NCRYPT_KEY_HANDLE,
-					pbData: PBYTE,
-					cbData: DWORD,
-					dwFlags: DWORD,
-				) -> SECURITY_STATUS;
-			}
 		}
 	}
 }
