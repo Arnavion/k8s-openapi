@@ -12,7 +12,7 @@ OpenAPI spec
 ## Motivation
 
 While there is [official client
-generator](https://github.com/kubernetes-client/gen) it is not perfect and this
+generator](https://github.com/kubernetes-client/gen), it is not perfect, and this
 crate aims to address the issues currently present in official generator.
 
 
@@ -62,9 +62,9 @@ badly. This crate [just ignores them](https://github.com/Arnavion/k8s-openapi-co
   Fix-ups to the generated code (apart from what it does to work around mistakes in the spec, of course)
   are out of scope.
 * It is not a goal to cover APIs of third-party kubernetes services like
-  [openshift](https://github.com/Arnavion/k8s-openapi-codegen/issues/24#issuecomment-440990944)
+  [openshift](https://github.com/Arnavion/k8s-openapi-codegen/issues/24#issuecomment-440990944).
 
-This crate is exclusively focused on generating code from official Kubernetes API Specification
+This crate is exclusively focused on generating code from official Kubernetes API Specification.
 
 
 ## Usage
