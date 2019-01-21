@@ -4,3 +4,5 @@
 /k8s-openapi-tests/Cargo.lock
 /k8s-openapi-tests/target
 /target
+.idea
+.vscode
