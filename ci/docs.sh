@@ -11,6 +11,9 @@ export PATH="$PATH:$(realpath ~/.cargo/bin)"
 rustup install stable
 rustup default stable
 
+# Saves a few seconds for large crates
+export CARGO_INCREMENTAL=0
+
 pushd k8s-openapi
 cargo doc --features 'dox' --no-deps
 popd
