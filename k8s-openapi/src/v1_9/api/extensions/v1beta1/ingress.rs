@@ -20,7 +20,7 @@ pub struct Ingress {
 impl Ingress {
     /// create an Ingress
     ///
-    /// Use [`CreateExtensionsV1beta1NamespacedIngressResponse`](./enum.CreateExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedIngressResponse`](./enum.CreateNamespacedIngressResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_extensions_v1beta1_namespaced_ingress(
+    pub fn create_namespaced_ingress(
         namespace: &str,
         body: &crate::v1_9::api::extensions::v1beta1::Ingress,
-        optional: CreateExtensionsV1beta1NamespacedIngressOptional<'_>,
+        optional: CreateNamespacedIngressOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateExtensionsV1beta1NamespacedIngressOptional {
+        let CreateNamespacedIngressOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses?", namespace = namespace);
@@ -54,16 +54,16 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::create_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.create_extensions_v1beta1_namespaced_ingress)
+/// Optional parameters of [`Ingress::create_namespaced_ingress`](./struct.Ingress.html#method.create_namespaced_ingress)
 #[derive(Debug, Default)]
-pub struct CreateExtensionsV1beta1NamespacedIngressOptional<'a> {
+pub struct CreateNamespacedIngressOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::create_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.create_extensions_v1beta1_namespaced_ingress)
+/// Parses the HTTP response of [`Ingress::create_namespaced_ingress`](./struct.Ingress.html#method.create_namespaced_ingress)
 #[derive(Debug)]
-pub enum CreateExtensionsV1beta1NamespacedIngressResponse {
+pub enum CreateNamespacedIngressResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
     Created(crate::v1_9::api::extensions::v1beta1::Ingress),
     Accepted(crate::v1_9::api::extensions::v1beta1::Ingress),
@@ -71,7 +71,7 @@ pub enum CreateExtensionsV1beta1NamespacedIngressResponse {
     Other,
 }
 
-impl crate::Response for CreateExtensionsV1beta1NamespacedIngressResponse {
+impl crate::Response for CreateNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -80,7 +80,7 @@ impl crate::Response for CreateExtensionsV1beta1NamespacedIngressResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateExtensionsV1beta1NamespacedIngressResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedIngressResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -88,7 +88,7 @@ impl crate::Response for CreateExtensionsV1beta1NamespacedIngressResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateExtensionsV1beta1NamespacedIngressResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedIngressResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -96,10 +96,10 @@ impl crate::Response for CreateExtensionsV1beta1NamespacedIngressResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateExtensionsV1beta1NamespacedIngressResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedIngressResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateExtensionsV1beta1NamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((CreateExtensionsV1beta1NamespacedIngressResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedIngressResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedIngressResponse::Other, 0)),
         }
     }
 }
@@ -109,7 +109,7 @@ impl crate::Response for CreateExtensionsV1beta1NamespacedIngressResponse {
 impl Ingress {
     /// delete collection of Ingress
     ///
-    /// Use [`DeleteExtensionsV1beta1CollectionNamespacedIngressResponse`](./enum.DeleteExtensionsV1beta1CollectionNamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedIngressResponse`](./enum.DeleteCollectionNamespacedIngressResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -120,11 +120,11 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_extensions_v1beta1_collection_namespaced_ingress(
+    pub fn delete_collection_namespaced_ingress(
         namespace: &str,
-        optional: DeleteExtensionsV1beta1CollectionNamespacedIngressOptional<'_>,
+        optional: DeleteCollectionNamespacedIngressOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteExtensionsV1beta1CollectionNamespacedIngressOptional {
+        let DeleteCollectionNamespacedIngressOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -172,9 +172,9 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::delete_extensions_v1beta1_collection_namespaced_ingress`](./struct.Ingress.html#method.delete_extensions_v1beta1_collection_namespaced_ingress)
+/// Optional parameters of [`Ingress::delete_collection_namespaced_ingress`](./struct.Ingress.html#method.delete_collection_namespaced_ingress)
 #[derive(Debug, Default)]
-pub struct DeleteExtensionsV1beta1CollectionNamespacedIngressOptional<'a> {
+pub struct DeleteCollectionNamespacedIngressOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -197,16 +197,16 @@ pub struct DeleteExtensionsV1beta1CollectionNamespacedIngressOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::delete_extensions_v1beta1_collection_namespaced_ingress`](./struct.Ingress.html#method.delete_extensions_v1beta1_collection_namespaced_ingress)
+/// Parses the HTTP response of [`Ingress::delete_collection_namespaced_ingress`](./struct.Ingress.html#method.delete_collection_namespaced_ingress)
 #[derive(Debug)]
-pub enum DeleteExtensionsV1beta1CollectionNamespacedIngressResponse {
+pub enum DeleteCollectionNamespacedIngressResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::extensions::v1beta1::Ingress),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteExtensionsV1beta1CollectionNamespacedIngressResponse {
+impl crate::Response for DeleteCollectionNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -222,16 +222,16 @@ impl crate::Response for DeleteExtensionsV1beta1CollectionNamespacedIngressRespo
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1CollectionNamespacedIngressResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedIngressResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1CollectionNamespacedIngressResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedIngressResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1CollectionNamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((DeleteExtensionsV1beta1CollectionNamespacedIngressResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedIngressResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedIngressResponse::Other, 0)),
         }
     }
 }
@@ -241,7 +241,7 @@ impl crate::Response for DeleteExtensionsV1beta1CollectionNamespacedIngressRespo
 impl Ingress {
     /// delete an Ingress
     ///
-    /// Use [`DeleteExtensionsV1beta1NamespacedIngressResponse`](./enum.DeleteExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedIngressResponse`](./enum.DeleteNamespacedIngressResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -256,12 +256,12 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_extensions_v1beta1_namespaced_ingress(
+    pub fn delete_namespaced_ingress(
         name: &str,
         namespace: &str,
-        optional: DeleteExtensionsV1beta1NamespacedIngressOptional<'_>,
+        optional: DeleteNamespacedIngressOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteExtensionsV1beta1NamespacedIngressOptional {
+        let DeleteNamespacedIngressOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -289,9 +289,9 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::delete_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.delete_extensions_v1beta1_namespaced_ingress)
+/// Optional parameters of [`Ingress::delete_namespaced_ingress`](./struct.Ingress.html#method.delete_namespaced_ingress)
 #[derive(Debug, Default)]
-pub struct DeleteExtensionsV1beta1NamespacedIngressOptional<'a> {
+pub struct DeleteNamespacedIngressOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -302,16 +302,16 @@ pub struct DeleteExtensionsV1beta1NamespacedIngressOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::delete_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.delete_extensions_v1beta1_namespaced_ingress)
+/// Parses the HTTP response of [`Ingress::delete_namespaced_ingress`](./struct.Ingress.html#method.delete_namespaced_ingress)
 #[derive(Debug)]
-pub enum DeleteExtensionsV1beta1NamespacedIngressResponse {
+pub enum DeleteNamespacedIngressResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::extensions::v1beta1::Ingress),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteExtensionsV1beta1NamespacedIngressResponse {
+impl crate::Response for DeleteNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -327,16 +327,16 @@ impl crate::Response for DeleteExtensionsV1beta1NamespacedIngressResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1NamespacedIngressResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedIngressResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1NamespacedIngressResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedIngressResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1NamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((DeleteExtensionsV1beta1NamespacedIngressResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedIngressResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedIngressResponse::Other, 0)),
         }
     }
 }
@@ -346,17 +346,17 @@ impl crate::Response for DeleteExtensionsV1beta1NamespacedIngressResponse {
 impl Ingress {
     /// list or watch objects of kind Ingress
     ///
-    /// Use [`ListExtensionsV1beta1IngressForAllNamespacesResponse`](./enum.ListExtensionsV1beta1IngressForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListIngressForAllNamespacesResponse`](./enum.ListIngressForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_extensions_v1beta1_ingress_for_all_namespaces(
-        optional: ListExtensionsV1beta1IngressForAllNamespacesOptional<'_>,
+    pub fn list_ingress_for_all_namespaces(
+        optional: ListIngressForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListExtensionsV1beta1IngressForAllNamespacesOptional {
+        let ListIngressForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -404,9 +404,9 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::list_extensions_v1beta1_ingress_for_all_namespaces`](./struct.Ingress.html#method.list_extensions_v1beta1_ingress_for_all_namespaces)
+/// Optional parameters of [`Ingress::list_ingress_for_all_namespaces`](./struct.Ingress.html#method.list_ingress_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListExtensionsV1beta1IngressForAllNamespacesOptional<'a> {
+pub struct ListIngressForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -429,15 +429,15 @@ pub struct ListExtensionsV1beta1IngressForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::list_extensions_v1beta1_ingress_for_all_namespaces`](./struct.Ingress.html#method.list_extensions_v1beta1_ingress_for_all_namespaces)
+/// Parses the HTTP response of [`Ingress::list_ingress_for_all_namespaces`](./struct.Ingress.html#method.list_ingress_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListExtensionsV1beta1IngressForAllNamespacesResponse {
+pub enum ListIngressForAllNamespacesResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::IngressList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListExtensionsV1beta1IngressForAllNamespacesResponse {
+impl crate::Response for ListIngressForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -446,10 +446,10 @@ impl crate::Response for ListExtensionsV1beta1IngressForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListExtensionsV1beta1IngressForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListIngressForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1IngressForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListExtensionsV1beta1IngressForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListIngressForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListIngressForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -459,7 +459,7 @@ impl crate::Response for ListExtensionsV1beta1IngressForAllNamespacesResponse {
 impl Ingress {
     /// list or watch objects of kind Ingress
     ///
-    /// Use [`ListExtensionsV1beta1NamespacedIngressResponse`](./enum.ListExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedIngressResponse`](./enum.ListNamespacedIngressResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -470,11 +470,11 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_extensions_v1beta1_namespaced_ingress(
+    pub fn list_namespaced_ingress(
         namespace: &str,
-        optional: ListExtensionsV1beta1NamespacedIngressOptional<'_>,
+        optional: ListNamespacedIngressOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListExtensionsV1beta1NamespacedIngressOptional {
+        let ListNamespacedIngressOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -522,9 +522,9 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::list_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.list_extensions_v1beta1_namespaced_ingress)
+/// Optional parameters of [`Ingress::list_namespaced_ingress`](./struct.Ingress.html#method.list_namespaced_ingress)
 #[derive(Debug, Default)]
-pub struct ListExtensionsV1beta1NamespacedIngressOptional<'a> {
+pub struct ListNamespacedIngressOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -547,15 +547,15 @@ pub struct ListExtensionsV1beta1NamespacedIngressOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::list_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.list_extensions_v1beta1_namespaced_ingress)
+/// Parses the HTTP response of [`Ingress::list_namespaced_ingress`](./struct.Ingress.html#method.list_namespaced_ingress)
 #[derive(Debug)]
-pub enum ListExtensionsV1beta1NamespacedIngressResponse {
+pub enum ListNamespacedIngressResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::IngressList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListExtensionsV1beta1NamespacedIngressResponse {
+impl crate::Response for ListNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -564,10 +564,10 @@ impl crate::Response for ListExtensionsV1beta1NamespacedIngressResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListExtensionsV1beta1NamespacedIngressResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedIngressResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1NamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((ListExtensionsV1beta1NamespacedIngressResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedIngressResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedIngressResponse::Other, 0)),
         }
     }
 }
@@ -577,7 +577,7 @@ impl crate::Response for ListExtensionsV1beta1NamespacedIngressResponse {
 impl Ingress {
     /// partially update the specified Ingress
     ///
-    /// Use [`PatchExtensionsV1beta1NamespacedIngressResponse`](./enum.PatchExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedIngressResponse`](./enum.PatchNamespacedIngressResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -594,13 +594,13 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_extensions_v1beta1_namespaced_ingress(
+    pub fn patch_namespaced_ingress(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchExtensionsV1beta1NamespacedIngressOptional<'_>,
+        optional: PatchNamespacedIngressOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchExtensionsV1beta1NamespacedIngressOptional {
+        let PatchNamespacedIngressOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?", name = name, namespace = namespace);
@@ -616,22 +616,22 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::patch_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.patch_extensions_v1beta1_namespaced_ingress)
+/// Optional parameters of [`Ingress::patch_namespaced_ingress`](./struct.Ingress.html#method.patch_namespaced_ingress)
 #[derive(Debug, Default)]
-pub struct PatchExtensionsV1beta1NamespacedIngressOptional<'a> {
+pub struct PatchNamespacedIngressOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::patch_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.patch_extensions_v1beta1_namespaced_ingress)
+/// Parses the HTTP response of [`Ingress::patch_namespaced_ingress`](./struct.Ingress.html#method.patch_namespaced_ingress)
 #[derive(Debug)]
-pub enum PatchExtensionsV1beta1NamespacedIngressResponse {
+pub enum PatchNamespacedIngressResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchExtensionsV1beta1NamespacedIngressResponse {
+impl crate::Response for PatchNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -640,10 +640,10 @@ impl crate::Response for PatchExtensionsV1beta1NamespacedIngressResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchExtensionsV1beta1NamespacedIngressResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedIngressResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((PatchExtensionsV1beta1NamespacedIngressResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedIngressResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedIngressResponse::Other, 0)),
         }
     }
 }
@@ -653,7 +653,7 @@ impl crate::Response for PatchExtensionsV1beta1NamespacedIngressResponse {
 impl Ingress {
     /// partially update status of the specified Ingress
     ///
-    /// Use [`PatchExtensionsV1beta1NamespacedIngressStatusResponse`](./enum.PatchExtensionsV1beta1NamespacedIngressStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedIngressStatusResponse`](./enum.PatchNamespacedIngressStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -670,13 +670,13 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_extensions_v1beta1_namespaced_ingress_status(
+    pub fn patch_namespaced_ingress_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchExtensionsV1beta1NamespacedIngressStatusOptional<'_>,
+        optional: PatchNamespacedIngressStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchExtensionsV1beta1NamespacedIngressStatusOptional {
+        let PatchNamespacedIngressStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status?", name = name, namespace = namespace);
@@ -692,22 +692,22 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::patch_extensions_v1beta1_namespaced_ingress_status`](./struct.Ingress.html#method.patch_extensions_v1beta1_namespaced_ingress_status)
+/// Optional parameters of [`Ingress::patch_namespaced_ingress_status`](./struct.Ingress.html#method.patch_namespaced_ingress_status)
 #[derive(Debug, Default)]
-pub struct PatchExtensionsV1beta1NamespacedIngressStatusOptional<'a> {
+pub struct PatchNamespacedIngressStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::patch_extensions_v1beta1_namespaced_ingress_status`](./struct.Ingress.html#method.patch_extensions_v1beta1_namespaced_ingress_status)
+/// Parses the HTTP response of [`Ingress::patch_namespaced_ingress_status`](./struct.Ingress.html#method.patch_namespaced_ingress_status)
 #[derive(Debug)]
-pub enum PatchExtensionsV1beta1NamespacedIngressStatusResponse {
+pub enum PatchNamespacedIngressStatusResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchExtensionsV1beta1NamespacedIngressStatusResponse {
+impl crate::Response for PatchNamespacedIngressStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -716,10 +716,10 @@ impl crate::Response for PatchExtensionsV1beta1NamespacedIngressStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchExtensionsV1beta1NamespacedIngressStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedIngressStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedIngressStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchExtensionsV1beta1NamespacedIngressStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedIngressStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedIngressStatusResponse::Other, 0)),
         }
     }
 }
@@ -729,7 +729,7 @@ impl crate::Response for PatchExtensionsV1beta1NamespacedIngressStatusResponse {
 impl Ingress {
     /// read the specified Ingress
     ///
-    /// Use [`ReadExtensionsV1beta1NamespacedIngressResponse`](./enum.ReadExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedIngressResponse`](./enum.ReadNamespacedIngressResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -744,12 +744,12 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_extensions_v1beta1_namespaced_ingress(
+    pub fn read_namespaced_ingress(
         name: &str,
         namespace: &str,
-        optional: ReadExtensionsV1beta1NamespacedIngressOptional<'_>,
+        optional: ReadNamespacedIngressOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadExtensionsV1beta1NamespacedIngressOptional {
+        let ReadNamespacedIngressOptional {
             exact,
             export,
             pretty,
@@ -773,9 +773,9 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::read_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.read_extensions_v1beta1_namespaced_ingress)
+/// Optional parameters of [`Ingress::read_namespaced_ingress`](./struct.Ingress.html#method.read_namespaced_ingress)
 #[derive(Debug, Default)]
-pub struct ReadExtensionsV1beta1NamespacedIngressOptional<'a> {
+pub struct ReadNamespacedIngressOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -784,15 +784,15 @@ pub struct ReadExtensionsV1beta1NamespacedIngressOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::read_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.read_extensions_v1beta1_namespaced_ingress)
+/// Parses the HTTP response of [`Ingress::read_namespaced_ingress`](./struct.Ingress.html#method.read_namespaced_ingress)
 #[derive(Debug)]
-pub enum ReadExtensionsV1beta1NamespacedIngressResponse {
+pub enum ReadNamespacedIngressResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadExtensionsV1beta1NamespacedIngressResponse {
+impl crate::Response for ReadNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -801,10 +801,10 @@ impl crate::Response for ReadExtensionsV1beta1NamespacedIngressResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadExtensionsV1beta1NamespacedIngressResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedIngressResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((ReadExtensionsV1beta1NamespacedIngressResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedIngressResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedIngressResponse::Other, 0)),
         }
     }
 }
@@ -814,7 +814,7 @@ impl crate::Response for ReadExtensionsV1beta1NamespacedIngressResponse {
 impl Ingress {
     /// read status of the specified Ingress
     ///
-    /// Use [`ReadExtensionsV1beta1NamespacedIngressStatusResponse`](./enum.ReadExtensionsV1beta1NamespacedIngressStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedIngressStatusResponse`](./enum.ReadNamespacedIngressStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -829,12 +829,12 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_extensions_v1beta1_namespaced_ingress_status(
+    pub fn read_namespaced_ingress_status(
         name: &str,
         namespace: &str,
-        optional: ReadExtensionsV1beta1NamespacedIngressStatusOptional<'_>,
+        optional: ReadNamespacedIngressStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadExtensionsV1beta1NamespacedIngressStatusOptional {
+        let ReadNamespacedIngressStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status?", name = name, namespace = namespace);
@@ -850,22 +850,22 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::read_extensions_v1beta1_namespaced_ingress_status`](./struct.Ingress.html#method.read_extensions_v1beta1_namespaced_ingress_status)
+/// Optional parameters of [`Ingress::read_namespaced_ingress_status`](./struct.Ingress.html#method.read_namespaced_ingress_status)
 #[derive(Debug, Default)]
-pub struct ReadExtensionsV1beta1NamespacedIngressStatusOptional<'a> {
+pub struct ReadNamespacedIngressStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::read_extensions_v1beta1_namespaced_ingress_status`](./struct.Ingress.html#method.read_extensions_v1beta1_namespaced_ingress_status)
+/// Parses the HTTP response of [`Ingress::read_namespaced_ingress_status`](./struct.Ingress.html#method.read_namespaced_ingress_status)
 #[derive(Debug)]
-pub enum ReadExtensionsV1beta1NamespacedIngressStatusResponse {
+pub enum ReadNamespacedIngressStatusResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadExtensionsV1beta1NamespacedIngressStatusResponse {
+impl crate::Response for ReadNamespacedIngressStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -874,10 +874,10 @@ impl crate::Response for ReadExtensionsV1beta1NamespacedIngressStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadExtensionsV1beta1NamespacedIngressStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedIngressStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedIngressStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadExtensionsV1beta1NamespacedIngressStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedIngressStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedIngressStatusResponse::Other, 0)),
         }
     }
 }
@@ -887,7 +887,7 @@ impl crate::Response for ReadExtensionsV1beta1NamespacedIngressStatusResponse {
 impl Ingress {
     /// replace the specified Ingress
     ///
-    /// Use [`ReplaceExtensionsV1beta1NamespacedIngressResponse`](./enum.ReplaceExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedIngressResponse`](./enum.ReplaceNamespacedIngressResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -904,13 +904,13 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_extensions_v1beta1_namespaced_ingress(
+    pub fn replace_namespaced_ingress(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::api::extensions::v1beta1::Ingress,
-        optional: ReplaceExtensionsV1beta1NamespacedIngressOptional<'_>,
+        optional: ReplaceNamespacedIngressOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceExtensionsV1beta1NamespacedIngressOptional {
+        let ReplaceNamespacedIngressOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}?", name = name, namespace = namespace);
@@ -926,23 +926,23 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::replace_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.replace_extensions_v1beta1_namespaced_ingress)
+/// Optional parameters of [`Ingress::replace_namespaced_ingress`](./struct.Ingress.html#method.replace_namespaced_ingress)
 #[derive(Debug, Default)]
-pub struct ReplaceExtensionsV1beta1NamespacedIngressOptional<'a> {
+pub struct ReplaceNamespacedIngressOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::replace_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.replace_extensions_v1beta1_namespaced_ingress)
+/// Parses the HTTP response of [`Ingress::replace_namespaced_ingress`](./struct.Ingress.html#method.replace_namespaced_ingress)
 #[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1NamespacedIngressResponse {
+pub enum ReplaceNamespacedIngressResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
     Created(crate::v1_9::api::extensions::v1beta1::Ingress),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceExtensionsV1beta1NamespacedIngressResponse {
+impl crate::Response for ReplaceNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -951,7 +951,7 @@ impl crate::Response for ReplaceExtensionsV1beta1NamespacedIngressResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceExtensionsV1beta1NamespacedIngressResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedIngressResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -959,10 +959,10 @@ impl crate::Response for ReplaceExtensionsV1beta1NamespacedIngressResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceExtensionsV1beta1NamespacedIngressResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedIngressResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceExtensionsV1beta1NamespacedIngressResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedIngressResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedIngressResponse::Other, 0)),
         }
     }
 }
@@ -972,7 +972,7 @@ impl crate::Response for ReplaceExtensionsV1beta1NamespacedIngressResponse {
 impl Ingress {
     /// replace status of the specified Ingress
     ///
-    /// Use [`ReplaceExtensionsV1beta1NamespacedIngressStatusResponse`](./enum.ReplaceExtensionsV1beta1NamespacedIngressStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedIngressStatusResponse`](./enum.ReplaceNamespacedIngressStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -989,13 +989,13 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_extensions_v1beta1_namespaced_ingress_status(
+    pub fn replace_namespaced_ingress_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::api::extensions::v1beta1::Ingress,
-        optional: ReplaceExtensionsV1beta1NamespacedIngressStatusOptional<'_>,
+        optional: ReplaceNamespacedIngressStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceExtensionsV1beta1NamespacedIngressStatusOptional {
+        let ReplaceNamespacedIngressStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}/status?", name = name, namespace = namespace);
@@ -1011,23 +1011,23 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::replace_extensions_v1beta1_namespaced_ingress_status`](./struct.Ingress.html#method.replace_extensions_v1beta1_namespaced_ingress_status)
+/// Optional parameters of [`Ingress::replace_namespaced_ingress_status`](./struct.Ingress.html#method.replace_namespaced_ingress_status)
 #[derive(Debug, Default)]
-pub struct ReplaceExtensionsV1beta1NamespacedIngressStatusOptional<'a> {
+pub struct ReplaceNamespacedIngressStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::replace_extensions_v1beta1_namespaced_ingress_status`](./struct.Ingress.html#method.replace_extensions_v1beta1_namespaced_ingress_status)
+/// Parses the HTTP response of [`Ingress::replace_namespaced_ingress_status`](./struct.Ingress.html#method.replace_namespaced_ingress_status)
 #[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1NamespacedIngressStatusResponse {
+pub enum ReplaceNamespacedIngressStatusResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::Ingress),
     Created(crate::v1_9::api::extensions::v1beta1::Ingress),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceExtensionsV1beta1NamespacedIngressStatusResponse {
+impl crate::Response for ReplaceNamespacedIngressStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1036,7 +1036,7 @@ impl crate::Response for ReplaceExtensionsV1beta1NamespacedIngressStatusResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceExtensionsV1beta1NamespacedIngressStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedIngressStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1044,10 +1044,10 @@ impl crate::Response for ReplaceExtensionsV1beta1NamespacedIngressStatusResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceExtensionsV1beta1NamespacedIngressStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedIngressStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedIngressStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceExtensionsV1beta1NamespacedIngressStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedIngressStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedIngressStatusResponse::Other, 0)),
         }
     }
 }
@@ -1057,17 +1057,17 @@ impl crate::Response for ReplaceExtensionsV1beta1NamespacedIngressStatusResponse
 impl Ingress {
     /// watch individual changes to a list of Ingress
     ///
-    /// Use [`WatchExtensionsV1beta1IngressListForAllNamespacesResponse`](./enum.WatchExtensionsV1beta1IngressListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchIngressListForAllNamespacesResponse`](./enum.WatchIngressListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_extensions_v1beta1_ingress_list_for_all_namespaces(
-        optional: WatchExtensionsV1beta1IngressListForAllNamespacesOptional<'_>,
+    pub fn watch_ingress_list_for_all_namespaces(
+        optional: WatchIngressListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchExtensionsV1beta1IngressListForAllNamespacesOptional {
+        let WatchIngressListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1115,9 +1115,9 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::watch_extensions_v1beta1_ingress_list_for_all_namespaces`](./struct.Ingress.html#method.watch_extensions_v1beta1_ingress_list_for_all_namespaces)
+/// Optional parameters of [`Ingress::watch_ingress_list_for_all_namespaces`](./struct.Ingress.html#method.watch_ingress_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchExtensionsV1beta1IngressListForAllNamespacesOptional<'a> {
+pub struct WatchIngressListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1140,15 +1140,15 @@ pub struct WatchExtensionsV1beta1IngressListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::watch_extensions_v1beta1_ingress_list_for_all_namespaces`](./struct.Ingress.html#method.watch_extensions_v1beta1_ingress_list_for_all_namespaces)
+/// Parses the HTTP response of [`Ingress::watch_ingress_list_for_all_namespaces`](./struct.Ingress.html#method.watch_ingress_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchExtensionsV1beta1IngressListForAllNamespacesResponse {
+pub enum WatchIngressListForAllNamespacesResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchExtensionsV1beta1IngressListForAllNamespacesResponse {
+impl crate::Response for WatchIngressListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1159,10 +1159,10 @@ impl crate::Response for WatchExtensionsV1beta1IngressListForAllNamespacesRespon
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchExtensionsV1beta1IngressListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchIngressListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1IngressListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchExtensionsV1beta1IngressListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchIngressListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchIngressListForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -1172,7 +1172,7 @@ impl crate::Response for WatchExtensionsV1beta1IngressListForAllNamespacesRespon
 impl Ingress {
     /// watch changes to an object of kind Ingress
     ///
-    /// Use [`WatchExtensionsV1beta1NamespacedIngressResponse`](./enum.WatchExtensionsV1beta1NamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedIngressResponse`](./enum.WatchNamespacedIngressResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1187,12 +1187,12 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_extensions_v1beta1_namespaced_ingress(
+    pub fn watch_namespaced_ingress(
         name: &str,
         namespace: &str,
-        optional: WatchExtensionsV1beta1NamespacedIngressOptional<'_>,
+        optional: WatchNamespacedIngressOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchExtensionsV1beta1NamespacedIngressOptional {
+        let WatchNamespacedIngressOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1240,9 +1240,9 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::watch_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.watch_extensions_v1beta1_namespaced_ingress)
+/// Optional parameters of [`Ingress::watch_namespaced_ingress`](./struct.Ingress.html#method.watch_namespaced_ingress)
 #[derive(Debug, Default)]
-pub struct WatchExtensionsV1beta1NamespacedIngressOptional<'a> {
+pub struct WatchNamespacedIngressOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1265,15 +1265,15 @@ pub struct WatchExtensionsV1beta1NamespacedIngressOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::watch_extensions_v1beta1_namespaced_ingress`](./struct.Ingress.html#method.watch_extensions_v1beta1_namespaced_ingress)
+/// Parses the HTTP response of [`Ingress::watch_namespaced_ingress`](./struct.Ingress.html#method.watch_namespaced_ingress)
 #[derive(Debug)]
-pub enum WatchExtensionsV1beta1NamespacedIngressResponse {
+pub enum WatchNamespacedIngressResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchExtensionsV1beta1NamespacedIngressResponse {
+impl crate::Response for WatchNamespacedIngressResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1284,10 +1284,10 @@ impl crate::Response for WatchExtensionsV1beta1NamespacedIngressResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchExtensionsV1beta1NamespacedIngressResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedIngressResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedIngressResponse::Unauthorized, 0)),
-            _ => Ok((WatchExtensionsV1beta1NamespacedIngressResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedIngressResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedIngressResponse::Other, 0)),
         }
     }
 }
@@ -1297,7 +1297,7 @@ impl crate::Response for WatchExtensionsV1beta1NamespacedIngressResponse {
 impl Ingress {
     /// watch individual changes to a list of Ingress
     ///
-    /// Use [`WatchExtensionsV1beta1NamespacedIngressListResponse`](./enum.WatchExtensionsV1beta1NamespacedIngressListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedIngressListResponse`](./enum.WatchNamespacedIngressListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1308,11 +1308,11 @@ impl Ingress {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_extensions_v1beta1_namespaced_ingress_list(
+    pub fn watch_namespaced_ingress_list(
         namespace: &str,
-        optional: WatchExtensionsV1beta1NamespacedIngressListOptional<'_>,
+        optional: WatchNamespacedIngressListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchExtensionsV1beta1NamespacedIngressListOptional {
+        let WatchNamespacedIngressListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1360,9 +1360,9 @@ impl Ingress {
     }
 }
 
-/// Optional parameters of [`Ingress::watch_extensions_v1beta1_namespaced_ingress_list`](./struct.Ingress.html#method.watch_extensions_v1beta1_namespaced_ingress_list)
+/// Optional parameters of [`Ingress::watch_namespaced_ingress_list`](./struct.Ingress.html#method.watch_namespaced_ingress_list)
 #[derive(Debug, Default)]
-pub struct WatchExtensionsV1beta1NamespacedIngressListOptional<'a> {
+pub struct WatchNamespacedIngressListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1385,15 +1385,15 @@ pub struct WatchExtensionsV1beta1NamespacedIngressListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::watch_extensions_v1beta1_namespaced_ingress_list`](./struct.Ingress.html#method.watch_extensions_v1beta1_namespaced_ingress_list)
+/// Parses the HTTP response of [`Ingress::watch_namespaced_ingress_list`](./struct.Ingress.html#method.watch_namespaced_ingress_list)
 #[derive(Debug)]
-pub enum WatchExtensionsV1beta1NamespacedIngressListResponse {
+pub enum WatchNamespacedIngressListResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchExtensionsV1beta1NamespacedIngressListResponse {
+impl crate::Response for WatchNamespacedIngressListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1404,10 +1404,10 @@ impl crate::Response for WatchExtensionsV1beta1NamespacedIngressListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchExtensionsV1beta1NamespacedIngressListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedIngressListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedIngressListResponse::Unauthorized, 0)),
-            _ => Ok((WatchExtensionsV1beta1NamespacedIngressListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedIngressListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedIngressListResponse::Other, 0)),
         }
     }
 }

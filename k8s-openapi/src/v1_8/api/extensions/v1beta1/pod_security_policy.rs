@@ -17,7 +17,7 @@ pub struct PodSecurityPolicy {
 impl PodSecurityPolicy {
     /// create a PodSecurityPolicy
     ///
-    /// Use [`CreateExtensionsV1beta1PodSecurityPolicyResponse`](./enum.CreateExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use [`CreatePodSecurityPolicyResponse`](./enum.CreatePodSecurityPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -26,11 +26,11 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_extensions_v1beta1_pod_security_policy(
+    pub fn create_pod_security_policy(
         body: &crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy,
-        optional: CreateExtensionsV1beta1PodSecurityPolicyOptional<'_>,
+        optional: CreatePodSecurityPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateExtensionsV1beta1PodSecurityPolicyOptional {
+        let CreatePodSecurityPolicyOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/podsecuritypolicies?");
@@ -46,22 +46,22 @@ impl PodSecurityPolicy {
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::create_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.create_extensions_v1beta1_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::create_pod_security_policy`](./struct.PodSecurityPolicy.html#method.create_pod_security_policy)
 #[derive(Debug, Default)]
-pub struct CreateExtensionsV1beta1PodSecurityPolicyOptional<'a> {
+pub struct CreatePodSecurityPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::create_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.create_extensions_v1beta1_pod_security_policy)
+/// Parses the HTTP response of [`PodSecurityPolicy::create_pod_security_policy`](./struct.PodSecurityPolicy.html#method.create_pod_security_policy)
 #[derive(Debug)]
-pub enum CreateExtensionsV1beta1PodSecurityPolicyResponse {
+pub enum CreatePodSecurityPolicyResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateExtensionsV1beta1PodSecurityPolicyResponse {
+impl crate::Response for CreatePodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -70,10 +70,10 @@ impl crate::Response for CreateExtensionsV1beta1PodSecurityPolicyResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateExtensionsV1beta1PodSecurityPolicyResponse::Ok(result), buf.len()))
+                Ok((CreatePodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateExtensionsV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((CreateExtensionsV1beta1PodSecurityPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreatePodSecurityPolicyResponse::Unauthorized, 0)),
+            _ => Ok((CreatePodSecurityPolicyResponse::Other, 0)),
         }
     }
 }
@@ -83,17 +83,17 @@ impl crate::Response for CreateExtensionsV1beta1PodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// delete collection of PodSecurityPolicy
     ///
-    /// Use [`DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse`](./enum.DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionPodSecurityPolicyResponse`](./enum.DeleteCollectionPodSecurityPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_extensions_v1beta1_collection_pod_security_policy(
-        optional: DeleteExtensionsV1beta1CollectionPodSecurityPolicyOptional<'_>,
+    pub fn delete_collection_pod_security_policy(
+        optional: DeleteCollectionPodSecurityPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteExtensionsV1beta1CollectionPodSecurityPolicyOptional {
+        let DeleteCollectionPodSecurityPolicyOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -141,9 +141,9 @@ impl PodSecurityPolicy {
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::delete_extensions_v1beta1_collection_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_extensions_v1beta1_collection_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::delete_collection_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_collection_pod_security_policy)
 #[derive(Debug, Default)]
-pub struct DeleteExtensionsV1beta1CollectionPodSecurityPolicyOptional<'a> {
+pub struct DeleteCollectionPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -166,16 +166,16 @@ pub struct DeleteExtensionsV1beta1CollectionPodSecurityPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::delete_extensions_v1beta1_collection_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_extensions_v1beta1_collection_pod_security_policy)
+/// Parses the HTTP response of [`PodSecurityPolicy::delete_collection_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_collection_pod_security_policy)
 #[derive(Debug)]
-pub enum DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse {
+pub enum DeleteCollectionPodSecurityPolicyResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse {
+impl crate::Response for DeleteCollectionPodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -191,16 +191,16 @@ impl crate::Response for DeleteExtensionsV1beta1CollectionPodSecurityPolicyRespo
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionPodSecurityPolicyResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionPodSecurityPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((DeleteExtensionsV1beta1CollectionPodSecurityPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionPodSecurityPolicyResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionPodSecurityPolicyResponse::Other, 0)),
         }
     }
 }
@@ -210,7 +210,7 @@ impl crate::Response for DeleteExtensionsV1beta1CollectionPodSecurityPolicyRespo
 impl PodSecurityPolicy {
     /// delete a PodSecurityPolicy
     ///
-    /// Use [`DeleteExtensionsV1beta1PodSecurityPolicyResponse`](./enum.DeleteExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use [`DeletePodSecurityPolicyResponse`](./enum.DeletePodSecurityPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -221,11 +221,11 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_extensions_v1beta1_pod_security_policy(
+    pub fn delete_pod_security_policy(
         name: &str,
-        optional: DeleteExtensionsV1beta1PodSecurityPolicyOptional<'_>,
+        optional: DeletePodSecurityPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteExtensionsV1beta1PodSecurityPolicyOptional {
+        let DeletePodSecurityPolicyOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -253,9 +253,9 @@ impl PodSecurityPolicy {
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::delete_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_extensions_v1beta1_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::delete_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_pod_security_policy)
 #[derive(Debug, Default)]
-pub struct DeleteExtensionsV1beta1PodSecurityPolicyOptional<'a> {
+pub struct DeletePodSecurityPolicyOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -266,16 +266,16 @@ pub struct DeleteExtensionsV1beta1PodSecurityPolicyOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::delete_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_extensions_v1beta1_pod_security_policy)
+/// Parses the HTTP response of [`PodSecurityPolicy::delete_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_pod_security_policy)
 #[derive(Debug)]
-pub enum DeleteExtensionsV1beta1PodSecurityPolicyResponse {
+pub enum DeletePodSecurityPolicyResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteExtensionsV1beta1PodSecurityPolicyResponse {
+impl crate::Response for DeletePodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -291,16 +291,16 @@ impl crate::Response for DeleteExtensionsV1beta1PodSecurityPolicyResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1PodSecurityPolicyResponse::OkStatus(result), buf.len()))
+                    Ok((DeletePodSecurityPolicyResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1PodSecurityPolicyResponse::OkValue(result), buf.len()))
+                    Ok((DeletePodSecurityPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((DeleteExtensionsV1beta1PodSecurityPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeletePodSecurityPolicyResponse::Unauthorized, 0)),
+            _ => Ok((DeletePodSecurityPolicyResponse::Other, 0)),
         }
     }
 }
@@ -310,17 +310,17 @@ impl crate::Response for DeleteExtensionsV1beta1PodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// list or watch objects of kind PodSecurityPolicy
     ///
-    /// Use [`ListExtensionsV1beta1PodSecurityPolicyResponse`](./enum.ListExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use [`ListPodSecurityPolicyResponse`](./enum.ListPodSecurityPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_extensions_v1beta1_pod_security_policy(
-        optional: ListExtensionsV1beta1PodSecurityPolicyOptional<'_>,
+    pub fn list_pod_security_policy(
+        optional: ListPodSecurityPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListExtensionsV1beta1PodSecurityPolicyOptional {
+        let ListPodSecurityPolicyOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -368,9 +368,9 @@ impl PodSecurityPolicy {
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::list_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.list_extensions_v1beta1_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::list_pod_security_policy`](./struct.PodSecurityPolicy.html#method.list_pod_security_policy)
 #[derive(Debug, Default)]
-pub struct ListExtensionsV1beta1PodSecurityPolicyOptional<'a> {
+pub struct ListPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -393,15 +393,15 @@ pub struct ListExtensionsV1beta1PodSecurityPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::list_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.list_extensions_v1beta1_pod_security_policy)
+/// Parses the HTTP response of [`PodSecurityPolicy::list_pod_security_policy`](./struct.PodSecurityPolicy.html#method.list_pod_security_policy)
 #[derive(Debug)]
-pub enum ListExtensionsV1beta1PodSecurityPolicyResponse {
+pub enum ListPodSecurityPolicyResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicyList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListExtensionsV1beta1PodSecurityPolicyResponse {
+impl crate::Response for ListPodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -410,10 +410,10 @@ impl crate::Response for ListExtensionsV1beta1PodSecurityPolicyResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListExtensionsV1beta1PodSecurityPolicyResponse::Ok(result), buf.len()))
+                Ok((ListPodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ListExtensionsV1beta1PodSecurityPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListPodSecurityPolicyResponse::Unauthorized, 0)),
+            _ => Ok((ListPodSecurityPolicyResponse::Other, 0)),
         }
     }
 }
@@ -423,7 +423,7 @@ impl crate::Response for ListExtensionsV1beta1PodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// partially update the specified PodSecurityPolicy
     ///
-    /// Use [`PatchExtensionsV1beta1PodSecurityPolicyResponse`](./enum.PatchExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use [`PatchPodSecurityPolicyResponse`](./enum.PatchPodSecurityPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -436,12 +436,12 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_extensions_v1beta1_pod_security_policy(
+    pub fn patch_pod_security_policy(
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchExtensionsV1beta1PodSecurityPolicyOptional<'_>,
+        optional: PatchPodSecurityPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchExtensionsV1beta1PodSecurityPolicyOptional {
+        let PatchPodSecurityPolicyOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/podsecuritypolicies/{name}?", name = name);
@@ -457,22 +457,22 @@ impl PodSecurityPolicy {
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::patch_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.patch_extensions_v1beta1_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::patch_pod_security_policy`](./struct.PodSecurityPolicy.html#method.patch_pod_security_policy)
 #[derive(Debug, Default)]
-pub struct PatchExtensionsV1beta1PodSecurityPolicyOptional<'a> {
+pub struct PatchPodSecurityPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::patch_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.patch_extensions_v1beta1_pod_security_policy)
+/// Parses the HTTP response of [`PodSecurityPolicy::patch_pod_security_policy`](./struct.PodSecurityPolicy.html#method.patch_pod_security_policy)
 #[derive(Debug)]
-pub enum PatchExtensionsV1beta1PodSecurityPolicyResponse {
+pub enum PatchPodSecurityPolicyResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchExtensionsV1beta1PodSecurityPolicyResponse {
+impl crate::Response for PatchPodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -481,10 +481,10 @@ impl crate::Response for PatchExtensionsV1beta1PodSecurityPolicyResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchExtensionsV1beta1PodSecurityPolicyResponse::Ok(result), buf.len()))
+                Ok((PatchPodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((PatchExtensionsV1beta1PodSecurityPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchPodSecurityPolicyResponse::Unauthorized, 0)),
+            _ => Ok((PatchPodSecurityPolicyResponse::Other, 0)),
         }
     }
 }
@@ -494,7 +494,7 @@ impl crate::Response for PatchExtensionsV1beta1PodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// read the specified PodSecurityPolicy
     ///
-    /// Use [`ReadExtensionsV1beta1PodSecurityPolicyResponse`](./enum.ReadExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use [`ReadPodSecurityPolicyResponse`](./enum.ReadPodSecurityPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -505,11 +505,11 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_extensions_v1beta1_pod_security_policy(
+    pub fn read_pod_security_policy(
         name: &str,
-        optional: ReadExtensionsV1beta1PodSecurityPolicyOptional<'_>,
+        optional: ReadPodSecurityPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadExtensionsV1beta1PodSecurityPolicyOptional {
+        let ReadPodSecurityPolicyOptional {
             exact,
             export,
             pretty,
@@ -533,9 +533,9 @@ impl PodSecurityPolicy {
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::read_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.read_extensions_v1beta1_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::read_pod_security_policy`](./struct.PodSecurityPolicy.html#method.read_pod_security_policy)
 #[derive(Debug, Default)]
-pub struct ReadExtensionsV1beta1PodSecurityPolicyOptional<'a> {
+pub struct ReadPodSecurityPolicyOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -544,15 +544,15 @@ pub struct ReadExtensionsV1beta1PodSecurityPolicyOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::read_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.read_extensions_v1beta1_pod_security_policy)
+/// Parses the HTTP response of [`PodSecurityPolicy::read_pod_security_policy`](./struct.PodSecurityPolicy.html#method.read_pod_security_policy)
 #[derive(Debug)]
-pub enum ReadExtensionsV1beta1PodSecurityPolicyResponse {
+pub enum ReadPodSecurityPolicyResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadExtensionsV1beta1PodSecurityPolicyResponse {
+impl crate::Response for ReadPodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -561,10 +561,10 @@ impl crate::Response for ReadExtensionsV1beta1PodSecurityPolicyResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadExtensionsV1beta1PodSecurityPolicyResponse::Ok(result), buf.len()))
+                Ok((ReadPodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ReadExtensionsV1beta1PodSecurityPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadPodSecurityPolicyResponse::Unauthorized, 0)),
+            _ => Ok((ReadPodSecurityPolicyResponse::Other, 0)),
         }
     }
 }
@@ -574,7 +574,7 @@ impl crate::Response for ReadExtensionsV1beta1PodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// replace the specified PodSecurityPolicy
     ///
-    /// Use [`ReplaceExtensionsV1beta1PodSecurityPolicyResponse`](./enum.ReplaceExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use [`ReplacePodSecurityPolicyResponse`](./enum.ReplacePodSecurityPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -587,12 +587,12 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_extensions_v1beta1_pod_security_policy(
+    pub fn replace_pod_security_policy(
         name: &str,
         body: &crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy,
-        optional: ReplaceExtensionsV1beta1PodSecurityPolicyOptional<'_>,
+        optional: ReplacePodSecurityPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceExtensionsV1beta1PodSecurityPolicyOptional {
+        let ReplacePodSecurityPolicyOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/extensions/v1beta1/podsecuritypolicies/{name}?", name = name);
@@ -608,22 +608,22 @@ impl PodSecurityPolicy {
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::replace_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.replace_extensions_v1beta1_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::replace_pod_security_policy`](./struct.PodSecurityPolicy.html#method.replace_pod_security_policy)
 #[derive(Debug, Default)]
-pub struct ReplaceExtensionsV1beta1PodSecurityPolicyOptional<'a> {
+pub struct ReplacePodSecurityPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::replace_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.replace_extensions_v1beta1_pod_security_policy)
+/// Parses the HTTP response of [`PodSecurityPolicy::replace_pod_security_policy`](./struct.PodSecurityPolicy.html#method.replace_pod_security_policy)
 #[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1PodSecurityPolicyResponse {
+pub enum ReplacePodSecurityPolicyResponse {
     Ok(crate::v1_8::api::extensions::v1beta1::PodSecurityPolicy),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceExtensionsV1beta1PodSecurityPolicyResponse {
+impl crate::Response for ReplacePodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -632,10 +632,10 @@ impl crate::Response for ReplaceExtensionsV1beta1PodSecurityPolicyResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceExtensionsV1beta1PodSecurityPolicyResponse::Ok(result), buf.len()))
+                Ok((ReplacePodSecurityPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceExtensionsV1beta1PodSecurityPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplacePodSecurityPolicyResponse::Unauthorized, 0)),
+            _ => Ok((ReplacePodSecurityPolicyResponse::Other, 0)),
         }
     }
 }
@@ -645,7 +645,7 @@ impl crate::Response for ReplaceExtensionsV1beta1PodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// watch changes to an object of kind PodSecurityPolicy
     ///
-    /// Use [`WatchExtensionsV1beta1PodSecurityPolicyResponse`](./enum.WatchExtensionsV1beta1PodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use [`WatchPodSecurityPolicyResponse`](./enum.WatchPodSecurityPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -656,11 +656,11 @@ impl PodSecurityPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_extensions_v1beta1_pod_security_policy(
+    pub fn watch_pod_security_policy(
         name: &str,
-        optional: WatchExtensionsV1beta1PodSecurityPolicyOptional<'_>,
+        optional: WatchPodSecurityPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchExtensionsV1beta1PodSecurityPolicyOptional {
+        let WatchPodSecurityPolicyOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -708,9 +708,9 @@ impl PodSecurityPolicy {
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::watch_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.watch_extensions_v1beta1_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::watch_pod_security_policy`](./struct.PodSecurityPolicy.html#method.watch_pod_security_policy)
 #[derive(Debug, Default)]
-pub struct WatchExtensionsV1beta1PodSecurityPolicyOptional<'a> {
+pub struct WatchPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -733,15 +733,15 @@ pub struct WatchExtensionsV1beta1PodSecurityPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::watch_extensions_v1beta1_pod_security_policy`](./struct.PodSecurityPolicy.html#method.watch_extensions_v1beta1_pod_security_policy)
+/// Parses the HTTP response of [`PodSecurityPolicy::watch_pod_security_policy`](./struct.PodSecurityPolicy.html#method.watch_pod_security_policy)
 #[derive(Debug)]
-pub enum WatchExtensionsV1beta1PodSecurityPolicyResponse {
+pub enum WatchPodSecurityPolicyResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchExtensionsV1beta1PodSecurityPolicyResponse {
+impl crate::Response for WatchPodSecurityPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -752,10 +752,10 @@ impl crate::Response for WatchExtensionsV1beta1PodSecurityPolicyResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchExtensionsV1beta1PodSecurityPolicyResponse::Ok(result), byte_offset))
+                Ok((WatchPodSecurityPolicyResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1PodSecurityPolicyResponse::Unauthorized, 0)),
-            _ => Ok((WatchExtensionsV1beta1PodSecurityPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPodSecurityPolicyResponse::Unauthorized, 0)),
+            _ => Ok((WatchPodSecurityPolicyResponse::Other, 0)),
         }
     }
 }
@@ -765,17 +765,17 @@ impl crate::Response for WatchExtensionsV1beta1PodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// watch individual changes to a list of PodSecurityPolicy
     ///
-    /// Use [`WatchExtensionsV1beta1PodSecurityPolicyListResponse`](./enum.WatchExtensionsV1beta1PodSecurityPolicyListResponse.html) to parse the HTTP response.
+    /// Use [`WatchPodSecurityPolicyListResponse`](./enum.WatchPodSecurityPolicyListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_extensions_v1beta1_pod_security_policy_list(
-        optional: WatchExtensionsV1beta1PodSecurityPolicyListOptional<'_>,
+    pub fn watch_pod_security_policy_list(
+        optional: WatchPodSecurityPolicyListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchExtensionsV1beta1PodSecurityPolicyListOptional {
+        let WatchPodSecurityPolicyListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -823,9 +823,9 @@ impl PodSecurityPolicy {
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::watch_extensions_v1beta1_pod_security_policy_list`](./struct.PodSecurityPolicy.html#method.watch_extensions_v1beta1_pod_security_policy_list)
+/// Optional parameters of [`PodSecurityPolicy::watch_pod_security_policy_list`](./struct.PodSecurityPolicy.html#method.watch_pod_security_policy_list)
 #[derive(Debug, Default)]
-pub struct WatchExtensionsV1beta1PodSecurityPolicyListOptional<'a> {
+pub struct WatchPodSecurityPolicyListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -848,15 +848,15 @@ pub struct WatchExtensionsV1beta1PodSecurityPolicyListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::watch_extensions_v1beta1_pod_security_policy_list`](./struct.PodSecurityPolicy.html#method.watch_extensions_v1beta1_pod_security_policy_list)
+/// Parses the HTTP response of [`PodSecurityPolicy::watch_pod_security_policy_list`](./struct.PodSecurityPolicy.html#method.watch_pod_security_policy_list)
 #[derive(Debug)]
-pub enum WatchExtensionsV1beta1PodSecurityPolicyListResponse {
+pub enum WatchPodSecurityPolicyListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchExtensionsV1beta1PodSecurityPolicyListResponse {
+impl crate::Response for WatchPodSecurityPolicyListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -867,10 +867,10 @@ impl crate::Response for WatchExtensionsV1beta1PodSecurityPolicyListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchExtensionsV1beta1PodSecurityPolicyListResponse::Ok(result), byte_offset))
+                Ok((WatchPodSecurityPolicyListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1PodSecurityPolicyListResponse::Unauthorized, 0)),
-            _ => Ok((WatchExtensionsV1beta1PodSecurityPolicyListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPodSecurityPolicyListResponse::Unauthorized, 0)),
+            _ => Ok((WatchPodSecurityPolicyListResponse::Other, 0)),
         }
     }
 }

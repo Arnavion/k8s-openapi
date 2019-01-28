@@ -17,7 +17,7 @@ pub struct Binding {
 impl Binding {
     /// create a Binding
     ///
-    /// Use [`CreateCoreV1NamespacedBindingResponse`](./enum.CreateCoreV1NamespacedBindingResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedBindingResponse`](./enum.CreateNamespacedBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -30,12 +30,12 @@ impl Binding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_binding(
+    pub fn create_namespaced_binding(
         namespace: &str,
         body: &crate::v1_8::api::core::v1::Binding,
-        optional: CreateCoreV1NamespacedBindingOptional<'_>,
+        optional: CreateNamespacedBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedBindingOptional {
+        let CreateNamespacedBindingOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/bindings?", namespace = namespace);
@@ -51,22 +51,22 @@ impl Binding {
     }
 }
 
-/// Optional parameters of [`Binding::create_core_v1_namespaced_binding`](./struct.Binding.html#method.create_core_v1_namespaced_binding)
+/// Optional parameters of [`Binding::create_namespaced_binding`](./struct.Binding.html#method.create_namespaced_binding)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedBindingOptional<'a> {
+pub struct CreateNamespacedBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Binding::create_core_v1_namespaced_binding`](./struct.Binding.html#method.create_core_v1_namespaced_binding)
+/// Parses the HTTP response of [`Binding::create_namespaced_binding`](./struct.Binding.html#method.create_namespaced_binding)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedBindingResponse {
+pub enum CreateNamespacedBindingResponse {
     Ok(crate::v1_8::api::core::v1::Binding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedBindingResponse {
+impl crate::Response for CreateNamespacedBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -75,10 +75,10 @@ impl crate::Response for CreateCoreV1NamespacedBindingResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedBindingResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedBindingResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedBindingResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedBindingResponse::Other, 0)),
         }
     }
 }
@@ -88,7 +88,7 @@ impl crate::Response for CreateCoreV1NamespacedBindingResponse {
 impl Binding {
     /// create binding of a Pod
     ///
-    /// Use [`CreateCoreV1NamespacedPodBindingResponse`](./enum.CreateCoreV1NamespacedPodBindingResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedPodBindingResponse`](./enum.CreateNamespacedPodBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -105,13 +105,13 @@ impl Binding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_pod_binding(
+    pub fn create_namespaced_pod_binding(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::core::v1::Binding,
-        optional: CreateCoreV1NamespacedPodBindingOptional<'_>,
+        optional: CreateNamespacedPodBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedPodBindingOptional {
+        let CreateNamespacedPodBindingOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/binding?", name = name, namespace = namespace);
@@ -127,22 +127,22 @@ impl Binding {
     }
 }
 
-/// Optional parameters of [`Binding::create_core_v1_namespaced_pod_binding`](./struct.Binding.html#method.create_core_v1_namespaced_pod_binding)
+/// Optional parameters of [`Binding::create_namespaced_pod_binding`](./struct.Binding.html#method.create_namespaced_pod_binding)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedPodBindingOptional<'a> {
+pub struct CreateNamespacedPodBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Binding::create_core_v1_namespaced_pod_binding`](./struct.Binding.html#method.create_core_v1_namespaced_pod_binding)
+/// Parses the HTTP response of [`Binding::create_namespaced_pod_binding`](./struct.Binding.html#method.create_namespaced_pod_binding)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedPodBindingResponse {
+pub enum CreateNamespacedPodBindingResponse {
     Ok(crate::v1_8::api::core::v1::Binding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedPodBindingResponse {
+impl crate::Response for CreateNamespacedPodBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -151,10 +151,10 @@ impl crate::Response for CreateCoreV1NamespacedPodBindingResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedPodBindingResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedPodBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedPodBindingResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedPodBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPodBindingResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedPodBindingResponse::Other, 0)),
         }
     }
 }

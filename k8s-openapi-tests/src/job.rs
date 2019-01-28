@@ -51,18 +51,18 @@ fn create() {
 		};
 
 		let request =
-			batch::Job::create_batch_v1_namespaced_job("default", &job, Default::default())
+			batch::Job::create_namespaced_job("default", &job, Default::default())
 			.expect("couldn't create job");
 		let job: batch::Job = {
 			let response = client.execute(request).expect("couldn't create job");
 			crate::get_single_value(response, |response, status_code, _response_body| k8s_match!(response, {
-				k8s_if_1_8!(batch::CreateBatchV1NamespacedJobResponse::Other if status_code == http::StatusCode::CREATED =>
+				k8s_if_1_8!(batch::CreateNamespacedJobResponse::Other if status_code == http::StatusCode::CREATED =>
 					match serde_json::from_slice(_response_body) {
 						Ok(job) => Ok(crate::ValueResult::GotValue(job)),
 						Err(ref err) if err.is_eof() => Ok(crate::ValueResult::NeedMoreData),
 						Err(err) => Err(err.into()),
 					}),
-				k8s_if_ge_1_9!(batch::CreateBatchV1NamespacedJobResponse::Created(job) =>
+				k8s_if_ge_1_9!(batch::CreateNamespacedJobResponse::Created(job) =>
 					Ok(crate::ValueResult::GotValue(job))),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			})).expect("couldn't create job")
@@ -88,7 +88,7 @@ fn create() {
 			let job: batch::Job = {
 				let response = client.execute(request).expect("couldn't get job");
 				crate::get_single_value(response, |response, status_code, _| match response {
-					batch::ReadBatchV1NamespacedJobResponse::Ok(job) => Ok(crate::ValueResult::GotValue(job)),
+					batch::ReadNamespacedJobResponse::Ok(job) => Ok(crate::ValueResult::GotValue(job)),
 					other => Err(format!("{:?} {}", other, status_code).into()),
 				}).expect("couldn't get job")
 			};
@@ -106,11 +106,11 @@ fn create() {
 
 		// Find a pod of the failed job using owner reference
 		let job_pod_status = loop {
-			let request = api::Pod::list_core_v1_namespaced_pod("default", Default::default()).expect("couldn't list pods");
+			let request = api::Pod::list_namespaced_pod("default", Default::default()).expect("couldn't list pods");
 			let pod_list = {
 				let response = client.execute(request).expect("couldn't list pods");;
 				crate::get_single_value(response, |response, status_code, _| match response {
-					api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
+					api::ListNamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
 					other => Err(format!("{:?} {}", other, status_code).into()),
 				}).expect("couldn't list pods")
 			};
@@ -146,14 +146,14 @@ fn create() {
 		{
 			let response = client.execute(request).expect("couldn't delete job");
 			crate::get_single_value(response, |response, status_code, _| match response {
-				batch::DeleteBatchV1NamespacedJobResponse::OkStatus(_) | batch::DeleteBatchV1NamespacedJobResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
+				batch::DeleteNamespacedJobResponse::OkStatus(_) | batch::DeleteNamespacedJobResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't delete job");
 		}
 
 		// Delete all pods of the job using label selector
 		let request =
-			api::Pod::list_core_v1_namespaced_pod("default", api::ListCoreV1NamespacedPodOptional {
+			api::Pod::list_namespaced_pod("default", api::ListNamespacedPodOptional {
 				label_selector: Some("job-name=k8s-openapi-tests-create-job"),
 				..Default::default()
 			})
@@ -161,7 +161,7 @@ fn create() {
 		let pod_list = {
 			let response = client.execute(request).expect("couldn't list pods");;
 			crate::get_single_value(response, |response, status_code, _| match response {
-				api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
+				api::ListNamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't list pods")
 		};
@@ -173,7 +173,7 @@ fn create() {
 			let request = http::Request::delete(self_link).body(vec![]).expect("couldn't delete job pod");
 			let response = client.execute(request).expect("couldn't delete job pod");
 			crate::get_single_value(response, |response, status_code, _| match response {
-				api::DeleteCoreV1NamespacedPodResponse::OkStatus(_) | api::DeleteCoreV1NamespacedPodResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
+				api::DeleteNamespacedPodResponse::OkStatus(_) | api::DeleteNamespacedPodResponse::OkValue(_) => Ok(crate::ValueResult::GotValue(())),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't delete job pod");
 		}

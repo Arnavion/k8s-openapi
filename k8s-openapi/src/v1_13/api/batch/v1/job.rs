@@ -20,7 +20,7 @@ pub struct Job {
 impl Job {
     /// create a Job
     ///
-    /// Use [`CreateBatchV1NamespacedJobResponse`](./enum.CreateBatchV1NamespacedJobResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedJobResponse`](./enum.CreateNamespacedJobResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_batch_v1_namespaced_job(
+    pub fn create_namespaced_job(
         namespace: &str,
         body: &crate::v1_13::api::batch::v1::Job,
-        optional: CreateBatchV1NamespacedJobOptional<'_>,
+        optional: CreateNamespacedJobOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateBatchV1NamespacedJobOptional {
+        let CreateNamespacedJobOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -62,9 +62,9 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::create_batch_v1_namespaced_job`](./struct.Job.html#method.create_batch_v1_namespaced_job)
+/// Optional parameters of [`Job::create_namespaced_job`](./struct.Job.html#method.create_namespaced_job)
 #[derive(Debug, Default)]
-pub struct CreateBatchV1NamespacedJobOptional<'a> {
+pub struct CreateNamespacedJobOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -73,9 +73,9 @@ pub struct CreateBatchV1NamespacedJobOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::create_batch_v1_namespaced_job`](./struct.Job.html#method.create_batch_v1_namespaced_job)
+/// Parses the HTTP response of [`Job::create_namespaced_job`](./struct.Job.html#method.create_namespaced_job)
 #[derive(Debug)]
-pub enum CreateBatchV1NamespacedJobResponse {
+pub enum CreateNamespacedJobResponse {
     Ok(crate::v1_13::api::batch::v1::Job),
     Created(crate::v1_13::api::batch::v1::Job),
     Accepted(crate::v1_13::api::batch::v1::Job),
@@ -83,7 +83,7 @@ pub enum CreateBatchV1NamespacedJobResponse {
     Other,
 }
 
-impl crate::Response for CreateBatchV1NamespacedJobResponse {
+impl crate::Response for CreateNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -92,7 +92,7 @@ impl crate::Response for CreateBatchV1NamespacedJobResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateBatchV1NamespacedJobResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedJobResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -100,7 +100,7 @@ impl crate::Response for CreateBatchV1NamespacedJobResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateBatchV1NamespacedJobResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedJobResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -108,10 +108,10 @@ impl crate::Response for CreateBatchV1NamespacedJobResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateBatchV1NamespacedJobResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedJobResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateBatchV1NamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((CreateBatchV1NamespacedJobResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedJobResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedJobResponse::Other, 0)),
         }
     }
 }
@@ -121,7 +121,7 @@ impl crate::Response for CreateBatchV1NamespacedJobResponse {
 impl Job {
     /// delete collection of Job
     ///
-    /// Use [`DeleteBatchV1CollectionNamespacedJobResponse`](./enum.DeleteBatchV1CollectionNamespacedJobResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedJobResponse`](./enum.DeleteCollectionNamespacedJobResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -132,11 +132,11 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_batch_v1_collection_namespaced_job(
+    pub fn delete_collection_namespaced_job(
         namespace: &str,
-        optional: DeleteBatchV1CollectionNamespacedJobOptional<'_>,
+        optional: DeleteCollectionNamespacedJobOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteBatchV1CollectionNamespacedJobOptional {
+        let DeleteCollectionNamespacedJobOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -184,9 +184,9 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::delete_batch_v1_collection_namespaced_job`](./struct.Job.html#method.delete_batch_v1_collection_namespaced_job)
+/// Optional parameters of [`Job::delete_collection_namespaced_job`](./struct.Job.html#method.delete_collection_namespaced_job)
 #[derive(Debug, Default)]
-pub struct DeleteBatchV1CollectionNamespacedJobOptional<'a> {
+pub struct DeleteCollectionNamespacedJobOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -211,16 +211,16 @@ pub struct DeleteBatchV1CollectionNamespacedJobOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::delete_batch_v1_collection_namespaced_job`](./struct.Job.html#method.delete_batch_v1_collection_namespaced_job)
+/// Parses the HTTP response of [`Job::delete_collection_namespaced_job`](./struct.Job.html#method.delete_collection_namespaced_job)
 #[derive(Debug)]
-pub enum DeleteBatchV1CollectionNamespacedJobResponse {
+pub enum DeleteCollectionNamespacedJobResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::batch::v1::Job),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteBatchV1CollectionNamespacedJobResponse {
+impl crate::Response for DeleteCollectionNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -236,16 +236,16 @@ impl crate::Response for DeleteBatchV1CollectionNamespacedJobResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteBatchV1CollectionNamespacedJobResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedJobResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteBatchV1CollectionNamespacedJobResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedJobResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteBatchV1CollectionNamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((DeleteBatchV1CollectionNamespacedJobResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedJobResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedJobResponse::Other, 0)),
         }
     }
 }
@@ -255,7 +255,7 @@ impl crate::Response for DeleteBatchV1CollectionNamespacedJobResponse {
 impl Job {
     /// delete a Job
     ///
-    /// Use [`DeleteBatchV1NamespacedJobResponse`](./enum.DeleteBatchV1NamespacedJobResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedJobResponse`](./enum.DeleteNamespacedJobResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -270,12 +270,12 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_batch_v1_namespaced_job(
+    pub fn delete_namespaced_job(
         name: &str,
         namespace: &str,
-        optional: DeleteBatchV1NamespacedJobOptional<'_>,
+        optional: DeleteNamespacedJobOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteBatchV1NamespacedJobOptional {
+        let DeleteNamespacedJobOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -307,9 +307,9 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::delete_batch_v1_namespaced_job`](./struct.Job.html#method.delete_batch_v1_namespaced_job)
+/// Optional parameters of [`Job::delete_namespaced_job`](./struct.Job.html#method.delete_namespaced_job)
 #[derive(Debug, Default)]
-pub struct DeleteBatchV1NamespacedJobOptional<'a> {
+pub struct DeleteNamespacedJobOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -322,9 +322,9 @@ pub struct DeleteBatchV1NamespacedJobOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::delete_batch_v1_namespaced_job`](./struct.Job.html#method.delete_batch_v1_namespaced_job)
+/// Parses the HTTP response of [`Job::delete_namespaced_job`](./struct.Job.html#method.delete_namespaced_job)
 #[derive(Debug)]
-pub enum DeleteBatchV1NamespacedJobResponse {
+pub enum DeleteNamespacedJobResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::batch::v1::Job),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -332,7 +332,7 @@ pub enum DeleteBatchV1NamespacedJobResponse {
     Other,
 }
 
-impl crate::Response for DeleteBatchV1NamespacedJobResponse {
+impl crate::Response for DeleteNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -348,12 +348,12 @@ impl crate::Response for DeleteBatchV1NamespacedJobResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteBatchV1NamespacedJobResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedJobResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteBatchV1NamespacedJobResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedJobResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -362,10 +362,10 @@ impl crate::Response for DeleteBatchV1NamespacedJobResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteBatchV1NamespacedJobResponse::Accepted(result), buf.len()))
+                Ok((DeleteNamespacedJobResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteBatchV1NamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((DeleteBatchV1NamespacedJobResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedJobResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedJobResponse::Other, 0)),
         }
     }
 }
@@ -375,17 +375,17 @@ impl crate::Response for DeleteBatchV1NamespacedJobResponse {
 impl Job {
     /// list or watch objects of kind Job
     ///
-    /// Use [`ListBatchV1JobForAllNamespacesResponse`](./enum.ListBatchV1JobForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListJobForAllNamespacesResponse`](./enum.ListJobForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_batch_v1_job_for_all_namespaces(
-        optional: ListBatchV1JobForAllNamespacesOptional<'_>,
+    pub fn list_job_for_all_namespaces(
+        optional: ListJobForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListBatchV1JobForAllNamespacesOptional {
+        let ListJobForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -433,9 +433,9 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::list_batch_v1_job_for_all_namespaces`](./struct.Job.html#method.list_batch_v1_job_for_all_namespaces)
+/// Optional parameters of [`Job::list_job_for_all_namespaces`](./struct.Job.html#method.list_job_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListBatchV1JobForAllNamespacesOptional<'a> {
+pub struct ListJobForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -460,15 +460,15 @@ pub struct ListBatchV1JobForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::list_batch_v1_job_for_all_namespaces`](./struct.Job.html#method.list_batch_v1_job_for_all_namespaces)
+/// Parses the HTTP response of [`Job::list_job_for_all_namespaces`](./struct.Job.html#method.list_job_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListBatchV1JobForAllNamespacesResponse {
+pub enum ListJobForAllNamespacesResponse {
     Ok(crate::v1_13::api::batch::v1::JobList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListBatchV1JobForAllNamespacesResponse {
+impl crate::Response for ListJobForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -477,10 +477,10 @@ impl crate::Response for ListBatchV1JobForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListBatchV1JobForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListJobForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListBatchV1JobForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListBatchV1JobForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListJobForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListJobForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -490,7 +490,7 @@ impl crate::Response for ListBatchV1JobForAllNamespacesResponse {
 impl Job {
     /// list or watch objects of kind Job
     ///
-    /// Use [`ListBatchV1NamespacedJobResponse`](./enum.ListBatchV1NamespacedJobResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedJobResponse`](./enum.ListNamespacedJobResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -501,11 +501,11 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_batch_v1_namespaced_job(
+    pub fn list_namespaced_job(
         namespace: &str,
-        optional: ListBatchV1NamespacedJobOptional<'_>,
+        optional: ListNamespacedJobOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListBatchV1NamespacedJobOptional {
+        let ListNamespacedJobOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -553,9 +553,9 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::list_batch_v1_namespaced_job`](./struct.Job.html#method.list_batch_v1_namespaced_job)
+/// Optional parameters of [`Job::list_namespaced_job`](./struct.Job.html#method.list_namespaced_job)
 #[derive(Debug, Default)]
-pub struct ListBatchV1NamespacedJobOptional<'a> {
+pub struct ListNamespacedJobOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -580,15 +580,15 @@ pub struct ListBatchV1NamespacedJobOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::list_batch_v1_namespaced_job`](./struct.Job.html#method.list_batch_v1_namespaced_job)
+/// Parses the HTTP response of [`Job::list_namespaced_job`](./struct.Job.html#method.list_namespaced_job)
 #[derive(Debug)]
-pub enum ListBatchV1NamespacedJobResponse {
+pub enum ListNamespacedJobResponse {
     Ok(crate::v1_13::api::batch::v1::JobList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListBatchV1NamespacedJobResponse {
+impl crate::Response for ListNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -597,10 +597,10 @@ impl crate::Response for ListBatchV1NamespacedJobResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListBatchV1NamespacedJobResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListBatchV1NamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((ListBatchV1NamespacedJobResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedJobResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedJobResponse::Other, 0)),
         }
     }
 }
@@ -610,7 +610,7 @@ impl crate::Response for ListBatchV1NamespacedJobResponse {
 impl Job {
     /// partially update the specified Job
     ///
-    /// Use [`PatchBatchV1NamespacedJobResponse`](./enum.PatchBatchV1NamespacedJobResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedJobResponse`](./enum.PatchNamespacedJobResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -627,13 +627,13 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_batch_v1_namespaced_job(
+    pub fn patch_namespaced_job(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchBatchV1NamespacedJobOptional<'_>,
+        optional: PatchNamespacedJobOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchBatchV1NamespacedJobOptional {
+        let PatchNamespacedJobOptional {
             dry_run,
             pretty,
         } = optional;
@@ -653,24 +653,24 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::patch_batch_v1_namespaced_job`](./struct.Job.html#method.patch_batch_v1_namespaced_job)
+/// Optional parameters of [`Job::patch_namespaced_job`](./struct.Job.html#method.patch_namespaced_job)
 #[derive(Debug, Default)]
-pub struct PatchBatchV1NamespacedJobOptional<'a> {
+pub struct PatchNamespacedJobOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::patch_batch_v1_namespaced_job`](./struct.Job.html#method.patch_batch_v1_namespaced_job)
+/// Parses the HTTP response of [`Job::patch_namespaced_job`](./struct.Job.html#method.patch_namespaced_job)
 #[derive(Debug)]
-pub enum PatchBatchV1NamespacedJobResponse {
+pub enum PatchNamespacedJobResponse {
     Ok(crate::v1_13::api::batch::v1::Job),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchBatchV1NamespacedJobResponse {
+impl crate::Response for PatchNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -679,10 +679,10 @@ impl crate::Response for PatchBatchV1NamespacedJobResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchBatchV1NamespacedJobResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchBatchV1NamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((PatchBatchV1NamespacedJobResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedJobResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedJobResponse::Other, 0)),
         }
     }
 }
@@ -692,7 +692,7 @@ impl crate::Response for PatchBatchV1NamespacedJobResponse {
 impl Job {
     /// partially update status of the specified Job
     ///
-    /// Use [`PatchBatchV1NamespacedJobStatusResponse`](./enum.PatchBatchV1NamespacedJobStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedJobStatusResponse`](./enum.PatchNamespacedJobStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -709,13 +709,13 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_batch_v1_namespaced_job_status(
+    pub fn patch_namespaced_job_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchBatchV1NamespacedJobStatusOptional<'_>,
+        optional: PatchNamespacedJobStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchBatchV1NamespacedJobStatusOptional {
+        let PatchNamespacedJobStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -735,24 +735,24 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::patch_batch_v1_namespaced_job_status`](./struct.Job.html#method.patch_batch_v1_namespaced_job_status)
+/// Optional parameters of [`Job::patch_namespaced_job_status`](./struct.Job.html#method.patch_namespaced_job_status)
 #[derive(Debug, Default)]
-pub struct PatchBatchV1NamespacedJobStatusOptional<'a> {
+pub struct PatchNamespacedJobStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::patch_batch_v1_namespaced_job_status`](./struct.Job.html#method.patch_batch_v1_namespaced_job_status)
+/// Parses the HTTP response of [`Job::patch_namespaced_job_status`](./struct.Job.html#method.patch_namespaced_job_status)
 #[derive(Debug)]
-pub enum PatchBatchV1NamespacedJobStatusResponse {
+pub enum PatchNamespacedJobStatusResponse {
     Ok(crate::v1_13::api::batch::v1::Job),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchBatchV1NamespacedJobStatusResponse {
+impl crate::Response for PatchNamespacedJobStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -761,10 +761,10 @@ impl crate::Response for PatchBatchV1NamespacedJobStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchBatchV1NamespacedJobStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedJobStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchBatchV1NamespacedJobStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchBatchV1NamespacedJobStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedJobStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedJobStatusResponse::Other, 0)),
         }
     }
 }
@@ -774,7 +774,7 @@ impl crate::Response for PatchBatchV1NamespacedJobStatusResponse {
 impl Job {
     /// read the specified Job
     ///
-    /// Use [`ReadBatchV1NamespacedJobResponse`](./enum.ReadBatchV1NamespacedJobResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedJobResponse`](./enum.ReadNamespacedJobResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -789,12 +789,12 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_batch_v1_namespaced_job(
+    pub fn read_namespaced_job(
         name: &str,
         namespace: &str,
-        optional: ReadBatchV1NamespacedJobOptional<'_>,
+        optional: ReadNamespacedJobOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadBatchV1NamespacedJobOptional {
+        let ReadNamespacedJobOptional {
             exact,
             export,
             pretty,
@@ -818,9 +818,9 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::read_batch_v1_namespaced_job`](./struct.Job.html#method.read_batch_v1_namespaced_job)
+/// Optional parameters of [`Job::read_namespaced_job`](./struct.Job.html#method.read_namespaced_job)
 #[derive(Debug, Default)]
-pub struct ReadBatchV1NamespacedJobOptional<'a> {
+pub struct ReadNamespacedJobOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -829,15 +829,15 @@ pub struct ReadBatchV1NamespacedJobOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::read_batch_v1_namespaced_job`](./struct.Job.html#method.read_batch_v1_namespaced_job)
+/// Parses the HTTP response of [`Job::read_namespaced_job`](./struct.Job.html#method.read_namespaced_job)
 #[derive(Debug)]
-pub enum ReadBatchV1NamespacedJobResponse {
+pub enum ReadNamespacedJobResponse {
     Ok(crate::v1_13::api::batch::v1::Job),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadBatchV1NamespacedJobResponse {
+impl crate::Response for ReadNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -846,10 +846,10 @@ impl crate::Response for ReadBatchV1NamespacedJobResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadBatchV1NamespacedJobResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedJobResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadBatchV1NamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((ReadBatchV1NamespacedJobResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedJobResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedJobResponse::Other, 0)),
         }
     }
 }
@@ -859,7 +859,7 @@ impl crate::Response for ReadBatchV1NamespacedJobResponse {
 impl Job {
     /// read status of the specified Job
     ///
-    /// Use [`ReadBatchV1NamespacedJobStatusResponse`](./enum.ReadBatchV1NamespacedJobStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedJobStatusResponse`](./enum.ReadNamespacedJobStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -874,12 +874,12 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_batch_v1_namespaced_job_status(
+    pub fn read_namespaced_job_status(
         name: &str,
         namespace: &str,
-        optional: ReadBatchV1NamespacedJobStatusOptional<'_>,
+        optional: ReadNamespacedJobStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadBatchV1NamespacedJobStatusOptional {
+        let ReadNamespacedJobStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/batch/v1/namespaces/{namespace}/jobs/{name}/status?", name = name, namespace = namespace);
@@ -895,22 +895,22 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::read_batch_v1_namespaced_job_status`](./struct.Job.html#method.read_batch_v1_namespaced_job_status)
+/// Optional parameters of [`Job::read_namespaced_job_status`](./struct.Job.html#method.read_namespaced_job_status)
 #[derive(Debug, Default)]
-pub struct ReadBatchV1NamespacedJobStatusOptional<'a> {
+pub struct ReadNamespacedJobStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::read_batch_v1_namespaced_job_status`](./struct.Job.html#method.read_batch_v1_namespaced_job_status)
+/// Parses the HTTP response of [`Job::read_namespaced_job_status`](./struct.Job.html#method.read_namespaced_job_status)
 #[derive(Debug)]
-pub enum ReadBatchV1NamespacedJobStatusResponse {
+pub enum ReadNamespacedJobStatusResponse {
     Ok(crate::v1_13::api::batch::v1::Job),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadBatchV1NamespacedJobStatusResponse {
+impl crate::Response for ReadNamespacedJobStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -919,10 +919,10 @@ impl crate::Response for ReadBatchV1NamespacedJobStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadBatchV1NamespacedJobStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedJobStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadBatchV1NamespacedJobStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadBatchV1NamespacedJobStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedJobStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedJobStatusResponse::Other, 0)),
         }
     }
 }
@@ -932,7 +932,7 @@ impl crate::Response for ReadBatchV1NamespacedJobStatusResponse {
 impl Job {
     /// replace the specified Job
     ///
-    /// Use [`ReplaceBatchV1NamespacedJobResponse`](./enum.ReplaceBatchV1NamespacedJobResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedJobResponse`](./enum.ReplaceNamespacedJobResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -949,13 +949,13 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_batch_v1_namespaced_job(
+    pub fn replace_namespaced_job(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::batch::v1::Job,
-        optional: ReplaceBatchV1NamespacedJobOptional<'_>,
+        optional: ReplaceNamespacedJobOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceBatchV1NamespacedJobOptional {
+        let ReplaceNamespacedJobOptional {
             dry_run,
             pretty,
         } = optional;
@@ -975,25 +975,25 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::replace_batch_v1_namespaced_job`](./struct.Job.html#method.replace_batch_v1_namespaced_job)
+/// Optional parameters of [`Job::replace_namespaced_job`](./struct.Job.html#method.replace_namespaced_job)
 #[derive(Debug, Default)]
-pub struct ReplaceBatchV1NamespacedJobOptional<'a> {
+pub struct ReplaceNamespacedJobOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::replace_batch_v1_namespaced_job`](./struct.Job.html#method.replace_batch_v1_namespaced_job)
+/// Parses the HTTP response of [`Job::replace_namespaced_job`](./struct.Job.html#method.replace_namespaced_job)
 #[derive(Debug)]
-pub enum ReplaceBatchV1NamespacedJobResponse {
+pub enum ReplaceNamespacedJobResponse {
     Ok(crate::v1_13::api::batch::v1::Job),
     Created(crate::v1_13::api::batch::v1::Job),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceBatchV1NamespacedJobResponse {
+impl crate::Response for ReplaceNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1002,7 +1002,7 @@ impl crate::Response for ReplaceBatchV1NamespacedJobResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceBatchV1NamespacedJobResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedJobResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1010,10 +1010,10 @@ impl crate::Response for ReplaceBatchV1NamespacedJobResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceBatchV1NamespacedJobResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedJobResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceBatchV1NamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceBatchV1NamespacedJobResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedJobResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedJobResponse::Other, 0)),
         }
     }
 }
@@ -1023,7 +1023,7 @@ impl crate::Response for ReplaceBatchV1NamespacedJobResponse {
 impl Job {
     /// replace status of the specified Job
     ///
-    /// Use [`ReplaceBatchV1NamespacedJobStatusResponse`](./enum.ReplaceBatchV1NamespacedJobStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedJobStatusResponse`](./enum.ReplaceNamespacedJobStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1040,13 +1040,13 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_batch_v1_namespaced_job_status(
+    pub fn replace_namespaced_job_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::batch::v1::Job,
-        optional: ReplaceBatchV1NamespacedJobStatusOptional<'_>,
+        optional: ReplaceNamespacedJobStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceBatchV1NamespacedJobStatusOptional {
+        let ReplaceNamespacedJobStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -1066,25 +1066,25 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::replace_batch_v1_namespaced_job_status`](./struct.Job.html#method.replace_batch_v1_namespaced_job_status)
+/// Optional parameters of [`Job::replace_namespaced_job_status`](./struct.Job.html#method.replace_namespaced_job_status)
 #[derive(Debug, Default)]
-pub struct ReplaceBatchV1NamespacedJobStatusOptional<'a> {
+pub struct ReplaceNamespacedJobStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::replace_batch_v1_namespaced_job_status`](./struct.Job.html#method.replace_batch_v1_namespaced_job_status)
+/// Parses the HTTP response of [`Job::replace_namespaced_job_status`](./struct.Job.html#method.replace_namespaced_job_status)
 #[derive(Debug)]
-pub enum ReplaceBatchV1NamespacedJobStatusResponse {
+pub enum ReplaceNamespacedJobStatusResponse {
     Ok(crate::v1_13::api::batch::v1::Job),
     Created(crate::v1_13::api::batch::v1::Job),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceBatchV1NamespacedJobStatusResponse {
+impl crate::Response for ReplaceNamespacedJobStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1093,7 +1093,7 @@ impl crate::Response for ReplaceBatchV1NamespacedJobStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceBatchV1NamespacedJobStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedJobStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1101,10 +1101,10 @@ impl crate::Response for ReplaceBatchV1NamespacedJobStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceBatchV1NamespacedJobStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedJobStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceBatchV1NamespacedJobStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceBatchV1NamespacedJobStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedJobStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedJobStatusResponse::Other, 0)),
         }
     }
 }
@@ -1114,17 +1114,17 @@ impl crate::Response for ReplaceBatchV1NamespacedJobStatusResponse {
 impl Job {
     /// watch individual changes to a list of Job. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchBatchV1JobListForAllNamespacesResponse`](./enum.WatchBatchV1JobListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchJobListForAllNamespacesResponse`](./enum.WatchJobListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_batch_v1_job_list_for_all_namespaces(
-        optional: WatchBatchV1JobListForAllNamespacesOptional<'_>,
+    pub fn watch_job_list_for_all_namespaces(
+        optional: WatchJobListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchBatchV1JobListForAllNamespacesOptional {
+        let WatchJobListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1172,9 +1172,9 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::watch_batch_v1_job_list_for_all_namespaces`](./struct.Job.html#method.watch_batch_v1_job_list_for_all_namespaces)
+/// Optional parameters of [`Job::watch_job_list_for_all_namespaces`](./struct.Job.html#method.watch_job_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchBatchV1JobListForAllNamespacesOptional<'a> {
+pub struct WatchJobListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1199,15 +1199,15 @@ pub struct WatchBatchV1JobListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::watch_batch_v1_job_list_for_all_namespaces`](./struct.Job.html#method.watch_batch_v1_job_list_for_all_namespaces)
+/// Parses the HTTP response of [`Job::watch_job_list_for_all_namespaces`](./struct.Job.html#method.watch_job_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchBatchV1JobListForAllNamespacesResponse {
+pub enum WatchJobListForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchBatchV1JobListForAllNamespacesResponse {
+impl crate::Response for WatchJobListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1218,10 +1218,10 @@ impl crate::Response for WatchBatchV1JobListForAllNamespacesResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchBatchV1JobListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchJobListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchBatchV1JobListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchBatchV1JobListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchJobListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchJobListForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -1231,7 +1231,7 @@ impl crate::Response for WatchBatchV1JobListForAllNamespacesResponse {
 impl Job {
     /// watch changes to an object of kind Job. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchBatchV1NamespacedJobResponse`](./enum.WatchBatchV1NamespacedJobResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedJobResponse`](./enum.WatchNamespacedJobResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1246,12 +1246,12 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_batch_v1_namespaced_job(
+    pub fn watch_namespaced_job(
         name: &str,
         namespace: &str,
-        optional: WatchBatchV1NamespacedJobOptional<'_>,
+        optional: WatchNamespacedJobOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchBatchV1NamespacedJobOptional {
+        let WatchNamespacedJobOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1299,9 +1299,9 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::watch_batch_v1_namespaced_job`](./struct.Job.html#method.watch_batch_v1_namespaced_job)
+/// Optional parameters of [`Job::watch_namespaced_job`](./struct.Job.html#method.watch_namespaced_job)
 #[derive(Debug, Default)]
-pub struct WatchBatchV1NamespacedJobOptional<'a> {
+pub struct WatchNamespacedJobOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1326,15 +1326,15 @@ pub struct WatchBatchV1NamespacedJobOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::watch_batch_v1_namespaced_job`](./struct.Job.html#method.watch_batch_v1_namespaced_job)
+/// Parses the HTTP response of [`Job::watch_namespaced_job`](./struct.Job.html#method.watch_namespaced_job)
 #[derive(Debug)]
-pub enum WatchBatchV1NamespacedJobResponse {
+pub enum WatchNamespacedJobResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchBatchV1NamespacedJobResponse {
+impl crate::Response for WatchNamespacedJobResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1345,10 +1345,10 @@ impl crate::Response for WatchBatchV1NamespacedJobResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchBatchV1NamespacedJobResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedJobResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchBatchV1NamespacedJobResponse::Unauthorized, 0)),
-            _ => Ok((WatchBatchV1NamespacedJobResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedJobResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedJobResponse::Other, 0)),
         }
     }
 }
@@ -1358,7 +1358,7 @@ impl crate::Response for WatchBatchV1NamespacedJobResponse {
 impl Job {
     /// watch individual changes to a list of Job. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchBatchV1NamespacedJobListResponse`](./enum.WatchBatchV1NamespacedJobListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedJobListResponse`](./enum.WatchNamespacedJobListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1369,11 +1369,11 @@ impl Job {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_batch_v1_namespaced_job_list(
+    pub fn watch_namespaced_job_list(
         namespace: &str,
-        optional: WatchBatchV1NamespacedJobListOptional<'_>,
+        optional: WatchNamespacedJobListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchBatchV1NamespacedJobListOptional {
+        let WatchNamespacedJobListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1421,9 +1421,9 @@ impl Job {
     }
 }
 
-/// Optional parameters of [`Job::watch_batch_v1_namespaced_job_list`](./struct.Job.html#method.watch_batch_v1_namespaced_job_list)
+/// Optional parameters of [`Job::watch_namespaced_job_list`](./struct.Job.html#method.watch_namespaced_job_list)
 #[derive(Debug, Default)]
-pub struct WatchBatchV1NamespacedJobListOptional<'a> {
+pub struct WatchNamespacedJobListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1448,15 +1448,15 @@ pub struct WatchBatchV1NamespacedJobListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::watch_batch_v1_namespaced_job_list`](./struct.Job.html#method.watch_batch_v1_namespaced_job_list)
+/// Parses the HTTP response of [`Job::watch_namespaced_job_list`](./struct.Job.html#method.watch_namespaced_job_list)
 #[derive(Debug)]
-pub enum WatchBatchV1NamespacedJobListResponse {
+pub enum WatchNamespacedJobListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchBatchV1NamespacedJobListResponse {
+impl crate::Response for WatchNamespacedJobListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1467,10 +1467,10 @@ impl crate::Response for WatchBatchV1NamespacedJobListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchBatchV1NamespacedJobListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedJobListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchBatchV1NamespacedJobListResponse::Unauthorized, 0)),
-            _ => Ok((WatchBatchV1NamespacedJobListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedJobListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedJobListResponse::Other, 0)),
         }
     }
 }

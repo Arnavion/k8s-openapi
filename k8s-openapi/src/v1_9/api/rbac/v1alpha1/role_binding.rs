@@ -20,7 +20,7 @@ pub struct RoleBinding {
 impl RoleBinding {
     /// create a RoleBinding
     ///
-    /// Use [`CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedRoleBindingResponse`](./enum.CreateNamespacedRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl RoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_rbac_authorization_v1alpha1_namespaced_role_binding(
+    pub fn create_namespaced_role_binding(
         namespace: &str,
         body: &crate::v1_9::api::rbac::v1alpha1::RoleBinding,
-        optional: CreateRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'_>,
+        optional: CreateNamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateRbacAuthorizationV1alpha1NamespacedRoleBindingOptional {
+        let CreateNamespacedRoleBindingOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings?", namespace = namespace);
@@ -54,16 +54,16 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::create_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.create_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::create_namespaced_role_binding`](./struct.RoleBinding.html#method.create_namespaced_role_binding)
 #[derive(Debug, Default)]
-pub struct CreateRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'a> {
+pub struct CreateNamespacedRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::create_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.create_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Parses the HTTP response of [`RoleBinding::create_namespaced_role_binding`](./struct.RoleBinding.html#method.create_namespaced_role_binding)
 #[derive(Debug)]
-pub enum CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+pub enum CreateNamespacedRoleBindingResponse {
     Ok(crate::v1_9::api::rbac::v1alpha1::RoleBinding),
     Created(crate::v1_9::api::rbac::v1alpha1::RoleBinding),
     Accepted(crate::v1_9::api::rbac::v1alpha1::RoleBinding),
@@ -71,7 +71,7 @@ pub enum CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
     Other,
 }
 
-impl crate::Response for CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+impl crate::Response for CreateNamespacedRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -80,7 +80,7 @@ impl crate::Response for CreateRbacAuthorizationV1alpha1NamespacedRoleBindingRes
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedRoleBindingResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -88,7 +88,7 @@ impl crate::Response for CreateRbacAuthorizationV1alpha1NamespacedRoleBindingRes
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedRoleBindingResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -96,10 +96,10 @@ impl crate::Response for CreateRbacAuthorizationV1alpha1NamespacedRoleBindingRes
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedRoleBindingResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((CreateRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -109,7 +109,7 @@ impl crate::Response for CreateRbacAuthorizationV1alpha1NamespacedRoleBindingRes
 impl RoleBinding {
     /// delete collection of RoleBinding
     ///
-    /// Use [`DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedRoleBindingResponse`](./enum.DeleteCollectionNamespacedRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -120,11 +120,11 @@ impl RoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_rbac_authorization_v1alpha1_collection_namespaced_role_binding(
+    pub fn delete_collection_namespaced_role_binding(
         namespace: &str,
-        optional: DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingOptional<'_>,
+        optional: DeleteCollectionNamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingOptional {
+        let DeleteCollectionNamespacedRoleBindingOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -172,9 +172,9 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::delete_rbac_authorization_v1alpha1_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1alpha1_collection_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::delete_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_collection_namespaced_role_binding)
 #[derive(Debug, Default)]
-pub struct DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingOptional<'a> {
+pub struct DeleteCollectionNamespacedRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -197,16 +197,16 @@ pub struct DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingOptiona
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::delete_rbac_authorization_v1alpha1_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1alpha1_collection_namespaced_role_binding)
+/// Parses the HTTP response of [`RoleBinding::delete_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_collection_namespaced_role_binding)
 #[derive(Debug)]
-pub enum DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse {
+pub enum DeleteCollectionNamespacedRoleBindingResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::rbac::v1alpha1::RoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse {
+impl crate::Response for DeleteCollectionNamespacedRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -222,16 +222,16 @@ impl crate::Response for DeleteRbacAuthorizationV1alpha1CollectionNamespacedRole
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedRoleBindingResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedRoleBindingResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((DeleteRbacAuthorizationV1alpha1CollectionNamespacedRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -241,7 +241,7 @@ impl crate::Response for DeleteRbacAuthorizationV1alpha1CollectionNamespacedRole
 impl RoleBinding {
     /// delete a RoleBinding
     ///
-    /// Use [`DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedRoleBindingResponse`](./enum.DeleteNamespacedRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -256,12 +256,12 @@ impl RoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_rbac_authorization_v1alpha1_namespaced_role_binding(
+    pub fn delete_namespaced_role_binding(
         name: &str,
         namespace: &str,
-        optional: DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'_>,
+        optional: DeleteNamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingOptional {
+        let DeleteNamespacedRoleBindingOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -289,9 +289,9 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::delete_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::delete_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_namespaced_role_binding)
 #[derive(Debug, Default)]
-pub struct DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'a> {
+pub struct DeleteNamespacedRoleBindingOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -302,16 +302,16 @@ pub struct DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::delete_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Parses the HTTP response of [`RoleBinding::delete_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_namespaced_role_binding)
 #[derive(Debug)]
-pub enum DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+pub enum DeleteNamespacedRoleBindingResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::rbac::v1alpha1::RoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+impl crate::Response for DeleteNamespacedRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -327,16 +327,16 @@ impl crate::Response for DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingRes
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedRoleBindingResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedRoleBindingResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -346,7 +346,7 @@ impl crate::Response for DeleteRbacAuthorizationV1alpha1NamespacedRoleBindingRes
 impl RoleBinding {
     /// list or watch objects of kind RoleBinding
     ///
-    /// Use [`ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedRoleBindingResponse`](./enum.ListNamespacedRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -357,11 +357,11 @@ impl RoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_rbac_authorization_v1alpha1_namespaced_role_binding(
+    pub fn list_namespaced_role_binding(
         namespace: &str,
-        optional: ListRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'_>,
+        optional: ListNamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListRbacAuthorizationV1alpha1NamespacedRoleBindingOptional {
+        let ListNamespacedRoleBindingOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -409,9 +409,9 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::list_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.list_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::list_namespaced_role_binding`](./struct.RoleBinding.html#method.list_namespaced_role_binding)
 #[derive(Debug, Default)]
-pub struct ListRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'a> {
+pub struct ListNamespacedRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -434,15 +434,15 @@ pub struct ListRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::list_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.list_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Parses the HTTP response of [`RoleBinding::list_namespaced_role_binding`](./struct.RoleBinding.html#method.list_namespaced_role_binding)
 #[derive(Debug)]
-pub enum ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+pub enum ListNamespacedRoleBindingResponse {
     Ok(crate::v1_9::api::rbac::v1alpha1::RoleBindingList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+impl crate::Response for ListNamespacedRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -451,10 +451,10 @@ impl crate::Response for ListRbacAuthorizationV1alpha1NamespacedRoleBindingRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((ListRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -464,17 +464,17 @@ impl crate::Response for ListRbacAuthorizationV1alpha1NamespacedRoleBindingRespo
 impl RoleBinding {
     /// list or watch objects of kind RoleBinding
     ///
-    /// Use [`ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse`](./enum.ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListRoleBindingForAllNamespacesResponse`](./enum.ListRoleBindingForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_rbac_authorization_v1alpha1_role_binding_for_all_namespaces(
-        optional: ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesOptional<'_>,
+    pub fn list_role_binding_for_all_namespaces(
+        optional: ListRoleBindingForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesOptional {
+        let ListRoleBindingForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -522,9 +522,9 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::list_rbac_authorization_v1alpha1_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_rbac_authorization_v1alpha1_role_binding_for_all_namespaces)
+/// Optional parameters of [`RoleBinding::list_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_role_binding_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesOptional<'a> {
+pub struct ListRoleBindingForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -547,15 +547,15 @@ pub struct ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesOptional<'a> 
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::list_rbac_authorization_v1alpha1_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_rbac_authorization_v1alpha1_role_binding_for_all_namespaces)
+/// Parses the HTTP response of [`RoleBinding::list_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_role_binding_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse {
+pub enum ListRoleBindingForAllNamespacesResponse {
     Ok(crate::v1_9::api::rbac::v1alpha1::RoleBindingList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse {
+impl crate::Response for ListRoleBindingForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -564,10 +564,10 @@ impl crate::Response for ListRbacAuthorizationV1alpha1RoleBindingForAllNamespace
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListRoleBindingForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListRbacAuthorizationV1alpha1RoleBindingForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListRoleBindingForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListRoleBindingForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -577,7 +577,7 @@ impl crate::Response for ListRbacAuthorizationV1alpha1RoleBindingForAllNamespace
 impl RoleBinding {
     /// partially update the specified RoleBinding
     ///
-    /// Use [`PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedRoleBindingResponse`](./enum.PatchNamespacedRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -594,13 +594,13 @@ impl RoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_rbac_authorization_v1alpha1_namespaced_role_binding(
+    pub fn patch_namespaced_role_binding(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'_>,
+        optional: PatchNamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchRbacAuthorizationV1alpha1NamespacedRoleBindingOptional {
+        let PatchNamespacedRoleBindingOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name}?", name = name, namespace = namespace);
@@ -616,22 +616,22 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::patch_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::patch_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_namespaced_role_binding)
 #[derive(Debug, Default)]
-pub struct PatchRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'a> {
+pub struct PatchNamespacedRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::patch_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Parses the HTTP response of [`RoleBinding::patch_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_namespaced_role_binding)
 #[derive(Debug)]
-pub enum PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+pub enum PatchNamespacedRoleBindingResponse {
     Ok(crate::v1_9::api::rbac::v1alpha1::RoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+impl crate::Response for PatchNamespacedRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -640,10 +640,10 @@ impl crate::Response for PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResp
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -653,7 +653,7 @@ impl crate::Response for PatchRbacAuthorizationV1alpha1NamespacedRoleBindingResp
 impl RoleBinding {
     /// read the specified RoleBinding
     ///
-    /// Use [`ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedRoleBindingResponse`](./enum.ReadNamespacedRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -668,12 +668,12 @@ impl RoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_rbac_authorization_v1alpha1_namespaced_role_binding(
+    pub fn read_namespaced_role_binding(
         name: &str,
         namespace: &str,
-        optional: ReadRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'_>,
+        optional: ReadNamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadRbacAuthorizationV1alpha1NamespacedRoleBindingOptional {
+        let ReadNamespacedRoleBindingOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name}?", name = name, namespace = namespace);
@@ -689,22 +689,22 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::read_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.read_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::read_namespaced_role_binding`](./struct.RoleBinding.html#method.read_namespaced_role_binding)
 #[derive(Debug, Default)]
-pub struct ReadRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'a> {
+pub struct ReadNamespacedRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::read_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.read_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Parses the HTTP response of [`RoleBinding::read_namespaced_role_binding`](./struct.RoleBinding.html#method.read_namespaced_role_binding)
 #[derive(Debug)]
-pub enum ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+pub enum ReadNamespacedRoleBindingResponse {
     Ok(crate::v1_9::api::rbac::v1alpha1::RoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+impl crate::Response for ReadNamespacedRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -713,10 +713,10 @@ impl crate::Response for ReadRbacAuthorizationV1alpha1NamespacedRoleBindingRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((ReadRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -726,7 +726,7 @@ impl crate::Response for ReadRbacAuthorizationV1alpha1NamespacedRoleBindingRespo
 impl RoleBinding {
     /// replace the specified RoleBinding
     ///
-    /// Use [`ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedRoleBindingResponse`](./enum.ReplaceNamespacedRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -743,13 +743,13 @@ impl RoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_rbac_authorization_v1alpha1_namespaced_role_binding(
+    pub fn replace_namespaced_role_binding(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::api::rbac::v1alpha1::RoleBinding,
-        optional: ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'_>,
+        optional: ReplaceNamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingOptional {
+        let ReplaceNamespacedRoleBindingOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings/{name}?", name = name, namespace = namespace);
@@ -765,23 +765,23 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::replace_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::replace_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_namespaced_role_binding)
 #[derive(Debug, Default)]
-pub struct ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'a> {
+pub struct ReplaceNamespacedRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::replace_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Parses the HTTP response of [`RoleBinding::replace_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_namespaced_role_binding)
 #[derive(Debug)]
-pub enum ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+pub enum ReplaceNamespacedRoleBindingResponse {
     Ok(crate::v1_9::api::rbac::v1alpha1::RoleBinding),
     Created(crate::v1_9::api::rbac::v1alpha1::RoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+impl crate::Response for ReplaceNamespacedRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -790,7 +790,7 @@ impl crate::Response for ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingRe
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedRoleBindingResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -798,10 +798,10 @@ impl crate::Response for ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingRe
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedRoleBindingResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -811,7 +811,7 @@ impl crate::Response for ReplaceRbacAuthorizationV1alpha1NamespacedRoleBindingRe
 impl RoleBinding {
     /// watch changes to an object of kind RoleBinding
     ///
-    /// Use [`WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse`](./enum.WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedRoleBindingResponse`](./enum.WatchNamespacedRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -826,12 +826,12 @@ impl RoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_rbac_authorization_v1alpha1_namespaced_role_binding(
+    pub fn watch_namespaced_role_binding(
         name: &str,
         namespace: &str,
-        optional: WatchRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'_>,
+        optional: WatchNamespacedRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchRbacAuthorizationV1alpha1NamespacedRoleBindingOptional {
+        let WatchNamespacedRoleBindingOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -879,9 +879,9 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::watch_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::watch_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_namespaced_role_binding)
 #[derive(Debug, Default)]
-pub struct WatchRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'a> {
+pub struct WatchNamespacedRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -904,15 +904,15 @@ pub struct WatchRbacAuthorizationV1alpha1NamespacedRoleBindingOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1alpha1_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1alpha1_namespaced_role_binding)
+/// Parses the HTTP response of [`RoleBinding::watch_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_namespaced_role_binding)
 #[derive(Debug)]
-pub enum WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+pub enum WatchNamespacedRoleBindingResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse {
+impl crate::Response for WatchNamespacedRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -923,10 +923,10 @@ impl crate::Response for WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResp
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedRoleBindingResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -936,7 +936,7 @@ impl crate::Response for WatchRbacAuthorizationV1alpha1NamespacedRoleBindingResp
 impl RoleBinding {
     /// watch individual changes to a list of RoleBinding
     ///
-    /// Use [`WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse`](./enum.WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedRoleBindingListResponse`](./enum.WatchNamespacedRoleBindingListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -947,11 +947,11 @@ impl RoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_rbac_authorization_v1alpha1_namespaced_role_binding_list(
+    pub fn watch_namespaced_role_binding_list(
         namespace: &str,
-        optional: WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListOptional<'_>,
+        optional: WatchNamespacedRoleBindingListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListOptional {
+        let WatchNamespacedRoleBindingListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -999,9 +999,9 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::watch_rbac_authorization_v1alpha1_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1alpha1_namespaced_role_binding_list)
+/// Optional parameters of [`RoleBinding::watch_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_namespaced_role_binding_list)
 #[derive(Debug, Default)]
-pub struct WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListOptional<'a> {
+pub struct WatchNamespacedRoleBindingListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1024,15 +1024,15 @@ pub struct WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1alpha1_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1alpha1_namespaced_role_binding_list)
+/// Parses the HTTP response of [`RoleBinding::watch_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_namespaced_role_binding_list)
 #[derive(Debug)]
-pub enum WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse {
+pub enum WatchNamespacedRoleBindingListResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse {
+impl crate::Response for WatchNamespacedRoleBindingListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1043,10 +1043,10 @@ impl crate::Response for WatchRbacAuthorizationV1alpha1NamespacedRoleBindingList
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedRoleBindingListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse::Unauthorized, 0)),
-            _ => Ok((WatchRbacAuthorizationV1alpha1NamespacedRoleBindingListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedRoleBindingListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedRoleBindingListResponse::Other, 0)),
         }
     }
 }
@@ -1056,17 +1056,17 @@ impl crate::Response for WatchRbacAuthorizationV1alpha1NamespacedRoleBindingList
 impl RoleBinding {
     /// watch individual changes to a list of RoleBinding
     ///
-    /// Use [`WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse`](./enum.WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchRoleBindingListForAllNamespacesResponse`](./enum.WatchRoleBindingListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_rbac_authorization_v1alpha1_role_binding_list_for_all_namespaces(
-        optional: WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesOptional<'_>,
+    pub fn watch_role_binding_list_for_all_namespaces(
+        optional: WatchRoleBindingListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesOptional {
+        let WatchRoleBindingListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1114,9 +1114,9 @@ impl RoleBinding {
     }
 }
 
-/// Optional parameters of [`RoleBinding::watch_rbac_authorization_v1alpha1_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1alpha1_role_binding_list_for_all_namespaces)
+/// Optional parameters of [`RoleBinding::watch_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_role_binding_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesOptional<'a> {
+pub struct WatchRoleBindingListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1139,15 +1139,15 @@ pub struct WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesOptional
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::watch_rbac_authorization_v1alpha1_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_rbac_authorization_v1alpha1_role_binding_list_for_all_namespaces)
+/// Parses the HTTP response of [`RoleBinding::watch_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_role_binding_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse {
+pub enum WatchRoleBindingListForAllNamespacesResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse {
+impl crate::Response for WatchRoleBindingListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1158,10 +1158,10 @@ impl crate::Response for WatchRbacAuthorizationV1alpha1RoleBindingListForAllName
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchRoleBindingListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchRbacAuthorizationV1alpha1RoleBindingListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchRoleBindingListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchRoleBindingListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

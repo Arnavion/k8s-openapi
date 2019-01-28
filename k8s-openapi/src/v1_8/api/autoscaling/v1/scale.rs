@@ -20,7 +20,7 @@ pub struct Scale {
 impl Scale {
     /// partially update scale of the specified ReplicationController
     ///
-    /// Use [`PatchCoreV1NamespacedReplicationControllerScaleResponse`](./enum.PatchCoreV1NamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedReplicationControllerScaleResponse`](./enum.PatchNamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,13 +37,13 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_replication_controller_scale(
+    pub fn patch_namespaced_replication_controller_scale(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedReplicationControllerScaleOptional<'_>,
+        optional: PatchNamespacedReplicationControllerScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedReplicationControllerScaleOptional {
+        let PatchNamespacedReplicationControllerScaleOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
@@ -59,22 +59,22 @@ impl Scale {
     }
 }
 
-/// Optional parameters of [`Scale::patch_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.patch_core_v1_namespaced_replication_controller_scale)
+/// Optional parameters of [`Scale::patch_namespaced_replication_controller_scale`](./struct.Scale.html#method.patch_namespaced_replication_controller_scale)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedReplicationControllerScaleOptional<'a> {
+pub struct PatchNamespacedReplicationControllerScaleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Scale::patch_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.patch_core_v1_namespaced_replication_controller_scale)
+/// Parses the HTTP response of [`Scale::patch_namespaced_replication_controller_scale`](./struct.Scale.html#method.patch_namespaced_replication_controller_scale)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedReplicationControllerScaleResponse {
+pub enum PatchNamespacedReplicationControllerScaleResponse {
     Ok(crate::v1_8::api::autoscaling::v1::Scale),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedReplicationControllerScaleResponse {
+impl crate::Response for PatchNamespacedReplicationControllerScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -83,10 +83,10 @@ impl crate::Response for PatchCoreV1NamespacedReplicationControllerScaleResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedReplicationControllerScaleResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedReplicationControllerScaleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedReplicationControllerScaleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedReplicationControllerScaleResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedReplicationControllerScaleResponse::Other, 0)),
         }
     }
 }
@@ -96,7 +96,7 @@ impl crate::Response for PatchCoreV1NamespacedReplicationControllerScaleResponse
 impl Scale {
     /// read scale of the specified ReplicationController
     ///
-    /// Use [`ReadCoreV1NamespacedReplicationControllerScaleResponse`](./enum.ReadCoreV1NamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedReplicationControllerScaleResponse`](./enum.ReadNamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -111,12 +111,12 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_replication_controller_scale(
+    pub fn read_namespaced_replication_controller_scale(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedReplicationControllerScaleOptional<'_>,
+        optional: ReadNamespacedReplicationControllerScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedReplicationControllerScaleOptional {
+        let ReadNamespacedReplicationControllerScaleOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
@@ -132,22 +132,22 @@ impl Scale {
     }
 }
 
-/// Optional parameters of [`Scale::read_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.read_core_v1_namespaced_replication_controller_scale)
+/// Optional parameters of [`Scale::read_namespaced_replication_controller_scale`](./struct.Scale.html#method.read_namespaced_replication_controller_scale)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedReplicationControllerScaleOptional<'a> {
+pub struct ReadNamespacedReplicationControllerScaleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Scale::read_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.read_core_v1_namespaced_replication_controller_scale)
+/// Parses the HTTP response of [`Scale::read_namespaced_replication_controller_scale`](./struct.Scale.html#method.read_namespaced_replication_controller_scale)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedReplicationControllerScaleResponse {
+pub enum ReadNamespacedReplicationControllerScaleResponse {
     Ok(crate::v1_8::api::autoscaling::v1::Scale),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedReplicationControllerScaleResponse {
+impl crate::Response for ReadNamespacedReplicationControllerScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -156,10 +156,10 @@ impl crate::Response for ReadCoreV1NamespacedReplicationControllerScaleResponse 
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedReplicationControllerScaleResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedReplicationControllerScaleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedReplicationControllerScaleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedReplicationControllerScaleResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedReplicationControllerScaleResponse::Other, 0)),
         }
     }
 }
@@ -169,7 +169,7 @@ impl crate::Response for ReadCoreV1NamespacedReplicationControllerScaleResponse 
 impl Scale {
     /// replace scale of the specified ReplicationController
     ///
-    /// Use [`ReplaceCoreV1NamespacedReplicationControllerScaleResponse`](./enum.ReplaceCoreV1NamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedReplicationControllerScaleResponse`](./enum.ReplaceNamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -186,13 +186,13 @@ impl Scale {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_replication_controller_scale(
+    pub fn replace_namespaced_replication_controller_scale(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::autoscaling::v1::Scale,
-        optional: ReplaceCoreV1NamespacedReplicationControllerScaleOptional<'_>,
+        optional: ReplaceNamespacedReplicationControllerScaleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedReplicationControllerScaleOptional {
+        let ReplaceNamespacedReplicationControllerScaleOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale?", name = name, namespace = namespace);
@@ -208,22 +208,22 @@ impl Scale {
     }
 }
 
-/// Optional parameters of [`Scale::replace_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.replace_core_v1_namespaced_replication_controller_scale)
+/// Optional parameters of [`Scale::replace_namespaced_replication_controller_scale`](./struct.Scale.html#method.replace_namespaced_replication_controller_scale)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedReplicationControllerScaleOptional<'a> {
+pub struct ReplaceNamespacedReplicationControllerScaleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Scale::replace_core_v1_namespaced_replication_controller_scale`](./struct.Scale.html#method.replace_core_v1_namespaced_replication_controller_scale)
+/// Parses the HTTP response of [`Scale::replace_namespaced_replication_controller_scale`](./struct.Scale.html#method.replace_namespaced_replication_controller_scale)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedReplicationControllerScaleResponse {
+pub enum ReplaceNamespacedReplicationControllerScaleResponse {
     Ok(crate::v1_8::api::autoscaling::v1::Scale),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedReplicationControllerScaleResponse {
+impl crate::Response for ReplaceNamespacedReplicationControllerScaleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -232,10 +232,10 @@ impl crate::Response for ReplaceCoreV1NamespacedReplicationControllerScaleRespon
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedReplicationControllerScaleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedReplicationControllerScaleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedReplicationControllerScaleResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedReplicationControllerScaleResponse::Other, 0)),
         }
     }
 }

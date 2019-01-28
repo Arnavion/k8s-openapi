@@ -93,6 +93,7 @@ pub struct Operation {
 	pub kubernetes_group_kind_version: Option<super::KubernetesGroupKindVersion>,
 	pub parameters: Vec<Parameter>,
 	pub responses: std::collections::BTreeMap<reqwest::StatusCode, Option<super::Schema>>,
+	pub tag: String,
 }
 
 #[derive(Debug)]
@@ -221,6 +222,7 @@ impl<'de> serde::Deserialize<'de> for PathItem {
 			#[serde(default)]
 			parameters: Vec<Parameter>,
 			responses: std::collections::BTreeMap<String, InnerResponse>,
+			tags: (String,),
 		}
 
 		#[derive(Debug, serde_derive::Deserialize)]
@@ -246,6 +248,7 @@ impl<'de> serde::Deserialize<'de> for PathItem {
 				method,
 				parameters: value.parameters,
 				responses: responses?,
+				tag: value.tags.0,
 			})
 		}
 

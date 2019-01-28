@@ -17,7 +17,7 @@ pub struct NetworkPolicy {
 impl NetworkPolicy {
     /// create a NetworkPolicy
     ///
-    /// Use [`CreateExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.CreateExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedNetworkPolicyResponse`](./enum.CreateNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -30,12 +30,12 @@ impl NetworkPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_extensions_v1beta1_namespaced_network_policy(
+    pub fn create_namespaced_network_policy(
         namespace: &str,
         body: &crate::v1_13::api::extensions::v1beta1::NetworkPolicy,
-        optional: CreateExtensionsV1beta1NamespacedNetworkPolicyOptional<'_>,
+        optional: CreateNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateExtensionsV1beta1NamespacedNetworkPolicyOptional {
+        let CreateNamespacedNetworkPolicyOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -59,9 +59,9 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::create_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.create_extensions_v1beta1_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::create_namespaced_network_policy`](./struct.NetworkPolicy.html#method.create_namespaced_network_policy)
 #[derive(Debug, Default)]
-pub struct CreateExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
+pub struct CreateNamespacedNetworkPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -70,9 +70,9 @@ pub struct CreateExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::create_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.create_extensions_v1beta1_namespaced_network_policy)
+/// Parses the HTTP response of [`NetworkPolicy::create_namespaced_network_policy`](./struct.NetworkPolicy.html#method.create_namespaced_network_policy)
 #[derive(Debug)]
-pub enum CreateExtensionsV1beta1NamespacedNetworkPolicyResponse {
+pub enum CreateNamespacedNetworkPolicyResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
     Created(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
     Accepted(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
@@ -80,7 +80,7 @@ pub enum CreateExtensionsV1beta1NamespacedNetworkPolicyResponse {
     Other,
 }
 
-impl crate::Response for CreateExtensionsV1beta1NamespacedNetworkPolicyResponse {
+impl crate::Response for CreateNamespacedNetworkPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -89,7 +89,7 @@ impl crate::Response for CreateExtensionsV1beta1NamespacedNetworkPolicyResponse 
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateExtensionsV1beta1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -97,7 +97,7 @@ impl crate::Response for CreateExtensionsV1beta1NamespacedNetworkPolicyResponse 
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateExtensionsV1beta1NamespacedNetworkPolicyResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedNetworkPolicyResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -105,10 +105,10 @@ impl crate::Response for CreateExtensionsV1beta1NamespacedNetworkPolicyResponse 
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateExtensionsV1beta1NamespacedNetworkPolicyResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedNetworkPolicyResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateExtensionsV1beta1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((CreateExtensionsV1beta1NamespacedNetworkPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
 }
@@ -118,7 +118,7 @@ impl crate::Response for CreateExtensionsV1beta1NamespacedNetworkPolicyResponse 
 impl NetworkPolicy {
     /// delete collection of NetworkPolicy
     ///
-    /// Use [`DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse`](./enum.DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedNetworkPolicyResponse`](./enum.DeleteCollectionNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -129,11 +129,11 @@ impl NetworkPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_extensions_v1beta1_collection_namespaced_network_policy(
+    pub fn delete_collection_namespaced_network_policy(
         namespace: &str,
-        optional: DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyOptional<'_>,
+        optional: DeleteCollectionNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyOptional {
+        let DeleteCollectionNamespacedNetworkPolicyOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -181,9 +181,9 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::delete_extensions_v1beta1_collection_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_extensions_v1beta1_collection_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::delete_collection_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_collection_namespaced_network_policy)
 #[derive(Debug, Default)]
-pub struct DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyOptional<'a> {
+pub struct DeleteCollectionNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -208,16 +208,16 @@ pub struct DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyOptional<'a> 
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::delete_extensions_v1beta1_collection_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_extensions_v1beta1_collection_namespaced_network_policy)
+/// Parses the HTTP response of [`NetworkPolicy::delete_collection_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_collection_namespaced_network_policy)
 #[derive(Debug)]
-pub enum DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse {
+pub enum DeleteCollectionNamespacedNetworkPolicyResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse {
+impl crate::Response for DeleteCollectionNamespacedNetworkPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -233,16 +233,16 @@ impl crate::Response for DeleteExtensionsV1beta1CollectionNamespacedNetworkPolic
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedNetworkPolicyResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedNetworkPolicyResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((DeleteExtensionsV1beta1CollectionNamespacedNetworkPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
 }
@@ -252,7 +252,7 @@ impl crate::Response for DeleteExtensionsV1beta1CollectionNamespacedNetworkPolic
 impl NetworkPolicy {
     /// delete a NetworkPolicy
     ///
-    /// Use [`DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedNetworkPolicyResponse`](./enum.DeleteNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -267,12 +267,12 @@ impl NetworkPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_extensions_v1beta1_namespaced_network_policy(
+    pub fn delete_namespaced_network_policy(
         name: &str,
         namespace: &str,
-        optional: DeleteExtensionsV1beta1NamespacedNetworkPolicyOptional<'_>,
+        optional: DeleteNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteExtensionsV1beta1NamespacedNetworkPolicyOptional {
+        let DeleteNamespacedNetworkPolicyOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -304,9 +304,9 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::delete_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_extensions_v1beta1_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::delete_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_namespaced_network_policy)
 #[derive(Debug, Default)]
-pub struct DeleteExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
+pub struct DeleteNamespacedNetworkPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -319,9 +319,9 @@ pub struct DeleteExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::delete_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_extensions_v1beta1_namespaced_network_policy)
+/// Parses the HTTP response of [`NetworkPolicy::delete_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_namespaced_network_policy)
 #[derive(Debug)]
-pub enum DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse {
+pub enum DeleteNamespacedNetworkPolicyResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -329,7 +329,7 @@ pub enum DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse {
     Other,
 }
 
-impl crate::Response for DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse {
+impl crate::Response for DeleteNamespacedNetworkPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -345,12 +345,12 @@ impl crate::Response for DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse 
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedNetworkPolicyResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedNetworkPolicyResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -359,10 +359,10 @@ impl crate::Response for DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse 
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::Accepted(result), buf.len()))
+                Ok((DeleteNamespacedNetworkPolicyResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
 }
@@ -372,7 +372,7 @@ impl crate::Response for DeleteExtensionsV1beta1NamespacedNetworkPolicyResponse 
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
     ///
-    /// Use [`ListExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.ListExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedNetworkPolicyResponse`](./enum.ListNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -383,11 +383,11 @@ impl NetworkPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_extensions_v1beta1_namespaced_network_policy(
+    pub fn list_namespaced_network_policy(
         namespace: &str,
-        optional: ListExtensionsV1beta1NamespacedNetworkPolicyOptional<'_>,
+        optional: ListNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListExtensionsV1beta1NamespacedNetworkPolicyOptional {
+        let ListNamespacedNetworkPolicyOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -435,9 +435,9 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::list_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.list_extensions_v1beta1_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::list_namespaced_network_policy`](./struct.NetworkPolicy.html#method.list_namespaced_network_policy)
 #[derive(Debug, Default)]
-pub struct ListExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
+pub struct ListNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -462,15 +462,15 @@ pub struct ListExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::list_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.list_extensions_v1beta1_namespaced_network_policy)
+/// Parses the HTTP response of [`NetworkPolicy::list_namespaced_network_policy`](./struct.NetworkPolicy.html#method.list_namespaced_network_policy)
 #[derive(Debug)]
-pub enum ListExtensionsV1beta1NamespacedNetworkPolicyResponse {
+pub enum ListNamespacedNetworkPolicyResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::NetworkPolicyList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListExtensionsV1beta1NamespacedNetworkPolicyResponse {
+impl crate::Response for ListNamespacedNetworkPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -479,10 +479,10 @@ impl crate::Response for ListExtensionsV1beta1NamespacedNetworkPolicyResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListExtensionsV1beta1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ListExtensionsV1beta1NamespacedNetworkPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
 }
@@ -492,17 +492,17 @@ impl crate::Response for ListExtensionsV1beta1NamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
     ///
-    /// Use [`ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse`](./enum.ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListNetworkPolicyForAllNamespacesResponse`](./enum.ListNetworkPolicyForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_extensions_v1beta1_network_policy_for_all_namespaces(
-        optional: ListExtensionsV1beta1NetworkPolicyForAllNamespacesOptional<'_>,
+    pub fn list_network_policy_for_all_namespaces(
+        optional: ListNetworkPolicyForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListExtensionsV1beta1NetworkPolicyForAllNamespacesOptional {
+        let ListNetworkPolicyForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -550,9 +550,9 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::list_extensions_v1beta1_network_policy_for_all_namespaces`](./struct.NetworkPolicy.html#method.list_extensions_v1beta1_network_policy_for_all_namespaces)
+/// Optional parameters of [`NetworkPolicy::list_network_policy_for_all_namespaces`](./struct.NetworkPolicy.html#method.list_network_policy_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListExtensionsV1beta1NetworkPolicyForAllNamespacesOptional<'a> {
+pub struct ListNetworkPolicyForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -577,15 +577,15 @@ pub struct ListExtensionsV1beta1NetworkPolicyForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::list_extensions_v1beta1_network_policy_for_all_namespaces`](./struct.NetworkPolicy.html#method.list_extensions_v1beta1_network_policy_for_all_namespaces)
+/// Parses the HTTP response of [`NetworkPolicy::list_network_policy_for_all_namespaces`](./struct.NetworkPolicy.html#method.list_network_policy_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse {
+pub enum ListNetworkPolicyForAllNamespacesResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::NetworkPolicyList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse {
+impl crate::Response for ListNetworkPolicyForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -594,10 +594,10 @@ impl crate::Response for ListExtensionsV1beta1NetworkPolicyForAllNamespacesRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListNetworkPolicyForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListExtensionsV1beta1NetworkPolicyForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNetworkPolicyForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListNetworkPolicyForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -607,7 +607,7 @@ impl crate::Response for ListExtensionsV1beta1NetworkPolicyForAllNamespacesRespo
 impl NetworkPolicy {
     /// partially update the specified NetworkPolicy
     ///
-    /// Use [`PatchExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.PatchExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedNetworkPolicyResponse`](./enum.PatchNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -624,13 +624,13 @@ impl NetworkPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_extensions_v1beta1_namespaced_network_policy(
+    pub fn patch_namespaced_network_policy(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchExtensionsV1beta1NamespacedNetworkPolicyOptional<'_>,
+        optional: PatchNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchExtensionsV1beta1NamespacedNetworkPolicyOptional {
+        let PatchNamespacedNetworkPolicyOptional {
             dry_run,
             pretty,
         } = optional;
@@ -650,24 +650,24 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::patch_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.patch_extensions_v1beta1_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::patch_namespaced_network_policy`](./struct.NetworkPolicy.html#method.patch_namespaced_network_policy)
 #[derive(Debug, Default)]
-pub struct PatchExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
+pub struct PatchNamespacedNetworkPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::patch_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.patch_extensions_v1beta1_namespaced_network_policy)
+/// Parses the HTTP response of [`NetworkPolicy::patch_namespaced_network_policy`](./struct.NetworkPolicy.html#method.patch_namespaced_network_policy)
 #[derive(Debug)]
-pub enum PatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
+pub enum PatchNamespacedNetworkPolicyResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
+impl crate::Response for PatchNamespacedNetworkPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -676,10 +676,10 @@ impl crate::Response for PatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchExtensionsV1beta1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchExtensionsV1beta1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((PatchExtensionsV1beta1NamespacedNetworkPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
 }
@@ -689,7 +689,7 @@ impl crate::Response for PatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// read the specified NetworkPolicy
     ///
-    /// Use [`ReadExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.ReadExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedNetworkPolicyResponse`](./enum.ReadNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -704,12 +704,12 @@ impl NetworkPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_extensions_v1beta1_namespaced_network_policy(
+    pub fn read_namespaced_network_policy(
         name: &str,
         namespace: &str,
-        optional: ReadExtensionsV1beta1NamespacedNetworkPolicyOptional<'_>,
+        optional: ReadNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadExtensionsV1beta1NamespacedNetworkPolicyOptional {
+        let ReadNamespacedNetworkPolicyOptional {
             exact,
             export,
             pretty,
@@ -733,9 +733,9 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::read_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.read_extensions_v1beta1_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::read_namespaced_network_policy`](./struct.NetworkPolicy.html#method.read_namespaced_network_policy)
 #[derive(Debug, Default)]
-pub struct ReadExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
+pub struct ReadNamespacedNetworkPolicyOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -744,15 +744,15 @@ pub struct ReadExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::read_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.read_extensions_v1beta1_namespaced_network_policy)
+/// Parses the HTTP response of [`NetworkPolicy::read_namespaced_network_policy`](./struct.NetworkPolicy.html#method.read_namespaced_network_policy)
 #[derive(Debug)]
-pub enum ReadExtensionsV1beta1NamespacedNetworkPolicyResponse {
+pub enum ReadNamespacedNetworkPolicyResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadExtensionsV1beta1NamespacedNetworkPolicyResponse {
+impl crate::Response for ReadNamespacedNetworkPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -761,10 +761,10 @@ impl crate::Response for ReadExtensionsV1beta1NamespacedNetworkPolicyResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadExtensionsV1beta1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadExtensionsV1beta1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ReadExtensionsV1beta1NamespacedNetworkPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
 }
@@ -774,7 +774,7 @@ impl crate::Response for ReadExtensionsV1beta1NamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// replace the specified NetworkPolicy
     ///
-    /// Use [`ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedNetworkPolicyResponse`](./enum.ReplaceNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -791,13 +791,13 @@ impl NetworkPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_extensions_v1beta1_namespaced_network_policy(
+    pub fn replace_namespaced_network_policy(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::extensions::v1beta1::NetworkPolicy,
-        optional: ReplaceExtensionsV1beta1NamespacedNetworkPolicyOptional<'_>,
+        optional: ReplaceNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceExtensionsV1beta1NamespacedNetworkPolicyOptional {
+        let ReplaceNamespacedNetworkPolicyOptional {
             dry_run,
             pretty,
         } = optional;
@@ -817,25 +817,25 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::replace_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.replace_extensions_v1beta1_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::replace_namespaced_network_policy`](./struct.NetworkPolicy.html#method.replace_namespaced_network_policy)
 #[derive(Debug, Default)]
-pub struct ReplaceExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
+pub struct ReplaceNamespacedNetworkPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::replace_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.replace_extensions_v1beta1_namespaced_network_policy)
+/// Parses the HTTP response of [`NetworkPolicy::replace_namespaced_network_policy`](./struct.NetworkPolicy.html#method.replace_namespaced_network_policy)
 #[derive(Debug)]
-pub enum ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse {
+pub enum ReplaceNamespacedNetworkPolicyResponse {
     Ok(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
     Created(crate::v1_13::api::extensions::v1beta1::NetworkPolicy),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse {
+impl crate::Response for ReplaceNamespacedNetworkPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -844,7 +844,7 @@ impl crate::Response for ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedNetworkPolicyResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -852,10 +852,10 @@ impl crate::Response for ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedNetworkPolicyResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
 }
@@ -865,7 +865,7 @@ impl crate::Response for ReplaceExtensionsV1beta1NamespacedNetworkPolicyResponse
 impl NetworkPolicy {
     /// watch changes to an object of kind NetworkPolicy. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchExtensionsV1beta1NamespacedNetworkPolicyResponse`](./enum.WatchExtensionsV1beta1NamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedNetworkPolicyResponse`](./enum.WatchNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -880,12 +880,12 @@ impl NetworkPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_extensions_v1beta1_namespaced_network_policy(
+    pub fn watch_namespaced_network_policy(
         name: &str,
         namespace: &str,
-        optional: WatchExtensionsV1beta1NamespacedNetworkPolicyOptional<'_>,
+        optional: WatchNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchExtensionsV1beta1NamespacedNetworkPolicyOptional {
+        let WatchNamespacedNetworkPolicyOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -933,9 +933,9 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::watch_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.watch_extensions_v1beta1_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::watch_namespaced_network_policy`](./struct.NetworkPolicy.html#method.watch_namespaced_network_policy)
 #[derive(Debug, Default)]
-pub struct WatchExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
+pub struct WatchNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -960,15 +960,15 @@ pub struct WatchExtensionsV1beta1NamespacedNetworkPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::watch_extensions_v1beta1_namespaced_network_policy`](./struct.NetworkPolicy.html#method.watch_extensions_v1beta1_namespaced_network_policy)
+/// Parses the HTTP response of [`NetworkPolicy::watch_namespaced_network_policy`](./struct.NetworkPolicy.html#method.watch_namespaced_network_policy)
 #[derive(Debug)]
-pub enum WatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
+pub enum WatchNamespacedNetworkPolicyResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
+impl crate::Response for WatchNamespacedNetworkPolicyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -979,10 +979,10 @@ impl crate::Response for WatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchExtensionsV1beta1NamespacedNetworkPolicyResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedNetworkPolicyResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedNetworkPolicyResponse::Unauthorized, 0)),
-            _ => Ok((WatchExtensionsV1beta1NamespacedNetworkPolicyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedNetworkPolicyResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedNetworkPolicyResponse::Other, 0)),
         }
     }
 }
@@ -992,7 +992,7 @@ impl crate::Response for WatchExtensionsV1beta1NamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// watch individual changes to a list of NetworkPolicy. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse`](./enum.WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedNetworkPolicyListResponse`](./enum.WatchNamespacedNetworkPolicyListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1003,11 +1003,11 @@ impl NetworkPolicy {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_extensions_v1beta1_namespaced_network_policy_list(
+    pub fn watch_namespaced_network_policy_list(
         namespace: &str,
-        optional: WatchExtensionsV1beta1NamespacedNetworkPolicyListOptional<'_>,
+        optional: WatchNamespacedNetworkPolicyListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchExtensionsV1beta1NamespacedNetworkPolicyListOptional {
+        let WatchNamespacedNetworkPolicyListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1055,9 +1055,9 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::watch_extensions_v1beta1_namespaced_network_policy_list`](./struct.NetworkPolicy.html#method.watch_extensions_v1beta1_namespaced_network_policy_list)
+/// Optional parameters of [`NetworkPolicy::watch_namespaced_network_policy_list`](./struct.NetworkPolicy.html#method.watch_namespaced_network_policy_list)
 #[derive(Debug, Default)]
-pub struct WatchExtensionsV1beta1NamespacedNetworkPolicyListOptional<'a> {
+pub struct WatchNamespacedNetworkPolicyListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1082,15 +1082,15 @@ pub struct WatchExtensionsV1beta1NamespacedNetworkPolicyListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::watch_extensions_v1beta1_namespaced_network_policy_list`](./struct.NetworkPolicy.html#method.watch_extensions_v1beta1_namespaced_network_policy_list)
+/// Parses the HTTP response of [`NetworkPolicy::watch_namespaced_network_policy_list`](./struct.NetworkPolicy.html#method.watch_namespaced_network_policy_list)
 #[derive(Debug)]
-pub enum WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse {
+pub enum WatchNamespacedNetworkPolicyListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse {
+impl crate::Response for WatchNamespacedNetworkPolicyListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1101,10 +1101,10 @@ impl crate::Response for WatchExtensionsV1beta1NamespacedNetworkPolicyListRespon
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedNetworkPolicyListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse::Unauthorized, 0)),
-            _ => Ok((WatchExtensionsV1beta1NamespacedNetworkPolicyListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedNetworkPolicyListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedNetworkPolicyListResponse::Other, 0)),
         }
     }
 }
@@ -1114,17 +1114,17 @@ impl crate::Response for WatchExtensionsV1beta1NamespacedNetworkPolicyListRespon
 impl NetworkPolicy {
     /// watch individual changes to a list of NetworkPolicy. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse`](./enum.WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchNetworkPolicyListForAllNamespacesResponse`](./enum.WatchNetworkPolicyListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_extensions_v1beta1_network_policy_list_for_all_namespaces(
-        optional: WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesOptional<'_>,
+    pub fn watch_network_policy_list_for_all_namespaces(
+        optional: WatchNetworkPolicyListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesOptional {
+        let WatchNetworkPolicyListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1172,9 +1172,9 @@ impl NetworkPolicy {
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::watch_extensions_v1beta1_network_policy_list_for_all_namespaces`](./struct.NetworkPolicy.html#method.watch_extensions_v1beta1_network_policy_list_for_all_namespaces)
+/// Optional parameters of [`NetworkPolicy::watch_network_policy_list_for_all_namespaces`](./struct.NetworkPolicy.html#method.watch_network_policy_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesOptional<'a> {
+pub struct WatchNetworkPolicyListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1199,15 +1199,15 @@ pub struct WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::watch_extensions_v1beta1_network_policy_list_for_all_namespaces`](./struct.NetworkPolicy.html#method.watch_extensions_v1beta1_network_policy_list_for_all_namespaces)
+/// Parses the HTTP response of [`NetworkPolicy::watch_network_policy_list_for_all_namespaces`](./struct.NetworkPolicy.html#method.watch_network_policy_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse {
+pub enum WatchNetworkPolicyListForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse {
+impl crate::Response for WatchNetworkPolicyListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1218,10 +1218,10 @@ impl crate::Response for WatchExtensionsV1beta1NetworkPolicyListForAllNamespaces
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchNetworkPolicyListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchExtensionsV1beta1NetworkPolicyListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkPolicyListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchNetworkPolicyListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

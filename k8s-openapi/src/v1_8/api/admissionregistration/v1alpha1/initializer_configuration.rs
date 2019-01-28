@@ -17,7 +17,7 @@ pub struct InitializerConfiguration {
 impl InitializerConfiguration {
     /// create an InitializerConfiguration
     ///
-    /// Use [`CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`CreateInitializerConfigurationResponse`](./enum.CreateInitializerConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -26,11 +26,11 @@ impl InitializerConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_admissionregistration_v1alpha1_initializer_configuration(
+    pub fn create_initializer_configuration(
         body: &crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration,
-        optional: CreateAdmissionregistrationV1alpha1InitializerConfigurationOptional<'_>,
+        optional: CreateInitializerConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAdmissionregistrationV1alpha1InitializerConfigurationOptional {
+        let CreateInitializerConfigurationOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?");
@@ -46,22 +46,22 @@ impl InitializerConfiguration {
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::create_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.create_admissionregistration_v1alpha1_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::create_initializer_configuration`](./struct.InitializerConfiguration.html#method.create_initializer_configuration)
 #[derive(Debug, Default)]
-pub struct CreateAdmissionregistrationV1alpha1InitializerConfigurationOptional<'a> {
+pub struct CreateInitializerConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::create_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.create_admissionregistration_v1alpha1_initializer_configuration)
+/// Parses the HTTP response of [`InitializerConfiguration::create_initializer_configuration`](./struct.InitializerConfiguration.html#method.create_initializer_configuration)
 #[derive(Debug)]
-pub enum CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+pub enum CreateInitializerConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+impl crate::Response for CreateInitializerConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -70,10 +70,10 @@ impl crate::Response for CreateAdmissionregistrationV1alpha1InitializerConfigura
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse::Ok(result), buf.len()))
+                Ok((CreateInitializerConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((CreateAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateInitializerConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((CreateInitializerConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -83,17 +83,17 @@ impl crate::Response for CreateAdmissionregistrationV1alpha1InitializerConfigura
 impl InitializerConfiguration {
     /// delete collection of InitializerConfiguration
     ///
-    /// Use [`DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse`](./enum.DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionInitializerConfigurationResponse`](./enum.DeleteCollectionInitializerConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_admissionregistration_v1alpha1_collection_initializer_configuration(
-        optional: DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationOptional<'_>,
+    pub fn delete_collection_initializer_configuration(
+        optional: DeleteCollectionInitializerConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationOptional {
+        let DeleteCollectionInitializerConfigurationOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -141,9 +141,9 @@ impl InitializerConfiguration {
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::delete_admissionregistration_v1alpha1_collection_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_admissionregistration_v1alpha1_collection_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::delete_collection_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_collection_initializer_configuration)
 #[derive(Debug, Default)]
-pub struct DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationOptional<'a> {
+pub struct DeleteCollectionInitializerConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -166,16 +166,16 @@ pub struct DeleteAdmissionregistrationV1alpha1CollectionInitializerConfiguration
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::delete_admissionregistration_v1alpha1_collection_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_admissionregistration_v1alpha1_collection_initializer_configuration)
+/// Parses the HTTP response of [`InitializerConfiguration::delete_collection_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_collection_initializer_configuration)
 #[derive(Debug)]
-pub enum DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse {
+pub enum DeleteCollectionInitializerConfigurationResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse {
+impl crate::Response for DeleteCollectionInitializerConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -191,16 +191,16 @@ impl crate::Response for DeleteAdmissionregistrationV1alpha1CollectionInitialize
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionInitializerConfigurationResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionInitializerConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAdmissionregistrationV1alpha1CollectionInitializerConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionInitializerConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionInitializerConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -210,7 +210,7 @@ impl crate::Response for DeleteAdmissionregistrationV1alpha1CollectionInitialize
 impl InitializerConfiguration {
     /// delete an InitializerConfiguration
     ///
-    /// Use [`DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`DeleteInitializerConfigurationResponse`](./enum.DeleteInitializerConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -221,11 +221,11 @@ impl InitializerConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_admissionregistration_v1alpha1_initializer_configuration(
+    pub fn delete_initializer_configuration(
         name: &str,
-        optional: DeleteAdmissionregistrationV1alpha1InitializerConfigurationOptional<'_>,
+        optional: DeleteInitializerConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAdmissionregistrationV1alpha1InitializerConfigurationOptional {
+        let DeleteInitializerConfigurationOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -253,9 +253,9 @@ impl InitializerConfiguration {
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::delete_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_admissionregistration_v1alpha1_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::delete_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_initializer_configuration)
 #[derive(Debug, Default)]
-pub struct DeleteAdmissionregistrationV1alpha1InitializerConfigurationOptional<'a> {
+pub struct DeleteInitializerConfigurationOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -266,16 +266,16 @@ pub struct DeleteAdmissionregistrationV1alpha1InitializerConfigurationOptional<'
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::delete_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_admissionregistration_v1alpha1_initializer_configuration)
+/// Parses the HTTP response of [`InitializerConfiguration::delete_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_initializer_configuration)
 #[derive(Debug)]
-pub enum DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+pub enum DeleteInitializerConfigurationResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+impl crate::Response for DeleteInitializerConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -291,16 +291,16 @@ impl crate::Response for DeleteAdmissionregistrationV1alpha1InitializerConfigura
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteInitializerConfigurationResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse::OkValue(result), buf.len()))
+                    Ok((DeleteInitializerConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteInitializerConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((DeleteInitializerConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -310,17 +310,17 @@ impl crate::Response for DeleteAdmissionregistrationV1alpha1InitializerConfigura
 impl InitializerConfiguration {
     /// list or watch objects of kind InitializerConfiguration
     ///
-    /// Use [`ListAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.ListAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`ListInitializerConfigurationResponse`](./enum.ListInitializerConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_admissionregistration_v1alpha1_initializer_configuration(
-        optional: ListAdmissionregistrationV1alpha1InitializerConfigurationOptional<'_>,
+    pub fn list_initializer_configuration(
+        optional: ListInitializerConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAdmissionregistrationV1alpha1InitializerConfigurationOptional {
+        let ListInitializerConfigurationOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -368,9 +368,9 @@ impl InitializerConfiguration {
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::list_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.list_admissionregistration_v1alpha1_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::list_initializer_configuration`](./struct.InitializerConfiguration.html#method.list_initializer_configuration)
 #[derive(Debug, Default)]
-pub struct ListAdmissionregistrationV1alpha1InitializerConfigurationOptional<'a> {
+pub struct ListInitializerConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -393,15 +393,15 @@ pub struct ListAdmissionregistrationV1alpha1InitializerConfigurationOptional<'a>
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::list_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.list_admissionregistration_v1alpha1_initializer_configuration)
+/// Parses the HTTP response of [`InitializerConfiguration::list_initializer_configuration`](./struct.InitializerConfiguration.html#method.list_initializer_configuration)
 #[derive(Debug)]
-pub enum ListAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+pub enum ListInitializerConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfigurationList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+impl crate::Response for ListInitializerConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -410,10 +410,10 @@ impl crate::Response for ListAdmissionregistrationV1alpha1InitializerConfigurati
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAdmissionregistrationV1alpha1InitializerConfigurationResponse::Ok(result), buf.len()))
+                Ok((ListInitializerConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAdmissionregistrationV1alpha1InitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ListAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListInitializerConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ListInitializerConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -423,7 +423,7 @@ impl crate::Response for ListAdmissionregistrationV1alpha1InitializerConfigurati
 impl InitializerConfiguration {
     /// partially update the specified InitializerConfiguration
     ///
-    /// Use [`PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`PatchInitializerConfigurationResponse`](./enum.PatchInitializerConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -436,12 +436,12 @@ impl InitializerConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_admissionregistration_v1alpha1_initializer_configuration(
+    pub fn patch_initializer_configuration(
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAdmissionregistrationV1alpha1InitializerConfigurationOptional<'_>,
+        optional: PatchInitializerConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAdmissionregistrationV1alpha1InitializerConfigurationOptional {
+        let PatchInitializerConfigurationOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations/{name}?", name = name);
@@ -457,22 +457,22 @@ impl InitializerConfiguration {
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::patch_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.patch_admissionregistration_v1alpha1_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::patch_initializer_configuration`](./struct.InitializerConfiguration.html#method.patch_initializer_configuration)
 #[derive(Debug, Default)]
-pub struct PatchAdmissionregistrationV1alpha1InitializerConfigurationOptional<'a> {
+pub struct PatchInitializerConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::patch_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.patch_admissionregistration_v1alpha1_initializer_configuration)
+/// Parses the HTTP response of [`InitializerConfiguration::patch_initializer_configuration`](./struct.InitializerConfiguration.html#method.patch_initializer_configuration)
 #[derive(Debug)]
-pub enum PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+pub enum PatchInitializerConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+impl crate::Response for PatchInitializerConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -481,10 +481,10 @@ impl crate::Response for PatchAdmissionregistrationV1alpha1InitializerConfigurat
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse::Ok(result), buf.len()))
+                Ok((PatchInitializerConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((PatchAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchInitializerConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((PatchInitializerConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -494,7 +494,7 @@ impl crate::Response for PatchAdmissionregistrationV1alpha1InitializerConfigurat
 impl InitializerConfiguration {
     /// read the specified InitializerConfiguration
     ///
-    /// Use [`ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`ReadInitializerConfigurationResponse`](./enum.ReadInitializerConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -505,11 +505,11 @@ impl InitializerConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_admissionregistration_v1alpha1_initializer_configuration(
+    pub fn read_initializer_configuration(
         name: &str,
-        optional: ReadAdmissionregistrationV1alpha1InitializerConfigurationOptional<'_>,
+        optional: ReadInitializerConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAdmissionregistrationV1alpha1InitializerConfigurationOptional {
+        let ReadInitializerConfigurationOptional {
             exact,
             export,
             pretty,
@@ -533,9 +533,9 @@ impl InitializerConfiguration {
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::read_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.read_admissionregistration_v1alpha1_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::read_initializer_configuration`](./struct.InitializerConfiguration.html#method.read_initializer_configuration)
 #[derive(Debug, Default)]
-pub struct ReadAdmissionregistrationV1alpha1InitializerConfigurationOptional<'a> {
+pub struct ReadInitializerConfigurationOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -544,15 +544,15 @@ pub struct ReadAdmissionregistrationV1alpha1InitializerConfigurationOptional<'a>
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::read_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.read_admissionregistration_v1alpha1_initializer_configuration)
+/// Parses the HTTP response of [`InitializerConfiguration::read_initializer_configuration`](./struct.InitializerConfiguration.html#method.read_initializer_configuration)
 #[derive(Debug)]
-pub enum ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+pub enum ReadInitializerConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+impl crate::Response for ReadInitializerConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -561,10 +561,10 @@ impl crate::Response for ReadAdmissionregistrationV1alpha1InitializerConfigurati
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse::Ok(result), buf.len()))
+                Ok((ReadInitializerConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReadAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadInitializerConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ReadInitializerConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -574,7 +574,7 @@ impl crate::Response for ReadAdmissionregistrationV1alpha1InitializerConfigurati
 impl InitializerConfiguration {
     /// replace the specified InitializerConfiguration
     ///
-    /// Use [`ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceInitializerConfigurationResponse`](./enum.ReplaceInitializerConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -587,12 +587,12 @@ impl InitializerConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_admissionregistration_v1alpha1_initializer_configuration(
+    pub fn replace_initializer_configuration(
         name: &str,
         body: &crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration,
-        optional: ReplaceAdmissionregistrationV1alpha1InitializerConfigurationOptional<'_>,
+        optional: ReplaceInitializerConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAdmissionregistrationV1alpha1InitializerConfigurationOptional {
+        let ReplaceInitializerConfigurationOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations/{name}?", name = name);
@@ -608,22 +608,22 @@ impl InitializerConfiguration {
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::replace_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.replace_admissionregistration_v1alpha1_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::replace_initializer_configuration`](./struct.InitializerConfiguration.html#method.replace_initializer_configuration)
 #[derive(Debug, Default)]
-pub struct ReplaceAdmissionregistrationV1alpha1InitializerConfigurationOptional<'a> {
+pub struct ReplaceInitializerConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::replace_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.replace_admissionregistration_v1alpha1_initializer_configuration)
+/// Parses the HTTP response of [`InitializerConfiguration::replace_initializer_configuration`](./struct.InitializerConfiguration.html#method.replace_initializer_configuration)
 #[derive(Debug)]
-pub enum ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+pub enum ReplaceInitializerConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::InitializerConfiguration),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+impl crate::Response for ReplaceInitializerConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -632,10 +632,10 @@ impl crate::Response for ReplaceAdmissionregistrationV1alpha1InitializerConfigur
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse::Ok(result), buf.len()))
+                Ok((ReplaceInitializerConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceInitializerConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceInitializerConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -645,7 +645,7 @@ impl crate::Response for ReplaceAdmissionregistrationV1alpha1InitializerConfigur
 impl InitializerConfiguration {
     /// watch changes to an object of kind InitializerConfiguration
     ///
-    /// Use [`WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse`](./enum.WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`WatchInitializerConfigurationResponse`](./enum.WatchInitializerConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -656,11 +656,11 @@ impl InitializerConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_admissionregistration_v1alpha1_initializer_configuration(
+    pub fn watch_initializer_configuration(
         name: &str,
-        optional: WatchAdmissionregistrationV1alpha1InitializerConfigurationOptional<'_>,
+        optional: WatchInitializerConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAdmissionregistrationV1alpha1InitializerConfigurationOptional {
+        let WatchInitializerConfigurationOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -708,9 +708,9 @@ impl InitializerConfiguration {
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::watch_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.watch_admissionregistration_v1alpha1_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::watch_initializer_configuration`](./struct.InitializerConfiguration.html#method.watch_initializer_configuration)
 #[derive(Debug, Default)]
-pub struct WatchAdmissionregistrationV1alpha1InitializerConfigurationOptional<'a> {
+pub struct WatchInitializerConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -733,15 +733,15 @@ pub struct WatchAdmissionregistrationV1alpha1InitializerConfigurationOptional<'a
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::watch_admissionregistration_v1alpha1_initializer_configuration`](./struct.InitializerConfiguration.html#method.watch_admissionregistration_v1alpha1_initializer_configuration)
+/// Parses the HTTP response of [`InitializerConfiguration::watch_initializer_configuration`](./struct.InitializerConfiguration.html#method.watch_initializer_configuration)
 #[derive(Debug)]
-pub enum WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+pub enum WatchInitializerConfigurationResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse {
+impl crate::Response for WatchInitializerConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -752,10 +752,10 @@ impl crate::Response for WatchAdmissionregistrationV1alpha1InitializerConfigurat
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse::Ok(result), byte_offset))
+                Ok((WatchInitializerConfigurationResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((WatchAdmissionregistrationV1alpha1InitializerConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchInitializerConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((WatchInitializerConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -765,17 +765,17 @@ impl crate::Response for WatchAdmissionregistrationV1alpha1InitializerConfigurat
 impl InitializerConfiguration {
     /// watch individual changes to a list of InitializerConfiguration
     ///
-    /// Use [`WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse`](./enum.WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse.html) to parse the HTTP response.
+    /// Use [`WatchInitializerConfigurationListResponse`](./enum.WatchInitializerConfigurationListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_admissionregistration_v1alpha1_initializer_configuration_list(
-        optional: WatchAdmissionregistrationV1alpha1InitializerConfigurationListOptional<'_>,
+    pub fn watch_initializer_configuration_list(
+        optional: WatchInitializerConfigurationListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAdmissionregistrationV1alpha1InitializerConfigurationListOptional {
+        let WatchInitializerConfigurationListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -823,9 +823,9 @@ impl InitializerConfiguration {
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::watch_admissionregistration_v1alpha1_initializer_configuration_list`](./struct.InitializerConfiguration.html#method.watch_admissionregistration_v1alpha1_initializer_configuration_list)
+/// Optional parameters of [`InitializerConfiguration::watch_initializer_configuration_list`](./struct.InitializerConfiguration.html#method.watch_initializer_configuration_list)
 #[derive(Debug, Default)]
-pub struct WatchAdmissionregistrationV1alpha1InitializerConfigurationListOptional<'a> {
+pub struct WatchInitializerConfigurationListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -848,15 +848,15 @@ pub struct WatchAdmissionregistrationV1alpha1InitializerConfigurationListOptiona
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::watch_admissionregistration_v1alpha1_initializer_configuration_list`](./struct.InitializerConfiguration.html#method.watch_admissionregistration_v1alpha1_initializer_configuration_list)
+/// Parses the HTTP response of [`InitializerConfiguration::watch_initializer_configuration_list`](./struct.InitializerConfiguration.html#method.watch_initializer_configuration_list)
 #[derive(Debug)]
-pub enum WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse {
+pub enum WatchInitializerConfigurationListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse {
+impl crate::Response for WatchInitializerConfigurationListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -867,10 +867,10 @@ impl crate::Response for WatchAdmissionregistrationV1alpha1InitializerConfigurat
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse::Ok(result), byte_offset))
+                Ok((WatchInitializerConfigurationListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse::Unauthorized, 0)),
-            _ => Ok((WatchAdmissionregistrationV1alpha1InitializerConfigurationListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchInitializerConfigurationListResponse::Unauthorized, 0)),
+            _ => Ok((WatchInitializerConfigurationListResponse::Other, 0)),
         }
     }
 }

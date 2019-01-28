@@ -19,7 +19,7 @@ pub struct APIService {
 impl APIService {
     /// create an APIService
     ///
-    /// Use [`CreateApiregistrationV1APIServiceResponse`](./enum.CreateApiregistrationV1APIServiceResponse.html) to parse the HTTP response.
+    /// Use [`CreateAPIServiceResponse`](./enum.CreateAPIServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -28,11 +28,11 @@ impl APIService {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_apiregistration_v1_api_service(
+    pub fn create_api_service(
         body: &crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
-        optional: CreateApiregistrationV1APIServiceOptional<'_>,
+        optional: CreateAPIServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateApiregistrationV1APIServiceOptional {
+        let CreateAPIServiceOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -56,9 +56,9 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::create_apiregistration_v1_api_service`](./struct.APIService.html#method.create_apiregistration_v1_api_service)
+/// Optional parameters of [`APIService::create_api_service`](./struct.APIService.html#method.create_api_service)
 #[derive(Debug, Default)]
-pub struct CreateApiregistrationV1APIServiceOptional<'a> {
+pub struct CreateAPIServiceOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -67,9 +67,9 @@ pub struct CreateApiregistrationV1APIServiceOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`APIService::create_apiregistration_v1_api_service`](./struct.APIService.html#method.create_apiregistration_v1_api_service)
+/// Parses the HTTP response of [`APIService::create_api_service`](./struct.APIService.html#method.create_api_service)
 #[derive(Debug)]
-pub enum CreateApiregistrationV1APIServiceResponse {
+pub enum CreateAPIServiceResponse {
     Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Created(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Accepted(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
@@ -77,7 +77,7 @@ pub enum CreateApiregistrationV1APIServiceResponse {
     Other,
 }
 
-impl crate::Response for CreateApiregistrationV1APIServiceResponse {
+impl crate::Response for CreateAPIServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -86,7 +86,7 @@ impl crate::Response for CreateApiregistrationV1APIServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateApiregistrationV1APIServiceResponse::Ok(result), buf.len()))
+                Ok((CreateAPIServiceResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -94,7 +94,7 @@ impl crate::Response for CreateApiregistrationV1APIServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateApiregistrationV1APIServiceResponse::Created(result), buf.len()))
+                Ok((CreateAPIServiceResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -102,10 +102,10 @@ impl crate::Response for CreateApiregistrationV1APIServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateApiregistrationV1APIServiceResponse::Accepted(result), buf.len()))
+                Ok((CreateAPIServiceResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateApiregistrationV1APIServiceResponse::Unauthorized, 0)),
-            _ => Ok((CreateApiregistrationV1APIServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateAPIServiceResponse::Unauthorized, 0)),
+            _ => Ok((CreateAPIServiceResponse::Other, 0)),
         }
     }
 }
@@ -115,7 +115,7 @@ impl crate::Response for CreateApiregistrationV1APIServiceResponse {
 impl APIService {
     /// delete an APIService
     ///
-    /// Use [`DeleteApiregistrationV1APIServiceResponse`](./enum.DeleteApiregistrationV1APIServiceResponse.html) to parse the HTTP response.
+    /// Use [`DeleteAPIServiceResponse`](./enum.DeleteAPIServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -126,11 +126,11 @@ impl APIService {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apiregistration_v1_api_service(
+    pub fn delete_api_service(
         name: &str,
-        optional: DeleteApiregistrationV1APIServiceOptional<'_>,
+        optional: DeleteAPIServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteApiregistrationV1APIServiceOptional {
+        let DeleteAPIServiceOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -162,9 +162,9 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::delete_apiregistration_v1_api_service`](./struct.APIService.html#method.delete_apiregistration_v1_api_service)
+/// Optional parameters of [`APIService::delete_api_service`](./struct.APIService.html#method.delete_api_service)
 #[derive(Debug, Default)]
-pub struct DeleteApiregistrationV1APIServiceOptional<'a> {
+pub struct DeleteAPIServiceOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -177,9 +177,9 @@ pub struct DeleteApiregistrationV1APIServiceOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`APIService::delete_apiregistration_v1_api_service`](./struct.APIService.html#method.delete_apiregistration_v1_api_service)
+/// Parses the HTTP response of [`APIService::delete_api_service`](./struct.APIService.html#method.delete_api_service)
 #[derive(Debug)]
-pub enum DeleteApiregistrationV1APIServiceResponse {
+pub enum DeleteAPIServiceResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -187,7 +187,7 @@ pub enum DeleteApiregistrationV1APIServiceResponse {
     Other,
 }
 
-impl crate::Response for DeleteApiregistrationV1APIServiceResponse {
+impl crate::Response for DeleteAPIServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -203,12 +203,12 @@ impl crate::Response for DeleteApiregistrationV1APIServiceResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteApiregistrationV1APIServiceResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteAPIServiceResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteApiregistrationV1APIServiceResponse::OkValue(result), buf.len()))
+                    Ok((DeleteAPIServiceResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -217,10 +217,10 @@ impl crate::Response for DeleteApiregistrationV1APIServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteApiregistrationV1APIServiceResponse::Accepted(result), buf.len()))
+                Ok((DeleteAPIServiceResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteApiregistrationV1APIServiceResponse::Unauthorized, 0)),
-            _ => Ok((DeleteApiregistrationV1APIServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteAPIServiceResponse::Unauthorized, 0)),
+            _ => Ok((DeleteAPIServiceResponse::Other, 0)),
         }
     }
 }
@@ -230,17 +230,17 @@ impl crate::Response for DeleteApiregistrationV1APIServiceResponse {
 impl APIService {
     /// delete collection of APIService
     ///
-    /// Use [`DeleteApiregistrationV1CollectionAPIServiceResponse`](./enum.DeleteApiregistrationV1CollectionAPIServiceResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionAPIServiceResponse`](./enum.DeleteCollectionAPIServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apiregistration_v1_collection_api_service(
-        optional: DeleteApiregistrationV1CollectionAPIServiceOptional<'_>,
+    pub fn delete_collection_api_service(
+        optional: DeleteCollectionAPIServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteApiregistrationV1CollectionAPIServiceOptional {
+        let DeleteCollectionAPIServiceOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -288,9 +288,9 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::delete_apiregistration_v1_collection_api_service`](./struct.APIService.html#method.delete_apiregistration_v1_collection_api_service)
+/// Optional parameters of [`APIService::delete_collection_api_service`](./struct.APIService.html#method.delete_collection_api_service)
 #[derive(Debug, Default)]
-pub struct DeleteApiregistrationV1CollectionAPIServiceOptional<'a> {
+pub struct DeleteCollectionAPIServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -315,16 +315,16 @@ pub struct DeleteApiregistrationV1CollectionAPIServiceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`APIService::delete_apiregistration_v1_collection_api_service`](./struct.APIService.html#method.delete_apiregistration_v1_collection_api_service)
+/// Parses the HTTP response of [`APIService::delete_collection_api_service`](./struct.APIService.html#method.delete_collection_api_service)
 #[derive(Debug)]
-pub enum DeleteApiregistrationV1CollectionAPIServiceResponse {
+pub enum DeleteCollectionAPIServiceResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteApiregistrationV1CollectionAPIServiceResponse {
+impl crate::Response for DeleteCollectionAPIServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -340,16 +340,16 @@ impl crate::Response for DeleteApiregistrationV1CollectionAPIServiceResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteApiregistrationV1CollectionAPIServiceResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionAPIServiceResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteApiregistrationV1CollectionAPIServiceResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionAPIServiceResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteApiregistrationV1CollectionAPIServiceResponse::Unauthorized, 0)),
-            _ => Ok((DeleteApiregistrationV1CollectionAPIServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionAPIServiceResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionAPIServiceResponse::Other, 0)),
         }
     }
 }
@@ -359,17 +359,17 @@ impl crate::Response for DeleteApiregistrationV1CollectionAPIServiceResponse {
 impl APIService {
     /// list or watch objects of kind APIService
     ///
-    /// Use [`ListApiregistrationV1APIServiceResponse`](./enum.ListApiregistrationV1APIServiceResponse.html) to parse the HTTP response.
+    /// Use [`ListAPIServiceResponse`](./enum.ListAPIServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apiregistration_v1_api_service(
-        optional: ListApiregistrationV1APIServiceOptional<'_>,
+    pub fn list_api_service(
+        optional: ListAPIServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListApiregistrationV1APIServiceOptional {
+        let ListAPIServiceOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -417,9 +417,9 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::list_apiregistration_v1_api_service`](./struct.APIService.html#method.list_apiregistration_v1_api_service)
+/// Optional parameters of [`APIService::list_api_service`](./struct.APIService.html#method.list_api_service)
 #[derive(Debug, Default)]
-pub struct ListApiregistrationV1APIServiceOptional<'a> {
+pub struct ListAPIServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -444,15 +444,15 @@ pub struct ListApiregistrationV1APIServiceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`APIService::list_apiregistration_v1_api_service`](./struct.APIService.html#method.list_apiregistration_v1_api_service)
+/// Parses the HTTP response of [`APIService::list_api_service`](./struct.APIService.html#method.list_api_service)
 #[derive(Debug)]
-pub enum ListApiregistrationV1APIServiceResponse {
+pub enum ListAPIServiceResponse {
     Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIServiceList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListApiregistrationV1APIServiceResponse {
+impl crate::Response for ListAPIServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -461,10 +461,10 @@ impl crate::Response for ListApiregistrationV1APIServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListApiregistrationV1APIServiceResponse::Ok(result), buf.len()))
+                Ok((ListAPIServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListApiregistrationV1APIServiceResponse::Unauthorized, 0)),
-            _ => Ok((ListApiregistrationV1APIServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListAPIServiceResponse::Unauthorized, 0)),
+            _ => Ok((ListAPIServiceResponse::Other, 0)),
         }
     }
 }
@@ -474,7 +474,7 @@ impl crate::Response for ListApiregistrationV1APIServiceResponse {
 impl APIService {
     /// partially update the specified APIService
     ///
-    /// Use [`PatchApiregistrationV1APIServiceResponse`](./enum.PatchApiregistrationV1APIServiceResponse.html) to parse the HTTP response.
+    /// Use [`PatchAPIServiceResponse`](./enum.PatchAPIServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -487,12 +487,12 @@ impl APIService {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apiregistration_v1_api_service(
+    pub fn patch_api_service(
         name: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchApiregistrationV1APIServiceOptional<'_>,
+        optional: PatchAPIServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchApiregistrationV1APIServiceOptional {
+        let PatchAPIServiceOptional {
             dry_run,
             pretty,
         } = optional;
@@ -512,24 +512,24 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::patch_apiregistration_v1_api_service`](./struct.APIService.html#method.patch_apiregistration_v1_api_service)
+/// Optional parameters of [`APIService::patch_api_service`](./struct.APIService.html#method.patch_api_service)
 #[derive(Debug, Default)]
-pub struct PatchApiregistrationV1APIServiceOptional<'a> {
+pub struct PatchAPIServiceOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`APIService::patch_apiregistration_v1_api_service`](./struct.APIService.html#method.patch_apiregistration_v1_api_service)
+/// Parses the HTTP response of [`APIService::patch_api_service`](./struct.APIService.html#method.patch_api_service)
 #[derive(Debug)]
-pub enum PatchApiregistrationV1APIServiceResponse {
+pub enum PatchAPIServiceResponse {
     Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchApiregistrationV1APIServiceResponse {
+impl crate::Response for PatchAPIServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -538,10 +538,10 @@ impl crate::Response for PatchApiregistrationV1APIServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchApiregistrationV1APIServiceResponse::Ok(result), buf.len()))
+                Ok((PatchAPIServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchApiregistrationV1APIServiceResponse::Unauthorized, 0)),
-            _ => Ok((PatchApiregistrationV1APIServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchAPIServiceResponse::Unauthorized, 0)),
+            _ => Ok((PatchAPIServiceResponse::Other, 0)),
         }
     }
 }
@@ -551,7 +551,7 @@ impl crate::Response for PatchApiregistrationV1APIServiceResponse {
 impl APIService {
     /// partially update status of the specified APIService
     ///
-    /// Use [`PatchApiregistrationV1APIServiceStatusResponse`](./enum.PatchApiregistrationV1APIServiceStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchAPIServiceStatusResponse`](./enum.PatchAPIServiceStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -564,12 +564,12 @@ impl APIService {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apiregistration_v1_api_service_status(
+    pub fn patch_api_service_status(
         name: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchApiregistrationV1APIServiceStatusOptional<'_>,
+        optional: PatchAPIServiceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchApiregistrationV1APIServiceStatusOptional {
+        let PatchAPIServiceStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -589,24 +589,24 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::patch_apiregistration_v1_api_service_status`](./struct.APIService.html#method.patch_apiregistration_v1_api_service_status)
+/// Optional parameters of [`APIService::patch_api_service_status`](./struct.APIService.html#method.patch_api_service_status)
 #[derive(Debug, Default)]
-pub struct PatchApiregistrationV1APIServiceStatusOptional<'a> {
+pub struct PatchAPIServiceStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`APIService::patch_apiregistration_v1_api_service_status`](./struct.APIService.html#method.patch_apiregistration_v1_api_service_status)
+/// Parses the HTTP response of [`APIService::patch_api_service_status`](./struct.APIService.html#method.patch_api_service_status)
 #[derive(Debug)]
-pub enum PatchApiregistrationV1APIServiceStatusResponse {
+pub enum PatchAPIServiceStatusResponse {
     Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchApiregistrationV1APIServiceStatusResponse {
+impl crate::Response for PatchAPIServiceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -615,10 +615,10 @@ impl crate::Response for PatchApiregistrationV1APIServiceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchApiregistrationV1APIServiceStatusResponse::Ok(result), buf.len()))
+                Ok((PatchAPIServiceStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchApiregistrationV1APIServiceStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchApiregistrationV1APIServiceStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchAPIServiceStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchAPIServiceStatusResponse::Other, 0)),
         }
     }
 }
@@ -628,7 +628,7 @@ impl crate::Response for PatchApiregistrationV1APIServiceStatusResponse {
 impl APIService {
     /// read the specified APIService
     ///
-    /// Use [`ReadApiregistrationV1APIServiceResponse`](./enum.ReadApiregistrationV1APIServiceResponse.html) to parse the HTTP response.
+    /// Use [`ReadAPIServiceResponse`](./enum.ReadAPIServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -639,11 +639,11 @@ impl APIService {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apiregistration_v1_api_service(
+    pub fn read_api_service(
         name: &str,
-        optional: ReadApiregistrationV1APIServiceOptional<'_>,
+        optional: ReadAPIServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadApiregistrationV1APIServiceOptional {
+        let ReadAPIServiceOptional {
             exact,
             export,
             pretty,
@@ -667,9 +667,9 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::read_apiregistration_v1_api_service`](./struct.APIService.html#method.read_apiregistration_v1_api_service)
+/// Optional parameters of [`APIService::read_api_service`](./struct.APIService.html#method.read_api_service)
 #[derive(Debug, Default)]
-pub struct ReadApiregistrationV1APIServiceOptional<'a> {
+pub struct ReadAPIServiceOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -678,15 +678,15 @@ pub struct ReadApiregistrationV1APIServiceOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`APIService::read_apiregistration_v1_api_service`](./struct.APIService.html#method.read_apiregistration_v1_api_service)
+/// Parses the HTTP response of [`APIService::read_api_service`](./struct.APIService.html#method.read_api_service)
 #[derive(Debug)]
-pub enum ReadApiregistrationV1APIServiceResponse {
+pub enum ReadAPIServiceResponse {
     Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadApiregistrationV1APIServiceResponse {
+impl crate::Response for ReadAPIServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -695,10 +695,10 @@ impl crate::Response for ReadApiregistrationV1APIServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadApiregistrationV1APIServiceResponse::Ok(result), buf.len()))
+                Ok((ReadAPIServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadApiregistrationV1APIServiceResponse::Unauthorized, 0)),
-            _ => Ok((ReadApiregistrationV1APIServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadAPIServiceResponse::Unauthorized, 0)),
+            _ => Ok((ReadAPIServiceResponse::Other, 0)),
         }
     }
 }
@@ -708,7 +708,7 @@ impl crate::Response for ReadApiregistrationV1APIServiceResponse {
 impl APIService {
     /// read status of the specified APIService
     ///
-    /// Use [`ReadApiregistrationV1APIServiceStatusResponse`](./enum.ReadApiregistrationV1APIServiceStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadAPIServiceStatusResponse`](./enum.ReadAPIServiceStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -719,11 +719,11 @@ impl APIService {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apiregistration_v1_api_service_status(
+    pub fn read_api_service_status(
         name: &str,
-        optional: ReadApiregistrationV1APIServiceStatusOptional<'_>,
+        optional: ReadAPIServiceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadApiregistrationV1APIServiceStatusOptional {
+        let ReadAPIServiceStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apiregistration.k8s.io/v1/apiservices/{name}/status?", name = name);
@@ -739,22 +739,22 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::read_apiregistration_v1_api_service_status`](./struct.APIService.html#method.read_apiregistration_v1_api_service_status)
+/// Optional parameters of [`APIService::read_api_service_status`](./struct.APIService.html#method.read_api_service_status)
 #[derive(Debug, Default)]
-pub struct ReadApiregistrationV1APIServiceStatusOptional<'a> {
+pub struct ReadAPIServiceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`APIService::read_apiregistration_v1_api_service_status`](./struct.APIService.html#method.read_apiregistration_v1_api_service_status)
+/// Parses the HTTP response of [`APIService::read_api_service_status`](./struct.APIService.html#method.read_api_service_status)
 #[derive(Debug)]
-pub enum ReadApiregistrationV1APIServiceStatusResponse {
+pub enum ReadAPIServiceStatusResponse {
     Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadApiregistrationV1APIServiceStatusResponse {
+impl crate::Response for ReadAPIServiceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -763,10 +763,10 @@ impl crate::Response for ReadApiregistrationV1APIServiceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadApiregistrationV1APIServiceStatusResponse::Ok(result), buf.len()))
+                Ok((ReadAPIServiceStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadApiregistrationV1APIServiceStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadApiregistrationV1APIServiceStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadAPIServiceStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadAPIServiceStatusResponse::Other, 0)),
         }
     }
 }
@@ -776,7 +776,7 @@ impl crate::Response for ReadApiregistrationV1APIServiceStatusResponse {
 impl APIService {
     /// replace the specified APIService
     ///
-    /// Use [`ReplaceApiregistrationV1APIServiceResponse`](./enum.ReplaceApiregistrationV1APIServiceResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceAPIServiceResponse`](./enum.ReplaceAPIServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -789,12 +789,12 @@ impl APIService {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apiregistration_v1_api_service(
+    pub fn replace_api_service(
         name: &str,
         body: &crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
-        optional: ReplaceApiregistrationV1APIServiceOptional<'_>,
+        optional: ReplaceAPIServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceApiregistrationV1APIServiceOptional {
+        let ReplaceAPIServiceOptional {
             dry_run,
             pretty,
         } = optional;
@@ -814,25 +814,25 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::replace_apiregistration_v1_api_service`](./struct.APIService.html#method.replace_apiregistration_v1_api_service)
+/// Optional parameters of [`APIService::replace_api_service`](./struct.APIService.html#method.replace_api_service)
 #[derive(Debug, Default)]
-pub struct ReplaceApiregistrationV1APIServiceOptional<'a> {
+pub struct ReplaceAPIServiceOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`APIService::replace_apiregistration_v1_api_service`](./struct.APIService.html#method.replace_apiregistration_v1_api_service)
+/// Parses the HTTP response of [`APIService::replace_api_service`](./struct.APIService.html#method.replace_api_service)
 #[derive(Debug)]
-pub enum ReplaceApiregistrationV1APIServiceResponse {
+pub enum ReplaceAPIServiceResponse {
     Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Created(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceApiregistrationV1APIServiceResponse {
+impl crate::Response for ReplaceAPIServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -841,7 +841,7 @@ impl crate::Response for ReplaceApiregistrationV1APIServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceApiregistrationV1APIServiceResponse::Ok(result), buf.len()))
+                Ok((ReplaceAPIServiceResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -849,10 +849,10 @@ impl crate::Response for ReplaceApiregistrationV1APIServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceApiregistrationV1APIServiceResponse::Created(result), buf.len()))
+                Ok((ReplaceAPIServiceResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiregistrationV1APIServiceResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceApiregistrationV1APIServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAPIServiceResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceAPIServiceResponse::Other, 0)),
         }
     }
 }
@@ -862,7 +862,7 @@ impl crate::Response for ReplaceApiregistrationV1APIServiceResponse {
 impl APIService {
     /// replace status of the specified APIService
     ///
-    /// Use [`ReplaceApiregistrationV1APIServiceStatusResponse`](./enum.ReplaceApiregistrationV1APIServiceStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceAPIServiceStatusResponse`](./enum.ReplaceAPIServiceStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -875,12 +875,12 @@ impl APIService {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apiregistration_v1_api_service_status(
+    pub fn replace_api_service_status(
         name: &str,
         body: &crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService,
-        optional: ReplaceApiregistrationV1APIServiceStatusOptional<'_>,
+        optional: ReplaceAPIServiceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceApiregistrationV1APIServiceStatusOptional {
+        let ReplaceAPIServiceStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -900,25 +900,25 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::replace_apiregistration_v1_api_service_status`](./struct.APIService.html#method.replace_apiregistration_v1_api_service_status)
+/// Optional parameters of [`APIService::replace_api_service_status`](./struct.APIService.html#method.replace_api_service_status)
 #[derive(Debug, Default)]
-pub struct ReplaceApiregistrationV1APIServiceStatusOptional<'a> {
+pub struct ReplaceAPIServiceStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`APIService::replace_apiregistration_v1_api_service_status`](./struct.APIService.html#method.replace_apiregistration_v1_api_service_status)
+/// Parses the HTTP response of [`APIService::replace_api_service_status`](./struct.APIService.html#method.replace_api_service_status)
 #[derive(Debug)]
-pub enum ReplaceApiregistrationV1APIServiceStatusResponse {
+pub enum ReplaceAPIServiceStatusResponse {
     Ok(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Created(crate::v1_12::kube_aggregator::pkg::apis::apiregistration::v1::APIService),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceApiregistrationV1APIServiceStatusResponse {
+impl crate::Response for ReplaceAPIServiceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -927,7 +927,7 @@ impl crate::Response for ReplaceApiregistrationV1APIServiceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceApiregistrationV1APIServiceStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceAPIServiceStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -935,10 +935,10 @@ impl crate::Response for ReplaceApiregistrationV1APIServiceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceApiregistrationV1APIServiceStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceAPIServiceStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiregistrationV1APIServiceStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceApiregistrationV1APIServiceStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAPIServiceStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceAPIServiceStatusResponse::Other, 0)),
         }
     }
 }
@@ -948,7 +948,7 @@ impl crate::Response for ReplaceApiregistrationV1APIServiceStatusResponse {
 impl APIService {
     /// watch changes to an object of kind APIService. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchApiregistrationV1APIServiceResponse`](./enum.WatchApiregistrationV1APIServiceResponse.html) to parse the HTTP response.
+    /// Use [`WatchAPIServiceResponse`](./enum.WatchAPIServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -959,11 +959,11 @@ impl APIService {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apiregistration_v1_api_service(
+    pub fn watch_api_service(
         name: &str,
-        optional: WatchApiregistrationV1APIServiceOptional<'_>,
+        optional: WatchAPIServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchApiregistrationV1APIServiceOptional {
+        let WatchAPIServiceOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1011,9 +1011,9 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::watch_apiregistration_v1_api_service`](./struct.APIService.html#method.watch_apiregistration_v1_api_service)
+/// Optional parameters of [`APIService::watch_api_service`](./struct.APIService.html#method.watch_api_service)
 #[derive(Debug, Default)]
-pub struct WatchApiregistrationV1APIServiceOptional<'a> {
+pub struct WatchAPIServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1038,15 +1038,15 @@ pub struct WatchApiregistrationV1APIServiceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`APIService::watch_apiregistration_v1_api_service`](./struct.APIService.html#method.watch_apiregistration_v1_api_service)
+/// Parses the HTTP response of [`APIService::watch_api_service`](./struct.APIService.html#method.watch_api_service)
 #[derive(Debug)]
-pub enum WatchApiregistrationV1APIServiceResponse {
+pub enum WatchAPIServiceResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchApiregistrationV1APIServiceResponse {
+impl crate::Response for WatchAPIServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1057,10 +1057,10 @@ impl crate::Response for WatchApiregistrationV1APIServiceResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchApiregistrationV1APIServiceResponse::Ok(result), byte_offset))
+                Ok((WatchAPIServiceResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchApiregistrationV1APIServiceResponse::Unauthorized, 0)),
-            _ => Ok((WatchApiregistrationV1APIServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchAPIServiceResponse::Unauthorized, 0)),
+            _ => Ok((WatchAPIServiceResponse::Other, 0)),
         }
     }
 }
@@ -1070,17 +1070,17 @@ impl crate::Response for WatchApiregistrationV1APIServiceResponse {
 impl APIService {
     /// watch individual changes to a list of APIService. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchApiregistrationV1APIServiceListResponse`](./enum.WatchApiregistrationV1APIServiceListResponse.html) to parse the HTTP response.
+    /// Use [`WatchAPIServiceListResponse`](./enum.WatchAPIServiceListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apiregistration_v1_api_service_list(
-        optional: WatchApiregistrationV1APIServiceListOptional<'_>,
+    pub fn watch_api_service_list(
+        optional: WatchAPIServiceListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchApiregistrationV1APIServiceListOptional {
+        let WatchAPIServiceListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1128,9 +1128,9 @@ impl APIService {
     }
 }
 
-/// Optional parameters of [`APIService::watch_apiregistration_v1_api_service_list`](./struct.APIService.html#method.watch_apiregistration_v1_api_service_list)
+/// Optional parameters of [`APIService::watch_api_service_list`](./struct.APIService.html#method.watch_api_service_list)
 #[derive(Debug, Default)]
-pub struct WatchApiregistrationV1APIServiceListOptional<'a> {
+pub struct WatchAPIServiceListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1155,15 +1155,15 @@ pub struct WatchApiregistrationV1APIServiceListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`APIService::watch_apiregistration_v1_api_service_list`](./struct.APIService.html#method.watch_apiregistration_v1_api_service_list)
+/// Parses the HTTP response of [`APIService::watch_api_service_list`](./struct.APIService.html#method.watch_api_service_list)
 #[derive(Debug)]
-pub enum WatchApiregistrationV1APIServiceListResponse {
+pub enum WatchAPIServiceListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchApiregistrationV1APIServiceListResponse {
+impl crate::Response for WatchAPIServiceListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1174,10 +1174,10 @@ impl crate::Response for WatchApiregistrationV1APIServiceListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchApiregistrationV1APIServiceListResponse::Ok(result), byte_offset))
+                Ok((WatchAPIServiceListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchApiregistrationV1APIServiceListResponse::Unauthorized, 0)),
-            _ => Ok((WatchApiregistrationV1APIServiceListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchAPIServiceListResponse::Unauthorized, 0)),
+            _ => Ok((WatchAPIServiceListResponse::Other, 0)),
         }
     }
 }

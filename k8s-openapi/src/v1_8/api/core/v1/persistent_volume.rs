@@ -20,7 +20,7 @@ pub struct PersistentVolume {
 impl PersistentVolume {
     /// create a PersistentVolume
     ///
-    /// Use [`CreateCoreV1PersistentVolumeResponse`](./enum.CreateCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use [`CreatePersistentVolumeResponse`](./enum.CreatePersistentVolumeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,11 +29,11 @@ impl PersistentVolume {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_persistent_volume(
+    pub fn create_persistent_volume(
         body: &crate::v1_8::api::core::v1::PersistentVolume,
-        optional: CreateCoreV1PersistentVolumeOptional<'_>,
+        optional: CreatePersistentVolumeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1PersistentVolumeOptional {
+        let CreatePersistentVolumeOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/persistentvolumes?");
@@ -49,22 +49,22 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::create_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.create_core_v1_persistent_volume)
+/// Optional parameters of [`PersistentVolume::create_persistent_volume`](./struct.PersistentVolume.html#method.create_persistent_volume)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1PersistentVolumeOptional<'a> {
+pub struct CreatePersistentVolumeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::create_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.create_core_v1_persistent_volume)
+/// Parses the HTTP response of [`PersistentVolume::create_persistent_volume`](./struct.PersistentVolume.html#method.create_persistent_volume)
 #[derive(Debug)]
-pub enum CreateCoreV1PersistentVolumeResponse {
+pub enum CreatePersistentVolumeResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateCoreV1PersistentVolumeResponse {
+impl crate::Response for CreatePersistentVolumeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -73,10 +73,10 @@ impl crate::Response for CreateCoreV1PersistentVolumeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1PersistentVolumeResponse::Ok(result), buf.len()))
+                Ok((CreatePersistentVolumeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1PersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1PersistentVolumeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreatePersistentVolumeResponse::Unauthorized, 0)),
+            _ => Ok((CreatePersistentVolumeResponse::Other, 0)),
         }
     }
 }
@@ -86,17 +86,17 @@ impl crate::Response for CreateCoreV1PersistentVolumeResponse {
 impl PersistentVolume {
     /// delete collection of PersistentVolume
     ///
-    /// Use [`DeleteCoreV1CollectionPersistentVolumeResponse`](./enum.DeleteCoreV1CollectionPersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionPersistentVolumeResponse`](./enum.DeleteCollectionPersistentVolumeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_collection_persistent_volume(
-        optional: DeleteCoreV1CollectionPersistentVolumeOptional<'_>,
+    pub fn delete_collection_persistent_volume(
+        optional: DeleteCollectionPersistentVolumeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1CollectionPersistentVolumeOptional {
+        let DeleteCollectionPersistentVolumeOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -144,9 +144,9 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::delete_core_v1_collection_persistent_volume`](./struct.PersistentVolume.html#method.delete_core_v1_collection_persistent_volume)
+/// Optional parameters of [`PersistentVolume::delete_collection_persistent_volume`](./struct.PersistentVolume.html#method.delete_collection_persistent_volume)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1CollectionPersistentVolumeOptional<'a> {
+pub struct DeleteCollectionPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -169,16 +169,16 @@ pub struct DeleteCoreV1CollectionPersistentVolumeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::delete_core_v1_collection_persistent_volume`](./struct.PersistentVolume.html#method.delete_core_v1_collection_persistent_volume)
+/// Parses the HTTP response of [`PersistentVolume::delete_collection_persistent_volume`](./struct.PersistentVolume.html#method.delete_collection_persistent_volume)
 #[derive(Debug)]
-pub enum DeleteCoreV1CollectionPersistentVolumeResponse {
+pub enum DeleteCollectionPersistentVolumeResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::PersistentVolume),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1CollectionPersistentVolumeResponse {
+impl crate::Response for DeleteCollectionPersistentVolumeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -194,16 +194,16 @@ impl crate::Response for DeleteCoreV1CollectionPersistentVolumeResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionPersistentVolumeResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionPersistentVolumeResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionPersistentVolumeResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionPersistentVolumeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionPersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1CollectionPersistentVolumeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionPersistentVolumeResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionPersistentVolumeResponse::Other, 0)),
         }
     }
 }
@@ -213,7 +213,7 @@ impl crate::Response for DeleteCoreV1CollectionPersistentVolumeResponse {
 impl PersistentVolume {
     /// delete a PersistentVolume
     ///
-    /// Use [`DeleteCoreV1PersistentVolumeResponse`](./enum.DeleteCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use [`DeletePersistentVolumeResponse`](./enum.DeletePersistentVolumeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -224,11 +224,11 @@ impl PersistentVolume {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_persistent_volume(
+    pub fn delete_persistent_volume(
         name: &str,
-        optional: DeleteCoreV1PersistentVolumeOptional<'_>,
+        optional: DeletePersistentVolumeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1PersistentVolumeOptional {
+        let DeletePersistentVolumeOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -256,9 +256,9 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::delete_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.delete_core_v1_persistent_volume)
+/// Optional parameters of [`PersistentVolume::delete_persistent_volume`](./struct.PersistentVolume.html#method.delete_persistent_volume)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1PersistentVolumeOptional<'a> {
+pub struct DeletePersistentVolumeOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -269,16 +269,16 @@ pub struct DeleteCoreV1PersistentVolumeOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::delete_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.delete_core_v1_persistent_volume)
+/// Parses the HTTP response of [`PersistentVolume::delete_persistent_volume`](./struct.PersistentVolume.html#method.delete_persistent_volume)
 #[derive(Debug)]
-pub enum DeleteCoreV1PersistentVolumeResponse {
+pub enum DeletePersistentVolumeResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::PersistentVolume),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1PersistentVolumeResponse {
+impl crate::Response for DeletePersistentVolumeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -294,16 +294,16 @@ impl crate::Response for DeleteCoreV1PersistentVolumeResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1PersistentVolumeResponse::OkStatus(result), buf.len()))
+                    Ok((DeletePersistentVolumeResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1PersistentVolumeResponse::OkValue(result), buf.len()))
+                    Ok((DeletePersistentVolumeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1PersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1PersistentVolumeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeletePersistentVolumeResponse::Unauthorized, 0)),
+            _ => Ok((DeletePersistentVolumeResponse::Other, 0)),
         }
     }
 }
@@ -313,17 +313,17 @@ impl crate::Response for DeleteCoreV1PersistentVolumeResponse {
 impl PersistentVolume {
     /// list or watch objects of kind PersistentVolume
     ///
-    /// Use [`ListCoreV1PersistentVolumeResponse`](./enum.ListCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use [`ListPersistentVolumeResponse`](./enum.ListPersistentVolumeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_persistent_volume(
-        optional: ListCoreV1PersistentVolumeOptional<'_>,
+    pub fn list_persistent_volume(
+        optional: ListPersistentVolumeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1PersistentVolumeOptional {
+        let ListPersistentVolumeOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -371,9 +371,9 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::list_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.list_core_v1_persistent_volume)
+/// Optional parameters of [`PersistentVolume::list_persistent_volume`](./struct.PersistentVolume.html#method.list_persistent_volume)
 #[derive(Debug, Default)]
-pub struct ListCoreV1PersistentVolumeOptional<'a> {
+pub struct ListPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -396,15 +396,15 @@ pub struct ListCoreV1PersistentVolumeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::list_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.list_core_v1_persistent_volume)
+/// Parses the HTTP response of [`PersistentVolume::list_persistent_volume`](./struct.PersistentVolume.html#method.list_persistent_volume)
 #[derive(Debug)]
-pub enum ListCoreV1PersistentVolumeResponse {
+pub enum ListPersistentVolumeResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1PersistentVolumeResponse {
+impl crate::Response for ListPersistentVolumeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -413,10 +413,10 @@ impl crate::Response for ListCoreV1PersistentVolumeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1PersistentVolumeResponse::Ok(result), buf.len()))
+                Ok((ListPersistentVolumeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1PersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1PersistentVolumeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListPersistentVolumeResponse::Unauthorized, 0)),
+            _ => Ok((ListPersistentVolumeResponse::Other, 0)),
         }
     }
 }
@@ -426,7 +426,7 @@ impl crate::Response for ListCoreV1PersistentVolumeResponse {
 impl PersistentVolume {
     /// partially update the specified PersistentVolume
     ///
-    /// Use [`PatchCoreV1PersistentVolumeResponse`](./enum.PatchCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use [`PatchPersistentVolumeResponse`](./enum.PatchPersistentVolumeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -439,12 +439,12 @@ impl PersistentVolume {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_persistent_volume(
+    pub fn patch_persistent_volume(
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1PersistentVolumeOptional<'_>,
+        optional: PatchPersistentVolumeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1PersistentVolumeOptional {
+        let PatchPersistentVolumeOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/persistentvolumes/{name}?", name = name);
@@ -460,22 +460,22 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::patch_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.patch_core_v1_persistent_volume)
+/// Optional parameters of [`PersistentVolume::patch_persistent_volume`](./struct.PersistentVolume.html#method.patch_persistent_volume)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1PersistentVolumeOptional<'a> {
+pub struct PatchPersistentVolumeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::patch_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.patch_core_v1_persistent_volume)
+/// Parses the HTTP response of [`PersistentVolume::patch_persistent_volume`](./struct.PersistentVolume.html#method.patch_persistent_volume)
 #[derive(Debug)]
-pub enum PatchCoreV1PersistentVolumeResponse {
+pub enum PatchPersistentVolumeResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1PersistentVolumeResponse {
+impl crate::Response for PatchPersistentVolumeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -484,10 +484,10 @@ impl crate::Response for PatchCoreV1PersistentVolumeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1PersistentVolumeResponse::Ok(result), buf.len()))
+                Ok((PatchPersistentVolumeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1PersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1PersistentVolumeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchPersistentVolumeResponse::Unauthorized, 0)),
+            _ => Ok((PatchPersistentVolumeResponse::Other, 0)),
         }
     }
 }
@@ -497,7 +497,7 @@ impl crate::Response for PatchCoreV1PersistentVolumeResponse {
 impl PersistentVolume {
     /// partially update status of the specified PersistentVolume
     ///
-    /// Use [`PatchCoreV1PersistentVolumeStatusResponse`](./enum.PatchCoreV1PersistentVolumeStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchPersistentVolumeStatusResponse`](./enum.PatchPersistentVolumeStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -510,12 +510,12 @@ impl PersistentVolume {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_persistent_volume_status(
+    pub fn patch_persistent_volume_status(
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1PersistentVolumeStatusOptional<'_>,
+        optional: PatchPersistentVolumeStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1PersistentVolumeStatusOptional {
+        let PatchPersistentVolumeStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/persistentvolumes/{name}/status?", name = name);
@@ -531,22 +531,22 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::patch_core_v1_persistent_volume_status`](./struct.PersistentVolume.html#method.patch_core_v1_persistent_volume_status)
+/// Optional parameters of [`PersistentVolume::patch_persistent_volume_status`](./struct.PersistentVolume.html#method.patch_persistent_volume_status)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1PersistentVolumeStatusOptional<'a> {
+pub struct PatchPersistentVolumeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::patch_core_v1_persistent_volume_status`](./struct.PersistentVolume.html#method.patch_core_v1_persistent_volume_status)
+/// Parses the HTTP response of [`PersistentVolume::patch_persistent_volume_status`](./struct.PersistentVolume.html#method.patch_persistent_volume_status)
 #[derive(Debug)]
-pub enum PatchCoreV1PersistentVolumeStatusResponse {
+pub enum PatchPersistentVolumeStatusResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1PersistentVolumeStatusResponse {
+impl crate::Response for PatchPersistentVolumeStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -555,10 +555,10 @@ impl crate::Response for PatchCoreV1PersistentVolumeStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1PersistentVolumeStatusResponse::Ok(result), buf.len()))
+                Ok((PatchPersistentVolumeStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1PersistentVolumeStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1PersistentVolumeStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchPersistentVolumeStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchPersistentVolumeStatusResponse::Other, 0)),
         }
     }
 }
@@ -568,7 +568,7 @@ impl crate::Response for PatchCoreV1PersistentVolumeStatusResponse {
 impl PersistentVolume {
     /// read the specified PersistentVolume
     ///
-    /// Use [`ReadCoreV1PersistentVolumeResponse`](./enum.ReadCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use [`ReadPersistentVolumeResponse`](./enum.ReadPersistentVolumeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -579,11 +579,11 @@ impl PersistentVolume {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_persistent_volume(
+    pub fn read_persistent_volume(
         name: &str,
-        optional: ReadCoreV1PersistentVolumeOptional<'_>,
+        optional: ReadPersistentVolumeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1PersistentVolumeOptional {
+        let ReadPersistentVolumeOptional {
             exact,
             export,
             pretty,
@@ -607,9 +607,9 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::read_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.read_core_v1_persistent_volume)
+/// Optional parameters of [`PersistentVolume::read_persistent_volume`](./struct.PersistentVolume.html#method.read_persistent_volume)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1PersistentVolumeOptional<'a> {
+pub struct ReadPersistentVolumeOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -618,15 +618,15 @@ pub struct ReadCoreV1PersistentVolumeOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::read_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.read_core_v1_persistent_volume)
+/// Parses the HTTP response of [`PersistentVolume::read_persistent_volume`](./struct.PersistentVolume.html#method.read_persistent_volume)
 #[derive(Debug)]
-pub enum ReadCoreV1PersistentVolumeResponse {
+pub enum ReadPersistentVolumeResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1PersistentVolumeResponse {
+impl crate::Response for ReadPersistentVolumeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -635,10 +635,10 @@ impl crate::Response for ReadCoreV1PersistentVolumeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1PersistentVolumeResponse::Ok(result), buf.len()))
+                Ok((ReadPersistentVolumeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1PersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1PersistentVolumeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadPersistentVolumeResponse::Unauthorized, 0)),
+            _ => Ok((ReadPersistentVolumeResponse::Other, 0)),
         }
     }
 }
@@ -648,7 +648,7 @@ impl crate::Response for ReadCoreV1PersistentVolumeResponse {
 impl PersistentVolume {
     /// read status of the specified PersistentVolume
     ///
-    /// Use [`ReadCoreV1PersistentVolumeStatusResponse`](./enum.ReadCoreV1PersistentVolumeStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadPersistentVolumeStatusResponse`](./enum.ReadPersistentVolumeStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -659,11 +659,11 @@ impl PersistentVolume {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_persistent_volume_status(
+    pub fn read_persistent_volume_status(
         name: &str,
-        optional: ReadCoreV1PersistentVolumeStatusOptional<'_>,
+        optional: ReadPersistentVolumeStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1PersistentVolumeStatusOptional {
+        let ReadPersistentVolumeStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/persistentvolumes/{name}/status?", name = name);
@@ -679,22 +679,22 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::read_core_v1_persistent_volume_status`](./struct.PersistentVolume.html#method.read_core_v1_persistent_volume_status)
+/// Optional parameters of [`PersistentVolume::read_persistent_volume_status`](./struct.PersistentVolume.html#method.read_persistent_volume_status)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1PersistentVolumeStatusOptional<'a> {
+pub struct ReadPersistentVolumeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::read_core_v1_persistent_volume_status`](./struct.PersistentVolume.html#method.read_core_v1_persistent_volume_status)
+/// Parses the HTTP response of [`PersistentVolume::read_persistent_volume_status`](./struct.PersistentVolume.html#method.read_persistent_volume_status)
 #[derive(Debug)]
-pub enum ReadCoreV1PersistentVolumeStatusResponse {
+pub enum ReadPersistentVolumeStatusResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1PersistentVolumeStatusResponse {
+impl crate::Response for ReadPersistentVolumeStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -703,10 +703,10 @@ impl crate::Response for ReadCoreV1PersistentVolumeStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1PersistentVolumeStatusResponse::Ok(result), buf.len()))
+                Ok((ReadPersistentVolumeStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1PersistentVolumeStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1PersistentVolumeStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadPersistentVolumeStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadPersistentVolumeStatusResponse::Other, 0)),
         }
     }
 }
@@ -716,7 +716,7 @@ impl crate::Response for ReadCoreV1PersistentVolumeStatusResponse {
 impl PersistentVolume {
     /// replace the specified PersistentVolume
     ///
-    /// Use [`ReplaceCoreV1PersistentVolumeResponse`](./enum.ReplaceCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use [`ReplacePersistentVolumeResponse`](./enum.ReplacePersistentVolumeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -729,12 +729,12 @@ impl PersistentVolume {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_persistent_volume(
+    pub fn replace_persistent_volume(
         name: &str,
         body: &crate::v1_8::api::core::v1::PersistentVolume,
-        optional: ReplaceCoreV1PersistentVolumeOptional<'_>,
+        optional: ReplacePersistentVolumeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1PersistentVolumeOptional {
+        let ReplacePersistentVolumeOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/persistentvolumes/{name}?", name = name);
@@ -750,22 +750,22 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::replace_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.replace_core_v1_persistent_volume)
+/// Optional parameters of [`PersistentVolume::replace_persistent_volume`](./struct.PersistentVolume.html#method.replace_persistent_volume)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1PersistentVolumeOptional<'a> {
+pub struct ReplacePersistentVolumeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::replace_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.replace_core_v1_persistent_volume)
+/// Parses the HTTP response of [`PersistentVolume::replace_persistent_volume`](./struct.PersistentVolume.html#method.replace_persistent_volume)
 #[derive(Debug)]
-pub enum ReplaceCoreV1PersistentVolumeResponse {
+pub enum ReplacePersistentVolumeResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1PersistentVolumeResponse {
+impl crate::Response for ReplacePersistentVolumeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -774,10 +774,10 @@ impl crate::Response for ReplaceCoreV1PersistentVolumeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1PersistentVolumeResponse::Ok(result), buf.len()))
+                Ok((ReplacePersistentVolumeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1PersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1PersistentVolumeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplacePersistentVolumeResponse::Unauthorized, 0)),
+            _ => Ok((ReplacePersistentVolumeResponse::Other, 0)),
         }
     }
 }
@@ -787,7 +787,7 @@ impl crate::Response for ReplaceCoreV1PersistentVolumeResponse {
 impl PersistentVolume {
     /// replace status of the specified PersistentVolume
     ///
-    /// Use [`ReplaceCoreV1PersistentVolumeStatusResponse`](./enum.ReplaceCoreV1PersistentVolumeStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplacePersistentVolumeStatusResponse`](./enum.ReplacePersistentVolumeStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -800,12 +800,12 @@ impl PersistentVolume {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_persistent_volume_status(
+    pub fn replace_persistent_volume_status(
         name: &str,
         body: &crate::v1_8::api::core::v1::PersistentVolume,
-        optional: ReplaceCoreV1PersistentVolumeStatusOptional<'_>,
+        optional: ReplacePersistentVolumeStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1PersistentVolumeStatusOptional {
+        let ReplacePersistentVolumeStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/persistentvolumes/{name}/status?", name = name);
@@ -821,22 +821,22 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::replace_core_v1_persistent_volume_status`](./struct.PersistentVolume.html#method.replace_core_v1_persistent_volume_status)
+/// Optional parameters of [`PersistentVolume::replace_persistent_volume_status`](./struct.PersistentVolume.html#method.replace_persistent_volume_status)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1PersistentVolumeStatusOptional<'a> {
+pub struct ReplacePersistentVolumeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::replace_core_v1_persistent_volume_status`](./struct.PersistentVolume.html#method.replace_core_v1_persistent_volume_status)
+/// Parses the HTTP response of [`PersistentVolume::replace_persistent_volume_status`](./struct.PersistentVolume.html#method.replace_persistent_volume_status)
 #[derive(Debug)]
-pub enum ReplaceCoreV1PersistentVolumeStatusResponse {
+pub enum ReplacePersistentVolumeStatusResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolume),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1PersistentVolumeStatusResponse {
+impl crate::Response for ReplacePersistentVolumeStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -845,10 +845,10 @@ impl crate::Response for ReplaceCoreV1PersistentVolumeStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1PersistentVolumeStatusResponse::Ok(result), buf.len()))
+                Ok((ReplacePersistentVolumeStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1PersistentVolumeStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1PersistentVolumeStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplacePersistentVolumeStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplacePersistentVolumeStatusResponse::Other, 0)),
         }
     }
 }
@@ -858,7 +858,7 @@ impl crate::Response for ReplaceCoreV1PersistentVolumeStatusResponse {
 impl PersistentVolume {
     /// watch changes to an object of kind PersistentVolume
     ///
-    /// Use [`WatchCoreV1PersistentVolumeResponse`](./enum.WatchCoreV1PersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use [`WatchPersistentVolumeResponse`](./enum.WatchPersistentVolumeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -869,11 +869,11 @@ impl PersistentVolume {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_persistent_volume(
+    pub fn watch_persistent_volume(
         name: &str,
-        optional: WatchCoreV1PersistentVolumeOptional<'_>,
+        optional: WatchPersistentVolumeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1PersistentVolumeOptional {
+        let WatchPersistentVolumeOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -921,9 +921,9 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::watch_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.watch_core_v1_persistent_volume)
+/// Optional parameters of [`PersistentVolume::watch_persistent_volume`](./struct.PersistentVolume.html#method.watch_persistent_volume)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1PersistentVolumeOptional<'a> {
+pub struct WatchPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -946,15 +946,15 @@ pub struct WatchCoreV1PersistentVolumeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::watch_core_v1_persistent_volume`](./struct.PersistentVolume.html#method.watch_core_v1_persistent_volume)
+/// Parses the HTTP response of [`PersistentVolume::watch_persistent_volume`](./struct.PersistentVolume.html#method.watch_persistent_volume)
 #[derive(Debug)]
-pub enum WatchCoreV1PersistentVolumeResponse {
+pub enum WatchPersistentVolumeResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1PersistentVolumeResponse {
+impl crate::Response for WatchPersistentVolumeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -965,10 +965,10 @@ impl crate::Response for WatchCoreV1PersistentVolumeResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1PersistentVolumeResponse::Ok(result), byte_offset))
+                Ok((WatchPersistentVolumeResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1PersistentVolumeResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1PersistentVolumeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPersistentVolumeResponse::Unauthorized, 0)),
+            _ => Ok((WatchPersistentVolumeResponse::Other, 0)),
         }
     }
 }
@@ -978,17 +978,17 @@ impl crate::Response for WatchCoreV1PersistentVolumeResponse {
 impl PersistentVolume {
     /// watch individual changes to a list of PersistentVolume
     ///
-    /// Use [`WatchCoreV1PersistentVolumeListResponse`](./enum.WatchCoreV1PersistentVolumeListResponse.html) to parse the HTTP response.
+    /// Use [`WatchPersistentVolumeListResponse`](./enum.WatchPersistentVolumeListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_persistent_volume_list(
-        optional: WatchCoreV1PersistentVolumeListOptional<'_>,
+    pub fn watch_persistent_volume_list(
+        optional: WatchPersistentVolumeListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1PersistentVolumeListOptional {
+        let WatchPersistentVolumeListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1036,9 +1036,9 @@ impl PersistentVolume {
     }
 }
 
-/// Optional parameters of [`PersistentVolume::watch_core_v1_persistent_volume_list`](./struct.PersistentVolume.html#method.watch_core_v1_persistent_volume_list)
+/// Optional parameters of [`PersistentVolume::watch_persistent_volume_list`](./struct.PersistentVolume.html#method.watch_persistent_volume_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1PersistentVolumeListOptional<'a> {
+pub struct WatchPersistentVolumeListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1061,15 +1061,15 @@ pub struct WatchCoreV1PersistentVolumeListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::watch_core_v1_persistent_volume_list`](./struct.PersistentVolume.html#method.watch_core_v1_persistent_volume_list)
+/// Parses the HTTP response of [`PersistentVolume::watch_persistent_volume_list`](./struct.PersistentVolume.html#method.watch_persistent_volume_list)
 #[derive(Debug)]
-pub enum WatchCoreV1PersistentVolumeListResponse {
+pub enum WatchPersistentVolumeListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1PersistentVolumeListResponse {
+impl crate::Response for WatchPersistentVolumeListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1080,10 +1080,10 @@ impl crate::Response for WatchCoreV1PersistentVolumeListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1PersistentVolumeListResponse::Ok(result), byte_offset))
+                Ok((WatchPersistentVolumeListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1PersistentVolumeListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1PersistentVolumeListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPersistentVolumeListResponse::Unauthorized, 0)),
+            _ => Ok((WatchPersistentVolumeListResponse::Other, 0)),
         }
     }
 }

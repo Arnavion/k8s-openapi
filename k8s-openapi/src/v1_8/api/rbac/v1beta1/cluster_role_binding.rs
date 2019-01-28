@@ -20,7 +20,7 @@ pub struct ClusterRoleBinding {
 impl ClusterRoleBinding {
     /// create a ClusterRoleBinding
     ///
-    /// Use [`CreateRbacAuthorizationV1beta1ClusterRoleBindingResponse`](./enum.CreateRbacAuthorizationV1beta1ClusterRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`CreateClusterRoleBindingResponse`](./enum.CreateClusterRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,11 +29,11 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_rbac_authorization_v1beta1_cluster_role_binding(
+    pub fn create_cluster_role_binding(
         body: &crate::v1_8::api::rbac::v1beta1::ClusterRoleBinding,
-        optional: CreateRbacAuthorizationV1beta1ClusterRoleBindingOptional<'_>,
+        optional: CreateClusterRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateRbacAuthorizationV1beta1ClusterRoleBindingOptional {
+        let CreateClusterRoleBindingOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings?");
@@ -49,22 +49,22 @@ impl ClusterRoleBinding {
     }
 }
 
-/// Optional parameters of [`ClusterRoleBinding::create_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.create_rbac_authorization_v1beta1_cluster_role_binding)
+/// Optional parameters of [`ClusterRoleBinding::create_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.create_cluster_role_binding)
 #[derive(Debug, Default)]
-pub struct CreateRbacAuthorizationV1beta1ClusterRoleBindingOptional<'a> {
+pub struct CreateClusterRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ClusterRoleBinding::create_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.create_rbac_authorization_v1beta1_cluster_role_binding)
+/// Parses the HTTP response of [`ClusterRoleBinding::create_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.create_cluster_role_binding)
 #[derive(Debug)]
-pub enum CreateRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+pub enum CreateClusterRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1beta1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+impl crate::Response for CreateClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -73,10 +73,10 @@ impl crate::Response for CreateRbacAuthorizationV1beta1ClusterRoleBindingRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateRbacAuthorizationV1beta1ClusterRoleBindingResponse::Ok(result), buf.len()))
+                Ok((CreateClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateRbacAuthorizationV1beta1ClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((CreateRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateClusterRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((CreateClusterRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -86,7 +86,7 @@ impl crate::Response for CreateRbacAuthorizationV1beta1ClusterRoleBindingRespons
 impl ClusterRoleBinding {
     /// delete a ClusterRoleBinding
     ///
-    /// Use [`DeleteRbacAuthorizationV1beta1ClusterRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1beta1ClusterRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`DeleteClusterRoleBindingResponse`](./enum.DeleteClusterRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -97,11 +97,11 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_rbac_authorization_v1beta1_cluster_role_binding(
+    pub fn delete_cluster_role_binding(
         name: &str,
-        optional: DeleteRbacAuthorizationV1beta1ClusterRoleBindingOptional<'_>,
+        optional: DeleteClusterRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteRbacAuthorizationV1beta1ClusterRoleBindingOptional {
+        let DeleteClusterRoleBindingOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -129,9 +129,9 @@ impl ClusterRoleBinding {
     }
 }
 
-/// Optional parameters of [`ClusterRoleBinding::delete_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_rbac_authorization_v1beta1_cluster_role_binding)
+/// Optional parameters of [`ClusterRoleBinding::delete_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_cluster_role_binding)
 #[derive(Debug, Default)]
-pub struct DeleteRbacAuthorizationV1beta1ClusterRoleBindingOptional<'a> {
+pub struct DeleteClusterRoleBindingOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -142,16 +142,16 @@ pub struct DeleteRbacAuthorizationV1beta1ClusterRoleBindingOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ClusterRoleBinding::delete_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_rbac_authorization_v1beta1_cluster_role_binding)
+/// Parses the HTTP response of [`ClusterRoleBinding::delete_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_cluster_role_binding)
 #[derive(Debug)]
-pub enum DeleteRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+pub enum DeleteClusterRoleBindingResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::rbac::v1beta1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+impl crate::Response for DeleteClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -167,16 +167,16 @@ impl crate::Response for DeleteRbacAuthorizationV1beta1ClusterRoleBindingRespons
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1beta1ClusterRoleBindingResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteClusterRoleBindingResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1beta1ClusterRoleBindingResponse::OkValue(result), buf.len()))
+                    Ok((DeleteClusterRoleBindingResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1beta1ClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((DeleteRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteClusterRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((DeleteClusterRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -186,17 +186,17 @@ impl crate::Response for DeleteRbacAuthorizationV1beta1ClusterRoleBindingRespons
 impl ClusterRoleBinding {
     /// delete collection of ClusterRoleBinding
     ///
-    /// Use [`DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingResponse`](./enum.DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionClusterRoleBindingResponse`](./enum.DeleteCollectionClusterRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_rbac_authorization_v1beta1_collection_cluster_role_binding(
-        optional: DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingOptional<'_>,
+    pub fn delete_collection_cluster_role_binding(
+        optional: DeleteCollectionClusterRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingOptional {
+        let DeleteCollectionClusterRoleBindingOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -244,9 +244,9 @@ impl ClusterRoleBinding {
     }
 }
 
-/// Optional parameters of [`ClusterRoleBinding::delete_rbac_authorization_v1beta1_collection_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_rbac_authorization_v1beta1_collection_cluster_role_binding)
+/// Optional parameters of [`ClusterRoleBinding::delete_collection_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_collection_cluster_role_binding)
 #[derive(Debug, Default)]
-pub struct DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingOptional<'a> {
+pub struct DeleteCollectionClusterRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -269,16 +269,16 @@ pub struct DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingOptional<'a
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ClusterRoleBinding::delete_rbac_authorization_v1beta1_collection_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_rbac_authorization_v1beta1_collection_cluster_role_binding)
+/// Parses the HTTP response of [`ClusterRoleBinding::delete_collection_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.delete_collection_cluster_role_binding)
 #[derive(Debug)]
-pub enum DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingResponse {
+pub enum DeleteCollectionClusterRoleBindingResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::rbac::v1beta1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingResponse {
+impl crate::Response for DeleteCollectionClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -294,16 +294,16 @@ impl crate::Response for DeleteRbacAuthorizationV1beta1CollectionClusterRoleBind
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionClusterRoleBindingResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionClusterRoleBindingResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((DeleteRbacAuthorizationV1beta1CollectionClusterRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionClusterRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionClusterRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -313,17 +313,17 @@ impl crate::Response for DeleteRbacAuthorizationV1beta1CollectionClusterRoleBind
 impl ClusterRoleBinding {
     /// list or watch objects of kind ClusterRoleBinding
     ///
-    /// Use [`ListRbacAuthorizationV1beta1ClusterRoleBindingResponse`](./enum.ListRbacAuthorizationV1beta1ClusterRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`ListClusterRoleBindingResponse`](./enum.ListClusterRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_rbac_authorization_v1beta1_cluster_role_binding(
-        optional: ListRbacAuthorizationV1beta1ClusterRoleBindingOptional<'_>,
+    pub fn list_cluster_role_binding(
+        optional: ListClusterRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListRbacAuthorizationV1beta1ClusterRoleBindingOptional {
+        let ListClusterRoleBindingOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -371,9 +371,9 @@ impl ClusterRoleBinding {
     }
 }
 
-/// Optional parameters of [`ClusterRoleBinding::list_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.list_rbac_authorization_v1beta1_cluster_role_binding)
+/// Optional parameters of [`ClusterRoleBinding::list_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.list_cluster_role_binding)
 #[derive(Debug, Default)]
-pub struct ListRbacAuthorizationV1beta1ClusterRoleBindingOptional<'a> {
+pub struct ListClusterRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -396,15 +396,15 @@ pub struct ListRbacAuthorizationV1beta1ClusterRoleBindingOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ClusterRoleBinding::list_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.list_rbac_authorization_v1beta1_cluster_role_binding)
+/// Parses the HTTP response of [`ClusterRoleBinding::list_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.list_cluster_role_binding)
 #[derive(Debug)]
-pub enum ListRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+pub enum ListClusterRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1beta1::ClusterRoleBindingList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+impl crate::Response for ListClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -413,10 +413,10 @@ impl crate::Response for ListRbacAuthorizationV1beta1ClusterRoleBindingResponse 
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListRbacAuthorizationV1beta1ClusterRoleBindingResponse::Ok(result), buf.len()))
+                Ok((ListClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListRbacAuthorizationV1beta1ClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((ListRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListClusterRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((ListClusterRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -426,7 +426,7 @@ impl crate::Response for ListRbacAuthorizationV1beta1ClusterRoleBindingResponse 
 impl ClusterRoleBinding {
     /// partially update the specified ClusterRoleBinding
     ///
-    /// Use [`PatchRbacAuthorizationV1beta1ClusterRoleBindingResponse`](./enum.PatchRbacAuthorizationV1beta1ClusterRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`PatchClusterRoleBindingResponse`](./enum.PatchClusterRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -439,12 +439,12 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_rbac_authorization_v1beta1_cluster_role_binding(
+    pub fn patch_cluster_role_binding(
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchRbacAuthorizationV1beta1ClusterRoleBindingOptional<'_>,
+        optional: PatchClusterRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchRbacAuthorizationV1beta1ClusterRoleBindingOptional {
+        let PatchClusterRoleBindingOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name}?", name = name);
@@ -460,22 +460,22 @@ impl ClusterRoleBinding {
     }
 }
 
-/// Optional parameters of [`ClusterRoleBinding::patch_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.patch_rbac_authorization_v1beta1_cluster_role_binding)
+/// Optional parameters of [`ClusterRoleBinding::patch_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.patch_cluster_role_binding)
 #[derive(Debug, Default)]
-pub struct PatchRbacAuthorizationV1beta1ClusterRoleBindingOptional<'a> {
+pub struct PatchClusterRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ClusterRoleBinding::patch_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.patch_rbac_authorization_v1beta1_cluster_role_binding)
+/// Parses the HTTP response of [`ClusterRoleBinding::patch_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.patch_cluster_role_binding)
 #[derive(Debug)]
-pub enum PatchRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+pub enum PatchClusterRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1beta1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+impl crate::Response for PatchClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -484,10 +484,10 @@ impl crate::Response for PatchRbacAuthorizationV1beta1ClusterRoleBindingResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchRbacAuthorizationV1beta1ClusterRoleBindingResponse::Ok(result), buf.len()))
+                Ok((PatchClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchRbacAuthorizationV1beta1ClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((PatchRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchClusterRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((PatchClusterRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -497,7 +497,7 @@ impl crate::Response for PatchRbacAuthorizationV1beta1ClusterRoleBindingResponse
 impl ClusterRoleBinding {
     /// read the specified ClusterRoleBinding
     ///
-    /// Use [`ReadRbacAuthorizationV1beta1ClusterRoleBindingResponse`](./enum.ReadRbacAuthorizationV1beta1ClusterRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`ReadClusterRoleBindingResponse`](./enum.ReadClusterRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -508,11 +508,11 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_rbac_authorization_v1beta1_cluster_role_binding(
+    pub fn read_cluster_role_binding(
         name: &str,
-        optional: ReadRbacAuthorizationV1beta1ClusterRoleBindingOptional<'_>,
+        optional: ReadClusterRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadRbacAuthorizationV1beta1ClusterRoleBindingOptional {
+        let ReadClusterRoleBindingOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name}?", name = name);
@@ -528,22 +528,22 @@ impl ClusterRoleBinding {
     }
 }
 
-/// Optional parameters of [`ClusterRoleBinding::read_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.read_rbac_authorization_v1beta1_cluster_role_binding)
+/// Optional parameters of [`ClusterRoleBinding::read_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.read_cluster_role_binding)
 #[derive(Debug, Default)]
-pub struct ReadRbacAuthorizationV1beta1ClusterRoleBindingOptional<'a> {
+pub struct ReadClusterRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ClusterRoleBinding::read_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.read_rbac_authorization_v1beta1_cluster_role_binding)
+/// Parses the HTTP response of [`ClusterRoleBinding::read_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.read_cluster_role_binding)
 #[derive(Debug)]
-pub enum ReadRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+pub enum ReadClusterRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1beta1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+impl crate::Response for ReadClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -552,10 +552,10 @@ impl crate::Response for ReadRbacAuthorizationV1beta1ClusterRoleBindingResponse 
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadRbacAuthorizationV1beta1ClusterRoleBindingResponse::Ok(result), buf.len()))
+                Ok((ReadClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadRbacAuthorizationV1beta1ClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((ReadRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadClusterRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((ReadClusterRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -565,7 +565,7 @@ impl crate::Response for ReadRbacAuthorizationV1beta1ClusterRoleBindingResponse 
 impl ClusterRoleBinding {
     /// replace the specified ClusterRoleBinding
     ///
-    /// Use [`ReplaceRbacAuthorizationV1beta1ClusterRoleBindingResponse`](./enum.ReplaceRbacAuthorizationV1beta1ClusterRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceClusterRoleBindingResponse`](./enum.ReplaceClusterRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -578,12 +578,12 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_rbac_authorization_v1beta1_cluster_role_binding(
+    pub fn replace_cluster_role_binding(
         name: &str,
         body: &crate::v1_8::api::rbac::v1beta1::ClusterRoleBinding,
-        optional: ReplaceRbacAuthorizationV1beta1ClusterRoleBindingOptional<'_>,
+        optional: ReplaceClusterRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceRbacAuthorizationV1beta1ClusterRoleBindingOptional {
+        let ReplaceClusterRoleBindingOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name}?", name = name);
@@ -599,22 +599,22 @@ impl ClusterRoleBinding {
     }
 }
 
-/// Optional parameters of [`ClusterRoleBinding::replace_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.replace_rbac_authorization_v1beta1_cluster_role_binding)
+/// Optional parameters of [`ClusterRoleBinding::replace_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.replace_cluster_role_binding)
 #[derive(Debug, Default)]
-pub struct ReplaceRbacAuthorizationV1beta1ClusterRoleBindingOptional<'a> {
+pub struct ReplaceClusterRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ClusterRoleBinding::replace_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.replace_rbac_authorization_v1beta1_cluster_role_binding)
+/// Parses the HTTP response of [`ClusterRoleBinding::replace_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.replace_cluster_role_binding)
 #[derive(Debug)]
-pub enum ReplaceRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+pub enum ReplaceClusterRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1beta1::ClusterRoleBinding),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+impl crate::Response for ReplaceClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -623,10 +623,10 @@ impl crate::Response for ReplaceRbacAuthorizationV1beta1ClusterRoleBindingRespon
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceRbacAuthorizationV1beta1ClusterRoleBindingResponse::Ok(result), buf.len()))
+                Ok((ReplaceClusterRoleBindingResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceRbacAuthorizationV1beta1ClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceClusterRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceClusterRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -636,7 +636,7 @@ impl crate::Response for ReplaceRbacAuthorizationV1beta1ClusterRoleBindingRespon
 impl ClusterRoleBinding {
     /// watch changes to an object of kind ClusterRoleBinding
     ///
-    /// Use [`WatchRbacAuthorizationV1beta1ClusterRoleBindingResponse`](./enum.WatchRbacAuthorizationV1beta1ClusterRoleBindingResponse.html) to parse the HTTP response.
+    /// Use [`WatchClusterRoleBindingResponse`](./enum.WatchClusterRoleBindingResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -647,11 +647,11 @@ impl ClusterRoleBinding {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_rbac_authorization_v1beta1_cluster_role_binding(
+    pub fn watch_cluster_role_binding(
         name: &str,
-        optional: WatchRbacAuthorizationV1beta1ClusterRoleBindingOptional<'_>,
+        optional: WatchClusterRoleBindingOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchRbacAuthorizationV1beta1ClusterRoleBindingOptional {
+        let WatchClusterRoleBindingOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -699,9 +699,9 @@ impl ClusterRoleBinding {
     }
 }
 
-/// Optional parameters of [`ClusterRoleBinding::watch_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.watch_rbac_authorization_v1beta1_cluster_role_binding)
+/// Optional parameters of [`ClusterRoleBinding::watch_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.watch_cluster_role_binding)
 #[derive(Debug, Default)]
-pub struct WatchRbacAuthorizationV1beta1ClusterRoleBindingOptional<'a> {
+pub struct WatchClusterRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -724,15 +724,15 @@ pub struct WatchRbacAuthorizationV1beta1ClusterRoleBindingOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ClusterRoleBinding::watch_rbac_authorization_v1beta1_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.watch_rbac_authorization_v1beta1_cluster_role_binding)
+/// Parses the HTTP response of [`ClusterRoleBinding::watch_cluster_role_binding`](./struct.ClusterRoleBinding.html#method.watch_cluster_role_binding)
 #[derive(Debug)]
-pub enum WatchRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+pub enum WatchClusterRoleBindingResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchRbacAuthorizationV1beta1ClusterRoleBindingResponse {
+impl crate::Response for WatchClusterRoleBindingResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -743,10 +743,10 @@ impl crate::Response for WatchRbacAuthorizationV1beta1ClusterRoleBindingResponse
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchRbacAuthorizationV1beta1ClusterRoleBindingResponse::Ok(result), byte_offset))
+                Ok((WatchClusterRoleBindingResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1beta1ClusterRoleBindingResponse::Unauthorized, 0)),
-            _ => Ok((WatchRbacAuthorizationV1beta1ClusterRoleBindingResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchClusterRoleBindingResponse::Unauthorized, 0)),
+            _ => Ok((WatchClusterRoleBindingResponse::Other, 0)),
         }
     }
 }
@@ -756,17 +756,17 @@ impl crate::Response for WatchRbacAuthorizationV1beta1ClusterRoleBindingResponse
 impl ClusterRoleBinding {
     /// watch individual changes to a list of ClusterRoleBinding
     ///
-    /// Use [`WatchRbacAuthorizationV1beta1ClusterRoleBindingListResponse`](./enum.WatchRbacAuthorizationV1beta1ClusterRoleBindingListResponse.html) to parse the HTTP response.
+    /// Use [`WatchClusterRoleBindingListResponse`](./enum.WatchClusterRoleBindingListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_rbac_authorization_v1beta1_cluster_role_binding_list(
-        optional: WatchRbacAuthorizationV1beta1ClusterRoleBindingListOptional<'_>,
+    pub fn watch_cluster_role_binding_list(
+        optional: WatchClusterRoleBindingListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchRbacAuthorizationV1beta1ClusterRoleBindingListOptional {
+        let WatchClusterRoleBindingListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -814,9 +814,9 @@ impl ClusterRoleBinding {
     }
 }
 
-/// Optional parameters of [`ClusterRoleBinding::watch_rbac_authorization_v1beta1_cluster_role_binding_list`](./struct.ClusterRoleBinding.html#method.watch_rbac_authorization_v1beta1_cluster_role_binding_list)
+/// Optional parameters of [`ClusterRoleBinding::watch_cluster_role_binding_list`](./struct.ClusterRoleBinding.html#method.watch_cluster_role_binding_list)
 #[derive(Debug, Default)]
-pub struct WatchRbacAuthorizationV1beta1ClusterRoleBindingListOptional<'a> {
+pub struct WatchClusterRoleBindingListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -839,15 +839,15 @@ pub struct WatchRbacAuthorizationV1beta1ClusterRoleBindingListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ClusterRoleBinding::watch_rbac_authorization_v1beta1_cluster_role_binding_list`](./struct.ClusterRoleBinding.html#method.watch_rbac_authorization_v1beta1_cluster_role_binding_list)
+/// Parses the HTTP response of [`ClusterRoleBinding::watch_cluster_role_binding_list`](./struct.ClusterRoleBinding.html#method.watch_cluster_role_binding_list)
 #[derive(Debug)]
-pub enum WatchRbacAuthorizationV1beta1ClusterRoleBindingListResponse {
+pub enum WatchClusterRoleBindingListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchRbacAuthorizationV1beta1ClusterRoleBindingListResponse {
+impl crate::Response for WatchClusterRoleBindingListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -858,10 +858,10 @@ impl crate::Response for WatchRbacAuthorizationV1beta1ClusterRoleBindingListResp
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchRbacAuthorizationV1beta1ClusterRoleBindingListResponse::Ok(result), byte_offset))
+                Ok((WatchClusterRoleBindingListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1beta1ClusterRoleBindingListResponse::Unauthorized, 0)),
-            _ => Ok((WatchRbacAuthorizationV1beta1ClusterRoleBindingListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchClusterRoleBindingListResponse::Unauthorized, 0)),
+            _ => Ok((WatchClusterRoleBindingListResponse::Other, 0)),
         }
     }
 }

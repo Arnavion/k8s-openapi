@@ -17,17 +17,17 @@ pub struct ComponentStatus {
 impl ComponentStatus {
     /// list objects of kind ComponentStatus
     ///
-    /// Use [`ListCoreV1ComponentStatusResponse`](./enum.ListCoreV1ComponentStatusResponse.html) to parse the HTTP response.
+    /// Use [`ListComponentStatusResponse`](./enum.ListComponentStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_component_status(
-        optional: ListCoreV1ComponentStatusOptional<'_>,
+    pub fn list_component_status(
+        optional: ListComponentStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1ComponentStatusOptional {
+        let ListComponentStatusOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -75,9 +75,9 @@ impl ComponentStatus {
     }
 }
 
-/// Optional parameters of [`ComponentStatus::list_core_v1_component_status`](./struct.ComponentStatus.html#method.list_core_v1_component_status)
+/// Optional parameters of [`ComponentStatus::list_component_status`](./struct.ComponentStatus.html#method.list_component_status)
 #[derive(Debug, Default)]
-pub struct ListCoreV1ComponentStatusOptional<'a> {
+pub struct ListComponentStatusOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -100,15 +100,15 @@ pub struct ListCoreV1ComponentStatusOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ComponentStatus::list_core_v1_component_status`](./struct.ComponentStatus.html#method.list_core_v1_component_status)
+/// Parses the HTTP response of [`ComponentStatus::list_component_status`](./struct.ComponentStatus.html#method.list_component_status)
 #[derive(Debug)]
-pub enum ListCoreV1ComponentStatusResponse {
+pub enum ListComponentStatusResponse {
     Ok(crate::v1_8::api::core::v1::ComponentStatusList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1ComponentStatusResponse {
+impl crate::Response for ListComponentStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -117,10 +117,10 @@ impl crate::Response for ListCoreV1ComponentStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1ComponentStatusResponse::Ok(result), buf.len()))
+                Ok((ListComponentStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ComponentStatusResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1ComponentStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListComponentStatusResponse::Unauthorized, 0)),
+            _ => Ok((ListComponentStatusResponse::Other, 0)),
         }
     }
 }
@@ -130,7 +130,7 @@ impl crate::Response for ListCoreV1ComponentStatusResponse {
 impl ComponentStatus {
     /// read the specified ComponentStatus
     ///
-    /// Use [`ReadCoreV1ComponentStatusResponse`](./enum.ReadCoreV1ComponentStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadComponentStatusResponse`](./enum.ReadComponentStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -141,11 +141,11 @@ impl ComponentStatus {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_component_status(
+    pub fn read_component_status(
         name: &str,
-        optional: ReadCoreV1ComponentStatusOptional<'_>,
+        optional: ReadComponentStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1ComponentStatusOptional {
+        let ReadComponentStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/componentstatuses/{name}?", name = name);
@@ -161,22 +161,22 @@ impl ComponentStatus {
     }
 }
 
-/// Optional parameters of [`ComponentStatus::read_core_v1_component_status`](./struct.ComponentStatus.html#method.read_core_v1_component_status)
+/// Optional parameters of [`ComponentStatus::read_component_status`](./struct.ComponentStatus.html#method.read_component_status)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1ComponentStatusOptional<'a> {
+pub struct ReadComponentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ComponentStatus::read_core_v1_component_status`](./struct.ComponentStatus.html#method.read_core_v1_component_status)
+/// Parses the HTTP response of [`ComponentStatus::read_component_status`](./struct.ComponentStatus.html#method.read_component_status)
 #[derive(Debug)]
-pub enum ReadCoreV1ComponentStatusResponse {
+pub enum ReadComponentStatusResponse {
     Ok(crate::v1_8::api::core::v1::ComponentStatus),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1ComponentStatusResponse {
+impl crate::Response for ReadComponentStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -185,10 +185,10 @@ impl crate::Response for ReadCoreV1ComponentStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1ComponentStatusResponse::Ok(result), buf.len()))
+                Ok((ReadComponentStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1ComponentStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1ComponentStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadComponentStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadComponentStatusResponse::Other, 0)),
         }
     }
 }

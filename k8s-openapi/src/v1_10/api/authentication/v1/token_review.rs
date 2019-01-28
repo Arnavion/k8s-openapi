@@ -19,7 +19,7 @@ pub struct TokenReview {
 impl TokenReview {
     /// create a TokenReview
     ///
-    /// Use [`CreateAuthenticationV1TokenReviewResponse`](./enum.CreateAuthenticationV1TokenReviewResponse.html) to parse the HTTP response.
+    /// Use [`CreateTokenReviewResponse`](./enum.CreateTokenReviewResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -28,11 +28,11 @@ impl TokenReview {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_authentication_v1_token_review(
+    pub fn create_token_review(
         body: &crate::v1_10::api::authentication::v1::TokenReview,
-        optional: CreateAuthenticationV1TokenReviewOptional<'_>,
+        optional: CreateTokenReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAuthenticationV1TokenReviewOptional {
+        let CreateTokenReviewOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/authentication.k8s.io/v1/tokenreviews?");
@@ -48,16 +48,16 @@ impl TokenReview {
     }
 }
 
-/// Optional parameters of [`TokenReview::create_authentication_v1_token_review`](./struct.TokenReview.html#method.create_authentication_v1_token_review)
+/// Optional parameters of [`TokenReview::create_token_review`](./struct.TokenReview.html#method.create_token_review)
 #[derive(Debug, Default)]
-pub struct CreateAuthenticationV1TokenReviewOptional<'a> {
+pub struct CreateTokenReviewOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`TokenReview::create_authentication_v1_token_review`](./struct.TokenReview.html#method.create_authentication_v1_token_review)
+/// Parses the HTTP response of [`TokenReview::create_token_review`](./struct.TokenReview.html#method.create_token_review)
 #[derive(Debug)]
-pub enum CreateAuthenticationV1TokenReviewResponse {
+pub enum CreateTokenReviewResponse {
     Ok(crate::v1_10::api::authentication::v1::TokenReview),
     Created(crate::v1_10::api::authentication::v1::TokenReview),
     Accepted(crate::v1_10::api::authentication::v1::TokenReview),
@@ -65,7 +65,7 @@ pub enum CreateAuthenticationV1TokenReviewResponse {
     Other,
 }
 
-impl crate::Response for CreateAuthenticationV1TokenReviewResponse {
+impl crate::Response for CreateTokenReviewResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -74,7 +74,7 @@ impl crate::Response for CreateAuthenticationV1TokenReviewResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthenticationV1TokenReviewResponse::Ok(result), buf.len()))
+                Ok((CreateTokenReviewResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -82,7 +82,7 @@ impl crate::Response for CreateAuthenticationV1TokenReviewResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthenticationV1TokenReviewResponse::Created(result), buf.len()))
+                Ok((CreateTokenReviewResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -90,10 +90,10 @@ impl crate::Response for CreateAuthenticationV1TokenReviewResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthenticationV1TokenReviewResponse::Accepted(result), buf.len()))
+                Ok((CreateTokenReviewResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAuthenticationV1TokenReviewResponse::Unauthorized, 0)),
-            _ => Ok((CreateAuthenticationV1TokenReviewResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateTokenReviewResponse::Unauthorized, 0)),
+            _ => Ok((CreateTokenReviewResponse::Other, 0)),
         }
     }
 }

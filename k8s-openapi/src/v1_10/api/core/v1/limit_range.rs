@@ -17,7 +17,7 @@ pub struct LimitRange {
 impl LimitRange {
     /// create a LimitRange
     ///
-    /// Use [`CreateCoreV1NamespacedLimitRangeResponse`](./enum.CreateCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedLimitRangeResponse`](./enum.CreateNamespacedLimitRangeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -30,12 +30,12 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_limit_range(
+    pub fn create_namespaced_limit_range(
         namespace: &str,
         body: &crate::v1_10::api::core::v1::LimitRange,
-        optional: CreateCoreV1NamespacedLimitRangeOptional<'_>,
+        optional: CreateNamespacedLimitRangeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedLimitRangeOptional {
+        let CreateNamespacedLimitRangeOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/limitranges?", namespace = namespace);
@@ -51,16 +51,16 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::create_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.create_core_v1_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::create_namespaced_limit_range`](./struct.LimitRange.html#method.create_namespaced_limit_range)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedLimitRangeOptional<'a> {
+pub struct CreateNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LimitRange::create_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.create_core_v1_namespaced_limit_range)
+/// Parses the HTTP response of [`LimitRange::create_namespaced_limit_range`](./struct.LimitRange.html#method.create_namespaced_limit_range)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedLimitRangeResponse {
+pub enum CreateNamespacedLimitRangeResponse {
     Ok(crate::v1_10::api::core::v1::LimitRange),
     Created(crate::v1_10::api::core::v1::LimitRange),
     Accepted(crate::v1_10::api::core::v1::LimitRange),
@@ -68,7 +68,7 @@ pub enum CreateCoreV1NamespacedLimitRangeResponse {
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedLimitRangeResponse {
+impl crate::Response for CreateNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -77,7 +77,7 @@ impl crate::Response for CreateCoreV1NamespacedLimitRangeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedLimitRangeResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedLimitRangeResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -85,7 +85,7 @@ impl crate::Response for CreateCoreV1NamespacedLimitRangeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedLimitRangeResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedLimitRangeResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -93,10 +93,10 @@ impl crate::Response for CreateCoreV1NamespacedLimitRangeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedLimitRangeResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedLimitRangeResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedLimitRangeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedLimitRangeResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedLimitRangeResponse::Other, 0)),
         }
     }
 }
@@ -106,7 +106,7 @@ impl crate::Response for CreateCoreV1NamespacedLimitRangeResponse {
 impl LimitRange {
     /// delete collection of LimitRange
     ///
-    /// Use [`DeleteCoreV1CollectionNamespacedLimitRangeResponse`](./enum.DeleteCoreV1CollectionNamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedLimitRangeResponse`](./enum.DeleteCollectionNamespacedLimitRangeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -117,11 +117,11 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_collection_namespaced_limit_range(
+    pub fn delete_collection_namespaced_limit_range(
         namespace: &str,
-        optional: DeleteCoreV1CollectionNamespacedLimitRangeOptional<'_>,
+        optional: DeleteCollectionNamespacedLimitRangeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1CollectionNamespacedLimitRangeOptional {
+        let DeleteCollectionNamespacedLimitRangeOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -169,9 +169,9 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::delete_core_v1_collection_namespaced_limit_range`](./struct.LimitRange.html#method.delete_core_v1_collection_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::delete_collection_namespaced_limit_range`](./struct.LimitRange.html#method.delete_collection_namespaced_limit_range)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1CollectionNamespacedLimitRangeOptional<'a> {
+pub struct DeleteCollectionNamespacedLimitRangeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -194,16 +194,16 @@ pub struct DeleteCoreV1CollectionNamespacedLimitRangeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::delete_core_v1_collection_namespaced_limit_range`](./struct.LimitRange.html#method.delete_core_v1_collection_namespaced_limit_range)
+/// Parses the HTTP response of [`LimitRange::delete_collection_namespaced_limit_range`](./struct.LimitRange.html#method.delete_collection_namespaced_limit_range)
 #[derive(Debug)]
-pub enum DeleteCoreV1CollectionNamespacedLimitRangeResponse {
+pub enum DeleteCollectionNamespacedLimitRangeResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::api::core::v1::LimitRange),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1CollectionNamespacedLimitRangeResponse {
+impl crate::Response for DeleteCollectionNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -219,16 +219,16 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedLimitRangeResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedLimitRangeResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedLimitRangeResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedLimitRangeResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedLimitRangeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1CollectionNamespacedLimitRangeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedLimitRangeResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedLimitRangeResponse::Other, 0)),
         }
     }
 }
@@ -238,7 +238,7 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedLimitRangeResponse {
 impl LimitRange {
     /// delete a LimitRange
     ///
-    /// Use [`DeleteCoreV1NamespacedLimitRangeResponse`](./enum.DeleteCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedLimitRangeResponse`](./enum.DeleteNamespacedLimitRangeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -253,12 +253,12 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_namespaced_limit_range(
+    pub fn delete_namespaced_limit_range(
         name: &str,
         namespace: &str,
-        optional: DeleteCoreV1NamespacedLimitRangeOptional<'_>,
+        optional: DeleteNamespacedLimitRangeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NamespacedLimitRangeOptional {
+        let DeleteNamespacedLimitRangeOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -286,9 +286,9 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::delete_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.delete_core_v1_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::delete_namespaced_limit_range`](./struct.LimitRange.html#method.delete_namespaced_limit_range)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NamespacedLimitRangeOptional<'a> {
+pub struct DeleteNamespacedLimitRangeOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -299,16 +299,16 @@ pub struct DeleteCoreV1NamespacedLimitRangeOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LimitRange::delete_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.delete_core_v1_namespaced_limit_range)
+/// Parses the HTTP response of [`LimitRange::delete_namespaced_limit_range`](./struct.LimitRange.html#method.delete_namespaced_limit_range)
 #[derive(Debug)]
-pub enum DeleteCoreV1NamespacedLimitRangeResponse {
+pub enum DeleteNamespacedLimitRangeResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::api::core::v1::LimitRange),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NamespacedLimitRangeResponse {
+impl crate::Response for DeleteNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -324,16 +324,16 @@ impl crate::Response for DeleteCoreV1NamespacedLimitRangeResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedLimitRangeResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedLimitRangeResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedLimitRangeResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedLimitRangeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NamespacedLimitRangeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedLimitRangeResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedLimitRangeResponse::Other, 0)),
         }
     }
 }
@@ -343,17 +343,17 @@ impl crate::Response for DeleteCoreV1NamespacedLimitRangeResponse {
 impl LimitRange {
     /// list or watch objects of kind LimitRange
     ///
-    /// Use [`ListCoreV1LimitRangeForAllNamespacesResponse`](./enum.ListCoreV1LimitRangeForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListLimitRangeForAllNamespacesResponse`](./enum.ListLimitRangeForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_limit_range_for_all_namespaces(
-        optional: ListCoreV1LimitRangeForAllNamespacesOptional<'_>,
+    pub fn list_limit_range_for_all_namespaces(
+        optional: ListLimitRangeForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1LimitRangeForAllNamespacesOptional {
+        let ListLimitRangeForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -401,9 +401,9 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::list_core_v1_limit_range_for_all_namespaces`](./struct.LimitRange.html#method.list_core_v1_limit_range_for_all_namespaces)
+/// Optional parameters of [`LimitRange::list_limit_range_for_all_namespaces`](./struct.LimitRange.html#method.list_limit_range_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListCoreV1LimitRangeForAllNamespacesOptional<'a> {
+pub struct ListLimitRangeForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -426,15 +426,15 @@ pub struct ListCoreV1LimitRangeForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::list_core_v1_limit_range_for_all_namespaces`](./struct.LimitRange.html#method.list_core_v1_limit_range_for_all_namespaces)
+/// Parses the HTTP response of [`LimitRange::list_limit_range_for_all_namespaces`](./struct.LimitRange.html#method.list_limit_range_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListCoreV1LimitRangeForAllNamespacesResponse {
+pub enum ListLimitRangeForAllNamespacesResponse {
     Ok(crate::v1_10::api::core::v1::LimitRangeList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1LimitRangeForAllNamespacesResponse {
+impl crate::Response for ListLimitRangeForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -443,10 +443,10 @@ impl crate::Response for ListCoreV1LimitRangeForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1LimitRangeForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListLimitRangeForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1LimitRangeForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1LimitRangeForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListLimitRangeForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListLimitRangeForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -456,7 +456,7 @@ impl crate::Response for ListCoreV1LimitRangeForAllNamespacesResponse {
 impl LimitRange {
     /// list or watch objects of kind LimitRange
     ///
-    /// Use [`ListCoreV1NamespacedLimitRangeResponse`](./enum.ListCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedLimitRangeResponse`](./enum.ListNamespacedLimitRangeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -467,11 +467,11 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_namespaced_limit_range(
+    pub fn list_namespaced_limit_range(
         namespace: &str,
-        optional: ListCoreV1NamespacedLimitRangeOptional<'_>,
+        optional: ListNamespacedLimitRangeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NamespacedLimitRangeOptional {
+        let ListNamespacedLimitRangeOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -519,9 +519,9 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::list_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.list_core_v1_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::list_namespaced_limit_range`](./struct.LimitRange.html#method.list_namespaced_limit_range)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NamespacedLimitRangeOptional<'a> {
+pub struct ListNamespacedLimitRangeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -544,15 +544,15 @@ pub struct ListCoreV1NamespacedLimitRangeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::list_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.list_core_v1_namespaced_limit_range)
+/// Parses the HTTP response of [`LimitRange::list_namespaced_limit_range`](./struct.LimitRange.html#method.list_namespaced_limit_range)
 #[derive(Debug)]
-pub enum ListCoreV1NamespacedLimitRangeResponse {
+pub enum ListNamespacedLimitRangeResponse {
     Ok(crate::v1_10::api::core::v1::LimitRangeList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NamespacedLimitRangeResponse {
+impl crate::Response for ListNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -561,10 +561,10 @@ impl crate::Response for ListCoreV1NamespacedLimitRangeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NamespacedLimitRangeResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedLimitRangeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NamespacedLimitRangeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedLimitRangeResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedLimitRangeResponse::Other, 0)),
         }
     }
 }
@@ -574,7 +574,7 @@ impl crate::Response for ListCoreV1NamespacedLimitRangeResponse {
 impl LimitRange {
     /// partially update the specified LimitRange
     ///
-    /// Use [`PatchCoreV1NamespacedLimitRangeResponse`](./enum.PatchCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedLimitRangeResponse`](./enum.PatchNamespacedLimitRangeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -591,13 +591,13 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_limit_range(
+    pub fn patch_namespaced_limit_range(
         name: &str,
         namespace: &str,
         body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedLimitRangeOptional<'_>,
+        optional: PatchNamespacedLimitRangeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedLimitRangeOptional {
+        let PatchNamespacedLimitRangeOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/limitranges/{name}?", name = name, namespace = namespace);
@@ -613,22 +613,22 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::patch_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.patch_core_v1_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::patch_namespaced_limit_range`](./struct.LimitRange.html#method.patch_namespaced_limit_range)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedLimitRangeOptional<'a> {
+pub struct PatchNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LimitRange::patch_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.patch_core_v1_namespaced_limit_range)
+/// Parses the HTTP response of [`LimitRange::patch_namespaced_limit_range`](./struct.LimitRange.html#method.patch_namespaced_limit_range)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedLimitRangeResponse {
+pub enum PatchNamespacedLimitRangeResponse {
     Ok(crate::v1_10::api::core::v1::LimitRange),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedLimitRangeResponse {
+impl crate::Response for PatchNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -637,10 +637,10 @@ impl crate::Response for PatchCoreV1NamespacedLimitRangeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedLimitRangeResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedLimitRangeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedLimitRangeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedLimitRangeResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedLimitRangeResponse::Other, 0)),
         }
     }
 }
@@ -650,7 +650,7 @@ impl crate::Response for PatchCoreV1NamespacedLimitRangeResponse {
 impl LimitRange {
     /// read the specified LimitRange
     ///
-    /// Use [`ReadCoreV1NamespacedLimitRangeResponse`](./enum.ReadCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedLimitRangeResponse`](./enum.ReadNamespacedLimitRangeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -665,12 +665,12 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_limit_range(
+    pub fn read_namespaced_limit_range(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedLimitRangeOptional<'_>,
+        optional: ReadNamespacedLimitRangeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedLimitRangeOptional {
+        let ReadNamespacedLimitRangeOptional {
             exact,
             export,
             pretty,
@@ -694,9 +694,9 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::read_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.read_core_v1_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::read_namespaced_limit_range`](./struct.LimitRange.html#method.read_namespaced_limit_range)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedLimitRangeOptional<'a> {
+pub struct ReadNamespacedLimitRangeOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -705,15 +705,15 @@ pub struct ReadCoreV1NamespacedLimitRangeOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LimitRange::read_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.read_core_v1_namespaced_limit_range)
+/// Parses the HTTP response of [`LimitRange::read_namespaced_limit_range`](./struct.LimitRange.html#method.read_namespaced_limit_range)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedLimitRangeResponse {
+pub enum ReadNamespacedLimitRangeResponse {
     Ok(crate::v1_10::api::core::v1::LimitRange),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedLimitRangeResponse {
+impl crate::Response for ReadNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -722,10 +722,10 @@ impl crate::Response for ReadCoreV1NamespacedLimitRangeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedLimitRangeResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedLimitRangeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedLimitRangeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedLimitRangeResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedLimitRangeResponse::Other, 0)),
         }
     }
 }
@@ -735,7 +735,7 @@ impl crate::Response for ReadCoreV1NamespacedLimitRangeResponse {
 impl LimitRange {
     /// replace the specified LimitRange
     ///
-    /// Use [`ReplaceCoreV1NamespacedLimitRangeResponse`](./enum.ReplaceCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedLimitRangeResponse`](./enum.ReplaceNamespacedLimitRangeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -752,13 +752,13 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_limit_range(
+    pub fn replace_namespaced_limit_range(
         name: &str,
         namespace: &str,
         body: &crate::v1_10::api::core::v1::LimitRange,
-        optional: ReplaceCoreV1NamespacedLimitRangeOptional<'_>,
+        optional: ReplaceNamespacedLimitRangeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedLimitRangeOptional {
+        let ReplaceNamespacedLimitRangeOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/limitranges/{name}?", name = name, namespace = namespace);
@@ -774,23 +774,23 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::replace_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.replace_core_v1_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::replace_namespaced_limit_range`](./struct.LimitRange.html#method.replace_namespaced_limit_range)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedLimitRangeOptional<'a> {
+pub struct ReplaceNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LimitRange::replace_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.replace_core_v1_namespaced_limit_range)
+/// Parses the HTTP response of [`LimitRange::replace_namespaced_limit_range`](./struct.LimitRange.html#method.replace_namespaced_limit_range)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedLimitRangeResponse {
+pub enum ReplaceNamespacedLimitRangeResponse {
     Ok(crate::v1_10::api::core::v1::LimitRange),
     Created(crate::v1_10::api::core::v1::LimitRange),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedLimitRangeResponse {
+impl crate::Response for ReplaceNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -799,7 +799,7 @@ impl crate::Response for ReplaceCoreV1NamespacedLimitRangeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedLimitRangeResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedLimitRangeResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -807,10 +807,10 @@ impl crate::Response for ReplaceCoreV1NamespacedLimitRangeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedLimitRangeResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedLimitRangeResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedLimitRangeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedLimitRangeResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedLimitRangeResponse::Other, 0)),
         }
     }
 }
@@ -820,17 +820,17 @@ impl crate::Response for ReplaceCoreV1NamespacedLimitRangeResponse {
 impl LimitRange {
     /// watch individual changes to a list of LimitRange
     ///
-    /// Use [`WatchCoreV1LimitRangeListForAllNamespacesResponse`](./enum.WatchCoreV1LimitRangeListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchLimitRangeListForAllNamespacesResponse`](./enum.WatchLimitRangeListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_limit_range_list_for_all_namespaces(
-        optional: WatchCoreV1LimitRangeListForAllNamespacesOptional<'_>,
+    pub fn watch_limit_range_list_for_all_namespaces(
+        optional: WatchLimitRangeListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1LimitRangeListForAllNamespacesOptional {
+        let WatchLimitRangeListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -878,9 +878,9 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::watch_core_v1_limit_range_list_for_all_namespaces`](./struct.LimitRange.html#method.watch_core_v1_limit_range_list_for_all_namespaces)
+/// Optional parameters of [`LimitRange::watch_limit_range_list_for_all_namespaces`](./struct.LimitRange.html#method.watch_limit_range_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1LimitRangeListForAllNamespacesOptional<'a> {
+pub struct WatchLimitRangeListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -903,15 +903,15 @@ pub struct WatchCoreV1LimitRangeListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::watch_core_v1_limit_range_list_for_all_namespaces`](./struct.LimitRange.html#method.watch_core_v1_limit_range_list_for_all_namespaces)
+/// Parses the HTTP response of [`LimitRange::watch_limit_range_list_for_all_namespaces`](./struct.LimitRange.html#method.watch_limit_range_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchCoreV1LimitRangeListForAllNamespacesResponse {
+pub enum WatchLimitRangeListForAllNamespacesResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1LimitRangeListForAllNamespacesResponse {
+impl crate::Response for WatchLimitRangeListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -922,10 +922,10 @@ impl crate::Response for WatchCoreV1LimitRangeListForAllNamespacesResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1LimitRangeListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchLimitRangeListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1LimitRangeListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1LimitRangeListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchLimitRangeListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchLimitRangeListForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -935,7 +935,7 @@ impl crate::Response for WatchCoreV1LimitRangeListForAllNamespacesResponse {
 impl LimitRange {
     /// watch changes to an object of kind LimitRange
     ///
-    /// Use [`WatchCoreV1NamespacedLimitRangeResponse`](./enum.WatchCoreV1NamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedLimitRangeResponse`](./enum.WatchNamespacedLimitRangeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -950,12 +950,12 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_limit_range(
+    pub fn watch_namespaced_limit_range(
         name: &str,
         namespace: &str,
-        optional: WatchCoreV1NamespacedLimitRangeOptional<'_>,
+        optional: WatchNamespacedLimitRangeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedLimitRangeOptional {
+        let WatchNamespacedLimitRangeOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1003,9 +1003,9 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::watch_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.watch_core_v1_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::watch_namespaced_limit_range`](./struct.LimitRange.html#method.watch_namespaced_limit_range)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedLimitRangeOptional<'a> {
+pub struct WatchNamespacedLimitRangeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1028,15 +1028,15 @@ pub struct WatchCoreV1NamespacedLimitRangeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::watch_core_v1_namespaced_limit_range`](./struct.LimitRange.html#method.watch_core_v1_namespaced_limit_range)
+/// Parses the HTTP response of [`LimitRange::watch_namespaced_limit_range`](./struct.LimitRange.html#method.watch_namespaced_limit_range)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedLimitRangeResponse {
+pub enum WatchNamespacedLimitRangeResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedLimitRangeResponse {
+impl crate::Response for WatchNamespacedLimitRangeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1047,10 +1047,10 @@ impl crate::Response for WatchCoreV1NamespacedLimitRangeResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedLimitRangeResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedLimitRangeResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedLimitRangeResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedLimitRangeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedLimitRangeResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedLimitRangeResponse::Other, 0)),
         }
     }
 }
@@ -1060,7 +1060,7 @@ impl crate::Response for WatchCoreV1NamespacedLimitRangeResponse {
 impl LimitRange {
     /// watch individual changes to a list of LimitRange
     ///
-    /// Use [`WatchCoreV1NamespacedLimitRangeListResponse`](./enum.WatchCoreV1NamespacedLimitRangeListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedLimitRangeListResponse`](./enum.WatchNamespacedLimitRangeListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1071,11 +1071,11 @@ impl LimitRange {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_limit_range_list(
+    pub fn watch_namespaced_limit_range_list(
         namespace: &str,
-        optional: WatchCoreV1NamespacedLimitRangeListOptional<'_>,
+        optional: WatchNamespacedLimitRangeListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedLimitRangeListOptional {
+        let WatchNamespacedLimitRangeListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1123,9 +1123,9 @@ impl LimitRange {
     }
 }
 
-/// Optional parameters of [`LimitRange::watch_core_v1_namespaced_limit_range_list`](./struct.LimitRange.html#method.watch_core_v1_namespaced_limit_range_list)
+/// Optional parameters of [`LimitRange::watch_namespaced_limit_range_list`](./struct.LimitRange.html#method.watch_namespaced_limit_range_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedLimitRangeListOptional<'a> {
+pub struct WatchNamespacedLimitRangeListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1148,15 +1148,15 @@ pub struct WatchCoreV1NamespacedLimitRangeListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::watch_core_v1_namespaced_limit_range_list`](./struct.LimitRange.html#method.watch_core_v1_namespaced_limit_range_list)
+/// Parses the HTTP response of [`LimitRange::watch_namespaced_limit_range_list`](./struct.LimitRange.html#method.watch_namespaced_limit_range_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedLimitRangeListResponse {
+pub enum WatchNamespacedLimitRangeListResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedLimitRangeListResponse {
+impl crate::Response for WatchNamespacedLimitRangeListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1167,10 +1167,10 @@ impl crate::Response for WatchCoreV1NamespacedLimitRangeListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedLimitRangeListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedLimitRangeListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedLimitRangeListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedLimitRangeListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedLimitRangeListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedLimitRangeListResponse::Other, 0)),
         }
     }
 }

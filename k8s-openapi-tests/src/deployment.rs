@@ -9,22 +9,16 @@ fn list() {
 	use k8s_openapi::apimachinery::pkg::util as util;
 
 	crate::Client::with("deployment-list", |client| {
-		k8s_if_1_8! {
-			let request = apps::Deployment::list_apps_v1beta2_namespaced_deployment("kube-system", Default::default());
-		}
-		k8s_if_ge_1_9! {
-			let request = apps::Deployment::list_apps_v1_namespaced_deployment("kube-system", Default::default());
-		}
-		let request = request.expect("couldn't list deployments");
+		let request =
+			apps::Deployment::list_namespaced_deployment("kube-system", Default::default())
+			.expect("couldn't list deployments");
 		let response = client.execute(request).expect("couldn't list deployments");;
 		let deployment_list =
-			crate::get_single_value(response, |response, status_code, _| k8s_match!(response, {
-				k8s_if_1_8!(apps::ListAppsV1beta2NamespacedDeploymentResponse::Ok(deployment_list) =>
-					Ok(crate::ValueResult::GotValue(deployment_list))),
-				k8s_if_ge_1_9!(apps::ListAppsV1NamespacedDeploymentResponse::Ok(deployment_list) =>
-					Ok(crate::ValueResult::GotValue(deployment_list))),
+			crate::get_single_value(response, |response, status_code, _| match response {
+				apps::ListNamespacedDeploymentResponse::Ok(deployment_list) =>
+					Ok(crate::ValueResult::GotValue(deployment_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
-			})).expect("couldn't list deployments");
+			}).expect("couldn't list deployments");
 
 		assert_eq!(k8s_openapi::kind(&deployment_list), "DeploymentList");
 

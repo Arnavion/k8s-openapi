@@ -17,7 +17,7 @@ pub struct Role {
 impl Role {
     /// create a Role
     ///
-    /// Use [`CreateRbacAuthorizationV1NamespacedRoleResponse`](./enum.CreateRbacAuthorizationV1NamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedRoleResponse`](./enum.CreateNamespacedRoleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -30,12 +30,12 @@ impl Role {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_rbac_authorization_v1_namespaced_role(
+    pub fn create_namespaced_role(
         namespace: &str,
         body: &crate::v1_13::api::rbac::v1::Role,
-        optional: CreateRbacAuthorizationV1NamespacedRoleOptional<'_>,
+        optional: CreateNamespacedRoleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateRbacAuthorizationV1NamespacedRoleOptional {
+        let CreateNamespacedRoleOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -59,9 +59,9 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::create_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.create_rbac_authorization_v1_namespaced_role)
+/// Optional parameters of [`Role::create_namespaced_role`](./struct.Role.html#method.create_namespaced_role)
 #[derive(Debug, Default)]
-pub struct CreateRbacAuthorizationV1NamespacedRoleOptional<'a> {
+pub struct CreateNamespacedRoleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -70,9 +70,9 @@ pub struct CreateRbacAuthorizationV1NamespacedRoleOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Role::create_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.create_rbac_authorization_v1_namespaced_role)
+/// Parses the HTTP response of [`Role::create_namespaced_role`](./struct.Role.html#method.create_namespaced_role)
 #[derive(Debug)]
-pub enum CreateRbacAuthorizationV1NamespacedRoleResponse {
+pub enum CreateNamespacedRoleResponse {
     Ok(crate::v1_13::api::rbac::v1::Role),
     Created(crate::v1_13::api::rbac::v1::Role),
     Accepted(crate::v1_13::api::rbac::v1::Role),
@@ -80,7 +80,7 @@ pub enum CreateRbacAuthorizationV1NamespacedRoleResponse {
     Other,
 }
 
-impl crate::Response for CreateRbacAuthorizationV1NamespacedRoleResponse {
+impl crate::Response for CreateNamespacedRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -89,7 +89,7 @@ impl crate::Response for CreateRbacAuthorizationV1NamespacedRoleResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateRbacAuthorizationV1NamespacedRoleResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedRoleResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -97,7 +97,7 @@ impl crate::Response for CreateRbacAuthorizationV1NamespacedRoleResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateRbacAuthorizationV1NamespacedRoleResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedRoleResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -105,10 +105,10 @@ impl crate::Response for CreateRbacAuthorizationV1NamespacedRoleResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateRbacAuthorizationV1NamespacedRoleResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedRoleResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateRbacAuthorizationV1NamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((CreateRbacAuthorizationV1NamespacedRoleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedRoleResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedRoleResponse::Other, 0)),
         }
     }
 }
@@ -118,7 +118,7 @@ impl crate::Response for CreateRbacAuthorizationV1NamespacedRoleResponse {
 impl Role {
     /// delete collection of Role
     ///
-    /// Use [`DeleteRbacAuthorizationV1CollectionNamespacedRoleResponse`](./enum.DeleteRbacAuthorizationV1CollectionNamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedRoleResponse`](./enum.DeleteCollectionNamespacedRoleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -129,11 +129,11 @@ impl Role {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_rbac_authorization_v1_collection_namespaced_role(
+    pub fn delete_collection_namespaced_role(
         namespace: &str,
-        optional: DeleteRbacAuthorizationV1CollectionNamespacedRoleOptional<'_>,
+        optional: DeleteCollectionNamespacedRoleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteRbacAuthorizationV1CollectionNamespacedRoleOptional {
+        let DeleteCollectionNamespacedRoleOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -181,9 +181,9 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::delete_rbac_authorization_v1_collection_namespaced_role`](./struct.Role.html#method.delete_rbac_authorization_v1_collection_namespaced_role)
+/// Optional parameters of [`Role::delete_collection_namespaced_role`](./struct.Role.html#method.delete_collection_namespaced_role)
 #[derive(Debug, Default)]
-pub struct DeleteRbacAuthorizationV1CollectionNamespacedRoleOptional<'a> {
+pub struct DeleteCollectionNamespacedRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -208,16 +208,16 @@ pub struct DeleteRbacAuthorizationV1CollectionNamespacedRoleOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::delete_rbac_authorization_v1_collection_namespaced_role`](./struct.Role.html#method.delete_rbac_authorization_v1_collection_namespaced_role)
+/// Parses the HTTP response of [`Role::delete_collection_namespaced_role`](./struct.Role.html#method.delete_collection_namespaced_role)
 #[derive(Debug)]
-pub enum DeleteRbacAuthorizationV1CollectionNamespacedRoleResponse {
+pub enum DeleteCollectionNamespacedRoleResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::rbac::v1::Role),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteRbacAuthorizationV1CollectionNamespacedRoleResponse {
+impl crate::Response for DeleteCollectionNamespacedRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -233,16 +233,16 @@ impl crate::Response for DeleteRbacAuthorizationV1CollectionNamespacedRoleRespon
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1CollectionNamespacedRoleResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedRoleResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1CollectionNamespacedRoleResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedRoleResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1CollectionNamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((DeleteRbacAuthorizationV1CollectionNamespacedRoleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedRoleResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedRoleResponse::Other, 0)),
         }
     }
 }
@@ -252,7 +252,7 @@ impl crate::Response for DeleteRbacAuthorizationV1CollectionNamespacedRoleRespon
 impl Role {
     /// delete a Role
     ///
-    /// Use [`DeleteRbacAuthorizationV1NamespacedRoleResponse`](./enum.DeleteRbacAuthorizationV1NamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedRoleResponse`](./enum.DeleteNamespacedRoleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -267,12 +267,12 @@ impl Role {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_rbac_authorization_v1_namespaced_role(
+    pub fn delete_namespaced_role(
         name: &str,
         namespace: &str,
-        optional: DeleteRbacAuthorizationV1NamespacedRoleOptional<'_>,
+        optional: DeleteNamespacedRoleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteRbacAuthorizationV1NamespacedRoleOptional {
+        let DeleteNamespacedRoleOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -304,9 +304,9 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::delete_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.delete_rbac_authorization_v1_namespaced_role)
+/// Optional parameters of [`Role::delete_namespaced_role`](./struct.Role.html#method.delete_namespaced_role)
 #[derive(Debug, Default)]
-pub struct DeleteRbacAuthorizationV1NamespacedRoleOptional<'a> {
+pub struct DeleteNamespacedRoleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -319,9 +319,9 @@ pub struct DeleteRbacAuthorizationV1NamespacedRoleOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Role::delete_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.delete_rbac_authorization_v1_namespaced_role)
+/// Parses the HTTP response of [`Role::delete_namespaced_role`](./struct.Role.html#method.delete_namespaced_role)
 #[derive(Debug)]
-pub enum DeleteRbacAuthorizationV1NamespacedRoleResponse {
+pub enum DeleteNamespacedRoleResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::rbac::v1::Role),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -329,7 +329,7 @@ pub enum DeleteRbacAuthorizationV1NamespacedRoleResponse {
     Other,
 }
 
-impl crate::Response for DeleteRbacAuthorizationV1NamespacedRoleResponse {
+impl crate::Response for DeleteNamespacedRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -345,12 +345,12 @@ impl crate::Response for DeleteRbacAuthorizationV1NamespacedRoleResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1NamespacedRoleResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedRoleResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteRbacAuthorizationV1NamespacedRoleResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedRoleResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -359,10 +359,10 @@ impl crate::Response for DeleteRbacAuthorizationV1NamespacedRoleResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteRbacAuthorizationV1NamespacedRoleResponse::Accepted(result), buf.len()))
+                Ok((DeleteNamespacedRoleResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteRbacAuthorizationV1NamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((DeleteRbacAuthorizationV1NamespacedRoleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedRoleResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedRoleResponse::Other, 0)),
         }
     }
 }
@@ -372,7 +372,7 @@ impl crate::Response for DeleteRbacAuthorizationV1NamespacedRoleResponse {
 impl Role {
     /// list or watch objects of kind Role
     ///
-    /// Use [`ListRbacAuthorizationV1NamespacedRoleResponse`](./enum.ListRbacAuthorizationV1NamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedRoleResponse`](./enum.ListNamespacedRoleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -383,11 +383,11 @@ impl Role {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_rbac_authorization_v1_namespaced_role(
+    pub fn list_namespaced_role(
         namespace: &str,
-        optional: ListRbacAuthorizationV1NamespacedRoleOptional<'_>,
+        optional: ListNamespacedRoleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListRbacAuthorizationV1NamespacedRoleOptional {
+        let ListNamespacedRoleOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -435,9 +435,9 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::list_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.list_rbac_authorization_v1_namespaced_role)
+/// Optional parameters of [`Role::list_namespaced_role`](./struct.Role.html#method.list_namespaced_role)
 #[derive(Debug, Default)]
-pub struct ListRbacAuthorizationV1NamespacedRoleOptional<'a> {
+pub struct ListNamespacedRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -462,15 +462,15 @@ pub struct ListRbacAuthorizationV1NamespacedRoleOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::list_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.list_rbac_authorization_v1_namespaced_role)
+/// Parses the HTTP response of [`Role::list_namespaced_role`](./struct.Role.html#method.list_namespaced_role)
 #[derive(Debug)]
-pub enum ListRbacAuthorizationV1NamespacedRoleResponse {
+pub enum ListNamespacedRoleResponse {
     Ok(crate::v1_13::api::rbac::v1::RoleList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListRbacAuthorizationV1NamespacedRoleResponse {
+impl crate::Response for ListNamespacedRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -479,10 +479,10 @@ impl crate::Response for ListRbacAuthorizationV1NamespacedRoleResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListRbacAuthorizationV1NamespacedRoleResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedRoleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListRbacAuthorizationV1NamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((ListRbacAuthorizationV1NamespacedRoleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedRoleResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedRoleResponse::Other, 0)),
         }
     }
 }
@@ -492,17 +492,17 @@ impl crate::Response for ListRbacAuthorizationV1NamespacedRoleResponse {
 impl Role {
     /// list or watch objects of kind Role
     ///
-    /// Use [`ListRbacAuthorizationV1RoleForAllNamespacesResponse`](./enum.ListRbacAuthorizationV1RoleForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListRoleForAllNamespacesResponse`](./enum.ListRoleForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_rbac_authorization_v1_role_for_all_namespaces(
-        optional: ListRbacAuthorizationV1RoleForAllNamespacesOptional<'_>,
+    pub fn list_role_for_all_namespaces(
+        optional: ListRoleForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListRbacAuthorizationV1RoleForAllNamespacesOptional {
+        let ListRoleForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -550,9 +550,9 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::list_rbac_authorization_v1_role_for_all_namespaces`](./struct.Role.html#method.list_rbac_authorization_v1_role_for_all_namespaces)
+/// Optional parameters of [`Role::list_role_for_all_namespaces`](./struct.Role.html#method.list_role_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListRbacAuthorizationV1RoleForAllNamespacesOptional<'a> {
+pub struct ListRoleForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -577,15 +577,15 @@ pub struct ListRbacAuthorizationV1RoleForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::list_rbac_authorization_v1_role_for_all_namespaces`](./struct.Role.html#method.list_rbac_authorization_v1_role_for_all_namespaces)
+/// Parses the HTTP response of [`Role::list_role_for_all_namespaces`](./struct.Role.html#method.list_role_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListRbacAuthorizationV1RoleForAllNamespacesResponse {
+pub enum ListRoleForAllNamespacesResponse {
     Ok(crate::v1_13::api::rbac::v1::RoleList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListRbacAuthorizationV1RoleForAllNamespacesResponse {
+impl crate::Response for ListRoleForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -594,10 +594,10 @@ impl crate::Response for ListRbacAuthorizationV1RoleForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListRbacAuthorizationV1RoleForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListRoleForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListRbacAuthorizationV1RoleForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListRbacAuthorizationV1RoleForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListRoleForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListRoleForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -607,7 +607,7 @@ impl crate::Response for ListRbacAuthorizationV1RoleForAllNamespacesResponse {
 impl Role {
     /// partially update the specified Role
     ///
-    /// Use [`PatchRbacAuthorizationV1NamespacedRoleResponse`](./enum.PatchRbacAuthorizationV1NamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedRoleResponse`](./enum.PatchNamespacedRoleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -624,13 +624,13 @@ impl Role {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_rbac_authorization_v1_namespaced_role(
+    pub fn patch_namespaced_role(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchRbacAuthorizationV1NamespacedRoleOptional<'_>,
+        optional: PatchNamespacedRoleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchRbacAuthorizationV1NamespacedRoleOptional {
+        let PatchNamespacedRoleOptional {
             dry_run,
             pretty,
         } = optional;
@@ -650,24 +650,24 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::patch_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.patch_rbac_authorization_v1_namespaced_role)
+/// Optional parameters of [`Role::patch_namespaced_role`](./struct.Role.html#method.patch_namespaced_role)
 #[derive(Debug, Default)]
-pub struct PatchRbacAuthorizationV1NamespacedRoleOptional<'a> {
+pub struct PatchNamespacedRoleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Role::patch_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.patch_rbac_authorization_v1_namespaced_role)
+/// Parses the HTTP response of [`Role::patch_namespaced_role`](./struct.Role.html#method.patch_namespaced_role)
 #[derive(Debug)]
-pub enum PatchRbacAuthorizationV1NamespacedRoleResponse {
+pub enum PatchNamespacedRoleResponse {
     Ok(crate::v1_13::api::rbac::v1::Role),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchRbacAuthorizationV1NamespacedRoleResponse {
+impl crate::Response for PatchNamespacedRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -676,10 +676,10 @@ impl crate::Response for PatchRbacAuthorizationV1NamespacedRoleResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchRbacAuthorizationV1NamespacedRoleResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedRoleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchRbacAuthorizationV1NamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((PatchRbacAuthorizationV1NamespacedRoleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedRoleResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedRoleResponse::Other, 0)),
         }
     }
 }
@@ -689,7 +689,7 @@ impl crate::Response for PatchRbacAuthorizationV1NamespacedRoleResponse {
 impl Role {
     /// read the specified Role
     ///
-    /// Use [`ReadRbacAuthorizationV1NamespacedRoleResponse`](./enum.ReadRbacAuthorizationV1NamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedRoleResponse`](./enum.ReadNamespacedRoleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -704,12 +704,12 @@ impl Role {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_rbac_authorization_v1_namespaced_role(
+    pub fn read_namespaced_role(
         name: &str,
         namespace: &str,
-        optional: ReadRbacAuthorizationV1NamespacedRoleOptional<'_>,
+        optional: ReadNamespacedRoleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadRbacAuthorizationV1NamespacedRoleOptional {
+        let ReadNamespacedRoleOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles/{name}?", name = name, namespace = namespace);
@@ -725,22 +725,22 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::read_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.read_rbac_authorization_v1_namespaced_role)
+/// Optional parameters of [`Role::read_namespaced_role`](./struct.Role.html#method.read_namespaced_role)
 #[derive(Debug, Default)]
-pub struct ReadRbacAuthorizationV1NamespacedRoleOptional<'a> {
+pub struct ReadNamespacedRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Role::read_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.read_rbac_authorization_v1_namespaced_role)
+/// Parses the HTTP response of [`Role::read_namespaced_role`](./struct.Role.html#method.read_namespaced_role)
 #[derive(Debug)]
-pub enum ReadRbacAuthorizationV1NamespacedRoleResponse {
+pub enum ReadNamespacedRoleResponse {
     Ok(crate::v1_13::api::rbac::v1::Role),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadRbacAuthorizationV1NamespacedRoleResponse {
+impl crate::Response for ReadNamespacedRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -749,10 +749,10 @@ impl crate::Response for ReadRbacAuthorizationV1NamespacedRoleResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadRbacAuthorizationV1NamespacedRoleResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedRoleResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadRbacAuthorizationV1NamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((ReadRbacAuthorizationV1NamespacedRoleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedRoleResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedRoleResponse::Other, 0)),
         }
     }
 }
@@ -762,7 +762,7 @@ impl crate::Response for ReadRbacAuthorizationV1NamespacedRoleResponse {
 impl Role {
     /// replace the specified Role
     ///
-    /// Use [`ReplaceRbacAuthorizationV1NamespacedRoleResponse`](./enum.ReplaceRbacAuthorizationV1NamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedRoleResponse`](./enum.ReplaceNamespacedRoleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -779,13 +779,13 @@ impl Role {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_rbac_authorization_v1_namespaced_role(
+    pub fn replace_namespaced_role(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::rbac::v1::Role,
-        optional: ReplaceRbacAuthorizationV1NamespacedRoleOptional<'_>,
+        optional: ReplaceNamespacedRoleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceRbacAuthorizationV1NamespacedRoleOptional {
+        let ReplaceNamespacedRoleOptional {
             dry_run,
             pretty,
         } = optional;
@@ -805,25 +805,25 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::replace_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.replace_rbac_authorization_v1_namespaced_role)
+/// Optional parameters of [`Role::replace_namespaced_role`](./struct.Role.html#method.replace_namespaced_role)
 #[derive(Debug, Default)]
-pub struct ReplaceRbacAuthorizationV1NamespacedRoleOptional<'a> {
+pub struct ReplaceNamespacedRoleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Role::replace_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.replace_rbac_authorization_v1_namespaced_role)
+/// Parses the HTTP response of [`Role::replace_namespaced_role`](./struct.Role.html#method.replace_namespaced_role)
 #[derive(Debug)]
-pub enum ReplaceRbacAuthorizationV1NamespacedRoleResponse {
+pub enum ReplaceNamespacedRoleResponse {
     Ok(crate::v1_13::api::rbac::v1::Role),
     Created(crate::v1_13::api::rbac::v1::Role),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceRbacAuthorizationV1NamespacedRoleResponse {
+impl crate::Response for ReplaceNamespacedRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -832,7 +832,7 @@ impl crate::Response for ReplaceRbacAuthorizationV1NamespacedRoleResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceRbacAuthorizationV1NamespacedRoleResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedRoleResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -840,10 +840,10 @@ impl crate::Response for ReplaceRbacAuthorizationV1NamespacedRoleResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceRbacAuthorizationV1NamespacedRoleResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedRoleResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceRbacAuthorizationV1NamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceRbacAuthorizationV1NamespacedRoleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedRoleResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedRoleResponse::Other, 0)),
         }
     }
 }
@@ -853,7 +853,7 @@ impl crate::Response for ReplaceRbacAuthorizationV1NamespacedRoleResponse {
 impl Role {
     /// watch changes to an object of kind Role. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchRbacAuthorizationV1NamespacedRoleResponse`](./enum.WatchRbacAuthorizationV1NamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedRoleResponse`](./enum.WatchNamespacedRoleResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -868,12 +868,12 @@ impl Role {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_rbac_authorization_v1_namespaced_role(
+    pub fn watch_namespaced_role(
         name: &str,
         namespace: &str,
-        optional: WatchRbacAuthorizationV1NamespacedRoleOptional<'_>,
+        optional: WatchNamespacedRoleOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchRbacAuthorizationV1NamespacedRoleOptional {
+        let WatchNamespacedRoleOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -921,9 +921,9 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::watch_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.watch_rbac_authorization_v1_namespaced_role)
+/// Optional parameters of [`Role::watch_namespaced_role`](./struct.Role.html#method.watch_namespaced_role)
 #[derive(Debug, Default)]
-pub struct WatchRbacAuthorizationV1NamespacedRoleOptional<'a> {
+pub struct WatchNamespacedRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -948,15 +948,15 @@ pub struct WatchRbacAuthorizationV1NamespacedRoleOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::watch_rbac_authorization_v1_namespaced_role`](./struct.Role.html#method.watch_rbac_authorization_v1_namespaced_role)
+/// Parses the HTTP response of [`Role::watch_namespaced_role`](./struct.Role.html#method.watch_namespaced_role)
 #[derive(Debug)]
-pub enum WatchRbacAuthorizationV1NamespacedRoleResponse {
+pub enum WatchNamespacedRoleResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchRbacAuthorizationV1NamespacedRoleResponse {
+impl crate::Response for WatchNamespacedRoleResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -967,10 +967,10 @@ impl crate::Response for WatchRbacAuthorizationV1NamespacedRoleResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchRbacAuthorizationV1NamespacedRoleResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedRoleResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1NamespacedRoleResponse::Unauthorized, 0)),
-            _ => Ok((WatchRbacAuthorizationV1NamespacedRoleResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedRoleResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedRoleResponse::Other, 0)),
         }
     }
 }
@@ -980,7 +980,7 @@ impl crate::Response for WatchRbacAuthorizationV1NamespacedRoleResponse {
 impl Role {
     /// watch individual changes to a list of Role. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchRbacAuthorizationV1NamespacedRoleListResponse`](./enum.WatchRbacAuthorizationV1NamespacedRoleListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedRoleListResponse`](./enum.WatchNamespacedRoleListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -991,11 +991,11 @@ impl Role {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_rbac_authorization_v1_namespaced_role_list(
+    pub fn watch_namespaced_role_list(
         namespace: &str,
-        optional: WatchRbacAuthorizationV1NamespacedRoleListOptional<'_>,
+        optional: WatchNamespacedRoleListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchRbacAuthorizationV1NamespacedRoleListOptional {
+        let WatchNamespacedRoleListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1043,9 +1043,9 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::watch_rbac_authorization_v1_namespaced_role_list`](./struct.Role.html#method.watch_rbac_authorization_v1_namespaced_role_list)
+/// Optional parameters of [`Role::watch_namespaced_role_list`](./struct.Role.html#method.watch_namespaced_role_list)
 #[derive(Debug, Default)]
-pub struct WatchRbacAuthorizationV1NamespacedRoleListOptional<'a> {
+pub struct WatchNamespacedRoleListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1070,15 +1070,15 @@ pub struct WatchRbacAuthorizationV1NamespacedRoleListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::watch_rbac_authorization_v1_namespaced_role_list`](./struct.Role.html#method.watch_rbac_authorization_v1_namespaced_role_list)
+/// Parses the HTTP response of [`Role::watch_namespaced_role_list`](./struct.Role.html#method.watch_namespaced_role_list)
 #[derive(Debug)]
-pub enum WatchRbacAuthorizationV1NamespacedRoleListResponse {
+pub enum WatchNamespacedRoleListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchRbacAuthorizationV1NamespacedRoleListResponse {
+impl crate::Response for WatchNamespacedRoleListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1089,10 +1089,10 @@ impl crate::Response for WatchRbacAuthorizationV1NamespacedRoleListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchRbacAuthorizationV1NamespacedRoleListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedRoleListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1NamespacedRoleListResponse::Unauthorized, 0)),
-            _ => Ok((WatchRbacAuthorizationV1NamespacedRoleListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedRoleListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedRoleListResponse::Other, 0)),
         }
     }
 }
@@ -1102,17 +1102,17 @@ impl crate::Response for WatchRbacAuthorizationV1NamespacedRoleListResponse {
 impl Role {
     /// watch individual changes to a list of Role. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchRbacAuthorizationV1RoleListForAllNamespacesResponse`](./enum.WatchRbacAuthorizationV1RoleListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchRoleListForAllNamespacesResponse`](./enum.WatchRoleListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_rbac_authorization_v1_role_list_for_all_namespaces(
-        optional: WatchRbacAuthorizationV1RoleListForAllNamespacesOptional<'_>,
+    pub fn watch_role_list_for_all_namespaces(
+        optional: WatchRoleListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchRbacAuthorizationV1RoleListForAllNamespacesOptional {
+        let WatchRoleListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1160,9 +1160,9 @@ impl Role {
     }
 }
 
-/// Optional parameters of [`Role::watch_rbac_authorization_v1_role_list_for_all_namespaces`](./struct.Role.html#method.watch_rbac_authorization_v1_role_list_for_all_namespaces)
+/// Optional parameters of [`Role::watch_role_list_for_all_namespaces`](./struct.Role.html#method.watch_role_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchRbacAuthorizationV1RoleListForAllNamespacesOptional<'a> {
+pub struct WatchRoleListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1187,15 +1187,15 @@ pub struct WatchRbacAuthorizationV1RoleListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::watch_rbac_authorization_v1_role_list_for_all_namespaces`](./struct.Role.html#method.watch_rbac_authorization_v1_role_list_for_all_namespaces)
+/// Parses the HTTP response of [`Role::watch_role_list_for_all_namespaces`](./struct.Role.html#method.watch_role_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchRbacAuthorizationV1RoleListForAllNamespacesResponse {
+pub enum WatchRoleListForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchRbacAuthorizationV1RoleListForAllNamespacesResponse {
+impl crate::Response for WatchRoleListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1206,10 +1206,10 @@ impl crate::Response for WatchRbacAuthorizationV1RoleListForAllNamespacesRespons
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchRbacAuthorizationV1RoleListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchRoleListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchRbacAuthorizationV1RoleListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchRbacAuthorizationV1RoleListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchRoleListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchRoleListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

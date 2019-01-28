@@ -20,7 +20,7 @@ pub struct PersistentVolumeClaim {
 impl PersistentVolumeClaim {
     /// create a PersistentVolumeClaim
     ///
-    /// Use [`CreateCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.CreateCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedPersistentVolumeClaimResponse`](./enum.CreateNamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_persistent_volume_claim(
+    pub fn create_namespaced_persistent_volume_claim(
         namespace: &str,
         body: &crate::v1_8::api::core::v1::PersistentVolumeClaim,
-        optional: CreateCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
+        optional: CreateNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedPersistentVolumeClaimOptional {
+        let CreateNamespacedPersistentVolumeClaimOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims?", namespace = namespace);
@@ -54,22 +54,22 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::create_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.create_core_v1_namespaced_persistent_volume_claim)
+/// Optional parameters of [`PersistentVolumeClaim::create_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.create_namespaced_persistent_volume_claim)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+pub struct CreateNamespacedPersistentVolumeClaimOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::create_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.create_core_v1_namespaced_persistent_volume_claim)
+/// Parses the HTTP response of [`PersistentVolumeClaim::create_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.create_namespaced_persistent_volume_claim)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedPersistentVolumeClaimResponse {
+pub enum CreateNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedPersistentVolumeClaimResponse {
+impl crate::Response for CreateNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -78,10 +78,10 @@ impl crate::Response for CreateCoreV1NamespacedPersistentVolumeClaimResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
 }
@@ -91,7 +91,7 @@ impl crate::Response for CreateCoreV1NamespacedPersistentVolumeClaimResponse {
 impl PersistentVolumeClaim {
     /// delete collection of PersistentVolumeClaim
     ///
-    /// Use [`DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse`](./enum.DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedPersistentVolumeClaimResponse`](./enum.DeleteCollectionNamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -102,11 +102,11 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_collection_namespaced_persistent_volume_claim(
+    pub fn delete_collection_namespaced_persistent_volume_claim(
         namespace: &str,
-        optional: DeleteCoreV1CollectionNamespacedPersistentVolumeClaimOptional<'_>,
+        optional: DeleteCollectionNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1CollectionNamespacedPersistentVolumeClaimOptional {
+        let DeleteCollectionNamespacedPersistentVolumeClaimOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -154,9 +154,9 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::delete_core_v1_collection_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_collection_namespaced_persistent_volume_claim)
+/// Optional parameters of [`PersistentVolumeClaim::delete_collection_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_collection_namespaced_persistent_volume_claim)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1CollectionNamespacedPersistentVolumeClaimOptional<'a> {
+pub struct DeleteCollectionNamespacedPersistentVolumeClaimOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -179,16 +179,16 @@ pub struct DeleteCoreV1CollectionNamespacedPersistentVolumeClaimOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::delete_core_v1_collection_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_collection_namespaced_persistent_volume_claim)
+/// Parses the HTTP response of [`PersistentVolumeClaim::delete_collection_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_collection_namespaced_persistent_volume_claim)
 #[derive(Debug)]
-pub enum DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse {
+pub enum DeleteCollectionNamespacedPersistentVolumeClaimResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse {
+impl crate::Response for DeleteCollectionNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -204,16 +204,16 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedPersistentVolumeClaimRe
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedPersistentVolumeClaimResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedPersistentVolumeClaimResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1CollectionNamespacedPersistentVolumeClaimResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
 }
@@ -223,7 +223,7 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedPersistentVolumeClaimRe
 impl PersistentVolumeClaim {
     /// delete a PersistentVolumeClaim
     ///
-    /// Use [`DeleteCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.DeleteCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedPersistentVolumeClaimResponse`](./enum.DeleteNamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -238,12 +238,12 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_namespaced_persistent_volume_claim(
+    pub fn delete_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        optional: DeleteCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
+        optional: DeleteNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NamespacedPersistentVolumeClaimOptional {
+        let DeleteNamespacedPersistentVolumeClaimOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -271,9 +271,9 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::delete_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_namespaced_persistent_volume_claim)
+/// Optional parameters of [`PersistentVolumeClaim::delete_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_namespaced_persistent_volume_claim)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+pub struct DeleteNamespacedPersistentVolumeClaimOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -284,16 +284,16 @@ pub struct DeleteCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::delete_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_core_v1_namespaced_persistent_volume_claim)
+/// Parses the HTTP response of [`PersistentVolumeClaim::delete_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.delete_namespaced_persistent_volume_claim)
 #[derive(Debug)]
-pub enum DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
+pub enum DeleteNamespacedPersistentVolumeClaimResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
+impl crate::Response for DeleteNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -309,16 +309,16 @@ impl crate::Response for DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedPersistentVolumeClaimResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedPersistentVolumeClaimResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
 }
@@ -328,7 +328,7 @@ impl crate::Response for DeleteCoreV1NamespacedPersistentVolumeClaimResponse {
 impl PersistentVolumeClaim {
     /// list or watch objects of kind PersistentVolumeClaim
     ///
-    /// Use [`ListCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.ListCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedPersistentVolumeClaimResponse`](./enum.ListNamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -339,11 +339,11 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_namespaced_persistent_volume_claim(
+    pub fn list_namespaced_persistent_volume_claim(
         namespace: &str,
-        optional: ListCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
+        optional: ListNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NamespacedPersistentVolumeClaimOptional {
+        let ListNamespacedPersistentVolumeClaimOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -391,9 +391,9 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::list_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.list_core_v1_namespaced_persistent_volume_claim)
+/// Optional parameters of [`PersistentVolumeClaim::list_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.list_namespaced_persistent_volume_claim)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+pub struct ListNamespacedPersistentVolumeClaimOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -416,15 +416,15 @@ pub struct ListCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::list_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.list_core_v1_namespaced_persistent_volume_claim)
+/// Parses the HTTP response of [`PersistentVolumeClaim::list_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.list_namespaced_persistent_volume_claim)
 #[derive(Debug)]
-pub enum ListCoreV1NamespacedPersistentVolumeClaimResponse {
+pub enum ListNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeClaimList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NamespacedPersistentVolumeClaimResponse {
+impl crate::Response for ListNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -433,10 +433,10 @@ impl crate::Response for ListCoreV1NamespacedPersistentVolumeClaimResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
 }
@@ -446,17 +446,17 @@ impl crate::Response for ListCoreV1NamespacedPersistentVolumeClaimResponse {
 impl PersistentVolumeClaim {
     /// list or watch objects of kind PersistentVolumeClaim
     ///
-    /// Use [`ListCoreV1PersistentVolumeClaimForAllNamespacesResponse`](./enum.ListCoreV1PersistentVolumeClaimForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListPersistentVolumeClaimForAllNamespacesResponse`](./enum.ListPersistentVolumeClaimForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_persistent_volume_claim_for_all_namespaces(
-        optional: ListCoreV1PersistentVolumeClaimForAllNamespacesOptional<'_>,
+    pub fn list_persistent_volume_claim_for_all_namespaces(
+        optional: ListPersistentVolumeClaimForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1PersistentVolumeClaimForAllNamespacesOptional {
+        let ListPersistentVolumeClaimForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -504,9 +504,9 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::list_core_v1_persistent_volume_claim_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.list_core_v1_persistent_volume_claim_for_all_namespaces)
+/// Optional parameters of [`PersistentVolumeClaim::list_persistent_volume_claim_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.list_persistent_volume_claim_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListCoreV1PersistentVolumeClaimForAllNamespacesOptional<'a> {
+pub struct ListPersistentVolumeClaimForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -529,15 +529,15 @@ pub struct ListCoreV1PersistentVolumeClaimForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::list_core_v1_persistent_volume_claim_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.list_core_v1_persistent_volume_claim_for_all_namespaces)
+/// Parses the HTTP response of [`PersistentVolumeClaim::list_persistent_volume_claim_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.list_persistent_volume_claim_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListCoreV1PersistentVolumeClaimForAllNamespacesResponse {
+pub enum ListPersistentVolumeClaimForAllNamespacesResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeClaimList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1PersistentVolumeClaimForAllNamespacesResponse {
+impl crate::Response for ListPersistentVolumeClaimForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -546,10 +546,10 @@ impl crate::Response for ListCoreV1PersistentVolumeClaimForAllNamespacesResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1PersistentVolumeClaimForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListPersistentVolumeClaimForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1PersistentVolumeClaimForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1PersistentVolumeClaimForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListPersistentVolumeClaimForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListPersistentVolumeClaimForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -559,7 +559,7 @@ impl crate::Response for ListCoreV1PersistentVolumeClaimForAllNamespacesResponse
 impl PersistentVolumeClaim {
     /// partially update the specified PersistentVolumeClaim
     ///
-    /// Use [`PatchCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.PatchCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedPersistentVolumeClaimResponse`](./enum.PatchNamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -576,13 +576,13 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_persistent_volume_claim(
+    pub fn patch_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
+        optional: PatchNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedPersistentVolumeClaimOptional {
+        let PatchNamespacedPersistentVolumeClaimOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
@@ -598,22 +598,22 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim)
+/// Optional parameters of [`PersistentVolumeClaim::patch_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.patch_namespaced_persistent_volume_claim)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+pub struct PatchNamespacedPersistentVolumeClaimOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim)
+/// Parses the HTTP response of [`PersistentVolumeClaim::patch_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.patch_namespaced_persistent_volume_claim)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedPersistentVolumeClaimResponse {
+pub enum PatchNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedPersistentVolumeClaimResponse {
+impl crate::Response for PatchNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -622,10 +622,10 @@ impl crate::Response for PatchCoreV1NamespacedPersistentVolumeClaimResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
 }
@@ -635,7 +635,7 @@ impl crate::Response for PatchCoreV1NamespacedPersistentVolumeClaimResponse {
 impl PersistentVolumeClaim {
     /// partially update status of the specified PersistentVolumeClaim
     ///
-    /// Use [`PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse`](./enum.PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedPersistentVolumeClaimStatusResponse`](./enum.PatchNamespacedPersistentVolumeClaimStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -652,13 +652,13 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_persistent_volume_claim_status(
+    pub fn patch_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedPersistentVolumeClaimStatusOptional<'_>,
+        optional: PatchNamespacedPersistentVolumeClaimStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedPersistentVolumeClaimStatusOptional {
+        let PatchNamespacedPersistentVolumeClaimStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status?", name = name, namespace = namespace);
@@ -674,22 +674,22 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim_status)
+/// Optional parameters of [`PersistentVolumeClaim::patch_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.patch_namespaced_persistent_volume_claim_status)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedPersistentVolumeClaimStatusOptional<'a> {
+pub struct PatchNamespacedPersistentVolumeClaimStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::patch_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.patch_core_v1_namespaced_persistent_volume_claim_status)
+/// Parses the HTTP response of [`PersistentVolumeClaim::patch_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.patch_namespaced_persistent_volume_claim_status)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse {
+pub enum PatchNamespacedPersistentVolumeClaimStatusResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse {
+impl crate::Response for PatchNamespacedPersistentVolumeClaimStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -698,10 +698,10 @@ impl crate::Response for PatchCoreV1NamespacedPersistentVolumeClaimStatusRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
         }
     }
 }
@@ -711,7 +711,7 @@ impl crate::Response for PatchCoreV1NamespacedPersistentVolumeClaimStatusRespons
 impl PersistentVolumeClaim {
     /// read the specified PersistentVolumeClaim
     ///
-    /// Use [`ReadCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.ReadCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedPersistentVolumeClaimResponse`](./enum.ReadNamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -726,12 +726,12 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_persistent_volume_claim(
+    pub fn read_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
+        optional: ReadNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedPersistentVolumeClaimOptional {
+        let ReadNamespacedPersistentVolumeClaimOptional {
             exact,
             export,
             pretty,
@@ -755,9 +755,9 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim)
+/// Optional parameters of [`PersistentVolumeClaim::read_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.read_namespaced_persistent_volume_claim)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+pub struct ReadNamespacedPersistentVolumeClaimOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -766,15 +766,15 @@ pub struct ReadCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim)
+/// Parses the HTTP response of [`PersistentVolumeClaim::read_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.read_namespaced_persistent_volume_claim)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedPersistentVolumeClaimResponse {
+pub enum ReadNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedPersistentVolumeClaimResponse {
+impl crate::Response for ReadNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -783,10 +783,10 @@ impl crate::Response for ReadCoreV1NamespacedPersistentVolumeClaimResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
 }
@@ -796,7 +796,7 @@ impl crate::Response for ReadCoreV1NamespacedPersistentVolumeClaimResponse {
 impl PersistentVolumeClaim {
     /// read status of the specified PersistentVolumeClaim
     ///
-    /// Use [`ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse`](./enum.ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedPersistentVolumeClaimStatusResponse`](./enum.ReadNamespacedPersistentVolumeClaimStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -811,12 +811,12 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_persistent_volume_claim_status(
+    pub fn read_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedPersistentVolumeClaimStatusOptional<'_>,
+        optional: ReadNamespacedPersistentVolumeClaimStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedPersistentVolumeClaimStatusOptional {
+        let ReadNamespacedPersistentVolumeClaimStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status?", name = name, namespace = namespace);
@@ -832,22 +832,22 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim_status)
+/// Optional parameters of [`PersistentVolumeClaim::read_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.read_namespaced_persistent_volume_claim_status)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedPersistentVolumeClaimStatusOptional<'a> {
+pub struct ReadNamespacedPersistentVolumeClaimStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::read_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.read_core_v1_namespaced_persistent_volume_claim_status)
+/// Parses the HTTP response of [`PersistentVolumeClaim::read_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.read_namespaced_persistent_volume_claim_status)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse {
+pub enum ReadNamespacedPersistentVolumeClaimStatusResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse {
+impl crate::Response for ReadNamespacedPersistentVolumeClaimStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -856,10 +856,10 @@ impl crate::Response for ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
         }
     }
 }
@@ -869,7 +869,7 @@ impl crate::Response for ReadCoreV1NamespacedPersistentVolumeClaimStatusResponse
 impl PersistentVolumeClaim {
     /// replace the specified PersistentVolumeClaim
     ///
-    /// Use [`ReplaceCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.ReplaceCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedPersistentVolumeClaimResponse`](./enum.ReplaceNamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -886,13 +886,13 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_persistent_volume_claim(
+    pub fn replace_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::core::v1::PersistentVolumeClaim,
-        optional: ReplaceCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
+        optional: ReplaceNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedPersistentVolumeClaimOptional {
+        let ReplaceNamespacedPersistentVolumeClaimOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}?", name = name, namespace = namespace);
@@ -908,22 +908,22 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim)
+/// Optional parameters of [`PersistentVolumeClaim::replace_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.replace_namespaced_persistent_volume_claim)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+pub struct ReplaceNamespacedPersistentVolumeClaimOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim)
+/// Parses the HTTP response of [`PersistentVolumeClaim::replace_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.replace_namespaced_persistent_volume_claim)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedPersistentVolumeClaimResponse {
+pub enum ReplaceNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimResponse {
+impl crate::Response for ReplaceNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -932,10 +932,10 @@ impl crate::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedPersistentVolumeClaimResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
 }
@@ -945,7 +945,7 @@ impl crate::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimResponse {
 impl PersistentVolumeClaim {
     /// replace status of the specified PersistentVolumeClaim
     ///
-    /// Use [`ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse`](./enum.ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedPersistentVolumeClaimStatusResponse`](./enum.ReplaceNamespacedPersistentVolumeClaimStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -962,13 +962,13 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_persistent_volume_claim_status(
+    pub fn replace_namespaced_persistent_volume_claim_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::core::v1::PersistentVolumeClaim,
-        optional: ReplaceCoreV1NamespacedPersistentVolumeClaimStatusOptional<'_>,
+        optional: ReplaceNamespacedPersistentVolumeClaimStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedPersistentVolumeClaimStatusOptional {
+        let ReplaceNamespacedPersistentVolumeClaimStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/persistentvolumeclaims/{name}/status?", name = name, namespace = namespace);
@@ -984,22 +984,22 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim_status)
+/// Optional parameters of [`PersistentVolumeClaim::replace_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.replace_namespaced_persistent_volume_claim_status)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedPersistentVolumeClaimStatusOptional<'a> {
+pub struct ReplaceNamespacedPersistentVolumeClaimStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::replace_core_v1_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.replace_core_v1_namespaced_persistent_volume_claim_status)
+/// Parses the HTTP response of [`PersistentVolumeClaim::replace_namespaced_persistent_volume_claim_status`](./struct.PersistentVolumeClaim.html#method.replace_namespaced_persistent_volume_claim_status)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse {
+pub enum ReplaceNamespacedPersistentVolumeClaimStatusResponse {
     Ok(crate::v1_8::api::core::v1::PersistentVolumeClaim),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse {
+impl crate::Response for ReplaceNamespacedPersistentVolumeClaimStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1008,10 +1008,10 @@ impl crate::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimStatusRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedPersistentVolumeClaimStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPersistentVolumeClaimStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedPersistentVolumeClaimStatusResponse::Other, 0)),
         }
     }
 }
@@ -1021,7 +1021,7 @@ impl crate::Response for ReplaceCoreV1NamespacedPersistentVolumeClaimStatusRespo
 impl PersistentVolumeClaim {
     /// watch changes to an object of kind PersistentVolumeClaim
     ///
-    /// Use [`WatchCoreV1NamespacedPersistentVolumeClaimResponse`](./enum.WatchCoreV1NamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedPersistentVolumeClaimResponse`](./enum.WatchNamespacedPersistentVolumeClaimResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1036,12 +1036,12 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_persistent_volume_claim(
+    pub fn watch_namespaced_persistent_volume_claim(
         name: &str,
         namespace: &str,
-        optional: WatchCoreV1NamespacedPersistentVolumeClaimOptional<'_>,
+        optional: WatchNamespacedPersistentVolumeClaimOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedPersistentVolumeClaimOptional {
+        let WatchNamespacedPersistentVolumeClaimOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1089,9 +1089,9 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim)
+/// Optional parameters of [`PersistentVolumeClaim::watch_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.watch_namespaced_persistent_volume_claim)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
+pub struct WatchNamespacedPersistentVolumeClaimOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1114,15 +1114,15 @@ pub struct WatchCoreV1NamespacedPersistentVolumeClaimOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim)
+/// Parses the HTTP response of [`PersistentVolumeClaim::watch_namespaced_persistent_volume_claim`](./struct.PersistentVolumeClaim.html#method.watch_namespaced_persistent_volume_claim)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedPersistentVolumeClaimResponse {
+pub enum WatchNamespacedPersistentVolumeClaimResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedPersistentVolumeClaimResponse {
+impl crate::Response for WatchNamespacedPersistentVolumeClaimResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1133,10 +1133,10 @@ impl crate::Response for WatchCoreV1NamespacedPersistentVolumeClaimResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedPersistentVolumeClaimResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedPersistentVolumeClaimResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedPersistentVolumeClaimResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPersistentVolumeClaimResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedPersistentVolumeClaimResponse::Other, 0)),
         }
     }
 }
@@ -1146,7 +1146,7 @@ impl crate::Response for WatchCoreV1NamespacedPersistentVolumeClaimResponse {
 impl PersistentVolumeClaim {
     /// watch individual changes to a list of PersistentVolumeClaim
     ///
-    /// Use [`WatchCoreV1NamespacedPersistentVolumeClaimListResponse`](./enum.WatchCoreV1NamespacedPersistentVolumeClaimListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedPersistentVolumeClaimListResponse`](./enum.WatchNamespacedPersistentVolumeClaimListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1157,11 +1157,11 @@ impl PersistentVolumeClaim {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_persistent_volume_claim_list(
+    pub fn watch_namespaced_persistent_volume_claim_list(
         namespace: &str,
-        optional: WatchCoreV1NamespacedPersistentVolumeClaimListOptional<'_>,
+        optional: WatchNamespacedPersistentVolumeClaimListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedPersistentVolumeClaimListOptional {
+        let WatchNamespacedPersistentVolumeClaimListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1209,9 +1209,9 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim_list`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim_list)
+/// Optional parameters of [`PersistentVolumeClaim::watch_namespaced_persistent_volume_claim_list`](./struct.PersistentVolumeClaim.html#method.watch_namespaced_persistent_volume_claim_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedPersistentVolumeClaimListOptional<'a> {
+pub struct WatchNamespacedPersistentVolumeClaimListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1234,15 +1234,15 @@ pub struct WatchCoreV1NamespacedPersistentVolumeClaimListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_namespaced_persistent_volume_claim_list`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_namespaced_persistent_volume_claim_list)
+/// Parses the HTTP response of [`PersistentVolumeClaim::watch_namespaced_persistent_volume_claim_list`](./struct.PersistentVolumeClaim.html#method.watch_namespaced_persistent_volume_claim_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedPersistentVolumeClaimListResponse {
+pub enum WatchNamespacedPersistentVolumeClaimListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedPersistentVolumeClaimListResponse {
+impl crate::Response for WatchNamespacedPersistentVolumeClaimListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1253,10 +1253,10 @@ impl crate::Response for WatchCoreV1NamespacedPersistentVolumeClaimListResponse 
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedPersistentVolumeClaimListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedPersistentVolumeClaimListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPersistentVolumeClaimListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedPersistentVolumeClaimListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPersistentVolumeClaimListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedPersistentVolumeClaimListResponse::Other, 0)),
         }
     }
 }
@@ -1266,17 +1266,17 @@ impl crate::Response for WatchCoreV1NamespacedPersistentVolumeClaimListResponse 
 impl PersistentVolumeClaim {
     /// watch individual changes to a list of PersistentVolumeClaim
     ///
-    /// Use [`WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse`](./enum.WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchPersistentVolumeClaimListForAllNamespacesResponse`](./enum.WatchPersistentVolumeClaimListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_persistent_volume_claim_list_for_all_namespaces(
-        optional: WatchCoreV1PersistentVolumeClaimListForAllNamespacesOptional<'_>,
+    pub fn watch_persistent_volume_claim_list_for_all_namespaces(
+        optional: WatchPersistentVolumeClaimListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1PersistentVolumeClaimListForAllNamespacesOptional {
+        let WatchPersistentVolumeClaimListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1324,9 +1324,9 @@ impl PersistentVolumeClaim {
     }
 }
 
-/// Optional parameters of [`PersistentVolumeClaim::watch_core_v1_persistent_volume_claim_list_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_persistent_volume_claim_list_for_all_namespaces)
+/// Optional parameters of [`PersistentVolumeClaim::watch_persistent_volume_claim_list_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.watch_persistent_volume_claim_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1PersistentVolumeClaimListForAllNamespacesOptional<'a> {
+pub struct WatchPersistentVolumeClaimListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1349,15 +1349,15 @@ pub struct WatchCoreV1PersistentVolumeClaimListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolumeClaim::watch_core_v1_persistent_volume_claim_list_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.watch_core_v1_persistent_volume_claim_list_for_all_namespaces)
+/// Parses the HTTP response of [`PersistentVolumeClaim::watch_persistent_volume_claim_list_for_all_namespaces`](./struct.PersistentVolumeClaim.html#method.watch_persistent_volume_claim_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse {
+pub enum WatchPersistentVolumeClaimListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse {
+impl crate::Response for WatchPersistentVolumeClaimListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1368,10 +1368,10 @@ impl crate::Response for WatchCoreV1PersistentVolumeClaimListForAllNamespacesRes
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchPersistentVolumeClaimListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1PersistentVolumeClaimListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPersistentVolumeClaimListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchPersistentVolumeClaimListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

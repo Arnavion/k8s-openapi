@@ -20,7 +20,7 @@ pub struct Service {
 impl Service {
     /// connect DELETE requests to proxy of Service
     ///
-    /// Use [`ConnectCoreV1DeleteNamespacedServiceProxyResponse`](./enum.ConnectCoreV1DeleteNamespacedServiceProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectDeleteNamespacedServiceProxyResponse`](./enum.ConnectDeleteNamespacedServiceProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -35,12 +35,12 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_delete_namespaced_service_proxy(
+    pub fn connect_delete_namespaced_service_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1DeleteNamespacedServiceProxyOptional<'_>,
+        optional: ConnectDeleteNamespacedServiceProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1DeleteNamespacedServiceProxyOptional {
+        let ConnectDeleteNamespacedServiceProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
@@ -56,22 +56,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_core_v1_delete_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_delete_namespaced_service_proxy)
+/// Optional parameters of [`Service::connect_delete_namespaced_service_proxy`](./struct.Service.html#method.connect_delete_namespaced_service_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1DeleteNamespacedServiceProxyOptional<'a> {
+pub struct ConnectDeleteNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_core_v1_delete_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_delete_namespaced_service_proxy)
+/// Parses the HTTP response of [`Service::connect_delete_namespaced_service_proxy`](./struct.Service.html#method.connect_delete_namespaced_service_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1DeleteNamespacedServiceProxyResponse {
+pub enum ConnectDeleteNamespacedServiceProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1DeleteNamespacedServiceProxyResponse {
+impl crate::Response for ConnectDeleteNamespacedServiceProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -85,10 +85,10 @@ impl crate::Response for ConnectCoreV1DeleteNamespacedServiceProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1DeleteNamespacedServiceProxyResponse::Ok(result), len))
+                Ok((ConnectDeleteNamespacedServiceProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedServiceProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1DeleteNamespacedServiceProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNamespacedServiceProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectDeleteNamespacedServiceProxyResponse::Other, 0)),
         }
     }
 }
@@ -98,7 +98,7 @@ impl crate::Response for ConnectCoreV1DeleteNamespacedServiceProxyResponse {
 impl Service {
     /// connect DELETE requests to proxy of Service
     ///
-    /// Use [`ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse`](./enum.ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectDeleteNamespacedServiceProxyWithPathResponse`](./enum.ConnectDeleteNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -117,13 +117,13 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_delete_namespaced_service_proxy_with_path(
+    pub fn connect_delete_namespaced_service_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectCoreV1DeleteNamespacedServiceProxyWithPathOptional<'_>,
+        optional: ConnectDeleteNamespacedServiceProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1DeleteNamespacedServiceProxyWithPathOptional {
+        let ConnectDeleteNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -139,22 +139,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_core_v1_delete_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_delete_namespaced_service_proxy_with_path)
+/// Optional parameters of [`Service::connect_delete_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_delete_namespaced_service_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1DeleteNamespacedServiceProxyWithPathOptional<'a> {
+pub struct ConnectDeleteNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_core_v1_delete_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_delete_namespaced_service_proxy_with_path)
+/// Parses the HTTP response of [`Service::connect_delete_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_delete_namespaced_service_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse {
+pub enum ConnectDeleteNamespacedServiceProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse {
+impl crate::Response for ConnectDeleteNamespacedServiceProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -168,10 +168,10 @@ impl crate::Response for ConnectCoreV1DeleteNamespacedServiceProxyWithPathRespon
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectDeleteNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1DeleteNamespacedServiceProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectDeleteNamespacedServiceProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -181,7 +181,7 @@ impl crate::Response for ConnectCoreV1DeleteNamespacedServiceProxyWithPathRespon
 impl Service {
     /// connect GET requests to proxy of Service
     ///
-    /// Use [`ConnectCoreV1GetNamespacedServiceProxyResponse`](./enum.ConnectCoreV1GetNamespacedServiceProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectGetNamespacedServiceProxyResponse`](./enum.ConnectGetNamespacedServiceProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -196,12 +196,12 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_get_namespaced_service_proxy(
+    pub fn connect_get_namespaced_service_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1GetNamespacedServiceProxyOptional<'_>,
+        optional: ConnectGetNamespacedServiceProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1GetNamespacedServiceProxyOptional {
+        let ConnectGetNamespacedServiceProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
@@ -217,22 +217,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_core_v1_get_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_get_namespaced_service_proxy)
+/// Optional parameters of [`Service::connect_get_namespaced_service_proxy`](./struct.Service.html#method.connect_get_namespaced_service_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1GetNamespacedServiceProxyOptional<'a> {
+pub struct ConnectGetNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_core_v1_get_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_get_namespaced_service_proxy)
+/// Parses the HTTP response of [`Service::connect_get_namespaced_service_proxy`](./struct.Service.html#method.connect_get_namespaced_service_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1GetNamespacedServiceProxyResponse {
+pub enum ConnectGetNamespacedServiceProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1GetNamespacedServiceProxyResponse {
+impl crate::Response for ConnectGetNamespacedServiceProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -246,10 +246,10 @@ impl crate::Response for ConnectCoreV1GetNamespacedServiceProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1GetNamespacedServiceProxyResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedServiceProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedServiceProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1GetNamespacedServiceProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedServiceProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectGetNamespacedServiceProxyResponse::Other, 0)),
         }
     }
 }
@@ -259,7 +259,7 @@ impl crate::Response for ConnectCoreV1GetNamespacedServiceProxyResponse {
 impl Service {
     /// connect GET requests to proxy of Service
     ///
-    /// Use [`ConnectCoreV1GetNamespacedServiceProxyWithPathResponse`](./enum.ConnectCoreV1GetNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectGetNamespacedServiceProxyWithPathResponse`](./enum.ConnectGetNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -278,13 +278,13 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_get_namespaced_service_proxy_with_path(
+    pub fn connect_get_namespaced_service_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectCoreV1GetNamespacedServiceProxyWithPathOptional<'_>,
+        optional: ConnectGetNamespacedServiceProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1GetNamespacedServiceProxyWithPathOptional {
+        let ConnectGetNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -300,22 +300,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_core_v1_get_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_get_namespaced_service_proxy_with_path)
+/// Optional parameters of [`Service::connect_get_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_get_namespaced_service_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1GetNamespacedServiceProxyWithPathOptional<'a> {
+pub struct ConnectGetNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_core_v1_get_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_get_namespaced_service_proxy_with_path)
+/// Parses the HTTP response of [`Service::connect_get_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_get_namespaced_service_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1GetNamespacedServiceProxyWithPathResponse {
+pub enum ConnectGetNamespacedServiceProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1GetNamespacedServiceProxyWithPathResponse {
+impl crate::Response for ConnectGetNamespacedServiceProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -329,10 +329,10 @@ impl crate::Response for ConnectCoreV1GetNamespacedServiceProxyWithPathResponse 
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1GetNamespacedServiceProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectGetNamespacedServiceProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -342,7 +342,7 @@ impl crate::Response for ConnectCoreV1GetNamespacedServiceProxyWithPathResponse 
 impl Service {
     /// connect PATCH requests to proxy of Service
     ///
-    /// Use [`ConnectCoreV1PatchNamespacedServiceProxyResponse`](./enum.ConnectCoreV1PatchNamespacedServiceProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPatchNamespacedServiceProxyResponse`](./enum.ConnectPatchNamespacedServiceProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -357,12 +357,12 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_patch_namespaced_service_proxy(
+    pub fn connect_patch_namespaced_service_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1PatchNamespacedServiceProxyOptional<'_>,
+        optional: ConnectPatchNamespacedServiceProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PatchNamespacedServiceProxyOptional {
+        let ConnectPatchNamespacedServiceProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
@@ -378,22 +378,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_core_v1_patch_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_patch_namespaced_service_proxy)
+/// Optional parameters of [`Service::connect_patch_namespaced_service_proxy`](./struct.Service.html#method.connect_patch_namespaced_service_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PatchNamespacedServiceProxyOptional<'a> {
+pub struct ConnectPatchNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_core_v1_patch_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_patch_namespaced_service_proxy)
+/// Parses the HTTP response of [`Service::connect_patch_namespaced_service_proxy`](./struct.Service.html#method.connect_patch_namespaced_service_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1PatchNamespacedServiceProxyResponse {
+pub enum ConnectPatchNamespacedServiceProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PatchNamespacedServiceProxyResponse {
+impl crate::Response for ConnectPatchNamespacedServiceProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -407,10 +407,10 @@ impl crate::Response for ConnectCoreV1PatchNamespacedServiceProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PatchNamespacedServiceProxyResponse::Ok(result), len))
+                Ok((ConnectPatchNamespacedServiceProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedServiceProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PatchNamespacedServiceProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNamespacedServiceProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPatchNamespacedServiceProxyResponse::Other, 0)),
         }
     }
 }
@@ -420,7 +420,7 @@ impl crate::Response for ConnectCoreV1PatchNamespacedServiceProxyResponse {
 impl Service {
     /// connect PATCH requests to proxy of Service
     ///
-    /// Use [`ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse`](./enum.ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPatchNamespacedServiceProxyWithPathResponse`](./enum.ConnectPatchNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -439,13 +439,13 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_patch_namespaced_service_proxy_with_path(
+    pub fn connect_patch_namespaced_service_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectCoreV1PatchNamespacedServiceProxyWithPathOptional<'_>,
+        optional: ConnectPatchNamespacedServiceProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PatchNamespacedServiceProxyWithPathOptional {
+        let ConnectPatchNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -461,22 +461,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_core_v1_patch_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_patch_namespaced_service_proxy_with_path)
+/// Optional parameters of [`Service::connect_patch_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_patch_namespaced_service_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PatchNamespacedServiceProxyWithPathOptional<'a> {
+pub struct ConnectPatchNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_core_v1_patch_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_patch_namespaced_service_proxy_with_path)
+/// Parses the HTTP response of [`Service::connect_patch_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_patch_namespaced_service_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse {
+pub enum ConnectPatchNamespacedServiceProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse {
+impl crate::Response for ConnectPatchNamespacedServiceProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -490,10 +490,10 @@ impl crate::Response for ConnectCoreV1PatchNamespacedServiceProxyWithPathRespons
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPatchNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PatchNamespacedServiceProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPatchNamespacedServiceProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -503,7 +503,7 @@ impl crate::Response for ConnectCoreV1PatchNamespacedServiceProxyWithPathRespons
 impl Service {
     /// connect POST requests to proxy of Service
     ///
-    /// Use [`ConnectCoreV1PostNamespacedServiceProxyResponse`](./enum.ConnectCoreV1PostNamespacedServiceProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPostNamespacedServiceProxyResponse`](./enum.ConnectPostNamespacedServiceProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -518,12 +518,12 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_post_namespaced_service_proxy(
+    pub fn connect_post_namespaced_service_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1PostNamespacedServiceProxyOptional<'_>,
+        optional: ConnectPostNamespacedServiceProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PostNamespacedServiceProxyOptional {
+        let ConnectPostNamespacedServiceProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
@@ -539,22 +539,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_core_v1_post_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_post_namespaced_service_proxy)
+/// Optional parameters of [`Service::connect_post_namespaced_service_proxy`](./struct.Service.html#method.connect_post_namespaced_service_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PostNamespacedServiceProxyOptional<'a> {
+pub struct ConnectPostNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_core_v1_post_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_post_namespaced_service_proxy)
+/// Parses the HTTP response of [`Service::connect_post_namespaced_service_proxy`](./struct.Service.html#method.connect_post_namespaced_service_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1PostNamespacedServiceProxyResponse {
+pub enum ConnectPostNamespacedServiceProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PostNamespacedServiceProxyResponse {
+impl crate::Response for ConnectPostNamespacedServiceProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -568,10 +568,10 @@ impl crate::Response for ConnectCoreV1PostNamespacedServiceProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PostNamespacedServiceProxyResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedServiceProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedServiceProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PostNamespacedServiceProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedServiceProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPostNamespacedServiceProxyResponse::Other, 0)),
         }
     }
 }
@@ -581,7 +581,7 @@ impl crate::Response for ConnectCoreV1PostNamespacedServiceProxyResponse {
 impl Service {
     /// connect POST requests to proxy of Service
     ///
-    /// Use [`ConnectCoreV1PostNamespacedServiceProxyWithPathResponse`](./enum.ConnectCoreV1PostNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPostNamespacedServiceProxyWithPathResponse`](./enum.ConnectPostNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -600,13 +600,13 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_post_namespaced_service_proxy_with_path(
+    pub fn connect_post_namespaced_service_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectCoreV1PostNamespacedServiceProxyWithPathOptional<'_>,
+        optional: ConnectPostNamespacedServiceProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PostNamespacedServiceProxyWithPathOptional {
+        let ConnectPostNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -622,22 +622,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_core_v1_post_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_post_namespaced_service_proxy_with_path)
+/// Optional parameters of [`Service::connect_post_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_post_namespaced_service_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PostNamespacedServiceProxyWithPathOptional<'a> {
+pub struct ConnectPostNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_core_v1_post_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_post_namespaced_service_proxy_with_path)
+/// Parses the HTTP response of [`Service::connect_post_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_post_namespaced_service_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1PostNamespacedServiceProxyWithPathResponse {
+pub enum ConnectPostNamespacedServiceProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PostNamespacedServiceProxyWithPathResponse {
+impl crate::Response for ConnectPostNamespacedServiceProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -651,10 +651,10 @@ impl crate::Response for ConnectCoreV1PostNamespacedServiceProxyWithPathResponse
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PostNamespacedServiceProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPostNamespacedServiceProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -664,7 +664,7 @@ impl crate::Response for ConnectCoreV1PostNamespacedServiceProxyWithPathResponse
 impl Service {
     /// connect PUT requests to proxy of Service
     ///
-    /// Use [`ConnectCoreV1PutNamespacedServiceProxyResponse`](./enum.ConnectCoreV1PutNamespacedServiceProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPutNamespacedServiceProxyResponse`](./enum.ConnectPutNamespacedServiceProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -679,12 +679,12 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_put_namespaced_service_proxy(
+    pub fn connect_put_namespaced_service_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1PutNamespacedServiceProxyOptional<'_>,
+        optional: ConnectPutNamespacedServiceProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PutNamespacedServiceProxyOptional {
+        let ConnectPutNamespacedServiceProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy?", name = name, namespace = namespace);
@@ -700,22 +700,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_core_v1_put_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_put_namespaced_service_proxy)
+/// Optional parameters of [`Service::connect_put_namespaced_service_proxy`](./struct.Service.html#method.connect_put_namespaced_service_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PutNamespacedServiceProxyOptional<'a> {
+pub struct ConnectPutNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_core_v1_put_namespaced_service_proxy`](./struct.Service.html#method.connect_core_v1_put_namespaced_service_proxy)
+/// Parses the HTTP response of [`Service::connect_put_namespaced_service_proxy`](./struct.Service.html#method.connect_put_namespaced_service_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1PutNamespacedServiceProxyResponse {
+pub enum ConnectPutNamespacedServiceProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PutNamespacedServiceProxyResponse {
+impl crate::Response for ConnectPutNamespacedServiceProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -729,10 +729,10 @@ impl crate::Response for ConnectCoreV1PutNamespacedServiceProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PutNamespacedServiceProxyResponse::Ok(result), len))
+                Ok((ConnectPutNamespacedServiceProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedServiceProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PutNamespacedServiceProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNamespacedServiceProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPutNamespacedServiceProxyResponse::Other, 0)),
         }
     }
 }
@@ -742,7 +742,7 @@ impl crate::Response for ConnectCoreV1PutNamespacedServiceProxyResponse {
 impl Service {
     /// connect PUT requests to proxy of Service
     ///
-    /// Use [`ConnectCoreV1PutNamespacedServiceProxyWithPathResponse`](./enum.ConnectCoreV1PutNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPutNamespacedServiceProxyWithPathResponse`](./enum.ConnectPutNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -761,13 +761,13 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_put_namespaced_service_proxy_with_path(
+    pub fn connect_put_namespaced_service_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectCoreV1PutNamespacedServiceProxyWithPathOptional<'_>,
+        optional: ConnectPutNamespacedServiceProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PutNamespacedServiceProxyWithPathOptional {
+        let ConnectPutNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -783,22 +783,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::connect_core_v1_put_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_put_namespaced_service_proxy_with_path)
+/// Optional parameters of [`Service::connect_put_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_put_namespaced_service_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PutNamespacedServiceProxyWithPathOptional<'a> {
+pub struct ConnectPutNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_core_v1_put_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_core_v1_put_namespaced_service_proxy_with_path)
+/// Parses the HTTP response of [`Service::connect_put_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_put_namespaced_service_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1PutNamespacedServiceProxyWithPathResponse {
+pub enum ConnectPutNamespacedServiceProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PutNamespacedServiceProxyWithPathResponse {
+impl crate::Response for ConnectPutNamespacedServiceProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -812,10 +812,10 @@ impl crate::Response for ConnectCoreV1PutNamespacedServiceProxyWithPathResponse 
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPutNamespacedServiceProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PutNamespacedServiceProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNamespacedServiceProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPutNamespacedServiceProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -825,7 +825,7 @@ impl crate::Response for ConnectCoreV1PutNamespacedServiceProxyWithPathResponse 
 impl Service {
     /// create a Service
     ///
-    /// Use [`CreateCoreV1NamespacedServiceResponse`](./enum.CreateCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedServiceResponse`](./enum.CreateNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -838,12 +838,12 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_service(
+    pub fn create_namespaced_service(
         namespace: &str,
         body: &crate::v1_8::api::core::v1::Service,
-        optional: CreateCoreV1NamespacedServiceOptional<'_>,
+        optional: CreateNamespacedServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedServiceOptional {
+        let CreateNamespacedServiceOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
@@ -859,22 +859,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::create_core_v1_namespaced_service`](./struct.Service.html#method.create_core_v1_namespaced_service)
+/// Optional parameters of [`Service::create_namespaced_service`](./struct.Service.html#method.create_namespaced_service)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedServiceOptional<'a> {
+pub struct CreateNamespacedServiceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::create_core_v1_namespaced_service`](./struct.Service.html#method.create_core_v1_namespaced_service)
+/// Parses the HTTP response of [`Service::create_namespaced_service`](./struct.Service.html#method.create_namespaced_service)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedServiceResponse {
+pub enum CreateNamespacedServiceResponse {
     Ok(crate::v1_8::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedServiceResponse {
+impl crate::Response for CreateNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -883,10 +883,10 @@ impl crate::Response for CreateCoreV1NamespacedServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -896,7 +896,7 @@ impl crate::Response for CreateCoreV1NamespacedServiceResponse {
 impl Service {
     /// delete a Service
     ///
-    /// Use [`DeleteCoreV1NamespacedServiceResponse`](./enum.DeleteCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedServiceResponse`](./enum.DeleteNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -911,12 +911,12 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_namespaced_service(
+    pub fn delete_namespaced_service(
         name: &str,
         namespace: &str,
-        optional: DeleteCoreV1NamespacedServiceOptional<'_>,
+        optional: DeleteNamespacedServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NamespacedServiceOptional {
+        let DeleteNamespacedServiceOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
@@ -932,23 +932,23 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::delete_core_v1_namespaced_service`](./struct.Service.html#method.delete_core_v1_namespaced_service)
+/// Optional parameters of [`Service::delete_namespaced_service`](./struct.Service.html#method.delete_namespaced_service)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NamespacedServiceOptional<'a> {
+pub struct DeleteNamespacedServiceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::delete_core_v1_namespaced_service`](./struct.Service.html#method.delete_core_v1_namespaced_service)
+/// Parses the HTTP response of [`Service::delete_namespaced_service`](./struct.Service.html#method.delete_namespaced_service)
 #[derive(Debug)]
-pub enum DeleteCoreV1NamespacedServiceResponse {
+pub enum DeleteNamespacedServiceResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NamespacedServiceResponse {
+impl crate::Response for DeleteNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -964,16 +964,16 @@ impl crate::Response for DeleteCoreV1NamespacedServiceResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedServiceResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedServiceResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedServiceResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedServiceResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -983,7 +983,7 @@ impl crate::Response for DeleteCoreV1NamespacedServiceResponse {
 impl Service {
     /// list or watch objects of kind Service
     ///
-    /// Use [`ListCoreV1NamespacedServiceResponse`](./enum.ListCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedServiceResponse`](./enum.ListNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -994,11 +994,11 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_namespaced_service(
+    pub fn list_namespaced_service(
         namespace: &str,
-        optional: ListCoreV1NamespacedServiceOptional<'_>,
+        optional: ListNamespacedServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NamespacedServiceOptional {
+        let ListNamespacedServiceOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1046,9 +1046,9 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::list_core_v1_namespaced_service`](./struct.Service.html#method.list_core_v1_namespaced_service)
+/// Optional parameters of [`Service::list_namespaced_service`](./struct.Service.html#method.list_namespaced_service)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NamespacedServiceOptional<'a> {
+pub struct ListNamespacedServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1071,15 +1071,15 @@ pub struct ListCoreV1NamespacedServiceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Service::list_core_v1_namespaced_service`](./struct.Service.html#method.list_core_v1_namespaced_service)
+/// Parses the HTTP response of [`Service::list_namespaced_service`](./struct.Service.html#method.list_namespaced_service)
 #[derive(Debug)]
-pub enum ListCoreV1NamespacedServiceResponse {
+pub enum ListNamespacedServiceResponse {
     Ok(crate::v1_8::api::core::v1::ServiceList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NamespacedServiceResponse {
+impl crate::Response for ListNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1088,10 +1088,10 @@ impl crate::Response for ListCoreV1NamespacedServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -1101,17 +1101,17 @@ impl crate::Response for ListCoreV1NamespacedServiceResponse {
 impl Service {
     /// list or watch objects of kind Service
     ///
-    /// Use [`ListCoreV1ServiceForAllNamespacesResponse`](./enum.ListCoreV1ServiceForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListServiceForAllNamespacesResponse`](./enum.ListServiceForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_service_for_all_namespaces(
-        optional: ListCoreV1ServiceForAllNamespacesOptional<'_>,
+    pub fn list_service_for_all_namespaces(
+        optional: ListServiceForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1ServiceForAllNamespacesOptional {
+        let ListServiceForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1159,9 +1159,9 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::list_core_v1_service_for_all_namespaces`](./struct.Service.html#method.list_core_v1_service_for_all_namespaces)
+/// Optional parameters of [`Service::list_service_for_all_namespaces`](./struct.Service.html#method.list_service_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListCoreV1ServiceForAllNamespacesOptional<'a> {
+pub struct ListServiceForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1184,15 +1184,15 @@ pub struct ListCoreV1ServiceForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Service::list_core_v1_service_for_all_namespaces`](./struct.Service.html#method.list_core_v1_service_for_all_namespaces)
+/// Parses the HTTP response of [`Service::list_service_for_all_namespaces`](./struct.Service.html#method.list_service_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListCoreV1ServiceForAllNamespacesResponse {
+pub enum ListServiceForAllNamespacesResponse {
     Ok(crate::v1_8::api::core::v1::ServiceList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1ServiceForAllNamespacesResponse {
+impl crate::Response for ListServiceForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1201,10 +1201,10 @@ impl crate::Response for ListCoreV1ServiceForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1ServiceForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListServiceForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ServiceForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1ServiceForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListServiceForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListServiceForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -1214,7 +1214,7 @@ impl crate::Response for ListCoreV1ServiceForAllNamespacesResponse {
 impl Service {
     /// partially update the specified Service
     ///
-    /// Use [`PatchCoreV1NamespacedServiceResponse`](./enum.PatchCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedServiceResponse`](./enum.PatchNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1231,13 +1231,13 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_service(
+    pub fn patch_namespaced_service(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedServiceOptional<'_>,
+        optional: PatchNamespacedServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedServiceOptional {
+        let PatchNamespacedServiceOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
@@ -1253,22 +1253,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::patch_core_v1_namespaced_service`](./struct.Service.html#method.patch_core_v1_namespaced_service)
+/// Optional parameters of [`Service::patch_namespaced_service`](./struct.Service.html#method.patch_namespaced_service)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedServiceOptional<'a> {
+pub struct PatchNamespacedServiceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::patch_core_v1_namespaced_service`](./struct.Service.html#method.patch_core_v1_namespaced_service)
+/// Parses the HTTP response of [`Service::patch_namespaced_service`](./struct.Service.html#method.patch_namespaced_service)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedServiceResponse {
+pub enum PatchNamespacedServiceResponse {
     Ok(crate::v1_8::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedServiceResponse {
+impl crate::Response for PatchNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1277,10 +1277,10 @@ impl crate::Response for PatchCoreV1NamespacedServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -1290,7 +1290,7 @@ impl crate::Response for PatchCoreV1NamespacedServiceResponse {
 impl Service {
     /// partially update status of the specified Service
     ///
-    /// Use [`PatchCoreV1NamespacedServiceStatusResponse`](./enum.PatchCoreV1NamespacedServiceStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedServiceStatusResponse`](./enum.PatchNamespacedServiceStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1307,13 +1307,13 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_service_status(
+    pub fn patch_namespaced_service_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedServiceStatusOptional<'_>,
+        optional: PatchNamespacedServiceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedServiceStatusOptional {
+        let PatchNamespacedServiceStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
@@ -1329,22 +1329,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::patch_core_v1_namespaced_service_status`](./struct.Service.html#method.patch_core_v1_namespaced_service_status)
+/// Optional parameters of [`Service::patch_namespaced_service_status`](./struct.Service.html#method.patch_namespaced_service_status)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedServiceStatusOptional<'a> {
+pub struct PatchNamespacedServiceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::patch_core_v1_namespaced_service_status`](./struct.Service.html#method.patch_core_v1_namespaced_service_status)
+/// Parses the HTTP response of [`Service::patch_namespaced_service_status`](./struct.Service.html#method.patch_namespaced_service_status)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedServiceStatusResponse {
+pub enum PatchNamespacedServiceStatusResponse {
     Ok(crate::v1_8::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedServiceStatusResponse {
+impl crate::Response for PatchNamespacedServiceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1353,10 +1353,10 @@ impl crate::Response for PatchCoreV1NamespacedServiceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedServiceStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedServiceStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedServiceStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedServiceStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedServiceStatusResponse::Other, 0)),
         }
     }
 }
@@ -1366,7 +1366,7 @@ impl crate::Response for PatchCoreV1NamespacedServiceStatusResponse {
 impl Service {
     /// proxy DELETE requests to Service
     ///
-    /// Use [`ProxyCoreV1DELETENamespacedServiceResponse`](./enum.ProxyCoreV1DELETENamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`ProxyDELETENamespacedServiceResponse`](./enum.ProxyDELETENamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1377,7 +1377,7 @@ impl Service {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    pub fn proxy_core_v1_delete_namespaced_service(
+    pub fn proxy_delete_namespaced_service(
         name: &str,
         namespace: &str,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
@@ -1389,15 +1389,15 @@ impl Service {
     }
 }
 
-/// Parses the HTTP response of [`Service::proxy_core_v1_delete_namespaced_service`](./struct.Service.html#method.proxy_core_v1_delete_namespaced_service)
+/// Parses the HTTP response of [`Service::proxy_delete_namespaced_service`](./struct.Service.html#method.proxy_delete_namespaced_service)
 #[derive(Debug)]
-pub enum ProxyCoreV1DELETENamespacedServiceResponse {
+pub enum ProxyDELETENamespacedServiceResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ProxyCoreV1DELETENamespacedServiceResponse {
+impl crate::Response for ProxyDELETENamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1411,10 +1411,10 @@ impl crate::Response for ProxyCoreV1DELETENamespacedServiceResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ProxyCoreV1DELETENamespacedServiceResponse::Ok(result), len))
+                Ok((ProxyDELETENamespacedServiceResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1DELETENamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((ProxyCoreV1DELETENamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyDELETENamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ProxyDELETENamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -1424,7 +1424,7 @@ impl crate::Response for ProxyCoreV1DELETENamespacedServiceResponse {
 impl Service {
     /// proxy DELETE requests to Service
     ///
-    /// Use [`ProxyCoreV1DELETENamespacedServiceWithPathResponse`](./enum.ProxyCoreV1DELETENamespacedServiceWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ProxyDELETENamespacedServiceWithPathResponse`](./enum.ProxyDELETENamespacedServiceWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1439,7 +1439,7 @@ impl Service {
     /// * `path`
     ///
     ///     path to the resource
-    pub fn proxy_core_v1_delete_namespaced_service_with_path(
+    pub fn proxy_delete_namespaced_service_with_path(
         name: &str,
         namespace: &str,
         path: &str,
@@ -1452,15 +1452,15 @@ impl Service {
     }
 }
 
-/// Parses the HTTP response of [`Service::proxy_core_v1_delete_namespaced_service_with_path`](./struct.Service.html#method.proxy_core_v1_delete_namespaced_service_with_path)
+/// Parses the HTTP response of [`Service::proxy_delete_namespaced_service_with_path`](./struct.Service.html#method.proxy_delete_namespaced_service_with_path)
 #[derive(Debug)]
-pub enum ProxyCoreV1DELETENamespacedServiceWithPathResponse {
+pub enum ProxyDELETENamespacedServiceWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ProxyCoreV1DELETENamespacedServiceWithPathResponse {
+impl crate::Response for ProxyDELETENamespacedServiceWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1474,10 +1474,10 @@ impl crate::Response for ProxyCoreV1DELETENamespacedServiceWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ProxyCoreV1DELETENamespacedServiceWithPathResponse::Ok(result), len))
+                Ok((ProxyDELETENamespacedServiceWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1DELETENamespacedServiceWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ProxyCoreV1DELETENamespacedServiceWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyDELETENamespacedServiceWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ProxyDELETENamespacedServiceWithPathResponse::Other, 0)),
         }
     }
 }
@@ -1487,7 +1487,7 @@ impl crate::Response for ProxyCoreV1DELETENamespacedServiceWithPathResponse {
 impl Service {
     /// proxy GET requests to Service
     ///
-    /// Use [`ProxyCoreV1GETNamespacedServiceResponse`](./enum.ProxyCoreV1GETNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`ProxyGETNamespacedServiceResponse`](./enum.ProxyGETNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1498,7 +1498,7 @@ impl Service {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    pub fn proxy_core_v1_get_namespaced_service(
+    pub fn proxy_get_namespaced_service(
         name: &str,
         namespace: &str,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
@@ -1510,15 +1510,15 @@ impl Service {
     }
 }
 
-/// Parses the HTTP response of [`Service::proxy_core_v1_get_namespaced_service`](./struct.Service.html#method.proxy_core_v1_get_namespaced_service)
+/// Parses the HTTP response of [`Service::proxy_get_namespaced_service`](./struct.Service.html#method.proxy_get_namespaced_service)
 #[derive(Debug)]
-pub enum ProxyCoreV1GETNamespacedServiceResponse {
+pub enum ProxyGETNamespacedServiceResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ProxyCoreV1GETNamespacedServiceResponse {
+impl crate::Response for ProxyGETNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1532,10 +1532,10 @@ impl crate::Response for ProxyCoreV1GETNamespacedServiceResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ProxyCoreV1GETNamespacedServiceResponse::Ok(result), len))
+                Ok((ProxyGETNamespacedServiceResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1GETNamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((ProxyCoreV1GETNamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyGETNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ProxyGETNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -1545,7 +1545,7 @@ impl crate::Response for ProxyCoreV1GETNamespacedServiceResponse {
 impl Service {
     /// proxy GET requests to Service
     ///
-    /// Use [`ProxyCoreV1GETNamespacedServiceWithPathResponse`](./enum.ProxyCoreV1GETNamespacedServiceWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ProxyGETNamespacedServiceWithPathResponse`](./enum.ProxyGETNamespacedServiceWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1560,7 +1560,7 @@ impl Service {
     /// * `path`
     ///
     ///     path to the resource
-    pub fn proxy_core_v1_get_namespaced_service_with_path(
+    pub fn proxy_get_namespaced_service_with_path(
         name: &str,
         namespace: &str,
         path: &str,
@@ -1573,15 +1573,15 @@ impl Service {
     }
 }
 
-/// Parses the HTTP response of [`Service::proxy_core_v1_get_namespaced_service_with_path`](./struct.Service.html#method.proxy_core_v1_get_namespaced_service_with_path)
+/// Parses the HTTP response of [`Service::proxy_get_namespaced_service_with_path`](./struct.Service.html#method.proxy_get_namespaced_service_with_path)
 #[derive(Debug)]
-pub enum ProxyCoreV1GETNamespacedServiceWithPathResponse {
+pub enum ProxyGETNamespacedServiceWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ProxyCoreV1GETNamespacedServiceWithPathResponse {
+impl crate::Response for ProxyGETNamespacedServiceWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1595,10 +1595,10 @@ impl crate::Response for ProxyCoreV1GETNamespacedServiceWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ProxyCoreV1GETNamespacedServiceWithPathResponse::Ok(result), len))
+                Ok((ProxyGETNamespacedServiceWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1GETNamespacedServiceWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ProxyCoreV1GETNamespacedServiceWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyGETNamespacedServiceWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ProxyGETNamespacedServiceWithPathResponse::Other, 0)),
         }
     }
 }
@@ -1608,7 +1608,7 @@ impl crate::Response for ProxyCoreV1GETNamespacedServiceWithPathResponse {
 impl Service {
     /// proxy PATCH requests to Service
     ///
-    /// Use [`ProxyCoreV1PATCHNamespacedServiceResponse`](./enum.ProxyCoreV1PATCHNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`ProxyPATCHNamespacedServiceResponse`](./enum.ProxyPATCHNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1619,7 +1619,7 @@ impl Service {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    pub fn proxy_core_v1_patch_namespaced_service(
+    pub fn proxy_patch_namespaced_service(
         name: &str,
         namespace: &str,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
@@ -1631,15 +1631,15 @@ impl Service {
     }
 }
 
-/// Parses the HTTP response of [`Service::proxy_core_v1_patch_namespaced_service`](./struct.Service.html#method.proxy_core_v1_patch_namespaced_service)
+/// Parses the HTTP response of [`Service::proxy_patch_namespaced_service`](./struct.Service.html#method.proxy_patch_namespaced_service)
 #[derive(Debug)]
-pub enum ProxyCoreV1PATCHNamespacedServiceResponse {
+pub enum ProxyPATCHNamespacedServiceResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ProxyCoreV1PATCHNamespacedServiceResponse {
+impl crate::Response for ProxyPATCHNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1653,10 +1653,10 @@ impl crate::Response for ProxyCoreV1PATCHNamespacedServiceResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ProxyCoreV1PATCHNamespacedServiceResponse::Ok(result), len))
+                Ok((ProxyPATCHNamespacedServiceResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PATCHNamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((ProxyCoreV1PATCHNamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyPATCHNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ProxyPATCHNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -1666,7 +1666,7 @@ impl crate::Response for ProxyCoreV1PATCHNamespacedServiceResponse {
 impl Service {
     /// proxy PATCH requests to Service
     ///
-    /// Use [`ProxyCoreV1PATCHNamespacedServiceWithPathResponse`](./enum.ProxyCoreV1PATCHNamespacedServiceWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ProxyPATCHNamespacedServiceWithPathResponse`](./enum.ProxyPATCHNamespacedServiceWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1681,7 +1681,7 @@ impl Service {
     /// * `path`
     ///
     ///     path to the resource
-    pub fn proxy_core_v1_patch_namespaced_service_with_path(
+    pub fn proxy_patch_namespaced_service_with_path(
         name: &str,
         namespace: &str,
         path: &str,
@@ -1694,15 +1694,15 @@ impl Service {
     }
 }
 
-/// Parses the HTTP response of [`Service::proxy_core_v1_patch_namespaced_service_with_path`](./struct.Service.html#method.proxy_core_v1_patch_namespaced_service_with_path)
+/// Parses the HTTP response of [`Service::proxy_patch_namespaced_service_with_path`](./struct.Service.html#method.proxy_patch_namespaced_service_with_path)
 #[derive(Debug)]
-pub enum ProxyCoreV1PATCHNamespacedServiceWithPathResponse {
+pub enum ProxyPATCHNamespacedServiceWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ProxyCoreV1PATCHNamespacedServiceWithPathResponse {
+impl crate::Response for ProxyPATCHNamespacedServiceWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1716,10 +1716,10 @@ impl crate::Response for ProxyCoreV1PATCHNamespacedServiceWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ProxyCoreV1PATCHNamespacedServiceWithPathResponse::Ok(result), len))
+                Ok((ProxyPATCHNamespacedServiceWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PATCHNamespacedServiceWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ProxyCoreV1PATCHNamespacedServiceWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyPATCHNamespacedServiceWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ProxyPATCHNamespacedServiceWithPathResponse::Other, 0)),
         }
     }
 }
@@ -1729,7 +1729,7 @@ impl crate::Response for ProxyCoreV1PATCHNamespacedServiceWithPathResponse {
 impl Service {
     /// proxy POST requests to Service
     ///
-    /// Use [`ProxyCoreV1POSTNamespacedServiceResponse`](./enum.ProxyCoreV1POSTNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`ProxyPOSTNamespacedServiceResponse`](./enum.ProxyPOSTNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1740,7 +1740,7 @@ impl Service {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    pub fn proxy_core_v1_post_namespaced_service(
+    pub fn proxy_post_namespaced_service(
         name: &str,
         namespace: &str,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
@@ -1752,15 +1752,15 @@ impl Service {
     }
 }
 
-/// Parses the HTTP response of [`Service::proxy_core_v1_post_namespaced_service`](./struct.Service.html#method.proxy_core_v1_post_namespaced_service)
+/// Parses the HTTP response of [`Service::proxy_post_namespaced_service`](./struct.Service.html#method.proxy_post_namespaced_service)
 #[derive(Debug)]
-pub enum ProxyCoreV1POSTNamespacedServiceResponse {
+pub enum ProxyPOSTNamespacedServiceResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ProxyCoreV1POSTNamespacedServiceResponse {
+impl crate::Response for ProxyPOSTNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1774,10 +1774,10 @@ impl crate::Response for ProxyCoreV1POSTNamespacedServiceResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ProxyCoreV1POSTNamespacedServiceResponse::Ok(result), len))
+                Ok((ProxyPOSTNamespacedServiceResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1POSTNamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((ProxyCoreV1POSTNamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyPOSTNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ProxyPOSTNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -1787,7 +1787,7 @@ impl crate::Response for ProxyCoreV1POSTNamespacedServiceResponse {
 impl Service {
     /// proxy POST requests to Service
     ///
-    /// Use [`ProxyCoreV1POSTNamespacedServiceWithPathResponse`](./enum.ProxyCoreV1POSTNamespacedServiceWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ProxyPOSTNamespacedServiceWithPathResponse`](./enum.ProxyPOSTNamespacedServiceWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1802,7 +1802,7 @@ impl Service {
     /// * `path`
     ///
     ///     path to the resource
-    pub fn proxy_core_v1_post_namespaced_service_with_path(
+    pub fn proxy_post_namespaced_service_with_path(
         name: &str,
         namespace: &str,
         path: &str,
@@ -1815,15 +1815,15 @@ impl Service {
     }
 }
 
-/// Parses the HTTP response of [`Service::proxy_core_v1_post_namespaced_service_with_path`](./struct.Service.html#method.proxy_core_v1_post_namespaced_service_with_path)
+/// Parses the HTTP response of [`Service::proxy_post_namespaced_service_with_path`](./struct.Service.html#method.proxy_post_namespaced_service_with_path)
 #[derive(Debug)]
-pub enum ProxyCoreV1POSTNamespacedServiceWithPathResponse {
+pub enum ProxyPOSTNamespacedServiceWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ProxyCoreV1POSTNamespacedServiceWithPathResponse {
+impl crate::Response for ProxyPOSTNamespacedServiceWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1837,10 +1837,10 @@ impl crate::Response for ProxyCoreV1POSTNamespacedServiceWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ProxyCoreV1POSTNamespacedServiceWithPathResponse::Ok(result), len))
+                Ok((ProxyPOSTNamespacedServiceWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1POSTNamespacedServiceWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ProxyCoreV1POSTNamespacedServiceWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyPOSTNamespacedServiceWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ProxyPOSTNamespacedServiceWithPathResponse::Other, 0)),
         }
     }
 }
@@ -1850,7 +1850,7 @@ impl crate::Response for ProxyCoreV1POSTNamespacedServiceWithPathResponse {
 impl Service {
     /// proxy PUT requests to Service
     ///
-    /// Use [`ProxyCoreV1PUTNamespacedServiceResponse`](./enum.ProxyCoreV1PUTNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`ProxyPUTNamespacedServiceResponse`](./enum.ProxyPUTNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1861,7 +1861,7 @@ impl Service {
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
-    pub fn proxy_core_v1_put_namespaced_service(
+    pub fn proxy_put_namespaced_service(
         name: &str,
         namespace: &str,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
@@ -1873,15 +1873,15 @@ impl Service {
     }
 }
 
-/// Parses the HTTP response of [`Service::proxy_core_v1_put_namespaced_service`](./struct.Service.html#method.proxy_core_v1_put_namespaced_service)
+/// Parses the HTTP response of [`Service::proxy_put_namespaced_service`](./struct.Service.html#method.proxy_put_namespaced_service)
 #[derive(Debug)]
-pub enum ProxyCoreV1PUTNamespacedServiceResponse {
+pub enum ProxyPUTNamespacedServiceResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ProxyCoreV1PUTNamespacedServiceResponse {
+impl crate::Response for ProxyPUTNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1895,10 +1895,10 @@ impl crate::Response for ProxyCoreV1PUTNamespacedServiceResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ProxyCoreV1PUTNamespacedServiceResponse::Ok(result), len))
+                Ok((ProxyPUTNamespacedServiceResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PUTNamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((ProxyCoreV1PUTNamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyPUTNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ProxyPUTNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -1908,7 +1908,7 @@ impl crate::Response for ProxyCoreV1PUTNamespacedServiceResponse {
 impl Service {
     /// proxy PUT requests to Service
     ///
-    /// Use [`ProxyCoreV1PUTNamespacedServiceWithPathResponse`](./enum.ProxyCoreV1PUTNamespacedServiceWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ProxyPUTNamespacedServiceWithPathResponse`](./enum.ProxyPUTNamespacedServiceWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1923,7 +1923,7 @@ impl Service {
     /// * `path`
     ///
     ///     path to the resource
-    pub fn proxy_core_v1_put_namespaced_service_with_path(
+    pub fn proxy_put_namespaced_service_with_path(
         name: &str,
         namespace: &str,
         path: &str,
@@ -1936,15 +1936,15 @@ impl Service {
     }
 }
 
-/// Parses the HTTP response of [`Service::proxy_core_v1_put_namespaced_service_with_path`](./struct.Service.html#method.proxy_core_v1_put_namespaced_service_with_path)
+/// Parses the HTTP response of [`Service::proxy_put_namespaced_service_with_path`](./struct.Service.html#method.proxy_put_namespaced_service_with_path)
 #[derive(Debug)]
-pub enum ProxyCoreV1PUTNamespacedServiceWithPathResponse {
+pub enum ProxyPUTNamespacedServiceWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ProxyCoreV1PUTNamespacedServiceWithPathResponse {
+impl crate::Response for ProxyPUTNamespacedServiceWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1958,10 +1958,10 @@ impl crate::Response for ProxyCoreV1PUTNamespacedServiceWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ProxyCoreV1PUTNamespacedServiceWithPathResponse::Ok(result), len))
+                Ok((ProxyPUTNamespacedServiceWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ProxyCoreV1PUTNamespacedServiceWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ProxyCoreV1PUTNamespacedServiceWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ProxyPUTNamespacedServiceWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ProxyPUTNamespacedServiceWithPathResponse::Other, 0)),
         }
     }
 }
@@ -1971,7 +1971,7 @@ impl crate::Response for ProxyCoreV1PUTNamespacedServiceWithPathResponse {
 impl Service {
     /// read the specified Service
     ///
-    /// Use [`ReadCoreV1NamespacedServiceResponse`](./enum.ReadCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedServiceResponse`](./enum.ReadNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1986,12 +1986,12 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_service(
+    pub fn read_namespaced_service(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedServiceOptional<'_>,
+        optional: ReadNamespacedServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedServiceOptional {
+        let ReadNamespacedServiceOptional {
             exact,
             export,
             pretty,
@@ -2015,9 +2015,9 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::read_core_v1_namespaced_service`](./struct.Service.html#method.read_core_v1_namespaced_service)
+/// Optional parameters of [`Service::read_namespaced_service`](./struct.Service.html#method.read_namespaced_service)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedServiceOptional<'a> {
+pub struct ReadNamespacedServiceOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -2026,15 +2026,15 @@ pub struct ReadCoreV1NamespacedServiceOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::read_core_v1_namespaced_service`](./struct.Service.html#method.read_core_v1_namespaced_service)
+/// Parses the HTTP response of [`Service::read_namespaced_service`](./struct.Service.html#method.read_namespaced_service)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedServiceResponse {
+pub enum ReadNamespacedServiceResponse {
     Ok(crate::v1_8::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedServiceResponse {
+impl crate::Response for ReadNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2043,10 +2043,10 @@ impl crate::Response for ReadCoreV1NamespacedServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -2056,7 +2056,7 @@ impl crate::Response for ReadCoreV1NamespacedServiceResponse {
 impl Service {
     /// read status of the specified Service
     ///
-    /// Use [`ReadCoreV1NamespacedServiceStatusResponse`](./enum.ReadCoreV1NamespacedServiceStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedServiceStatusResponse`](./enum.ReadNamespacedServiceStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2071,12 +2071,12 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_service_status(
+    pub fn read_namespaced_service_status(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedServiceStatusOptional<'_>,
+        optional: ReadNamespacedServiceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedServiceStatusOptional {
+        let ReadNamespacedServiceStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
@@ -2092,22 +2092,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::read_core_v1_namespaced_service_status`](./struct.Service.html#method.read_core_v1_namespaced_service_status)
+/// Optional parameters of [`Service::read_namespaced_service_status`](./struct.Service.html#method.read_namespaced_service_status)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedServiceStatusOptional<'a> {
+pub struct ReadNamespacedServiceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::read_core_v1_namespaced_service_status`](./struct.Service.html#method.read_core_v1_namespaced_service_status)
+/// Parses the HTTP response of [`Service::read_namespaced_service_status`](./struct.Service.html#method.read_namespaced_service_status)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedServiceStatusResponse {
+pub enum ReadNamespacedServiceStatusResponse {
     Ok(crate::v1_8::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedServiceStatusResponse {
+impl crate::Response for ReadNamespacedServiceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2116,10 +2116,10 @@ impl crate::Response for ReadCoreV1NamespacedServiceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedServiceStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedServiceStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedServiceStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedServiceStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedServiceStatusResponse::Other, 0)),
         }
     }
 }
@@ -2129,7 +2129,7 @@ impl crate::Response for ReadCoreV1NamespacedServiceStatusResponse {
 impl Service {
     /// replace the specified Service
     ///
-    /// Use [`ReplaceCoreV1NamespacedServiceResponse`](./enum.ReplaceCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedServiceResponse`](./enum.ReplaceNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2146,13 +2146,13 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_service(
+    pub fn replace_namespaced_service(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::core::v1::Service,
-        optional: ReplaceCoreV1NamespacedServiceOptional<'_>,
+        optional: ReplaceNamespacedServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedServiceOptional {
+        let ReplaceNamespacedServiceOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
@@ -2168,22 +2168,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::replace_core_v1_namespaced_service`](./struct.Service.html#method.replace_core_v1_namespaced_service)
+/// Optional parameters of [`Service::replace_namespaced_service`](./struct.Service.html#method.replace_namespaced_service)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedServiceOptional<'a> {
+pub struct ReplaceNamespacedServiceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::replace_core_v1_namespaced_service`](./struct.Service.html#method.replace_core_v1_namespaced_service)
+/// Parses the HTTP response of [`Service::replace_namespaced_service`](./struct.Service.html#method.replace_namespaced_service)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedServiceResponse {
+pub enum ReplaceNamespacedServiceResponse {
     Ok(crate::v1_8::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedServiceResponse {
+impl crate::Response for ReplaceNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2192,10 +2192,10 @@ impl crate::Response for ReplaceCoreV1NamespacedServiceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedServiceResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedServiceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -2205,7 +2205,7 @@ impl crate::Response for ReplaceCoreV1NamespacedServiceResponse {
 impl Service {
     /// replace status of the specified Service
     ///
-    /// Use [`ReplaceCoreV1NamespacedServiceStatusResponse`](./enum.ReplaceCoreV1NamespacedServiceStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedServiceStatusResponse`](./enum.ReplaceNamespacedServiceStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2222,13 +2222,13 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_service_status(
+    pub fn replace_namespaced_service_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::core::v1::Service,
-        optional: ReplaceCoreV1NamespacedServiceStatusOptional<'_>,
+        optional: ReplaceNamespacedServiceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedServiceStatusOptional {
+        let ReplaceNamespacedServiceStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services/{name}/status?", name = name, namespace = namespace);
@@ -2244,22 +2244,22 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::replace_core_v1_namespaced_service_status`](./struct.Service.html#method.replace_core_v1_namespaced_service_status)
+/// Optional parameters of [`Service::replace_namespaced_service_status`](./struct.Service.html#method.replace_namespaced_service_status)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedServiceStatusOptional<'a> {
+pub struct ReplaceNamespacedServiceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::replace_core_v1_namespaced_service_status`](./struct.Service.html#method.replace_core_v1_namespaced_service_status)
+/// Parses the HTTP response of [`Service::replace_namespaced_service_status`](./struct.Service.html#method.replace_namespaced_service_status)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedServiceStatusResponse {
+pub enum ReplaceNamespacedServiceStatusResponse {
     Ok(crate::v1_8::api::core::v1::Service),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedServiceStatusResponse {
+impl crate::Response for ReplaceNamespacedServiceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2268,10 +2268,10 @@ impl crate::Response for ReplaceCoreV1NamespacedServiceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedServiceStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedServiceStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedServiceStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedServiceStatusResponse::Other, 0)),
         }
     }
 }
@@ -2281,7 +2281,7 @@ impl crate::Response for ReplaceCoreV1NamespacedServiceStatusResponse {
 impl Service {
     /// watch changes to an object of kind Service
     ///
-    /// Use [`WatchCoreV1NamespacedServiceResponse`](./enum.WatchCoreV1NamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedServiceResponse`](./enum.WatchNamespacedServiceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2296,12 +2296,12 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_service(
+    pub fn watch_namespaced_service(
         name: &str,
         namespace: &str,
-        optional: WatchCoreV1NamespacedServiceOptional<'_>,
+        optional: WatchNamespacedServiceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedServiceOptional {
+        let WatchNamespacedServiceOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -2349,9 +2349,9 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::watch_core_v1_namespaced_service`](./struct.Service.html#method.watch_core_v1_namespaced_service)
+/// Optional parameters of [`Service::watch_namespaced_service`](./struct.Service.html#method.watch_namespaced_service)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedServiceOptional<'a> {
+pub struct WatchNamespacedServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -2374,15 +2374,15 @@ pub struct WatchCoreV1NamespacedServiceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Service::watch_core_v1_namespaced_service`](./struct.Service.html#method.watch_core_v1_namespaced_service)
+/// Parses the HTTP response of [`Service::watch_namespaced_service`](./struct.Service.html#method.watch_namespaced_service)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedServiceResponse {
+pub enum WatchNamespacedServiceResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedServiceResponse {
+impl crate::Response for WatchNamespacedServiceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2393,10 +2393,10 @@ impl crate::Response for WatchCoreV1NamespacedServiceResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedServiceResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedServiceResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedServiceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedServiceResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedServiceResponse::Other, 0)),
         }
     }
 }
@@ -2406,7 +2406,7 @@ impl crate::Response for WatchCoreV1NamespacedServiceResponse {
 impl Service {
     /// watch individual changes to a list of Service
     ///
-    /// Use [`WatchCoreV1NamespacedServiceListResponse`](./enum.WatchCoreV1NamespacedServiceListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedServiceListResponse`](./enum.WatchNamespacedServiceListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2417,11 +2417,11 @@ impl Service {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_service_list(
+    pub fn watch_namespaced_service_list(
         namespace: &str,
-        optional: WatchCoreV1NamespacedServiceListOptional<'_>,
+        optional: WatchNamespacedServiceListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedServiceListOptional {
+        let WatchNamespacedServiceListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -2469,9 +2469,9 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::watch_core_v1_namespaced_service_list`](./struct.Service.html#method.watch_core_v1_namespaced_service_list)
+/// Optional parameters of [`Service::watch_namespaced_service_list`](./struct.Service.html#method.watch_namespaced_service_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedServiceListOptional<'a> {
+pub struct WatchNamespacedServiceListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -2494,15 +2494,15 @@ pub struct WatchCoreV1NamespacedServiceListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Service::watch_core_v1_namespaced_service_list`](./struct.Service.html#method.watch_core_v1_namespaced_service_list)
+/// Parses the HTTP response of [`Service::watch_namespaced_service_list`](./struct.Service.html#method.watch_namespaced_service_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedServiceListResponse {
+pub enum WatchNamespacedServiceListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedServiceListResponse {
+impl crate::Response for WatchNamespacedServiceListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2513,10 +2513,10 @@ impl crate::Response for WatchCoreV1NamespacedServiceListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedServiceListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedServiceListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedServiceListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedServiceListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedServiceListResponse::Other, 0)),
         }
     }
 }
@@ -2526,17 +2526,17 @@ impl crate::Response for WatchCoreV1NamespacedServiceListResponse {
 impl Service {
     /// watch individual changes to a list of Service
     ///
-    /// Use [`WatchCoreV1ServiceListForAllNamespacesResponse`](./enum.WatchCoreV1ServiceListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchServiceListForAllNamespacesResponse`](./enum.WatchServiceListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_service_list_for_all_namespaces(
-        optional: WatchCoreV1ServiceListForAllNamespacesOptional<'_>,
+    pub fn watch_service_list_for_all_namespaces(
+        optional: WatchServiceListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1ServiceListForAllNamespacesOptional {
+        let WatchServiceListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -2584,9 +2584,9 @@ impl Service {
     }
 }
 
-/// Optional parameters of [`Service::watch_core_v1_service_list_for_all_namespaces`](./struct.Service.html#method.watch_core_v1_service_list_for_all_namespaces)
+/// Optional parameters of [`Service::watch_service_list_for_all_namespaces`](./struct.Service.html#method.watch_service_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1ServiceListForAllNamespacesOptional<'a> {
+pub struct WatchServiceListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -2609,15 +2609,15 @@ pub struct WatchCoreV1ServiceListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Service::watch_core_v1_service_list_for_all_namespaces`](./struct.Service.html#method.watch_core_v1_service_list_for_all_namespaces)
+/// Parses the HTTP response of [`Service::watch_service_list_for_all_namespaces`](./struct.Service.html#method.watch_service_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchCoreV1ServiceListForAllNamespacesResponse {
+pub enum WatchServiceListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1ServiceListForAllNamespacesResponse {
+impl crate::Response for WatchServiceListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2628,10 +2628,10 @@ impl crate::Response for WatchCoreV1ServiceListForAllNamespacesResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1ServiceListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchServiceListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1ServiceListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1ServiceListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchServiceListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchServiceListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

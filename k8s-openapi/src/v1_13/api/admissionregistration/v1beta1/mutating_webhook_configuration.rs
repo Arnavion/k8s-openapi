@@ -17,7 +17,7 @@ pub struct MutatingWebhookConfiguration {
 impl MutatingWebhookConfiguration {
     /// create a MutatingWebhookConfiguration
     ///
-    /// Use [`CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`CreateMutatingWebhookConfigurationResponse`](./enum.CreateMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -26,11 +26,11 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_admissionregistration_v1beta1_mutating_webhook_configuration(
+    pub fn create_mutating_webhook_configuration(
         body: &crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration,
-        optional: CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'_>,
+        optional: CreateMutatingWebhookConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional {
+        let CreateMutatingWebhookConfigurationOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -54,9 +54,9 @@ impl MutatingWebhookConfiguration {
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::create_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.create_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::create_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.create_mutating_webhook_configuration)
 #[derive(Debug, Default)]
-pub struct CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'a> {
+pub struct CreateMutatingWebhookConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -65,9 +65,9 @@ pub struct CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationOptiona
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::create_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.create_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::create_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.create_mutating_webhook_configuration)
 #[derive(Debug)]
-pub enum CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+pub enum CreateMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Created(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Accepted(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -75,7 +75,7 @@ pub enum CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse 
     Other,
 }
 
-impl crate::Response for CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+impl crate::Response for CreateMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -84,7 +84,7 @@ impl crate::Response for CreateAdmissionregistrationV1beta1MutatingWebhookConfig
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
+                Ok((CreateMutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -92,7 +92,7 @@ impl crate::Response for CreateAdmissionregistrationV1beta1MutatingWebhookConfig
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Created(result), buf.len()))
+                Ok((CreateMutatingWebhookConfigurationResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -100,10 +100,10 @@ impl crate::Response for CreateAdmissionregistrationV1beta1MutatingWebhookConfig
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Accepted(result), buf.len()))
+                Ok((CreateMutatingWebhookConfigurationResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((CreateAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateMutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((CreateMutatingWebhookConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -113,17 +113,17 @@ impl crate::Response for CreateAdmissionregistrationV1beta1MutatingWebhookConfig
 impl MutatingWebhookConfiguration {
     /// delete collection of MutatingWebhookConfiguration
     ///
-    /// Use [`DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse`](./enum.DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionMutatingWebhookConfigurationResponse`](./enum.DeleteCollectionMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_admissionregistration_v1beta1_collection_mutating_webhook_configuration(
-        optional: DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationOptional<'_>,
+    pub fn delete_collection_mutating_webhook_configuration(
+        optional: DeleteCollectionMutatingWebhookConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationOptional {
+        let DeleteCollectionMutatingWebhookConfigurationOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -171,9 +171,9 @@ impl MutatingWebhookConfiguration {
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::delete_admissionregistration_v1beta1_collection_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_admissionregistration_v1beta1_collection_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::delete_collection_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_collection_mutating_webhook_configuration)
 #[derive(Debug, Default)]
-pub struct DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationOptional<'a> {
+pub struct DeleteCollectionMutatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -198,16 +198,16 @@ pub struct DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurat
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::delete_admissionregistration_v1beta1_collection_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_admissionregistration_v1beta1_collection_mutating_webhook_configuration)
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::delete_collection_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_collection_mutating_webhook_configuration)
 #[derive(Debug)]
-pub enum DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse {
+pub enum DeleteCollectionMutatingWebhookConfigurationResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse {
+impl crate::Response for DeleteCollectionMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -223,16 +223,16 @@ impl crate::Response for DeleteAdmissionregistrationV1beta1CollectionMutatingWeb
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionMutatingWebhookConfigurationResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionMutatingWebhookConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAdmissionregistrationV1beta1CollectionMutatingWebhookConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionMutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionMutatingWebhookConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -242,7 +242,7 @@ impl crate::Response for DeleteAdmissionregistrationV1beta1CollectionMutatingWeb
 impl MutatingWebhookConfiguration {
     /// delete a MutatingWebhookConfiguration
     ///
-    /// Use [`DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`DeleteMutatingWebhookConfigurationResponse`](./enum.DeleteMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -253,11 +253,11 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_admissionregistration_v1beta1_mutating_webhook_configuration(
+    pub fn delete_mutating_webhook_configuration(
         name: &str,
-        optional: DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'_>,
+        optional: DeleteMutatingWebhookConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional {
+        let DeleteMutatingWebhookConfigurationOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -289,9 +289,9 @@ impl MutatingWebhookConfiguration {
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::delete_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::delete_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_mutating_webhook_configuration)
 #[derive(Debug, Default)]
-pub struct DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'a> {
+pub struct DeleteMutatingWebhookConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -304,9 +304,9 @@ pub struct DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationOptiona
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::delete_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::delete_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_mutating_webhook_configuration)
 #[derive(Debug)]
-pub enum DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+pub enum DeleteMutatingWebhookConfigurationResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -314,7 +314,7 @@ pub enum DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse 
     Other,
 }
 
-impl crate::Response for DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+impl crate::Response for DeleteMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -330,12 +330,12 @@ impl crate::Response for DeleteAdmissionregistrationV1beta1MutatingWebhookConfig
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteMutatingWebhookConfigurationResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::OkValue(result), buf.len()))
+                    Ok((DeleteMutatingWebhookConfigurationResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -344,10 +344,10 @@ impl crate::Response for DeleteAdmissionregistrationV1beta1MutatingWebhookConfig
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Accepted(result), buf.len()))
+                Ok((DeleteMutatingWebhookConfigurationResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteMutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((DeleteMutatingWebhookConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -357,17 +357,17 @@ impl crate::Response for DeleteAdmissionregistrationV1beta1MutatingWebhookConfig
 impl MutatingWebhookConfiguration {
     /// list or watch objects of kind MutatingWebhookConfiguration
     ///
-    /// Use [`ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`ListMutatingWebhookConfigurationResponse`](./enum.ListMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_admissionregistration_v1beta1_mutating_webhook_configuration(
-        optional: ListAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'_>,
+    pub fn list_mutating_webhook_configuration(
+        optional: ListMutatingWebhookConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional {
+        let ListMutatingWebhookConfigurationOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -415,9 +415,9 @@ impl MutatingWebhookConfiguration {
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::list_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.list_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::list_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.list_mutating_webhook_configuration)
 #[derive(Debug, Default)]
-pub struct ListAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'a> {
+pub struct ListMutatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -442,15 +442,15 @@ pub struct ListAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::list_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.list_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::list_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.list_mutating_webhook_configuration)
 #[derive(Debug)]
-pub enum ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+pub enum ListMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfigurationList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+impl crate::Response for ListMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -459,10 +459,10 @@ impl crate::Response for ListAdmissionregistrationV1beta1MutatingWebhookConfigur
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
+                Ok((ListMutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ListAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListMutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ListMutatingWebhookConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -472,7 +472,7 @@ impl crate::Response for ListAdmissionregistrationV1beta1MutatingWebhookConfigur
 impl MutatingWebhookConfiguration {
     /// partially update the specified MutatingWebhookConfiguration
     ///
-    /// Use [`PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`PatchMutatingWebhookConfigurationResponse`](./enum.PatchMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -485,12 +485,12 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_admissionregistration_v1beta1_mutating_webhook_configuration(
+    pub fn patch_mutating_webhook_configuration(
         name: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'_>,
+        optional: PatchMutatingWebhookConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional {
+        let PatchMutatingWebhookConfigurationOptional {
             dry_run,
             pretty,
         } = optional;
@@ -510,24 +510,24 @@ impl MutatingWebhookConfiguration {
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::patch_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.patch_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::patch_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.patch_mutating_webhook_configuration)
 #[derive(Debug, Default)]
-pub struct PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'a> {
+pub struct PatchMutatingWebhookConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::patch_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.patch_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::patch_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.patch_mutating_webhook_configuration)
 #[derive(Debug)]
-pub enum PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+pub enum PatchMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+impl crate::Response for PatchMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -536,10 +536,10 @@ impl crate::Response for PatchAdmissionregistrationV1beta1MutatingWebhookConfigu
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
+                Ok((PatchMutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((PatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchMutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((PatchMutatingWebhookConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -549,7 +549,7 @@ impl crate::Response for PatchAdmissionregistrationV1beta1MutatingWebhookConfigu
 impl MutatingWebhookConfiguration {
     /// read the specified MutatingWebhookConfiguration
     ///
-    /// Use [`ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`ReadMutatingWebhookConfigurationResponse`](./enum.ReadMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -560,11 +560,11 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_admissionregistration_v1beta1_mutating_webhook_configuration(
+    pub fn read_mutating_webhook_configuration(
         name: &str,
-        optional: ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'_>,
+        optional: ReadMutatingWebhookConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional {
+        let ReadMutatingWebhookConfigurationOptional {
             exact,
             export,
             pretty,
@@ -588,9 +588,9 @@ impl MutatingWebhookConfiguration {
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::read_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.read_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::read_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.read_mutating_webhook_configuration)
 #[derive(Debug, Default)]
-pub struct ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'a> {
+pub struct ReadMutatingWebhookConfigurationOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -599,15 +599,15 @@ pub struct ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::read_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.read_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::read_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.read_mutating_webhook_configuration)
 #[derive(Debug)]
-pub enum ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+pub enum ReadMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+impl crate::Response for ReadMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -616,10 +616,10 @@ impl crate::Response for ReadAdmissionregistrationV1beta1MutatingWebhookConfigur
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
+                Ok((ReadMutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReadAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadMutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ReadMutatingWebhookConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -629,7 +629,7 @@ impl crate::Response for ReadAdmissionregistrationV1beta1MutatingWebhookConfigur
 impl MutatingWebhookConfiguration {
     /// replace the specified MutatingWebhookConfiguration
     ///
-    /// Use [`ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceMutatingWebhookConfigurationResponse`](./enum.ReplaceMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -642,12 +642,12 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_admissionregistration_v1beta1_mutating_webhook_configuration(
+    pub fn replace_mutating_webhook_configuration(
         name: &str,
         body: &crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration,
-        optional: ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'_>,
+        optional: ReplaceMutatingWebhookConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional {
+        let ReplaceMutatingWebhookConfigurationOptional {
             dry_run,
             pretty,
         } = optional;
@@ -667,25 +667,25 @@ impl MutatingWebhookConfiguration {
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::replace_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.replace_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::replace_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.replace_mutating_webhook_configuration)
 #[derive(Debug, Default)]
-pub struct ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'a> {
+pub struct ReplaceMutatingWebhookConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::replace_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.replace_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::replace_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.replace_mutating_webhook_configuration)
 #[derive(Debug)]
-pub enum ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+pub enum ReplaceMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Created(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+impl crate::Response for ReplaceMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -694,7 +694,7 @@ impl crate::Response for ReplaceAdmissionregistrationV1beta1MutatingWebhookConfi
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), buf.len()))
+                Ok((ReplaceMutatingWebhookConfigurationResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -702,10 +702,10 @@ impl crate::Response for ReplaceAdmissionregistrationV1beta1MutatingWebhookConfi
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Created(result), buf.len()))
+                Ok((ReplaceMutatingWebhookConfigurationResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceMutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceMutatingWebhookConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -715,7 +715,7 @@ impl crate::Response for ReplaceAdmissionregistrationV1beta1MutatingWebhookConfi
 impl MutatingWebhookConfiguration {
     /// watch changes to an object of kind MutatingWebhookConfiguration. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse`](./enum.WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use [`WatchMutatingWebhookConfigurationResponse`](./enum.WatchMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -726,11 +726,11 @@ impl MutatingWebhookConfiguration {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_admissionregistration_v1beta1_mutating_webhook_configuration(
+    pub fn watch_mutating_webhook_configuration(
         name: &str,
-        optional: WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'_>,
+        optional: WatchMutatingWebhookConfigurationOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional {
+        let WatchMutatingWebhookConfigurationOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -778,9 +778,9 @@ impl MutatingWebhookConfiguration {
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::watch_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.watch_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.watch_mutating_webhook_configuration)
 #[derive(Debug, Default)]
-pub struct WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional<'a> {
+pub struct WatchMutatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -805,15 +805,15 @@ pub struct WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationOptional
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::watch_admissionregistration_v1beta1_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.watch_admissionregistration_v1beta1_mutating_webhook_configuration)
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.watch_mutating_webhook_configuration)
 #[derive(Debug)]
-pub enum WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+pub enum WatchMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse {
+impl crate::Response for WatchMutatingWebhookConfigurationResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -824,10 +824,10 @@ impl crate::Response for WatchAdmissionregistrationV1beta1MutatingWebhookConfigu
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Ok(result), byte_offset))
+                Ok((WatchMutatingWebhookConfigurationResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Unauthorized, 0)),
-            _ => Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchMutatingWebhookConfigurationResponse::Unauthorized, 0)),
+            _ => Ok((WatchMutatingWebhookConfigurationResponse::Other, 0)),
         }
     }
 }
@@ -837,17 +837,17 @@ impl crate::Response for WatchAdmissionregistrationV1beta1MutatingWebhookConfigu
 impl MutatingWebhookConfiguration {
     /// watch individual changes to a list of MutatingWebhookConfiguration. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse`](./enum.WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse.html) to parse the HTTP response.
+    /// Use [`WatchMutatingWebhookConfigurationListResponse`](./enum.WatchMutatingWebhookConfigurationListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_admissionregistration_v1beta1_mutating_webhook_configuration_list(
-        optional: WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListOptional<'_>,
+    pub fn watch_mutating_webhook_configuration_list(
+        optional: WatchMutatingWebhookConfigurationListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListOptional {
+        let WatchMutatingWebhookConfigurationListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -895,9 +895,9 @@ impl MutatingWebhookConfiguration {
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::watch_admissionregistration_v1beta1_mutating_webhook_configuration_list`](./struct.MutatingWebhookConfiguration.html#method.watch_admissionregistration_v1beta1_mutating_webhook_configuration_list)
+/// Optional parameters of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration_list`](./struct.MutatingWebhookConfiguration.html#method.watch_mutating_webhook_configuration_list)
 #[derive(Debug, Default)]
-pub struct WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListOptional<'a> {
+pub struct WatchMutatingWebhookConfigurationListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -922,15 +922,15 @@ pub struct WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListOpti
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::watch_admissionregistration_v1beta1_mutating_webhook_configuration_list`](./struct.MutatingWebhookConfiguration.html#method.watch_admissionregistration_v1beta1_mutating_webhook_configuration_list)
+/// Parses the HTTP response of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration_list`](./struct.MutatingWebhookConfiguration.html#method.watch_mutating_webhook_configuration_list)
 #[derive(Debug)]
-pub enum WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse {
+pub enum WatchMutatingWebhookConfigurationListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse {
+impl crate::Response for WatchMutatingWebhookConfigurationListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -941,10 +941,10 @@ impl crate::Response for WatchAdmissionregistrationV1beta1MutatingWebhookConfigu
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse::Ok(result), byte_offset))
+                Ok((WatchMutatingWebhookConfigurationListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse::Unauthorized, 0)),
-            _ => Ok((WatchAdmissionregistrationV1beta1MutatingWebhookConfigurationListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchMutatingWebhookConfigurationListResponse::Unauthorized, 0)),
+            _ => Ok((WatchMutatingWebhookConfigurationListResponse::Other, 0)),
         }
     }
 }

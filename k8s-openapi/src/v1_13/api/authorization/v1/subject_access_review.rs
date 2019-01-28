@@ -19,7 +19,7 @@ pub struct SubjectAccessReview {
 impl SubjectAccessReview {
     /// create a SubjectAccessReview
     ///
-    /// Use [`CreateAuthorizationV1SubjectAccessReviewResponse`](./enum.CreateAuthorizationV1SubjectAccessReviewResponse.html) to parse the HTTP response.
+    /// Use [`CreateSubjectAccessReviewResponse`](./enum.CreateSubjectAccessReviewResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -28,11 +28,11 @@ impl SubjectAccessReview {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_authorization_v1_subject_access_review(
+    pub fn create_subject_access_review(
         body: &crate::v1_13::api::authorization::v1::SubjectAccessReview,
-        optional: CreateAuthorizationV1SubjectAccessReviewOptional<'_>,
+        optional: CreateSubjectAccessReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAuthorizationV1SubjectAccessReviewOptional {
+        let CreateSubjectAccessReviewOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -56,9 +56,9 @@ impl SubjectAccessReview {
     }
 }
 
-/// Optional parameters of [`SubjectAccessReview::create_authorization_v1_subject_access_review`](./struct.SubjectAccessReview.html#method.create_authorization_v1_subject_access_review)
+/// Optional parameters of [`SubjectAccessReview::create_subject_access_review`](./struct.SubjectAccessReview.html#method.create_subject_access_review)
 #[derive(Debug, Default)]
-pub struct CreateAuthorizationV1SubjectAccessReviewOptional<'a> {
+pub struct CreateSubjectAccessReviewOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If IncludeUninitialized is specified, the object may be returned without completing initialization.
@@ -67,9 +67,9 @@ pub struct CreateAuthorizationV1SubjectAccessReviewOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`SubjectAccessReview::create_authorization_v1_subject_access_review`](./struct.SubjectAccessReview.html#method.create_authorization_v1_subject_access_review)
+/// Parses the HTTP response of [`SubjectAccessReview::create_subject_access_review`](./struct.SubjectAccessReview.html#method.create_subject_access_review)
 #[derive(Debug)]
-pub enum CreateAuthorizationV1SubjectAccessReviewResponse {
+pub enum CreateSubjectAccessReviewResponse {
     Ok(crate::v1_13::api::authorization::v1::SubjectAccessReview),
     Created(crate::v1_13::api::authorization::v1::SubjectAccessReview),
     Accepted(crate::v1_13::api::authorization::v1::SubjectAccessReview),
@@ -77,7 +77,7 @@ pub enum CreateAuthorizationV1SubjectAccessReviewResponse {
     Other,
 }
 
-impl crate::Response for CreateAuthorizationV1SubjectAccessReviewResponse {
+impl crate::Response for CreateSubjectAccessReviewResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -86,7 +86,7 @@ impl crate::Response for CreateAuthorizationV1SubjectAccessReviewResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1SubjectAccessReviewResponse::Ok(result), buf.len()))
+                Ok((CreateSubjectAccessReviewResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -94,7 +94,7 @@ impl crate::Response for CreateAuthorizationV1SubjectAccessReviewResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1SubjectAccessReviewResponse::Created(result), buf.len()))
+                Ok((CreateSubjectAccessReviewResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -102,10 +102,10 @@ impl crate::Response for CreateAuthorizationV1SubjectAccessReviewResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1SubjectAccessReviewResponse::Accepted(result), buf.len()))
+                Ok((CreateSubjectAccessReviewResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAuthorizationV1SubjectAccessReviewResponse::Unauthorized, 0)),
-            _ => Ok((CreateAuthorizationV1SubjectAccessReviewResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateSubjectAccessReviewResponse::Unauthorized, 0)),
+            _ => Ok((CreateSubjectAccessReviewResponse::Other, 0)),
         }
     }
 }

@@ -17,7 +17,7 @@ pub struct Eviction {
 impl Eviction {
     /// create eviction of a Pod
     ///
-    /// Use [`CreateCoreV1NamespacedPodEvictionResponse`](./enum.CreateCoreV1NamespacedPodEvictionResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedPodEvictionResponse`](./enum.CreateNamespacedPodEvictionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -34,13 +34,13 @@ impl Eviction {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_pod_eviction(
+    pub fn create_namespaced_pod_eviction(
         name: &str,
         namespace: &str,
         body: &crate::v1_10::api::policy::v1beta1::Eviction,
-        optional: CreateCoreV1NamespacedPodEvictionOptional<'_>,
+        optional: CreateNamespacedPodEvictionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedPodEvictionOptional {
+        let CreateNamespacedPodEvictionOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/eviction?", name = name, namespace = namespace);
@@ -56,16 +56,16 @@ impl Eviction {
     }
 }
 
-/// Optional parameters of [`Eviction::create_core_v1_namespaced_pod_eviction`](./struct.Eviction.html#method.create_core_v1_namespaced_pod_eviction)
+/// Optional parameters of [`Eviction::create_namespaced_pod_eviction`](./struct.Eviction.html#method.create_namespaced_pod_eviction)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedPodEvictionOptional<'a> {
+pub struct CreateNamespacedPodEvictionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Eviction::create_core_v1_namespaced_pod_eviction`](./struct.Eviction.html#method.create_core_v1_namespaced_pod_eviction)
+/// Parses the HTTP response of [`Eviction::create_namespaced_pod_eviction`](./struct.Eviction.html#method.create_namespaced_pod_eviction)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedPodEvictionResponse {
+pub enum CreateNamespacedPodEvictionResponse {
     Ok(crate::v1_10::api::policy::v1beta1::Eviction),
     Created(crate::v1_10::api::policy::v1beta1::Eviction),
     Accepted(crate::v1_10::api::policy::v1beta1::Eviction),
@@ -73,7 +73,7 @@ pub enum CreateCoreV1NamespacedPodEvictionResponse {
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedPodEvictionResponse {
+impl crate::Response for CreateNamespacedPodEvictionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -82,7 +82,7 @@ impl crate::Response for CreateCoreV1NamespacedPodEvictionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedPodEvictionResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedPodEvictionResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -90,7 +90,7 @@ impl crate::Response for CreateCoreV1NamespacedPodEvictionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedPodEvictionResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedPodEvictionResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -98,10 +98,10 @@ impl crate::Response for CreateCoreV1NamespacedPodEvictionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedPodEvictionResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedPodEvictionResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedPodEvictionResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedPodEvictionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPodEvictionResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedPodEvictionResponse::Other, 0)),
         }
     }
 }

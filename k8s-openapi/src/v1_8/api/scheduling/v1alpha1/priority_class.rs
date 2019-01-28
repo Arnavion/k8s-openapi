@@ -23,7 +23,7 @@ pub struct PriorityClass {
 impl PriorityClass {
     /// create a PriorityClass
     ///
-    /// Use [`CreateSchedulingV1alpha1PriorityClassResponse`](./enum.CreateSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
+    /// Use [`CreatePriorityClassResponse`](./enum.CreatePriorityClassResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -32,11 +32,11 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_scheduling_v1alpha1_priority_class(
+    pub fn create_priority_class(
         body: &crate::v1_8::api::scheduling::v1alpha1::PriorityClass,
-        optional: CreateSchedulingV1alpha1PriorityClassOptional<'_>,
+        optional: CreatePriorityClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateSchedulingV1alpha1PriorityClassOptional {
+        let CreatePriorityClassOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses?");
@@ -52,22 +52,22 @@ impl PriorityClass {
     }
 }
 
-/// Optional parameters of [`PriorityClass::create_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.create_scheduling_v1alpha1_priority_class)
+/// Optional parameters of [`PriorityClass::create_priority_class`](./struct.PriorityClass.html#method.create_priority_class)
 #[derive(Debug, Default)]
-pub struct CreateSchedulingV1alpha1PriorityClassOptional<'a> {
+pub struct CreatePriorityClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::create_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.create_scheduling_v1alpha1_priority_class)
+/// Parses the HTTP response of [`PriorityClass::create_priority_class`](./struct.PriorityClass.html#method.create_priority_class)
 #[derive(Debug)]
-pub enum CreateSchedulingV1alpha1PriorityClassResponse {
+pub enum CreatePriorityClassResponse {
     Ok(crate::v1_8::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateSchedulingV1alpha1PriorityClassResponse {
+impl crate::Response for CreatePriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -76,10 +76,10 @@ impl crate::Response for CreateSchedulingV1alpha1PriorityClassResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateSchedulingV1alpha1PriorityClassResponse::Ok(result), buf.len()))
+                Ok((CreatePriorityClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((CreateSchedulingV1alpha1PriorityClassResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreatePriorityClassResponse::Unauthorized, 0)),
+            _ => Ok((CreatePriorityClassResponse::Other, 0)),
         }
     }
 }
@@ -89,17 +89,17 @@ impl crate::Response for CreateSchedulingV1alpha1PriorityClassResponse {
 impl PriorityClass {
     /// delete collection of PriorityClass
     ///
-    /// Use [`DeleteSchedulingV1alpha1CollectionPriorityClassResponse`](./enum.DeleteSchedulingV1alpha1CollectionPriorityClassResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionPriorityClassResponse`](./enum.DeleteCollectionPriorityClassResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_scheduling_v1alpha1_collection_priority_class(
-        optional: DeleteSchedulingV1alpha1CollectionPriorityClassOptional<'_>,
+    pub fn delete_collection_priority_class(
+        optional: DeleteCollectionPriorityClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteSchedulingV1alpha1CollectionPriorityClassOptional {
+        let DeleteCollectionPriorityClassOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -147,9 +147,9 @@ impl PriorityClass {
     }
 }
 
-/// Optional parameters of [`PriorityClass::delete_scheduling_v1alpha1_collection_priority_class`](./struct.PriorityClass.html#method.delete_scheduling_v1alpha1_collection_priority_class)
+/// Optional parameters of [`PriorityClass::delete_collection_priority_class`](./struct.PriorityClass.html#method.delete_collection_priority_class)
 #[derive(Debug, Default)]
-pub struct DeleteSchedulingV1alpha1CollectionPriorityClassOptional<'a> {
+pub struct DeleteCollectionPriorityClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -172,16 +172,16 @@ pub struct DeleteSchedulingV1alpha1CollectionPriorityClassOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::delete_scheduling_v1alpha1_collection_priority_class`](./struct.PriorityClass.html#method.delete_scheduling_v1alpha1_collection_priority_class)
+/// Parses the HTTP response of [`PriorityClass::delete_collection_priority_class`](./struct.PriorityClass.html#method.delete_collection_priority_class)
 #[derive(Debug)]
-pub enum DeleteSchedulingV1alpha1CollectionPriorityClassResponse {
+pub enum DeleteCollectionPriorityClassResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteSchedulingV1alpha1CollectionPriorityClassResponse {
+impl crate::Response for DeleteCollectionPriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -197,16 +197,16 @@ impl crate::Response for DeleteSchedulingV1alpha1CollectionPriorityClassResponse
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteSchedulingV1alpha1CollectionPriorityClassResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionPriorityClassResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteSchedulingV1alpha1CollectionPriorityClassResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionPriorityClassResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteSchedulingV1alpha1CollectionPriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((DeleteSchedulingV1alpha1CollectionPriorityClassResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionPriorityClassResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionPriorityClassResponse::Other, 0)),
         }
     }
 }
@@ -216,7 +216,7 @@ impl crate::Response for DeleteSchedulingV1alpha1CollectionPriorityClassResponse
 impl PriorityClass {
     /// delete a PriorityClass
     ///
-    /// Use [`DeleteSchedulingV1alpha1PriorityClassResponse`](./enum.DeleteSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
+    /// Use [`DeletePriorityClassResponse`](./enum.DeletePriorityClassResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -227,11 +227,11 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_scheduling_v1alpha1_priority_class(
+    pub fn delete_priority_class(
         name: &str,
-        optional: DeleteSchedulingV1alpha1PriorityClassOptional<'_>,
+        optional: DeletePriorityClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteSchedulingV1alpha1PriorityClassOptional {
+        let DeletePriorityClassOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -259,9 +259,9 @@ impl PriorityClass {
     }
 }
 
-/// Optional parameters of [`PriorityClass::delete_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.delete_scheduling_v1alpha1_priority_class)
+/// Optional parameters of [`PriorityClass::delete_priority_class`](./struct.PriorityClass.html#method.delete_priority_class)
 #[derive(Debug, Default)]
-pub struct DeleteSchedulingV1alpha1PriorityClassOptional<'a> {
+pub struct DeletePriorityClassOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -272,16 +272,16 @@ pub struct DeleteSchedulingV1alpha1PriorityClassOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::delete_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.delete_scheduling_v1alpha1_priority_class)
+/// Parses the HTTP response of [`PriorityClass::delete_priority_class`](./struct.PriorityClass.html#method.delete_priority_class)
 #[derive(Debug)]
-pub enum DeleteSchedulingV1alpha1PriorityClassResponse {
+pub enum DeletePriorityClassResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteSchedulingV1alpha1PriorityClassResponse {
+impl crate::Response for DeletePriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -297,16 +297,16 @@ impl crate::Response for DeleteSchedulingV1alpha1PriorityClassResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteSchedulingV1alpha1PriorityClassResponse::OkStatus(result), buf.len()))
+                    Ok((DeletePriorityClassResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteSchedulingV1alpha1PriorityClassResponse::OkValue(result), buf.len()))
+                    Ok((DeletePriorityClassResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((DeleteSchedulingV1alpha1PriorityClassResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeletePriorityClassResponse::Unauthorized, 0)),
+            _ => Ok((DeletePriorityClassResponse::Other, 0)),
         }
     }
 }
@@ -316,17 +316,17 @@ impl crate::Response for DeleteSchedulingV1alpha1PriorityClassResponse {
 impl PriorityClass {
     /// list or watch objects of kind PriorityClass
     ///
-    /// Use [`ListSchedulingV1alpha1PriorityClassResponse`](./enum.ListSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
+    /// Use [`ListPriorityClassResponse`](./enum.ListPriorityClassResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_scheduling_v1alpha1_priority_class(
-        optional: ListSchedulingV1alpha1PriorityClassOptional<'_>,
+    pub fn list_priority_class(
+        optional: ListPriorityClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListSchedulingV1alpha1PriorityClassOptional {
+        let ListPriorityClassOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -374,9 +374,9 @@ impl PriorityClass {
     }
 }
 
-/// Optional parameters of [`PriorityClass::list_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.list_scheduling_v1alpha1_priority_class)
+/// Optional parameters of [`PriorityClass::list_priority_class`](./struct.PriorityClass.html#method.list_priority_class)
 #[derive(Debug, Default)]
-pub struct ListSchedulingV1alpha1PriorityClassOptional<'a> {
+pub struct ListPriorityClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -399,15 +399,15 @@ pub struct ListSchedulingV1alpha1PriorityClassOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::list_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.list_scheduling_v1alpha1_priority_class)
+/// Parses the HTTP response of [`PriorityClass::list_priority_class`](./struct.PriorityClass.html#method.list_priority_class)
 #[derive(Debug)]
-pub enum ListSchedulingV1alpha1PriorityClassResponse {
+pub enum ListPriorityClassResponse {
     Ok(crate::v1_8::api::scheduling::v1alpha1::PriorityClassList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListSchedulingV1alpha1PriorityClassResponse {
+impl crate::Response for ListPriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -416,10 +416,10 @@ impl crate::Response for ListSchedulingV1alpha1PriorityClassResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListSchedulingV1alpha1PriorityClassResponse::Ok(result), buf.len()))
+                Ok((ListPriorityClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((ListSchedulingV1alpha1PriorityClassResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListPriorityClassResponse::Unauthorized, 0)),
+            _ => Ok((ListPriorityClassResponse::Other, 0)),
         }
     }
 }
@@ -429,7 +429,7 @@ impl crate::Response for ListSchedulingV1alpha1PriorityClassResponse {
 impl PriorityClass {
     /// partially update the specified PriorityClass
     ///
-    /// Use [`PatchSchedulingV1alpha1PriorityClassResponse`](./enum.PatchSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
+    /// Use [`PatchPriorityClassResponse`](./enum.PatchPriorityClassResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -442,12 +442,12 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_scheduling_v1alpha1_priority_class(
+    pub fn patch_priority_class(
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchSchedulingV1alpha1PriorityClassOptional<'_>,
+        optional: PatchPriorityClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchSchedulingV1alpha1PriorityClassOptional {
+        let PatchPriorityClassOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name}?", name = name);
@@ -463,22 +463,22 @@ impl PriorityClass {
     }
 }
 
-/// Optional parameters of [`PriorityClass::patch_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.patch_scheduling_v1alpha1_priority_class)
+/// Optional parameters of [`PriorityClass::patch_priority_class`](./struct.PriorityClass.html#method.patch_priority_class)
 #[derive(Debug, Default)]
-pub struct PatchSchedulingV1alpha1PriorityClassOptional<'a> {
+pub struct PatchPriorityClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::patch_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.patch_scheduling_v1alpha1_priority_class)
+/// Parses the HTTP response of [`PriorityClass::patch_priority_class`](./struct.PriorityClass.html#method.patch_priority_class)
 #[derive(Debug)]
-pub enum PatchSchedulingV1alpha1PriorityClassResponse {
+pub enum PatchPriorityClassResponse {
     Ok(crate::v1_8::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchSchedulingV1alpha1PriorityClassResponse {
+impl crate::Response for PatchPriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -487,10 +487,10 @@ impl crate::Response for PatchSchedulingV1alpha1PriorityClassResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchSchedulingV1alpha1PriorityClassResponse::Ok(result), buf.len()))
+                Ok((PatchPriorityClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((PatchSchedulingV1alpha1PriorityClassResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchPriorityClassResponse::Unauthorized, 0)),
+            _ => Ok((PatchPriorityClassResponse::Other, 0)),
         }
     }
 }
@@ -500,7 +500,7 @@ impl crate::Response for PatchSchedulingV1alpha1PriorityClassResponse {
 impl PriorityClass {
     /// read the specified PriorityClass
     ///
-    /// Use [`ReadSchedulingV1alpha1PriorityClassResponse`](./enum.ReadSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
+    /// Use [`ReadPriorityClassResponse`](./enum.ReadPriorityClassResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -511,11 +511,11 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_scheduling_v1alpha1_priority_class(
+    pub fn read_priority_class(
         name: &str,
-        optional: ReadSchedulingV1alpha1PriorityClassOptional<'_>,
+        optional: ReadPriorityClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadSchedulingV1alpha1PriorityClassOptional {
+        let ReadPriorityClassOptional {
             exact,
             export,
             pretty,
@@ -539,9 +539,9 @@ impl PriorityClass {
     }
 }
 
-/// Optional parameters of [`PriorityClass::read_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.read_scheduling_v1alpha1_priority_class)
+/// Optional parameters of [`PriorityClass::read_priority_class`](./struct.PriorityClass.html#method.read_priority_class)
 #[derive(Debug, Default)]
-pub struct ReadSchedulingV1alpha1PriorityClassOptional<'a> {
+pub struct ReadPriorityClassOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -550,15 +550,15 @@ pub struct ReadSchedulingV1alpha1PriorityClassOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::read_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.read_scheduling_v1alpha1_priority_class)
+/// Parses the HTTP response of [`PriorityClass::read_priority_class`](./struct.PriorityClass.html#method.read_priority_class)
 #[derive(Debug)]
-pub enum ReadSchedulingV1alpha1PriorityClassResponse {
+pub enum ReadPriorityClassResponse {
     Ok(crate::v1_8::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadSchedulingV1alpha1PriorityClassResponse {
+impl crate::Response for ReadPriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -567,10 +567,10 @@ impl crate::Response for ReadSchedulingV1alpha1PriorityClassResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadSchedulingV1alpha1PriorityClassResponse::Ok(result), buf.len()))
+                Ok((ReadPriorityClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((ReadSchedulingV1alpha1PriorityClassResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadPriorityClassResponse::Unauthorized, 0)),
+            _ => Ok((ReadPriorityClassResponse::Other, 0)),
         }
     }
 }
@@ -580,7 +580,7 @@ impl crate::Response for ReadSchedulingV1alpha1PriorityClassResponse {
 impl PriorityClass {
     /// replace the specified PriorityClass
     ///
-    /// Use [`ReplaceSchedulingV1alpha1PriorityClassResponse`](./enum.ReplaceSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
+    /// Use [`ReplacePriorityClassResponse`](./enum.ReplacePriorityClassResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -593,12 +593,12 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_scheduling_v1alpha1_priority_class(
+    pub fn replace_priority_class(
         name: &str,
         body: &crate::v1_8::api::scheduling::v1alpha1::PriorityClass,
-        optional: ReplaceSchedulingV1alpha1PriorityClassOptional<'_>,
+        optional: ReplacePriorityClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceSchedulingV1alpha1PriorityClassOptional {
+        let ReplacePriorityClassOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses/{name}?", name = name);
@@ -614,22 +614,22 @@ impl PriorityClass {
     }
 }
 
-/// Optional parameters of [`PriorityClass::replace_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.replace_scheduling_v1alpha1_priority_class)
+/// Optional parameters of [`PriorityClass::replace_priority_class`](./struct.PriorityClass.html#method.replace_priority_class)
 #[derive(Debug, Default)]
-pub struct ReplaceSchedulingV1alpha1PriorityClassOptional<'a> {
+pub struct ReplacePriorityClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::replace_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.replace_scheduling_v1alpha1_priority_class)
+/// Parses the HTTP response of [`PriorityClass::replace_priority_class`](./struct.PriorityClass.html#method.replace_priority_class)
 #[derive(Debug)]
-pub enum ReplaceSchedulingV1alpha1PriorityClassResponse {
+pub enum ReplacePriorityClassResponse {
     Ok(crate::v1_8::api::scheduling::v1alpha1::PriorityClass),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceSchedulingV1alpha1PriorityClassResponse {
+impl crate::Response for ReplacePriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -638,10 +638,10 @@ impl crate::Response for ReplaceSchedulingV1alpha1PriorityClassResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceSchedulingV1alpha1PriorityClassResponse::Ok(result), buf.len()))
+                Ok((ReplacePriorityClassResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceSchedulingV1alpha1PriorityClassResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplacePriorityClassResponse::Unauthorized, 0)),
+            _ => Ok((ReplacePriorityClassResponse::Other, 0)),
         }
     }
 }
@@ -651,7 +651,7 @@ impl crate::Response for ReplaceSchedulingV1alpha1PriorityClassResponse {
 impl PriorityClass {
     /// watch changes to an object of kind PriorityClass
     ///
-    /// Use [`WatchSchedulingV1alpha1PriorityClassResponse`](./enum.WatchSchedulingV1alpha1PriorityClassResponse.html) to parse the HTTP response.
+    /// Use [`WatchPriorityClassResponse`](./enum.WatchPriorityClassResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -662,11 +662,11 @@ impl PriorityClass {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_scheduling_v1alpha1_priority_class(
+    pub fn watch_priority_class(
         name: &str,
-        optional: WatchSchedulingV1alpha1PriorityClassOptional<'_>,
+        optional: WatchPriorityClassOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchSchedulingV1alpha1PriorityClassOptional {
+        let WatchPriorityClassOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -714,9 +714,9 @@ impl PriorityClass {
     }
 }
 
-/// Optional parameters of [`PriorityClass::watch_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.watch_scheduling_v1alpha1_priority_class)
+/// Optional parameters of [`PriorityClass::watch_priority_class`](./struct.PriorityClass.html#method.watch_priority_class)
 #[derive(Debug, Default)]
-pub struct WatchSchedulingV1alpha1PriorityClassOptional<'a> {
+pub struct WatchPriorityClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -739,15 +739,15 @@ pub struct WatchSchedulingV1alpha1PriorityClassOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::watch_scheduling_v1alpha1_priority_class`](./struct.PriorityClass.html#method.watch_scheduling_v1alpha1_priority_class)
+/// Parses the HTTP response of [`PriorityClass::watch_priority_class`](./struct.PriorityClass.html#method.watch_priority_class)
 #[derive(Debug)]
-pub enum WatchSchedulingV1alpha1PriorityClassResponse {
+pub enum WatchPriorityClassResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchSchedulingV1alpha1PriorityClassResponse {
+impl crate::Response for WatchPriorityClassResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -758,10 +758,10 @@ impl crate::Response for WatchSchedulingV1alpha1PriorityClassResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchSchedulingV1alpha1PriorityClassResponse::Ok(result), byte_offset))
+                Ok((WatchPriorityClassResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchSchedulingV1alpha1PriorityClassResponse::Unauthorized, 0)),
-            _ => Ok((WatchSchedulingV1alpha1PriorityClassResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPriorityClassResponse::Unauthorized, 0)),
+            _ => Ok((WatchPriorityClassResponse::Other, 0)),
         }
     }
 }
@@ -771,17 +771,17 @@ impl crate::Response for WatchSchedulingV1alpha1PriorityClassResponse {
 impl PriorityClass {
     /// watch individual changes to a list of PriorityClass
     ///
-    /// Use [`WatchSchedulingV1alpha1PriorityClassListResponse`](./enum.WatchSchedulingV1alpha1PriorityClassListResponse.html) to parse the HTTP response.
+    /// Use [`WatchPriorityClassListResponse`](./enum.WatchPriorityClassListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_scheduling_v1alpha1_priority_class_list(
-        optional: WatchSchedulingV1alpha1PriorityClassListOptional<'_>,
+    pub fn watch_priority_class_list(
+        optional: WatchPriorityClassListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchSchedulingV1alpha1PriorityClassListOptional {
+        let WatchPriorityClassListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -829,9 +829,9 @@ impl PriorityClass {
     }
 }
 
-/// Optional parameters of [`PriorityClass::watch_scheduling_v1alpha1_priority_class_list`](./struct.PriorityClass.html#method.watch_scheduling_v1alpha1_priority_class_list)
+/// Optional parameters of [`PriorityClass::watch_priority_class_list`](./struct.PriorityClass.html#method.watch_priority_class_list)
 #[derive(Debug, Default)]
-pub struct WatchSchedulingV1alpha1PriorityClassListOptional<'a> {
+pub struct WatchPriorityClassListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -854,15 +854,15 @@ pub struct WatchSchedulingV1alpha1PriorityClassListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::watch_scheduling_v1alpha1_priority_class_list`](./struct.PriorityClass.html#method.watch_scheduling_v1alpha1_priority_class_list)
+/// Parses the HTTP response of [`PriorityClass::watch_priority_class_list`](./struct.PriorityClass.html#method.watch_priority_class_list)
 #[derive(Debug)]
-pub enum WatchSchedulingV1alpha1PriorityClassListResponse {
+pub enum WatchPriorityClassListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchSchedulingV1alpha1PriorityClassListResponse {
+impl crate::Response for WatchPriorityClassListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -873,10 +873,10 @@ impl crate::Response for WatchSchedulingV1alpha1PriorityClassListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchSchedulingV1alpha1PriorityClassListResponse::Ok(result), byte_offset))
+                Ok((WatchPriorityClassListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchSchedulingV1alpha1PriorityClassListResponse::Unauthorized, 0)),
-            _ => Ok((WatchSchedulingV1alpha1PriorityClassListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPriorityClassListResponse::Unauthorized, 0)),
+            _ => Ok((WatchPriorityClassListResponse::Other, 0)),
         }
     }
 }

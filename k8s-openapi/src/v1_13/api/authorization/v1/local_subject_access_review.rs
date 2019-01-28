@@ -19,7 +19,7 @@ pub struct LocalSubjectAccessReview {
 impl LocalSubjectAccessReview {
     /// create a LocalSubjectAccessReview
     ///
-    /// Use [`CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse`](./enum.CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedLocalSubjectAccessReviewResponse`](./enum.CreateNamespacedLocalSubjectAccessReviewResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -32,12 +32,12 @@ impl LocalSubjectAccessReview {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_authorization_v1_namespaced_local_subject_access_review(
+    pub fn create_namespaced_local_subject_access_review(
         namespace: &str,
         body: &crate::v1_13::api::authorization::v1::LocalSubjectAccessReview,
-        optional: CreateAuthorizationV1NamespacedLocalSubjectAccessReviewOptional<'_>,
+        optional: CreateNamespacedLocalSubjectAccessReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAuthorizationV1NamespacedLocalSubjectAccessReviewOptional {
+        let CreateNamespacedLocalSubjectAccessReviewOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -61,9 +61,9 @@ impl LocalSubjectAccessReview {
     }
 }
 
-/// Optional parameters of [`LocalSubjectAccessReview::create_authorization_v1_namespaced_local_subject_access_review`](./struct.LocalSubjectAccessReview.html#method.create_authorization_v1_namespaced_local_subject_access_review)
+/// Optional parameters of [`LocalSubjectAccessReview::create_namespaced_local_subject_access_review`](./struct.LocalSubjectAccessReview.html#method.create_namespaced_local_subject_access_review)
 #[derive(Debug, Default)]
-pub struct CreateAuthorizationV1NamespacedLocalSubjectAccessReviewOptional<'a> {
+pub struct CreateNamespacedLocalSubjectAccessReviewOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If IncludeUninitialized is specified, the object may be returned without completing initialization.
@@ -72,9 +72,9 @@ pub struct CreateAuthorizationV1NamespacedLocalSubjectAccessReviewOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LocalSubjectAccessReview::create_authorization_v1_namespaced_local_subject_access_review`](./struct.LocalSubjectAccessReview.html#method.create_authorization_v1_namespaced_local_subject_access_review)
+/// Parses the HTTP response of [`LocalSubjectAccessReview::create_namespaced_local_subject_access_review`](./struct.LocalSubjectAccessReview.html#method.create_namespaced_local_subject_access_review)
 #[derive(Debug)]
-pub enum CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse {
+pub enum CreateNamespacedLocalSubjectAccessReviewResponse {
     Ok(crate::v1_13::api::authorization::v1::LocalSubjectAccessReview),
     Created(crate::v1_13::api::authorization::v1::LocalSubjectAccessReview),
     Accepted(crate::v1_13::api::authorization::v1::LocalSubjectAccessReview),
@@ -82,7 +82,7 @@ pub enum CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse {
     Other,
 }
 
-impl crate::Response for CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse {
+impl crate::Response for CreateNamespacedLocalSubjectAccessReviewResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -91,7 +91,7 @@ impl crate::Response for CreateAuthorizationV1NamespacedLocalSubjectAccessReview
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedLocalSubjectAccessReviewResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -99,7 +99,7 @@ impl crate::Response for CreateAuthorizationV1NamespacedLocalSubjectAccessReview
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedLocalSubjectAccessReviewResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -107,10 +107,10 @@ impl crate::Response for CreateAuthorizationV1NamespacedLocalSubjectAccessReview
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedLocalSubjectAccessReviewResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Unauthorized, 0)),
-            _ => Ok((CreateAuthorizationV1NamespacedLocalSubjectAccessReviewResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedLocalSubjectAccessReviewResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedLocalSubjectAccessReviewResponse::Other, 0)),
         }
     }
 }

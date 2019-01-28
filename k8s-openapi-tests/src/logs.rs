@@ -3,11 +3,11 @@ fn get() {
 	use k8s_openapi::api::core::v1 as api;
 
 	crate::Client::with("logs-get", |client| {
-		let request = api::Pod::list_core_v1_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
+		let request = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
 		let pod_list = {
 			let response = client.execute(request).expect("couldn't list pods");;
 			crate::get_single_value(response, |response, status_code, _| match response {
-				api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
+				api::ListNamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't list pods")
 		};
@@ -24,7 +24,7 @@ fn get() {
 			.name.as_ref().expect("couldn't get addon-manager pod name");
 
 		let request =
-			api::Pod::read_core_v1_namespaced_pod_log(addon_manager_pod_name, "kube-system", api::ReadCoreV1NamespacedPodLogOptional {
+			api::Pod::read_namespaced_pod_log(addon_manager_pod_name, "kube-system", api::ReadNamespacedPodLogOptional {
 				container: Some("kube-addon-manager"),
 				..Default::default()
 			})
@@ -33,7 +33,7 @@ fn get() {
 		let strings = {
 			let response = client.execute(request).expect("couldn't get addon-manager pod logs");
 			crate::get_multiple_values(response, |response, status_code, _| match response {
-				api::ReadCoreV1NamespacedPodLogResponse::Ok(s) => Ok(crate::ValueResult::GotValue(s)),
+				api::ReadNamespacedPodLogResponse::Ok(s) => Ok(crate::ValueResult::GotValue(s)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't get addon-manager pod logs")
 		};

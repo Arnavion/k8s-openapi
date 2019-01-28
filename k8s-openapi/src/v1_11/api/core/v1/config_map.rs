@@ -20,7 +20,7 @@ pub struct ConfigMap {
 impl ConfigMap {
     /// create a ConfigMap
     ///
-    /// Use [`CreateCoreV1NamespacedConfigMapResponse`](./enum.CreateCoreV1NamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedConfigMapResponse`](./enum.CreateNamespacedConfigMapResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_config_map(
+    pub fn create_namespaced_config_map(
         namespace: &str,
         body: &crate::v1_11::api::core::v1::ConfigMap,
-        optional: CreateCoreV1NamespacedConfigMapOptional<'_>,
+        optional: CreateNamespacedConfigMapOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedConfigMapOptional {
+        let CreateNamespacedConfigMapOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/configmaps?", namespace = namespace);
@@ -54,16 +54,16 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::create_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.create_core_v1_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::create_namespaced_config_map`](./struct.ConfigMap.html#method.create_namespaced_config_map)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedConfigMapOptional<'a> {
+pub struct CreateNamespacedConfigMapOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::create_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.create_core_v1_namespaced_config_map)
+/// Parses the HTTP response of [`ConfigMap::create_namespaced_config_map`](./struct.ConfigMap.html#method.create_namespaced_config_map)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedConfigMapResponse {
+pub enum CreateNamespacedConfigMapResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMap),
     Created(crate::v1_11::api::core::v1::ConfigMap),
     Accepted(crate::v1_11::api::core::v1::ConfigMap),
@@ -71,7 +71,7 @@ pub enum CreateCoreV1NamespacedConfigMapResponse {
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedConfigMapResponse {
+impl crate::Response for CreateNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -80,7 +80,7 @@ impl crate::Response for CreateCoreV1NamespacedConfigMapResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedConfigMapResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedConfigMapResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -88,7 +88,7 @@ impl crate::Response for CreateCoreV1NamespacedConfigMapResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedConfigMapResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedConfigMapResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -96,10 +96,10 @@ impl crate::Response for CreateCoreV1NamespacedConfigMapResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedConfigMapResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedConfigMapResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedConfigMapResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedConfigMapResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedConfigMapResponse::Other, 0)),
         }
     }
 }
@@ -109,7 +109,7 @@ impl crate::Response for CreateCoreV1NamespacedConfigMapResponse {
 impl ConfigMap {
     /// delete collection of ConfigMap
     ///
-    /// Use [`DeleteCoreV1CollectionNamespacedConfigMapResponse`](./enum.DeleteCoreV1CollectionNamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedConfigMapResponse`](./enum.DeleteCollectionNamespacedConfigMapResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -120,11 +120,11 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_collection_namespaced_config_map(
+    pub fn delete_collection_namespaced_config_map(
         namespace: &str,
-        optional: DeleteCoreV1CollectionNamespacedConfigMapOptional<'_>,
+        optional: DeleteCollectionNamespacedConfigMapOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1CollectionNamespacedConfigMapOptional {
+        let DeleteCollectionNamespacedConfigMapOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -172,9 +172,9 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::delete_core_v1_collection_namespaced_config_map`](./struct.ConfigMap.html#method.delete_core_v1_collection_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::delete_collection_namespaced_config_map`](./struct.ConfigMap.html#method.delete_collection_namespaced_config_map)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1CollectionNamespacedConfigMapOptional<'a> {
+pub struct DeleteCollectionNamespacedConfigMapOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -197,16 +197,16 @@ pub struct DeleteCoreV1CollectionNamespacedConfigMapOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::delete_core_v1_collection_namespaced_config_map`](./struct.ConfigMap.html#method.delete_core_v1_collection_namespaced_config_map)
+/// Parses the HTTP response of [`ConfigMap::delete_collection_namespaced_config_map`](./struct.ConfigMap.html#method.delete_collection_namespaced_config_map)
 #[derive(Debug)]
-pub enum DeleteCoreV1CollectionNamespacedConfigMapResponse {
+pub enum DeleteCollectionNamespacedConfigMapResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_11::api::core::v1::ConfigMap),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1CollectionNamespacedConfigMapResponse {
+impl crate::Response for DeleteCollectionNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -222,16 +222,16 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedConfigMapResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedConfigMapResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedConfigMapResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedConfigMapResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedConfigMapResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1CollectionNamespacedConfigMapResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedConfigMapResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedConfigMapResponse::Other, 0)),
         }
     }
 }
@@ -241,7 +241,7 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedConfigMapResponse {
 impl ConfigMap {
     /// delete a ConfigMap
     ///
-    /// Use [`DeleteCoreV1NamespacedConfigMapResponse`](./enum.DeleteCoreV1NamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedConfigMapResponse`](./enum.DeleteNamespacedConfigMapResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -256,12 +256,12 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_namespaced_config_map(
+    pub fn delete_namespaced_config_map(
         name: &str,
         namespace: &str,
-        optional: DeleteCoreV1NamespacedConfigMapOptional<'_>,
+        optional: DeleteNamespacedConfigMapOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NamespacedConfigMapOptional {
+        let DeleteNamespacedConfigMapOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -289,9 +289,9 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::delete_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.delete_core_v1_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::delete_namespaced_config_map`](./struct.ConfigMap.html#method.delete_namespaced_config_map)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NamespacedConfigMapOptional<'a> {
+pub struct DeleteNamespacedConfigMapOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -302,16 +302,16 @@ pub struct DeleteCoreV1NamespacedConfigMapOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::delete_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.delete_core_v1_namespaced_config_map)
+/// Parses the HTTP response of [`ConfigMap::delete_namespaced_config_map`](./struct.ConfigMap.html#method.delete_namespaced_config_map)
 #[derive(Debug)]
-pub enum DeleteCoreV1NamespacedConfigMapResponse {
+pub enum DeleteNamespacedConfigMapResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_11::api::core::v1::ConfigMap),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NamespacedConfigMapResponse {
+impl crate::Response for DeleteNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -327,16 +327,16 @@ impl crate::Response for DeleteCoreV1NamespacedConfigMapResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedConfigMapResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedConfigMapResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedConfigMapResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedConfigMapResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NamespacedConfigMapResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedConfigMapResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedConfigMapResponse::Other, 0)),
         }
     }
 }
@@ -346,17 +346,17 @@ impl crate::Response for DeleteCoreV1NamespacedConfigMapResponse {
 impl ConfigMap {
     /// list or watch objects of kind ConfigMap
     ///
-    /// Use [`ListCoreV1ConfigMapForAllNamespacesResponse`](./enum.ListCoreV1ConfigMapForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListConfigMapForAllNamespacesResponse`](./enum.ListConfigMapForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_config_map_for_all_namespaces(
-        optional: ListCoreV1ConfigMapForAllNamespacesOptional<'_>,
+    pub fn list_config_map_for_all_namespaces(
+        optional: ListConfigMapForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1ConfigMapForAllNamespacesOptional {
+        let ListConfigMapForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -404,9 +404,9 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::list_core_v1_config_map_for_all_namespaces`](./struct.ConfigMap.html#method.list_core_v1_config_map_for_all_namespaces)
+/// Optional parameters of [`ConfigMap::list_config_map_for_all_namespaces`](./struct.ConfigMap.html#method.list_config_map_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListCoreV1ConfigMapForAllNamespacesOptional<'a> {
+pub struct ListConfigMapForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -429,15 +429,15 @@ pub struct ListCoreV1ConfigMapForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::list_core_v1_config_map_for_all_namespaces`](./struct.ConfigMap.html#method.list_core_v1_config_map_for_all_namespaces)
+/// Parses the HTTP response of [`ConfigMap::list_config_map_for_all_namespaces`](./struct.ConfigMap.html#method.list_config_map_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListCoreV1ConfigMapForAllNamespacesResponse {
+pub enum ListConfigMapForAllNamespacesResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMapList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1ConfigMapForAllNamespacesResponse {
+impl crate::Response for ListConfigMapForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -446,10 +446,10 @@ impl crate::Response for ListCoreV1ConfigMapForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1ConfigMapForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListConfigMapForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ConfigMapForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1ConfigMapForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListConfigMapForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListConfigMapForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -459,7 +459,7 @@ impl crate::Response for ListCoreV1ConfigMapForAllNamespacesResponse {
 impl ConfigMap {
     /// list or watch objects of kind ConfigMap
     ///
-    /// Use [`ListCoreV1NamespacedConfigMapResponse`](./enum.ListCoreV1NamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedConfigMapResponse`](./enum.ListNamespacedConfigMapResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -470,11 +470,11 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_namespaced_config_map(
+    pub fn list_namespaced_config_map(
         namespace: &str,
-        optional: ListCoreV1NamespacedConfigMapOptional<'_>,
+        optional: ListNamespacedConfigMapOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NamespacedConfigMapOptional {
+        let ListNamespacedConfigMapOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -522,9 +522,9 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::list_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.list_core_v1_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::list_namespaced_config_map`](./struct.ConfigMap.html#method.list_namespaced_config_map)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NamespacedConfigMapOptional<'a> {
+pub struct ListNamespacedConfigMapOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -547,15 +547,15 @@ pub struct ListCoreV1NamespacedConfigMapOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::list_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.list_core_v1_namespaced_config_map)
+/// Parses the HTTP response of [`ConfigMap::list_namespaced_config_map`](./struct.ConfigMap.html#method.list_namespaced_config_map)
 #[derive(Debug)]
-pub enum ListCoreV1NamespacedConfigMapResponse {
+pub enum ListNamespacedConfigMapResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMapList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NamespacedConfigMapResponse {
+impl crate::Response for ListNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -564,10 +564,10 @@ impl crate::Response for ListCoreV1NamespacedConfigMapResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NamespacedConfigMapResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedConfigMapResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NamespacedConfigMapResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedConfigMapResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedConfigMapResponse::Other, 0)),
         }
     }
 }
@@ -577,7 +577,7 @@ impl crate::Response for ListCoreV1NamespacedConfigMapResponse {
 impl ConfigMap {
     /// partially update the specified ConfigMap
     ///
-    /// Use [`PatchCoreV1NamespacedConfigMapResponse`](./enum.PatchCoreV1NamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedConfigMapResponse`](./enum.PatchNamespacedConfigMapResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -594,13 +594,13 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_config_map(
+    pub fn patch_namespaced_config_map(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedConfigMapOptional<'_>,
+        optional: PatchNamespacedConfigMapOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedConfigMapOptional {
+        let PatchNamespacedConfigMapOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/configmaps/{name}?", name = name, namespace = namespace);
@@ -616,22 +616,22 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::patch_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.patch_core_v1_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::patch_namespaced_config_map`](./struct.ConfigMap.html#method.patch_namespaced_config_map)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedConfigMapOptional<'a> {
+pub struct PatchNamespacedConfigMapOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::patch_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.patch_core_v1_namespaced_config_map)
+/// Parses the HTTP response of [`ConfigMap::patch_namespaced_config_map`](./struct.ConfigMap.html#method.patch_namespaced_config_map)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedConfigMapResponse {
+pub enum PatchNamespacedConfigMapResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMap),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedConfigMapResponse {
+impl crate::Response for PatchNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -640,10 +640,10 @@ impl crate::Response for PatchCoreV1NamespacedConfigMapResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedConfigMapResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedConfigMapResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedConfigMapResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedConfigMapResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedConfigMapResponse::Other, 0)),
         }
     }
 }
@@ -653,7 +653,7 @@ impl crate::Response for PatchCoreV1NamespacedConfigMapResponse {
 impl ConfigMap {
     /// read the specified ConfigMap
     ///
-    /// Use [`ReadCoreV1NamespacedConfigMapResponse`](./enum.ReadCoreV1NamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedConfigMapResponse`](./enum.ReadNamespacedConfigMapResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -668,12 +668,12 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_config_map(
+    pub fn read_namespaced_config_map(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedConfigMapOptional<'_>,
+        optional: ReadNamespacedConfigMapOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedConfigMapOptional {
+        let ReadNamespacedConfigMapOptional {
             exact,
             export,
             pretty,
@@ -697,9 +697,9 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::read_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.read_core_v1_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::read_namespaced_config_map`](./struct.ConfigMap.html#method.read_namespaced_config_map)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedConfigMapOptional<'a> {
+pub struct ReadNamespacedConfigMapOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -708,15 +708,15 @@ pub struct ReadCoreV1NamespacedConfigMapOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::read_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.read_core_v1_namespaced_config_map)
+/// Parses the HTTP response of [`ConfigMap::read_namespaced_config_map`](./struct.ConfigMap.html#method.read_namespaced_config_map)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedConfigMapResponse {
+pub enum ReadNamespacedConfigMapResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMap),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedConfigMapResponse {
+impl crate::Response for ReadNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -725,10 +725,10 @@ impl crate::Response for ReadCoreV1NamespacedConfigMapResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedConfigMapResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedConfigMapResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedConfigMapResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedConfigMapResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedConfigMapResponse::Other, 0)),
         }
     }
 }
@@ -738,7 +738,7 @@ impl crate::Response for ReadCoreV1NamespacedConfigMapResponse {
 impl ConfigMap {
     /// replace the specified ConfigMap
     ///
-    /// Use [`ReplaceCoreV1NamespacedConfigMapResponse`](./enum.ReplaceCoreV1NamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedConfigMapResponse`](./enum.ReplaceNamespacedConfigMapResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -755,13 +755,13 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_config_map(
+    pub fn replace_namespaced_config_map(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::api::core::v1::ConfigMap,
-        optional: ReplaceCoreV1NamespacedConfigMapOptional<'_>,
+        optional: ReplaceNamespacedConfigMapOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedConfigMapOptional {
+        let ReplaceNamespacedConfigMapOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/configmaps/{name}?", name = name, namespace = namespace);
@@ -777,23 +777,23 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::replace_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.replace_core_v1_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::replace_namespaced_config_map`](./struct.ConfigMap.html#method.replace_namespaced_config_map)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedConfigMapOptional<'a> {
+pub struct ReplaceNamespacedConfigMapOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::replace_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.replace_core_v1_namespaced_config_map)
+/// Parses the HTTP response of [`ConfigMap::replace_namespaced_config_map`](./struct.ConfigMap.html#method.replace_namespaced_config_map)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedConfigMapResponse {
+pub enum ReplaceNamespacedConfigMapResponse {
     Ok(crate::v1_11::api::core::v1::ConfigMap),
     Created(crate::v1_11::api::core::v1::ConfigMap),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedConfigMapResponse {
+impl crate::Response for ReplaceNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -802,7 +802,7 @@ impl crate::Response for ReplaceCoreV1NamespacedConfigMapResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedConfigMapResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedConfigMapResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -810,10 +810,10 @@ impl crate::Response for ReplaceCoreV1NamespacedConfigMapResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedConfigMapResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedConfigMapResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedConfigMapResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedConfigMapResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedConfigMapResponse::Other, 0)),
         }
     }
 }
@@ -823,17 +823,17 @@ impl crate::Response for ReplaceCoreV1NamespacedConfigMapResponse {
 impl ConfigMap {
     /// watch individual changes to a list of ConfigMap
     ///
-    /// Use [`WatchCoreV1ConfigMapListForAllNamespacesResponse`](./enum.WatchCoreV1ConfigMapListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchConfigMapListForAllNamespacesResponse`](./enum.WatchConfigMapListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_config_map_list_for_all_namespaces(
-        optional: WatchCoreV1ConfigMapListForAllNamespacesOptional<'_>,
+    pub fn watch_config_map_list_for_all_namespaces(
+        optional: WatchConfigMapListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1ConfigMapListForAllNamespacesOptional {
+        let WatchConfigMapListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -881,9 +881,9 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::watch_core_v1_config_map_list_for_all_namespaces`](./struct.ConfigMap.html#method.watch_core_v1_config_map_list_for_all_namespaces)
+/// Optional parameters of [`ConfigMap::watch_config_map_list_for_all_namespaces`](./struct.ConfigMap.html#method.watch_config_map_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1ConfigMapListForAllNamespacesOptional<'a> {
+pub struct WatchConfigMapListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -906,15 +906,15 @@ pub struct WatchCoreV1ConfigMapListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::watch_core_v1_config_map_list_for_all_namespaces`](./struct.ConfigMap.html#method.watch_core_v1_config_map_list_for_all_namespaces)
+/// Parses the HTTP response of [`ConfigMap::watch_config_map_list_for_all_namespaces`](./struct.ConfigMap.html#method.watch_config_map_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchCoreV1ConfigMapListForAllNamespacesResponse {
+pub enum WatchConfigMapListForAllNamespacesResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1ConfigMapListForAllNamespacesResponse {
+impl crate::Response for WatchConfigMapListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -925,10 +925,10 @@ impl crate::Response for WatchCoreV1ConfigMapListForAllNamespacesResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1ConfigMapListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchConfigMapListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1ConfigMapListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1ConfigMapListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchConfigMapListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchConfigMapListForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -938,7 +938,7 @@ impl crate::Response for WatchCoreV1ConfigMapListForAllNamespacesResponse {
 impl ConfigMap {
     /// watch changes to an object of kind ConfigMap
     ///
-    /// Use [`WatchCoreV1NamespacedConfigMapResponse`](./enum.WatchCoreV1NamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedConfigMapResponse`](./enum.WatchNamespacedConfigMapResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -953,12 +953,12 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_config_map(
+    pub fn watch_namespaced_config_map(
         name: &str,
         namespace: &str,
-        optional: WatchCoreV1NamespacedConfigMapOptional<'_>,
+        optional: WatchNamespacedConfigMapOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedConfigMapOptional {
+        let WatchNamespacedConfigMapOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1006,9 +1006,9 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::watch_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.watch_core_v1_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::watch_namespaced_config_map`](./struct.ConfigMap.html#method.watch_namespaced_config_map)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedConfigMapOptional<'a> {
+pub struct WatchNamespacedConfigMapOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1031,15 +1031,15 @@ pub struct WatchCoreV1NamespacedConfigMapOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::watch_core_v1_namespaced_config_map`](./struct.ConfigMap.html#method.watch_core_v1_namespaced_config_map)
+/// Parses the HTTP response of [`ConfigMap::watch_namespaced_config_map`](./struct.ConfigMap.html#method.watch_namespaced_config_map)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedConfigMapResponse {
+pub enum WatchNamespacedConfigMapResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedConfigMapResponse {
+impl crate::Response for WatchNamespacedConfigMapResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1050,10 +1050,10 @@ impl crate::Response for WatchCoreV1NamespacedConfigMapResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedConfigMapResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedConfigMapResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedConfigMapResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedConfigMapResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedConfigMapResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedConfigMapResponse::Other, 0)),
         }
     }
 }
@@ -1063,7 +1063,7 @@ impl crate::Response for WatchCoreV1NamespacedConfigMapResponse {
 impl ConfigMap {
     /// watch individual changes to a list of ConfigMap
     ///
-    /// Use [`WatchCoreV1NamespacedConfigMapListResponse`](./enum.WatchCoreV1NamespacedConfigMapListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedConfigMapListResponse`](./enum.WatchNamespacedConfigMapListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1074,11 +1074,11 @@ impl ConfigMap {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_config_map_list(
+    pub fn watch_namespaced_config_map_list(
         namespace: &str,
-        optional: WatchCoreV1NamespacedConfigMapListOptional<'_>,
+        optional: WatchNamespacedConfigMapListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedConfigMapListOptional {
+        let WatchNamespacedConfigMapListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1126,9 +1126,9 @@ impl ConfigMap {
     }
 }
 
-/// Optional parameters of [`ConfigMap::watch_core_v1_namespaced_config_map_list`](./struct.ConfigMap.html#method.watch_core_v1_namespaced_config_map_list)
+/// Optional parameters of [`ConfigMap::watch_namespaced_config_map_list`](./struct.ConfigMap.html#method.watch_namespaced_config_map_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedConfigMapListOptional<'a> {
+pub struct WatchNamespacedConfigMapListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1151,15 +1151,15 @@ pub struct WatchCoreV1NamespacedConfigMapListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::watch_core_v1_namespaced_config_map_list`](./struct.ConfigMap.html#method.watch_core_v1_namespaced_config_map_list)
+/// Parses the HTTP response of [`ConfigMap::watch_namespaced_config_map_list`](./struct.ConfigMap.html#method.watch_namespaced_config_map_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedConfigMapListResponse {
+pub enum WatchNamespacedConfigMapListResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedConfigMapListResponse {
+impl crate::Response for WatchNamespacedConfigMapListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1170,10 +1170,10 @@ impl crate::Response for WatchCoreV1NamespacedConfigMapListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedConfigMapListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedConfigMapListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedConfigMapListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedConfigMapListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedConfigMapListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedConfigMapListResponse::Other, 0)),
         }
     }
 }

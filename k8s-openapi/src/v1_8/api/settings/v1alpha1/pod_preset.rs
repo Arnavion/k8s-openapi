@@ -15,7 +15,7 @@ pub struct PodPreset {
 impl PodPreset {
     /// create a PodPreset
     ///
-    /// Use [`CreateSettingsV1alpha1NamespacedPodPresetResponse`](./enum.CreateSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedPodPresetResponse`](./enum.CreateNamespacedPodPresetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -28,12 +28,12 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_settings_v1alpha1_namespaced_pod_preset(
+    pub fn create_namespaced_pod_preset(
         namespace: &str,
         body: &crate::v1_8::api::settings::v1alpha1::PodPreset,
-        optional: CreateSettingsV1alpha1NamespacedPodPresetOptional<'_>,
+        optional: CreateNamespacedPodPresetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateSettingsV1alpha1NamespacedPodPresetOptional {
+        let CreateNamespacedPodPresetOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets?", namespace = namespace);
@@ -49,22 +49,22 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::create_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.create_settings_v1alpha1_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::create_namespaced_pod_preset`](./struct.PodPreset.html#method.create_namespaced_pod_preset)
 #[derive(Debug, Default)]
-pub struct CreateSettingsV1alpha1NamespacedPodPresetOptional<'a> {
+pub struct CreateNamespacedPodPresetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodPreset::create_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.create_settings_v1alpha1_namespaced_pod_preset)
+/// Parses the HTTP response of [`PodPreset::create_namespaced_pod_preset`](./struct.PodPreset.html#method.create_namespaced_pod_preset)
 #[derive(Debug)]
-pub enum CreateSettingsV1alpha1NamespacedPodPresetResponse {
+pub enum CreateNamespacedPodPresetResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateSettingsV1alpha1NamespacedPodPresetResponse {
+impl crate::Response for CreateNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -73,10 +73,10 @@ impl crate::Response for CreateSettingsV1alpha1NamespacedPodPresetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
-            _ => Ok((CreateSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedPodPresetResponse::Other, 0)),
         }
     }
 }
@@ -86,7 +86,7 @@ impl crate::Response for CreateSettingsV1alpha1NamespacedPodPresetResponse {
 impl PodPreset {
     /// delete collection of PodPreset
     ///
-    /// Use [`DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse`](./enum.DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedPodPresetResponse`](./enum.DeleteCollectionNamespacedPodPresetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -97,11 +97,11 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_settings_v1alpha1_collection_namespaced_pod_preset(
+    pub fn delete_collection_namespaced_pod_preset(
         namespace: &str,
-        optional: DeleteSettingsV1alpha1CollectionNamespacedPodPresetOptional<'_>,
+        optional: DeleteCollectionNamespacedPodPresetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteSettingsV1alpha1CollectionNamespacedPodPresetOptional {
+        let DeleteCollectionNamespacedPodPresetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -149,9 +149,9 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::delete_settings_v1alpha1_collection_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_settings_v1alpha1_collection_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::delete_collection_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_collection_namespaced_pod_preset)
 #[derive(Debug, Default)]
-pub struct DeleteSettingsV1alpha1CollectionNamespacedPodPresetOptional<'a> {
+pub struct DeleteCollectionNamespacedPodPresetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -174,16 +174,16 @@ pub struct DeleteSettingsV1alpha1CollectionNamespacedPodPresetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::delete_settings_v1alpha1_collection_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_settings_v1alpha1_collection_namespaced_pod_preset)
+/// Parses the HTTP response of [`PodPreset::delete_collection_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_collection_namespaced_pod_preset)
 #[derive(Debug)]
-pub enum DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse {
+pub enum DeleteCollectionNamespacedPodPresetResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse {
+impl crate::Response for DeleteCollectionNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -199,16 +199,16 @@ impl crate::Response for DeleteSettingsV1alpha1CollectionNamespacedPodPresetResp
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedPodPresetResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedPodPresetResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Unauthorized, 0)),
-            _ => Ok((DeleteSettingsV1alpha1CollectionNamespacedPodPresetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedPodPresetResponse::Other, 0)),
         }
     }
 }
@@ -218,7 +218,7 @@ impl crate::Response for DeleteSettingsV1alpha1CollectionNamespacedPodPresetResp
 impl PodPreset {
     /// delete a PodPreset
     ///
-    /// Use [`DeleteSettingsV1alpha1NamespacedPodPresetResponse`](./enum.DeleteSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedPodPresetResponse`](./enum.DeleteNamespacedPodPresetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -233,12 +233,12 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_settings_v1alpha1_namespaced_pod_preset(
+    pub fn delete_namespaced_pod_preset(
         name: &str,
         namespace: &str,
-        optional: DeleteSettingsV1alpha1NamespacedPodPresetOptional<'_>,
+        optional: DeleteNamespacedPodPresetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteSettingsV1alpha1NamespacedPodPresetOptional {
+        let DeleteNamespacedPodPresetOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -266,9 +266,9 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::delete_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_settings_v1alpha1_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::delete_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_namespaced_pod_preset)
 #[derive(Debug, Default)]
-pub struct DeleteSettingsV1alpha1NamespacedPodPresetOptional<'a> {
+pub struct DeleteNamespacedPodPresetOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -279,16 +279,16 @@ pub struct DeleteSettingsV1alpha1NamespacedPodPresetOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodPreset::delete_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_settings_v1alpha1_namespaced_pod_preset)
+/// Parses the HTTP response of [`PodPreset::delete_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_namespaced_pod_preset)
 #[derive(Debug)]
-pub enum DeleteSettingsV1alpha1NamespacedPodPresetResponse {
+pub enum DeleteNamespacedPodPresetResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteSettingsV1alpha1NamespacedPodPresetResponse {
+impl crate::Response for DeleteNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -304,16 +304,16 @@ impl crate::Response for DeleteSettingsV1alpha1NamespacedPodPresetResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedPodPresetResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedPodPresetResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
-            _ => Ok((DeleteSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedPodPresetResponse::Other, 0)),
         }
     }
 }
@@ -323,7 +323,7 @@ impl crate::Response for DeleteSettingsV1alpha1NamespacedPodPresetResponse {
 impl PodPreset {
     /// list or watch objects of kind PodPreset
     ///
-    /// Use [`ListSettingsV1alpha1NamespacedPodPresetResponse`](./enum.ListSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedPodPresetResponse`](./enum.ListNamespacedPodPresetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -334,11 +334,11 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_settings_v1alpha1_namespaced_pod_preset(
+    pub fn list_namespaced_pod_preset(
         namespace: &str,
-        optional: ListSettingsV1alpha1NamespacedPodPresetOptional<'_>,
+        optional: ListNamespacedPodPresetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListSettingsV1alpha1NamespacedPodPresetOptional {
+        let ListNamespacedPodPresetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -386,9 +386,9 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::list_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.list_settings_v1alpha1_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::list_namespaced_pod_preset`](./struct.PodPreset.html#method.list_namespaced_pod_preset)
 #[derive(Debug, Default)]
-pub struct ListSettingsV1alpha1NamespacedPodPresetOptional<'a> {
+pub struct ListNamespacedPodPresetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -411,15 +411,15 @@ pub struct ListSettingsV1alpha1NamespacedPodPresetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::list_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.list_settings_v1alpha1_namespaced_pod_preset)
+/// Parses the HTTP response of [`PodPreset::list_namespaced_pod_preset`](./struct.PodPreset.html#method.list_namespaced_pod_preset)
 #[derive(Debug)]
-pub enum ListSettingsV1alpha1NamespacedPodPresetResponse {
+pub enum ListNamespacedPodPresetResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPresetList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListSettingsV1alpha1NamespacedPodPresetResponse {
+impl crate::Response for ListNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -428,10 +428,10 @@ impl crate::Response for ListSettingsV1alpha1NamespacedPodPresetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
-            _ => Ok((ListSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedPodPresetResponse::Other, 0)),
         }
     }
 }
@@ -441,17 +441,17 @@ impl crate::Response for ListSettingsV1alpha1NamespacedPodPresetResponse {
 impl PodPreset {
     /// list or watch objects of kind PodPreset
     ///
-    /// Use [`ListSettingsV1alpha1PodPresetForAllNamespacesResponse`](./enum.ListSettingsV1alpha1PodPresetForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListPodPresetForAllNamespacesResponse`](./enum.ListPodPresetForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_settings_v1alpha1_pod_preset_for_all_namespaces(
-        optional: ListSettingsV1alpha1PodPresetForAllNamespacesOptional<'_>,
+    pub fn list_pod_preset_for_all_namespaces(
+        optional: ListPodPresetForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListSettingsV1alpha1PodPresetForAllNamespacesOptional {
+        let ListPodPresetForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -499,9 +499,9 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::list_settings_v1alpha1_pod_preset_for_all_namespaces`](./struct.PodPreset.html#method.list_settings_v1alpha1_pod_preset_for_all_namespaces)
+/// Optional parameters of [`PodPreset::list_pod_preset_for_all_namespaces`](./struct.PodPreset.html#method.list_pod_preset_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListSettingsV1alpha1PodPresetForAllNamespacesOptional<'a> {
+pub struct ListPodPresetForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -524,15 +524,15 @@ pub struct ListSettingsV1alpha1PodPresetForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::list_settings_v1alpha1_pod_preset_for_all_namespaces`](./struct.PodPreset.html#method.list_settings_v1alpha1_pod_preset_for_all_namespaces)
+/// Parses the HTTP response of [`PodPreset::list_pod_preset_for_all_namespaces`](./struct.PodPreset.html#method.list_pod_preset_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
+pub enum ListPodPresetForAllNamespacesResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPresetList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
+impl crate::Response for ListPodPresetForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -541,10 +541,10 @@ impl crate::Response for ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListPodPresetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListSettingsV1alpha1PodPresetForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListPodPresetForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListPodPresetForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -554,7 +554,7 @@ impl crate::Response for ListSettingsV1alpha1PodPresetForAllNamespacesResponse {
 impl PodPreset {
     /// partially update the specified PodPreset
     ///
-    /// Use [`PatchSettingsV1alpha1NamespacedPodPresetResponse`](./enum.PatchSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedPodPresetResponse`](./enum.PatchNamespacedPodPresetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -571,13 +571,13 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_settings_v1alpha1_namespaced_pod_preset(
+    pub fn patch_namespaced_pod_preset(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchSettingsV1alpha1NamespacedPodPresetOptional<'_>,
+        optional: PatchNamespacedPodPresetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchSettingsV1alpha1NamespacedPodPresetOptional {
+        let PatchNamespacedPodPresetOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
@@ -593,22 +593,22 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::patch_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.patch_settings_v1alpha1_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::patch_namespaced_pod_preset`](./struct.PodPreset.html#method.patch_namespaced_pod_preset)
 #[derive(Debug, Default)]
-pub struct PatchSettingsV1alpha1NamespacedPodPresetOptional<'a> {
+pub struct PatchNamespacedPodPresetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodPreset::patch_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.patch_settings_v1alpha1_namespaced_pod_preset)
+/// Parses the HTTP response of [`PodPreset::patch_namespaced_pod_preset`](./struct.PodPreset.html#method.patch_namespaced_pod_preset)
 #[derive(Debug)]
-pub enum PatchSettingsV1alpha1NamespacedPodPresetResponse {
+pub enum PatchNamespacedPodPresetResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchSettingsV1alpha1NamespacedPodPresetResponse {
+impl crate::Response for PatchNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -617,10 +617,10 @@ impl crate::Response for PatchSettingsV1alpha1NamespacedPodPresetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
-            _ => Ok((PatchSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedPodPresetResponse::Other, 0)),
         }
     }
 }
@@ -630,7 +630,7 @@ impl crate::Response for PatchSettingsV1alpha1NamespacedPodPresetResponse {
 impl PodPreset {
     /// read the specified PodPreset
     ///
-    /// Use [`ReadSettingsV1alpha1NamespacedPodPresetResponse`](./enum.ReadSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedPodPresetResponse`](./enum.ReadNamespacedPodPresetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -645,12 +645,12 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_settings_v1alpha1_namespaced_pod_preset(
+    pub fn read_namespaced_pod_preset(
         name: &str,
         namespace: &str,
-        optional: ReadSettingsV1alpha1NamespacedPodPresetOptional<'_>,
+        optional: ReadNamespacedPodPresetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadSettingsV1alpha1NamespacedPodPresetOptional {
+        let ReadNamespacedPodPresetOptional {
             exact,
             export,
             pretty,
@@ -674,9 +674,9 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::read_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.read_settings_v1alpha1_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::read_namespaced_pod_preset`](./struct.PodPreset.html#method.read_namespaced_pod_preset)
 #[derive(Debug, Default)]
-pub struct ReadSettingsV1alpha1NamespacedPodPresetOptional<'a> {
+pub struct ReadNamespacedPodPresetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -685,15 +685,15 @@ pub struct ReadSettingsV1alpha1NamespacedPodPresetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodPreset::read_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.read_settings_v1alpha1_namespaced_pod_preset)
+/// Parses the HTTP response of [`PodPreset::read_namespaced_pod_preset`](./struct.PodPreset.html#method.read_namespaced_pod_preset)
 #[derive(Debug)]
-pub enum ReadSettingsV1alpha1NamespacedPodPresetResponse {
+pub enum ReadNamespacedPodPresetResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadSettingsV1alpha1NamespacedPodPresetResponse {
+impl crate::Response for ReadNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -702,10 +702,10 @@ impl crate::Response for ReadSettingsV1alpha1NamespacedPodPresetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
-            _ => Ok((ReadSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedPodPresetResponse::Other, 0)),
         }
     }
 }
@@ -715,7 +715,7 @@ impl crate::Response for ReadSettingsV1alpha1NamespacedPodPresetResponse {
 impl PodPreset {
     /// replace the specified PodPreset
     ///
-    /// Use [`ReplaceSettingsV1alpha1NamespacedPodPresetResponse`](./enum.ReplaceSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedPodPresetResponse`](./enum.ReplaceNamespacedPodPresetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -732,13 +732,13 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_settings_v1alpha1_namespaced_pod_preset(
+    pub fn replace_namespaced_pod_preset(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::settings::v1alpha1::PodPreset,
-        optional: ReplaceSettingsV1alpha1NamespacedPodPresetOptional<'_>,
+        optional: ReplaceNamespacedPodPresetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceSettingsV1alpha1NamespacedPodPresetOptional {
+        let ReplaceNamespacedPodPresetOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets/{name}?", name = name, namespace = namespace);
@@ -754,22 +754,22 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::replace_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.replace_settings_v1alpha1_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::replace_namespaced_pod_preset`](./struct.PodPreset.html#method.replace_namespaced_pod_preset)
 #[derive(Debug, Default)]
-pub struct ReplaceSettingsV1alpha1NamespacedPodPresetOptional<'a> {
+pub struct ReplaceNamespacedPodPresetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodPreset::replace_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.replace_settings_v1alpha1_namespaced_pod_preset)
+/// Parses the HTTP response of [`PodPreset::replace_namespaced_pod_preset`](./struct.PodPreset.html#method.replace_namespaced_pod_preset)
 #[derive(Debug)]
-pub enum ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
+pub enum ReplaceNamespacedPodPresetResponse {
     Ok(crate::v1_8::api::settings::v1alpha1::PodPreset),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
+impl crate::Response for ReplaceNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -778,10 +778,10 @@ impl crate::Response for ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedPodPresetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedPodPresetResponse::Other, 0)),
         }
     }
 }
@@ -791,7 +791,7 @@ impl crate::Response for ReplaceSettingsV1alpha1NamespacedPodPresetResponse {
 impl PodPreset {
     /// watch changes to an object of kind PodPreset
     ///
-    /// Use [`WatchSettingsV1alpha1NamespacedPodPresetResponse`](./enum.WatchSettingsV1alpha1NamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedPodPresetResponse`](./enum.WatchNamespacedPodPresetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -806,12 +806,12 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_settings_v1alpha1_namespaced_pod_preset(
+    pub fn watch_namespaced_pod_preset(
         name: &str,
         namespace: &str,
-        optional: WatchSettingsV1alpha1NamespacedPodPresetOptional<'_>,
+        optional: WatchNamespacedPodPresetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchSettingsV1alpha1NamespacedPodPresetOptional {
+        let WatchNamespacedPodPresetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -859,9 +859,9 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::watch_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.watch_settings_v1alpha1_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::watch_namespaced_pod_preset`](./struct.PodPreset.html#method.watch_namespaced_pod_preset)
 #[derive(Debug, Default)]
-pub struct WatchSettingsV1alpha1NamespacedPodPresetOptional<'a> {
+pub struct WatchNamespacedPodPresetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -884,15 +884,15 @@ pub struct WatchSettingsV1alpha1NamespacedPodPresetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::watch_settings_v1alpha1_namespaced_pod_preset`](./struct.PodPreset.html#method.watch_settings_v1alpha1_namespaced_pod_preset)
+/// Parses the HTTP response of [`PodPreset::watch_namespaced_pod_preset`](./struct.PodPreset.html#method.watch_namespaced_pod_preset)
 #[derive(Debug)]
-pub enum WatchSettingsV1alpha1NamespacedPodPresetResponse {
+pub enum WatchNamespacedPodPresetResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchSettingsV1alpha1NamespacedPodPresetResponse {
+impl crate::Response for WatchNamespacedPodPresetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -903,10 +903,10 @@ impl crate::Response for WatchSettingsV1alpha1NamespacedPodPresetResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchSettingsV1alpha1NamespacedPodPresetResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedPodPresetResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1NamespacedPodPresetResponse::Unauthorized, 0)),
-            _ => Ok((WatchSettingsV1alpha1NamespacedPodPresetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPodPresetResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedPodPresetResponse::Other, 0)),
         }
     }
 }
@@ -916,7 +916,7 @@ impl crate::Response for WatchSettingsV1alpha1NamespacedPodPresetResponse {
 impl PodPreset {
     /// watch individual changes to a list of PodPreset
     ///
-    /// Use [`WatchSettingsV1alpha1NamespacedPodPresetListResponse`](./enum.WatchSettingsV1alpha1NamespacedPodPresetListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedPodPresetListResponse`](./enum.WatchNamespacedPodPresetListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -927,11 +927,11 @@ impl PodPreset {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_settings_v1alpha1_namespaced_pod_preset_list(
+    pub fn watch_namespaced_pod_preset_list(
         namespace: &str,
-        optional: WatchSettingsV1alpha1NamespacedPodPresetListOptional<'_>,
+        optional: WatchNamespacedPodPresetListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchSettingsV1alpha1NamespacedPodPresetListOptional {
+        let WatchNamespacedPodPresetListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -979,9 +979,9 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::watch_settings_v1alpha1_namespaced_pod_preset_list`](./struct.PodPreset.html#method.watch_settings_v1alpha1_namespaced_pod_preset_list)
+/// Optional parameters of [`PodPreset::watch_namespaced_pod_preset_list`](./struct.PodPreset.html#method.watch_namespaced_pod_preset_list)
 #[derive(Debug, Default)]
-pub struct WatchSettingsV1alpha1NamespacedPodPresetListOptional<'a> {
+pub struct WatchNamespacedPodPresetListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1004,15 +1004,15 @@ pub struct WatchSettingsV1alpha1NamespacedPodPresetListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::watch_settings_v1alpha1_namespaced_pod_preset_list`](./struct.PodPreset.html#method.watch_settings_v1alpha1_namespaced_pod_preset_list)
+/// Parses the HTTP response of [`PodPreset::watch_namespaced_pod_preset_list`](./struct.PodPreset.html#method.watch_namespaced_pod_preset_list)
 #[derive(Debug)]
-pub enum WatchSettingsV1alpha1NamespacedPodPresetListResponse {
+pub enum WatchNamespacedPodPresetListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchSettingsV1alpha1NamespacedPodPresetListResponse {
+impl crate::Response for WatchNamespacedPodPresetListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1023,10 +1023,10 @@ impl crate::Response for WatchSettingsV1alpha1NamespacedPodPresetListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchSettingsV1alpha1NamespacedPodPresetListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedPodPresetListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1NamespacedPodPresetListResponse::Unauthorized, 0)),
-            _ => Ok((WatchSettingsV1alpha1NamespacedPodPresetListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPodPresetListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedPodPresetListResponse::Other, 0)),
         }
     }
 }
@@ -1036,17 +1036,17 @@ impl crate::Response for WatchSettingsV1alpha1NamespacedPodPresetListResponse {
 impl PodPreset {
     /// watch individual changes to a list of PodPreset
     ///
-    /// Use [`WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse`](./enum.WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchPodPresetListForAllNamespacesResponse`](./enum.WatchPodPresetListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_settings_v1alpha1_pod_preset_list_for_all_namespaces(
-        optional: WatchSettingsV1alpha1PodPresetListForAllNamespacesOptional<'_>,
+    pub fn watch_pod_preset_list_for_all_namespaces(
+        optional: WatchPodPresetListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchSettingsV1alpha1PodPresetListForAllNamespacesOptional {
+        let WatchPodPresetListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1094,9 +1094,9 @@ impl PodPreset {
     }
 }
 
-/// Optional parameters of [`PodPreset::watch_settings_v1alpha1_pod_preset_list_for_all_namespaces`](./struct.PodPreset.html#method.watch_settings_v1alpha1_pod_preset_list_for_all_namespaces)
+/// Optional parameters of [`PodPreset::watch_pod_preset_list_for_all_namespaces`](./struct.PodPreset.html#method.watch_pod_preset_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchSettingsV1alpha1PodPresetListForAllNamespacesOptional<'a> {
+pub struct WatchPodPresetListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1119,15 +1119,15 @@ pub struct WatchSettingsV1alpha1PodPresetListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::watch_settings_v1alpha1_pod_preset_list_for_all_namespaces`](./struct.PodPreset.html#method.watch_settings_v1alpha1_pod_preset_list_for_all_namespaces)
+/// Parses the HTTP response of [`PodPreset::watch_pod_preset_list_for_all_namespaces`](./struct.PodPreset.html#method.watch_pod_preset_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse {
+pub enum WatchPodPresetListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse {
+impl crate::Response for WatchPodPresetListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1138,10 +1138,10 @@ impl crate::Response for WatchSettingsV1alpha1PodPresetListForAllNamespacesRespo
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchPodPresetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchSettingsV1alpha1PodPresetListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPodPresetListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchPodPresetListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

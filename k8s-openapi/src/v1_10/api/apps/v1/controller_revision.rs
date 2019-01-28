@@ -20,7 +20,7 @@ pub struct ControllerRevision {
 impl ControllerRevision {
     /// create a ControllerRevision
     ///
-    /// Use [`CreateAppsV1NamespacedControllerRevisionResponse`](./enum.CreateAppsV1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedControllerRevisionResponse`](./enum.CreateNamespacedControllerRevisionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_apps_v1_namespaced_controller_revision(
+    pub fn create_namespaced_controller_revision(
         namespace: &str,
         body: &crate::v1_10::api::apps::v1::ControllerRevision,
-        optional: CreateAppsV1NamespacedControllerRevisionOptional<'_>,
+        optional: CreateNamespacedControllerRevisionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAppsV1NamespacedControllerRevisionOptional {
+        let CreateNamespacedControllerRevisionOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/controllerrevisions?", namespace = namespace);
@@ -54,16 +54,16 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::create_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.create_apps_v1_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::create_namespaced_controller_revision`](./struct.ControllerRevision.html#method.create_namespaced_controller_revision)
 #[derive(Debug, Default)]
-pub struct CreateAppsV1NamespacedControllerRevisionOptional<'a> {
+pub struct CreateNamespacedControllerRevisionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::create_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.create_apps_v1_namespaced_controller_revision)
+/// Parses the HTTP response of [`ControllerRevision::create_namespaced_controller_revision`](./struct.ControllerRevision.html#method.create_namespaced_controller_revision)
 #[derive(Debug)]
-pub enum CreateAppsV1NamespacedControllerRevisionResponse {
+pub enum CreateNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::api::apps::v1::ControllerRevision),
     Created(crate::v1_10::api::apps::v1::ControllerRevision),
     Accepted(crate::v1_10::api::apps::v1::ControllerRevision),
@@ -71,7 +71,7 @@ pub enum CreateAppsV1NamespacedControllerRevisionResponse {
     Other,
 }
 
-impl crate::Response for CreateAppsV1NamespacedControllerRevisionResponse {
+impl crate::Response for CreateNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -80,7 +80,7 @@ impl crate::Response for CreateAppsV1NamespacedControllerRevisionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1NamespacedControllerRevisionResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedControllerRevisionResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -88,7 +88,7 @@ impl crate::Response for CreateAppsV1NamespacedControllerRevisionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1NamespacedControllerRevisionResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedControllerRevisionResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -96,10 +96,10 @@ impl crate::Response for CreateAppsV1NamespacedControllerRevisionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1NamespacedControllerRevisionResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedControllerRevisionResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1NamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((CreateAppsV1NamespacedControllerRevisionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedControllerRevisionResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedControllerRevisionResponse::Other, 0)),
         }
     }
 }
@@ -109,7 +109,7 @@ impl crate::Response for CreateAppsV1NamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// delete collection of ControllerRevision
     ///
-    /// Use [`DeleteAppsV1CollectionNamespacedControllerRevisionResponse`](./enum.DeleteAppsV1CollectionNamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedControllerRevisionResponse`](./enum.DeleteCollectionNamespacedControllerRevisionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -120,11 +120,11 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apps_v1_collection_namespaced_controller_revision(
+    pub fn delete_collection_namespaced_controller_revision(
         namespace: &str,
-        optional: DeleteAppsV1CollectionNamespacedControllerRevisionOptional<'_>,
+        optional: DeleteCollectionNamespacedControllerRevisionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAppsV1CollectionNamespacedControllerRevisionOptional {
+        let DeleteCollectionNamespacedControllerRevisionOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -172,9 +172,9 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::delete_apps_v1_collection_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_apps_v1_collection_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::delete_collection_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_collection_namespaced_controller_revision)
 #[derive(Debug, Default)]
-pub struct DeleteAppsV1CollectionNamespacedControllerRevisionOptional<'a> {
+pub struct DeleteCollectionNamespacedControllerRevisionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -197,16 +197,16 @@ pub struct DeleteAppsV1CollectionNamespacedControllerRevisionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::delete_apps_v1_collection_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_apps_v1_collection_namespaced_controller_revision)
+/// Parses the HTTP response of [`ControllerRevision::delete_collection_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_collection_namespaced_controller_revision)
 #[derive(Debug)]
-pub enum DeleteAppsV1CollectionNamespacedControllerRevisionResponse {
+pub enum DeleteCollectionNamespacedControllerRevisionResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::api::apps::v1::ControllerRevision),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAppsV1CollectionNamespacedControllerRevisionResponse {
+impl crate::Response for DeleteCollectionNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -222,16 +222,16 @@ impl crate::Response for DeleteAppsV1CollectionNamespacedControllerRevisionRespo
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1CollectionNamespacedControllerRevisionResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedControllerRevisionResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1CollectionNamespacedControllerRevisionResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedControllerRevisionResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1CollectionNamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAppsV1CollectionNamespacedControllerRevisionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedControllerRevisionResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedControllerRevisionResponse::Other, 0)),
         }
     }
 }
@@ -241,7 +241,7 @@ impl crate::Response for DeleteAppsV1CollectionNamespacedControllerRevisionRespo
 impl ControllerRevision {
     /// delete a ControllerRevision
     ///
-    /// Use [`DeleteAppsV1NamespacedControllerRevisionResponse`](./enum.DeleteAppsV1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedControllerRevisionResponse`](./enum.DeleteNamespacedControllerRevisionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -256,12 +256,12 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apps_v1_namespaced_controller_revision(
+    pub fn delete_namespaced_controller_revision(
         name: &str,
         namespace: &str,
-        optional: DeleteAppsV1NamespacedControllerRevisionOptional<'_>,
+        optional: DeleteNamespacedControllerRevisionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAppsV1NamespacedControllerRevisionOptional {
+        let DeleteNamespacedControllerRevisionOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -289,9 +289,9 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::delete_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_apps_v1_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::delete_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_namespaced_controller_revision)
 #[derive(Debug, Default)]
-pub struct DeleteAppsV1NamespacedControllerRevisionOptional<'a> {
+pub struct DeleteNamespacedControllerRevisionOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -302,16 +302,16 @@ pub struct DeleteAppsV1NamespacedControllerRevisionOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::delete_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_apps_v1_namespaced_controller_revision)
+/// Parses the HTTP response of [`ControllerRevision::delete_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_namespaced_controller_revision)
 #[derive(Debug)]
-pub enum DeleteAppsV1NamespacedControllerRevisionResponse {
+pub enum DeleteNamespacedControllerRevisionResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::api::apps::v1::ControllerRevision),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAppsV1NamespacedControllerRevisionResponse {
+impl crate::Response for DeleteNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -327,16 +327,16 @@ impl crate::Response for DeleteAppsV1NamespacedControllerRevisionResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1NamespacedControllerRevisionResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedControllerRevisionResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1NamespacedControllerRevisionResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedControllerRevisionResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1NamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAppsV1NamespacedControllerRevisionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedControllerRevisionResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedControllerRevisionResponse::Other, 0)),
         }
     }
 }
@@ -346,17 +346,17 @@ impl crate::Response for DeleteAppsV1NamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// list or watch objects of kind ControllerRevision
     ///
-    /// Use [`ListAppsV1ControllerRevisionForAllNamespacesResponse`](./enum.ListAppsV1ControllerRevisionForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListControllerRevisionForAllNamespacesResponse`](./enum.ListControllerRevisionForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apps_v1_controller_revision_for_all_namespaces(
-        optional: ListAppsV1ControllerRevisionForAllNamespacesOptional<'_>,
+    pub fn list_controller_revision_for_all_namespaces(
+        optional: ListControllerRevisionForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAppsV1ControllerRevisionForAllNamespacesOptional {
+        let ListControllerRevisionForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -404,9 +404,9 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::list_apps_v1_controller_revision_for_all_namespaces`](./struct.ControllerRevision.html#method.list_apps_v1_controller_revision_for_all_namespaces)
+/// Optional parameters of [`ControllerRevision::list_controller_revision_for_all_namespaces`](./struct.ControllerRevision.html#method.list_controller_revision_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListAppsV1ControllerRevisionForAllNamespacesOptional<'a> {
+pub struct ListControllerRevisionForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -429,15 +429,15 @@ pub struct ListAppsV1ControllerRevisionForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::list_apps_v1_controller_revision_for_all_namespaces`](./struct.ControllerRevision.html#method.list_apps_v1_controller_revision_for_all_namespaces)
+/// Parses the HTTP response of [`ControllerRevision::list_controller_revision_for_all_namespaces`](./struct.ControllerRevision.html#method.list_controller_revision_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListAppsV1ControllerRevisionForAllNamespacesResponse {
+pub enum ListControllerRevisionForAllNamespacesResponse {
     Ok(crate::v1_10::api::apps::v1::ControllerRevisionList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAppsV1ControllerRevisionForAllNamespacesResponse {
+impl crate::Response for ListControllerRevisionForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -446,10 +446,10 @@ impl crate::Response for ListAppsV1ControllerRevisionForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAppsV1ControllerRevisionForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListControllerRevisionForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1ControllerRevisionForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListAppsV1ControllerRevisionForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListControllerRevisionForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListControllerRevisionForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -459,7 +459,7 @@ impl crate::Response for ListAppsV1ControllerRevisionForAllNamespacesResponse {
 impl ControllerRevision {
     /// list or watch objects of kind ControllerRevision
     ///
-    /// Use [`ListAppsV1NamespacedControllerRevisionResponse`](./enum.ListAppsV1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedControllerRevisionResponse`](./enum.ListNamespacedControllerRevisionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -470,11 +470,11 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apps_v1_namespaced_controller_revision(
+    pub fn list_namespaced_controller_revision(
         namespace: &str,
-        optional: ListAppsV1NamespacedControllerRevisionOptional<'_>,
+        optional: ListNamespacedControllerRevisionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAppsV1NamespacedControllerRevisionOptional {
+        let ListNamespacedControllerRevisionOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -522,9 +522,9 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::list_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.list_apps_v1_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::list_namespaced_controller_revision`](./struct.ControllerRevision.html#method.list_namespaced_controller_revision)
 #[derive(Debug, Default)]
-pub struct ListAppsV1NamespacedControllerRevisionOptional<'a> {
+pub struct ListNamespacedControllerRevisionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -547,15 +547,15 @@ pub struct ListAppsV1NamespacedControllerRevisionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::list_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.list_apps_v1_namespaced_controller_revision)
+/// Parses the HTTP response of [`ControllerRevision::list_namespaced_controller_revision`](./struct.ControllerRevision.html#method.list_namespaced_controller_revision)
 #[derive(Debug)]
-pub enum ListAppsV1NamespacedControllerRevisionResponse {
+pub enum ListNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::api::apps::v1::ControllerRevisionList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAppsV1NamespacedControllerRevisionResponse {
+impl crate::Response for ListNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -564,10 +564,10 @@ impl crate::Response for ListAppsV1NamespacedControllerRevisionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAppsV1NamespacedControllerRevisionResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedControllerRevisionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1NamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((ListAppsV1NamespacedControllerRevisionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedControllerRevisionResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedControllerRevisionResponse::Other, 0)),
         }
     }
 }
@@ -577,7 +577,7 @@ impl crate::Response for ListAppsV1NamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// partially update the specified ControllerRevision
     ///
-    /// Use [`PatchAppsV1NamespacedControllerRevisionResponse`](./enum.PatchAppsV1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedControllerRevisionResponse`](./enum.PatchNamespacedControllerRevisionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -594,13 +594,13 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apps_v1_namespaced_controller_revision(
+    pub fn patch_namespaced_controller_revision(
         name: &str,
         namespace: &str,
         body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAppsV1NamespacedControllerRevisionOptional<'_>,
+        optional: PatchNamespacedControllerRevisionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAppsV1NamespacedControllerRevisionOptional {
+        let PatchNamespacedControllerRevisionOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/controllerrevisions/{name}?", name = name, namespace = namespace);
@@ -616,22 +616,22 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::patch_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.patch_apps_v1_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::patch_namespaced_controller_revision`](./struct.ControllerRevision.html#method.patch_namespaced_controller_revision)
 #[derive(Debug, Default)]
-pub struct PatchAppsV1NamespacedControllerRevisionOptional<'a> {
+pub struct PatchNamespacedControllerRevisionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::patch_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.patch_apps_v1_namespaced_controller_revision)
+/// Parses the HTTP response of [`ControllerRevision::patch_namespaced_controller_revision`](./struct.ControllerRevision.html#method.patch_namespaced_controller_revision)
 #[derive(Debug)]
-pub enum PatchAppsV1NamespacedControllerRevisionResponse {
+pub enum PatchNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::api::apps::v1::ControllerRevision),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAppsV1NamespacedControllerRevisionResponse {
+impl crate::Response for PatchNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -640,10 +640,10 @@ impl crate::Response for PatchAppsV1NamespacedControllerRevisionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAppsV1NamespacedControllerRevisionResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedControllerRevisionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1NamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((PatchAppsV1NamespacedControllerRevisionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedControllerRevisionResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedControllerRevisionResponse::Other, 0)),
         }
     }
 }
@@ -653,7 +653,7 @@ impl crate::Response for PatchAppsV1NamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// read the specified ControllerRevision
     ///
-    /// Use [`ReadAppsV1NamespacedControllerRevisionResponse`](./enum.ReadAppsV1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedControllerRevisionResponse`](./enum.ReadNamespacedControllerRevisionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -668,12 +668,12 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apps_v1_namespaced_controller_revision(
+    pub fn read_namespaced_controller_revision(
         name: &str,
         namespace: &str,
-        optional: ReadAppsV1NamespacedControllerRevisionOptional<'_>,
+        optional: ReadNamespacedControllerRevisionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAppsV1NamespacedControllerRevisionOptional {
+        let ReadNamespacedControllerRevisionOptional {
             exact,
             export,
             pretty,
@@ -697,9 +697,9 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::read_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.read_apps_v1_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::read_namespaced_controller_revision`](./struct.ControllerRevision.html#method.read_namespaced_controller_revision)
 #[derive(Debug, Default)]
-pub struct ReadAppsV1NamespacedControllerRevisionOptional<'a> {
+pub struct ReadNamespacedControllerRevisionOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -708,15 +708,15 @@ pub struct ReadAppsV1NamespacedControllerRevisionOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::read_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.read_apps_v1_namespaced_controller_revision)
+/// Parses the HTTP response of [`ControllerRevision::read_namespaced_controller_revision`](./struct.ControllerRevision.html#method.read_namespaced_controller_revision)
 #[derive(Debug)]
-pub enum ReadAppsV1NamespacedControllerRevisionResponse {
+pub enum ReadNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::api::apps::v1::ControllerRevision),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAppsV1NamespacedControllerRevisionResponse {
+impl crate::Response for ReadNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -725,10 +725,10 @@ impl crate::Response for ReadAppsV1NamespacedControllerRevisionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAppsV1NamespacedControllerRevisionResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedControllerRevisionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1NamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((ReadAppsV1NamespacedControllerRevisionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedControllerRevisionResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedControllerRevisionResponse::Other, 0)),
         }
     }
 }
@@ -738,7 +738,7 @@ impl crate::Response for ReadAppsV1NamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// replace the specified ControllerRevision
     ///
-    /// Use [`ReplaceAppsV1NamespacedControllerRevisionResponse`](./enum.ReplaceAppsV1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedControllerRevisionResponse`](./enum.ReplaceNamespacedControllerRevisionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -755,13 +755,13 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apps_v1_namespaced_controller_revision(
+    pub fn replace_namespaced_controller_revision(
         name: &str,
         namespace: &str,
         body: &crate::v1_10::api::apps::v1::ControllerRevision,
-        optional: ReplaceAppsV1NamespacedControllerRevisionOptional<'_>,
+        optional: ReplaceNamespacedControllerRevisionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAppsV1NamespacedControllerRevisionOptional {
+        let ReplaceNamespacedControllerRevisionOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/controllerrevisions/{name}?", name = name, namespace = namespace);
@@ -777,23 +777,23 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::replace_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.replace_apps_v1_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::replace_namespaced_controller_revision`](./struct.ControllerRevision.html#method.replace_namespaced_controller_revision)
 #[derive(Debug, Default)]
-pub struct ReplaceAppsV1NamespacedControllerRevisionOptional<'a> {
+pub struct ReplaceNamespacedControllerRevisionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::replace_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.replace_apps_v1_namespaced_controller_revision)
+/// Parses the HTTP response of [`ControllerRevision::replace_namespaced_controller_revision`](./struct.ControllerRevision.html#method.replace_namespaced_controller_revision)
 #[derive(Debug)]
-pub enum ReplaceAppsV1NamespacedControllerRevisionResponse {
+pub enum ReplaceNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::api::apps::v1::ControllerRevision),
     Created(crate::v1_10::api::apps::v1::ControllerRevision),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAppsV1NamespacedControllerRevisionResponse {
+impl crate::Response for ReplaceNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -802,7 +802,7 @@ impl crate::Response for ReplaceAppsV1NamespacedControllerRevisionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1NamespacedControllerRevisionResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedControllerRevisionResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -810,10 +810,10 @@ impl crate::Response for ReplaceAppsV1NamespacedControllerRevisionResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1NamespacedControllerRevisionResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedControllerRevisionResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1NamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAppsV1NamespacedControllerRevisionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedControllerRevisionResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedControllerRevisionResponse::Other, 0)),
         }
     }
 }
@@ -823,17 +823,17 @@ impl crate::Response for ReplaceAppsV1NamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// watch individual changes to a list of ControllerRevision
     ///
-    /// Use [`WatchAppsV1ControllerRevisionListForAllNamespacesResponse`](./enum.WatchAppsV1ControllerRevisionListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchControllerRevisionListForAllNamespacesResponse`](./enum.WatchControllerRevisionListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1_controller_revision_list_for_all_namespaces(
-        optional: WatchAppsV1ControllerRevisionListForAllNamespacesOptional<'_>,
+    pub fn watch_controller_revision_list_for_all_namespaces(
+        optional: WatchControllerRevisionListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1ControllerRevisionListForAllNamespacesOptional {
+        let WatchControllerRevisionListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -881,9 +881,9 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::watch_apps_v1_controller_revision_list_for_all_namespaces`](./struct.ControllerRevision.html#method.watch_apps_v1_controller_revision_list_for_all_namespaces)
+/// Optional parameters of [`ControllerRevision::watch_controller_revision_list_for_all_namespaces`](./struct.ControllerRevision.html#method.watch_controller_revision_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1ControllerRevisionListForAllNamespacesOptional<'a> {
+pub struct WatchControllerRevisionListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -906,15 +906,15 @@ pub struct WatchAppsV1ControllerRevisionListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::watch_apps_v1_controller_revision_list_for_all_namespaces`](./struct.ControllerRevision.html#method.watch_apps_v1_controller_revision_list_for_all_namespaces)
+/// Parses the HTTP response of [`ControllerRevision::watch_controller_revision_list_for_all_namespaces`](./struct.ControllerRevision.html#method.watch_controller_revision_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchAppsV1ControllerRevisionListForAllNamespacesResponse {
+pub enum WatchControllerRevisionListForAllNamespacesResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1ControllerRevisionListForAllNamespacesResponse {
+impl crate::Response for WatchControllerRevisionListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -925,10 +925,10 @@ impl crate::Response for WatchAppsV1ControllerRevisionListForAllNamespacesRespon
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1ControllerRevisionListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchControllerRevisionListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1ControllerRevisionListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1ControllerRevisionListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchControllerRevisionListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchControllerRevisionListForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -938,7 +938,7 @@ impl crate::Response for WatchAppsV1ControllerRevisionListForAllNamespacesRespon
 impl ControllerRevision {
     /// watch changes to an object of kind ControllerRevision
     ///
-    /// Use [`WatchAppsV1NamespacedControllerRevisionResponse`](./enum.WatchAppsV1NamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedControllerRevisionResponse`](./enum.WatchNamespacedControllerRevisionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -953,12 +953,12 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1_namespaced_controller_revision(
+    pub fn watch_namespaced_controller_revision(
         name: &str,
         namespace: &str,
-        optional: WatchAppsV1NamespacedControllerRevisionOptional<'_>,
+        optional: WatchNamespacedControllerRevisionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1NamespacedControllerRevisionOptional {
+        let WatchNamespacedControllerRevisionOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1006,9 +1006,9 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::watch_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.watch_apps_v1_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::watch_namespaced_controller_revision`](./struct.ControllerRevision.html#method.watch_namespaced_controller_revision)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1NamespacedControllerRevisionOptional<'a> {
+pub struct WatchNamespacedControllerRevisionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1031,15 +1031,15 @@ pub struct WatchAppsV1NamespacedControllerRevisionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::watch_apps_v1_namespaced_controller_revision`](./struct.ControllerRevision.html#method.watch_apps_v1_namespaced_controller_revision)
+/// Parses the HTTP response of [`ControllerRevision::watch_namespaced_controller_revision`](./struct.ControllerRevision.html#method.watch_namespaced_controller_revision)
 #[derive(Debug)]
-pub enum WatchAppsV1NamespacedControllerRevisionResponse {
+pub enum WatchNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1NamespacedControllerRevisionResponse {
+impl crate::Response for WatchNamespacedControllerRevisionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1050,10 +1050,10 @@ impl crate::Response for WatchAppsV1NamespacedControllerRevisionResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1NamespacedControllerRevisionResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedControllerRevisionResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1NamespacedControllerRevisionResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1NamespacedControllerRevisionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedControllerRevisionResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedControllerRevisionResponse::Other, 0)),
         }
     }
 }
@@ -1063,7 +1063,7 @@ impl crate::Response for WatchAppsV1NamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// watch individual changes to a list of ControllerRevision
     ///
-    /// Use [`WatchAppsV1NamespacedControllerRevisionListResponse`](./enum.WatchAppsV1NamespacedControllerRevisionListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedControllerRevisionListResponse`](./enum.WatchNamespacedControllerRevisionListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1074,11 +1074,11 @@ impl ControllerRevision {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1_namespaced_controller_revision_list(
+    pub fn watch_namespaced_controller_revision_list(
         namespace: &str,
-        optional: WatchAppsV1NamespacedControllerRevisionListOptional<'_>,
+        optional: WatchNamespacedControllerRevisionListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1NamespacedControllerRevisionListOptional {
+        let WatchNamespacedControllerRevisionListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1126,9 +1126,9 @@ impl ControllerRevision {
     }
 }
 
-/// Optional parameters of [`ControllerRevision::watch_apps_v1_namespaced_controller_revision_list`](./struct.ControllerRevision.html#method.watch_apps_v1_namespaced_controller_revision_list)
+/// Optional parameters of [`ControllerRevision::watch_namespaced_controller_revision_list`](./struct.ControllerRevision.html#method.watch_namespaced_controller_revision_list)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1NamespacedControllerRevisionListOptional<'a> {
+pub struct WatchNamespacedControllerRevisionListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1151,15 +1151,15 @@ pub struct WatchAppsV1NamespacedControllerRevisionListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::watch_apps_v1_namespaced_controller_revision_list`](./struct.ControllerRevision.html#method.watch_apps_v1_namespaced_controller_revision_list)
+/// Parses the HTTP response of [`ControllerRevision::watch_namespaced_controller_revision_list`](./struct.ControllerRevision.html#method.watch_namespaced_controller_revision_list)
 #[derive(Debug)]
-pub enum WatchAppsV1NamespacedControllerRevisionListResponse {
+pub enum WatchNamespacedControllerRevisionListResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1NamespacedControllerRevisionListResponse {
+impl crate::Response for WatchNamespacedControllerRevisionListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1170,10 +1170,10 @@ impl crate::Response for WatchAppsV1NamespacedControllerRevisionListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1NamespacedControllerRevisionListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedControllerRevisionListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1NamespacedControllerRevisionListResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1NamespacedControllerRevisionListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedControllerRevisionListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedControllerRevisionListResponse::Other, 0)),
         }
     }
 }

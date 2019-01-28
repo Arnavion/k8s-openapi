@@ -17,7 +17,7 @@ pub struct Lease {
 impl Lease {
     /// create a Lease
     ///
-    /// Use [`CreateCoordinationV1beta1NamespacedLeaseResponse`](./enum.CreateCoordinationV1beta1NamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedLeaseResponse`](./enum.CreateNamespacedLeaseResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -30,12 +30,12 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_coordination_v1beta1_namespaced_lease(
+    pub fn create_namespaced_lease(
         namespace: &str,
         body: &crate::v1_12::api::coordination::v1beta1::Lease,
-        optional: CreateCoordinationV1beta1NamespacedLeaseOptional<'_>,
+        optional: CreateNamespacedLeaseOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoordinationV1beta1NamespacedLeaseOptional {
+        let CreateNamespacedLeaseOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -59,9 +59,9 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::create_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.create_coordination_v1beta1_namespaced_lease)
+/// Optional parameters of [`Lease::create_namespaced_lease`](./struct.Lease.html#method.create_namespaced_lease)
 #[derive(Debug, Default)]
-pub struct CreateCoordinationV1beta1NamespacedLeaseOptional<'a> {
+pub struct CreateNamespacedLeaseOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -70,9 +70,9 @@ pub struct CreateCoordinationV1beta1NamespacedLeaseOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Lease::create_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.create_coordination_v1beta1_namespaced_lease)
+/// Parses the HTTP response of [`Lease::create_namespaced_lease`](./struct.Lease.html#method.create_namespaced_lease)
 #[derive(Debug)]
-pub enum CreateCoordinationV1beta1NamespacedLeaseResponse {
+pub enum CreateNamespacedLeaseResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::Lease),
     Created(crate::v1_12::api::coordination::v1beta1::Lease),
     Accepted(crate::v1_12::api::coordination::v1beta1::Lease),
@@ -80,7 +80,7 @@ pub enum CreateCoordinationV1beta1NamespacedLeaseResponse {
     Other,
 }
 
-impl crate::Response for CreateCoordinationV1beta1NamespacedLeaseResponse {
+impl crate::Response for CreateNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -89,7 +89,7 @@ impl crate::Response for CreateCoordinationV1beta1NamespacedLeaseResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoordinationV1beta1NamespacedLeaseResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedLeaseResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -97,7 +97,7 @@ impl crate::Response for CreateCoordinationV1beta1NamespacedLeaseResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoordinationV1beta1NamespacedLeaseResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedLeaseResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -105,10 +105,10 @@ impl crate::Response for CreateCoordinationV1beta1NamespacedLeaseResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoordinationV1beta1NamespacedLeaseResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedLeaseResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoordinationV1beta1NamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoordinationV1beta1NamespacedLeaseResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedLeaseResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedLeaseResponse::Other, 0)),
         }
     }
 }
@@ -118,7 +118,7 @@ impl crate::Response for CreateCoordinationV1beta1NamespacedLeaseResponse {
 impl Lease {
     /// delete collection of Lease
     ///
-    /// Use [`DeleteCoordinationV1beta1CollectionNamespacedLeaseResponse`](./enum.DeleteCoordinationV1beta1CollectionNamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedLeaseResponse`](./enum.DeleteCollectionNamespacedLeaseResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -129,11 +129,11 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_coordination_v1beta1_collection_namespaced_lease(
+    pub fn delete_collection_namespaced_lease(
         namespace: &str,
-        optional: DeleteCoordinationV1beta1CollectionNamespacedLeaseOptional<'_>,
+        optional: DeleteCollectionNamespacedLeaseOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoordinationV1beta1CollectionNamespacedLeaseOptional {
+        let DeleteCollectionNamespacedLeaseOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -181,9 +181,9 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::delete_coordination_v1beta1_collection_namespaced_lease`](./struct.Lease.html#method.delete_coordination_v1beta1_collection_namespaced_lease)
+/// Optional parameters of [`Lease::delete_collection_namespaced_lease`](./struct.Lease.html#method.delete_collection_namespaced_lease)
 #[derive(Debug, Default)]
-pub struct DeleteCoordinationV1beta1CollectionNamespacedLeaseOptional<'a> {
+pub struct DeleteCollectionNamespacedLeaseOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -208,16 +208,16 @@ pub struct DeleteCoordinationV1beta1CollectionNamespacedLeaseOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::delete_coordination_v1beta1_collection_namespaced_lease`](./struct.Lease.html#method.delete_coordination_v1beta1_collection_namespaced_lease)
+/// Parses the HTTP response of [`Lease::delete_collection_namespaced_lease`](./struct.Lease.html#method.delete_collection_namespaced_lease)
 #[derive(Debug)]
-pub enum DeleteCoordinationV1beta1CollectionNamespacedLeaseResponse {
+pub enum DeleteCollectionNamespacedLeaseResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::coordination::v1beta1::Lease),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoordinationV1beta1CollectionNamespacedLeaseResponse {
+impl crate::Response for DeleteCollectionNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -233,16 +233,16 @@ impl crate::Response for DeleteCoordinationV1beta1CollectionNamespacedLeaseRespo
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoordinationV1beta1CollectionNamespacedLeaseResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedLeaseResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoordinationV1beta1CollectionNamespacedLeaseResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedLeaseResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoordinationV1beta1CollectionNamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoordinationV1beta1CollectionNamespacedLeaseResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedLeaseResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedLeaseResponse::Other, 0)),
         }
     }
 }
@@ -252,7 +252,7 @@ impl crate::Response for DeleteCoordinationV1beta1CollectionNamespacedLeaseRespo
 impl Lease {
     /// delete a Lease
     ///
-    /// Use [`DeleteCoordinationV1beta1NamespacedLeaseResponse`](./enum.DeleteCoordinationV1beta1NamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedLeaseResponse`](./enum.DeleteNamespacedLeaseResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -267,12 +267,12 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_coordination_v1beta1_namespaced_lease(
+    pub fn delete_namespaced_lease(
         name: &str,
         namespace: &str,
-        optional: DeleteCoordinationV1beta1NamespacedLeaseOptional<'_>,
+        optional: DeleteNamespacedLeaseOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoordinationV1beta1NamespacedLeaseOptional {
+        let DeleteNamespacedLeaseOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -304,9 +304,9 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::delete_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.delete_coordination_v1beta1_namespaced_lease)
+/// Optional parameters of [`Lease::delete_namespaced_lease`](./struct.Lease.html#method.delete_namespaced_lease)
 #[derive(Debug, Default)]
-pub struct DeleteCoordinationV1beta1NamespacedLeaseOptional<'a> {
+pub struct DeleteNamespacedLeaseOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -319,9 +319,9 @@ pub struct DeleteCoordinationV1beta1NamespacedLeaseOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Lease::delete_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.delete_coordination_v1beta1_namespaced_lease)
+/// Parses the HTTP response of [`Lease::delete_namespaced_lease`](./struct.Lease.html#method.delete_namespaced_lease)
 #[derive(Debug)]
-pub enum DeleteCoordinationV1beta1NamespacedLeaseResponse {
+pub enum DeleteNamespacedLeaseResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::coordination::v1beta1::Lease),
     Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -329,7 +329,7 @@ pub enum DeleteCoordinationV1beta1NamespacedLeaseResponse {
     Other,
 }
 
-impl crate::Response for DeleteCoordinationV1beta1NamespacedLeaseResponse {
+impl crate::Response for DeleteNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -345,12 +345,12 @@ impl crate::Response for DeleteCoordinationV1beta1NamespacedLeaseResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoordinationV1beta1NamespacedLeaseResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedLeaseResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoordinationV1beta1NamespacedLeaseResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedLeaseResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -359,10 +359,10 @@ impl crate::Response for DeleteCoordinationV1beta1NamespacedLeaseResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteCoordinationV1beta1NamespacedLeaseResponse::Accepted(result), buf.len()))
+                Ok((DeleteNamespacedLeaseResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoordinationV1beta1NamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoordinationV1beta1NamespacedLeaseResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedLeaseResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedLeaseResponse::Other, 0)),
         }
     }
 }
@@ -372,17 +372,17 @@ impl crate::Response for DeleteCoordinationV1beta1NamespacedLeaseResponse {
 impl Lease {
     /// list or watch objects of kind Lease
     ///
-    /// Use [`ListCoordinationV1beta1LeaseForAllNamespacesResponse`](./enum.ListCoordinationV1beta1LeaseForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListLeaseForAllNamespacesResponse`](./enum.ListLeaseForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_coordination_v1beta1_lease_for_all_namespaces(
-        optional: ListCoordinationV1beta1LeaseForAllNamespacesOptional<'_>,
+    pub fn list_lease_for_all_namespaces(
+        optional: ListLeaseForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoordinationV1beta1LeaseForAllNamespacesOptional {
+        let ListLeaseForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -430,9 +430,9 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::list_coordination_v1beta1_lease_for_all_namespaces`](./struct.Lease.html#method.list_coordination_v1beta1_lease_for_all_namespaces)
+/// Optional parameters of [`Lease::list_lease_for_all_namespaces`](./struct.Lease.html#method.list_lease_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListCoordinationV1beta1LeaseForAllNamespacesOptional<'a> {
+pub struct ListLeaseForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -457,15 +457,15 @@ pub struct ListCoordinationV1beta1LeaseForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::list_coordination_v1beta1_lease_for_all_namespaces`](./struct.Lease.html#method.list_coordination_v1beta1_lease_for_all_namespaces)
+/// Parses the HTTP response of [`Lease::list_lease_for_all_namespaces`](./struct.Lease.html#method.list_lease_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListCoordinationV1beta1LeaseForAllNamespacesResponse {
+pub enum ListLeaseForAllNamespacesResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::LeaseList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoordinationV1beta1LeaseForAllNamespacesResponse {
+impl crate::Response for ListLeaseForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -474,10 +474,10 @@ impl crate::Response for ListCoordinationV1beta1LeaseForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoordinationV1beta1LeaseForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListLeaseForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoordinationV1beta1LeaseForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCoordinationV1beta1LeaseForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListLeaseForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListLeaseForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -487,7 +487,7 @@ impl crate::Response for ListCoordinationV1beta1LeaseForAllNamespacesResponse {
 impl Lease {
     /// list or watch objects of kind Lease
     ///
-    /// Use [`ListCoordinationV1beta1NamespacedLeaseResponse`](./enum.ListCoordinationV1beta1NamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedLeaseResponse`](./enum.ListNamespacedLeaseResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -498,11 +498,11 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_coordination_v1beta1_namespaced_lease(
+    pub fn list_namespaced_lease(
         namespace: &str,
-        optional: ListCoordinationV1beta1NamespacedLeaseOptional<'_>,
+        optional: ListNamespacedLeaseOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoordinationV1beta1NamespacedLeaseOptional {
+        let ListNamespacedLeaseOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -550,9 +550,9 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::list_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.list_coordination_v1beta1_namespaced_lease)
+/// Optional parameters of [`Lease::list_namespaced_lease`](./struct.Lease.html#method.list_namespaced_lease)
 #[derive(Debug, Default)]
-pub struct ListCoordinationV1beta1NamespacedLeaseOptional<'a> {
+pub struct ListNamespacedLeaseOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -577,15 +577,15 @@ pub struct ListCoordinationV1beta1NamespacedLeaseOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::list_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.list_coordination_v1beta1_namespaced_lease)
+/// Parses the HTTP response of [`Lease::list_namespaced_lease`](./struct.Lease.html#method.list_namespaced_lease)
 #[derive(Debug)]
-pub enum ListCoordinationV1beta1NamespacedLeaseResponse {
+pub enum ListNamespacedLeaseResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::LeaseList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoordinationV1beta1NamespacedLeaseResponse {
+impl crate::Response for ListNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -594,10 +594,10 @@ impl crate::Response for ListCoordinationV1beta1NamespacedLeaseResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoordinationV1beta1NamespacedLeaseResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedLeaseResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoordinationV1beta1NamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((ListCoordinationV1beta1NamespacedLeaseResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedLeaseResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedLeaseResponse::Other, 0)),
         }
     }
 }
@@ -607,7 +607,7 @@ impl crate::Response for ListCoordinationV1beta1NamespacedLeaseResponse {
 impl Lease {
     /// partially update the specified Lease
     ///
-    /// Use [`PatchCoordinationV1beta1NamespacedLeaseResponse`](./enum.PatchCoordinationV1beta1NamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedLeaseResponse`](./enum.PatchNamespacedLeaseResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -624,13 +624,13 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_coordination_v1beta1_namespaced_lease(
+    pub fn patch_namespaced_lease(
         name: &str,
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoordinationV1beta1NamespacedLeaseOptional<'_>,
+        optional: PatchNamespacedLeaseOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoordinationV1beta1NamespacedLeaseOptional {
+        let PatchNamespacedLeaseOptional {
             dry_run,
             pretty,
         } = optional;
@@ -650,24 +650,24 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::patch_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.patch_coordination_v1beta1_namespaced_lease)
+/// Optional parameters of [`Lease::patch_namespaced_lease`](./struct.Lease.html#method.patch_namespaced_lease)
 #[derive(Debug, Default)]
-pub struct PatchCoordinationV1beta1NamespacedLeaseOptional<'a> {
+pub struct PatchNamespacedLeaseOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Lease::patch_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.patch_coordination_v1beta1_namespaced_lease)
+/// Parses the HTTP response of [`Lease::patch_namespaced_lease`](./struct.Lease.html#method.patch_namespaced_lease)
 #[derive(Debug)]
-pub enum PatchCoordinationV1beta1NamespacedLeaseResponse {
+pub enum PatchNamespacedLeaseResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::Lease),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoordinationV1beta1NamespacedLeaseResponse {
+impl crate::Response for PatchNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -676,10 +676,10 @@ impl crate::Response for PatchCoordinationV1beta1NamespacedLeaseResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoordinationV1beta1NamespacedLeaseResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedLeaseResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoordinationV1beta1NamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoordinationV1beta1NamespacedLeaseResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedLeaseResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedLeaseResponse::Other, 0)),
         }
     }
 }
@@ -689,7 +689,7 @@ impl crate::Response for PatchCoordinationV1beta1NamespacedLeaseResponse {
 impl Lease {
     /// read the specified Lease
     ///
-    /// Use [`ReadCoordinationV1beta1NamespacedLeaseResponse`](./enum.ReadCoordinationV1beta1NamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedLeaseResponse`](./enum.ReadNamespacedLeaseResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -704,12 +704,12 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_coordination_v1beta1_namespaced_lease(
+    pub fn read_namespaced_lease(
         name: &str,
         namespace: &str,
-        optional: ReadCoordinationV1beta1NamespacedLeaseOptional<'_>,
+        optional: ReadNamespacedLeaseOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoordinationV1beta1NamespacedLeaseOptional {
+        let ReadNamespacedLeaseOptional {
             exact,
             export,
             pretty,
@@ -733,9 +733,9 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::read_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.read_coordination_v1beta1_namespaced_lease)
+/// Optional parameters of [`Lease::read_namespaced_lease`](./struct.Lease.html#method.read_namespaced_lease)
 #[derive(Debug, Default)]
-pub struct ReadCoordinationV1beta1NamespacedLeaseOptional<'a> {
+pub struct ReadNamespacedLeaseOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -744,15 +744,15 @@ pub struct ReadCoordinationV1beta1NamespacedLeaseOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Lease::read_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.read_coordination_v1beta1_namespaced_lease)
+/// Parses the HTTP response of [`Lease::read_namespaced_lease`](./struct.Lease.html#method.read_namespaced_lease)
 #[derive(Debug)]
-pub enum ReadCoordinationV1beta1NamespacedLeaseResponse {
+pub enum ReadNamespacedLeaseResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::Lease),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoordinationV1beta1NamespacedLeaseResponse {
+impl crate::Response for ReadNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -761,10 +761,10 @@ impl crate::Response for ReadCoordinationV1beta1NamespacedLeaseResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoordinationV1beta1NamespacedLeaseResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedLeaseResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoordinationV1beta1NamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoordinationV1beta1NamespacedLeaseResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedLeaseResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedLeaseResponse::Other, 0)),
         }
     }
 }
@@ -774,7 +774,7 @@ impl crate::Response for ReadCoordinationV1beta1NamespacedLeaseResponse {
 impl Lease {
     /// replace the specified Lease
     ///
-    /// Use [`ReplaceCoordinationV1beta1NamespacedLeaseResponse`](./enum.ReplaceCoordinationV1beta1NamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedLeaseResponse`](./enum.ReplaceNamespacedLeaseResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -791,13 +791,13 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_coordination_v1beta1_namespaced_lease(
+    pub fn replace_namespaced_lease(
         name: &str,
         namespace: &str,
         body: &crate::v1_12::api::coordination::v1beta1::Lease,
-        optional: ReplaceCoordinationV1beta1NamespacedLeaseOptional<'_>,
+        optional: ReplaceNamespacedLeaseOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoordinationV1beta1NamespacedLeaseOptional {
+        let ReplaceNamespacedLeaseOptional {
             dry_run,
             pretty,
         } = optional;
@@ -817,25 +817,25 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::replace_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.replace_coordination_v1beta1_namespaced_lease)
+/// Optional parameters of [`Lease::replace_namespaced_lease`](./struct.Lease.html#method.replace_namespaced_lease)
 #[derive(Debug, Default)]
-pub struct ReplaceCoordinationV1beta1NamespacedLeaseOptional<'a> {
+pub struct ReplaceNamespacedLeaseOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Lease::replace_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.replace_coordination_v1beta1_namespaced_lease)
+/// Parses the HTTP response of [`Lease::replace_namespaced_lease`](./struct.Lease.html#method.replace_namespaced_lease)
 #[derive(Debug)]
-pub enum ReplaceCoordinationV1beta1NamespacedLeaseResponse {
+pub enum ReplaceNamespacedLeaseResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::Lease),
     Created(crate::v1_12::api::coordination::v1beta1::Lease),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoordinationV1beta1NamespacedLeaseResponse {
+impl crate::Response for ReplaceNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -844,7 +844,7 @@ impl crate::Response for ReplaceCoordinationV1beta1NamespacedLeaseResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoordinationV1beta1NamespacedLeaseResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedLeaseResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -852,10 +852,10 @@ impl crate::Response for ReplaceCoordinationV1beta1NamespacedLeaseResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoordinationV1beta1NamespacedLeaseResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedLeaseResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoordinationV1beta1NamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoordinationV1beta1NamespacedLeaseResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedLeaseResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedLeaseResponse::Other, 0)),
         }
     }
 }
@@ -865,17 +865,17 @@ impl crate::Response for ReplaceCoordinationV1beta1NamespacedLeaseResponse {
 impl Lease {
     /// watch individual changes to a list of Lease. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchCoordinationV1beta1LeaseListForAllNamespacesResponse`](./enum.WatchCoordinationV1beta1LeaseListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchLeaseListForAllNamespacesResponse`](./enum.WatchLeaseListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_coordination_v1beta1_lease_list_for_all_namespaces(
-        optional: WatchCoordinationV1beta1LeaseListForAllNamespacesOptional<'_>,
+    pub fn watch_lease_list_for_all_namespaces(
+        optional: WatchLeaseListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoordinationV1beta1LeaseListForAllNamespacesOptional {
+        let WatchLeaseListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -923,9 +923,9 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::watch_coordination_v1beta1_lease_list_for_all_namespaces`](./struct.Lease.html#method.watch_coordination_v1beta1_lease_list_for_all_namespaces)
+/// Optional parameters of [`Lease::watch_lease_list_for_all_namespaces`](./struct.Lease.html#method.watch_lease_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchCoordinationV1beta1LeaseListForAllNamespacesOptional<'a> {
+pub struct WatchLeaseListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -950,15 +950,15 @@ pub struct WatchCoordinationV1beta1LeaseListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::watch_coordination_v1beta1_lease_list_for_all_namespaces`](./struct.Lease.html#method.watch_coordination_v1beta1_lease_list_for_all_namespaces)
+/// Parses the HTTP response of [`Lease::watch_lease_list_for_all_namespaces`](./struct.Lease.html#method.watch_lease_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchCoordinationV1beta1LeaseListForAllNamespacesResponse {
+pub enum WatchLeaseListForAllNamespacesResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoordinationV1beta1LeaseListForAllNamespacesResponse {
+impl crate::Response for WatchLeaseListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -969,10 +969,10 @@ impl crate::Response for WatchCoordinationV1beta1LeaseListForAllNamespacesRespon
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoordinationV1beta1LeaseListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchLeaseListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoordinationV1beta1LeaseListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoordinationV1beta1LeaseListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchLeaseListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchLeaseListForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -982,7 +982,7 @@ impl crate::Response for WatchCoordinationV1beta1LeaseListForAllNamespacesRespon
 impl Lease {
     /// watch changes to an object of kind Lease. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchCoordinationV1beta1NamespacedLeaseResponse`](./enum.WatchCoordinationV1beta1NamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedLeaseResponse`](./enum.WatchNamespacedLeaseResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -997,12 +997,12 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_coordination_v1beta1_namespaced_lease(
+    pub fn watch_namespaced_lease(
         name: &str,
         namespace: &str,
-        optional: WatchCoordinationV1beta1NamespacedLeaseOptional<'_>,
+        optional: WatchNamespacedLeaseOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoordinationV1beta1NamespacedLeaseOptional {
+        let WatchNamespacedLeaseOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1050,9 +1050,9 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::watch_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.watch_coordination_v1beta1_namespaced_lease)
+/// Optional parameters of [`Lease::watch_namespaced_lease`](./struct.Lease.html#method.watch_namespaced_lease)
 #[derive(Debug, Default)]
-pub struct WatchCoordinationV1beta1NamespacedLeaseOptional<'a> {
+pub struct WatchNamespacedLeaseOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1077,15 +1077,15 @@ pub struct WatchCoordinationV1beta1NamespacedLeaseOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::watch_coordination_v1beta1_namespaced_lease`](./struct.Lease.html#method.watch_coordination_v1beta1_namespaced_lease)
+/// Parses the HTTP response of [`Lease::watch_namespaced_lease`](./struct.Lease.html#method.watch_namespaced_lease)
 #[derive(Debug)]
-pub enum WatchCoordinationV1beta1NamespacedLeaseResponse {
+pub enum WatchNamespacedLeaseResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoordinationV1beta1NamespacedLeaseResponse {
+impl crate::Response for WatchNamespacedLeaseResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1096,10 +1096,10 @@ impl crate::Response for WatchCoordinationV1beta1NamespacedLeaseResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoordinationV1beta1NamespacedLeaseResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedLeaseResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoordinationV1beta1NamespacedLeaseResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoordinationV1beta1NamespacedLeaseResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedLeaseResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedLeaseResponse::Other, 0)),
         }
     }
 }
@@ -1109,7 +1109,7 @@ impl crate::Response for WatchCoordinationV1beta1NamespacedLeaseResponse {
 impl Lease {
     /// watch individual changes to a list of Lease. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchCoordinationV1beta1NamespacedLeaseListResponse`](./enum.WatchCoordinationV1beta1NamespacedLeaseListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedLeaseListResponse`](./enum.WatchNamespacedLeaseListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1120,11 +1120,11 @@ impl Lease {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_coordination_v1beta1_namespaced_lease_list(
+    pub fn watch_namespaced_lease_list(
         namespace: &str,
-        optional: WatchCoordinationV1beta1NamespacedLeaseListOptional<'_>,
+        optional: WatchNamespacedLeaseListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoordinationV1beta1NamespacedLeaseListOptional {
+        let WatchNamespacedLeaseListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1172,9 +1172,9 @@ impl Lease {
     }
 }
 
-/// Optional parameters of [`Lease::watch_coordination_v1beta1_namespaced_lease_list`](./struct.Lease.html#method.watch_coordination_v1beta1_namespaced_lease_list)
+/// Optional parameters of [`Lease::watch_namespaced_lease_list`](./struct.Lease.html#method.watch_namespaced_lease_list)
 #[derive(Debug, Default)]
-pub struct WatchCoordinationV1beta1NamespacedLeaseListOptional<'a> {
+pub struct WatchNamespacedLeaseListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1199,15 +1199,15 @@ pub struct WatchCoordinationV1beta1NamespacedLeaseListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::watch_coordination_v1beta1_namespaced_lease_list`](./struct.Lease.html#method.watch_coordination_v1beta1_namespaced_lease_list)
+/// Parses the HTTP response of [`Lease::watch_namespaced_lease_list`](./struct.Lease.html#method.watch_namespaced_lease_list)
 #[derive(Debug)]
-pub enum WatchCoordinationV1beta1NamespacedLeaseListResponse {
+pub enum WatchNamespacedLeaseListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoordinationV1beta1NamespacedLeaseListResponse {
+impl crate::Response for WatchNamespacedLeaseListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1218,10 +1218,10 @@ impl crate::Response for WatchCoordinationV1beta1NamespacedLeaseListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoordinationV1beta1NamespacedLeaseListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedLeaseListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoordinationV1beta1NamespacedLeaseListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoordinationV1beta1NamespacedLeaseListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedLeaseListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedLeaseListResponse::Other, 0)),
         }
     }
 }

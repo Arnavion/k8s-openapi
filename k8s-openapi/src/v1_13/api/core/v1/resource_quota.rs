@@ -20,7 +20,7 @@ pub struct ResourceQuota {
 impl ResourceQuota {
     /// create a ResourceQuota
     ///
-    /// Use [`CreateCoreV1NamespacedResourceQuotaResponse`](./enum.CreateCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedResourceQuotaResponse`](./enum.CreateNamespacedResourceQuotaResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_resource_quota(
+    pub fn create_namespaced_resource_quota(
         namespace: &str,
         body: &crate::v1_13::api::core::v1::ResourceQuota,
-        optional: CreateCoreV1NamespacedResourceQuotaOptional<'_>,
+        optional: CreateNamespacedResourceQuotaOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedResourceQuotaOptional {
+        let CreateNamespacedResourceQuotaOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -62,9 +62,9 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::create_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.create_core_v1_namespaced_resource_quota)
+/// Optional parameters of [`ResourceQuota::create_namespaced_resource_quota`](./struct.ResourceQuota.html#method.create_namespaced_resource_quota)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedResourceQuotaOptional<'a> {
+pub struct CreateNamespacedResourceQuotaOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -73,9 +73,9 @@ pub struct CreateCoreV1NamespacedResourceQuotaOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::create_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.create_core_v1_namespaced_resource_quota)
+/// Parses the HTTP response of [`ResourceQuota::create_namespaced_resource_quota`](./struct.ResourceQuota.html#method.create_namespaced_resource_quota)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedResourceQuotaResponse {
+pub enum CreateNamespacedResourceQuotaResponse {
     Ok(crate::v1_13::api::core::v1::ResourceQuota),
     Created(crate::v1_13::api::core::v1::ResourceQuota),
     Accepted(crate::v1_13::api::core::v1::ResourceQuota),
@@ -83,7 +83,7 @@ pub enum CreateCoreV1NamespacedResourceQuotaResponse {
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedResourceQuotaResponse {
+impl crate::Response for CreateNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -92,7 +92,7 @@ impl crate::Response for CreateCoreV1NamespacedResourceQuotaResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedResourceQuotaResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedResourceQuotaResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -100,7 +100,7 @@ impl crate::Response for CreateCoreV1NamespacedResourceQuotaResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedResourceQuotaResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedResourceQuotaResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -108,10 +108,10 @@ impl crate::Response for CreateCoreV1NamespacedResourceQuotaResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedResourceQuotaResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedResourceQuotaResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedResourceQuotaResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedResourceQuotaResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedResourceQuotaResponse::Other, 0)),
         }
     }
 }
@@ -121,7 +121,7 @@ impl crate::Response for CreateCoreV1NamespacedResourceQuotaResponse {
 impl ResourceQuota {
     /// delete collection of ResourceQuota
     ///
-    /// Use [`DeleteCoreV1CollectionNamespacedResourceQuotaResponse`](./enum.DeleteCoreV1CollectionNamespacedResourceQuotaResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedResourceQuotaResponse`](./enum.DeleteCollectionNamespacedResourceQuotaResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -132,11 +132,11 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_collection_namespaced_resource_quota(
+    pub fn delete_collection_namespaced_resource_quota(
         namespace: &str,
-        optional: DeleteCoreV1CollectionNamespacedResourceQuotaOptional<'_>,
+        optional: DeleteCollectionNamespacedResourceQuotaOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1CollectionNamespacedResourceQuotaOptional {
+        let DeleteCollectionNamespacedResourceQuotaOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -184,9 +184,9 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::delete_core_v1_collection_namespaced_resource_quota`](./struct.ResourceQuota.html#method.delete_core_v1_collection_namespaced_resource_quota)
+/// Optional parameters of [`ResourceQuota::delete_collection_namespaced_resource_quota`](./struct.ResourceQuota.html#method.delete_collection_namespaced_resource_quota)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1CollectionNamespacedResourceQuotaOptional<'a> {
+pub struct DeleteCollectionNamespacedResourceQuotaOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -211,16 +211,16 @@ pub struct DeleteCoreV1CollectionNamespacedResourceQuotaOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::delete_core_v1_collection_namespaced_resource_quota`](./struct.ResourceQuota.html#method.delete_core_v1_collection_namespaced_resource_quota)
+/// Parses the HTTP response of [`ResourceQuota::delete_collection_namespaced_resource_quota`](./struct.ResourceQuota.html#method.delete_collection_namespaced_resource_quota)
 #[derive(Debug)]
-pub enum DeleteCoreV1CollectionNamespacedResourceQuotaResponse {
+pub enum DeleteCollectionNamespacedResourceQuotaResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::core::v1::ResourceQuota),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1CollectionNamespacedResourceQuotaResponse {
+impl crate::Response for DeleteCollectionNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -236,16 +236,16 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedResourceQuotaResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedResourceQuotaResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedResourceQuotaResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedResourceQuotaResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedResourceQuotaResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1CollectionNamespacedResourceQuotaResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedResourceQuotaResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedResourceQuotaResponse::Other, 0)),
         }
     }
 }
@@ -255,7 +255,7 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedResourceQuotaResponse {
 impl ResourceQuota {
     /// delete a ResourceQuota
     ///
-    /// Use [`DeleteCoreV1NamespacedResourceQuotaResponse`](./enum.DeleteCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedResourceQuotaResponse`](./enum.DeleteNamespacedResourceQuotaResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -270,12 +270,12 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_namespaced_resource_quota(
+    pub fn delete_namespaced_resource_quota(
         name: &str,
         namespace: &str,
-        optional: DeleteCoreV1NamespacedResourceQuotaOptional<'_>,
+        optional: DeleteNamespacedResourceQuotaOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NamespacedResourceQuotaOptional {
+        let DeleteNamespacedResourceQuotaOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -307,9 +307,9 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::delete_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.delete_core_v1_namespaced_resource_quota)
+/// Optional parameters of [`ResourceQuota::delete_namespaced_resource_quota`](./struct.ResourceQuota.html#method.delete_namespaced_resource_quota)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NamespacedResourceQuotaOptional<'a> {
+pub struct DeleteNamespacedResourceQuotaOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -322,9 +322,9 @@ pub struct DeleteCoreV1NamespacedResourceQuotaOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::delete_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.delete_core_v1_namespaced_resource_quota)
+/// Parses the HTTP response of [`ResourceQuota::delete_namespaced_resource_quota`](./struct.ResourceQuota.html#method.delete_namespaced_resource_quota)
 #[derive(Debug)]
-pub enum DeleteCoreV1NamespacedResourceQuotaResponse {
+pub enum DeleteNamespacedResourceQuotaResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::core::v1::ResourceQuota),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -332,7 +332,7 @@ pub enum DeleteCoreV1NamespacedResourceQuotaResponse {
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NamespacedResourceQuotaResponse {
+impl crate::Response for DeleteNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -348,12 +348,12 @@ impl crate::Response for DeleteCoreV1NamespacedResourceQuotaResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedResourceQuotaResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedResourceQuotaResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedResourceQuotaResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedResourceQuotaResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -362,10 +362,10 @@ impl crate::Response for DeleteCoreV1NamespacedResourceQuotaResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteCoreV1NamespacedResourceQuotaResponse::Accepted(result), buf.len()))
+                Ok((DeleteNamespacedResourceQuotaResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NamespacedResourceQuotaResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedResourceQuotaResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedResourceQuotaResponse::Other, 0)),
         }
     }
 }
@@ -375,7 +375,7 @@ impl crate::Response for DeleteCoreV1NamespacedResourceQuotaResponse {
 impl ResourceQuota {
     /// list or watch objects of kind ResourceQuota
     ///
-    /// Use [`ListCoreV1NamespacedResourceQuotaResponse`](./enum.ListCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedResourceQuotaResponse`](./enum.ListNamespacedResourceQuotaResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -386,11 +386,11 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_namespaced_resource_quota(
+    pub fn list_namespaced_resource_quota(
         namespace: &str,
-        optional: ListCoreV1NamespacedResourceQuotaOptional<'_>,
+        optional: ListNamespacedResourceQuotaOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NamespacedResourceQuotaOptional {
+        let ListNamespacedResourceQuotaOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -438,9 +438,9 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::list_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.list_core_v1_namespaced_resource_quota)
+/// Optional parameters of [`ResourceQuota::list_namespaced_resource_quota`](./struct.ResourceQuota.html#method.list_namespaced_resource_quota)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NamespacedResourceQuotaOptional<'a> {
+pub struct ListNamespacedResourceQuotaOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -465,15 +465,15 @@ pub struct ListCoreV1NamespacedResourceQuotaOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::list_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.list_core_v1_namespaced_resource_quota)
+/// Parses the HTTP response of [`ResourceQuota::list_namespaced_resource_quota`](./struct.ResourceQuota.html#method.list_namespaced_resource_quota)
 #[derive(Debug)]
-pub enum ListCoreV1NamespacedResourceQuotaResponse {
+pub enum ListNamespacedResourceQuotaResponse {
     Ok(crate::v1_13::api::core::v1::ResourceQuotaList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NamespacedResourceQuotaResponse {
+impl crate::Response for ListNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -482,10 +482,10 @@ impl crate::Response for ListCoreV1NamespacedResourceQuotaResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NamespacedResourceQuotaResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedResourceQuotaResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NamespacedResourceQuotaResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedResourceQuotaResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedResourceQuotaResponse::Other, 0)),
         }
     }
 }
@@ -495,17 +495,17 @@ impl crate::Response for ListCoreV1NamespacedResourceQuotaResponse {
 impl ResourceQuota {
     /// list or watch objects of kind ResourceQuota
     ///
-    /// Use [`ListCoreV1ResourceQuotaForAllNamespacesResponse`](./enum.ListCoreV1ResourceQuotaForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListResourceQuotaForAllNamespacesResponse`](./enum.ListResourceQuotaForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_resource_quota_for_all_namespaces(
-        optional: ListCoreV1ResourceQuotaForAllNamespacesOptional<'_>,
+    pub fn list_resource_quota_for_all_namespaces(
+        optional: ListResourceQuotaForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1ResourceQuotaForAllNamespacesOptional {
+        let ListResourceQuotaForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -553,9 +553,9 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::list_core_v1_resource_quota_for_all_namespaces`](./struct.ResourceQuota.html#method.list_core_v1_resource_quota_for_all_namespaces)
+/// Optional parameters of [`ResourceQuota::list_resource_quota_for_all_namespaces`](./struct.ResourceQuota.html#method.list_resource_quota_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListCoreV1ResourceQuotaForAllNamespacesOptional<'a> {
+pub struct ListResourceQuotaForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -580,15 +580,15 @@ pub struct ListCoreV1ResourceQuotaForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::list_core_v1_resource_quota_for_all_namespaces`](./struct.ResourceQuota.html#method.list_core_v1_resource_quota_for_all_namespaces)
+/// Parses the HTTP response of [`ResourceQuota::list_resource_quota_for_all_namespaces`](./struct.ResourceQuota.html#method.list_resource_quota_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListCoreV1ResourceQuotaForAllNamespacesResponse {
+pub enum ListResourceQuotaForAllNamespacesResponse {
     Ok(crate::v1_13::api::core::v1::ResourceQuotaList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1ResourceQuotaForAllNamespacesResponse {
+impl crate::Response for ListResourceQuotaForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -597,10 +597,10 @@ impl crate::Response for ListCoreV1ResourceQuotaForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1ResourceQuotaForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListResourceQuotaForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ResourceQuotaForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1ResourceQuotaForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListResourceQuotaForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListResourceQuotaForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -610,7 +610,7 @@ impl crate::Response for ListCoreV1ResourceQuotaForAllNamespacesResponse {
 impl ResourceQuota {
     /// partially update the specified ResourceQuota
     ///
-    /// Use [`PatchCoreV1NamespacedResourceQuotaResponse`](./enum.PatchCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedResourceQuotaResponse`](./enum.PatchNamespacedResourceQuotaResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -627,13 +627,13 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_resource_quota(
+    pub fn patch_namespaced_resource_quota(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedResourceQuotaOptional<'_>,
+        optional: PatchNamespacedResourceQuotaOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedResourceQuotaOptional {
+        let PatchNamespacedResourceQuotaOptional {
             dry_run,
             pretty,
         } = optional;
@@ -653,24 +653,24 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::patch_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.patch_core_v1_namespaced_resource_quota)
+/// Optional parameters of [`ResourceQuota::patch_namespaced_resource_quota`](./struct.ResourceQuota.html#method.patch_namespaced_resource_quota)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedResourceQuotaOptional<'a> {
+pub struct PatchNamespacedResourceQuotaOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::patch_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.patch_core_v1_namespaced_resource_quota)
+/// Parses the HTTP response of [`ResourceQuota::patch_namespaced_resource_quota`](./struct.ResourceQuota.html#method.patch_namespaced_resource_quota)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedResourceQuotaResponse {
+pub enum PatchNamespacedResourceQuotaResponse {
     Ok(crate::v1_13::api::core::v1::ResourceQuota),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedResourceQuotaResponse {
+impl crate::Response for PatchNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -679,10 +679,10 @@ impl crate::Response for PatchCoreV1NamespacedResourceQuotaResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedResourceQuotaResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedResourceQuotaResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedResourceQuotaResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedResourceQuotaResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedResourceQuotaResponse::Other, 0)),
         }
     }
 }
@@ -692,7 +692,7 @@ impl crate::Response for PatchCoreV1NamespacedResourceQuotaResponse {
 impl ResourceQuota {
     /// partially update status of the specified ResourceQuota
     ///
-    /// Use [`PatchCoreV1NamespacedResourceQuotaStatusResponse`](./enum.PatchCoreV1NamespacedResourceQuotaStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedResourceQuotaStatusResponse`](./enum.PatchNamespacedResourceQuotaStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -709,13 +709,13 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_resource_quota_status(
+    pub fn patch_namespaced_resource_quota_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedResourceQuotaStatusOptional<'_>,
+        optional: PatchNamespacedResourceQuotaStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedResourceQuotaStatusOptional {
+        let PatchNamespacedResourceQuotaStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -735,24 +735,24 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::patch_core_v1_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.patch_core_v1_namespaced_resource_quota_status)
+/// Optional parameters of [`ResourceQuota::patch_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.patch_namespaced_resource_quota_status)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedResourceQuotaStatusOptional<'a> {
+pub struct PatchNamespacedResourceQuotaStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::patch_core_v1_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.patch_core_v1_namespaced_resource_quota_status)
+/// Parses the HTTP response of [`ResourceQuota::patch_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.patch_namespaced_resource_quota_status)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedResourceQuotaStatusResponse {
+pub enum PatchNamespacedResourceQuotaStatusResponse {
     Ok(crate::v1_13::api::core::v1::ResourceQuota),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedResourceQuotaStatusResponse {
+impl crate::Response for PatchNamespacedResourceQuotaStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -761,10 +761,10 @@ impl crate::Response for PatchCoreV1NamespacedResourceQuotaStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedResourceQuotaStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedResourceQuotaStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedResourceQuotaStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedResourceQuotaStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedResourceQuotaStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedResourceQuotaStatusResponse::Other, 0)),
         }
     }
 }
@@ -774,7 +774,7 @@ impl crate::Response for PatchCoreV1NamespacedResourceQuotaStatusResponse {
 impl ResourceQuota {
     /// read the specified ResourceQuota
     ///
-    /// Use [`ReadCoreV1NamespacedResourceQuotaResponse`](./enum.ReadCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedResourceQuotaResponse`](./enum.ReadNamespacedResourceQuotaResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -789,12 +789,12 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_resource_quota(
+    pub fn read_namespaced_resource_quota(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedResourceQuotaOptional<'_>,
+        optional: ReadNamespacedResourceQuotaOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedResourceQuotaOptional {
+        let ReadNamespacedResourceQuotaOptional {
             exact,
             export,
             pretty,
@@ -818,9 +818,9 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::read_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.read_core_v1_namespaced_resource_quota)
+/// Optional parameters of [`ResourceQuota::read_namespaced_resource_quota`](./struct.ResourceQuota.html#method.read_namespaced_resource_quota)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedResourceQuotaOptional<'a> {
+pub struct ReadNamespacedResourceQuotaOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -829,15 +829,15 @@ pub struct ReadCoreV1NamespacedResourceQuotaOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::read_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.read_core_v1_namespaced_resource_quota)
+/// Parses the HTTP response of [`ResourceQuota::read_namespaced_resource_quota`](./struct.ResourceQuota.html#method.read_namespaced_resource_quota)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedResourceQuotaResponse {
+pub enum ReadNamespacedResourceQuotaResponse {
     Ok(crate::v1_13::api::core::v1::ResourceQuota),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedResourceQuotaResponse {
+impl crate::Response for ReadNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -846,10 +846,10 @@ impl crate::Response for ReadCoreV1NamespacedResourceQuotaResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedResourceQuotaResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedResourceQuotaResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedResourceQuotaResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedResourceQuotaResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedResourceQuotaResponse::Other, 0)),
         }
     }
 }
@@ -859,7 +859,7 @@ impl crate::Response for ReadCoreV1NamespacedResourceQuotaResponse {
 impl ResourceQuota {
     /// read status of the specified ResourceQuota
     ///
-    /// Use [`ReadCoreV1NamespacedResourceQuotaStatusResponse`](./enum.ReadCoreV1NamespacedResourceQuotaStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedResourceQuotaStatusResponse`](./enum.ReadNamespacedResourceQuotaStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -874,12 +874,12 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_resource_quota_status(
+    pub fn read_namespaced_resource_quota_status(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedResourceQuotaStatusOptional<'_>,
+        optional: ReadNamespacedResourceQuotaStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedResourceQuotaStatusOptional {
+        let ReadNamespacedResourceQuotaStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/resourcequotas/{name}/status?", name = name, namespace = namespace);
@@ -895,22 +895,22 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::read_core_v1_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.read_core_v1_namespaced_resource_quota_status)
+/// Optional parameters of [`ResourceQuota::read_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.read_namespaced_resource_quota_status)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedResourceQuotaStatusOptional<'a> {
+pub struct ReadNamespacedResourceQuotaStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::read_core_v1_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.read_core_v1_namespaced_resource_quota_status)
+/// Parses the HTTP response of [`ResourceQuota::read_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.read_namespaced_resource_quota_status)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedResourceQuotaStatusResponse {
+pub enum ReadNamespacedResourceQuotaStatusResponse {
     Ok(crate::v1_13::api::core::v1::ResourceQuota),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedResourceQuotaStatusResponse {
+impl crate::Response for ReadNamespacedResourceQuotaStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -919,10 +919,10 @@ impl crate::Response for ReadCoreV1NamespacedResourceQuotaStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedResourceQuotaStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedResourceQuotaStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedResourceQuotaStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedResourceQuotaStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedResourceQuotaStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedResourceQuotaStatusResponse::Other, 0)),
         }
     }
 }
@@ -932,7 +932,7 @@ impl crate::Response for ReadCoreV1NamespacedResourceQuotaStatusResponse {
 impl ResourceQuota {
     /// replace the specified ResourceQuota
     ///
-    /// Use [`ReplaceCoreV1NamespacedResourceQuotaResponse`](./enum.ReplaceCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedResourceQuotaResponse`](./enum.ReplaceNamespacedResourceQuotaResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -949,13 +949,13 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_resource_quota(
+    pub fn replace_namespaced_resource_quota(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::core::v1::ResourceQuota,
-        optional: ReplaceCoreV1NamespacedResourceQuotaOptional<'_>,
+        optional: ReplaceNamespacedResourceQuotaOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedResourceQuotaOptional {
+        let ReplaceNamespacedResourceQuotaOptional {
             dry_run,
             pretty,
         } = optional;
@@ -975,25 +975,25 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::replace_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.replace_core_v1_namespaced_resource_quota)
+/// Optional parameters of [`ResourceQuota::replace_namespaced_resource_quota`](./struct.ResourceQuota.html#method.replace_namespaced_resource_quota)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedResourceQuotaOptional<'a> {
+pub struct ReplaceNamespacedResourceQuotaOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::replace_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.replace_core_v1_namespaced_resource_quota)
+/// Parses the HTTP response of [`ResourceQuota::replace_namespaced_resource_quota`](./struct.ResourceQuota.html#method.replace_namespaced_resource_quota)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedResourceQuotaResponse {
+pub enum ReplaceNamespacedResourceQuotaResponse {
     Ok(crate::v1_13::api::core::v1::ResourceQuota),
     Created(crate::v1_13::api::core::v1::ResourceQuota),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedResourceQuotaResponse {
+impl crate::Response for ReplaceNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1002,7 +1002,7 @@ impl crate::Response for ReplaceCoreV1NamespacedResourceQuotaResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedResourceQuotaResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedResourceQuotaResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1010,10 +1010,10 @@ impl crate::Response for ReplaceCoreV1NamespacedResourceQuotaResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedResourceQuotaResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedResourceQuotaResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedResourceQuotaResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedResourceQuotaResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedResourceQuotaResponse::Other, 0)),
         }
     }
 }
@@ -1023,7 +1023,7 @@ impl crate::Response for ReplaceCoreV1NamespacedResourceQuotaResponse {
 impl ResourceQuota {
     /// replace status of the specified ResourceQuota
     ///
-    /// Use [`ReplaceCoreV1NamespacedResourceQuotaStatusResponse`](./enum.ReplaceCoreV1NamespacedResourceQuotaStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedResourceQuotaStatusResponse`](./enum.ReplaceNamespacedResourceQuotaStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1040,13 +1040,13 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_resource_quota_status(
+    pub fn replace_namespaced_resource_quota_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::core::v1::ResourceQuota,
-        optional: ReplaceCoreV1NamespacedResourceQuotaStatusOptional<'_>,
+        optional: ReplaceNamespacedResourceQuotaStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedResourceQuotaStatusOptional {
+        let ReplaceNamespacedResourceQuotaStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -1066,25 +1066,25 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::replace_core_v1_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.replace_core_v1_namespaced_resource_quota_status)
+/// Optional parameters of [`ResourceQuota::replace_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.replace_namespaced_resource_quota_status)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedResourceQuotaStatusOptional<'a> {
+pub struct ReplaceNamespacedResourceQuotaStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::replace_core_v1_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.replace_core_v1_namespaced_resource_quota_status)
+/// Parses the HTTP response of [`ResourceQuota::replace_namespaced_resource_quota_status`](./struct.ResourceQuota.html#method.replace_namespaced_resource_quota_status)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedResourceQuotaStatusResponse {
+pub enum ReplaceNamespacedResourceQuotaStatusResponse {
     Ok(crate::v1_13::api::core::v1::ResourceQuota),
     Created(crate::v1_13::api::core::v1::ResourceQuota),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedResourceQuotaStatusResponse {
+impl crate::Response for ReplaceNamespacedResourceQuotaStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1093,7 +1093,7 @@ impl crate::Response for ReplaceCoreV1NamespacedResourceQuotaStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedResourceQuotaStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedResourceQuotaStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1101,10 +1101,10 @@ impl crate::Response for ReplaceCoreV1NamespacedResourceQuotaStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedResourceQuotaStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedResourceQuotaStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedResourceQuotaStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedResourceQuotaStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedResourceQuotaStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedResourceQuotaStatusResponse::Other, 0)),
         }
     }
 }
@@ -1114,7 +1114,7 @@ impl crate::Response for ReplaceCoreV1NamespacedResourceQuotaStatusResponse {
 impl ResourceQuota {
     /// watch changes to an object of kind ResourceQuota. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchCoreV1NamespacedResourceQuotaResponse`](./enum.WatchCoreV1NamespacedResourceQuotaResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedResourceQuotaResponse`](./enum.WatchNamespacedResourceQuotaResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1129,12 +1129,12 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_resource_quota(
+    pub fn watch_namespaced_resource_quota(
         name: &str,
         namespace: &str,
-        optional: WatchCoreV1NamespacedResourceQuotaOptional<'_>,
+        optional: WatchNamespacedResourceQuotaOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedResourceQuotaOptional {
+        let WatchNamespacedResourceQuotaOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1182,9 +1182,9 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::watch_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.watch_core_v1_namespaced_resource_quota)
+/// Optional parameters of [`ResourceQuota::watch_namespaced_resource_quota`](./struct.ResourceQuota.html#method.watch_namespaced_resource_quota)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedResourceQuotaOptional<'a> {
+pub struct WatchNamespacedResourceQuotaOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1209,15 +1209,15 @@ pub struct WatchCoreV1NamespacedResourceQuotaOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::watch_core_v1_namespaced_resource_quota`](./struct.ResourceQuota.html#method.watch_core_v1_namespaced_resource_quota)
+/// Parses the HTTP response of [`ResourceQuota::watch_namespaced_resource_quota`](./struct.ResourceQuota.html#method.watch_namespaced_resource_quota)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedResourceQuotaResponse {
+pub enum WatchNamespacedResourceQuotaResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedResourceQuotaResponse {
+impl crate::Response for WatchNamespacedResourceQuotaResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1228,10 +1228,10 @@ impl crate::Response for WatchCoreV1NamespacedResourceQuotaResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedResourceQuotaResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedResourceQuotaResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedResourceQuotaResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedResourceQuotaResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedResourceQuotaResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedResourceQuotaResponse::Other, 0)),
         }
     }
 }
@@ -1241,7 +1241,7 @@ impl crate::Response for WatchCoreV1NamespacedResourceQuotaResponse {
 impl ResourceQuota {
     /// watch individual changes to a list of ResourceQuota. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchCoreV1NamespacedResourceQuotaListResponse`](./enum.WatchCoreV1NamespacedResourceQuotaListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedResourceQuotaListResponse`](./enum.WatchNamespacedResourceQuotaListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1252,11 +1252,11 @@ impl ResourceQuota {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_resource_quota_list(
+    pub fn watch_namespaced_resource_quota_list(
         namespace: &str,
-        optional: WatchCoreV1NamespacedResourceQuotaListOptional<'_>,
+        optional: WatchNamespacedResourceQuotaListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedResourceQuotaListOptional {
+        let WatchNamespacedResourceQuotaListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1304,9 +1304,9 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::watch_core_v1_namespaced_resource_quota_list`](./struct.ResourceQuota.html#method.watch_core_v1_namespaced_resource_quota_list)
+/// Optional parameters of [`ResourceQuota::watch_namespaced_resource_quota_list`](./struct.ResourceQuota.html#method.watch_namespaced_resource_quota_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedResourceQuotaListOptional<'a> {
+pub struct WatchNamespacedResourceQuotaListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1331,15 +1331,15 @@ pub struct WatchCoreV1NamespacedResourceQuotaListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::watch_core_v1_namespaced_resource_quota_list`](./struct.ResourceQuota.html#method.watch_core_v1_namespaced_resource_quota_list)
+/// Parses the HTTP response of [`ResourceQuota::watch_namespaced_resource_quota_list`](./struct.ResourceQuota.html#method.watch_namespaced_resource_quota_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedResourceQuotaListResponse {
+pub enum WatchNamespacedResourceQuotaListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedResourceQuotaListResponse {
+impl crate::Response for WatchNamespacedResourceQuotaListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1350,10 +1350,10 @@ impl crate::Response for WatchCoreV1NamespacedResourceQuotaListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedResourceQuotaListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedResourceQuotaListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedResourceQuotaListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedResourceQuotaListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedResourceQuotaListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedResourceQuotaListResponse::Other, 0)),
         }
     }
 }
@@ -1363,17 +1363,17 @@ impl crate::Response for WatchCoreV1NamespacedResourceQuotaListResponse {
 impl ResourceQuota {
     /// watch individual changes to a list of ResourceQuota. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchCoreV1ResourceQuotaListForAllNamespacesResponse`](./enum.WatchCoreV1ResourceQuotaListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchResourceQuotaListForAllNamespacesResponse`](./enum.WatchResourceQuotaListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_resource_quota_list_for_all_namespaces(
-        optional: WatchCoreV1ResourceQuotaListForAllNamespacesOptional<'_>,
+    pub fn watch_resource_quota_list_for_all_namespaces(
+        optional: WatchResourceQuotaListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1ResourceQuotaListForAllNamespacesOptional {
+        let WatchResourceQuotaListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1421,9 +1421,9 @@ impl ResourceQuota {
     }
 }
 
-/// Optional parameters of [`ResourceQuota::watch_core_v1_resource_quota_list_for_all_namespaces`](./struct.ResourceQuota.html#method.watch_core_v1_resource_quota_list_for_all_namespaces)
+/// Optional parameters of [`ResourceQuota::watch_resource_quota_list_for_all_namespaces`](./struct.ResourceQuota.html#method.watch_resource_quota_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1ResourceQuotaListForAllNamespacesOptional<'a> {
+pub struct WatchResourceQuotaListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1448,15 +1448,15 @@ pub struct WatchCoreV1ResourceQuotaListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ResourceQuota::watch_core_v1_resource_quota_list_for_all_namespaces`](./struct.ResourceQuota.html#method.watch_core_v1_resource_quota_list_for_all_namespaces)
+/// Parses the HTTP response of [`ResourceQuota::watch_resource_quota_list_for_all_namespaces`](./struct.ResourceQuota.html#method.watch_resource_quota_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchCoreV1ResourceQuotaListForAllNamespacesResponse {
+pub enum WatchResourceQuotaListForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1ResourceQuotaListForAllNamespacesResponse {
+impl crate::Response for WatchResourceQuotaListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1467,10 +1467,10 @@ impl crate::Response for WatchCoreV1ResourceQuotaListForAllNamespacesResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1ResourceQuotaListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchResourceQuotaListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1ResourceQuotaListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1ResourceQuotaListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchResourceQuotaListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchResourceQuotaListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

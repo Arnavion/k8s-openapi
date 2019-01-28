@@ -20,7 +20,7 @@ pub struct Pod {
 impl Pod {
     /// connect DELETE requests to proxy of Pod
     ///
-    /// Use [`ConnectCoreV1DeleteNamespacedPodProxyResponse`](./enum.ConnectCoreV1DeleteNamespacedPodProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectDeleteNamespacedPodProxyResponse`](./enum.ConnectDeleteNamespacedPodProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -35,12 +35,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_delete_namespaced_pod_proxy(
+    pub fn connect_delete_namespaced_pod_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1DeleteNamespacedPodProxyOptional<'_>,
+        optional: ConnectDeleteNamespacedPodProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1DeleteNamespacedPodProxyOptional {
+        let ConnectDeleteNamespacedPodProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
@@ -56,22 +56,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_delete_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_delete_namespaced_pod_proxy)
+/// Optional parameters of [`Pod::connect_delete_namespaced_pod_proxy`](./struct.Pod.html#method.connect_delete_namespaced_pod_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1DeleteNamespacedPodProxyOptional<'a> {
+pub struct ConnectDeleteNamespacedPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_delete_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_delete_namespaced_pod_proxy)
+/// Parses the HTTP response of [`Pod::connect_delete_namespaced_pod_proxy`](./struct.Pod.html#method.connect_delete_namespaced_pod_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1DeleteNamespacedPodProxyResponse {
+pub enum ConnectDeleteNamespacedPodProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1DeleteNamespacedPodProxyResponse {
+impl crate::Response for ConnectDeleteNamespacedPodProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -85,10 +85,10 @@ impl crate::Response for ConnectCoreV1DeleteNamespacedPodProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1DeleteNamespacedPodProxyResponse::Ok(result), len))
+                Ok((ConnectDeleteNamespacedPodProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedPodProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1DeleteNamespacedPodProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNamespacedPodProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectDeleteNamespacedPodProxyResponse::Other, 0)),
         }
     }
 }
@@ -98,7 +98,7 @@ impl crate::Response for ConnectCoreV1DeleteNamespacedPodProxyResponse {
 impl Pod {
     /// connect DELETE requests to proxy of Pod
     ///
-    /// Use [`ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectDeleteNamespacedPodProxyWithPathResponse`](./enum.ConnectDeleteNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -117,13 +117,13 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_delete_namespaced_pod_proxy_with_path(
+    pub fn connect_delete_namespaced_pod_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectCoreV1DeleteNamespacedPodProxyWithPathOptional<'_>,
+        optional: ConnectDeleteNamespacedPodProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1DeleteNamespacedPodProxyWithPathOptional {
+        let ConnectDeleteNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -139,22 +139,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_delete_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_delete_namespaced_pod_proxy_with_path)
+/// Optional parameters of [`Pod::connect_delete_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_delete_namespaced_pod_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1DeleteNamespacedPodProxyWithPathOptional<'a> {
+pub struct ConnectDeleteNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_delete_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_delete_namespaced_pod_proxy_with_path)
+/// Parses the HTTP response of [`Pod::connect_delete_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_delete_namespaced_pod_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse {
+pub enum ConnectDeleteNamespacedPodProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse {
+impl crate::Response for ConnectDeleteNamespacedPodProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -168,10 +168,10 @@ impl crate::Response for ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectDeleteNamespacedPodProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectDeleteNamespacedPodProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -181,7 +181,7 @@ impl crate::Response for ConnectCoreV1DeleteNamespacedPodProxyWithPathResponse {
 impl Pod {
     /// connect GET requests to attach of Pod
     ///
-    /// Use [`ConnectCoreV1GetNamespacedPodAttachResponse`](./enum.ConnectCoreV1GetNamespacedPodAttachResponse.html) to parse the HTTP response.
+    /// Use [`ConnectGetNamespacedPodAttachResponse`](./enum.ConnectGetNamespacedPodAttachResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -196,12 +196,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_get_namespaced_pod_attach(
+    pub fn connect_get_namespaced_pod_attach(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1GetNamespacedPodAttachOptional<'_>,
+        optional: ConnectGetNamespacedPodAttachOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1GetNamespacedPodAttachOptional {
+        let ConnectGetNamespacedPodAttachOptional {
             container,
             stderr,
             stdin,
@@ -233,9 +233,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_get_namespaced_pod_attach`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_attach)
+/// Optional parameters of [`Pod::connect_get_namespaced_pod_attach`](./struct.Pod.html#method.connect_get_namespaced_pod_attach)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1GetNamespacedPodAttachOptional<'a> {
+pub struct ConnectGetNamespacedPodAttachOptional<'a> {
     /// The container in which to execute the command. Defaults to only container if there is only one container in the pod.
     pub container: Option<&'a str>,
     /// Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
@@ -248,15 +248,15 @@ pub struct ConnectCoreV1GetNamespacedPodAttachOptional<'a> {
     pub tty: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_attach`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_attach)
+/// Parses the HTTP response of [`Pod::connect_get_namespaced_pod_attach`](./struct.Pod.html#method.connect_get_namespaced_pod_attach)
 #[derive(Debug)]
-pub enum ConnectCoreV1GetNamespacedPodAttachResponse {
+pub enum ConnectGetNamespacedPodAttachResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1GetNamespacedPodAttachResponse {
+impl crate::Response for ConnectGetNamespacedPodAttachResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -270,10 +270,10 @@ impl crate::Response for ConnectCoreV1GetNamespacedPodAttachResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1GetNamespacedPodAttachResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedPodAttachResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodAttachResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1GetNamespacedPodAttachResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedPodAttachResponse::Unauthorized, 0)),
+            _ => Ok((ConnectGetNamespacedPodAttachResponse::Other, 0)),
         }
     }
 }
@@ -283,7 +283,7 @@ impl crate::Response for ConnectCoreV1GetNamespacedPodAttachResponse {
 impl Pod {
     /// connect GET requests to exec of Pod
     ///
-    /// Use [`ConnectCoreV1GetNamespacedPodExecResponse`](./enum.ConnectCoreV1GetNamespacedPodExecResponse.html) to parse the HTTP response.
+    /// Use [`ConnectGetNamespacedPodExecResponse`](./enum.ConnectGetNamespacedPodExecResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -298,12 +298,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_get_namespaced_pod_exec(
+    pub fn connect_get_namespaced_pod_exec(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1GetNamespacedPodExecOptional<'_>,
+        optional: ConnectGetNamespacedPodExecOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1GetNamespacedPodExecOptional {
+        let ConnectGetNamespacedPodExecOptional {
             command,
             container,
             stderr,
@@ -339,9 +339,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_get_namespaced_pod_exec`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_exec)
+/// Optional parameters of [`Pod::connect_get_namespaced_pod_exec`](./struct.Pod.html#method.connect_get_namespaced_pod_exec)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1GetNamespacedPodExecOptional<'a> {
+pub struct ConnectGetNamespacedPodExecOptional<'a> {
     /// Command is the remote command to execute. argv array. Not executed within a shell.
     pub command: Option<&'a str>,
     /// Container in which to execute the command. Defaults to only container if there is only one container in the pod.
@@ -356,15 +356,15 @@ pub struct ConnectCoreV1GetNamespacedPodExecOptional<'a> {
     pub tty: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_exec`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_exec)
+/// Parses the HTTP response of [`Pod::connect_get_namespaced_pod_exec`](./struct.Pod.html#method.connect_get_namespaced_pod_exec)
 #[derive(Debug)]
-pub enum ConnectCoreV1GetNamespacedPodExecResponse {
+pub enum ConnectGetNamespacedPodExecResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1GetNamespacedPodExecResponse {
+impl crate::Response for ConnectGetNamespacedPodExecResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -378,10 +378,10 @@ impl crate::Response for ConnectCoreV1GetNamespacedPodExecResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1GetNamespacedPodExecResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedPodExecResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodExecResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1GetNamespacedPodExecResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedPodExecResponse::Unauthorized, 0)),
+            _ => Ok((ConnectGetNamespacedPodExecResponse::Other, 0)),
         }
     }
 }
@@ -391,7 +391,7 @@ impl crate::Response for ConnectCoreV1GetNamespacedPodExecResponse {
 impl Pod {
     /// connect GET requests to portforward of Pod
     ///
-    /// Use [`ConnectCoreV1GetNamespacedPodPortforwardResponse`](./enum.ConnectCoreV1GetNamespacedPodPortforwardResponse.html) to parse the HTTP response.
+    /// Use [`ConnectGetNamespacedPodPortforwardResponse`](./enum.ConnectGetNamespacedPodPortforwardResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -406,12 +406,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_get_namespaced_pod_portforward(
+    pub fn connect_get_namespaced_pod_portforward(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1GetNamespacedPodPortforwardOptional,
+        optional: ConnectGetNamespacedPodPortforwardOptional,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1GetNamespacedPodPortforwardOptional {
+        let ConnectGetNamespacedPodPortforwardOptional {
             ports,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?", name = name, namespace = namespace);
@@ -427,22 +427,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_get_namespaced_pod_portforward`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_portforward)
+/// Optional parameters of [`Pod::connect_get_namespaced_pod_portforward`](./struct.Pod.html#method.connect_get_namespaced_pod_portforward)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1GetNamespacedPodPortforwardOptional {
+pub struct ConnectGetNamespacedPodPortforwardOptional {
     /// List of ports to forward Required when using WebSockets
     pub ports: Option<i64>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_portforward`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_portforward)
+/// Parses the HTTP response of [`Pod::connect_get_namespaced_pod_portforward`](./struct.Pod.html#method.connect_get_namespaced_pod_portforward)
 #[derive(Debug)]
-pub enum ConnectCoreV1GetNamespacedPodPortforwardResponse {
+pub enum ConnectGetNamespacedPodPortforwardResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1GetNamespacedPodPortforwardResponse {
+impl crate::Response for ConnectGetNamespacedPodPortforwardResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -456,10 +456,10 @@ impl crate::Response for ConnectCoreV1GetNamespacedPodPortforwardResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1GetNamespacedPodPortforwardResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedPodPortforwardResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodPortforwardResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1GetNamespacedPodPortforwardResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedPodPortforwardResponse::Unauthorized, 0)),
+            _ => Ok((ConnectGetNamespacedPodPortforwardResponse::Other, 0)),
         }
     }
 }
@@ -469,7 +469,7 @@ impl crate::Response for ConnectCoreV1GetNamespacedPodPortforwardResponse {
 impl Pod {
     /// connect GET requests to proxy of Pod
     ///
-    /// Use [`ConnectCoreV1GetNamespacedPodProxyResponse`](./enum.ConnectCoreV1GetNamespacedPodProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectGetNamespacedPodProxyResponse`](./enum.ConnectGetNamespacedPodProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -484,12 +484,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_get_namespaced_pod_proxy(
+    pub fn connect_get_namespaced_pod_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1GetNamespacedPodProxyOptional<'_>,
+        optional: ConnectGetNamespacedPodProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1GetNamespacedPodProxyOptional {
+        let ConnectGetNamespacedPodProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
@@ -505,22 +505,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_get_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_proxy)
+/// Optional parameters of [`Pod::connect_get_namespaced_pod_proxy`](./struct.Pod.html#method.connect_get_namespaced_pod_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1GetNamespacedPodProxyOptional<'a> {
+pub struct ConnectGetNamespacedPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_proxy)
+/// Parses the HTTP response of [`Pod::connect_get_namespaced_pod_proxy`](./struct.Pod.html#method.connect_get_namespaced_pod_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1GetNamespacedPodProxyResponse {
+pub enum ConnectGetNamespacedPodProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1GetNamespacedPodProxyResponse {
+impl crate::Response for ConnectGetNamespacedPodProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -534,10 +534,10 @@ impl crate::Response for ConnectCoreV1GetNamespacedPodProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1GetNamespacedPodProxyResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedPodProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1GetNamespacedPodProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedPodProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectGetNamespacedPodProxyResponse::Other, 0)),
         }
     }
 }
@@ -547,7 +547,7 @@ impl crate::Response for ConnectCoreV1GetNamespacedPodProxyResponse {
 impl Pod {
     /// connect GET requests to proxy of Pod
     ///
-    /// Use [`ConnectCoreV1GetNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1GetNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectGetNamespacedPodProxyWithPathResponse`](./enum.ConnectGetNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -566,13 +566,13 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_get_namespaced_pod_proxy_with_path(
+    pub fn connect_get_namespaced_pod_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectCoreV1GetNamespacedPodProxyWithPathOptional<'_>,
+        optional: ConnectGetNamespacedPodProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1GetNamespacedPodProxyWithPathOptional {
+        let ConnectGetNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -588,22 +588,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_get_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_proxy_with_path)
+/// Optional parameters of [`Pod::connect_get_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_get_namespaced_pod_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1GetNamespacedPodProxyWithPathOptional<'a> {
+pub struct ConnectGetNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_get_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_get_namespaced_pod_proxy_with_path)
+/// Parses the HTTP response of [`Pod::connect_get_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_get_namespaced_pod_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1GetNamespacedPodProxyWithPathResponse {
+pub enum ConnectGetNamespacedPodProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1GetNamespacedPodProxyWithPathResponse {
+impl crate::Response for ConnectGetNamespacedPodProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -617,10 +617,10 @@ impl crate::Response for ConnectCoreV1GetNamespacedPodProxyWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1GetNamespacedPodProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedPodProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1GetNamespacedPodProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectGetNamespacedPodProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -630,7 +630,7 @@ impl crate::Response for ConnectCoreV1GetNamespacedPodProxyWithPathResponse {
 impl Pod {
     /// connect PATCH requests to proxy of Pod
     ///
-    /// Use [`ConnectCoreV1PatchNamespacedPodProxyResponse`](./enum.ConnectCoreV1PatchNamespacedPodProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPatchNamespacedPodProxyResponse`](./enum.ConnectPatchNamespacedPodProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -645,12 +645,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_patch_namespaced_pod_proxy(
+    pub fn connect_patch_namespaced_pod_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1PatchNamespacedPodProxyOptional<'_>,
+        optional: ConnectPatchNamespacedPodProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PatchNamespacedPodProxyOptional {
+        let ConnectPatchNamespacedPodProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
@@ -666,22 +666,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_patch_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_patch_namespaced_pod_proxy)
+/// Optional parameters of [`Pod::connect_patch_namespaced_pod_proxy`](./struct.Pod.html#method.connect_patch_namespaced_pod_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PatchNamespacedPodProxyOptional<'a> {
+pub struct ConnectPatchNamespacedPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_patch_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_patch_namespaced_pod_proxy)
+/// Parses the HTTP response of [`Pod::connect_patch_namespaced_pod_proxy`](./struct.Pod.html#method.connect_patch_namespaced_pod_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1PatchNamespacedPodProxyResponse {
+pub enum ConnectPatchNamespacedPodProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PatchNamespacedPodProxyResponse {
+impl crate::Response for ConnectPatchNamespacedPodProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -695,10 +695,10 @@ impl crate::Response for ConnectCoreV1PatchNamespacedPodProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PatchNamespacedPodProxyResponse::Ok(result), len))
+                Ok((ConnectPatchNamespacedPodProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedPodProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PatchNamespacedPodProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNamespacedPodProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPatchNamespacedPodProxyResponse::Other, 0)),
         }
     }
 }
@@ -708,7 +708,7 @@ impl crate::Response for ConnectCoreV1PatchNamespacedPodProxyResponse {
 impl Pod {
     /// connect PATCH requests to proxy of Pod
     ///
-    /// Use [`ConnectCoreV1PatchNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1PatchNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPatchNamespacedPodProxyWithPathResponse`](./enum.ConnectPatchNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -727,13 +727,13 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_patch_namespaced_pod_proxy_with_path(
+    pub fn connect_patch_namespaced_pod_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectCoreV1PatchNamespacedPodProxyWithPathOptional<'_>,
+        optional: ConnectPatchNamespacedPodProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PatchNamespacedPodProxyWithPathOptional {
+        let ConnectPatchNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -749,22 +749,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_patch_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_patch_namespaced_pod_proxy_with_path)
+/// Optional parameters of [`Pod::connect_patch_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_patch_namespaced_pod_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PatchNamespacedPodProxyWithPathOptional<'a> {
+pub struct ConnectPatchNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_patch_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_patch_namespaced_pod_proxy_with_path)
+/// Parses the HTTP response of [`Pod::connect_patch_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_patch_namespaced_pod_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1PatchNamespacedPodProxyWithPathResponse {
+pub enum ConnectPatchNamespacedPodProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PatchNamespacedPodProxyWithPathResponse {
+impl crate::Response for ConnectPatchNamespacedPodProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -778,10 +778,10 @@ impl crate::Response for ConnectCoreV1PatchNamespacedPodProxyWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PatchNamespacedPodProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPatchNamespacedPodProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PatchNamespacedPodProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPatchNamespacedPodProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -791,7 +791,7 @@ impl crate::Response for ConnectCoreV1PatchNamespacedPodProxyWithPathResponse {
 impl Pod {
     /// connect POST requests to attach of Pod
     ///
-    /// Use [`ConnectCoreV1PostNamespacedPodAttachResponse`](./enum.ConnectCoreV1PostNamespacedPodAttachResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPostNamespacedPodAttachResponse`](./enum.ConnectPostNamespacedPodAttachResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -806,12 +806,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_post_namespaced_pod_attach(
+    pub fn connect_post_namespaced_pod_attach(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1PostNamespacedPodAttachOptional<'_>,
+        optional: ConnectPostNamespacedPodAttachOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PostNamespacedPodAttachOptional {
+        let ConnectPostNamespacedPodAttachOptional {
             container,
             stderr,
             stdin,
@@ -843,9 +843,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_post_namespaced_pod_attach`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_attach)
+/// Optional parameters of [`Pod::connect_post_namespaced_pod_attach`](./struct.Pod.html#method.connect_post_namespaced_pod_attach)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PostNamespacedPodAttachOptional<'a> {
+pub struct ConnectPostNamespacedPodAttachOptional<'a> {
     /// The container in which to execute the command. Defaults to only container if there is only one container in the pod.
     pub container: Option<&'a str>,
     /// Stderr if true indicates that stderr is to be redirected for the attach call. Defaults to true.
@@ -858,15 +858,15 @@ pub struct ConnectCoreV1PostNamespacedPodAttachOptional<'a> {
     pub tty: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_attach`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_attach)
+/// Parses the HTTP response of [`Pod::connect_post_namespaced_pod_attach`](./struct.Pod.html#method.connect_post_namespaced_pod_attach)
 #[derive(Debug)]
-pub enum ConnectCoreV1PostNamespacedPodAttachResponse {
+pub enum ConnectPostNamespacedPodAttachResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PostNamespacedPodAttachResponse {
+impl crate::Response for ConnectPostNamespacedPodAttachResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -880,10 +880,10 @@ impl crate::Response for ConnectCoreV1PostNamespacedPodAttachResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PostNamespacedPodAttachResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedPodAttachResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodAttachResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PostNamespacedPodAttachResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedPodAttachResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPostNamespacedPodAttachResponse::Other, 0)),
         }
     }
 }
@@ -893,7 +893,7 @@ impl crate::Response for ConnectCoreV1PostNamespacedPodAttachResponse {
 impl Pod {
     /// connect POST requests to exec of Pod
     ///
-    /// Use [`ConnectCoreV1PostNamespacedPodExecResponse`](./enum.ConnectCoreV1PostNamespacedPodExecResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPostNamespacedPodExecResponse`](./enum.ConnectPostNamespacedPodExecResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -908,12 +908,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_post_namespaced_pod_exec(
+    pub fn connect_post_namespaced_pod_exec(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1PostNamespacedPodExecOptional<'_>,
+        optional: ConnectPostNamespacedPodExecOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PostNamespacedPodExecOptional {
+        let ConnectPostNamespacedPodExecOptional {
             command,
             container,
             stderr,
@@ -949,9 +949,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_post_namespaced_pod_exec`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_exec)
+/// Optional parameters of [`Pod::connect_post_namespaced_pod_exec`](./struct.Pod.html#method.connect_post_namespaced_pod_exec)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PostNamespacedPodExecOptional<'a> {
+pub struct ConnectPostNamespacedPodExecOptional<'a> {
     /// Command is the remote command to execute. argv array. Not executed within a shell.
     pub command: Option<&'a str>,
     /// Container in which to execute the command. Defaults to only container if there is only one container in the pod.
@@ -966,15 +966,15 @@ pub struct ConnectCoreV1PostNamespacedPodExecOptional<'a> {
     pub tty: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_exec`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_exec)
+/// Parses the HTTP response of [`Pod::connect_post_namespaced_pod_exec`](./struct.Pod.html#method.connect_post_namespaced_pod_exec)
 #[derive(Debug)]
-pub enum ConnectCoreV1PostNamespacedPodExecResponse {
+pub enum ConnectPostNamespacedPodExecResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PostNamespacedPodExecResponse {
+impl crate::Response for ConnectPostNamespacedPodExecResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -988,10 +988,10 @@ impl crate::Response for ConnectCoreV1PostNamespacedPodExecResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PostNamespacedPodExecResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedPodExecResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodExecResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PostNamespacedPodExecResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedPodExecResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPostNamespacedPodExecResponse::Other, 0)),
         }
     }
 }
@@ -1001,7 +1001,7 @@ impl crate::Response for ConnectCoreV1PostNamespacedPodExecResponse {
 impl Pod {
     /// connect POST requests to portforward of Pod
     ///
-    /// Use [`ConnectCoreV1PostNamespacedPodPortforwardResponse`](./enum.ConnectCoreV1PostNamespacedPodPortforwardResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPostNamespacedPodPortforwardResponse`](./enum.ConnectPostNamespacedPodPortforwardResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1016,12 +1016,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_post_namespaced_pod_portforward(
+    pub fn connect_post_namespaced_pod_portforward(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1PostNamespacedPodPortforwardOptional,
+        optional: ConnectPostNamespacedPodPortforwardOptional,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PostNamespacedPodPortforwardOptional {
+        let ConnectPostNamespacedPodPortforwardOptional {
             ports,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/portforward?", name = name, namespace = namespace);
@@ -1037,22 +1037,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_post_namespaced_pod_portforward`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_portforward)
+/// Optional parameters of [`Pod::connect_post_namespaced_pod_portforward`](./struct.Pod.html#method.connect_post_namespaced_pod_portforward)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PostNamespacedPodPortforwardOptional {
+pub struct ConnectPostNamespacedPodPortforwardOptional {
     /// List of ports to forward Required when using WebSockets
     pub ports: Option<i64>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_portforward`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_portforward)
+/// Parses the HTTP response of [`Pod::connect_post_namespaced_pod_portforward`](./struct.Pod.html#method.connect_post_namespaced_pod_portforward)
 #[derive(Debug)]
-pub enum ConnectCoreV1PostNamespacedPodPortforwardResponse {
+pub enum ConnectPostNamespacedPodPortforwardResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PostNamespacedPodPortforwardResponse {
+impl crate::Response for ConnectPostNamespacedPodPortforwardResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1066,10 +1066,10 @@ impl crate::Response for ConnectCoreV1PostNamespacedPodPortforwardResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PostNamespacedPodPortforwardResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedPodPortforwardResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodPortforwardResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PostNamespacedPodPortforwardResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedPodPortforwardResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPostNamespacedPodPortforwardResponse::Other, 0)),
         }
     }
 }
@@ -1079,7 +1079,7 @@ impl crate::Response for ConnectCoreV1PostNamespacedPodPortforwardResponse {
 impl Pod {
     /// connect POST requests to proxy of Pod
     ///
-    /// Use [`ConnectCoreV1PostNamespacedPodProxyResponse`](./enum.ConnectCoreV1PostNamespacedPodProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPostNamespacedPodProxyResponse`](./enum.ConnectPostNamespacedPodProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1094,12 +1094,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_post_namespaced_pod_proxy(
+    pub fn connect_post_namespaced_pod_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1PostNamespacedPodProxyOptional<'_>,
+        optional: ConnectPostNamespacedPodProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PostNamespacedPodProxyOptional {
+        let ConnectPostNamespacedPodProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
@@ -1115,22 +1115,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_post_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_proxy)
+/// Optional parameters of [`Pod::connect_post_namespaced_pod_proxy`](./struct.Pod.html#method.connect_post_namespaced_pod_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PostNamespacedPodProxyOptional<'a> {
+pub struct ConnectPostNamespacedPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_proxy)
+/// Parses the HTTP response of [`Pod::connect_post_namespaced_pod_proxy`](./struct.Pod.html#method.connect_post_namespaced_pod_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1PostNamespacedPodProxyResponse {
+pub enum ConnectPostNamespacedPodProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PostNamespacedPodProxyResponse {
+impl crate::Response for ConnectPostNamespacedPodProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1144,10 +1144,10 @@ impl crate::Response for ConnectCoreV1PostNamespacedPodProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PostNamespacedPodProxyResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedPodProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PostNamespacedPodProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedPodProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPostNamespacedPodProxyResponse::Other, 0)),
         }
     }
 }
@@ -1157,7 +1157,7 @@ impl crate::Response for ConnectCoreV1PostNamespacedPodProxyResponse {
 impl Pod {
     /// connect POST requests to proxy of Pod
     ///
-    /// Use [`ConnectCoreV1PostNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1PostNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPostNamespacedPodProxyWithPathResponse`](./enum.ConnectPostNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1176,13 +1176,13 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_post_namespaced_pod_proxy_with_path(
+    pub fn connect_post_namespaced_pod_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectCoreV1PostNamespacedPodProxyWithPathOptional<'_>,
+        optional: ConnectPostNamespacedPodProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PostNamespacedPodProxyWithPathOptional {
+        let ConnectPostNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -1198,22 +1198,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_post_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_proxy_with_path)
+/// Optional parameters of [`Pod::connect_post_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_post_namespaced_pod_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PostNamespacedPodProxyWithPathOptional<'a> {
+pub struct ConnectPostNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_post_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_post_namespaced_pod_proxy_with_path)
+/// Parses the HTTP response of [`Pod::connect_post_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_post_namespaced_pod_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1PostNamespacedPodProxyWithPathResponse {
+pub enum ConnectPostNamespacedPodProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PostNamespacedPodProxyWithPathResponse {
+impl crate::Response for ConnectPostNamespacedPodProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1227,10 +1227,10 @@ impl crate::Response for ConnectCoreV1PostNamespacedPodProxyWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PostNamespacedPodProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedPodProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PostNamespacedPodProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPostNamespacedPodProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -1240,7 +1240,7 @@ impl crate::Response for ConnectCoreV1PostNamespacedPodProxyWithPathResponse {
 impl Pod {
     /// connect PUT requests to proxy of Pod
     ///
-    /// Use [`ConnectCoreV1PutNamespacedPodProxyResponse`](./enum.ConnectCoreV1PutNamespacedPodProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPutNamespacedPodProxyResponse`](./enum.ConnectPutNamespacedPodProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1255,12 +1255,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_put_namespaced_pod_proxy(
+    pub fn connect_put_namespaced_pod_proxy(
         name: &str,
         namespace: &str,
-        optional: ConnectCoreV1PutNamespacedPodProxyOptional<'_>,
+        optional: ConnectPutNamespacedPodProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PutNamespacedPodProxyOptional {
+        let ConnectPutNamespacedPodProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy?", name = name, namespace = namespace);
@@ -1276,22 +1276,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_put_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_put_namespaced_pod_proxy)
+/// Optional parameters of [`Pod::connect_put_namespaced_pod_proxy`](./struct.Pod.html#method.connect_put_namespaced_pod_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PutNamespacedPodProxyOptional<'a> {
+pub struct ConnectPutNamespacedPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_put_namespaced_pod_proxy`](./struct.Pod.html#method.connect_core_v1_put_namespaced_pod_proxy)
+/// Parses the HTTP response of [`Pod::connect_put_namespaced_pod_proxy`](./struct.Pod.html#method.connect_put_namespaced_pod_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1PutNamespacedPodProxyResponse {
+pub enum ConnectPutNamespacedPodProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PutNamespacedPodProxyResponse {
+impl crate::Response for ConnectPutNamespacedPodProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1305,10 +1305,10 @@ impl crate::Response for ConnectCoreV1PutNamespacedPodProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PutNamespacedPodProxyResponse::Ok(result), len))
+                Ok((ConnectPutNamespacedPodProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedPodProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PutNamespacedPodProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNamespacedPodProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPutNamespacedPodProxyResponse::Other, 0)),
         }
     }
 }
@@ -1318,7 +1318,7 @@ impl crate::Response for ConnectCoreV1PutNamespacedPodProxyResponse {
 impl Pod {
     /// connect PUT requests to proxy of Pod
     ///
-    /// Use [`ConnectCoreV1PutNamespacedPodProxyWithPathResponse`](./enum.ConnectCoreV1PutNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPutNamespacedPodProxyWithPathResponse`](./enum.ConnectPutNamespacedPodProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1337,13 +1337,13 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_put_namespaced_pod_proxy_with_path(
+    pub fn connect_put_namespaced_pod_proxy_with_path(
         name: &str,
         namespace: &str,
         path: &str,
-        optional: ConnectCoreV1PutNamespacedPodProxyWithPathOptional<'_>,
+        optional: ConnectPutNamespacedPodProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PutNamespacedPodProxyWithPathOptional {
+        let ConnectPutNamespacedPodProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/proxy/{path}?", name = name, namespace = namespace, path = path);
@@ -1359,22 +1359,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::connect_core_v1_put_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_put_namespaced_pod_proxy_with_path)
+/// Optional parameters of [`Pod::connect_put_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_put_namespaced_pod_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PutNamespacedPodProxyWithPathOptional<'a> {
+pub struct ConnectPutNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::connect_core_v1_put_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_core_v1_put_namespaced_pod_proxy_with_path)
+/// Parses the HTTP response of [`Pod::connect_put_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_put_namespaced_pod_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1PutNamespacedPodProxyWithPathResponse {
+pub enum ConnectPutNamespacedPodProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PutNamespacedPodProxyWithPathResponse {
+impl crate::Response for ConnectPutNamespacedPodProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1388,10 +1388,10 @@ impl crate::Response for ConnectCoreV1PutNamespacedPodProxyWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PutNamespacedPodProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPutNamespacedPodProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PutNamespacedPodProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPutNamespacedPodProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -1401,7 +1401,7 @@ impl crate::Response for ConnectCoreV1PutNamespacedPodProxyWithPathResponse {
 impl Pod {
     /// create a Pod
     ///
-    /// Use [`CreateCoreV1NamespacedPodResponse`](./enum.CreateCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedPodResponse`](./enum.CreateNamespacedPodResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1414,12 +1414,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_pod(
+    pub fn create_namespaced_pod(
         namespace: &str,
         body: &crate::v1_11::api::core::v1::Pod,
-        optional: CreateCoreV1NamespacedPodOptional<'_>,
+        optional: CreateNamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedPodOptional {
+        let CreateNamespacedPodOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods?", namespace = namespace);
@@ -1435,16 +1435,16 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::create_core_v1_namespaced_pod`](./struct.Pod.html#method.create_core_v1_namespaced_pod)
+/// Optional parameters of [`Pod::create_namespaced_pod`](./struct.Pod.html#method.create_namespaced_pod)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedPodOptional<'a> {
+pub struct CreateNamespacedPodOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::create_core_v1_namespaced_pod`](./struct.Pod.html#method.create_core_v1_namespaced_pod)
+/// Parses the HTTP response of [`Pod::create_namespaced_pod`](./struct.Pod.html#method.create_namespaced_pod)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedPodResponse {
+pub enum CreateNamespacedPodResponse {
     Ok(crate::v1_11::api::core::v1::Pod),
     Created(crate::v1_11::api::core::v1::Pod),
     Accepted(crate::v1_11::api::core::v1::Pod),
@@ -1452,7 +1452,7 @@ pub enum CreateCoreV1NamespacedPodResponse {
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedPodResponse {
+impl crate::Response for CreateNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1461,7 +1461,7 @@ impl crate::Response for CreateCoreV1NamespacedPodResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedPodResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedPodResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1469,7 +1469,7 @@ impl crate::Response for CreateCoreV1NamespacedPodResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedPodResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedPodResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1477,10 +1477,10 @@ impl crate::Response for CreateCoreV1NamespacedPodResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedPodResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedPodResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedPodResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedPodResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPodResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedPodResponse::Other, 0)),
         }
     }
 }
@@ -1490,7 +1490,7 @@ impl crate::Response for CreateCoreV1NamespacedPodResponse {
 impl Pod {
     /// delete collection of Pod
     ///
-    /// Use [`DeleteCoreV1CollectionNamespacedPodResponse`](./enum.DeleteCoreV1CollectionNamespacedPodResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedPodResponse`](./enum.DeleteCollectionNamespacedPodResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1501,11 +1501,11 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_collection_namespaced_pod(
+    pub fn delete_collection_namespaced_pod(
         namespace: &str,
-        optional: DeleteCoreV1CollectionNamespacedPodOptional<'_>,
+        optional: DeleteCollectionNamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1CollectionNamespacedPodOptional {
+        let DeleteCollectionNamespacedPodOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1553,9 +1553,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::delete_core_v1_collection_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_collection_namespaced_pod)
+/// Optional parameters of [`Pod::delete_collection_namespaced_pod`](./struct.Pod.html#method.delete_collection_namespaced_pod)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1CollectionNamespacedPodOptional<'a> {
+pub struct DeleteCollectionNamespacedPodOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1578,16 +1578,16 @@ pub struct DeleteCoreV1CollectionNamespacedPodOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::delete_core_v1_collection_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_collection_namespaced_pod)
+/// Parses the HTTP response of [`Pod::delete_collection_namespaced_pod`](./struct.Pod.html#method.delete_collection_namespaced_pod)
 #[derive(Debug)]
-pub enum DeleteCoreV1CollectionNamespacedPodResponse {
+pub enum DeleteCollectionNamespacedPodResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_11::api::core::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1CollectionNamespacedPodResponse {
+impl crate::Response for DeleteCollectionNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1603,16 +1603,16 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedPodResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedPodResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedPodResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedPodResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedPodResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedPodResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1CollectionNamespacedPodResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedPodResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedPodResponse::Other, 0)),
         }
     }
 }
@@ -1622,7 +1622,7 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedPodResponse {
 impl Pod {
     /// delete a Pod
     ///
-    /// Use [`DeleteCoreV1NamespacedPodResponse`](./enum.DeleteCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedPodResponse`](./enum.DeleteNamespacedPodResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1637,12 +1637,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_namespaced_pod(
+    pub fn delete_namespaced_pod(
         name: &str,
         namespace: &str,
-        optional: DeleteCoreV1NamespacedPodOptional<'_>,
+        optional: DeleteNamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NamespacedPodOptional {
+        let DeleteNamespacedPodOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -1670,9 +1670,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::delete_core_v1_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_namespaced_pod)
+/// Optional parameters of [`Pod::delete_namespaced_pod`](./struct.Pod.html#method.delete_namespaced_pod)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NamespacedPodOptional<'a> {
+pub struct DeleteNamespacedPodOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -1683,16 +1683,16 @@ pub struct DeleteCoreV1NamespacedPodOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::delete_core_v1_namespaced_pod`](./struct.Pod.html#method.delete_core_v1_namespaced_pod)
+/// Parses the HTTP response of [`Pod::delete_namespaced_pod`](./struct.Pod.html#method.delete_namespaced_pod)
 #[derive(Debug)]
-pub enum DeleteCoreV1NamespacedPodResponse {
+pub enum DeleteNamespacedPodResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_11::api::core::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NamespacedPodResponse {
+impl crate::Response for DeleteNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1708,16 +1708,16 @@ impl crate::Response for DeleteCoreV1NamespacedPodResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedPodResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedPodResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedPodResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedPodResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedPodResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NamespacedPodResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedPodResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedPodResponse::Other, 0)),
         }
     }
 }
@@ -1727,7 +1727,7 @@ impl crate::Response for DeleteCoreV1NamespacedPodResponse {
 impl Pod {
     /// list or watch objects of kind Pod
     ///
-    /// Use [`ListCoreV1NamespacedPodResponse`](./enum.ListCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedPodResponse`](./enum.ListNamespacedPodResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1738,11 +1738,11 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_namespaced_pod(
+    pub fn list_namespaced_pod(
         namespace: &str,
-        optional: ListCoreV1NamespacedPodOptional<'_>,
+        optional: ListNamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NamespacedPodOptional {
+        let ListNamespacedPodOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1790,9 +1790,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::list_core_v1_namespaced_pod`](./struct.Pod.html#method.list_core_v1_namespaced_pod)
+/// Optional parameters of [`Pod::list_namespaced_pod`](./struct.Pod.html#method.list_namespaced_pod)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NamespacedPodOptional<'a> {
+pub struct ListNamespacedPodOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1815,15 +1815,15 @@ pub struct ListCoreV1NamespacedPodOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::list_core_v1_namespaced_pod`](./struct.Pod.html#method.list_core_v1_namespaced_pod)
+/// Parses the HTTP response of [`Pod::list_namespaced_pod`](./struct.Pod.html#method.list_namespaced_pod)
 #[derive(Debug)]
-pub enum ListCoreV1NamespacedPodResponse {
+pub enum ListNamespacedPodResponse {
     Ok(crate::v1_11::api::core::v1::PodList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NamespacedPodResponse {
+impl crate::Response for ListNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1832,10 +1832,10 @@ impl crate::Response for ListCoreV1NamespacedPodResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NamespacedPodResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedPodResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedPodResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NamespacedPodResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedPodResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedPodResponse::Other, 0)),
         }
     }
 }
@@ -1845,17 +1845,17 @@ impl crate::Response for ListCoreV1NamespacedPodResponse {
 impl Pod {
     /// list or watch objects of kind Pod
     ///
-    /// Use [`ListCoreV1PodForAllNamespacesResponse`](./enum.ListCoreV1PodForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListPodForAllNamespacesResponse`](./enum.ListPodForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_pod_for_all_namespaces(
-        optional: ListCoreV1PodForAllNamespacesOptional<'_>,
+    pub fn list_pod_for_all_namespaces(
+        optional: ListPodForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1PodForAllNamespacesOptional {
+        let ListPodForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1903,9 +1903,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::list_core_v1_pod_for_all_namespaces`](./struct.Pod.html#method.list_core_v1_pod_for_all_namespaces)
+/// Optional parameters of [`Pod::list_pod_for_all_namespaces`](./struct.Pod.html#method.list_pod_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListCoreV1PodForAllNamespacesOptional<'a> {
+pub struct ListPodForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1928,15 +1928,15 @@ pub struct ListCoreV1PodForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::list_core_v1_pod_for_all_namespaces`](./struct.Pod.html#method.list_core_v1_pod_for_all_namespaces)
+/// Parses the HTTP response of [`Pod::list_pod_for_all_namespaces`](./struct.Pod.html#method.list_pod_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListCoreV1PodForAllNamespacesResponse {
+pub enum ListPodForAllNamespacesResponse {
     Ok(crate::v1_11::api::core::v1::PodList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1PodForAllNamespacesResponse {
+impl crate::Response for ListPodForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1945,10 +1945,10 @@ impl crate::Response for ListCoreV1PodForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1PodForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListPodForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1PodForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1PodForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListPodForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListPodForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -1958,7 +1958,7 @@ impl crate::Response for ListCoreV1PodForAllNamespacesResponse {
 impl Pod {
     /// partially update the specified Pod
     ///
-    /// Use [`PatchCoreV1NamespacedPodResponse`](./enum.PatchCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedPodResponse`](./enum.PatchNamespacedPodResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1975,13 +1975,13 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_pod(
+    pub fn patch_namespaced_pod(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedPodOptional<'_>,
+        optional: PatchNamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedPodOptional {
+        let PatchNamespacedPodOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
@@ -1997,22 +1997,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::patch_core_v1_namespaced_pod`](./struct.Pod.html#method.patch_core_v1_namespaced_pod)
+/// Optional parameters of [`Pod::patch_namespaced_pod`](./struct.Pod.html#method.patch_namespaced_pod)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedPodOptional<'a> {
+pub struct PatchNamespacedPodOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::patch_core_v1_namespaced_pod`](./struct.Pod.html#method.patch_core_v1_namespaced_pod)
+/// Parses the HTTP response of [`Pod::patch_namespaced_pod`](./struct.Pod.html#method.patch_namespaced_pod)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedPodResponse {
+pub enum PatchNamespacedPodResponse {
     Ok(crate::v1_11::api::core::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedPodResponse {
+impl crate::Response for PatchNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2021,10 +2021,10 @@ impl crate::Response for PatchCoreV1NamespacedPodResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedPodResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedPodResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPodResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedPodResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPodResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedPodResponse::Other, 0)),
         }
     }
 }
@@ -2034,7 +2034,7 @@ impl crate::Response for PatchCoreV1NamespacedPodResponse {
 impl Pod {
     /// partially update status of the specified Pod
     ///
-    /// Use [`PatchCoreV1NamespacedPodStatusResponse`](./enum.PatchCoreV1NamespacedPodStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedPodStatusResponse`](./enum.PatchNamespacedPodStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2051,13 +2051,13 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_pod_status(
+    pub fn patch_namespaced_pod_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedPodStatusOptional<'_>,
+        optional: PatchNamespacedPodStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedPodStatusOptional {
+        let PatchNamespacedPodStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
@@ -2073,22 +2073,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::patch_core_v1_namespaced_pod_status`](./struct.Pod.html#method.patch_core_v1_namespaced_pod_status)
+/// Optional parameters of [`Pod::patch_namespaced_pod_status`](./struct.Pod.html#method.patch_namespaced_pod_status)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedPodStatusOptional<'a> {
+pub struct PatchNamespacedPodStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::patch_core_v1_namespaced_pod_status`](./struct.Pod.html#method.patch_core_v1_namespaced_pod_status)
+/// Parses the HTTP response of [`Pod::patch_namespaced_pod_status`](./struct.Pod.html#method.patch_namespaced_pod_status)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedPodStatusResponse {
+pub enum PatchNamespacedPodStatusResponse {
     Ok(crate::v1_11::api::core::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedPodStatusResponse {
+impl crate::Response for PatchNamespacedPodStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2097,10 +2097,10 @@ impl crate::Response for PatchCoreV1NamespacedPodStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedPodStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedPodStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedPodStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedPodStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPodStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedPodStatusResponse::Other, 0)),
         }
     }
 }
@@ -2110,7 +2110,7 @@ impl crate::Response for PatchCoreV1NamespacedPodStatusResponse {
 impl Pod {
     /// read the specified Pod
     ///
-    /// Use [`ReadCoreV1NamespacedPodResponse`](./enum.ReadCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedPodResponse`](./enum.ReadNamespacedPodResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2125,12 +2125,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_pod(
+    pub fn read_namespaced_pod(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedPodOptional<'_>,
+        optional: ReadNamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedPodOptional {
+        let ReadNamespacedPodOptional {
             exact,
             export,
             pretty,
@@ -2154,9 +2154,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::read_core_v1_namespaced_pod`](./struct.Pod.html#method.read_core_v1_namespaced_pod)
+/// Optional parameters of [`Pod::read_namespaced_pod`](./struct.Pod.html#method.read_namespaced_pod)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedPodOptional<'a> {
+pub struct ReadNamespacedPodOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -2165,15 +2165,15 @@ pub struct ReadCoreV1NamespacedPodOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod`](./struct.Pod.html#method.read_core_v1_namespaced_pod)
+/// Parses the HTTP response of [`Pod::read_namespaced_pod`](./struct.Pod.html#method.read_namespaced_pod)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedPodResponse {
+pub enum ReadNamespacedPodResponse {
     Ok(crate::v1_11::api::core::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedPodResponse {
+impl crate::Response for ReadNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2182,10 +2182,10 @@ impl crate::Response for ReadCoreV1NamespacedPodResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedPodResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedPodResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPodResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedPodResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPodResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedPodResponse::Other, 0)),
         }
     }
 }
@@ -2195,7 +2195,7 @@ impl crate::Response for ReadCoreV1NamespacedPodResponse {
 impl Pod {
     /// read log of the specified Pod
     ///
-    /// Use [`ReadCoreV1NamespacedPodLogResponse`](./enum.ReadCoreV1NamespacedPodLogResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedPodLogResponse`](./enum.ReadNamespacedPodLogResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2210,12 +2210,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_pod_log(
+    pub fn read_namespaced_pod_log(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedPodLogOptional<'_>,
+        optional: ReadNamespacedPodLogOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedPodLogOptional {
+        let ReadNamespacedPodLogOptional {
             container,
             follow,
             limit_bytes,
@@ -2259,9 +2259,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::read_core_v1_namespaced_pod_log`](./struct.Pod.html#method.read_core_v1_namespaced_pod_log)
+/// Optional parameters of [`Pod::read_namespaced_pod_log`](./struct.Pod.html#method.read_namespaced_pod_log)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedPodLogOptional<'a> {
+pub struct ReadNamespacedPodLogOptional<'a> {
     /// The container for which to stream logs. Defaults to only container if there is one container in the pod.
     pub container: Option<&'a str>,
     /// Follow the log stream of the pod. Defaults to false.
@@ -2280,15 +2280,15 @@ pub struct ReadCoreV1NamespacedPodLogOptional<'a> {
     pub timestamps: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod_log`](./struct.Pod.html#method.read_core_v1_namespaced_pod_log)
+/// Parses the HTTP response of [`Pod::read_namespaced_pod_log`](./struct.Pod.html#method.read_namespaced_pod_log)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedPodLogResponse {
+pub enum ReadNamespacedPodLogResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedPodLogResponse {
+impl crate::Response for ReadNamespacedPodLogResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2302,10 +2302,10 @@ impl crate::Response for ReadCoreV1NamespacedPodLogResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ReadCoreV1NamespacedPodLogResponse::Ok(result), len))
+                Ok((ReadNamespacedPodLogResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPodLogResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedPodLogResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPodLogResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedPodLogResponse::Other, 0)),
         }
     }
 }
@@ -2315,7 +2315,7 @@ impl crate::Response for ReadCoreV1NamespacedPodLogResponse {
 impl Pod {
     /// read status of the specified Pod
     ///
-    /// Use [`ReadCoreV1NamespacedPodStatusResponse`](./enum.ReadCoreV1NamespacedPodStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedPodStatusResponse`](./enum.ReadNamespacedPodStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2330,12 +2330,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_pod_status(
+    pub fn read_namespaced_pod_status(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedPodStatusOptional<'_>,
+        optional: ReadNamespacedPodStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedPodStatusOptional {
+        let ReadNamespacedPodStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
@@ -2351,22 +2351,22 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::read_core_v1_namespaced_pod_status`](./struct.Pod.html#method.read_core_v1_namespaced_pod_status)
+/// Optional parameters of [`Pod::read_namespaced_pod_status`](./struct.Pod.html#method.read_namespaced_pod_status)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedPodStatusOptional<'a> {
+pub struct ReadNamespacedPodStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::read_core_v1_namespaced_pod_status`](./struct.Pod.html#method.read_core_v1_namespaced_pod_status)
+/// Parses the HTTP response of [`Pod::read_namespaced_pod_status`](./struct.Pod.html#method.read_namespaced_pod_status)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedPodStatusResponse {
+pub enum ReadNamespacedPodStatusResponse {
     Ok(crate::v1_11::api::core::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedPodStatusResponse {
+impl crate::Response for ReadNamespacedPodStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2375,10 +2375,10 @@ impl crate::Response for ReadCoreV1NamespacedPodStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedPodStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedPodStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedPodStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedPodStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPodStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedPodStatusResponse::Other, 0)),
         }
     }
 }
@@ -2388,7 +2388,7 @@ impl crate::Response for ReadCoreV1NamespacedPodStatusResponse {
 impl Pod {
     /// replace the specified Pod
     ///
-    /// Use [`ReplaceCoreV1NamespacedPodResponse`](./enum.ReplaceCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedPodResponse`](./enum.ReplaceNamespacedPodResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2405,13 +2405,13 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_pod(
+    pub fn replace_namespaced_pod(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::api::core::v1::Pod,
-        optional: ReplaceCoreV1NamespacedPodOptional<'_>,
+        optional: ReplaceNamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedPodOptional {
+        let ReplaceNamespacedPodOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}?", name = name, namespace = namespace);
@@ -2427,23 +2427,23 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::replace_core_v1_namespaced_pod`](./struct.Pod.html#method.replace_core_v1_namespaced_pod)
+/// Optional parameters of [`Pod::replace_namespaced_pod`](./struct.Pod.html#method.replace_namespaced_pod)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedPodOptional<'a> {
+pub struct ReplaceNamespacedPodOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::replace_core_v1_namespaced_pod`](./struct.Pod.html#method.replace_core_v1_namespaced_pod)
+/// Parses the HTTP response of [`Pod::replace_namespaced_pod`](./struct.Pod.html#method.replace_namespaced_pod)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedPodResponse {
+pub enum ReplaceNamespacedPodResponse {
     Ok(crate::v1_11::api::core::v1::Pod),
     Created(crate::v1_11::api::core::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedPodResponse {
+impl crate::Response for ReplaceNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2452,7 +2452,7 @@ impl crate::Response for ReplaceCoreV1NamespacedPodResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedPodResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedPodResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -2460,10 +2460,10 @@ impl crate::Response for ReplaceCoreV1NamespacedPodResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedPodResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedPodResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPodResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedPodResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPodResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedPodResponse::Other, 0)),
         }
     }
 }
@@ -2473,7 +2473,7 @@ impl crate::Response for ReplaceCoreV1NamespacedPodResponse {
 impl Pod {
     /// replace status of the specified Pod
     ///
-    /// Use [`ReplaceCoreV1NamespacedPodStatusResponse`](./enum.ReplaceCoreV1NamespacedPodStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedPodStatusResponse`](./enum.ReplaceNamespacedPodStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2490,13 +2490,13 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_pod_status(
+    pub fn replace_namespaced_pod_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_11::api::core::v1::Pod,
-        optional: ReplaceCoreV1NamespacedPodStatusOptional<'_>,
+        optional: ReplaceNamespacedPodStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedPodStatusOptional {
+        let ReplaceNamespacedPodStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/pods/{name}/status?", name = name, namespace = namespace);
@@ -2512,23 +2512,23 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::replace_core_v1_namespaced_pod_status`](./struct.Pod.html#method.replace_core_v1_namespaced_pod_status)
+/// Optional parameters of [`Pod::replace_namespaced_pod_status`](./struct.Pod.html#method.replace_namespaced_pod_status)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedPodStatusOptional<'a> {
+pub struct ReplaceNamespacedPodStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Pod::replace_core_v1_namespaced_pod_status`](./struct.Pod.html#method.replace_core_v1_namespaced_pod_status)
+/// Parses the HTTP response of [`Pod::replace_namespaced_pod_status`](./struct.Pod.html#method.replace_namespaced_pod_status)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedPodStatusResponse {
+pub enum ReplaceNamespacedPodStatusResponse {
     Ok(crate::v1_11::api::core::v1::Pod),
     Created(crate::v1_11::api::core::v1::Pod),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedPodStatusResponse {
+impl crate::Response for ReplaceNamespacedPodStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2537,7 +2537,7 @@ impl crate::Response for ReplaceCoreV1NamespacedPodStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedPodStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedPodStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -2545,10 +2545,10 @@ impl crate::Response for ReplaceCoreV1NamespacedPodStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedPodStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedPodStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedPodStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedPodStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPodStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedPodStatusResponse::Other, 0)),
         }
     }
 }
@@ -2558,7 +2558,7 @@ impl crate::Response for ReplaceCoreV1NamespacedPodStatusResponse {
 impl Pod {
     /// watch changes to an object of kind Pod
     ///
-    /// Use [`WatchCoreV1NamespacedPodResponse`](./enum.WatchCoreV1NamespacedPodResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedPodResponse`](./enum.WatchNamespacedPodResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2573,12 +2573,12 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_pod(
+    pub fn watch_namespaced_pod(
         name: &str,
         namespace: &str,
-        optional: WatchCoreV1NamespacedPodOptional<'_>,
+        optional: WatchNamespacedPodOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedPodOptional {
+        let WatchNamespacedPodOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -2626,9 +2626,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::watch_core_v1_namespaced_pod`](./struct.Pod.html#method.watch_core_v1_namespaced_pod)
+/// Optional parameters of [`Pod::watch_namespaced_pod`](./struct.Pod.html#method.watch_namespaced_pod)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedPodOptional<'a> {
+pub struct WatchNamespacedPodOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -2651,15 +2651,15 @@ pub struct WatchCoreV1NamespacedPodOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::watch_core_v1_namespaced_pod`](./struct.Pod.html#method.watch_core_v1_namespaced_pod)
+/// Parses the HTTP response of [`Pod::watch_namespaced_pod`](./struct.Pod.html#method.watch_namespaced_pod)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedPodResponse {
+pub enum WatchNamespacedPodResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedPodResponse {
+impl crate::Response for WatchNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2670,10 +2670,10 @@ impl crate::Response for WatchCoreV1NamespacedPodResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedPodResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedPodResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPodResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedPodResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPodResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedPodResponse::Other, 0)),
         }
     }
 }
@@ -2683,7 +2683,7 @@ impl crate::Response for WatchCoreV1NamespacedPodResponse {
 impl Pod {
     /// watch individual changes to a list of Pod
     ///
-    /// Use [`WatchCoreV1NamespacedPodListResponse`](./enum.WatchCoreV1NamespacedPodListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedPodListResponse`](./enum.WatchNamespacedPodListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2694,11 +2694,11 @@ impl Pod {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_pod_list(
+    pub fn watch_namespaced_pod_list(
         namespace: &str,
-        optional: WatchCoreV1NamespacedPodListOptional<'_>,
+        optional: WatchNamespacedPodListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedPodListOptional {
+        let WatchNamespacedPodListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -2746,9 +2746,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::watch_core_v1_namespaced_pod_list`](./struct.Pod.html#method.watch_core_v1_namespaced_pod_list)
+/// Optional parameters of [`Pod::watch_namespaced_pod_list`](./struct.Pod.html#method.watch_namespaced_pod_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedPodListOptional<'a> {
+pub struct WatchNamespacedPodListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -2771,15 +2771,15 @@ pub struct WatchCoreV1NamespacedPodListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::watch_core_v1_namespaced_pod_list`](./struct.Pod.html#method.watch_core_v1_namespaced_pod_list)
+/// Parses the HTTP response of [`Pod::watch_namespaced_pod_list`](./struct.Pod.html#method.watch_namespaced_pod_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedPodListResponse {
+pub enum WatchNamespacedPodListResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedPodListResponse {
+impl crate::Response for WatchNamespacedPodListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2790,10 +2790,10 @@ impl crate::Response for WatchCoreV1NamespacedPodListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedPodListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedPodListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedPodListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedPodListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPodListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedPodListResponse::Other, 0)),
         }
     }
 }
@@ -2803,17 +2803,17 @@ impl crate::Response for WatchCoreV1NamespacedPodListResponse {
 impl Pod {
     /// watch individual changes to a list of Pod
     ///
-    /// Use [`WatchCoreV1PodListForAllNamespacesResponse`](./enum.WatchCoreV1PodListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchPodListForAllNamespacesResponse`](./enum.WatchPodListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_pod_list_for_all_namespaces(
-        optional: WatchCoreV1PodListForAllNamespacesOptional<'_>,
+    pub fn watch_pod_list_for_all_namespaces(
+        optional: WatchPodListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1PodListForAllNamespacesOptional {
+        let WatchPodListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -2861,9 +2861,9 @@ impl Pod {
     }
 }
 
-/// Optional parameters of [`Pod::watch_core_v1_pod_list_for_all_namespaces`](./struct.Pod.html#method.watch_core_v1_pod_list_for_all_namespaces)
+/// Optional parameters of [`Pod::watch_pod_list_for_all_namespaces`](./struct.Pod.html#method.watch_pod_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1PodListForAllNamespacesOptional<'a> {
+pub struct WatchPodListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -2886,15 +2886,15 @@ pub struct WatchCoreV1PodListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Pod::watch_core_v1_pod_list_for_all_namespaces`](./struct.Pod.html#method.watch_core_v1_pod_list_for_all_namespaces)
+/// Parses the HTTP response of [`Pod::watch_pod_list_for_all_namespaces`](./struct.Pod.html#method.watch_pod_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchCoreV1PodListForAllNamespacesResponse {
+pub enum WatchPodListForAllNamespacesResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1PodListForAllNamespacesResponse {
+impl crate::Response for WatchPodListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -2905,10 +2905,10 @@ impl crate::Response for WatchCoreV1PodListForAllNamespacesResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1PodListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchPodListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1PodListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1PodListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPodListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchPodListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

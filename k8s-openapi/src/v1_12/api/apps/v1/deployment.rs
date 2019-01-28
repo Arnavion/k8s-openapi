@@ -20,7 +20,7 @@ pub struct Deployment {
 impl Deployment {
     /// create a Deployment
     ///
-    /// Use [`CreateAppsV1NamespacedDeploymentResponse`](./enum.CreateAppsV1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedDeploymentResponse`](./enum.CreateNamespacedDeploymentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_apps_v1_namespaced_deployment(
+    pub fn create_namespaced_deployment(
         namespace: &str,
         body: &crate::v1_12::api::apps::v1::Deployment,
-        optional: CreateAppsV1NamespacedDeploymentOptional<'_>,
+        optional: CreateNamespacedDeploymentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAppsV1NamespacedDeploymentOptional {
+        let CreateNamespacedDeploymentOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -62,9 +62,9 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::create_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.create_apps_v1_namespaced_deployment)
+/// Optional parameters of [`Deployment::create_namespaced_deployment`](./struct.Deployment.html#method.create_namespaced_deployment)
 #[derive(Debug, Default)]
-pub struct CreateAppsV1NamespacedDeploymentOptional<'a> {
+pub struct CreateNamespacedDeploymentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -73,9 +73,9 @@ pub struct CreateAppsV1NamespacedDeploymentOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::create_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.create_apps_v1_namespaced_deployment)
+/// Parses the HTTP response of [`Deployment::create_namespaced_deployment`](./struct.Deployment.html#method.create_namespaced_deployment)
 #[derive(Debug)]
-pub enum CreateAppsV1NamespacedDeploymentResponse {
+pub enum CreateNamespacedDeploymentResponse {
     Ok(crate::v1_12::api::apps::v1::Deployment),
     Created(crate::v1_12::api::apps::v1::Deployment),
     Accepted(crate::v1_12::api::apps::v1::Deployment),
@@ -83,7 +83,7 @@ pub enum CreateAppsV1NamespacedDeploymentResponse {
     Other,
 }
 
-impl crate::Response for CreateAppsV1NamespacedDeploymentResponse {
+impl crate::Response for CreateNamespacedDeploymentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -92,7 +92,7 @@ impl crate::Response for CreateAppsV1NamespacedDeploymentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1NamespacedDeploymentResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedDeploymentResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -100,7 +100,7 @@ impl crate::Response for CreateAppsV1NamespacedDeploymentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1NamespacedDeploymentResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedDeploymentResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -108,10 +108,10 @@ impl crate::Response for CreateAppsV1NamespacedDeploymentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1NamespacedDeploymentResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedDeploymentResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1NamespacedDeploymentResponse::Unauthorized, 0)),
-            _ => Ok((CreateAppsV1NamespacedDeploymentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedDeploymentResponse::Other, 0)),
         }
     }
 }
@@ -121,7 +121,7 @@ impl crate::Response for CreateAppsV1NamespacedDeploymentResponse {
 impl Deployment {
     /// delete collection of Deployment
     ///
-    /// Use [`DeleteAppsV1CollectionNamespacedDeploymentResponse`](./enum.DeleteAppsV1CollectionNamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedDeploymentResponse`](./enum.DeleteCollectionNamespacedDeploymentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -132,11 +132,11 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apps_v1_collection_namespaced_deployment(
+    pub fn delete_collection_namespaced_deployment(
         namespace: &str,
-        optional: DeleteAppsV1CollectionNamespacedDeploymentOptional<'_>,
+        optional: DeleteCollectionNamespacedDeploymentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAppsV1CollectionNamespacedDeploymentOptional {
+        let DeleteCollectionNamespacedDeploymentOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -184,9 +184,9 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::delete_apps_v1_collection_namespaced_deployment`](./struct.Deployment.html#method.delete_apps_v1_collection_namespaced_deployment)
+/// Optional parameters of [`Deployment::delete_collection_namespaced_deployment`](./struct.Deployment.html#method.delete_collection_namespaced_deployment)
 #[derive(Debug, Default)]
-pub struct DeleteAppsV1CollectionNamespacedDeploymentOptional<'a> {
+pub struct DeleteCollectionNamespacedDeploymentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -211,16 +211,16 @@ pub struct DeleteAppsV1CollectionNamespacedDeploymentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::delete_apps_v1_collection_namespaced_deployment`](./struct.Deployment.html#method.delete_apps_v1_collection_namespaced_deployment)
+/// Parses the HTTP response of [`Deployment::delete_collection_namespaced_deployment`](./struct.Deployment.html#method.delete_collection_namespaced_deployment)
 #[derive(Debug)]
-pub enum DeleteAppsV1CollectionNamespacedDeploymentResponse {
+pub enum DeleteCollectionNamespacedDeploymentResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::apps::v1::Deployment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAppsV1CollectionNamespacedDeploymentResponse {
+impl crate::Response for DeleteCollectionNamespacedDeploymentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -236,16 +236,16 @@ impl crate::Response for DeleteAppsV1CollectionNamespacedDeploymentResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1CollectionNamespacedDeploymentResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedDeploymentResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1CollectionNamespacedDeploymentResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedDeploymentResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1CollectionNamespacedDeploymentResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAppsV1CollectionNamespacedDeploymentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedDeploymentResponse::Other, 0)),
         }
     }
 }
@@ -255,7 +255,7 @@ impl crate::Response for DeleteAppsV1CollectionNamespacedDeploymentResponse {
 impl Deployment {
     /// delete a Deployment
     ///
-    /// Use [`DeleteAppsV1NamespacedDeploymentResponse`](./enum.DeleteAppsV1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedDeploymentResponse`](./enum.DeleteNamespacedDeploymentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -270,12 +270,12 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apps_v1_namespaced_deployment(
+    pub fn delete_namespaced_deployment(
         name: &str,
         namespace: &str,
-        optional: DeleteAppsV1NamespacedDeploymentOptional<'_>,
+        optional: DeleteNamespacedDeploymentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAppsV1NamespacedDeploymentOptional {
+        let DeleteNamespacedDeploymentOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -307,9 +307,9 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::delete_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.delete_apps_v1_namespaced_deployment)
+/// Optional parameters of [`Deployment::delete_namespaced_deployment`](./struct.Deployment.html#method.delete_namespaced_deployment)
 #[derive(Debug, Default)]
-pub struct DeleteAppsV1NamespacedDeploymentOptional<'a> {
+pub struct DeleteNamespacedDeploymentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -322,9 +322,9 @@ pub struct DeleteAppsV1NamespacedDeploymentOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::delete_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.delete_apps_v1_namespaced_deployment)
+/// Parses the HTTP response of [`Deployment::delete_namespaced_deployment`](./struct.Deployment.html#method.delete_namespaced_deployment)
 #[derive(Debug)]
-pub enum DeleteAppsV1NamespacedDeploymentResponse {
+pub enum DeleteNamespacedDeploymentResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::apps::v1::Deployment),
     Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -332,7 +332,7 @@ pub enum DeleteAppsV1NamespacedDeploymentResponse {
     Other,
 }
 
-impl crate::Response for DeleteAppsV1NamespacedDeploymentResponse {
+impl crate::Response for DeleteNamespacedDeploymentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -348,12 +348,12 @@ impl crate::Response for DeleteAppsV1NamespacedDeploymentResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1NamespacedDeploymentResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedDeploymentResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1NamespacedDeploymentResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedDeploymentResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -362,10 +362,10 @@ impl crate::Response for DeleteAppsV1NamespacedDeploymentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteAppsV1NamespacedDeploymentResponse::Accepted(result), buf.len()))
+                Ok((DeleteNamespacedDeploymentResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1NamespacedDeploymentResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAppsV1NamespacedDeploymentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedDeploymentResponse::Other, 0)),
         }
     }
 }
@@ -375,17 +375,17 @@ impl crate::Response for DeleteAppsV1NamespacedDeploymentResponse {
 impl Deployment {
     /// list or watch objects of kind Deployment
     ///
-    /// Use [`ListAppsV1DeploymentForAllNamespacesResponse`](./enum.ListAppsV1DeploymentForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListDeploymentForAllNamespacesResponse`](./enum.ListDeploymentForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apps_v1_deployment_for_all_namespaces(
-        optional: ListAppsV1DeploymentForAllNamespacesOptional<'_>,
+    pub fn list_deployment_for_all_namespaces(
+        optional: ListDeploymentForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAppsV1DeploymentForAllNamespacesOptional {
+        let ListDeploymentForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -433,9 +433,9 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::list_apps_v1_deployment_for_all_namespaces`](./struct.Deployment.html#method.list_apps_v1_deployment_for_all_namespaces)
+/// Optional parameters of [`Deployment::list_deployment_for_all_namespaces`](./struct.Deployment.html#method.list_deployment_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListAppsV1DeploymentForAllNamespacesOptional<'a> {
+pub struct ListDeploymentForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -460,15 +460,15 @@ pub struct ListAppsV1DeploymentForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::list_apps_v1_deployment_for_all_namespaces`](./struct.Deployment.html#method.list_apps_v1_deployment_for_all_namespaces)
+/// Parses the HTTP response of [`Deployment::list_deployment_for_all_namespaces`](./struct.Deployment.html#method.list_deployment_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListAppsV1DeploymentForAllNamespacesResponse {
+pub enum ListDeploymentForAllNamespacesResponse {
     Ok(crate::v1_12::api::apps::v1::DeploymentList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAppsV1DeploymentForAllNamespacesResponse {
+impl crate::Response for ListDeploymentForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -477,10 +477,10 @@ impl crate::Response for ListAppsV1DeploymentForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAppsV1DeploymentForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListDeploymentForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1DeploymentForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListAppsV1DeploymentForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListDeploymentForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListDeploymentForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -490,7 +490,7 @@ impl crate::Response for ListAppsV1DeploymentForAllNamespacesResponse {
 impl Deployment {
     /// list or watch objects of kind Deployment
     ///
-    /// Use [`ListAppsV1NamespacedDeploymentResponse`](./enum.ListAppsV1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedDeploymentResponse`](./enum.ListNamespacedDeploymentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -501,11 +501,11 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apps_v1_namespaced_deployment(
+    pub fn list_namespaced_deployment(
         namespace: &str,
-        optional: ListAppsV1NamespacedDeploymentOptional<'_>,
+        optional: ListNamespacedDeploymentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAppsV1NamespacedDeploymentOptional {
+        let ListNamespacedDeploymentOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -553,9 +553,9 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::list_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.list_apps_v1_namespaced_deployment)
+/// Optional parameters of [`Deployment::list_namespaced_deployment`](./struct.Deployment.html#method.list_namespaced_deployment)
 #[derive(Debug, Default)]
-pub struct ListAppsV1NamespacedDeploymentOptional<'a> {
+pub struct ListNamespacedDeploymentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -580,15 +580,15 @@ pub struct ListAppsV1NamespacedDeploymentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::list_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.list_apps_v1_namespaced_deployment)
+/// Parses the HTTP response of [`Deployment::list_namespaced_deployment`](./struct.Deployment.html#method.list_namespaced_deployment)
 #[derive(Debug)]
-pub enum ListAppsV1NamespacedDeploymentResponse {
+pub enum ListNamespacedDeploymentResponse {
     Ok(crate::v1_12::api::apps::v1::DeploymentList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAppsV1NamespacedDeploymentResponse {
+impl crate::Response for ListNamespacedDeploymentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -597,10 +597,10 @@ impl crate::Response for ListAppsV1NamespacedDeploymentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAppsV1NamespacedDeploymentResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1NamespacedDeploymentResponse::Unauthorized, 0)),
-            _ => Ok((ListAppsV1NamespacedDeploymentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedDeploymentResponse::Other, 0)),
         }
     }
 }
@@ -610,7 +610,7 @@ impl crate::Response for ListAppsV1NamespacedDeploymentResponse {
 impl Deployment {
     /// partially update the specified Deployment
     ///
-    /// Use [`PatchAppsV1NamespacedDeploymentResponse`](./enum.PatchAppsV1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedDeploymentResponse`](./enum.PatchNamespacedDeploymentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -627,13 +627,13 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apps_v1_namespaced_deployment(
+    pub fn patch_namespaced_deployment(
         name: &str,
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAppsV1NamespacedDeploymentOptional<'_>,
+        optional: PatchNamespacedDeploymentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAppsV1NamespacedDeploymentOptional {
+        let PatchNamespacedDeploymentOptional {
             dry_run,
             pretty,
         } = optional;
@@ -653,24 +653,24 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::patch_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.patch_apps_v1_namespaced_deployment)
+/// Optional parameters of [`Deployment::patch_namespaced_deployment`](./struct.Deployment.html#method.patch_namespaced_deployment)
 #[derive(Debug, Default)]
-pub struct PatchAppsV1NamespacedDeploymentOptional<'a> {
+pub struct PatchNamespacedDeploymentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::patch_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.patch_apps_v1_namespaced_deployment)
+/// Parses the HTTP response of [`Deployment::patch_namespaced_deployment`](./struct.Deployment.html#method.patch_namespaced_deployment)
 #[derive(Debug)]
-pub enum PatchAppsV1NamespacedDeploymentResponse {
+pub enum PatchNamespacedDeploymentResponse {
     Ok(crate::v1_12::api::apps::v1::Deployment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAppsV1NamespacedDeploymentResponse {
+impl crate::Response for PatchNamespacedDeploymentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -679,10 +679,10 @@ impl crate::Response for PatchAppsV1NamespacedDeploymentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAppsV1NamespacedDeploymentResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1NamespacedDeploymentResponse::Unauthorized, 0)),
-            _ => Ok((PatchAppsV1NamespacedDeploymentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedDeploymentResponse::Other, 0)),
         }
     }
 }
@@ -692,7 +692,7 @@ impl crate::Response for PatchAppsV1NamespacedDeploymentResponse {
 impl Deployment {
     /// partially update status of the specified Deployment
     ///
-    /// Use [`PatchAppsV1NamespacedDeploymentStatusResponse`](./enum.PatchAppsV1NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedDeploymentStatusResponse`](./enum.PatchNamespacedDeploymentStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -709,13 +709,13 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apps_v1_namespaced_deployment_status(
+    pub fn patch_namespaced_deployment_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAppsV1NamespacedDeploymentStatusOptional<'_>,
+        optional: PatchNamespacedDeploymentStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAppsV1NamespacedDeploymentStatusOptional {
+        let PatchNamespacedDeploymentStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -735,24 +735,24 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::patch_apps_v1_namespaced_deployment_status`](./struct.Deployment.html#method.patch_apps_v1_namespaced_deployment_status)
+/// Optional parameters of [`Deployment::patch_namespaced_deployment_status`](./struct.Deployment.html#method.patch_namespaced_deployment_status)
 #[derive(Debug, Default)]
-pub struct PatchAppsV1NamespacedDeploymentStatusOptional<'a> {
+pub struct PatchNamespacedDeploymentStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::patch_apps_v1_namespaced_deployment_status`](./struct.Deployment.html#method.patch_apps_v1_namespaced_deployment_status)
+/// Parses the HTTP response of [`Deployment::patch_namespaced_deployment_status`](./struct.Deployment.html#method.patch_namespaced_deployment_status)
 #[derive(Debug)]
-pub enum PatchAppsV1NamespacedDeploymentStatusResponse {
+pub enum PatchNamespacedDeploymentStatusResponse {
     Ok(crate::v1_12::api::apps::v1::Deployment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAppsV1NamespacedDeploymentStatusResponse {
+impl crate::Response for PatchNamespacedDeploymentStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -761,10 +761,10 @@ impl crate::Response for PatchAppsV1NamespacedDeploymentStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAppsV1NamespacedDeploymentStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedDeploymentStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1NamespacedDeploymentStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchAppsV1NamespacedDeploymentStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedDeploymentStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedDeploymentStatusResponse::Other, 0)),
         }
     }
 }
@@ -774,7 +774,7 @@ impl crate::Response for PatchAppsV1NamespacedDeploymentStatusResponse {
 impl Deployment {
     /// read the specified Deployment
     ///
-    /// Use [`ReadAppsV1NamespacedDeploymentResponse`](./enum.ReadAppsV1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedDeploymentResponse`](./enum.ReadNamespacedDeploymentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -789,12 +789,12 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apps_v1_namespaced_deployment(
+    pub fn read_namespaced_deployment(
         name: &str,
         namespace: &str,
-        optional: ReadAppsV1NamespacedDeploymentOptional<'_>,
+        optional: ReadNamespacedDeploymentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAppsV1NamespacedDeploymentOptional {
+        let ReadNamespacedDeploymentOptional {
             exact,
             export,
             pretty,
@@ -818,9 +818,9 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::read_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.read_apps_v1_namespaced_deployment)
+/// Optional parameters of [`Deployment::read_namespaced_deployment`](./struct.Deployment.html#method.read_namespaced_deployment)
 #[derive(Debug, Default)]
-pub struct ReadAppsV1NamespacedDeploymentOptional<'a> {
+pub struct ReadNamespacedDeploymentOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -829,15 +829,15 @@ pub struct ReadAppsV1NamespacedDeploymentOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::read_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.read_apps_v1_namespaced_deployment)
+/// Parses the HTTP response of [`Deployment::read_namespaced_deployment`](./struct.Deployment.html#method.read_namespaced_deployment)
 #[derive(Debug)]
-pub enum ReadAppsV1NamespacedDeploymentResponse {
+pub enum ReadNamespacedDeploymentResponse {
     Ok(crate::v1_12::api::apps::v1::Deployment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAppsV1NamespacedDeploymentResponse {
+impl crate::Response for ReadNamespacedDeploymentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -846,10 +846,10 @@ impl crate::Response for ReadAppsV1NamespacedDeploymentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAppsV1NamespacedDeploymentResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedDeploymentResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1NamespacedDeploymentResponse::Unauthorized, 0)),
-            _ => Ok((ReadAppsV1NamespacedDeploymentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedDeploymentResponse::Other, 0)),
         }
     }
 }
@@ -859,7 +859,7 @@ impl crate::Response for ReadAppsV1NamespacedDeploymentResponse {
 impl Deployment {
     /// read status of the specified Deployment
     ///
-    /// Use [`ReadAppsV1NamespacedDeploymentStatusResponse`](./enum.ReadAppsV1NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedDeploymentStatusResponse`](./enum.ReadNamespacedDeploymentStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -874,12 +874,12 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apps_v1_namespaced_deployment_status(
+    pub fn read_namespaced_deployment_status(
         name: &str,
         namespace: &str,
-        optional: ReadAppsV1NamespacedDeploymentStatusOptional<'_>,
+        optional: ReadNamespacedDeploymentStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAppsV1NamespacedDeploymentStatusOptional {
+        let ReadNamespacedDeploymentStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1/namespaces/{namespace}/deployments/{name}/status?", name = name, namespace = namespace);
@@ -895,22 +895,22 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::read_apps_v1_namespaced_deployment_status`](./struct.Deployment.html#method.read_apps_v1_namespaced_deployment_status)
+/// Optional parameters of [`Deployment::read_namespaced_deployment_status`](./struct.Deployment.html#method.read_namespaced_deployment_status)
 #[derive(Debug, Default)]
-pub struct ReadAppsV1NamespacedDeploymentStatusOptional<'a> {
+pub struct ReadNamespacedDeploymentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::read_apps_v1_namespaced_deployment_status`](./struct.Deployment.html#method.read_apps_v1_namespaced_deployment_status)
+/// Parses the HTTP response of [`Deployment::read_namespaced_deployment_status`](./struct.Deployment.html#method.read_namespaced_deployment_status)
 #[derive(Debug)]
-pub enum ReadAppsV1NamespacedDeploymentStatusResponse {
+pub enum ReadNamespacedDeploymentStatusResponse {
     Ok(crate::v1_12::api::apps::v1::Deployment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAppsV1NamespacedDeploymentStatusResponse {
+impl crate::Response for ReadNamespacedDeploymentStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -919,10 +919,10 @@ impl crate::Response for ReadAppsV1NamespacedDeploymentStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAppsV1NamespacedDeploymentStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedDeploymentStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1NamespacedDeploymentStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadAppsV1NamespacedDeploymentStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedDeploymentStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedDeploymentStatusResponse::Other, 0)),
         }
     }
 }
@@ -932,7 +932,7 @@ impl crate::Response for ReadAppsV1NamespacedDeploymentStatusResponse {
 impl Deployment {
     /// replace the specified Deployment
     ///
-    /// Use [`ReplaceAppsV1NamespacedDeploymentResponse`](./enum.ReplaceAppsV1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedDeploymentResponse`](./enum.ReplaceNamespacedDeploymentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -949,13 +949,13 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apps_v1_namespaced_deployment(
+    pub fn replace_namespaced_deployment(
         name: &str,
         namespace: &str,
         body: &crate::v1_12::api::apps::v1::Deployment,
-        optional: ReplaceAppsV1NamespacedDeploymentOptional<'_>,
+        optional: ReplaceNamespacedDeploymentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAppsV1NamespacedDeploymentOptional {
+        let ReplaceNamespacedDeploymentOptional {
             dry_run,
             pretty,
         } = optional;
@@ -975,25 +975,25 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::replace_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.replace_apps_v1_namespaced_deployment)
+/// Optional parameters of [`Deployment::replace_namespaced_deployment`](./struct.Deployment.html#method.replace_namespaced_deployment)
 #[derive(Debug, Default)]
-pub struct ReplaceAppsV1NamespacedDeploymentOptional<'a> {
+pub struct ReplaceNamespacedDeploymentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::replace_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.replace_apps_v1_namespaced_deployment)
+/// Parses the HTTP response of [`Deployment::replace_namespaced_deployment`](./struct.Deployment.html#method.replace_namespaced_deployment)
 #[derive(Debug)]
-pub enum ReplaceAppsV1NamespacedDeploymentResponse {
+pub enum ReplaceNamespacedDeploymentResponse {
     Ok(crate::v1_12::api::apps::v1::Deployment),
     Created(crate::v1_12::api::apps::v1::Deployment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAppsV1NamespacedDeploymentResponse {
+impl crate::Response for ReplaceNamespacedDeploymentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1002,7 +1002,7 @@ impl crate::Response for ReplaceAppsV1NamespacedDeploymentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1NamespacedDeploymentResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedDeploymentResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1010,10 +1010,10 @@ impl crate::Response for ReplaceAppsV1NamespacedDeploymentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1NamespacedDeploymentResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedDeploymentResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1NamespacedDeploymentResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAppsV1NamespacedDeploymentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedDeploymentResponse::Other, 0)),
         }
     }
 }
@@ -1023,7 +1023,7 @@ impl crate::Response for ReplaceAppsV1NamespacedDeploymentResponse {
 impl Deployment {
     /// replace status of the specified Deployment
     ///
-    /// Use [`ReplaceAppsV1NamespacedDeploymentStatusResponse`](./enum.ReplaceAppsV1NamespacedDeploymentStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedDeploymentStatusResponse`](./enum.ReplaceNamespacedDeploymentStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1040,13 +1040,13 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apps_v1_namespaced_deployment_status(
+    pub fn replace_namespaced_deployment_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_12::api::apps::v1::Deployment,
-        optional: ReplaceAppsV1NamespacedDeploymentStatusOptional<'_>,
+        optional: ReplaceNamespacedDeploymentStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAppsV1NamespacedDeploymentStatusOptional {
+        let ReplaceNamespacedDeploymentStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -1066,25 +1066,25 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::replace_apps_v1_namespaced_deployment_status`](./struct.Deployment.html#method.replace_apps_v1_namespaced_deployment_status)
+/// Optional parameters of [`Deployment::replace_namespaced_deployment_status`](./struct.Deployment.html#method.replace_namespaced_deployment_status)
 #[derive(Debug, Default)]
-pub struct ReplaceAppsV1NamespacedDeploymentStatusOptional<'a> {
+pub struct ReplaceNamespacedDeploymentStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::replace_apps_v1_namespaced_deployment_status`](./struct.Deployment.html#method.replace_apps_v1_namespaced_deployment_status)
+/// Parses the HTTP response of [`Deployment::replace_namespaced_deployment_status`](./struct.Deployment.html#method.replace_namespaced_deployment_status)
 #[derive(Debug)]
-pub enum ReplaceAppsV1NamespacedDeploymentStatusResponse {
+pub enum ReplaceNamespacedDeploymentStatusResponse {
     Ok(crate::v1_12::api::apps::v1::Deployment),
     Created(crate::v1_12::api::apps::v1::Deployment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAppsV1NamespacedDeploymentStatusResponse {
+impl crate::Response for ReplaceNamespacedDeploymentStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1093,7 +1093,7 @@ impl crate::Response for ReplaceAppsV1NamespacedDeploymentStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1NamespacedDeploymentStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedDeploymentStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1101,10 +1101,10 @@ impl crate::Response for ReplaceAppsV1NamespacedDeploymentStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1NamespacedDeploymentStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedDeploymentStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1NamespacedDeploymentStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAppsV1NamespacedDeploymentStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedDeploymentStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedDeploymentStatusResponse::Other, 0)),
         }
     }
 }
@@ -1114,17 +1114,17 @@ impl crate::Response for ReplaceAppsV1NamespacedDeploymentStatusResponse {
 impl Deployment {
     /// watch individual changes to a list of Deployment. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchAppsV1DeploymentListForAllNamespacesResponse`](./enum.WatchAppsV1DeploymentListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchDeploymentListForAllNamespacesResponse`](./enum.WatchDeploymentListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1_deployment_list_for_all_namespaces(
-        optional: WatchAppsV1DeploymentListForAllNamespacesOptional<'_>,
+    pub fn watch_deployment_list_for_all_namespaces(
+        optional: WatchDeploymentListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1DeploymentListForAllNamespacesOptional {
+        let WatchDeploymentListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1172,9 +1172,9 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::watch_apps_v1_deployment_list_for_all_namespaces`](./struct.Deployment.html#method.watch_apps_v1_deployment_list_for_all_namespaces)
+/// Optional parameters of [`Deployment::watch_deployment_list_for_all_namespaces`](./struct.Deployment.html#method.watch_deployment_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1DeploymentListForAllNamespacesOptional<'a> {
+pub struct WatchDeploymentListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1199,15 +1199,15 @@ pub struct WatchAppsV1DeploymentListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::watch_apps_v1_deployment_list_for_all_namespaces`](./struct.Deployment.html#method.watch_apps_v1_deployment_list_for_all_namespaces)
+/// Parses the HTTP response of [`Deployment::watch_deployment_list_for_all_namespaces`](./struct.Deployment.html#method.watch_deployment_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchAppsV1DeploymentListForAllNamespacesResponse {
+pub enum WatchDeploymentListForAllNamespacesResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1DeploymentListForAllNamespacesResponse {
+impl crate::Response for WatchDeploymentListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1218,10 +1218,10 @@ impl crate::Response for WatchAppsV1DeploymentListForAllNamespacesResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1DeploymentListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchDeploymentListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1DeploymentListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1DeploymentListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchDeploymentListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchDeploymentListForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -1231,7 +1231,7 @@ impl crate::Response for WatchAppsV1DeploymentListForAllNamespacesResponse {
 impl Deployment {
     /// watch changes to an object of kind Deployment. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchAppsV1NamespacedDeploymentResponse`](./enum.WatchAppsV1NamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedDeploymentResponse`](./enum.WatchNamespacedDeploymentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1246,12 +1246,12 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1_namespaced_deployment(
+    pub fn watch_namespaced_deployment(
         name: &str,
         namespace: &str,
-        optional: WatchAppsV1NamespacedDeploymentOptional<'_>,
+        optional: WatchNamespacedDeploymentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1NamespacedDeploymentOptional {
+        let WatchNamespacedDeploymentOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1299,9 +1299,9 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::watch_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.watch_apps_v1_namespaced_deployment)
+/// Optional parameters of [`Deployment::watch_namespaced_deployment`](./struct.Deployment.html#method.watch_namespaced_deployment)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1NamespacedDeploymentOptional<'a> {
+pub struct WatchNamespacedDeploymentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1326,15 +1326,15 @@ pub struct WatchAppsV1NamespacedDeploymentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::watch_apps_v1_namespaced_deployment`](./struct.Deployment.html#method.watch_apps_v1_namespaced_deployment)
+/// Parses the HTTP response of [`Deployment::watch_namespaced_deployment`](./struct.Deployment.html#method.watch_namespaced_deployment)
 #[derive(Debug)]
-pub enum WatchAppsV1NamespacedDeploymentResponse {
+pub enum WatchNamespacedDeploymentResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1NamespacedDeploymentResponse {
+impl crate::Response for WatchNamespacedDeploymentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1345,10 +1345,10 @@ impl crate::Response for WatchAppsV1NamespacedDeploymentResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1NamespacedDeploymentResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedDeploymentResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1NamespacedDeploymentResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1NamespacedDeploymentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedDeploymentResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedDeploymentResponse::Other, 0)),
         }
     }
 }
@@ -1358,7 +1358,7 @@ impl crate::Response for WatchAppsV1NamespacedDeploymentResponse {
 impl Deployment {
     /// watch individual changes to a list of Deployment. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchAppsV1NamespacedDeploymentListResponse`](./enum.WatchAppsV1NamespacedDeploymentListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedDeploymentListResponse`](./enum.WatchNamespacedDeploymentListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1369,11 +1369,11 @@ impl Deployment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1_namespaced_deployment_list(
+    pub fn watch_namespaced_deployment_list(
         namespace: &str,
-        optional: WatchAppsV1NamespacedDeploymentListOptional<'_>,
+        optional: WatchNamespacedDeploymentListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1NamespacedDeploymentListOptional {
+        let WatchNamespacedDeploymentListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1421,9 +1421,9 @@ impl Deployment {
     }
 }
 
-/// Optional parameters of [`Deployment::watch_apps_v1_namespaced_deployment_list`](./struct.Deployment.html#method.watch_apps_v1_namespaced_deployment_list)
+/// Optional parameters of [`Deployment::watch_namespaced_deployment_list`](./struct.Deployment.html#method.watch_namespaced_deployment_list)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1NamespacedDeploymentListOptional<'a> {
+pub struct WatchNamespacedDeploymentListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1448,15 +1448,15 @@ pub struct WatchAppsV1NamespacedDeploymentListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::watch_apps_v1_namespaced_deployment_list`](./struct.Deployment.html#method.watch_apps_v1_namespaced_deployment_list)
+/// Parses the HTTP response of [`Deployment::watch_namespaced_deployment_list`](./struct.Deployment.html#method.watch_namespaced_deployment_list)
 #[derive(Debug)]
-pub enum WatchAppsV1NamespacedDeploymentListResponse {
+pub enum WatchNamespacedDeploymentListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1NamespacedDeploymentListResponse {
+impl crate::Response for WatchNamespacedDeploymentListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1467,10 +1467,10 @@ impl crate::Response for WatchAppsV1NamespacedDeploymentListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1NamespacedDeploymentListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedDeploymentListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1NamespacedDeploymentListResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1NamespacedDeploymentListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedDeploymentListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedDeploymentListResponse::Other, 0)),
         }
     }
 }

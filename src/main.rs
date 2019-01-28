@@ -1018,13 +1018,39 @@ fn write_operation(
 
 	writeln!(file, "// Generated from operation {}", operation.id)?;
 
+	let operation_id =
+		if type_name.is_some() {
+			// For functions associatd with types (eg `Pod::list_core_v1_namespaced_pod`), the API version contained in the operation name
+			// is already obvious from the type's path (`core::v1::Pod`), so it can be stripped (`list_namespaced_pod`).
+			let tag: String =
+				operation.tag.split('_')
+				.map(|part| {
+					let mut chars = part.chars();
+					if let Some(first_char) = chars.next() {
+						let rest_chars = chars.as_str();
+						std::borrow::Cow::Owned(format!("{}{}", first_char.to_uppercase(), rest_chars))
+					}
+					else {
+						std::borrow::Cow::Borrowed("")
+					}
+				})
+				.collect();
+
+			std::borrow::Cow::Owned(operation.id.replace(&tag, ""))
+		}
+		else {
+			// Functions not associated with types (eg `::get_core_v1_api_resources`) get emitted at the mod root,
+			// so their ID should be used as-is.
+			std::borrow::Cow::Borrowed(&operation.id)
+		};
+
 	let (operation_result_name, operation_optional_parameters_name) = {
-		let mut operation_id_chars = operation.id.chars();
-		let first_operation_id_chars = operation_id_chars.next().ok_or_else(|| format!("operation has empty ID: {:?}", operation))?.to_uppercase();
-		let rest_operation_id_chars = operation_id_chars.as_str();
+		let mut chars = operation_id.chars();
+		let first_char = chars.next().ok_or_else(|| format!("operation has empty ID: {:?}", operation))?.to_uppercase();
+		let rest_chars = chars.as_str();
 		(
-			format!("{}{}Response", first_operation_id_chars, rest_operation_id_chars),
-			format!("{}{}Optional", first_operation_id_chars, rest_operation_id_chars),
+			format!("{}{}Response", first_char, rest_chars),
+			format!("{}{}Optional", first_char, rest_chars),
 		)
 	};
 
@@ -1076,7 +1102,7 @@ fn write_operation(
 		writeln!(file, "impl {} {{", type_name)?;
 	}
 
-	let operation_fn_name = get_rust_ident(&operation.id);
+	let operation_fn_name = get_rust_ident(&operation_id);
 
 	let mut parameters: Vec<_> = path_item.parameters.iter().collect();
 	for parameter in &operation.parameters {

@@ -64,7 +64,7 @@
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     // Create a `http::Request` to list all the pods in the
 //!     // "kube-system" namespace.
-//!     let request = api::Pod::list_core_v1_namespaced_pod("kube-system", Default::default())?;
+//!     let request = api::Pod::list_namespaced_pod("kube-system", Default::default())?;
 //!
 //!     // Execute the request and get a response.
 //!     // If this is an asynchronous operation, you would await
@@ -98,8 +98,8 @@
 //!         // to the `ResponseBody` and try to parse it into
 //!         // the response type.
 //!         //
-//!         // For `Pod::list_core_v1_namespaced_pod` this is the
-//!         // `ListCoreV1NamespacedPodResponse` type.
+//!         // For `Pod::list_namespaced_pod` this is the
+//!         // `ListNamespacedPodResponse` type.
 //!         //
 //!         // `ResponseBody::parse` internally calls
 //!         // `Response::try_from_parts` for the response type. So you would
@@ -108,7 +108,7 @@
 //!         let response = response_body.parse();
 //!         match response {
 //!             // Successful response (HTTP 200 and parsed successfully)
-//!             Ok(api::ListCoreV1NamespacedPodResponse::Ok(pod_list)) =>
+//!             Ok(api::ListNamespacedPodResponse::Ok(pod_list)) =>
 //!                 break pod_list,
 //!
 //!             // Some unexpected response

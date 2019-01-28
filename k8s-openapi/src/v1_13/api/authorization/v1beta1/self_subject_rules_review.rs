@@ -19,7 +19,7 @@ pub struct SelfSubjectRulesReview {
 impl SelfSubjectRulesReview {
     /// create a SelfSubjectRulesReview
     ///
-    /// Use [`CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse`](./enum.CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse.html) to parse the HTTP response.
+    /// Use [`CreateSelfSubjectRulesReviewResponse`](./enum.CreateSelfSubjectRulesReviewResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -28,11 +28,11 @@ impl SelfSubjectRulesReview {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_authorization_v1beta1_self_subject_rules_review(
+    pub fn create_self_subject_rules_review(
         body: &crate::v1_13::api::authorization::v1beta1::SelfSubjectRulesReview,
-        optional: CreateAuthorizationV1beta1SelfSubjectRulesReviewOptional<'_>,
+        optional: CreateSelfSubjectRulesReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAuthorizationV1beta1SelfSubjectRulesReviewOptional {
+        let CreateSelfSubjectRulesReviewOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -56,9 +56,9 @@ impl SelfSubjectRulesReview {
     }
 }
 
-/// Optional parameters of [`SelfSubjectRulesReview::create_authorization_v1beta1_self_subject_rules_review`](./struct.SelfSubjectRulesReview.html#method.create_authorization_v1beta1_self_subject_rules_review)
+/// Optional parameters of [`SelfSubjectRulesReview::create_self_subject_rules_review`](./struct.SelfSubjectRulesReview.html#method.create_self_subject_rules_review)
 #[derive(Debug, Default)]
-pub struct CreateAuthorizationV1beta1SelfSubjectRulesReviewOptional<'a> {
+pub struct CreateSelfSubjectRulesReviewOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If IncludeUninitialized is specified, the object may be returned without completing initialization.
@@ -67,9 +67,9 @@ pub struct CreateAuthorizationV1beta1SelfSubjectRulesReviewOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`SelfSubjectRulesReview::create_authorization_v1beta1_self_subject_rules_review`](./struct.SelfSubjectRulesReview.html#method.create_authorization_v1beta1_self_subject_rules_review)
+/// Parses the HTTP response of [`SelfSubjectRulesReview::create_self_subject_rules_review`](./struct.SelfSubjectRulesReview.html#method.create_self_subject_rules_review)
 #[derive(Debug)]
-pub enum CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse {
+pub enum CreateSelfSubjectRulesReviewResponse {
     Ok(crate::v1_13::api::authorization::v1beta1::SelfSubjectRulesReview),
     Created(crate::v1_13::api::authorization::v1beta1::SelfSubjectRulesReview),
     Accepted(crate::v1_13::api::authorization::v1beta1::SelfSubjectRulesReview),
@@ -77,7 +77,7 @@ pub enum CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse {
     Other,
 }
 
-impl crate::Response for CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse {
+impl crate::Response for CreateSelfSubjectRulesReviewResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -86,7 +86,7 @@ impl crate::Response for CreateAuthorizationV1beta1SelfSubjectRulesReviewRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse::Ok(result), buf.len()))
+                Ok((CreateSelfSubjectRulesReviewResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -94,7 +94,7 @@ impl crate::Response for CreateAuthorizationV1beta1SelfSubjectRulesReviewRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse::Created(result), buf.len()))
+                Ok((CreateSelfSubjectRulesReviewResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -102,10 +102,10 @@ impl crate::Response for CreateAuthorizationV1beta1SelfSubjectRulesReviewRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse::Accepted(result), buf.len()))
+                Ok((CreateSelfSubjectRulesReviewResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse::Unauthorized, 0)),
-            _ => Ok((CreateAuthorizationV1beta1SelfSubjectRulesReviewResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateSelfSubjectRulesReviewResponse::Unauthorized, 0)),
+            _ => Ok((CreateSelfSubjectRulesReviewResponse::Other, 0)),
         }
     }
 }

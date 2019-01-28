@@ -20,7 +20,7 @@ pub struct DeploymentRollback {
 impl DeploymentRollback {
     /// create rollback of a Deployment
     ///
-    /// Use [`CreateAppsV1beta1NamespacedDeploymentRollbackResponse`](./enum.CreateAppsV1beta1NamespacedDeploymentRollbackResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedDeploymentRollbackResponse`](./enum.CreateNamespacedDeploymentRollbackResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,13 +37,13 @@ impl DeploymentRollback {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_apps_v1beta1_namespaced_deployment_rollback(
+    pub fn create_namespaced_deployment_rollback(
         name: &str,
         namespace: &str,
         body: &crate::v1_10::api::apps::v1beta1::DeploymentRollback,
-        optional: CreateAppsV1beta1NamespacedDeploymentRollbackOptional<'_>,
+        optional: CreateNamespacedDeploymentRollbackOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAppsV1beta1NamespacedDeploymentRollbackOptional {
+        let CreateNamespacedDeploymentRollbackOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/rollback?", name = name, namespace = namespace);
@@ -59,16 +59,16 @@ impl DeploymentRollback {
     }
 }
 
-/// Optional parameters of [`DeploymentRollback::create_apps_v1beta1_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_apps_v1beta1_namespaced_deployment_rollback)
+/// Optional parameters of [`DeploymentRollback::create_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_namespaced_deployment_rollback)
 #[derive(Debug, Default)]
-pub struct CreateAppsV1beta1NamespacedDeploymentRollbackOptional<'a> {
+pub struct CreateNamespacedDeploymentRollbackOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DeploymentRollback::create_apps_v1beta1_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_apps_v1beta1_namespaced_deployment_rollback)
+/// Parses the HTTP response of [`DeploymentRollback::create_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_namespaced_deployment_rollback)
 #[derive(Debug)]
-pub enum CreateAppsV1beta1NamespacedDeploymentRollbackResponse {
+pub enum CreateNamespacedDeploymentRollbackResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     Created(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     Accepted(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -76,7 +76,7 @@ pub enum CreateAppsV1beta1NamespacedDeploymentRollbackResponse {
     Other,
 }
 
-impl crate::Response for CreateAppsV1beta1NamespacedDeploymentRollbackResponse {
+impl crate::Response for CreateNamespacedDeploymentRollbackResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -85,7 +85,7 @@ impl crate::Response for CreateAppsV1beta1NamespacedDeploymentRollbackResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta1NamespacedDeploymentRollbackResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedDeploymentRollbackResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -93,7 +93,7 @@ impl crate::Response for CreateAppsV1beta1NamespacedDeploymentRollbackResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta1NamespacedDeploymentRollbackResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedDeploymentRollbackResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -101,10 +101,10 @@ impl crate::Response for CreateAppsV1beta1NamespacedDeploymentRollbackResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta1NamespacedDeploymentRollbackResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedDeploymentRollbackResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1beta1NamespacedDeploymentRollbackResponse::Unauthorized, 0)),
-            _ => Ok((CreateAppsV1beta1NamespacedDeploymentRollbackResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedDeploymentRollbackResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedDeploymentRollbackResponse::Other, 0)),
         }
     }
 }

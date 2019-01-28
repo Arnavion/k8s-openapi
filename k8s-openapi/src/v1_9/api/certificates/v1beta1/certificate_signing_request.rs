@@ -19,7 +19,7 @@ pub struct CertificateSigningRequest {
 impl CertificateSigningRequest {
     /// create a CertificateSigningRequest
     ///
-    /// Use [`CreateCertificatesV1beta1CertificateSigningRequestResponse`](./enum.CreateCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use [`CreateCertificateSigningRequestResponse`](./enum.CreateCertificateSigningRequestResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -28,11 +28,11 @@ impl CertificateSigningRequest {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_certificates_v1beta1_certificate_signing_request(
+    pub fn create_certificate_signing_request(
         body: &crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest,
-        optional: CreateCertificatesV1beta1CertificateSigningRequestOptional<'_>,
+        optional: CreateCertificateSigningRequestOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCertificatesV1beta1CertificateSigningRequestOptional {
+        let CreateCertificateSigningRequestOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?");
@@ -48,16 +48,16 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::create_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.create_certificates_v1beta1_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::create_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.create_certificate_signing_request)
 #[derive(Debug, Default)]
-pub struct CreateCertificatesV1beta1CertificateSigningRequestOptional<'a> {
+pub struct CreateCertificateSigningRequestOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::create_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.create_certificates_v1beta1_certificate_signing_request)
+/// Parses the HTTP response of [`CertificateSigningRequest::create_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.create_certificate_signing_request)
 #[derive(Debug)]
-pub enum CreateCertificatesV1beta1CertificateSigningRequestResponse {
+pub enum CreateCertificateSigningRequestResponse {
     Ok(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Created(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Accepted(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
@@ -65,7 +65,7 @@ pub enum CreateCertificatesV1beta1CertificateSigningRequestResponse {
     Other,
 }
 
-impl crate::Response for CreateCertificatesV1beta1CertificateSigningRequestResponse {
+impl crate::Response for CreateCertificateSigningRequestResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -74,7 +74,7 @@ impl crate::Response for CreateCertificatesV1beta1CertificateSigningRequestRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCertificatesV1beta1CertificateSigningRequestResponse::Ok(result), buf.len()))
+                Ok((CreateCertificateSigningRequestResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -82,7 +82,7 @@ impl crate::Response for CreateCertificatesV1beta1CertificateSigningRequestRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCertificatesV1beta1CertificateSigningRequestResponse::Created(result), buf.len()))
+                Ok((CreateCertificateSigningRequestResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -90,10 +90,10 @@ impl crate::Response for CreateCertificatesV1beta1CertificateSigningRequestRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCertificatesV1beta1CertificateSigningRequestResponse::Accepted(result), buf.len()))
+                Ok((CreateCertificateSigningRequestResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCertificatesV1beta1CertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((CreateCertificatesV1beta1CertificateSigningRequestResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateCertificateSigningRequestResponse::Unauthorized, 0)),
+            _ => Ok((CreateCertificateSigningRequestResponse::Other, 0)),
         }
     }
 }
@@ -103,7 +103,7 @@ impl crate::Response for CreateCertificatesV1beta1CertificateSigningRequestRespo
 impl CertificateSigningRequest {
     /// delete a CertificateSigningRequest
     ///
-    /// Use [`DeleteCertificatesV1beta1CertificateSigningRequestResponse`](./enum.DeleteCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCertificateSigningRequestResponse`](./enum.DeleteCertificateSigningRequestResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -114,11 +114,11 @@ impl CertificateSigningRequest {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_certificates_v1beta1_certificate_signing_request(
+    pub fn delete_certificate_signing_request(
         name: &str,
-        optional: DeleteCertificatesV1beta1CertificateSigningRequestOptional<'_>,
+        optional: DeleteCertificateSigningRequestOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCertificatesV1beta1CertificateSigningRequestOptional {
+        let DeleteCertificateSigningRequestOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -146,9 +146,9 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::delete_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificates_v1beta1_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::delete_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificate_signing_request)
 #[derive(Debug, Default)]
-pub struct DeleteCertificatesV1beta1CertificateSigningRequestOptional<'a> {
+pub struct DeleteCertificateSigningRequestOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -159,16 +159,16 @@ pub struct DeleteCertificatesV1beta1CertificateSigningRequestOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::delete_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificates_v1beta1_certificate_signing_request)
+/// Parses the HTTP response of [`CertificateSigningRequest::delete_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificate_signing_request)
 #[derive(Debug)]
-pub enum DeleteCertificatesV1beta1CertificateSigningRequestResponse {
+pub enum DeleteCertificateSigningRequestResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCertificatesV1beta1CertificateSigningRequestResponse {
+impl crate::Response for DeleteCertificateSigningRequestResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -184,16 +184,16 @@ impl crate::Response for DeleteCertificatesV1beta1CertificateSigningRequestRespo
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCertificatesV1beta1CertificateSigningRequestResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCertificateSigningRequestResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCertificatesV1beta1CertificateSigningRequestResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCertificateSigningRequestResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCertificatesV1beta1CertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCertificatesV1beta1CertificateSigningRequestResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCertificateSigningRequestResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCertificateSigningRequestResponse::Other, 0)),
         }
     }
 }
@@ -203,17 +203,17 @@ impl crate::Response for DeleteCertificatesV1beta1CertificateSigningRequestRespo
 impl CertificateSigningRequest {
     /// delete collection of CertificateSigningRequest
     ///
-    /// Use [`DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse`](./enum.DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionCertificateSigningRequestResponse`](./enum.DeleteCollectionCertificateSigningRequestResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_certificates_v1beta1_collection_certificate_signing_request(
-        optional: DeleteCertificatesV1beta1CollectionCertificateSigningRequestOptional<'_>,
+    pub fn delete_collection_certificate_signing_request(
+        optional: DeleteCollectionCertificateSigningRequestOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCertificatesV1beta1CollectionCertificateSigningRequestOptional {
+        let DeleteCollectionCertificateSigningRequestOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -261,9 +261,9 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::delete_certificates_v1beta1_collection_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificates_v1beta1_collection_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::delete_collection_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_collection_certificate_signing_request)
 #[derive(Debug, Default)]
-pub struct DeleteCertificatesV1beta1CollectionCertificateSigningRequestOptional<'a> {
+pub struct DeleteCollectionCertificateSigningRequestOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -286,16 +286,16 @@ pub struct DeleteCertificatesV1beta1CollectionCertificateSigningRequestOptional<
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::delete_certificates_v1beta1_collection_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificates_v1beta1_collection_certificate_signing_request)
+/// Parses the HTTP response of [`CertificateSigningRequest::delete_collection_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_collection_certificate_signing_request)
 #[derive(Debug)]
-pub enum DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse {
+pub enum DeleteCollectionCertificateSigningRequestResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse {
+impl crate::Response for DeleteCollectionCertificateSigningRequestResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -311,16 +311,16 @@ impl crate::Response for DeleteCertificatesV1beta1CollectionCertificateSigningRe
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionCertificateSigningRequestResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionCertificateSigningRequestResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCertificatesV1beta1CollectionCertificateSigningRequestResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionCertificateSigningRequestResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionCertificateSigningRequestResponse::Other, 0)),
         }
     }
 }
@@ -330,17 +330,17 @@ impl crate::Response for DeleteCertificatesV1beta1CollectionCertificateSigningRe
 impl CertificateSigningRequest {
     /// list or watch objects of kind CertificateSigningRequest
     ///
-    /// Use [`ListCertificatesV1beta1CertificateSigningRequestResponse`](./enum.ListCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use [`ListCertificateSigningRequestResponse`](./enum.ListCertificateSigningRequestResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_certificates_v1beta1_certificate_signing_request(
-        optional: ListCertificatesV1beta1CertificateSigningRequestOptional<'_>,
+    pub fn list_certificate_signing_request(
+        optional: ListCertificateSigningRequestOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCertificatesV1beta1CertificateSigningRequestOptional {
+        let ListCertificateSigningRequestOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -388,9 +388,9 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::list_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.list_certificates_v1beta1_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::list_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.list_certificate_signing_request)
 #[derive(Debug, Default)]
-pub struct ListCertificatesV1beta1CertificateSigningRequestOptional<'a> {
+pub struct ListCertificateSigningRequestOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -413,15 +413,15 @@ pub struct ListCertificatesV1beta1CertificateSigningRequestOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::list_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.list_certificates_v1beta1_certificate_signing_request)
+/// Parses the HTTP response of [`CertificateSigningRequest::list_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.list_certificate_signing_request)
 #[derive(Debug)]
-pub enum ListCertificatesV1beta1CertificateSigningRequestResponse {
+pub enum ListCertificateSigningRequestResponse {
     Ok(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequestList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCertificatesV1beta1CertificateSigningRequestResponse {
+impl crate::Response for ListCertificateSigningRequestResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -430,10 +430,10 @@ impl crate::Response for ListCertificatesV1beta1CertificateSigningRequestRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCertificatesV1beta1CertificateSigningRequestResponse::Ok(result), buf.len()))
+                Ok((ListCertificateSigningRequestResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCertificatesV1beta1CertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((ListCertificatesV1beta1CertificateSigningRequestResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCertificateSigningRequestResponse::Unauthorized, 0)),
+            _ => Ok((ListCertificateSigningRequestResponse::Other, 0)),
         }
     }
 }
@@ -443,7 +443,7 @@ impl crate::Response for ListCertificatesV1beta1CertificateSigningRequestRespons
 impl CertificateSigningRequest {
     /// partially update the specified CertificateSigningRequest
     ///
-    /// Use [`PatchCertificatesV1beta1CertificateSigningRequestResponse`](./enum.PatchCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use [`PatchCertificateSigningRequestResponse`](./enum.PatchCertificateSigningRequestResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -456,12 +456,12 @@ impl CertificateSigningRequest {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_certificates_v1beta1_certificate_signing_request(
+    pub fn patch_certificate_signing_request(
         name: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCertificatesV1beta1CertificateSigningRequestOptional<'_>,
+        optional: PatchCertificateSigningRequestOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCertificatesV1beta1CertificateSigningRequestOptional {
+        let PatchCertificateSigningRequestOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?", name = name);
@@ -477,22 +477,22 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::patch_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.patch_certificates_v1beta1_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::patch_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.patch_certificate_signing_request)
 #[derive(Debug, Default)]
-pub struct PatchCertificatesV1beta1CertificateSigningRequestOptional<'a> {
+pub struct PatchCertificateSigningRequestOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::patch_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.patch_certificates_v1beta1_certificate_signing_request)
+/// Parses the HTTP response of [`CertificateSigningRequest::patch_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.patch_certificate_signing_request)
 #[derive(Debug)]
-pub enum PatchCertificatesV1beta1CertificateSigningRequestResponse {
+pub enum PatchCertificateSigningRequestResponse {
     Ok(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCertificatesV1beta1CertificateSigningRequestResponse {
+impl crate::Response for PatchCertificateSigningRequestResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -501,10 +501,10 @@ impl crate::Response for PatchCertificatesV1beta1CertificateSigningRequestRespon
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCertificatesV1beta1CertificateSigningRequestResponse::Ok(result), buf.len()))
+                Ok((PatchCertificateSigningRequestResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCertificatesV1beta1CertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((PatchCertificatesV1beta1CertificateSigningRequestResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCertificateSigningRequestResponse::Unauthorized, 0)),
+            _ => Ok((PatchCertificateSigningRequestResponse::Other, 0)),
         }
     }
 }
@@ -514,7 +514,7 @@ impl crate::Response for PatchCertificatesV1beta1CertificateSigningRequestRespon
 impl CertificateSigningRequest {
     /// read the specified CertificateSigningRequest
     ///
-    /// Use [`ReadCertificatesV1beta1CertificateSigningRequestResponse`](./enum.ReadCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use [`ReadCertificateSigningRequestResponse`](./enum.ReadCertificateSigningRequestResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -525,11 +525,11 @@ impl CertificateSigningRequest {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_certificates_v1beta1_certificate_signing_request(
+    pub fn read_certificate_signing_request(
         name: &str,
-        optional: ReadCertificatesV1beta1CertificateSigningRequestOptional<'_>,
+        optional: ReadCertificateSigningRequestOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCertificatesV1beta1CertificateSigningRequestOptional {
+        let ReadCertificateSigningRequestOptional {
             exact,
             export,
             pretty,
@@ -553,9 +553,9 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::read_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.read_certificates_v1beta1_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::read_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.read_certificate_signing_request)
 #[derive(Debug, Default)]
-pub struct ReadCertificatesV1beta1CertificateSigningRequestOptional<'a> {
+pub struct ReadCertificateSigningRequestOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -564,15 +564,15 @@ pub struct ReadCertificatesV1beta1CertificateSigningRequestOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::read_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.read_certificates_v1beta1_certificate_signing_request)
+/// Parses the HTTP response of [`CertificateSigningRequest::read_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.read_certificate_signing_request)
 #[derive(Debug)]
-pub enum ReadCertificatesV1beta1CertificateSigningRequestResponse {
+pub enum ReadCertificateSigningRequestResponse {
     Ok(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCertificatesV1beta1CertificateSigningRequestResponse {
+impl crate::Response for ReadCertificateSigningRequestResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -581,10 +581,10 @@ impl crate::Response for ReadCertificatesV1beta1CertificateSigningRequestRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCertificatesV1beta1CertificateSigningRequestResponse::Ok(result), buf.len()))
+                Ok((ReadCertificateSigningRequestResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCertificatesV1beta1CertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((ReadCertificatesV1beta1CertificateSigningRequestResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCertificateSigningRequestResponse::Unauthorized, 0)),
+            _ => Ok((ReadCertificateSigningRequestResponse::Other, 0)),
         }
     }
 }
@@ -594,7 +594,7 @@ impl crate::Response for ReadCertificatesV1beta1CertificateSigningRequestRespons
 impl CertificateSigningRequest {
     /// replace the specified CertificateSigningRequest
     ///
-    /// Use [`ReplaceCertificatesV1beta1CertificateSigningRequestResponse`](./enum.ReplaceCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceCertificateSigningRequestResponse`](./enum.ReplaceCertificateSigningRequestResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -607,12 +607,12 @@ impl CertificateSigningRequest {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_certificates_v1beta1_certificate_signing_request(
+    pub fn replace_certificate_signing_request(
         name: &str,
         body: &crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest,
-        optional: ReplaceCertificatesV1beta1CertificateSigningRequestOptional<'_>,
+        optional: ReplaceCertificateSigningRequestOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCertificatesV1beta1CertificateSigningRequestOptional {
+        let ReplaceCertificateSigningRequestOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}?", name = name);
@@ -628,23 +628,23 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::replace_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.replace_certificates_v1beta1_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request)
 #[derive(Debug, Default)]
-pub struct ReplaceCertificatesV1beta1CertificateSigningRequestOptional<'a> {
+pub struct ReplaceCertificateSigningRequestOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.replace_certificates_v1beta1_certificate_signing_request)
+/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request)
 #[derive(Debug)]
-pub enum ReplaceCertificatesV1beta1CertificateSigningRequestResponse {
+pub enum ReplaceCertificateSigningRequestResponse {
     Ok(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Created(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestResponse {
+impl crate::Response for ReplaceCertificateSigningRequestResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -653,7 +653,7 @@ impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestResp
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCertificatesV1beta1CertificateSigningRequestResponse::Ok(result), buf.len()))
+                Ok((ReplaceCertificateSigningRequestResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -661,10 +661,10 @@ impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestResp
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCertificatesV1beta1CertificateSigningRequestResponse::Created(result), buf.len()))
+                Ok((ReplaceCertificateSigningRequestResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCertificatesV1beta1CertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCertificatesV1beta1CertificateSigningRequestResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCertificateSigningRequestResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceCertificateSigningRequestResponse::Other, 0)),
         }
     }
 }
@@ -674,7 +674,7 @@ impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestResp
 impl CertificateSigningRequest {
     /// replace approval of the specified CertificateSigningRequest
     ///
-    /// Use [`ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse`](./enum.ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceCertificateSigningRequestApprovalResponse`](./enum.ReplaceCertificateSigningRequestApprovalResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -687,12 +687,12 @@ impl CertificateSigningRequest {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_certificates_v1beta1_certificate_signing_request_approval(
+    pub fn replace_certificate_signing_request_approval(
         name: &str,
         body: &crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest,
-        optional: ReplaceCertificatesV1beta1CertificateSigningRequestApprovalOptional<'_>,
+        optional: ReplaceCertificateSigningRequestApprovalOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCertificatesV1beta1CertificateSigningRequestApprovalOptional {
+        let ReplaceCertificateSigningRequestApprovalOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/approval?", name = name);
@@ -708,23 +708,23 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::replace_certificates_v1beta1_certificate_signing_request_approval`](./struct.CertificateSigningRequest.html#method.replace_certificates_v1beta1_certificate_signing_request_approval)
+/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request_approval`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request_approval)
 #[derive(Debug, Default)]
-pub struct ReplaceCertificatesV1beta1CertificateSigningRequestApprovalOptional<'a> {
+pub struct ReplaceCertificateSigningRequestApprovalOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificates_v1beta1_certificate_signing_request_approval`](./struct.CertificateSigningRequest.html#method.replace_certificates_v1beta1_certificate_signing_request_approval)
+/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificate_signing_request_approval`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request_approval)
 #[derive(Debug)]
-pub enum ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse {
+pub enum ReplaceCertificateSigningRequestApprovalResponse {
     Ok(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Created(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse {
+impl crate::Response for ReplaceCertificateSigningRequestApprovalResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -733,7 +733,7 @@ impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestAppr
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse::Ok(result), buf.len()))
+                Ok((ReplaceCertificateSigningRequestApprovalResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -741,10 +741,10 @@ impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestAppr
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse::Created(result), buf.len()))
+                Ok((ReplaceCertificateSigningRequestApprovalResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCertificatesV1beta1CertificateSigningRequestApprovalResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCertificateSigningRequestApprovalResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceCertificateSigningRequestApprovalResponse::Other, 0)),
         }
     }
 }
@@ -754,7 +754,7 @@ impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestAppr
 impl CertificateSigningRequest {
     /// replace status of the specified CertificateSigningRequest
     ///
-    /// Use [`ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse`](./enum.ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceCertificateSigningRequestStatusResponse`](./enum.ReplaceCertificateSigningRequestStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -767,12 +767,12 @@ impl CertificateSigningRequest {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_certificates_v1beta1_certificate_signing_request_status(
+    pub fn replace_certificate_signing_request_status(
         name: &str,
         body: &crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest,
-        optional: ReplaceCertificatesV1beta1CertificateSigningRequestStatusOptional<'_>,
+        optional: ReplaceCertificateSigningRequestStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCertificatesV1beta1CertificateSigningRequestStatusOptional {
+        let ReplaceCertificateSigningRequestStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status?", name = name);
@@ -788,23 +788,23 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::replace_certificates_v1beta1_certificate_signing_request_status`](./struct.CertificateSigningRequest.html#method.replace_certificates_v1beta1_certificate_signing_request_status)
+/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request_status`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request_status)
 #[derive(Debug, Default)]
-pub struct ReplaceCertificatesV1beta1CertificateSigningRequestStatusOptional<'a> {
+pub struct ReplaceCertificateSigningRequestStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificates_v1beta1_certificate_signing_request_status`](./struct.CertificateSigningRequest.html#method.replace_certificates_v1beta1_certificate_signing_request_status)
+/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificate_signing_request_status`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request_status)
 #[derive(Debug)]
-pub enum ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse {
+pub enum ReplaceCertificateSigningRequestStatusResponse {
     Ok(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Created(crate::v1_9::api::certificates::v1beta1::CertificateSigningRequest),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse {
+impl crate::Response for ReplaceCertificateSigningRequestStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -813,7 +813,7 @@ impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestStat
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceCertificateSigningRequestStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -821,10 +821,10 @@ impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestStat
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceCertificateSigningRequestStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCertificatesV1beta1CertificateSigningRequestStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCertificateSigningRequestStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceCertificateSigningRequestStatusResponse::Other, 0)),
         }
     }
 }
@@ -834,7 +834,7 @@ impl crate::Response for ReplaceCertificatesV1beta1CertificateSigningRequestStat
 impl CertificateSigningRequest {
     /// watch changes to an object of kind CertificateSigningRequest
     ///
-    /// Use [`WatchCertificatesV1beta1CertificateSigningRequestResponse`](./enum.WatchCertificatesV1beta1CertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use [`WatchCertificateSigningRequestResponse`](./enum.WatchCertificateSigningRequestResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -845,11 +845,11 @@ impl CertificateSigningRequest {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_certificates_v1beta1_certificate_signing_request(
+    pub fn watch_certificate_signing_request(
         name: &str,
-        optional: WatchCertificatesV1beta1CertificateSigningRequestOptional<'_>,
+        optional: WatchCertificateSigningRequestOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCertificatesV1beta1CertificateSigningRequestOptional {
+        let WatchCertificateSigningRequestOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -897,9 +897,9 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::watch_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.watch_certificates_v1beta1_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::watch_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.watch_certificate_signing_request)
 #[derive(Debug, Default)]
-pub struct WatchCertificatesV1beta1CertificateSigningRequestOptional<'a> {
+pub struct WatchCertificateSigningRequestOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -922,15 +922,15 @@ pub struct WatchCertificatesV1beta1CertificateSigningRequestOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::watch_certificates_v1beta1_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.watch_certificates_v1beta1_certificate_signing_request)
+/// Parses the HTTP response of [`CertificateSigningRequest::watch_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.watch_certificate_signing_request)
 #[derive(Debug)]
-pub enum WatchCertificatesV1beta1CertificateSigningRequestResponse {
+pub enum WatchCertificateSigningRequestResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCertificatesV1beta1CertificateSigningRequestResponse {
+impl crate::Response for WatchCertificateSigningRequestResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -941,10 +941,10 @@ impl crate::Response for WatchCertificatesV1beta1CertificateSigningRequestRespon
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCertificatesV1beta1CertificateSigningRequestResponse::Ok(result), byte_offset))
+                Ok((WatchCertificateSigningRequestResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCertificatesV1beta1CertificateSigningRequestResponse::Unauthorized, 0)),
-            _ => Ok((WatchCertificatesV1beta1CertificateSigningRequestResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCertificateSigningRequestResponse::Unauthorized, 0)),
+            _ => Ok((WatchCertificateSigningRequestResponse::Other, 0)),
         }
     }
 }
@@ -954,17 +954,17 @@ impl crate::Response for WatchCertificatesV1beta1CertificateSigningRequestRespon
 impl CertificateSigningRequest {
     /// watch individual changes to a list of CertificateSigningRequest
     ///
-    /// Use [`WatchCertificatesV1beta1CertificateSigningRequestListResponse`](./enum.WatchCertificatesV1beta1CertificateSigningRequestListResponse.html) to parse the HTTP response.
+    /// Use [`WatchCertificateSigningRequestListResponse`](./enum.WatchCertificateSigningRequestListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_certificates_v1beta1_certificate_signing_request_list(
-        optional: WatchCertificatesV1beta1CertificateSigningRequestListOptional<'_>,
+    pub fn watch_certificate_signing_request_list(
+        optional: WatchCertificateSigningRequestListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCertificatesV1beta1CertificateSigningRequestListOptional {
+        let WatchCertificateSigningRequestListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1012,9 +1012,9 @@ impl CertificateSigningRequest {
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::watch_certificates_v1beta1_certificate_signing_request_list`](./struct.CertificateSigningRequest.html#method.watch_certificates_v1beta1_certificate_signing_request_list)
+/// Optional parameters of [`CertificateSigningRequest::watch_certificate_signing_request_list`](./struct.CertificateSigningRequest.html#method.watch_certificate_signing_request_list)
 #[derive(Debug, Default)]
-pub struct WatchCertificatesV1beta1CertificateSigningRequestListOptional<'a> {
+pub struct WatchCertificateSigningRequestListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1037,15 +1037,15 @@ pub struct WatchCertificatesV1beta1CertificateSigningRequestListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::watch_certificates_v1beta1_certificate_signing_request_list`](./struct.CertificateSigningRequest.html#method.watch_certificates_v1beta1_certificate_signing_request_list)
+/// Parses the HTTP response of [`CertificateSigningRequest::watch_certificate_signing_request_list`](./struct.CertificateSigningRequest.html#method.watch_certificate_signing_request_list)
 #[derive(Debug)]
-pub enum WatchCertificatesV1beta1CertificateSigningRequestListResponse {
+pub enum WatchCertificateSigningRequestListResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCertificatesV1beta1CertificateSigningRequestListResponse {
+impl crate::Response for WatchCertificateSigningRequestListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1056,10 +1056,10 @@ impl crate::Response for WatchCertificatesV1beta1CertificateSigningRequestListRe
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCertificatesV1beta1CertificateSigningRequestListResponse::Ok(result), byte_offset))
+                Ok((WatchCertificateSigningRequestListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCertificatesV1beta1CertificateSigningRequestListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCertificatesV1beta1CertificateSigningRequestListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCertificateSigningRequestListResponse::Unauthorized, 0)),
+            _ => Ok((WatchCertificateSigningRequestListResponse::Other, 0)),
         }
     }
 }

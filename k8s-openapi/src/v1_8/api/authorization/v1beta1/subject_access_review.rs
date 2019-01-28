@@ -19,7 +19,7 @@ pub struct SubjectAccessReview {
 impl SubjectAccessReview {
     /// create a SubjectAccessReview
     ///
-    /// Use [`CreateAuthorizationV1beta1SubjectAccessReviewResponse`](./enum.CreateAuthorizationV1beta1SubjectAccessReviewResponse.html) to parse the HTTP response.
+    /// Use [`CreateSubjectAccessReviewResponse`](./enum.CreateSubjectAccessReviewResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -28,11 +28,11 @@ impl SubjectAccessReview {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_authorization_v1beta1_subject_access_review(
+    pub fn create_subject_access_review(
         body: &crate::v1_8::api::authorization::v1beta1::SubjectAccessReview,
-        optional: CreateAuthorizationV1beta1SubjectAccessReviewOptional<'_>,
+        optional: CreateSubjectAccessReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAuthorizationV1beta1SubjectAccessReviewOptional {
+        let CreateSubjectAccessReviewOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/authorization.k8s.io/v1beta1/subjectaccessreviews?");
@@ -48,22 +48,22 @@ impl SubjectAccessReview {
     }
 }
 
-/// Optional parameters of [`SubjectAccessReview::create_authorization_v1beta1_subject_access_review`](./struct.SubjectAccessReview.html#method.create_authorization_v1beta1_subject_access_review)
+/// Optional parameters of [`SubjectAccessReview::create_subject_access_review`](./struct.SubjectAccessReview.html#method.create_subject_access_review)
 #[derive(Debug, Default)]
-pub struct CreateAuthorizationV1beta1SubjectAccessReviewOptional<'a> {
+pub struct CreateSubjectAccessReviewOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`SubjectAccessReview::create_authorization_v1beta1_subject_access_review`](./struct.SubjectAccessReview.html#method.create_authorization_v1beta1_subject_access_review)
+/// Parses the HTTP response of [`SubjectAccessReview::create_subject_access_review`](./struct.SubjectAccessReview.html#method.create_subject_access_review)
 #[derive(Debug)]
-pub enum CreateAuthorizationV1beta1SubjectAccessReviewResponse {
+pub enum CreateSubjectAccessReviewResponse {
     Ok(crate::v1_8::api::authorization::v1beta1::SubjectAccessReview),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateAuthorizationV1beta1SubjectAccessReviewResponse {
+impl crate::Response for CreateSubjectAccessReviewResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -72,10 +72,10 @@ impl crate::Response for CreateAuthorizationV1beta1SubjectAccessReviewResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1beta1SubjectAccessReviewResponse::Ok(result), buf.len()))
+                Ok((CreateSubjectAccessReviewResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAuthorizationV1beta1SubjectAccessReviewResponse::Unauthorized, 0)),
-            _ => Ok((CreateAuthorizationV1beta1SubjectAccessReviewResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateSubjectAccessReviewResponse::Unauthorized, 0)),
+            _ => Ok((CreateSubjectAccessReviewResponse::Other, 0)),
         }
     }
 }

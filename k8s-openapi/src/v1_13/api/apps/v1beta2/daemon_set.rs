@@ -20,7 +20,7 @@ pub struct DaemonSet {
 impl DaemonSet {
     /// create a DaemonSet
     ///
-    /// Use [`CreateAppsV1beta2NamespacedDaemonSetResponse`](./enum.CreateAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedDaemonSetResponse`](./enum.CreateNamespacedDaemonSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_apps_v1beta2_namespaced_daemon_set(
+    pub fn create_namespaced_daemon_set(
         namespace: &str,
         body: &crate::v1_13::api::apps::v1beta2::DaemonSet,
-        optional: CreateAppsV1beta2NamespacedDaemonSetOptional<'_>,
+        optional: CreateNamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAppsV1beta2NamespacedDaemonSetOptional {
+        let CreateNamespacedDaemonSetOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -62,9 +62,9 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::create_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_apps_v1beta2_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::create_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_namespaced_daemon_set)
 #[derive(Debug, Default)]
-pub struct CreateAppsV1beta2NamespacedDaemonSetOptional<'a> {
+pub struct CreateNamespacedDaemonSetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -73,9 +73,9 @@ pub struct CreateAppsV1beta2NamespacedDaemonSetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::create_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_apps_v1beta2_namespaced_daemon_set)
+/// Parses the HTTP response of [`DaemonSet::create_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_namespaced_daemon_set)
 #[derive(Debug)]
-pub enum CreateAppsV1beta2NamespacedDaemonSetResponse {
+pub enum CreateNamespacedDaemonSetResponse {
     Ok(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Created(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Accepted(crate::v1_13::api::apps::v1beta2::DaemonSet),
@@ -83,7 +83,7 @@ pub enum CreateAppsV1beta2NamespacedDaemonSetResponse {
     Other,
 }
 
-impl crate::Response for CreateAppsV1beta2NamespacedDaemonSetResponse {
+impl crate::Response for CreateNamespacedDaemonSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -92,7 +92,7 @@ impl crate::Response for CreateAppsV1beta2NamespacedDaemonSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta2NamespacedDaemonSetResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -100,7 +100,7 @@ impl crate::Response for CreateAppsV1beta2NamespacedDaemonSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta2NamespacedDaemonSetResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedDaemonSetResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -108,10 +108,10 @@ impl crate::Response for CreateAppsV1beta2NamespacedDaemonSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta2NamespacedDaemonSetResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedDaemonSetResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1beta2NamespacedDaemonSetResponse::Unauthorized, 0)),
-            _ => Ok((CreateAppsV1beta2NamespacedDaemonSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedDaemonSetResponse::Other, 0)),
         }
     }
 }
@@ -121,7 +121,7 @@ impl crate::Response for CreateAppsV1beta2NamespacedDaemonSetResponse {
 impl DaemonSet {
     /// delete collection of DaemonSet
     ///
-    /// Use [`DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse`](./enum.DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedDaemonSetResponse`](./enum.DeleteCollectionNamespacedDaemonSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -132,11 +132,11 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apps_v1beta2_collection_namespaced_daemon_set(
+    pub fn delete_collection_namespaced_daemon_set(
         namespace: &str,
-        optional: DeleteAppsV1beta2CollectionNamespacedDaemonSetOptional<'_>,
+        optional: DeleteCollectionNamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAppsV1beta2CollectionNamespacedDaemonSetOptional {
+        let DeleteCollectionNamespacedDaemonSetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -184,9 +184,9 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::delete_apps_v1beta2_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_apps_v1beta2_collection_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::delete_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_collection_namespaced_daemon_set)
 #[derive(Debug, Default)]
-pub struct DeleteAppsV1beta2CollectionNamespacedDaemonSetOptional<'a> {
+pub struct DeleteCollectionNamespacedDaemonSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -211,16 +211,16 @@ pub struct DeleteAppsV1beta2CollectionNamespacedDaemonSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::delete_apps_v1beta2_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_apps_v1beta2_collection_namespaced_daemon_set)
+/// Parses the HTTP response of [`DaemonSet::delete_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_collection_namespaced_daemon_set)
 #[derive(Debug)]
-pub enum DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse {
+pub enum DeleteCollectionNamespacedDaemonSetResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse {
+impl crate::Response for DeleteCollectionNamespacedDaemonSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -236,16 +236,16 @@ impl crate::Response for DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse 
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedDaemonSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedDaemonSetResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedDaemonSetResponse::Other, 0)),
         }
     }
 }
@@ -255,7 +255,7 @@ impl crate::Response for DeleteAppsV1beta2CollectionNamespacedDaemonSetResponse 
 impl DaemonSet {
     /// delete a DaemonSet
     ///
-    /// Use [`DeleteAppsV1beta2NamespacedDaemonSetResponse`](./enum.DeleteAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedDaemonSetResponse`](./enum.DeleteNamespacedDaemonSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -270,12 +270,12 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apps_v1beta2_namespaced_daemon_set(
+    pub fn delete_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        optional: DeleteAppsV1beta2NamespacedDaemonSetOptional<'_>,
+        optional: DeleteNamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAppsV1beta2NamespacedDaemonSetOptional {
+        let DeleteNamespacedDaemonSetOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -307,9 +307,9 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::delete_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_apps_v1beta2_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::delete_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_namespaced_daemon_set)
 #[derive(Debug, Default)]
-pub struct DeleteAppsV1beta2NamespacedDaemonSetOptional<'a> {
+pub struct DeleteNamespacedDaemonSetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -322,9 +322,9 @@ pub struct DeleteAppsV1beta2NamespacedDaemonSetOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::delete_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_apps_v1beta2_namespaced_daemon_set)
+/// Parses the HTTP response of [`DaemonSet::delete_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_namespaced_daemon_set)
 #[derive(Debug)]
-pub enum DeleteAppsV1beta2NamespacedDaemonSetResponse {
+pub enum DeleteNamespacedDaemonSetResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -332,7 +332,7 @@ pub enum DeleteAppsV1beta2NamespacedDaemonSetResponse {
     Other,
 }
 
-impl crate::Response for DeleteAppsV1beta2NamespacedDaemonSetResponse {
+impl crate::Response for DeleteNamespacedDaemonSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -348,12 +348,12 @@ impl crate::Response for DeleteAppsV1beta2NamespacedDaemonSetResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2NamespacedDaemonSetResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedDaemonSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2NamespacedDaemonSetResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedDaemonSetResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -362,10 +362,10 @@ impl crate::Response for DeleteAppsV1beta2NamespacedDaemonSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteAppsV1beta2NamespacedDaemonSetResponse::Accepted(result), buf.len()))
+                Ok((DeleteNamespacedDaemonSetResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta2NamespacedDaemonSetResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAppsV1beta2NamespacedDaemonSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedDaemonSetResponse::Other, 0)),
         }
     }
 }
@@ -375,17 +375,17 @@ impl crate::Response for DeleteAppsV1beta2NamespacedDaemonSetResponse {
 impl DaemonSet {
     /// list or watch objects of kind DaemonSet
     ///
-    /// Use [`ListAppsV1beta2DaemonSetForAllNamespacesResponse`](./enum.ListAppsV1beta2DaemonSetForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListDaemonSetForAllNamespacesResponse`](./enum.ListDaemonSetForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apps_v1beta2_daemon_set_for_all_namespaces(
-        optional: ListAppsV1beta2DaemonSetForAllNamespacesOptional<'_>,
+    pub fn list_daemon_set_for_all_namespaces(
+        optional: ListDaemonSetForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAppsV1beta2DaemonSetForAllNamespacesOptional {
+        let ListDaemonSetForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -433,9 +433,9 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::list_apps_v1beta2_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_apps_v1beta2_daemon_set_for_all_namespaces)
+/// Optional parameters of [`DaemonSet::list_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_daemon_set_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListAppsV1beta2DaemonSetForAllNamespacesOptional<'a> {
+pub struct ListDaemonSetForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -460,15 +460,15 @@ pub struct ListAppsV1beta2DaemonSetForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::list_apps_v1beta2_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_apps_v1beta2_daemon_set_for_all_namespaces)
+/// Parses the HTTP response of [`DaemonSet::list_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_daemon_set_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListAppsV1beta2DaemonSetForAllNamespacesResponse {
+pub enum ListDaemonSetForAllNamespacesResponse {
     Ok(crate::v1_13::api::apps::v1beta2::DaemonSetList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAppsV1beta2DaemonSetForAllNamespacesResponse {
+impl crate::Response for ListDaemonSetForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -477,10 +477,10 @@ impl crate::Response for ListAppsV1beta2DaemonSetForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAppsV1beta2DaemonSetForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListDaemonSetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta2DaemonSetForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListAppsV1beta2DaemonSetForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListDaemonSetForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListDaemonSetForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -490,7 +490,7 @@ impl crate::Response for ListAppsV1beta2DaemonSetForAllNamespacesResponse {
 impl DaemonSet {
     /// list or watch objects of kind DaemonSet
     ///
-    /// Use [`ListAppsV1beta2NamespacedDaemonSetResponse`](./enum.ListAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedDaemonSetResponse`](./enum.ListNamespacedDaemonSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -501,11 +501,11 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apps_v1beta2_namespaced_daemon_set(
+    pub fn list_namespaced_daemon_set(
         namespace: &str,
-        optional: ListAppsV1beta2NamespacedDaemonSetOptional<'_>,
+        optional: ListNamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAppsV1beta2NamespacedDaemonSetOptional {
+        let ListNamespacedDaemonSetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -553,9 +553,9 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::list_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_apps_v1beta2_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::list_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_namespaced_daemon_set)
 #[derive(Debug, Default)]
-pub struct ListAppsV1beta2NamespacedDaemonSetOptional<'a> {
+pub struct ListNamespacedDaemonSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -580,15 +580,15 @@ pub struct ListAppsV1beta2NamespacedDaemonSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::list_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_apps_v1beta2_namespaced_daemon_set)
+/// Parses the HTTP response of [`DaemonSet::list_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_namespaced_daemon_set)
 #[derive(Debug)]
-pub enum ListAppsV1beta2NamespacedDaemonSetResponse {
+pub enum ListNamespacedDaemonSetResponse {
     Ok(crate::v1_13::api::apps::v1beta2::DaemonSetList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAppsV1beta2NamespacedDaemonSetResponse {
+impl crate::Response for ListNamespacedDaemonSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -597,10 +597,10 @@ impl crate::Response for ListAppsV1beta2NamespacedDaemonSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAppsV1beta2NamespacedDaemonSetResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta2NamespacedDaemonSetResponse::Unauthorized, 0)),
-            _ => Ok((ListAppsV1beta2NamespacedDaemonSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedDaemonSetResponse::Other, 0)),
         }
     }
 }
@@ -610,7 +610,7 @@ impl crate::Response for ListAppsV1beta2NamespacedDaemonSetResponse {
 impl DaemonSet {
     /// partially update the specified DaemonSet
     ///
-    /// Use [`PatchAppsV1beta2NamespacedDaemonSetResponse`](./enum.PatchAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedDaemonSetResponse`](./enum.PatchNamespacedDaemonSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -627,13 +627,13 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apps_v1beta2_namespaced_daemon_set(
+    pub fn patch_namespaced_daemon_set(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAppsV1beta2NamespacedDaemonSetOptional<'_>,
+        optional: PatchNamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAppsV1beta2NamespacedDaemonSetOptional {
+        let PatchNamespacedDaemonSetOptional {
             dry_run,
             pretty,
         } = optional;
@@ -653,24 +653,24 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::patch_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_apps_v1beta2_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::patch_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_namespaced_daemon_set)
 #[derive(Debug, Default)]
-pub struct PatchAppsV1beta2NamespacedDaemonSetOptional<'a> {
+pub struct PatchNamespacedDaemonSetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::patch_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_apps_v1beta2_namespaced_daemon_set)
+/// Parses the HTTP response of [`DaemonSet::patch_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_namespaced_daemon_set)
 #[derive(Debug)]
-pub enum PatchAppsV1beta2NamespacedDaemonSetResponse {
+pub enum PatchNamespacedDaemonSetResponse {
     Ok(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAppsV1beta2NamespacedDaemonSetResponse {
+impl crate::Response for PatchNamespacedDaemonSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -679,10 +679,10 @@ impl crate::Response for PatchAppsV1beta2NamespacedDaemonSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAppsV1beta2NamespacedDaemonSetResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta2NamespacedDaemonSetResponse::Unauthorized, 0)),
-            _ => Ok((PatchAppsV1beta2NamespacedDaemonSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedDaemonSetResponse::Other, 0)),
         }
     }
 }
@@ -692,7 +692,7 @@ impl crate::Response for PatchAppsV1beta2NamespacedDaemonSetResponse {
 impl DaemonSet {
     /// partially update status of the specified DaemonSet
     ///
-    /// Use [`PatchAppsV1beta2NamespacedDaemonSetStatusResponse`](./enum.PatchAppsV1beta2NamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedDaemonSetStatusResponse`](./enum.PatchNamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -709,13 +709,13 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apps_v1beta2_namespaced_daemon_set_status(
+    pub fn patch_namespaced_daemon_set_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAppsV1beta2NamespacedDaemonSetStatusOptional<'_>,
+        optional: PatchNamespacedDaemonSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAppsV1beta2NamespacedDaemonSetStatusOptional {
+        let PatchNamespacedDaemonSetStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -735,24 +735,24 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::patch_apps_v1beta2_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_apps_v1beta2_namespaced_daemon_set_status)
+/// Optional parameters of [`DaemonSet::patch_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_namespaced_daemon_set_status)
 #[derive(Debug, Default)]
-pub struct PatchAppsV1beta2NamespacedDaemonSetStatusOptional<'a> {
+pub struct PatchNamespacedDaemonSetStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::patch_apps_v1beta2_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_apps_v1beta2_namespaced_daemon_set_status)
+/// Parses the HTTP response of [`DaemonSet::patch_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_namespaced_daemon_set_status)
 #[derive(Debug)]
-pub enum PatchAppsV1beta2NamespacedDaemonSetStatusResponse {
+pub enum PatchNamespacedDaemonSetStatusResponse {
     Ok(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAppsV1beta2NamespacedDaemonSetStatusResponse {
+impl crate::Response for PatchNamespacedDaemonSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -761,10 +761,10 @@ impl crate::Response for PatchAppsV1beta2NamespacedDaemonSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAppsV1beta2NamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta2NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchAppsV1beta2NamespacedDaemonSetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedDaemonSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedDaemonSetStatusResponse::Other, 0)),
         }
     }
 }
@@ -774,7 +774,7 @@ impl crate::Response for PatchAppsV1beta2NamespacedDaemonSetStatusResponse {
 impl DaemonSet {
     /// read the specified DaemonSet
     ///
-    /// Use [`ReadAppsV1beta2NamespacedDaemonSetResponse`](./enum.ReadAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedDaemonSetResponse`](./enum.ReadNamespacedDaemonSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -789,12 +789,12 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apps_v1beta2_namespaced_daemon_set(
+    pub fn read_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        optional: ReadAppsV1beta2NamespacedDaemonSetOptional<'_>,
+        optional: ReadNamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAppsV1beta2NamespacedDaemonSetOptional {
+        let ReadNamespacedDaemonSetOptional {
             exact,
             export,
             pretty,
@@ -818,9 +818,9 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::read_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_apps_v1beta2_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::read_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_namespaced_daemon_set)
 #[derive(Debug, Default)]
-pub struct ReadAppsV1beta2NamespacedDaemonSetOptional<'a> {
+pub struct ReadNamespacedDaemonSetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -829,15 +829,15 @@ pub struct ReadAppsV1beta2NamespacedDaemonSetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::read_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_apps_v1beta2_namespaced_daemon_set)
+/// Parses the HTTP response of [`DaemonSet::read_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_namespaced_daemon_set)
 #[derive(Debug)]
-pub enum ReadAppsV1beta2NamespacedDaemonSetResponse {
+pub enum ReadNamespacedDaemonSetResponse {
     Ok(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAppsV1beta2NamespacedDaemonSetResponse {
+impl crate::Response for ReadNamespacedDaemonSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -846,10 +846,10 @@ impl crate::Response for ReadAppsV1beta2NamespacedDaemonSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAppsV1beta2NamespacedDaemonSetResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta2NamespacedDaemonSetResponse::Unauthorized, 0)),
-            _ => Ok((ReadAppsV1beta2NamespacedDaemonSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedDaemonSetResponse::Other, 0)),
         }
     }
 }
@@ -859,7 +859,7 @@ impl crate::Response for ReadAppsV1beta2NamespacedDaemonSetResponse {
 impl DaemonSet {
     /// read status of the specified DaemonSet
     ///
-    /// Use [`ReadAppsV1beta2NamespacedDaemonSetStatusResponse`](./enum.ReadAppsV1beta2NamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedDaemonSetStatusResponse`](./enum.ReadNamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -874,12 +874,12 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apps_v1beta2_namespaced_daemon_set_status(
+    pub fn read_namespaced_daemon_set_status(
         name: &str,
         namespace: &str,
-        optional: ReadAppsV1beta2NamespacedDaemonSetStatusOptional<'_>,
+        optional: ReadNamespacedDaemonSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAppsV1beta2NamespacedDaemonSetStatusOptional {
+        let ReadNamespacedDaemonSetStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name}/status?", name = name, namespace = namespace);
@@ -895,22 +895,22 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::read_apps_v1beta2_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_apps_v1beta2_namespaced_daemon_set_status)
+/// Optional parameters of [`DaemonSet::read_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_namespaced_daemon_set_status)
 #[derive(Debug, Default)]
-pub struct ReadAppsV1beta2NamespacedDaemonSetStatusOptional<'a> {
+pub struct ReadNamespacedDaemonSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::read_apps_v1beta2_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_apps_v1beta2_namespaced_daemon_set_status)
+/// Parses the HTTP response of [`DaemonSet::read_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_namespaced_daemon_set_status)
 #[derive(Debug)]
-pub enum ReadAppsV1beta2NamespacedDaemonSetStatusResponse {
+pub enum ReadNamespacedDaemonSetStatusResponse {
     Ok(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAppsV1beta2NamespacedDaemonSetStatusResponse {
+impl crate::Response for ReadNamespacedDaemonSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -919,10 +919,10 @@ impl crate::Response for ReadAppsV1beta2NamespacedDaemonSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAppsV1beta2NamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta2NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadAppsV1beta2NamespacedDaemonSetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedDaemonSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedDaemonSetStatusResponse::Other, 0)),
         }
     }
 }
@@ -932,7 +932,7 @@ impl crate::Response for ReadAppsV1beta2NamespacedDaemonSetStatusResponse {
 impl DaemonSet {
     /// replace the specified DaemonSet
     ///
-    /// Use [`ReplaceAppsV1beta2NamespacedDaemonSetResponse`](./enum.ReplaceAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedDaemonSetResponse`](./enum.ReplaceNamespacedDaemonSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -949,13 +949,13 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apps_v1beta2_namespaced_daemon_set(
+    pub fn replace_namespaced_daemon_set(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::apps::v1beta2::DaemonSet,
-        optional: ReplaceAppsV1beta2NamespacedDaemonSetOptional<'_>,
+        optional: ReplaceNamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAppsV1beta2NamespacedDaemonSetOptional {
+        let ReplaceNamespacedDaemonSetOptional {
             dry_run,
             pretty,
         } = optional;
@@ -975,25 +975,25 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::replace_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_apps_v1beta2_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::replace_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_namespaced_daemon_set)
 #[derive(Debug, Default)]
-pub struct ReplaceAppsV1beta2NamespacedDaemonSetOptional<'a> {
+pub struct ReplaceNamespacedDaemonSetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::replace_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_apps_v1beta2_namespaced_daemon_set)
+/// Parses the HTTP response of [`DaemonSet::replace_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_namespaced_daemon_set)
 #[derive(Debug)]
-pub enum ReplaceAppsV1beta2NamespacedDaemonSetResponse {
+pub enum ReplaceNamespacedDaemonSetResponse {
     Ok(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Created(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAppsV1beta2NamespacedDaemonSetResponse {
+impl crate::Response for ReplaceNamespacedDaemonSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1002,7 +1002,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedDaemonSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedDaemonSetResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedDaemonSetResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1010,10 +1010,10 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedDaemonSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedDaemonSetResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedDaemonSetResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta2NamespacedDaemonSetResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAppsV1beta2NamespacedDaemonSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedDaemonSetResponse::Other, 0)),
         }
     }
 }
@@ -1023,7 +1023,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedDaemonSetResponse {
 impl DaemonSet {
     /// replace status of the specified DaemonSet
     ///
-    /// Use [`ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse`](./enum.ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedDaemonSetStatusResponse`](./enum.ReplaceNamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1040,13 +1040,13 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apps_v1beta2_namespaced_daemon_set_status(
+    pub fn replace_namespaced_daemon_set_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::apps::v1beta2::DaemonSet,
-        optional: ReplaceAppsV1beta2NamespacedDaemonSetStatusOptional<'_>,
+        optional: ReplaceNamespacedDaemonSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAppsV1beta2NamespacedDaemonSetStatusOptional {
+        let ReplaceNamespacedDaemonSetStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -1066,25 +1066,25 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::replace_apps_v1beta2_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_apps_v1beta2_namespaced_daemon_set_status)
+/// Optional parameters of [`DaemonSet::replace_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_namespaced_daemon_set_status)
 #[derive(Debug, Default)]
-pub struct ReplaceAppsV1beta2NamespacedDaemonSetStatusOptional<'a> {
+pub struct ReplaceNamespacedDaemonSetStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::replace_apps_v1beta2_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_apps_v1beta2_namespaced_daemon_set_status)
+/// Parses the HTTP response of [`DaemonSet::replace_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_namespaced_daemon_set_status)
 #[derive(Debug)]
-pub enum ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse {
+pub enum ReplaceNamespacedDaemonSetStatusResponse {
     Ok(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Created(crate::v1_13::api::apps::v1beta2::DaemonSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse {
+impl crate::Response for ReplaceNamespacedDaemonSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1093,7 +1093,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedDaemonSetStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1101,10 +1101,10 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedDaemonSetStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedDaemonSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedDaemonSetStatusResponse::Other, 0)),
         }
     }
 }
@@ -1114,17 +1114,17 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedDaemonSetStatusResponse {
 impl DaemonSet {
     /// watch individual changes to a list of DaemonSet. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchAppsV1beta2DaemonSetListForAllNamespacesResponse`](./enum.WatchAppsV1beta2DaemonSetListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchDaemonSetListForAllNamespacesResponse`](./enum.WatchDaemonSetListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1beta2_daemon_set_list_for_all_namespaces(
-        optional: WatchAppsV1beta2DaemonSetListForAllNamespacesOptional<'_>,
+    pub fn watch_daemon_set_list_for_all_namespaces(
+        optional: WatchDaemonSetListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1beta2DaemonSetListForAllNamespacesOptional {
+        let WatchDaemonSetListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1172,9 +1172,9 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::watch_apps_v1beta2_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_apps_v1beta2_daemon_set_list_for_all_namespaces)
+/// Optional parameters of [`DaemonSet::watch_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_daemon_set_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1beta2DaemonSetListForAllNamespacesOptional<'a> {
+pub struct WatchDaemonSetListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1199,15 +1199,15 @@ pub struct WatchAppsV1beta2DaemonSetListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::watch_apps_v1beta2_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_apps_v1beta2_daemon_set_list_for_all_namespaces)
+/// Parses the HTTP response of [`DaemonSet::watch_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_daemon_set_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchAppsV1beta2DaemonSetListForAllNamespacesResponse {
+pub enum WatchDaemonSetListForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1beta2DaemonSetListForAllNamespacesResponse {
+impl crate::Response for WatchDaemonSetListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1218,10 +1218,10 @@ impl crate::Response for WatchAppsV1beta2DaemonSetListForAllNamespacesResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1beta2DaemonSetListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchDaemonSetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta2DaemonSetListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1beta2DaemonSetListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchDaemonSetListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchDaemonSetListForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -1231,7 +1231,7 @@ impl crate::Response for WatchAppsV1beta2DaemonSetListForAllNamespacesResponse {
 impl DaemonSet {
     /// watch changes to an object of kind DaemonSet. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchAppsV1beta2NamespacedDaemonSetResponse`](./enum.WatchAppsV1beta2NamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedDaemonSetResponse`](./enum.WatchNamespacedDaemonSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1246,12 +1246,12 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1beta2_namespaced_daemon_set(
+    pub fn watch_namespaced_daemon_set(
         name: &str,
         namespace: &str,
-        optional: WatchAppsV1beta2NamespacedDaemonSetOptional<'_>,
+        optional: WatchNamespacedDaemonSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1beta2NamespacedDaemonSetOptional {
+        let WatchNamespacedDaemonSetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1299,9 +1299,9 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::watch_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_apps_v1beta2_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::watch_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_namespaced_daemon_set)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1beta2NamespacedDaemonSetOptional<'a> {
+pub struct WatchNamespacedDaemonSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1326,15 +1326,15 @@ pub struct WatchAppsV1beta2NamespacedDaemonSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::watch_apps_v1beta2_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_apps_v1beta2_namespaced_daemon_set)
+/// Parses the HTTP response of [`DaemonSet::watch_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_namespaced_daemon_set)
 #[derive(Debug)]
-pub enum WatchAppsV1beta2NamespacedDaemonSetResponse {
+pub enum WatchNamespacedDaemonSetResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1beta2NamespacedDaemonSetResponse {
+impl crate::Response for WatchNamespacedDaemonSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1345,10 +1345,10 @@ impl crate::Response for WatchAppsV1beta2NamespacedDaemonSetResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1beta2NamespacedDaemonSetResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedDaemonSetResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta2NamespacedDaemonSetResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1beta2NamespacedDaemonSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedDaemonSetResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedDaemonSetResponse::Other, 0)),
         }
     }
 }
@@ -1358,7 +1358,7 @@ impl crate::Response for WatchAppsV1beta2NamespacedDaemonSetResponse {
 impl DaemonSet {
     /// watch individual changes to a list of DaemonSet. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchAppsV1beta2NamespacedDaemonSetListResponse`](./enum.WatchAppsV1beta2NamespacedDaemonSetListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedDaemonSetListResponse`](./enum.WatchNamespacedDaemonSetListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1369,11 +1369,11 @@ impl DaemonSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1beta2_namespaced_daemon_set_list(
+    pub fn watch_namespaced_daemon_set_list(
         namespace: &str,
-        optional: WatchAppsV1beta2NamespacedDaemonSetListOptional<'_>,
+        optional: WatchNamespacedDaemonSetListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1beta2NamespacedDaemonSetListOptional {
+        let WatchNamespacedDaemonSetListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1421,9 +1421,9 @@ impl DaemonSet {
     }
 }
 
-/// Optional parameters of [`DaemonSet::watch_apps_v1beta2_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_apps_v1beta2_namespaced_daemon_set_list)
+/// Optional parameters of [`DaemonSet::watch_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_namespaced_daemon_set_list)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1beta2NamespacedDaemonSetListOptional<'a> {
+pub struct WatchNamespacedDaemonSetListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1448,15 +1448,15 @@ pub struct WatchAppsV1beta2NamespacedDaemonSetListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::watch_apps_v1beta2_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_apps_v1beta2_namespaced_daemon_set_list)
+/// Parses the HTTP response of [`DaemonSet::watch_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_namespaced_daemon_set_list)
 #[derive(Debug)]
-pub enum WatchAppsV1beta2NamespacedDaemonSetListResponse {
+pub enum WatchNamespacedDaemonSetListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1beta2NamespacedDaemonSetListResponse {
+impl crate::Response for WatchNamespacedDaemonSetListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1467,10 +1467,10 @@ impl crate::Response for WatchAppsV1beta2NamespacedDaemonSetListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1beta2NamespacedDaemonSetListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedDaemonSetListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta2NamespacedDaemonSetListResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1beta2NamespacedDaemonSetListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedDaemonSetListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedDaemonSetListResponse::Other, 0)),
         }
     }
 }

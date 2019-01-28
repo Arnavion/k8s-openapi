@@ -22,7 +22,7 @@ pub struct StatefulSet {
 impl StatefulSet {
     /// create a StatefulSet
     ///
-    /// Use [`CreateAppsV1beta2NamespacedStatefulSetResponse`](./enum.CreateAppsV1beta2NamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedStatefulSetResponse`](./enum.CreateNamespacedStatefulSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -35,12 +35,12 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_apps_v1beta2_namespaced_stateful_set(
+    pub fn create_namespaced_stateful_set(
         namespace: &str,
         body: &crate::v1_9::api::apps::v1beta2::StatefulSet,
-        optional: CreateAppsV1beta2NamespacedStatefulSetOptional<'_>,
+        optional: CreateNamespacedStatefulSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAppsV1beta2NamespacedStatefulSetOptional {
+        let CreateNamespacedStatefulSetOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets?", namespace = namespace);
@@ -56,16 +56,16 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::create_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.create_apps_v1beta2_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::create_namespaced_stateful_set`](./struct.StatefulSet.html#method.create_namespaced_stateful_set)
 #[derive(Debug, Default)]
-pub struct CreateAppsV1beta2NamespacedStatefulSetOptional<'a> {
+pub struct CreateNamespacedStatefulSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::create_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.create_apps_v1beta2_namespaced_stateful_set)
+/// Parses the HTTP response of [`StatefulSet::create_namespaced_stateful_set`](./struct.StatefulSet.html#method.create_namespaced_stateful_set)
 #[derive(Debug)]
-pub enum CreateAppsV1beta2NamespacedStatefulSetResponse {
+pub enum CreateNamespacedStatefulSetResponse {
     Ok(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Created(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Accepted(crate::v1_9::api::apps::v1beta2::StatefulSet),
@@ -73,7 +73,7 @@ pub enum CreateAppsV1beta2NamespacedStatefulSetResponse {
     Other,
 }
 
-impl crate::Response for CreateAppsV1beta2NamespacedStatefulSetResponse {
+impl crate::Response for CreateNamespacedStatefulSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -82,7 +82,7 @@ impl crate::Response for CreateAppsV1beta2NamespacedStatefulSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta2NamespacedStatefulSetResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedStatefulSetResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -90,7 +90,7 @@ impl crate::Response for CreateAppsV1beta2NamespacedStatefulSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta2NamespacedStatefulSetResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedStatefulSetResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -98,10 +98,10 @@ impl crate::Response for CreateAppsV1beta2NamespacedStatefulSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta2NamespacedStatefulSetResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedStatefulSetResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1beta2NamespacedStatefulSetResponse::Unauthorized, 0)),
-            _ => Ok((CreateAppsV1beta2NamespacedStatefulSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedStatefulSetResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedStatefulSetResponse::Other, 0)),
         }
     }
 }
@@ -111,7 +111,7 @@ impl crate::Response for CreateAppsV1beta2NamespacedStatefulSetResponse {
 impl StatefulSet {
     /// delete collection of StatefulSet
     ///
-    /// Use [`DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse`](./enum.DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedStatefulSetResponse`](./enum.DeleteCollectionNamespacedStatefulSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -122,11 +122,11 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apps_v1beta2_collection_namespaced_stateful_set(
+    pub fn delete_collection_namespaced_stateful_set(
         namespace: &str,
-        optional: DeleteAppsV1beta2CollectionNamespacedStatefulSetOptional<'_>,
+        optional: DeleteCollectionNamespacedStatefulSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAppsV1beta2CollectionNamespacedStatefulSetOptional {
+        let DeleteCollectionNamespacedStatefulSetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -174,9 +174,9 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::delete_apps_v1beta2_collection_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_apps_v1beta2_collection_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::delete_collection_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_collection_namespaced_stateful_set)
 #[derive(Debug, Default)]
-pub struct DeleteAppsV1beta2CollectionNamespacedStatefulSetOptional<'a> {
+pub struct DeleteCollectionNamespacedStatefulSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -199,16 +199,16 @@ pub struct DeleteAppsV1beta2CollectionNamespacedStatefulSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::delete_apps_v1beta2_collection_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_apps_v1beta2_collection_namespaced_stateful_set)
+/// Parses the HTTP response of [`StatefulSet::delete_collection_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_collection_namespaced_stateful_set)
 #[derive(Debug)]
-pub enum DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse {
+pub enum DeleteCollectionNamespacedStatefulSetResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse {
+impl crate::Response for DeleteCollectionNamespacedStatefulSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -224,16 +224,16 @@ impl crate::Response for DeleteAppsV1beta2CollectionNamespacedStatefulSetRespons
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedStatefulSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedStatefulSetResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAppsV1beta2CollectionNamespacedStatefulSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedStatefulSetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedStatefulSetResponse::Other, 0)),
         }
     }
 }
@@ -243,7 +243,7 @@ impl crate::Response for DeleteAppsV1beta2CollectionNamespacedStatefulSetRespons
 impl StatefulSet {
     /// delete a StatefulSet
     ///
-    /// Use [`DeleteAppsV1beta2NamespacedStatefulSetResponse`](./enum.DeleteAppsV1beta2NamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedStatefulSetResponse`](./enum.DeleteNamespacedStatefulSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -258,12 +258,12 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apps_v1beta2_namespaced_stateful_set(
+    pub fn delete_namespaced_stateful_set(
         name: &str,
         namespace: &str,
-        optional: DeleteAppsV1beta2NamespacedStatefulSetOptional<'_>,
+        optional: DeleteNamespacedStatefulSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAppsV1beta2NamespacedStatefulSetOptional {
+        let DeleteNamespacedStatefulSetOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -291,9 +291,9 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::delete_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_apps_v1beta2_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::delete_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_namespaced_stateful_set)
 #[derive(Debug, Default)]
-pub struct DeleteAppsV1beta2NamespacedStatefulSetOptional<'a> {
+pub struct DeleteNamespacedStatefulSetOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -304,16 +304,16 @@ pub struct DeleteAppsV1beta2NamespacedStatefulSetOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::delete_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_apps_v1beta2_namespaced_stateful_set)
+/// Parses the HTTP response of [`StatefulSet::delete_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_namespaced_stateful_set)
 #[derive(Debug)]
-pub enum DeleteAppsV1beta2NamespacedStatefulSetResponse {
+pub enum DeleteNamespacedStatefulSetResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAppsV1beta2NamespacedStatefulSetResponse {
+impl crate::Response for DeleteNamespacedStatefulSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -329,16 +329,16 @@ impl crate::Response for DeleteAppsV1beta2NamespacedStatefulSetResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2NamespacedStatefulSetResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedStatefulSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2NamespacedStatefulSetResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedStatefulSetResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta2NamespacedStatefulSetResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAppsV1beta2NamespacedStatefulSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedStatefulSetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedStatefulSetResponse::Other, 0)),
         }
     }
 }
@@ -348,7 +348,7 @@ impl crate::Response for DeleteAppsV1beta2NamespacedStatefulSetResponse {
 impl StatefulSet {
     /// list or watch objects of kind StatefulSet
     ///
-    /// Use [`ListAppsV1beta2NamespacedStatefulSetResponse`](./enum.ListAppsV1beta2NamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedStatefulSetResponse`](./enum.ListNamespacedStatefulSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -359,11 +359,11 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apps_v1beta2_namespaced_stateful_set(
+    pub fn list_namespaced_stateful_set(
         namespace: &str,
-        optional: ListAppsV1beta2NamespacedStatefulSetOptional<'_>,
+        optional: ListNamespacedStatefulSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAppsV1beta2NamespacedStatefulSetOptional {
+        let ListNamespacedStatefulSetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -411,9 +411,9 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::list_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.list_apps_v1beta2_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::list_namespaced_stateful_set`](./struct.StatefulSet.html#method.list_namespaced_stateful_set)
 #[derive(Debug, Default)]
-pub struct ListAppsV1beta2NamespacedStatefulSetOptional<'a> {
+pub struct ListNamespacedStatefulSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -436,15 +436,15 @@ pub struct ListAppsV1beta2NamespacedStatefulSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::list_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.list_apps_v1beta2_namespaced_stateful_set)
+/// Parses the HTTP response of [`StatefulSet::list_namespaced_stateful_set`](./struct.StatefulSet.html#method.list_namespaced_stateful_set)
 #[derive(Debug)]
-pub enum ListAppsV1beta2NamespacedStatefulSetResponse {
+pub enum ListNamespacedStatefulSetResponse {
     Ok(crate::v1_9::api::apps::v1beta2::StatefulSetList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAppsV1beta2NamespacedStatefulSetResponse {
+impl crate::Response for ListNamespacedStatefulSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -453,10 +453,10 @@ impl crate::Response for ListAppsV1beta2NamespacedStatefulSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAppsV1beta2NamespacedStatefulSetResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedStatefulSetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta2NamespacedStatefulSetResponse::Unauthorized, 0)),
-            _ => Ok((ListAppsV1beta2NamespacedStatefulSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedStatefulSetResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedStatefulSetResponse::Other, 0)),
         }
     }
 }
@@ -466,17 +466,17 @@ impl crate::Response for ListAppsV1beta2NamespacedStatefulSetResponse {
 impl StatefulSet {
     /// list or watch objects of kind StatefulSet
     ///
-    /// Use [`ListAppsV1beta2StatefulSetForAllNamespacesResponse`](./enum.ListAppsV1beta2StatefulSetForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListStatefulSetForAllNamespacesResponse`](./enum.ListStatefulSetForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apps_v1beta2_stateful_set_for_all_namespaces(
-        optional: ListAppsV1beta2StatefulSetForAllNamespacesOptional<'_>,
+    pub fn list_stateful_set_for_all_namespaces(
+        optional: ListStatefulSetForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAppsV1beta2StatefulSetForAllNamespacesOptional {
+        let ListStatefulSetForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -524,9 +524,9 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::list_apps_v1beta2_stateful_set_for_all_namespaces`](./struct.StatefulSet.html#method.list_apps_v1beta2_stateful_set_for_all_namespaces)
+/// Optional parameters of [`StatefulSet::list_stateful_set_for_all_namespaces`](./struct.StatefulSet.html#method.list_stateful_set_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListAppsV1beta2StatefulSetForAllNamespacesOptional<'a> {
+pub struct ListStatefulSetForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -549,15 +549,15 @@ pub struct ListAppsV1beta2StatefulSetForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::list_apps_v1beta2_stateful_set_for_all_namespaces`](./struct.StatefulSet.html#method.list_apps_v1beta2_stateful_set_for_all_namespaces)
+/// Parses the HTTP response of [`StatefulSet::list_stateful_set_for_all_namespaces`](./struct.StatefulSet.html#method.list_stateful_set_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListAppsV1beta2StatefulSetForAllNamespacesResponse {
+pub enum ListStatefulSetForAllNamespacesResponse {
     Ok(crate::v1_9::api::apps::v1beta2::StatefulSetList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAppsV1beta2StatefulSetForAllNamespacesResponse {
+impl crate::Response for ListStatefulSetForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -566,10 +566,10 @@ impl crate::Response for ListAppsV1beta2StatefulSetForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAppsV1beta2StatefulSetForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListStatefulSetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta2StatefulSetForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListAppsV1beta2StatefulSetForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListStatefulSetForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListStatefulSetForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -579,7 +579,7 @@ impl crate::Response for ListAppsV1beta2StatefulSetForAllNamespacesResponse {
 impl StatefulSet {
     /// partially update the specified StatefulSet
     ///
-    /// Use [`PatchAppsV1beta2NamespacedStatefulSetResponse`](./enum.PatchAppsV1beta2NamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedStatefulSetResponse`](./enum.PatchNamespacedStatefulSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -596,13 +596,13 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apps_v1beta2_namespaced_stateful_set(
+    pub fn patch_namespaced_stateful_set(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAppsV1beta2NamespacedStatefulSetOptional<'_>,
+        optional: PatchNamespacedStatefulSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAppsV1beta2NamespacedStatefulSetOptional {
+        let PatchNamespacedStatefulSetOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}?", name = name, namespace = namespace);
@@ -618,22 +618,22 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::patch_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.patch_apps_v1beta2_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::patch_namespaced_stateful_set`](./struct.StatefulSet.html#method.patch_namespaced_stateful_set)
 #[derive(Debug, Default)]
-pub struct PatchAppsV1beta2NamespacedStatefulSetOptional<'a> {
+pub struct PatchNamespacedStatefulSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::patch_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.patch_apps_v1beta2_namespaced_stateful_set)
+/// Parses the HTTP response of [`StatefulSet::patch_namespaced_stateful_set`](./struct.StatefulSet.html#method.patch_namespaced_stateful_set)
 #[derive(Debug)]
-pub enum PatchAppsV1beta2NamespacedStatefulSetResponse {
+pub enum PatchNamespacedStatefulSetResponse {
     Ok(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAppsV1beta2NamespacedStatefulSetResponse {
+impl crate::Response for PatchNamespacedStatefulSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -642,10 +642,10 @@ impl crate::Response for PatchAppsV1beta2NamespacedStatefulSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAppsV1beta2NamespacedStatefulSetResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedStatefulSetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta2NamespacedStatefulSetResponse::Unauthorized, 0)),
-            _ => Ok((PatchAppsV1beta2NamespacedStatefulSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedStatefulSetResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedStatefulSetResponse::Other, 0)),
         }
     }
 }
@@ -655,7 +655,7 @@ impl crate::Response for PatchAppsV1beta2NamespacedStatefulSetResponse {
 impl StatefulSet {
     /// partially update status of the specified StatefulSet
     ///
-    /// Use [`PatchAppsV1beta2NamespacedStatefulSetStatusResponse`](./enum.PatchAppsV1beta2NamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedStatefulSetStatusResponse`](./enum.PatchNamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -672,13 +672,13 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apps_v1beta2_namespaced_stateful_set_status(
+    pub fn patch_namespaced_stateful_set_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAppsV1beta2NamespacedStatefulSetStatusOptional<'_>,
+        optional: PatchNamespacedStatefulSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAppsV1beta2NamespacedStatefulSetStatusOptional {
+        let PatchNamespacedStatefulSetStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/status?", name = name, namespace = namespace);
@@ -694,22 +694,22 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::patch_apps_v1beta2_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.patch_apps_v1beta2_namespaced_stateful_set_status)
+/// Optional parameters of [`StatefulSet::patch_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.patch_namespaced_stateful_set_status)
 #[derive(Debug, Default)]
-pub struct PatchAppsV1beta2NamespacedStatefulSetStatusOptional<'a> {
+pub struct PatchNamespacedStatefulSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::patch_apps_v1beta2_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.patch_apps_v1beta2_namespaced_stateful_set_status)
+/// Parses the HTTP response of [`StatefulSet::patch_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.patch_namespaced_stateful_set_status)
 #[derive(Debug)]
-pub enum PatchAppsV1beta2NamespacedStatefulSetStatusResponse {
+pub enum PatchNamespacedStatefulSetStatusResponse {
     Ok(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAppsV1beta2NamespacedStatefulSetStatusResponse {
+impl crate::Response for PatchNamespacedStatefulSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -718,10 +718,10 @@ impl crate::Response for PatchAppsV1beta2NamespacedStatefulSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAppsV1beta2NamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta2NamespacedStatefulSetStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchAppsV1beta2NamespacedStatefulSetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedStatefulSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedStatefulSetStatusResponse::Other, 0)),
         }
     }
 }
@@ -731,7 +731,7 @@ impl crate::Response for PatchAppsV1beta2NamespacedStatefulSetStatusResponse {
 impl StatefulSet {
     /// read the specified StatefulSet
     ///
-    /// Use [`ReadAppsV1beta2NamespacedStatefulSetResponse`](./enum.ReadAppsV1beta2NamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedStatefulSetResponse`](./enum.ReadNamespacedStatefulSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -746,12 +746,12 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apps_v1beta2_namespaced_stateful_set(
+    pub fn read_namespaced_stateful_set(
         name: &str,
         namespace: &str,
-        optional: ReadAppsV1beta2NamespacedStatefulSetOptional<'_>,
+        optional: ReadNamespacedStatefulSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAppsV1beta2NamespacedStatefulSetOptional {
+        let ReadNamespacedStatefulSetOptional {
             exact,
             export,
             pretty,
@@ -775,9 +775,9 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::read_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.read_apps_v1beta2_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::read_namespaced_stateful_set`](./struct.StatefulSet.html#method.read_namespaced_stateful_set)
 #[derive(Debug, Default)]
-pub struct ReadAppsV1beta2NamespacedStatefulSetOptional<'a> {
+pub struct ReadNamespacedStatefulSetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -786,15 +786,15 @@ pub struct ReadAppsV1beta2NamespacedStatefulSetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::read_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.read_apps_v1beta2_namespaced_stateful_set)
+/// Parses the HTTP response of [`StatefulSet::read_namespaced_stateful_set`](./struct.StatefulSet.html#method.read_namespaced_stateful_set)
 #[derive(Debug)]
-pub enum ReadAppsV1beta2NamespacedStatefulSetResponse {
+pub enum ReadNamespacedStatefulSetResponse {
     Ok(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAppsV1beta2NamespacedStatefulSetResponse {
+impl crate::Response for ReadNamespacedStatefulSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -803,10 +803,10 @@ impl crate::Response for ReadAppsV1beta2NamespacedStatefulSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAppsV1beta2NamespacedStatefulSetResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedStatefulSetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta2NamespacedStatefulSetResponse::Unauthorized, 0)),
-            _ => Ok((ReadAppsV1beta2NamespacedStatefulSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedStatefulSetResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedStatefulSetResponse::Other, 0)),
         }
     }
 }
@@ -816,7 +816,7 @@ impl crate::Response for ReadAppsV1beta2NamespacedStatefulSetResponse {
 impl StatefulSet {
     /// read status of the specified StatefulSet
     ///
-    /// Use [`ReadAppsV1beta2NamespacedStatefulSetStatusResponse`](./enum.ReadAppsV1beta2NamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedStatefulSetStatusResponse`](./enum.ReadNamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -831,12 +831,12 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apps_v1beta2_namespaced_stateful_set_status(
+    pub fn read_namespaced_stateful_set_status(
         name: &str,
         namespace: &str,
-        optional: ReadAppsV1beta2NamespacedStatefulSetStatusOptional<'_>,
+        optional: ReadNamespacedStatefulSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAppsV1beta2NamespacedStatefulSetStatusOptional {
+        let ReadNamespacedStatefulSetStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/status?", name = name, namespace = namespace);
@@ -852,22 +852,22 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::read_apps_v1beta2_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.read_apps_v1beta2_namespaced_stateful_set_status)
+/// Optional parameters of [`StatefulSet::read_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.read_namespaced_stateful_set_status)
 #[derive(Debug, Default)]
-pub struct ReadAppsV1beta2NamespacedStatefulSetStatusOptional<'a> {
+pub struct ReadNamespacedStatefulSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::read_apps_v1beta2_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.read_apps_v1beta2_namespaced_stateful_set_status)
+/// Parses the HTTP response of [`StatefulSet::read_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.read_namespaced_stateful_set_status)
 #[derive(Debug)]
-pub enum ReadAppsV1beta2NamespacedStatefulSetStatusResponse {
+pub enum ReadNamespacedStatefulSetStatusResponse {
     Ok(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAppsV1beta2NamespacedStatefulSetStatusResponse {
+impl crate::Response for ReadNamespacedStatefulSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -876,10 +876,10 @@ impl crate::Response for ReadAppsV1beta2NamespacedStatefulSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAppsV1beta2NamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta2NamespacedStatefulSetStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadAppsV1beta2NamespacedStatefulSetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedStatefulSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedStatefulSetStatusResponse::Other, 0)),
         }
     }
 }
@@ -889,7 +889,7 @@ impl crate::Response for ReadAppsV1beta2NamespacedStatefulSetStatusResponse {
 impl StatefulSet {
     /// replace the specified StatefulSet
     ///
-    /// Use [`ReplaceAppsV1beta2NamespacedStatefulSetResponse`](./enum.ReplaceAppsV1beta2NamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedStatefulSetResponse`](./enum.ReplaceNamespacedStatefulSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -906,13 +906,13 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apps_v1beta2_namespaced_stateful_set(
+    pub fn replace_namespaced_stateful_set(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::api::apps::v1beta2::StatefulSet,
-        optional: ReplaceAppsV1beta2NamespacedStatefulSetOptional<'_>,
+        optional: ReplaceNamespacedStatefulSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAppsV1beta2NamespacedStatefulSetOptional {
+        let ReplaceNamespacedStatefulSetOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}?", name = name, namespace = namespace);
@@ -928,23 +928,23 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::replace_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.replace_apps_v1beta2_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::replace_namespaced_stateful_set`](./struct.StatefulSet.html#method.replace_namespaced_stateful_set)
 #[derive(Debug, Default)]
-pub struct ReplaceAppsV1beta2NamespacedStatefulSetOptional<'a> {
+pub struct ReplaceNamespacedStatefulSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::replace_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.replace_apps_v1beta2_namespaced_stateful_set)
+/// Parses the HTTP response of [`StatefulSet::replace_namespaced_stateful_set`](./struct.StatefulSet.html#method.replace_namespaced_stateful_set)
 #[derive(Debug)]
-pub enum ReplaceAppsV1beta2NamespacedStatefulSetResponse {
+pub enum ReplaceNamespacedStatefulSetResponse {
     Ok(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Created(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAppsV1beta2NamespacedStatefulSetResponse {
+impl crate::Response for ReplaceNamespacedStatefulSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -953,7 +953,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedStatefulSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedStatefulSetResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedStatefulSetResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -961,10 +961,10 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedStatefulSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedStatefulSetResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedStatefulSetResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta2NamespacedStatefulSetResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAppsV1beta2NamespacedStatefulSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedStatefulSetResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedStatefulSetResponse::Other, 0)),
         }
     }
 }
@@ -974,7 +974,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedStatefulSetResponse {
 impl StatefulSet {
     /// replace status of the specified StatefulSet
     ///
-    /// Use [`ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse`](./enum.ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedStatefulSetStatusResponse`](./enum.ReplaceNamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -991,13 +991,13 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apps_v1beta2_namespaced_stateful_set_status(
+    pub fn replace_namespaced_stateful_set_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_9::api::apps::v1beta2::StatefulSet,
-        optional: ReplaceAppsV1beta2NamespacedStatefulSetStatusOptional<'_>,
+        optional: ReplaceNamespacedStatefulSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAppsV1beta2NamespacedStatefulSetStatusOptional {
+        let ReplaceNamespacedStatefulSetStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/statefulsets/{name}/status?", name = name, namespace = namespace);
@@ -1013,23 +1013,23 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::replace_apps_v1beta2_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.replace_apps_v1beta2_namespaced_stateful_set_status)
+/// Optional parameters of [`StatefulSet::replace_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.replace_namespaced_stateful_set_status)
 #[derive(Debug, Default)]
-pub struct ReplaceAppsV1beta2NamespacedStatefulSetStatusOptional<'a> {
+pub struct ReplaceNamespacedStatefulSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::replace_apps_v1beta2_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.replace_apps_v1beta2_namespaced_stateful_set_status)
+/// Parses the HTTP response of [`StatefulSet::replace_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.replace_namespaced_stateful_set_status)
 #[derive(Debug)]
-pub enum ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse {
+pub enum ReplaceNamespacedStatefulSetStatusResponse {
     Ok(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Created(crate::v1_9::api::apps::v1beta2::StatefulSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse {
+impl crate::Response for ReplaceNamespacedStatefulSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1038,7 +1038,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedStatefulSetStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1046,10 +1046,10 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedStatefulSetStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedStatefulSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedStatefulSetStatusResponse::Other, 0)),
         }
     }
 }
@@ -1059,7 +1059,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedStatefulSetStatusResponse {
 impl StatefulSet {
     /// watch changes to an object of kind StatefulSet
     ///
-    /// Use [`WatchAppsV1beta2NamespacedStatefulSetResponse`](./enum.WatchAppsV1beta2NamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedStatefulSetResponse`](./enum.WatchNamespacedStatefulSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1074,12 +1074,12 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1beta2_namespaced_stateful_set(
+    pub fn watch_namespaced_stateful_set(
         name: &str,
         namespace: &str,
-        optional: WatchAppsV1beta2NamespacedStatefulSetOptional<'_>,
+        optional: WatchNamespacedStatefulSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1beta2NamespacedStatefulSetOptional {
+        let WatchNamespacedStatefulSetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1127,9 +1127,9 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::watch_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.watch_apps_v1beta2_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::watch_namespaced_stateful_set`](./struct.StatefulSet.html#method.watch_namespaced_stateful_set)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1beta2NamespacedStatefulSetOptional<'a> {
+pub struct WatchNamespacedStatefulSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1152,15 +1152,15 @@ pub struct WatchAppsV1beta2NamespacedStatefulSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::watch_apps_v1beta2_namespaced_stateful_set`](./struct.StatefulSet.html#method.watch_apps_v1beta2_namespaced_stateful_set)
+/// Parses the HTTP response of [`StatefulSet::watch_namespaced_stateful_set`](./struct.StatefulSet.html#method.watch_namespaced_stateful_set)
 #[derive(Debug)]
-pub enum WatchAppsV1beta2NamespacedStatefulSetResponse {
+pub enum WatchNamespacedStatefulSetResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1beta2NamespacedStatefulSetResponse {
+impl crate::Response for WatchNamespacedStatefulSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1171,10 +1171,10 @@ impl crate::Response for WatchAppsV1beta2NamespacedStatefulSetResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1beta2NamespacedStatefulSetResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedStatefulSetResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta2NamespacedStatefulSetResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1beta2NamespacedStatefulSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedStatefulSetResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedStatefulSetResponse::Other, 0)),
         }
     }
 }
@@ -1184,7 +1184,7 @@ impl crate::Response for WatchAppsV1beta2NamespacedStatefulSetResponse {
 impl StatefulSet {
     /// watch individual changes to a list of StatefulSet
     ///
-    /// Use [`WatchAppsV1beta2NamespacedStatefulSetListResponse`](./enum.WatchAppsV1beta2NamespacedStatefulSetListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedStatefulSetListResponse`](./enum.WatchNamespacedStatefulSetListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1195,11 +1195,11 @@ impl StatefulSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1beta2_namespaced_stateful_set_list(
+    pub fn watch_namespaced_stateful_set_list(
         namespace: &str,
-        optional: WatchAppsV1beta2NamespacedStatefulSetListOptional<'_>,
+        optional: WatchNamespacedStatefulSetListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1beta2NamespacedStatefulSetListOptional {
+        let WatchNamespacedStatefulSetListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1247,9 +1247,9 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::watch_apps_v1beta2_namespaced_stateful_set_list`](./struct.StatefulSet.html#method.watch_apps_v1beta2_namespaced_stateful_set_list)
+/// Optional parameters of [`StatefulSet::watch_namespaced_stateful_set_list`](./struct.StatefulSet.html#method.watch_namespaced_stateful_set_list)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1beta2NamespacedStatefulSetListOptional<'a> {
+pub struct WatchNamespacedStatefulSetListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1272,15 +1272,15 @@ pub struct WatchAppsV1beta2NamespacedStatefulSetListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::watch_apps_v1beta2_namespaced_stateful_set_list`](./struct.StatefulSet.html#method.watch_apps_v1beta2_namespaced_stateful_set_list)
+/// Parses the HTTP response of [`StatefulSet::watch_namespaced_stateful_set_list`](./struct.StatefulSet.html#method.watch_namespaced_stateful_set_list)
 #[derive(Debug)]
-pub enum WatchAppsV1beta2NamespacedStatefulSetListResponse {
+pub enum WatchNamespacedStatefulSetListResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1beta2NamespacedStatefulSetListResponse {
+impl crate::Response for WatchNamespacedStatefulSetListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1291,10 +1291,10 @@ impl crate::Response for WatchAppsV1beta2NamespacedStatefulSetListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1beta2NamespacedStatefulSetListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedStatefulSetListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta2NamespacedStatefulSetListResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1beta2NamespacedStatefulSetListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedStatefulSetListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedStatefulSetListResponse::Other, 0)),
         }
     }
 }
@@ -1304,17 +1304,17 @@ impl crate::Response for WatchAppsV1beta2NamespacedStatefulSetListResponse {
 impl StatefulSet {
     /// watch individual changes to a list of StatefulSet
     ///
-    /// Use [`WatchAppsV1beta2StatefulSetListForAllNamespacesResponse`](./enum.WatchAppsV1beta2StatefulSetListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchStatefulSetListForAllNamespacesResponse`](./enum.WatchStatefulSetListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1beta2_stateful_set_list_for_all_namespaces(
-        optional: WatchAppsV1beta2StatefulSetListForAllNamespacesOptional<'_>,
+    pub fn watch_stateful_set_list_for_all_namespaces(
+        optional: WatchStatefulSetListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1beta2StatefulSetListForAllNamespacesOptional {
+        let WatchStatefulSetListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1362,9 +1362,9 @@ impl StatefulSet {
     }
 }
 
-/// Optional parameters of [`StatefulSet::watch_apps_v1beta2_stateful_set_list_for_all_namespaces`](./struct.StatefulSet.html#method.watch_apps_v1beta2_stateful_set_list_for_all_namespaces)
+/// Optional parameters of [`StatefulSet::watch_stateful_set_list_for_all_namespaces`](./struct.StatefulSet.html#method.watch_stateful_set_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1beta2StatefulSetListForAllNamespacesOptional<'a> {
+pub struct WatchStatefulSetListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1387,15 +1387,15 @@ pub struct WatchAppsV1beta2StatefulSetListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::watch_apps_v1beta2_stateful_set_list_for_all_namespaces`](./struct.StatefulSet.html#method.watch_apps_v1beta2_stateful_set_list_for_all_namespaces)
+/// Parses the HTTP response of [`StatefulSet::watch_stateful_set_list_for_all_namespaces`](./struct.StatefulSet.html#method.watch_stateful_set_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchAppsV1beta2StatefulSetListForAllNamespacesResponse {
+pub enum WatchStatefulSetListForAllNamespacesResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1beta2StatefulSetListForAllNamespacesResponse {
+impl crate::Response for WatchStatefulSetListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1406,10 +1406,10 @@ impl crate::Response for WatchAppsV1beta2StatefulSetListForAllNamespacesResponse
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1beta2StatefulSetListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchStatefulSetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta2StatefulSetListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1beta2StatefulSetListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchStatefulSetListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchStatefulSetListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

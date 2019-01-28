@@ -19,7 +19,7 @@ pub struct CustomResourceDefinition {
 impl CustomResourceDefinition {
     /// create a CustomResourceDefinition
     ///
-    /// Use [`CreateApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.CreateApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use [`CreateCustomResourceDefinitionResponse`](./enum.CreateCustomResourceDefinitionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -28,11 +28,11 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_apiextensions_v1beta1_custom_resource_definition(
+    pub fn create_custom_resource_definition(
         body: &crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
-        optional: CreateApiextensionsV1beta1CustomResourceDefinitionOptional<'_>,
+        optional: CreateCustomResourceDefinitionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateApiextensionsV1beta1CustomResourceDefinitionOptional {
+        let CreateCustomResourceDefinitionOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?");
@@ -48,16 +48,16 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.create_apiextensions_v1beta1_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::create_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.create_custom_resource_definition)
 #[derive(Debug, Default)]
-pub struct CreateApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
+pub struct CreateCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::create_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.create_apiextensions_v1beta1_custom_resource_definition)
+/// Parses the HTTP response of [`CustomResourceDefinition::create_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.create_custom_resource_definition)
 #[derive(Debug)]
-pub enum CreateApiextensionsV1beta1CustomResourceDefinitionResponse {
+pub enum CreateCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Created(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Accepted(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -65,7 +65,7 @@ pub enum CreateApiextensionsV1beta1CustomResourceDefinitionResponse {
     Other,
 }
 
-impl crate::Response for CreateApiextensionsV1beta1CustomResourceDefinitionResponse {
+impl crate::Response for CreateCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -74,7 +74,7 @@ impl crate::Response for CreateApiextensionsV1beta1CustomResourceDefinitionRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), buf.len()))
+                Ok((CreateCustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -82,7 +82,7 @@ impl crate::Response for CreateApiextensionsV1beta1CustomResourceDefinitionRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Created(result), buf.len()))
+                Ok((CreateCustomResourceDefinitionResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -90,10 +90,10 @@ impl crate::Response for CreateApiextensionsV1beta1CustomResourceDefinitionRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Accepted(result), buf.len()))
+                Ok((CreateCustomResourceDefinitionResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((CreateApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateCustomResourceDefinitionResponse::Unauthorized, 0)),
+            _ => Ok((CreateCustomResourceDefinitionResponse::Other, 0)),
         }
     }
 }
@@ -103,17 +103,17 @@ impl crate::Response for CreateApiextensionsV1beta1CustomResourceDefinitionRespo
 impl CustomResourceDefinition {
     /// delete collection of CustomResourceDefinition
     ///
-    /// Use [`DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse`](./enum.DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionCustomResourceDefinitionResponse`](./enum.DeleteCollectionCustomResourceDefinitionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apiextensions_v1beta1_collection_custom_resource_definition(
-        optional: DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionOptional<'_>,
+    pub fn delete_collection_custom_resource_definition(
+        optional: DeleteCollectionCustomResourceDefinitionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionOptional {
+        let DeleteCollectionCustomResourceDefinitionOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -161,9 +161,9 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::delete_apiextensions_v1beta1_collection_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_apiextensions_v1beta1_collection_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::delete_collection_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_collection_custom_resource_definition)
 #[derive(Debug, Default)]
-pub struct DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionOptional<'a> {
+pub struct DeleteCollectionCustomResourceDefinitionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -186,16 +186,16 @@ pub struct DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionOptional<
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::delete_apiextensions_v1beta1_collection_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_apiextensions_v1beta1_collection_custom_resource_definition)
+/// Parses the HTTP response of [`CustomResourceDefinition::delete_collection_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_collection_custom_resource_definition)
 #[derive(Debug)]
-pub enum DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse {
+pub enum DeleteCollectionCustomResourceDefinitionResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse {
+impl crate::Response for DeleteCollectionCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -211,16 +211,16 @@ impl crate::Response for DeleteApiextensionsV1beta1CollectionCustomResourceDefin
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionCustomResourceDefinitionResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionCustomResourceDefinitionResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((DeleteApiextensionsV1beta1CollectionCustomResourceDefinitionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionCustomResourceDefinitionResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionCustomResourceDefinitionResponse::Other, 0)),
         }
     }
 }
@@ -230,7 +230,7 @@ impl crate::Response for DeleteApiextensionsV1beta1CollectionCustomResourceDefin
 impl CustomResourceDefinition {
     /// delete a CustomResourceDefinition
     ///
-    /// Use [`DeleteApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.DeleteApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCustomResourceDefinitionResponse`](./enum.DeleteCustomResourceDefinitionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -241,11 +241,11 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apiextensions_v1beta1_custom_resource_definition(
+    pub fn delete_custom_resource_definition(
         name: &str,
-        optional: DeleteApiextensionsV1beta1CustomResourceDefinitionOptional<'_>,
+        optional: DeleteCustomResourceDefinitionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteApiextensionsV1beta1CustomResourceDefinitionOptional {
+        let DeleteCustomResourceDefinitionOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -273,9 +273,9 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::delete_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_apiextensions_v1beta1_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::delete_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_custom_resource_definition)
 #[derive(Debug, Default)]
-pub struct DeleteApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
+pub struct DeleteCustomResourceDefinitionOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -286,16 +286,16 @@ pub struct DeleteApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::delete_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_apiextensions_v1beta1_custom_resource_definition)
+/// Parses the HTTP response of [`CustomResourceDefinition::delete_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_custom_resource_definition)
 #[derive(Debug)]
-pub enum DeleteApiextensionsV1beta1CustomResourceDefinitionResponse {
+pub enum DeleteCustomResourceDefinitionResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteApiextensionsV1beta1CustomResourceDefinitionResponse {
+impl crate::Response for DeleteCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -311,16 +311,16 @@ impl crate::Response for DeleteApiextensionsV1beta1CustomResourceDefinitionRespo
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCustomResourceDefinitionResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCustomResourceDefinitionResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((DeleteApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCustomResourceDefinitionResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCustomResourceDefinitionResponse::Other, 0)),
         }
     }
 }
@@ -330,17 +330,17 @@ impl crate::Response for DeleteApiextensionsV1beta1CustomResourceDefinitionRespo
 impl CustomResourceDefinition {
     /// list or watch objects of kind CustomResourceDefinition
     ///
-    /// Use [`ListApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.ListApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use [`ListCustomResourceDefinitionResponse`](./enum.ListCustomResourceDefinitionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apiextensions_v1beta1_custom_resource_definition(
-        optional: ListApiextensionsV1beta1CustomResourceDefinitionOptional<'_>,
+    pub fn list_custom_resource_definition(
+        optional: ListCustomResourceDefinitionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListApiextensionsV1beta1CustomResourceDefinitionOptional {
+        let ListCustomResourceDefinitionOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -388,9 +388,9 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::list_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.list_apiextensions_v1beta1_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::list_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.list_custom_resource_definition)
 #[derive(Debug, Default)]
-pub struct ListApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
+pub struct ListCustomResourceDefinitionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -413,15 +413,15 @@ pub struct ListApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::list_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.list_apiextensions_v1beta1_custom_resource_definition)
+/// Parses the HTTP response of [`CustomResourceDefinition::list_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.list_custom_resource_definition)
 #[derive(Debug)]
-pub enum ListApiextensionsV1beta1CustomResourceDefinitionResponse {
+pub enum ListCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListApiextensionsV1beta1CustomResourceDefinitionResponse {
+impl crate::Response for ListCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -430,10 +430,10 @@ impl crate::Response for ListApiextensionsV1beta1CustomResourceDefinitionRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), buf.len()))
+                Ok((ListCustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((ListApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListCustomResourceDefinitionResponse::Unauthorized, 0)),
+            _ => Ok((ListCustomResourceDefinitionResponse::Other, 0)),
         }
     }
 }
@@ -443,7 +443,7 @@ impl crate::Response for ListApiextensionsV1beta1CustomResourceDefinitionRespons
 impl CustomResourceDefinition {
     /// partially update the specified CustomResourceDefinition
     ///
-    /// Use [`PatchApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.PatchApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use [`PatchCustomResourceDefinitionResponse`](./enum.PatchCustomResourceDefinitionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -456,12 +456,12 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apiextensions_v1beta1_custom_resource_definition(
+    pub fn patch_custom_resource_definition(
         name: &str,
         body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchApiextensionsV1beta1CustomResourceDefinitionOptional<'_>,
+        optional: PatchCustomResourceDefinitionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchApiextensionsV1beta1CustomResourceDefinitionOptional {
+        let PatchCustomResourceDefinitionOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}?", name = name);
@@ -477,22 +477,22 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::patch_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.patch_apiextensions_v1beta1_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::patch_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.patch_custom_resource_definition)
 #[derive(Debug, Default)]
-pub struct PatchApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
+pub struct PatchCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::patch_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.patch_apiextensions_v1beta1_custom_resource_definition)
+/// Parses the HTTP response of [`CustomResourceDefinition::patch_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.patch_custom_resource_definition)
 #[derive(Debug)]
-pub enum PatchApiextensionsV1beta1CustomResourceDefinitionResponse {
+pub enum PatchCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchApiextensionsV1beta1CustomResourceDefinitionResponse {
+impl crate::Response for PatchCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -501,10 +501,10 @@ impl crate::Response for PatchApiextensionsV1beta1CustomResourceDefinitionRespon
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), buf.len()))
+                Ok((PatchCustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((PatchApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchCustomResourceDefinitionResponse::Unauthorized, 0)),
+            _ => Ok((PatchCustomResourceDefinitionResponse::Other, 0)),
         }
     }
 }
@@ -514,7 +514,7 @@ impl crate::Response for PatchApiextensionsV1beta1CustomResourceDefinitionRespon
 impl CustomResourceDefinition {
     /// read the specified CustomResourceDefinition
     ///
-    /// Use [`ReadApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.ReadApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use [`ReadCustomResourceDefinitionResponse`](./enum.ReadCustomResourceDefinitionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -525,11 +525,11 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apiextensions_v1beta1_custom_resource_definition(
+    pub fn read_custom_resource_definition(
         name: &str,
-        optional: ReadApiextensionsV1beta1CustomResourceDefinitionOptional<'_>,
+        optional: ReadCustomResourceDefinitionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadApiextensionsV1beta1CustomResourceDefinitionOptional {
+        let ReadCustomResourceDefinitionOptional {
             exact,
             export,
             pretty,
@@ -553,9 +553,9 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::read_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.read_apiextensions_v1beta1_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::read_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.read_custom_resource_definition)
 #[derive(Debug, Default)]
-pub struct ReadApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
+pub struct ReadCustomResourceDefinitionOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -564,15 +564,15 @@ pub struct ReadApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::read_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.read_apiextensions_v1beta1_custom_resource_definition)
+/// Parses the HTTP response of [`CustomResourceDefinition::read_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.read_custom_resource_definition)
 #[derive(Debug)]
-pub enum ReadApiextensionsV1beta1CustomResourceDefinitionResponse {
+pub enum ReadCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadApiextensionsV1beta1CustomResourceDefinitionResponse {
+impl crate::Response for ReadCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -581,10 +581,10 @@ impl crate::Response for ReadApiextensionsV1beta1CustomResourceDefinitionRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), buf.len()))
+                Ok((ReadCustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((ReadApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadCustomResourceDefinitionResponse::Unauthorized, 0)),
+            _ => Ok((ReadCustomResourceDefinitionResponse::Other, 0)),
         }
     }
 }
@@ -594,7 +594,7 @@ impl crate::Response for ReadApiextensionsV1beta1CustomResourceDefinitionRespons
 impl CustomResourceDefinition {
     /// replace the specified CustomResourceDefinition
     ///
-    /// Use [`ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceCustomResourceDefinitionResponse`](./enum.ReplaceCustomResourceDefinitionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -607,12 +607,12 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apiextensions_v1beta1_custom_resource_definition(
+    pub fn replace_custom_resource_definition(
         name: &str,
         body: &crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
-        optional: ReplaceApiextensionsV1beta1CustomResourceDefinitionOptional<'_>,
+        optional: ReplaceCustomResourceDefinitionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceApiextensionsV1beta1CustomResourceDefinitionOptional {
+        let ReplaceCustomResourceDefinitionOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}?", name = name);
@@ -628,23 +628,23 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::replace_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.replace_apiextensions_v1beta1_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::replace_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.replace_custom_resource_definition)
 #[derive(Debug, Default)]
-pub struct ReplaceApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
+pub struct ReplaceCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::replace_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.replace_apiextensions_v1beta1_custom_resource_definition)
+/// Parses the HTTP response of [`CustomResourceDefinition::replace_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.replace_custom_resource_definition)
 #[derive(Debug)]
-pub enum ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse {
+pub enum ReplaceCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Created(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse {
+impl crate::Response for ReplaceCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -653,7 +653,7 @@ impl crate::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionResp
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), buf.len()))
+                Ok((ReplaceCustomResourceDefinitionResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -661,10 +661,10 @@ impl crate::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionResp
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse::Created(result), buf.len()))
+                Ok((ReplaceCustomResourceDefinitionResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCustomResourceDefinitionResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceCustomResourceDefinitionResponse::Other, 0)),
         }
     }
 }
@@ -674,7 +674,7 @@ impl crate::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionResp
 impl CustomResourceDefinition {
     /// replace status of the specified CustomResourceDefinition
     ///
-    /// Use [`ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse`](./enum.ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceCustomResourceDefinitionStatusResponse`](./enum.ReplaceCustomResourceDefinitionStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -687,12 +687,12 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apiextensions_v1beta1_custom_resource_definition_status(
+    pub fn replace_custom_resource_definition_status(
         name: &str,
         body: &crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
-        optional: ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusOptional<'_>,
+        optional: ReplaceCustomResourceDefinitionStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusOptional {
+        let ReplaceCustomResourceDefinitionStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}/status?", name = name);
@@ -708,23 +708,23 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::replace_apiextensions_v1beta1_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.replace_apiextensions_v1beta1_custom_resource_definition_status)
+/// Optional parameters of [`CustomResourceDefinition::replace_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.replace_custom_resource_definition_status)
 #[derive(Debug, Default)]
-pub struct ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusOptional<'a> {
+pub struct ReplaceCustomResourceDefinitionStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::replace_apiextensions_v1beta1_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.replace_apiextensions_v1beta1_custom_resource_definition_status)
+/// Parses the HTTP response of [`CustomResourceDefinition::replace_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.replace_custom_resource_definition_status)
 #[derive(Debug)]
-pub enum ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
+pub enum ReplaceCustomResourceDefinitionStatusResponse {
     Ok(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Created(crate::v1_10::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse {
+impl crate::Response for ReplaceCustomResourceDefinitionStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -733,7 +733,7 @@ impl crate::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionStat
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceCustomResourceDefinitionStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -741,10 +741,10 @@ impl crate::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionStat
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceCustomResourceDefinitionStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceApiextensionsV1beta1CustomResourceDefinitionStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCustomResourceDefinitionStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceCustomResourceDefinitionStatusResponse::Other, 0)),
         }
     }
 }
@@ -754,7 +754,7 @@ impl crate::Response for ReplaceApiextensionsV1beta1CustomResourceDefinitionStat
 impl CustomResourceDefinition {
     /// watch changes to an object of kind CustomResourceDefinition
     ///
-    /// Use [`WatchApiextensionsV1beta1CustomResourceDefinitionResponse`](./enum.WatchApiextensionsV1beta1CustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use [`WatchCustomResourceDefinitionResponse`](./enum.WatchCustomResourceDefinitionResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -765,11 +765,11 @@ impl CustomResourceDefinition {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apiextensions_v1beta1_custom_resource_definition(
+    pub fn watch_custom_resource_definition(
         name: &str,
-        optional: WatchApiextensionsV1beta1CustomResourceDefinitionOptional<'_>,
+        optional: WatchCustomResourceDefinitionOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchApiextensionsV1beta1CustomResourceDefinitionOptional {
+        let WatchCustomResourceDefinitionOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -817,9 +817,9 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::watch_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.watch_apiextensions_v1beta1_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::watch_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.watch_custom_resource_definition)
 #[derive(Debug, Default)]
-pub struct WatchApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
+pub struct WatchCustomResourceDefinitionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -842,15 +842,15 @@ pub struct WatchApiextensionsV1beta1CustomResourceDefinitionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::watch_apiextensions_v1beta1_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.watch_apiextensions_v1beta1_custom_resource_definition)
+/// Parses the HTTP response of [`CustomResourceDefinition::watch_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.watch_custom_resource_definition)
 #[derive(Debug)]
-pub enum WatchApiextensionsV1beta1CustomResourceDefinitionResponse {
+pub enum WatchCustomResourceDefinitionResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchApiextensionsV1beta1CustomResourceDefinitionResponse {
+impl crate::Response for WatchCustomResourceDefinitionResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -861,10 +861,10 @@ impl crate::Response for WatchApiextensionsV1beta1CustomResourceDefinitionRespon
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchApiextensionsV1beta1CustomResourceDefinitionResponse::Ok(result), byte_offset))
+                Ok((WatchCustomResourceDefinitionResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchApiextensionsV1beta1CustomResourceDefinitionResponse::Unauthorized, 0)),
-            _ => Ok((WatchApiextensionsV1beta1CustomResourceDefinitionResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCustomResourceDefinitionResponse::Unauthorized, 0)),
+            _ => Ok((WatchCustomResourceDefinitionResponse::Other, 0)),
         }
     }
 }
@@ -874,17 +874,17 @@ impl crate::Response for WatchApiextensionsV1beta1CustomResourceDefinitionRespon
 impl CustomResourceDefinition {
     /// watch individual changes to a list of CustomResourceDefinition
     ///
-    /// Use [`WatchApiextensionsV1beta1CustomResourceDefinitionListResponse`](./enum.WatchApiextensionsV1beta1CustomResourceDefinitionListResponse.html) to parse the HTTP response.
+    /// Use [`WatchCustomResourceDefinitionListResponse`](./enum.WatchCustomResourceDefinitionListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apiextensions_v1beta1_custom_resource_definition_list(
-        optional: WatchApiextensionsV1beta1CustomResourceDefinitionListOptional<'_>,
+    pub fn watch_custom_resource_definition_list(
+        optional: WatchCustomResourceDefinitionListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchApiextensionsV1beta1CustomResourceDefinitionListOptional {
+        let WatchCustomResourceDefinitionListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -932,9 +932,9 @@ impl CustomResourceDefinition {
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::watch_apiextensions_v1beta1_custom_resource_definition_list`](./struct.CustomResourceDefinition.html#method.watch_apiextensions_v1beta1_custom_resource_definition_list)
+/// Optional parameters of [`CustomResourceDefinition::watch_custom_resource_definition_list`](./struct.CustomResourceDefinition.html#method.watch_custom_resource_definition_list)
 #[derive(Debug, Default)]
-pub struct WatchApiextensionsV1beta1CustomResourceDefinitionListOptional<'a> {
+pub struct WatchCustomResourceDefinitionListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -957,15 +957,15 @@ pub struct WatchApiextensionsV1beta1CustomResourceDefinitionListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::watch_apiextensions_v1beta1_custom_resource_definition_list`](./struct.CustomResourceDefinition.html#method.watch_apiextensions_v1beta1_custom_resource_definition_list)
+/// Parses the HTTP response of [`CustomResourceDefinition::watch_custom_resource_definition_list`](./struct.CustomResourceDefinition.html#method.watch_custom_resource_definition_list)
 #[derive(Debug)]
-pub enum WatchApiextensionsV1beta1CustomResourceDefinitionListResponse {
+pub enum WatchCustomResourceDefinitionListResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchApiextensionsV1beta1CustomResourceDefinitionListResponse {
+impl crate::Response for WatchCustomResourceDefinitionListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -976,10 +976,10 @@ impl crate::Response for WatchApiextensionsV1beta1CustomResourceDefinitionListRe
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchApiextensionsV1beta1CustomResourceDefinitionListResponse::Ok(result), byte_offset))
+                Ok((WatchCustomResourceDefinitionListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchApiextensionsV1beta1CustomResourceDefinitionListResponse::Unauthorized, 0)),
-            _ => Ok((WatchApiextensionsV1beta1CustomResourceDefinitionListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchCustomResourceDefinitionListResponse::Unauthorized, 0)),
+            _ => Ok((WatchCustomResourceDefinitionListResponse::Other, 0)),
         }
     }
 }

@@ -20,7 +20,7 @@ pub struct ReplicaSet {
 impl ReplicaSet {
     /// create a ReplicaSet
     ///
-    /// Use [`CreateAppsV1beta2NamespacedReplicaSetResponse`](./enum.CreateAppsV1beta2NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedReplicaSetResponse`](./enum.CreateNamespacedReplicaSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_apps_v1beta2_namespaced_replica_set(
+    pub fn create_namespaced_replica_set(
         namespace: &str,
         body: &crate::v1_13::api::apps::v1beta2::ReplicaSet,
-        optional: CreateAppsV1beta2NamespacedReplicaSetOptional<'_>,
+        optional: CreateNamespacedReplicaSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAppsV1beta2NamespacedReplicaSetOptional {
+        let CreateNamespacedReplicaSetOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -62,9 +62,9 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::create_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.create_apps_v1beta2_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::create_namespaced_replica_set`](./struct.ReplicaSet.html#method.create_namespaced_replica_set)
 #[derive(Debug, Default)]
-pub struct CreateAppsV1beta2NamespacedReplicaSetOptional<'a> {
+pub struct CreateNamespacedReplicaSetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -73,9 +73,9 @@ pub struct CreateAppsV1beta2NamespacedReplicaSetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::create_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.create_apps_v1beta2_namespaced_replica_set)
+/// Parses the HTTP response of [`ReplicaSet::create_namespaced_replica_set`](./struct.ReplicaSet.html#method.create_namespaced_replica_set)
 #[derive(Debug)]
-pub enum CreateAppsV1beta2NamespacedReplicaSetResponse {
+pub enum CreateNamespacedReplicaSetResponse {
     Ok(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Created(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Accepted(crate::v1_13::api::apps::v1beta2::ReplicaSet),
@@ -83,7 +83,7 @@ pub enum CreateAppsV1beta2NamespacedReplicaSetResponse {
     Other,
 }
 
-impl crate::Response for CreateAppsV1beta2NamespacedReplicaSetResponse {
+impl crate::Response for CreateNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -92,7 +92,7 @@ impl crate::Response for CreateAppsV1beta2NamespacedReplicaSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta2NamespacedReplicaSetResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedReplicaSetResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -100,7 +100,7 @@ impl crate::Response for CreateAppsV1beta2NamespacedReplicaSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta2NamespacedReplicaSetResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedReplicaSetResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -108,10 +108,10 @@ impl crate::Response for CreateAppsV1beta2NamespacedReplicaSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAppsV1beta2NamespacedReplicaSetResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedReplicaSetResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAppsV1beta2NamespacedReplicaSetResponse::Unauthorized, 0)),
-            _ => Ok((CreateAppsV1beta2NamespacedReplicaSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedReplicaSetResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedReplicaSetResponse::Other, 0)),
         }
     }
 }
@@ -121,7 +121,7 @@ impl crate::Response for CreateAppsV1beta2NamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// delete collection of ReplicaSet
     ///
-    /// Use [`DeleteAppsV1beta2CollectionNamespacedReplicaSetResponse`](./enum.DeleteAppsV1beta2CollectionNamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedReplicaSetResponse`](./enum.DeleteCollectionNamespacedReplicaSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -132,11 +132,11 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apps_v1beta2_collection_namespaced_replica_set(
+    pub fn delete_collection_namespaced_replica_set(
         namespace: &str,
-        optional: DeleteAppsV1beta2CollectionNamespacedReplicaSetOptional<'_>,
+        optional: DeleteCollectionNamespacedReplicaSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAppsV1beta2CollectionNamespacedReplicaSetOptional {
+        let DeleteCollectionNamespacedReplicaSetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -184,9 +184,9 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::delete_apps_v1beta2_collection_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_apps_v1beta2_collection_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::delete_collection_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_collection_namespaced_replica_set)
 #[derive(Debug, Default)]
-pub struct DeleteAppsV1beta2CollectionNamespacedReplicaSetOptional<'a> {
+pub struct DeleteCollectionNamespacedReplicaSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -211,16 +211,16 @@ pub struct DeleteAppsV1beta2CollectionNamespacedReplicaSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::delete_apps_v1beta2_collection_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_apps_v1beta2_collection_namespaced_replica_set)
+/// Parses the HTTP response of [`ReplicaSet::delete_collection_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_collection_namespaced_replica_set)
 #[derive(Debug)]
-pub enum DeleteAppsV1beta2CollectionNamespacedReplicaSetResponse {
+pub enum DeleteCollectionNamespacedReplicaSetResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAppsV1beta2CollectionNamespacedReplicaSetResponse {
+impl crate::Response for DeleteCollectionNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -236,16 +236,16 @@ impl crate::Response for DeleteAppsV1beta2CollectionNamespacedReplicaSetResponse
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2CollectionNamespacedReplicaSetResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedReplicaSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2CollectionNamespacedReplicaSetResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedReplicaSetResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta2CollectionNamespacedReplicaSetResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAppsV1beta2CollectionNamespacedReplicaSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedReplicaSetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedReplicaSetResponse::Other, 0)),
         }
     }
 }
@@ -255,7 +255,7 @@ impl crate::Response for DeleteAppsV1beta2CollectionNamespacedReplicaSetResponse
 impl ReplicaSet {
     /// delete a ReplicaSet
     ///
-    /// Use [`DeleteAppsV1beta2NamespacedReplicaSetResponse`](./enum.DeleteAppsV1beta2NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedReplicaSetResponse`](./enum.DeleteNamespacedReplicaSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -270,12 +270,12 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_apps_v1beta2_namespaced_replica_set(
+    pub fn delete_namespaced_replica_set(
         name: &str,
         namespace: &str,
-        optional: DeleteAppsV1beta2NamespacedReplicaSetOptional<'_>,
+        optional: DeleteNamespacedReplicaSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAppsV1beta2NamespacedReplicaSetOptional {
+        let DeleteNamespacedReplicaSetOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -307,9 +307,9 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::delete_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_apps_v1beta2_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::delete_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_namespaced_replica_set)
 #[derive(Debug, Default)]
-pub struct DeleteAppsV1beta2NamespacedReplicaSetOptional<'a> {
+pub struct DeleteNamespacedReplicaSetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -322,9 +322,9 @@ pub struct DeleteAppsV1beta2NamespacedReplicaSetOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::delete_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_apps_v1beta2_namespaced_replica_set)
+/// Parses the HTTP response of [`ReplicaSet::delete_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_namespaced_replica_set)
 #[derive(Debug)]
-pub enum DeleteAppsV1beta2NamespacedReplicaSetResponse {
+pub enum DeleteNamespacedReplicaSetResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -332,7 +332,7 @@ pub enum DeleteAppsV1beta2NamespacedReplicaSetResponse {
     Other,
 }
 
-impl crate::Response for DeleteAppsV1beta2NamespacedReplicaSetResponse {
+impl crate::Response for DeleteNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -348,12 +348,12 @@ impl crate::Response for DeleteAppsV1beta2NamespacedReplicaSetResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2NamespacedReplicaSetResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedReplicaSetResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAppsV1beta2NamespacedReplicaSetResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedReplicaSetResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -362,10 +362,10 @@ impl crate::Response for DeleteAppsV1beta2NamespacedReplicaSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteAppsV1beta2NamespacedReplicaSetResponse::Accepted(result), buf.len()))
+                Ok((DeleteNamespacedReplicaSetResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAppsV1beta2NamespacedReplicaSetResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAppsV1beta2NamespacedReplicaSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedReplicaSetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedReplicaSetResponse::Other, 0)),
         }
     }
 }
@@ -375,7 +375,7 @@ impl crate::Response for DeleteAppsV1beta2NamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// list or watch objects of kind ReplicaSet
     ///
-    /// Use [`ListAppsV1beta2NamespacedReplicaSetResponse`](./enum.ListAppsV1beta2NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedReplicaSetResponse`](./enum.ListNamespacedReplicaSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -386,11 +386,11 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apps_v1beta2_namespaced_replica_set(
+    pub fn list_namespaced_replica_set(
         namespace: &str,
-        optional: ListAppsV1beta2NamespacedReplicaSetOptional<'_>,
+        optional: ListNamespacedReplicaSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAppsV1beta2NamespacedReplicaSetOptional {
+        let ListNamespacedReplicaSetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -438,9 +438,9 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::list_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.list_apps_v1beta2_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::list_namespaced_replica_set`](./struct.ReplicaSet.html#method.list_namespaced_replica_set)
 #[derive(Debug, Default)]
-pub struct ListAppsV1beta2NamespacedReplicaSetOptional<'a> {
+pub struct ListNamespacedReplicaSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -465,15 +465,15 @@ pub struct ListAppsV1beta2NamespacedReplicaSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::list_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.list_apps_v1beta2_namespaced_replica_set)
+/// Parses the HTTP response of [`ReplicaSet::list_namespaced_replica_set`](./struct.ReplicaSet.html#method.list_namespaced_replica_set)
 #[derive(Debug)]
-pub enum ListAppsV1beta2NamespacedReplicaSetResponse {
+pub enum ListNamespacedReplicaSetResponse {
     Ok(crate::v1_13::api::apps::v1beta2::ReplicaSetList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAppsV1beta2NamespacedReplicaSetResponse {
+impl crate::Response for ListNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -482,10 +482,10 @@ impl crate::Response for ListAppsV1beta2NamespacedReplicaSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAppsV1beta2NamespacedReplicaSetResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedReplicaSetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta2NamespacedReplicaSetResponse::Unauthorized, 0)),
-            _ => Ok((ListAppsV1beta2NamespacedReplicaSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedReplicaSetResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedReplicaSetResponse::Other, 0)),
         }
     }
 }
@@ -495,17 +495,17 @@ impl crate::Response for ListAppsV1beta2NamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// list or watch objects of kind ReplicaSet
     ///
-    /// Use [`ListAppsV1beta2ReplicaSetForAllNamespacesResponse`](./enum.ListAppsV1beta2ReplicaSetForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListReplicaSetForAllNamespacesResponse`](./enum.ListReplicaSetForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_apps_v1beta2_replica_set_for_all_namespaces(
-        optional: ListAppsV1beta2ReplicaSetForAllNamespacesOptional<'_>,
+    pub fn list_replica_set_for_all_namespaces(
+        optional: ListReplicaSetForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAppsV1beta2ReplicaSetForAllNamespacesOptional {
+        let ListReplicaSetForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -553,9 +553,9 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::list_apps_v1beta2_replica_set_for_all_namespaces`](./struct.ReplicaSet.html#method.list_apps_v1beta2_replica_set_for_all_namespaces)
+/// Optional parameters of [`ReplicaSet::list_replica_set_for_all_namespaces`](./struct.ReplicaSet.html#method.list_replica_set_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListAppsV1beta2ReplicaSetForAllNamespacesOptional<'a> {
+pub struct ListReplicaSetForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -580,15 +580,15 @@ pub struct ListAppsV1beta2ReplicaSetForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::list_apps_v1beta2_replica_set_for_all_namespaces`](./struct.ReplicaSet.html#method.list_apps_v1beta2_replica_set_for_all_namespaces)
+/// Parses the HTTP response of [`ReplicaSet::list_replica_set_for_all_namespaces`](./struct.ReplicaSet.html#method.list_replica_set_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListAppsV1beta2ReplicaSetForAllNamespacesResponse {
+pub enum ListReplicaSetForAllNamespacesResponse {
     Ok(crate::v1_13::api::apps::v1beta2::ReplicaSetList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAppsV1beta2ReplicaSetForAllNamespacesResponse {
+impl crate::Response for ListReplicaSetForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -597,10 +597,10 @@ impl crate::Response for ListAppsV1beta2ReplicaSetForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAppsV1beta2ReplicaSetForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListReplicaSetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAppsV1beta2ReplicaSetForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListAppsV1beta2ReplicaSetForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListReplicaSetForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListReplicaSetForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -610,7 +610,7 @@ impl crate::Response for ListAppsV1beta2ReplicaSetForAllNamespacesResponse {
 impl ReplicaSet {
     /// partially update the specified ReplicaSet
     ///
-    /// Use [`PatchAppsV1beta2NamespacedReplicaSetResponse`](./enum.PatchAppsV1beta2NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedReplicaSetResponse`](./enum.PatchNamespacedReplicaSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -627,13 +627,13 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apps_v1beta2_namespaced_replica_set(
+    pub fn patch_namespaced_replica_set(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAppsV1beta2NamespacedReplicaSetOptional<'_>,
+        optional: PatchNamespacedReplicaSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAppsV1beta2NamespacedReplicaSetOptional {
+        let PatchNamespacedReplicaSetOptional {
             dry_run,
             pretty,
         } = optional;
@@ -653,24 +653,24 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::patch_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.patch_apps_v1beta2_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::patch_namespaced_replica_set`](./struct.ReplicaSet.html#method.patch_namespaced_replica_set)
 #[derive(Debug, Default)]
-pub struct PatchAppsV1beta2NamespacedReplicaSetOptional<'a> {
+pub struct PatchNamespacedReplicaSetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::patch_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.patch_apps_v1beta2_namespaced_replica_set)
+/// Parses the HTTP response of [`ReplicaSet::patch_namespaced_replica_set`](./struct.ReplicaSet.html#method.patch_namespaced_replica_set)
 #[derive(Debug)]
-pub enum PatchAppsV1beta2NamespacedReplicaSetResponse {
+pub enum PatchNamespacedReplicaSetResponse {
     Ok(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAppsV1beta2NamespacedReplicaSetResponse {
+impl crate::Response for PatchNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -679,10 +679,10 @@ impl crate::Response for PatchAppsV1beta2NamespacedReplicaSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAppsV1beta2NamespacedReplicaSetResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedReplicaSetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta2NamespacedReplicaSetResponse::Unauthorized, 0)),
-            _ => Ok((PatchAppsV1beta2NamespacedReplicaSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedReplicaSetResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedReplicaSetResponse::Other, 0)),
         }
     }
 }
@@ -692,7 +692,7 @@ impl crate::Response for PatchAppsV1beta2NamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// partially update status of the specified ReplicaSet
     ///
-    /// Use [`PatchAppsV1beta2NamespacedReplicaSetStatusResponse`](./enum.PatchAppsV1beta2NamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedReplicaSetStatusResponse`](./enum.PatchNamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -709,13 +709,13 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_apps_v1beta2_namespaced_replica_set_status(
+    pub fn patch_namespaced_replica_set_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAppsV1beta2NamespacedReplicaSetStatusOptional<'_>,
+        optional: PatchNamespacedReplicaSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAppsV1beta2NamespacedReplicaSetStatusOptional {
+        let PatchNamespacedReplicaSetStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -735,24 +735,24 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::patch_apps_v1beta2_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.patch_apps_v1beta2_namespaced_replica_set_status)
+/// Optional parameters of [`ReplicaSet::patch_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.patch_namespaced_replica_set_status)
 #[derive(Debug, Default)]
-pub struct PatchAppsV1beta2NamespacedReplicaSetStatusOptional<'a> {
+pub struct PatchNamespacedReplicaSetStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::patch_apps_v1beta2_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.patch_apps_v1beta2_namespaced_replica_set_status)
+/// Parses the HTTP response of [`ReplicaSet::patch_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.patch_namespaced_replica_set_status)
 #[derive(Debug)]
-pub enum PatchAppsV1beta2NamespacedReplicaSetStatusResponse {
+pub enum PatchNamespacedReplicaSetStatusResponse {
     Ok(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAppsV1beta2NamespacedReplicaSetStatusResponse {
+impl crate::Response for PatchNamespacedReplicaSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -761,10 +761,10 @@ impl crate::Response for PatchAppsV1beta2NamespacedReplicaSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAppsV1beta2NamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAppsV1beta2NamespacedReplicaSetStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchAppsV1beta2NamespacedReplicaSetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedReplicaSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedReplicaSetStatusResponse::Other, 0)),
         }
     }
 }
@@ -774,7 +774,7 @@ impl crate::Response for PatchAppsV1beta2NamespacedReplicaSetStatusResponse {
 impl ReplicaSet {
     /// read the specified ReplicaSet
     ///
-    /// Use [`ReadAppsV1beta2NamespacedReplicaSetResponse`](./enum.ReadAppsV1beta2NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedReplicaSetResponse`](./enum.ReadNamespacedReplicaSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -789,12 +789,12 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apps_v1beta2_namespaced_replica_set(
+    pub fn read_namespaced_replica_set(
         name: &str,
         namespace: &str,
-        optional: ReadAppsV1beta2NamespacedReplicaSetOptional<'_>,
+        optional: ReadNamespacedReplicaSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAppsV1beta2NamespacedReplicaSetOptional {
+        let ReadNamespacedReplicaSetOptional {
             exact,
             export,
             pretty,
@@ -818,9 +818,9 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::read_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.read_apps_v1beta2_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::read_namespaced_replica_set`](./struct.ReplicaSet.html#method.read_namespaced_replica_set)
 #[derive(Debug, Default)]
-pub struct ReadAppsV1beta2NamespacedReplicaSetOptional<'a> {
+pub struct ReadNamespacedReplicaSetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -829,15 +829,15 @@ pub struct ReadAppsV1beta2NamespacedReplicaSetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::read_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.read_apps_v1beta2_namespaced_replica_set)
+/// Parses the HTTP response of [`ReplicaSet::read_namespaced_replica_set`](./struct.ReplicaSet.html#method.read_namespaced_replica_set)
 #[derive(Debug)]
-pub enum ReadAppsV1beta2NamespacedReplicaSetResponse {
+pub enum ReadNamespacedReplicaSetResponse {
     Ok(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAppsV1beta2NamespacedReplicaSetResponse {
+impl crate::Response for ReadNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -846,10 +846,10 @@ impl crate::Response for ReadAppsV1beta2NamespacedReplicaSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAppsV1beta2NamespacedReplicaSetResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedReplicaSetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta2NamespacedReplicaSetResponse::Unauthorized, 0)),
-            _ => Ok((ReadAppsV1beta2NamespacedReplicaSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedReplicaSetResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedReplicaSetResponse::Other, 0)),
         }
     }
 }
@@ -859,7 +859,7 @@ impl crate::Response for ReadAppsV1beta2NamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// read status of the specified ReplicaSet
     ///
-    /// Use [`ReadAppsV1beta2NamespacedReplicaSetStatusResponse`](./enum.ReadAppsV1beta2NamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedReplicaSetStatusResponse`](./enum.ReadNamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -874,12 +874,12 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_apps_v1beta2_namespaced_replica_set_status(
+    pub fn read_namespaced_replica_set_status(
         name: &str,
         namespace: &str,
-        optional: ReadAppsV1beta2NamespacedReplicaSetStatusOptional<'_>,
+        optional: ReadNamespacedReplicaSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAppsV1beta2NamespacedReplicaSetStatusOptional {
+        let ReadNamespacedReplicaSetStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/apps/v1beta2/namespaces/{namespace}/replicasets/{name}/status?", name = name, namespace = namespace);
@@ -895,22 +895,22 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::read_apps_v1beta2_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.read_apps_v1beta2_namespaced_replica_set_status)
+/// Optional parameters of [`ReplicaSet::read_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.read_namespaced_replica_set_status)
 #[derive(Debug, Default)]
-pub struct ReadAppsV1beta2NamespacedReplicaSetStatusOptional<'a> {
+pub struct ReadNamespacedReplicaSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::read_apps_v1beta2_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.read_apps_v1beta2_namespaced_replica_set_status)
+/// Parses the HTTP response of [`ReplicaSet::read_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.read_namespaced_replica_set_status)
 #[derive(Debug)]
-pub enum ReadAppsV1beta2NamespacedReplicaSetStatusResponse {
+pub enum ReadNamespacedReplicaSetStatusResponse {
     Ok(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAppsV1beta2NamespacedReplicaSetStatusResponse {
+impl crate::Response for ReadNamespacedReplicaSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -919,10 +919,10 @@ impl crate::Response for ReadAppsV1beta2NamespacedReplicaSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAppsV1beta2NamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAppsV1beta2NamespacedReplicaSetStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadAppsV1beta2NamespacedReplicaSetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedReplicaSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedReplicaSetStatusResponse::Other, 0)),
         }
     }
 }
@@ -932,7 +932,7 @@ impl crate::Response for ReadAppsV1beta2NamespacedReplicaSetStatusResponse {
 impl ReplicaSet {
     /// replace the specified ReplicaSet
     ///
-    /// Use [`ReplaceAppsV1beta2NamespacedReplicaSetResponse`](./enum.ReplaceAppsV1beta2NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedReplicaSetResponse`](./enum.ReplaceNamespacedReplicaSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -949,13 +949,13 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apps_v1beta2_namespaced_replica_set(
+    pub fn replace_namespaced_replica_set(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::apps::v1beta2::ReplicaSet,
-        optional: ReplaceAppsV1beta2NamespacedReplicaSetOptional<'_>,
+        optional: ReplaceNamespacedReplicaSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAppsV1beta2NamespacedReplicaSetOptional {
+        let ReplaceNamespacedReplicaSetOptional {
             dry_run,
             pretty,
         } = optional;
@@ -975,25 +975,25 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::replace_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.replace_apps_v1beta2_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::replace_namespaced_replica_set`](./struct.ReplicaSet.html#method.replace_namespaced_replica_set)
 #[derive(Debug, Default)]
-pub struct ReplaceAppsV1beta2NamespacedReplicaSetOptional<'a> {
+pub struct ReplaceNamespacedReplicaSetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::replace_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.replace_apps_v1beta2_namespaced_replica_set)
+/// Parses the HTTP response of [`ReplicaSet::replace_namespaced_replica_set`](./struct.ReplicaSet.html#method.replace_namespaced_replica_set)
 #[derive(Debug)]
-pub enum ReplaceAppsV1beta2NamespacedReplicaSetResponse {
+pub enum ReplaceNamespacedReplicaSetResponse {
     Ok(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Created(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAppsV1beta2NamespacedReplicaSetResponse {
+impl crate::Response for ReplaceNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1002,7 +1002,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedReplicaSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedReplicaSetResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedReplicaSetResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1010,10 +1010,10 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedReplicaSetResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedReplicaSetResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedReplicaSetResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta2NamespacedReplicaSetResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAppsV1beta2NamespacedReplicaSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedReplicaSetResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedReplicaSetResponse::Other, 0)),
         }
     }
 }
@@ -1023,7 +1023,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// replace status of the specified ReplicaSet
     ///
-    /// Use [`ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse`](./enum.ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedReplicaSetStatusResponse`](./enum.ReplaceNamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1040,13 +1040,13 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_apps_v1beta2_namespaced_replica_set_status(
+    pub fn replace_namespaced_replica_set_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::apps::v1beta2::ReplicaSet,
-        optional: ReplaceAppsV1beta2NamespacedReplicaSetStatusOptional<'_>,
+        optional: ReplaceNamespacedReplicaSetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAppsV1beta2NamespacedReplicaSetStatusOptional {
+        let ReplaceNamespacedReplicaSetStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -1066,25 +1066,25 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::replace_apps_v1beta2_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.replace_apps_v1beta2_namespaced_replica_set_status)
+/// Optional parameters of [`ReplicaSet::replace_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.replace_namespaced_replica_set_status)
 #[derive(Debug, Default)]
-pub struct ReplaceAppsV1beta2NamespacedReplicaSetStatusOptional<'a> {
+pub struct ReplaceNamespacedReplicaSetStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::replace_apps_v1beta2_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.replace_apps_v1beta2_namespaced_replica_set_status)
+/// Parses the HTTP response of [`ReplicaSet::replace_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.replace_namespaced_replica_set_status)
 #[derive(Debug)]
-pub enum ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse {
+pub enum ReplaceNamespacedReplicaSetStatusResponse {
     Ok(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Created(crate::v1_13::api::apps::v1beta2::ReplicaSet),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse {
+impl crate::Response for ReplaceNamespacedReplicaSetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1093,7 +1093,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedReplicaSetStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1101,10 +1101,10 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedReplicaSetStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedReplicaSetStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedReplicaSetStatusResponse::Other, 0)),
         }
     }
 }
@@ -1114,7 +1114,7 @@ impl crate::Response for ReplaceAppsV1beta2NamespacedReplicaSetStatusResponse {
 impl ReplicaSet {
     /// watch changes to an object of kind ReplicaSet. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchAppsV1beta2NamespacedReplicaSetResponse`](./enum.WatchAppsV1beta2NamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedReplicaSetResponse`](./enum.WatchNamespacedReplicaSetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1129,12 +1129,12 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1beta2_namespaced_replica_set(
+    pub fn watch_namespaced_replica_set(
         name: &str,
         namespace: &str,
-        optional: WatchAppsV1beta2NamespacedReplicaSetOptional<'_>,
+        optional: WatchNamespacedReplicaSetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1beta2NamespacedReplicaSetOptional {
+        let WatchNamespacedReplicaSetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1182,9 +1182,9 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::watch_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.watch_apps_v1beta2_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::watch_namespaced_replica_set`](./struct.ReplicaSet.html#method.watch_namespaced_replica_set)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1beta2NamespacedReplicaSetOptional<'a> {
+pub struct WatchNamespacedReplicaSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1209,15 +1209,15 @@ pub struct WatchAppsV1beta2NamespacedReplicaSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::watch_apps_v1beta2_namespaced_replica_set`](./struct.ReplicaSet.html#method.watch_apps_v1beta2_namespaced_replica_set)
+/// Parses the HTTP response of [`ReplicaSet::watch_namespaced_replica_set`](./struct.ReplicaSet.html#method.watch_namespaced_replica_set)
 #[derive(Debug)]
-pub enum WatchAppsV1beta2NamespacedReplicaSetResponse {
+pub enum WatchNamespacedReplicaSetResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1beta2NamespacedReplicaSetResponse {
+impl crate::Response for WatchNamespacedReplicaSetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1228,10 +1228,10 @@ impl crate::Response for WatchAppsV1beta2NamespacedReplicaSetResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1beta2NamespacedReplicaSetResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedReplicaSetResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta2NamespacedReplicaSetResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1beta2NamespacedReplicaSetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedReplicaSetResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedReplicaSetResponse::Other, 0)),
         }
     }
 }
@@ -1241,7 +1241,7 @@ impl crate::Response for WatchAppsV1beta2NamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// watch individual changes to a list of ReplicaSet. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchAppsV1beta2NamespacedReplicaSetListResponse`](./enum.WatchAppsV1beta2NamespacedReplicaSetListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedReplicaSetListResponse`](./enum.WatchNamespacedReplicaSetListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1252,11 +1252,11 @@ impl ReplicaSet {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1beta2_namespaced_replica_set_list(
+    pub fn watch_namespaced_replica_set_list(
         namespace: &str,
-        optional: WatchAppsV1beta2NamespacedReplicaSetListOptional<'_>,
+        optional: WatchNamespacedReplicaSetListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1beta2NamespacedReplicaSetListOptional {
+        let WatchNamespacedReplicaSetListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1304,9 +1304,9 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::watch_apps_v1beta2_namespaced_replica_set_list`](./struct.ReplicaSet.html#method.watch_apps_v1beta2_namespaced_replica_set_list)
+/// Optional parameters of [`ReplicaSet::watch_namespaced_replica_set_list`](./struct.ReplicaSet.html#method.watch_namespaced_replica_set_list)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1beta2NamespacedReplicaSetListOptional<'a> {
+pub struct WatchNamespacedReplicaSetListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1331,15 +1331,15 @@ pub struct WatchAppsV1beta2NamespacedReplicaSetListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::watch_apps_v1beta2_namespaced_replica_set_list`](./struct.ReplicaSet.html#method.watch_apps_v1beta2_namespaced_replica_set_list)
+/// Parses the HTTP response of [`ReplicaSet::watch_namespaced_replica_set_list`](./struct.ReplicaSet.html#method.watch_namespaced_replica_set_list)
 #[derive(Debug)]
-pub enum WatchAppsV1beta2NamespacedReplicaSetListResponse {
+pub enum WatchNamespacedReplicaSetListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1beta2NamespacedReplicaSetListResponse {
+impl crate::Response for WatchNamespacedReplicaSetListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1350,10 +1350,10 @@ impl crate::Response for WatchAppsV1beta2NamespacedReplicaSetListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1beta2NamespacedReplicaSetListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedReplicaSetListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta2NamespacedReplicaSetListResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1beta2NamespacedReplicaSetListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedReplicaSetListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedReplicaSetListResponse::Other, 0)),
         }
     }
 }
@@ -1363,17 +1363,17 @@ impl crate::Response for WatchAppsV1beta2NamespacedReplicaSetListResponse {
 impl ReplicaSet {
     /// watch individual changes to a list of ReplicaSet. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchAppsV1beta2ReplicaSetListForAllNamespacesResponse`](./enum.WatchAppsV1beta2ReplicaSetListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchReplicaSetListForAllNamespacesResponse`](./enum.WatchReplicaSetListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_apps_v1beta2_replica_set_list_for_all_namespaces(
-        optional: WatchAppsV1beta2ReplicaSetListForAllNamespacesOptional<'_>,
+    pub fn watch_replica_set_list_for_all_namespaces(
+        optional: WatchReplicaSetListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAppsV1beta2ReplicaSetListForAllNamespacesOptional {
+        let WatchReplicaSetListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1421,9 +1421,9 @@ impl ReplicaSet {
     }
 }
 
-/// Optional parameters of [`ReplicaSet::watch_apps_v1beta2_replica_set_list_for_all_namespaces`](./struct.ReplicaSet.html#method.watch_apps_v1beta2_replica_set_list_for_all_namespaces)
+/// Optional parameters of [`ReplicaSet::watch_replica_set_list_for_all_namespaces`](./struct.ReplicaSet.html#method.watch_replica_set_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchAppsV1beta2ReplicaSetListForAllNamespacesOptional<'a> {
+pub struct WatchReplicaSetListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1448,15 +1448,15 @@ pub struct WatchAppsV1beta2ReplicaSetListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::watch_apps_v1beta2_replica_set_list_for_all_namespaces`](./struct.ReplicaSet.html#method.watch_apps_v1beta2_replica_set_list_for_all_namespaces)
+/// Parses the HTTP response of [`ReplicaSet::watch_replica_set_list_for_all_namespaces`](./struct.ReplicaSet.html#method.watch_replica_set_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchAppsV1beta2ReplicaSetListForAllNamespacesResponse {
+pub enum WatchReplicaSetListForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAppsV1beta2ReplicaSetListForAllNamespacesResponse {
+impl crate::Response for WatchReplicaSetListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1467,10 +1467,10 @@ impl crate::Response for WatchAppsV1beta2ReplicaSetListForAllNamespacesResponse 
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAppsV1beta2ReplicaSetListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchReplicaSetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAppsV1beta2ReplicaSetListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchAppsV1beta2ReplicaSetListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchReplicaSetListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchReplicaSetListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

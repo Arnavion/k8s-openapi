@@ -20,7 +20,7 @@ pub struct Node {
 impl Node {
     /// connect DELETE requests to proxy of Node
     ///
-    /// Use [`ConnectCoreV1DeleteNodeProxyResponse`](./enum.ConnectCoreV1DeleteNodeProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectDeleteNodeProxyResponse`](./enum.ConnectDeleteNodeProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,11 +31,11 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_delete_node_proxy(
+    pub fn connect_delete_node_proxy(
         name: &str,
-        optional: ConnectCoreV1DeleteNodeProxyOptional<'_>,
+        optional: ConnectDeleteNodeProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1DeleteNodeProxyOptional {
+        let ConnectDeleteNodeProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -51,22 +51,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_core_v1_delete_node_proxy`](./struct.Node.html#method.connect_core_v1_delete_node_proxy)
+/// Optional parameters of [`Node::connect_delete_node_proxy`](./struct.Node.html#method.connect_delete_node_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1DeleteNodeProxyOptional<'a> {
+pub struct ConnectDeleteNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_core_v1_delete_node_proxy`](./struct.Node.html#method.connect_core_v1_delete_node_proxy)
+/// Parses the HTTP response of [`Node::connect_delete_node_proxy`](./struct.Node.html#method.connect_delete_node_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1DeleteNodeProxyResponse {
+pub enum ConnectDeleteNodeProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1DeleteNodeProxyResponse {
+impl crate::Response for ConnectDeleteNodeProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -80,10 +80,10 @@ impl crate::Response for ConnectCoreV1DeleteNodeProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1DeleteNodeProxyResponse::Ok(result), len))
+                Ok((ConnectDeleteNodeProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNodeProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1DeleteNodeProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNodeProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectDeleteNodeProxyResponse::Other, 0)),
         }
     }
 }
@@ -93,7 +93,7 @@ impl crate::Response for ConnectCoreV1DeleteNodeProxyResponse {
 impl Node {
     /// connect DELETE requests to proxy of Node
     ///
-    /// Use [`ConnectCoreV1DeleteNodeProxyWithPathResponse`](./enum.ConnectCoreV1DeleteNodeProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectDeleteNodeProxyWithPathResponse`](./enum.ConnectDeleteNodeProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -108,12 +108,12 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_delete_node_proxy_with_path(
+    pub fn connect_delete_node_proxy_with_path(
         name: &str,
         path: &str,
-        optional: ConnectCoreV1DeleteNodeProxyWithPathOptional<'_>,
+        optional: ConnectDeleteNodeProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1DeleteNodeProxyWithPathOptional {
+        let ConnectDeleteNodeProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -129,22 +129,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_core_v1_delete_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_delete_node_proxy_with_path)
+/// Optional parameters of [`Node::connect_delete_node_proxy_with_path`](./struct.Node.html#method.connect_delete_node_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1DeleteNodeProxyWithPathOptional<'a> {
+pub struct ConnectDeleteNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_core_v1_delete_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_delete_node_proxy_with_path)
+/// Parses the HTTP response of [`Node::connect_delete_node_proxy_with_path`](./struct.Node.html#method.connect_delete_node_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1DeleteNodeProxyWithPathResponse {
+pub enum ConnectDeleteNodeProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1DeleteNodeProxyWithPathResponse {
+impl crate::Response for ConnectDeleteNodeProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -158,10 +158,10 @@ impl crate::Response for ConnectCoreV1DeleteNodeProxyWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1DeleteNodeProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectDeleteNodeProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1DeleteNodeProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1DeleteNodeProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNodeProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectDeleteNodeProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -171,7 +171,7 @@ impl crate::Response for ConnectCoreV1DeleteNodeProxyWithPathResponse {
 impl Node {
     /// connect GET requests to proxy of Node
     ///
-    /// Use [`ConnectCoreV1GetNodeProxyResponse`](./enum.ConnectCoreV1GetNodeProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectGetNodeProxyResponse`](./enum.ConnectGetNodeProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -182,11 +182,11 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_get_node_proxy(
+    pub fn connect_get_node_proxy(
         name: &str,
-        optional: ConnectCoreV1GetNodeProxyOptional<'_>,
+        optional: ConnectGetNodeProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1GetNodeProxyOptional {
+        let ConnectGetNodeProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -202,22 +202,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_core_v1_get_node_proxy`](./struct.Node.html#method.connect_core_v1_get_node_proxy)
+/// Optional parameters of [`Node::connect_get_node_proxy`](./struct.Node.html#method.connect_get_node_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1GetNodeProxyOptional<'a> {
+pub struct ConnectGetNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_core_v1_get_node_proxy`](./struct.Node.html#method.connect_core_v1_get_node_proxy)
+/// Parses the HTTP response of [`Node::connect_get_node_proxy`](./struct.Node.html#method.connect_get_node_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1GetNodeProxyResponse {
+pub enum ConnectGetNodeProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1GetNodeProxyResponse {
+impl crate::Response for ConnectGetNodeProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -231,10 +231,10 @@ impl crate::Response for ConnectCoreV1GetNodeProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1GetNodeProxyResponse::Ok(result), len))
+                Ok((ConnectGetNodeProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNodeProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1GetNodeProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNodeProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectGetNodeProxyResponse::Other, 0)),
         }
     }
 }
@@ -244,7 +244,7 @@ impl crate::Response for ConnectCoreV1GetNodeProxyResponse {
 impl Node {
     /// connect GET requests to proxy of Node
     ///
-    /// Use [`ConnectCoreV1GetNodeProxyWithPathResponse`](./enum.ConnectCoreV1GetNodeProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectGetNodeProxyWithPathResponse`](./enum.ConnectGetNodeProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -259,12 +259,12 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_get_node_proxy_with_path(
+    pub fn connect_get_node_proxy_with_path(
         name: &str,
         path: &str,
-        optional: ConnectCoreV1GetNodeProxyWithPathOptional<'_>,
+        optional: ConnectGetNodeProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1GetNodeProxyWithPathOptional {
+        let ConnectGetNodeProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -280,22 +280,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_core_v1_get_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_get_node_proxy_with_path)
+/// Optional parameters of [`Node::connect_get_node_proxy_with_path`](./struct.Node.html#method.connect_get_node_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1GetNodeProxyWithPathOptional<'a> {
+pub struct ConnectGetNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_core_v1_get_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_get_node_proxy_with_path)
+/// Parses the HTTP response of [`Node::connect_get_node_proxy_with_path`](./struct.Node.html#method.connect_get_node_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1GetNodeProxyWithPathResponse {
+pub enum ConnectGetNodeProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1GetNodeProxyWithPathResponse {
+impl crate::Response for ConnectGetNodeProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -309,10 +309,10 @@ impl crate::Response for ConnectCoreV1GetNodeProxyWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1GetNodeProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectGetNodeProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1GetNodeProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1GetNodeProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNodeProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectGetNodeProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -322,7 +322,7 @@ impl crate::Response for ConnectCoreV1GetNodeProxyWithPathResponse {
 impl Node {
     /// connect PATCH requests to proxy of Node
     ///
-    /// Use [`ConnectCoreV1PatchNodeProxyResponse`](./enum.ConnectCoreV1PatchNodeProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPatchNodeProxyResponse`](./enum.ConnectPatchNodeProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -333,11 +333,11 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_patch_node_proxy(
+    pub fn connect_patch_node_proxy(
         name: &str,
-        optional: ConnectCoreV1PatchNodeProxyOptional<'_>,
+        optional: ConnectPatchNodeProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PatchNodeProxyOptional {
+        let ConnectPatchNodeProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -353,22 +353,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_core_v1_patch_node_proxy`](./struct.Node.html#method.connect_core_v1_patch_node_proxy)
+/// Optional parameters of [`Node::connect_patch_node_proxy`](./struct.Node.html#method.connect_patch_node_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PatchNodeProxyOptional<'a> {
+pub struct ConnectPatchNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_core_v1_patch_node_proxy`](./struct.Node.html#method.connect_core_v1_patch_node_proxy)
+/// Parses the HTTP response of [`Node::connect_patch_node_proxy`](./struct.Node.html#method.connect_patch_node_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1PatchNodeProxyResponse {
+pub enum ConnectPatchNodeProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PatchNodeProxyResponse {
+impl crate::Response for ConnectPatchNodeProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -382,10 +382,10 @@ impl crate::Response for ConnectCoreV1PatchNodeProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PatchNodeProxyResponse::Ok(result), len))
+                Ok((ConnectPatchNodeProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNodeProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PatchNodeProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNodeProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPatchNodeProxyResponse::Other, 0)),
         }
     }
 }
@@ -395,7 +395,7 @@ impl crate::Response for ConnectCoreV1PatchNodeProxyResponse {
 impl Node {
     /// connect PATCH requests to proxy of Node
     ///
-    /// Use [`ConnectCoreV1PatchNodeProxyWithPathResponse`](./enum.ConnectCoreV1PatchNodeProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPatchNodeProxyWithPathResponse`](./enum.ConnectPatchNodeProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -410,12 +410,12 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_patch_node_proxy_with_path(
+    pub fn connect_patch_node_proxy_with_path(
         name: &str,
         path: &str,
-        optional: ConnectCoreV1PatchNodeProxyWithPathOptional<'_>,
+        optional: ConnectPatchNodeProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PatchNodeProxyWithPathOptional {
+        let ConnectPatchNodeProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -431,22 +431,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_core_v1_patch_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_patch_node_proxy_with_path)
+/// Optional parameters of [`Node::connect_patch_node_proxy_with_path`](./struct.Node.html#method.connect_patch_node_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PatchNodeProxyWithPathOptional<'a> {
+pub struct ConnectPatchNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_core_v1_patch_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_patch_node_proxy_with_path)
+/// Parses the HTTP response of [`Node::connect_patch_node_proxy_with_path`](./struct.Node.html#method.connect_patch_node_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1PatchNodeProxyWithPathResponse {
+pub enum ConnectPatchNodeProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PatchNodeProxyWithPathResponse {
+impl crate::Response for ConnectPatchNodeProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -460,10 +460,10 @@ impl crate::Response for ConnectCoreV1PatchNodeProxyWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PatchNodeProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPatchNodeProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PatchNodeProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PatchNodeProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNodeProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPatchNodeProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -473,7 +473,7 @@ impl crate::Response for ConnectCoreV1PatchNodeProxyWithPathResponse {
 impl Node {
     /// connect POST requests to proxy of Node
     ///
-    /// Use [`ConnectCoreV1PostNodeProxyResponse`](./enum.ConnectCoreV1PostNodeProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPostNodeProxyResponse`](./enum.ConnectPostNodeProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -484,11 +484,11 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_post_node_proxy(
+    pub fn connect_post_node_proxy(
         name: &str,
-        optional: ConnectCoreV1PostNodeProxyOptional<'_>,
+        optional: ConnectPostNodeProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PostNodeProxyOptional {
+        let ConnectPostNodeProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -504,22 +504,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_core_v1_post_node_proxy`](./struct.Node.html#method.connect_core_v1_post_node_proxy)
+/// Optional parameters of [`Node::connect_post_node_proxy`](./struct.Node.html#method.connect_post_node_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PostNodeProxyOptional<'a> {
+pub struct ConnectPostNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_core_v1_post_node_proxy`](./struct.Node.html#method.connect_core_v1_post_node_proxy)
+/// Parses the HTTP response of [`Node::connect_post_node_proxy`](./struct.Node.html#method.connect_post_node_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1PostNodeProxyResponse {
+pub enum ConnectPostNodeProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PostNodeProxyResponse {
+impl crate::Response for ConnectPostNodeProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -533,10 +533,10 @@ impl crate::Response for ConnectCoreV1PostNodeProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PostNodeProxyResponse::Ok(result), len))
+                Ok((ConnectPostNodeProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNodeProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PostNodeProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNodeProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPostNodeProxyResponse::Other, 0)),
         }
     }
 }
@@ -546,7 +546,7 @@ impl crate::Response for ConnectCoreV1PostNodeProxyResponse {
 impl Node {
     /// connect POST requests to proxy of Node
     ///
-    /// Use [`ConnectCoreV1PostNodeProxyWithPathResponse`](./enum.ConnectCoreV1PostNodeProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPostNodeProxyWithPathResponse`](./enum.ConnectPostNodeProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -561,12 +561,12 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_post_node_proxy_with_path(
+    pub fn connect_post_node_proxy_with_path(
         name: &str,
         path: &str,
-        optional: ConnectCoreV1PostNodeProxyWithPathOptional<'_>,
+        optional: ConnectPostNodeProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PostNodeProxyWithPathOptional {
+        let ConnectPostNodeProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -582,22 +582,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_core_v1_post_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_post_node_proxy_with_path)
+/// Optional parameters of [`Node::connect_post_node_proxy_with_path`](./struct.Node.html#method.connect_post_node_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PostNodeProxyWithPathOptional<'a> {
+pub struct ConnectPostNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_core_v1_post_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_post_node_proxy_with_path)
+/// Parses the HTTP response of [`Node::connect_post_node_proxy_with_path`](./struct.Node.html#method.connect_post_node_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1PostNodeProxyWithPathResponse {
+pub enum ConnectPostNodeProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PostNodeProxyWithPathResponse {
+impl crate::Response for ConnectPostNodeProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -611,10 +611,10 @@ impl crate::Response for ConnectCoreV1PostNodeProxyWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PostNodeProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPostNodeProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PostNodeProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PostNodeProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNodeProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPostNodeProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -624,7 +624,7 @@ impl crate::Response for ConnectCoreV1PostNodeProxyWithPathResponse {
 impl Node {
     /// connect PUT requests to proxy of Node
     ///
-    /// Use [`ConnectCoreV1PutNodeProxyResponse`](./enum.ConnectCoreV1PutNodeProxyResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPutNodeProxyResponse`](./enum.ConnectPutNodeProxyResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -635,11 +635,11 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_put_node_proxy(
+    pub fn connect_put_node_proxy(
         name: &str,
-        optional: ConnectCoreV1PutNodeProxyOptional<'_>,
+        optional: ConnectPutNodeProxyOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PutNodeProxyOptional {
+        let ConnectPutNodeProxyOptional {
             path,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy?", name = name);
@@ -655,22 +655,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_core_v1_put_node_proxy`](./struct.Node.html#method.connect_core_v1_put_node_proxy)
+/// Optional parameters of [`Node::connect_put_node_proxy`](./struct.Node.html#method.connect_put_node_proxy)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PutNodeProxyOptional<'a> {
+pub struct ConnectPutNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_core_v1_put_node_proxy`](./struct.Node.html#method.connect_core_v1_put_node_proxy)
+/// Parses the HTTP response of [`Node::connect_put_node_proxy`](./struct.Node.html#method.connect_put_node_proxy)
 #[derive(Debug)]
-pub enum ConnectCoreV1PutNodeProxyResponse {
+pub enum ConnectPutNodeProxyResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PutNodeProxyResponse {
+impl crate::Response for ConnectPutNodeProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -684,10 +684,10 @@ impl crate::Response for ConnectCoreV1PutNodeProxyResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PutNodeProxyResponse::Ok(result), len))
+                Ok((ConnectPutNodeProxyResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNodeProxyResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PutNodeProxyResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNodeProxyResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPutNodeProxyResponse::Other, 0)),
         }
     }
 }
@@ -697,7 +697,7 @@ impl crate::Response for ConnectCoreV1PutNodeProxyResponse {
 impl Node {
     /// connect PUT requests to proxy of Node
     ///
-    /// Use [`ConnectCoreV1PutNodeProxyWithPathResponse`](./enum.ConnectCoreV1PutNodeProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use [`ConnectPutNodeProxyWithPathResponse`](./enum.ConnectPutNodeProxyWithPathResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -712,12 +712,12 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn connect_core_v1_put_node_proxy_with_path(
+    pub fn connect_put_node_proxy_with_path(
         name: &str,
         path: &str,
-        optional: ConnectCoreV1PutNodeProxyWithPathOptional<'_>,
+        optional: ConnectPutNodeProxyWithPathOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ConnectCoreV1PutNodeProxyWithPathOptional {
+        let ConnectPutNodeProxyWithPathOptional {
             path_,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/proxy/{path}?", name = name, path = path);
@@ -733,22 +733,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::connect_core_v1_put_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_put_node_proxy_with_path)
+/// Optional parameters of [`Node::connect_put_node_proxy_with_path`](./struct.Node.html#method.connect_put_node_proxy_with_path)
 #[derive(Debug, Default)]
-pub struct ConnectCoreV1PutNodeProxyWithPathOptional<'a> {
+pub struct ConnectPutNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_core_v1_put_node_proxy_with_path`](./struct.Node.html#method.connect_core_v1_put_node_proxy_with_path)
+/// Parses the HTTP response of [`Node::connect_put_node_proxy_with_path`](./struct.Node.html#method.connect_put_node_proxy_with_path)
 #[derive(Debug)]
-pub enum ConnectCoreV1PutNodeProxyWithPathResponse {
+pub enum ConnectPutNodeProxyWithPathResponse {
     Ok(String),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ConnectCoreV1PutNodeProxyWithPathResponse {
+impl crate::Response for ConnectPutNodeProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -762,10 +762,10 @@ impl crate::Response for ConnectCoreV1PutNodeProxyWithPathResponse {
                 };
                 let result = result.to_string();
                 let len = result.len();
-                Ok((ConnectCoreV1PutNodeProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPutNodeProxyWithPathResponse::Ok(result), len))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ConnectCoreV1PutNodeProxyWithPathResponse::Unauthorized, 0)),
-            _ => Ok((ConnectCoreV1PutNodeProxyWithPathResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNodeProxyWithPathResponse::Unauthorized, 0)),
+            _ => Ok((ConnectPutNodeProxyWithPathResponse::Other, 0)),
         }
     }
 }
@@ -775,7 +775,7 @@ impl crate::Response for ConnectCoreV1PutNodeProxyWithPathResponse {
 impl Node {
     /// create a Node
     ///
-    /// Use [`CreateCoreV1NodeResponse`](./enum.CreateCoreV1NodeResponse.html) to parse the HTTP response.
+    /// Use [`CreateNodeResponse`](./enum.CreateNodeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -784,11 +784,11 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_node(
+    pub fn create_node(
         body: &crate::v1_12::api::core::v1::Node,
-        optional: CreateCoreV1NodeOptional<'_>,
+        optional: CreateNodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NodeOptional {
+        let CreateNodeOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -812,9 +812,9 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::create_core_v1_node`](./struct.Node.html#method.create_core_v1_node)
+/// Optional parameters of [`Node::create_node`](./struct.Node.html#method.create_node)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NodeOptional<'a> {
+pub struct CreateNodeOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -823,9 +823,9 @@ pub struct CreateCoreV1NodeOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::create_core_v1_node`](./struct.Node.html#method.create_core_v1_node)
+/// Parses the HTTP response of [`Node::create_node`](./struct.Node.html#method.create_node)
 #[derive(Debug)]
-pub enum CreateCoreV1NodeResponse {
+pub enum CreateNodeResponse {
     Ok(crate::v1_12::api::core::v1::Node),
     Created(crate::v1_12::api::core::v1::Node),
     Accepted(crate::v1_12::api::core::v1::Node),
@@ -833,7 +833,7 @@ pub enum CreateCoreV1NodeResponse {
     Other,
 }
 
-impl crate::Response for CreateCoreV1NodeResponse {
+impl crate::Response for CreateNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -842,7 +842,7 @@ impl crate::Response for CreateCoreV1NodeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NodeResponse::Ok(result), buf.len()))
+                Ok((CreateNodeResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -850,7 +850,7 @@ impl crate::Response for CreateCoreV1NodeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NodeResponse::Created(result), buf.len()))
+                Ok((CreateNodeResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -858,10 +858,10 @@ impl crate::Response for CreateCoreV1NodeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NodeResponse::Accepted(result), buf.len()))
+                Ok((CreateNodeResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NodeResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NodeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNodeResponse::Unauthorized, 0)),
+            _ => Ok((CreateNodeResponse::Other, 0)),
         }
     }
 }
@@ -871,17 +871,17 @@ impl crate::Response for CreateCoreV1NodeResponse {
 impl Node {
     /// delete collection of Node
     ///
-    /// Use [`DeleteCoreV1CollectionNodeResponse`](./enum.DeleteCoreV1CollectionNodeResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNodeResponse`](./enum.DeleteCollectionNodeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_collection_node(
-        optional: DeleteCoreV1CollectionNodeOptional<'_>,
+    pub fn delete_collection_node(
+        optional: DeleteCollectionNodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1CollectionNodeOptional {
+        let DeleteCollectionNodeOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -929,9 +929,9 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::delete_core_v1_collection_node`](./struct.Node.html#method.delete_core_v1_collection_node)
+/// Optional parameters of [`Node::delete_collection_node`](./struct.Node.html#method.delete_collection_node)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1CollectionNodeOptional<'a> {
+pub struct DeleteCollectionNodeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -956,16 +956,16 @@ pub struct DeleteCoreV1CollectionNodeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Node::delete_core_v1_collection_node`](./struct.Node.html#method.delete_core_v1_collection_node)
+/// Parses the HTTP response of [`Node::delete_collection_node`](./struct.Node.html#method.delete_collection_node)
 #[derive(Debug)]
-pub enum DeleteCoreV1CollectionNodeResponse {
+pub enum DeleteCollectionNodeResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1CollectionNodeResponse {
+impl crate::Response for DeleteCollectionNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -981,16 +981,16 @@ impl crate::Response for DeleteCoreV1CollectionNodeResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNodeResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNodeResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNodeResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNodeResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNodeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1CollectionNodeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNodeResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNodeResponse::Other, 0)),
         }
     }
 }
@@ -1000,7 +1000,7 @@ impl crate::Response for DeleteCoreV1CollectionNodeResponse {
 impl Node {
     /// delete a Node
     ///
-    /// Use [`DeleteCoreV1NodeResponse`](./enum.DeleteCoreV1NodeResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNodeResponse`](./enum.DeleteNodeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1011,11 +1011,11 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_node(
+    pub fn delete_node(
         name: &str,
-        optional: DeleteCoreV1NodeOptional<'_>,
+        optional: DeleteNodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NodeOptional {
+        let DeleteNodeOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -1047,9 +1047,9 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::delete_core_v1_node`](./struct.Node.html#method.delete_core_v1_node)
+/// Optional parameters of [`Node::delete_node`](./struct.Node.html#method.delete_node)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NodeOptional<'a> {
+pub struct DeleteNodeOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -1062,9 +1062,9 @@ pub struct DeleteCoreV1NodeOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::delete_core_v1_node`](./struct.Node.html#method.delete_core_v1_node)
+/// Parses the HTTP response of [`Node::delete_node`](./struct.Node.html#method.delete_node)
 #[derive(Debug)]
-pub enum DeleteCoreV1NodeResponse {
+pub enum DeleteNodeResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_12::api::core::v1::Node),
     Accepted(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -1072,7 +1072,7 @@ pub enum DeleteCoreV1NodeResponse {
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NodeResponse {
+impl crate::Response for DeleteNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1088,12 +1088,12 @@ impl crate::Response for DeleteCoreV1NodeResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NodeResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNodeResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NodeResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNodeResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -1102,10 +1102,10 @@ impl crate::Response for DeleteCoreV1NodeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteCoreV1NodeResponse::Accepted(result), buf.len()))
+                Ok((DeleteNodeResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NodeResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NodeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNodeResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNodeResponse::Other, 0)),
         }
     }
 }
@@ -1115,17 +1115,17 @@ impl crate::Response for DeleteCoreV1NodeResponse {
 impl Node {
     /// list or watch objects of kind Node
     ///
-    /// Use [`ListCoreV1NodeResponse`](./enum.ListCoreV1NodeResponse.html) to parse the HTTP response.
+    /// Use [`ListNodeResponse`](./enum.ListNodeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_node(
-        optional: ListCoreV1NodeOptional<'_>,
+    pub fn list_node(
+        optional: ListNodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NodeOptional {
+        let ListNodeOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1173,9 +1173,9 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::list_core_v1_node`](./struct.Node.html#method.list_core_v1_node)
+/// Optional parameters of [`Node::list_node`](./struct.Node.html#method.list_node)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NodeOptional<'a> {
+pub struct ListNodeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1200,15 +1200,15 @@ pub struct ListCoreV1NodeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Node::list_core_v1_node`](./struct.Node.html#method.list_core_v1_node)
+/// Parses the HTTP response of [`Node::list_node`](./struct.Node.html#method.list_node)
 #[derive(Debug)]
-pub enum ListCoreV1NodeResponse {
+pub enum ListNodeResponse {
     Ok(crate::v1_12::api::core::v1::NodeList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NodeResponse {
+impl crate::Response for ListNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1217,10 +1217,10 @@ impl crate::Response for ListCoreV1NodeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NodeResponse::Ok(result), buf.len()))
+                Ok((ListNodeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NodeResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NodeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNodeResponse::Unauthorized, 0)),
+            _ => Ok((ListNodeResponse::Other, 0)),
         }
     }
 }
@@ -1230,7 +1230,7 @@ impl crate::Response for ListCoreV1NodeResponse {
 impl Node {
     /// partially update the specified Node
     ///
-    /// Use [`PatchCoreV1NodeResponse`](./enum.PatchCoreV1NodeResponse.html) to parse the HTTP response.
+    /// Use [`PatchNodeResponse`](./enum.PatchNodeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1243,12 +1243,12 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_node(
+    pub fn patch_node(
         name: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NodeOptional<'_>,
+        optional: PatchNodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NodeOptional {
+        let PatchNodeOptional {
             dry_run,
             pretty,
         } = optional;
@@ -1268,24 +1268,24 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::patch_core_v1_node`](./struct.Node.html#method.patch_core_v1_node)
+/// Optional parameters of [`Node::patch_node`](./struct.Node.html#method.patch_node)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NodeOptional<'a> {
+pub struct PatchNodeOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::patch_core_v1_node`](./struct.Node.html#method.patch_core_v1_node)
+/// Parses the HTTP response of [`Node::patch_node`](./struct.Node.html#method.patch_node)
 #[derive(Debug)]
-pub enum PatchCoreV1NodeResponse {
+pub enum PatchNodeResponse {
     Ok(crate::v1_12::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NodeResponse {
+impl crate::Response for PatchNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1294,10 +1294,10 @@ impl crate::Response for PatchCoreV1NodeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NodeResponse::Ok(result), buf.len()))
+                Ok((PatchNodeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NodeResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NodeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNodeResponse::Unauthorized, 0)),
+            _ => Ok((PatchNodeResponse::Other, 0)),
         }
     }
 }
@@ -1307,7 +1307,7 @@ impl crate::Response for PatchCoreV1NodeResponse {
 impl Node {
     /// partially update status of the specified Node
     ///
-    /// Use [`PatchCoreV1NodeStatusResponse`](./enum.PatchCoreV1NodeStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNodeStatusResponse`](./enum.PatchNodeStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1320,12 +1320,12 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_node_status(
+    pub fn patch_node_status(
         name: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NodeStatusOptional<'_>,
+        optional: PatchNodeStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NodeStatusOptional {
+        let PatchNodeStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -1345,24 +1345,24 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::patch_core_v1_node_status`](./struct.Node.html#method.patch_core_v1_node_status)
+/// Optional parameters of [`Node::patch_node_status`](./struct.Node.html#method.patch_node_status)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NodeStatusOptional<'a> {
+pub struct PatchNodeStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::patch_core_v1_node_status`](./struct.Node.html#method.patch_core_v1_node_status)
+/// Parses the HTTP response of [`Node::patch_node_status`](./struct.Node.html#method.patch_node_status)
 #[derive(Debug)]
-pub enum PatchCoreV1NodeStatusResponse {
+pub enum PatchNodeStatusResponse {
     Ok(crate::v1_12::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NodeStatusResponse {
+impl crate::Response for PatchNodeStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1371,10 +1371,10 @@ impl crate::Response for PatchCoreV1NodeStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NodeStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNodeStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NodeStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NodeStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNodeStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNodeStatusResponse::Other, 0)),
         }
     }
 }
@@ -1384,7 +1384,7 @@ impl crate::Response for PatchCoreV1NodeStatusResponse {
 impl Node {
     /// read the specified Node
     ///
-    /// Use [`ReadCoreV1NodeResponse`](./enum.ReadCoreV1NodeResponse.html) to parse the HTTP response.
+    /// Use [`ReadNodeResponse`](./enum.ReadNodeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1395,11 +1395,11 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_node(
+    pub fn read_node(
         name: &str,
-        optional: ReadCoreV1NodeOptional<'_>,
+        optional: ReadNodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NodeOptional {
+        let ReadNodeOptional {
             exact,
             export,
             pretty,
@@ -1423,9 +1423,9 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::read_core_v1_node`](./struct.Node.html#method.read_core_v1_node)
+/// Optional parameters of [`Node::read_node`](./struct.Node.html#method.read_node)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NodeOptional<'a> {
+pub struct ReadNodeOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -1434,15 +1434,15 @@ pub struct ReadCoreV1NodeOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::read_core_v1_node`](./struct.Node.html#method.read_core_v1_node)
+/// Parses the HTTP response of [`Node::read_node`](./struct.Node.html#method.read_node)
 #[derive(Debug)]
-pub enum ReadCoreV1NodeResponse {
+pub enum ReadNodeResponse {
     Ok(crate::v1_12::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NodeResponse {
+impl crate::Response for ReadNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1451,10 +1451,10 @@ impl crate::Response for ReadCoreV1NodeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NodeResponse::Ok(result), buf.len()))
+                Ok((ReadNodeResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NodeResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NodeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNodeResponse::Unauthorized, 0)),
+            _ => Ok((ReadNodeResponse::Other, 0)),
         }
     }
 }
@@ -1464,7 +1464,7 @@ impl crate::Response for ReadCoreV1NodeResponse {
 impl Node {
     /// read status of the specified Node
     ///
-    /// Use [`ReadCoreV1NodeStatusResponse`](./enum.ReadCoreV1NodeStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNodeStatusResponse`](./enum.ReadNodeStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1475,11 +1475,11 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_node_status(
+    pub fn read_node_status(
         name: &str,
-        optional: ReadCoreV1NodeStatusOptional<'_>,
+        optional: ReadNodeStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NodeStatusOptional {
+        let ReadNodeStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/nodes/{name}/status?", name = name);
@@ -1495,22 +1495,22 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::read_core_v1_node_status`](./struct.Node.html#method.read_core_v1_node_status)
+/// Optional parameters of [`Node::read_node_status`](./struct.Node.html#method.read_node_status)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NodeStatusOptional<'a> {
+pub struct ReadNodeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::read_core_v1_node_status`](./struct.Node.html#method.read_core_v1_node_status)
+/// Parses the HTTP response of [`Node::read_node_status`](./struct.Node.html#method.read_node_status)
 #[derive(Debug)]
-pub enum ReadCoreV1NodeStatusResponse {
+pub enum ReadNodeStatusResponse {
     Ok(crate::v1_12::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NodeStatusResponse {
+impl crate::Response for ReadNodeStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1519,10 +1519,10 @@ impl crate::Response for ReadCoreV1NodeStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NodeStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNodeStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NodeStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NodeStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNodeStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNodeStatusResponse::Other, 0)),
         }
     }
 }
@@ -1532,7 +1532,7 @@ impl crate::Response for ReadCoreV1NodeStatusResponse {
 impl Node {
     /// replace the specified Node
     ///
-    /// Use [`ReplaceCoreV1NodeResponse`](./enum.ReplaceCoreV1NodeResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNodeResponse`](./enum.ReplaceNodeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1545,12 +1545,12 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_node(
+    pub fn replace_node(
         name: &str,
         body: &crate::v1_12::api::core::v1::Node,
-        optional: ReplaceCoreV1NodeOptional<'_>,
+        optional: ReplaceNodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NodeOptional {
+        let ReplaceNodeOptional {
             dry_run,
             pretty,
         } = optional;
@@ -1570,25 +1570,25 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::replace_core_v1_node`](./struct.Node.html#method.replace_core_v1_node)
+/// Optional parameters of [`Node::replace_node`](./struct.Node.html#method.replace_node)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NodeOptional<'a> {
+pub struct ReplaceNodeOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::replace_core_v1_node`](./struct.Node.html#method.replace_core_v1_node)
+/// Parses the HTTP response of [`Node::replace_node`](./struct.Node.html#method.replace_node)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NodeResponse {
+pub enum ReplaceNodeResponse {
     Ok(crate::v1_12::api::core::v1::Node),
     Created(crate::v1_12::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NodeResponse {
+impl crate::Response for ReplaceNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1597,7 +1597,7 @@ impl crate::Response for ReplaceCoreV1NodeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NodeResponse::Ok(result), buf.len()))
+                Ok((ReplaceNodeResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1605,10 +1605,10 @@ impl crate::Response for ReplaceCoreV1NodeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NodeResponse::Created(result), buf.len()))
+                Ok((ReplaceNodeResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NodeResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NodeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNodeResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNodeResponse::Other, 0)),
         }
     }
 }
@@ -1618,7 +1618,7 @@ impl crate::Response for ReplaceCoreV1NodeResponse {
 impl Node {
     /// replace status of the specified Node
     ///
-    /// Use [`ReplaceCoreV1NodeStatusResponse`](./enum.ReplaceCoreV1NodeStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNodeStatusResponse`](./enum.ReplaceNodeStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1631,12 +1631,12 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_node_status(
+    pub fn replace_node_status(
         name: &str,
         body: &crate::v1_12::api::core::v1::Node,
-        optional: ReplaceCoreV1NodeStatusOptional<'_>,
+        optional: ReplaceNodeStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NodeStatusOptional {
+        let ReplaceNodeStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -1656,25 +1656,25 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::replace_core_v1_node_status`](./struct.Node.html#method.replace_core_v1_node_status)
+/// Optional parameters of [`Node::replace_node_status`](./struct.Node.html#method.replace_node_status)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NodeStatusOptional<'a> {
+pub struct ReplaceNodeStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::replace_core_v1_node_status`](./struct.Node.html#method.replace_core_v1_node_status)
+/// Parses the HTTP response of [`Node::replace_node_status`](./struct.Node.html#method.replace_node_status)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NodeStatusResponse {
+pub enum ReplaceNodeStatusResponse {
     Ok(crate::v1_12::api::core::v1::Node),
     Created(crate::v1_12::api::core::v1::Node),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NodeStatusResponse {
+impl crate::Response for ReplaceNodeStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1683,7 +1683,7 @@ impl crate::Response for ReplaceCoreV1NodeStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NodeStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNodeStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1691,10 +1691,10 @@ impl crate::Response for ReplaceCoreV1NodeStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NodeStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNodeStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NodeStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NodeStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNodeStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNodeStatusResponse::Other, 0)),
         }
     }
 }
@@ -1704,7 +1704,7 @@ impl crate::Response for ReplaceCoreV1NodeStatusResponse {
 impl Node {
     /// watch changes to an object of kind Node. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchCoreV1NodeResponse`](./enum.WatchCoreV1NodeResponse.html) to parse the HTTP response.
+    /// Use [`WatchNodeResponse`](./enum.WatchNodeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1715,11 +1715,11 @@ impl Node {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_node(
+    pub fn watch_node(
         name: &str,
-        optional: WatchCoreV1NodeOptional<'_>,
+        optional: WatchNodeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NodeOptional {
+        let WatchNodeOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1767,9 +1767,9 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::watch_core_v1_node`](./struct.Node.html#method.watch_core_v1_node)
+/// Optional parameters of [`Node::watch_node`](./struct.Node.html#method.watch_node)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NodeOptional<'a> {
+pub struct WatchNodeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1794,15 +1794,15 @@ pub struct WatchCoreV1NodeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Node::watch_core_v1_node`](./struct.Node.html#method.watch_core_v1_node)
+/// Parses the HTTP response of [`Node::watch_node`](./struct.Node.html#method.watch_node)
 #[derive(Debug)]
-pub enum WatchCoreV1NodeResponse {
+pub enum WatchNodeResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NodeResponse {
+impl crate::Response for WatchNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1813,10 +1813,10 @@ impl crate::Response for WatchCoreV1NodeResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NodeResponse::Ok(result), byte_offset))
+                Ok((WatchNodeResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NodeResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NodeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNodeResponse::Unauthorized, 0)),
+            _ => Ok((WatchNodeResponse::Other, 0)),
         }
     }
 }
@@ -1826,17 +1826,17 @@ impl crate::Response for WatchCoreV1NodeResponse {
 impl Node {
     /// watch individual changes to a list of Node. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchCoreV1NodeListResponse`](./enum.WatchCoreV1NodeListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNodeListResponse`](./enum.WatchNodeListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_node_list(
-        optional: WatchCoreV1NodeListOptional<'_>,
+    pub fn watch_node_list(
+        optional: WatchNodeListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NodeListOptional {
+        let WatchNodeListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1884,9 +1884,9 @@ impl Node {
     }
 }
 
-/// Optional parameters of [`Node::watch_core_v1_node_list`](./struct.Node.html#method.watch_core_v1_node_list)
+/// Optional parameters of [`Node::watch_node_list`](./struct.Node.html#method.watch_node_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NodeListOptional<'a> {
+pub struct WatchNodeListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1911,15 +1911,15 @@ pub struct WatchCoreV1NodeListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Node::watch_core_v1_node_list`](./struct.Node.html#method.watch_core_v1_node_list)
+/// Parses the HTTP response of [`Node::watch_node_list`](./struct.Node.html#method.watch_node_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NodeListResponse {
+pub enum WatchNodeListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NodeListResponse {
+impl crate::Response for WatchNodeListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1930,10 +1930,10 @@ impl crate::Response for WatchCoreV1NodeListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NodeListResponse::Ok(result), byte_offset))
+                Ok((WatchNodeListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NodeListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NodeListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNodeListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNodeListResponse::Other, 0)),
         }
     }
 }

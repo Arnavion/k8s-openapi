@@ -23,7 +23,7 @@ pub struct ServiceAccount {
 impl ServiceAccount {
     /// create a ServiceAccount
     ///
-    /// Use [`CreateCoreV1NamespacedServiceAccountResponse`](./enum.CreateCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedServiceAccountResponse`](./enum.CreateNamespacedServiceAccountResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -36,12 +36,12 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_service_account(
+    pub fn create_namespaced_service_account(
         namespace: &str,
         body: &crate::v1_10::api::core::v1::ServiceAccount,
-        optional: CreateCoreV1NamespacedServiceAccountOptional<'_>,
+        optional: CreateNamespacedServiceAccountOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedServiceAccountOptional {
+        let CreateNamespacedServiceAccountOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts?", namespace = namespace);
@@ -57,16 +57,16 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::create_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.create_core_v1_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::create_namespaced_service_account`](./struct.ServiceAccount.html#method.create_namespaced_service_account)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedServiceAccountOptional<'a> {
+pub struct CreateNamespacedServiceAccountOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::create_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.create_core_v1_namespaced_service_account)
+/// Parses the HTTP response of [`ServiceAccount::create_namespaced_service_account`](./struct.ServiceAccount.html#method.create_namespaced_service_account)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedServiceAccountResponse {
+pub enum CreateNamespacedServiceAccountResponse {
     Ok(crate::v1_10::api::core::v1::ServiceAccount),
     Created(crate::v1_10::api::core::v1::ServiceAccount),
     Accepted(crate::v1_10::api::core::v1::ServiceAccount),
@@ -74,7 +74,7 @@ pub enum CreateCoreV1NamespacedServiceAccountResponse {
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedServiceAccountResponse {
+impl crate::Response for CreateNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -83,7 +83,7 @@ impl crate::Response for CreateCoreV1NamespacedServiceAccountResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedServiceAccountResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedServiceAccountResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -91,7 +91,7 @@ impl crate::Response for CreateCoreV1NamespacedServiceAccountResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedServiceAccountResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedServiceAccountResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -99,10 +99,10 @@ impl crate::Response for CreateCoreV1NamespacedServiceAccountResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedServiceAccountResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedServiceAccountResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedServiceAccountResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedServiceAccountResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedServiceAccountResponse::Other, 0)),
         }
     }
 }
@@ -112,7 +112,7 @@ impl crate::Response for CreateCoreV1NamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// delete collection of ServiceAccount
     ///
-    /// Use [`DeleteCoreV1CollectionNamespacedServiceAccountResponse`](./enum.DeleteCoreV1CollectionNamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedServiceAccountResponse`](./enum.DeleteCollectionNamespacedServiceAccountResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -123,11 +123,11 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_collection_namespaced_service_account(
+    pub fn delete_collection_namespaced_service_account(
         namespace: &str,
-        optional: DeleteCoreV1CollectionNamespacedServiceAccountOptional<'_>,
+        optional: DeleteCollectionNamespacedServiceAccountOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1CollectionNamespacedServiceAccountOptional {
+        let DeleteCollectionNamespacedServiceAccountOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -175,9 +175,9 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::delete_core_v1_collection_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_core_v1_collection_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::delete_collection_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_collection_namespaced_service_account)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1CollectionNamespacedServiceAccountOptional<'a> {
+pub struct DeleteCollectionNamespacedServiceAccountOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -200,16 +200,16 @@ pub struct DeleteCoreV1CollectionNamespacedServiceAccountOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::delete_core_v1_collection_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_core_v1_collection_namespaced_service_account)
+/// Parses the HTTP response of [`ServiceAccount::delete_collection_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_collection_namespaced_service_account)
 #[derive(Debug)]
-pub enum DeleteCoreV1CollectionNamespacedServiceAccountResponse {
+pub enum DeleteCollectionNamespacedServiceAccountResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::api::core::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1CollectionNamespacedServiceAccountResponse {
+impl crate::Response for DeleteCollectionNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -225,16 +225,16 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedServiceAccountResponse 
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedServiceAccountResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedServiceAccountResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedServiceAccountResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedServiceAccountResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedServiceAccountResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1CollectionNamespacedServiceAccountResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedServiceAccountResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedServiceAccountResponse::Other, 0)),
         }
     }
 }
@@ -244,7 +244,7 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedServiceAccountResponse 
 impl ServiceAccount {
     /// delete a ServiceAccount
     ///
-    /// Use [`DeleteCoreV1NamespacedServiceAccountResponse`](./enum.DeleteCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedServiceAccountResponse`](./enum.DeleteNamespacedServiceAccountResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -259,12 +259,12 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_namespaced_service_account(
+    pub fn delete_namespaced_service_account(
         name: &str,
         namespace: &str,
-        optional: DeleteCoreV1NamespacedServiceAccountOptional<'_>,
+        optional: DeleteNamespacedServiceAccountOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NamespacedServiceAccountOptional {
+        let DeleteNamespacedServiceAccountOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -292,9 +292,9 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::delete_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_core_v1_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::delete_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_namespaced_service_account)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NamespacedServiceAccountOptional<'a> {
+pub struct DeleteNamespacedServiceAccountOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -305,16 +305,16 @@ pub struct DeleteCoreV1NamespacedServiceAccountOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::delete_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_core_v1_namespaced_service_account)
+/// Parses the HTTP response of [`ServiceAccount::delete_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_namespaced_service_account)
 #[derive(Debug)]
-pub enum DeleteCoreV1NamespacedServiceAccountResponse {
+pub enum DeleteNamespacedServiceAccountResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::api::core::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NamespacedServiceAccountResponse {
+impl crate::Response for DeleteNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -330,16 +330,16 @@ impl crate::Response for DeleteCoreV1NamespacedServiceAccountResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedServiceAccountResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedServiceAccountResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedServiceAccountResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedServiceAccountResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NamespacedServiceAccountResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedServiceAccountResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedServiceAccountResponse::Other, 0)),
         }
     }
 }
@@ -349,7 +349,7 @@ impl crate::Response for DeleteCoreV1NamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// list or watch objects of kind ServiceAccount
     ///
-    /// Use [`ListCoreV1NamespacedServiceAccountResponse`](./enum.ListCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedServiceAccountResponse`](./enum.ListNamespacedServiceAccountResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -360,11 +360,11 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_namespaced_service_account(
+    pub fn list_namespaced_service_account(
         namespace: &str,
-        optional: ListCoreV1NamespacedServiceAccountOptional<'_>,
+        optional: ListNamespacedServiceAccountOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NamespacedServiceAccountOptional {
+        let ListNamespacedServiceAccountOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -412,9 +412,9 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::list_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.list_core_v1_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::list_namespaced_service_account`](./struct.ServiceAccount.html#method.list_namespaced_service_account)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NamespacedServiceAccountOptional<'a> {
+pub struct ListNamespacedServiceAccountOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -437,15 +437,15 @@ pub struct ListCoreV1NamespacedServiceAccountOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::list_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.list_core_v1_namespaced_service_account)
+/// Parses the HTTP response of [`ServiceAccount::list_namespaced_service_account`](./struct.ServiceAccount.html#method.list_namespaced_service_account)
 #[derive(Debug)]
-pub enum ListCoreV1NamespacedServiceAccountResponse {
+pub enum ListNamespacedServiceAccountResponse {
     Ok(crate::v1_10::api::core::v1::ServiceAccountList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NamespacedServiceAccountResponse {
+impl crate::Response for ListNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -454,10 +454,10 @@ impl crate::Response for ListCoreV1NamespacedServiceAccountResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NamespacedServiceAccountResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedServiceAccountResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NamespacedServiceAccountResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedServiceAccountResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedServiceAccountResponse::Other, 0)),
         }
     }
 }
@@ -467,17 +467,17 @@ impl crate::Response for ListCoreV1NamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// list or watch objects of kind ServiceAccount
     ///
-    /// Use [`ListCoreV1ServiceAccountForAllNamespacesResponse`](./enum.ListCoreV1ServiceAccountForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListServiceAccountForAllNamespacesResponse`](./enum.ListServiceAccountForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_service_account_for_all_namespaces(
-        optional: ListCoreV1ServiceAccountForAllNamespacesOptional<'_>,
+    pub fn list_service_account_for_all_namespaces(
+        optional: ListServiceAccountForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1ServiceAccountForAllNamespacesOptional {
+        let ListServiceAccountForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -525,9 +525,9 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::list_core_v1_service_account_for_all_namespaces`](./struct.ServiceAccount.html#method.list_core_v1_service_account_for_all_namespaces)
+/// Optional parameters of [`ServiceAccount::list_service_account_for_all_namespaces`](./struct.ServiceAccount.html#method.list_service_account_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListCoreV1ServiceAccountForAllNamespacesOptional<'a> {
+pub struct ListServiceAccountForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -550,15 +550,15 @@ pub struct ListCoreV1ServiceAccountForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::list_core_v1_service_account_for_all_namespaces`](./struct.ServiceAccount.html#method.list_core_v1_service_account_for_all_namespaces)
+/// Parses the HTTP response of [`ServiceAccount::list_service_account_for_all_namespaces`](./struct.ServiceAccount.html#method.list_service_account_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListCoreV1ServiceAccountForAllNamespacesResponse {
+pub enum ListServiceAccountForAllNamespacesResponse {
     Ok(crate::v1_10::api::core::v1::ServiceAccountList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1ServiceAccountForAllNamespacesResponse {
+impl crate::Response for ListServiceAccountForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -567,10 +567,10 @@ impl crate::Response for ListCoreV1ServiceAccountForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1ServiceAccountForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListServiceAccountForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ServiceAccountForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1ServiceAccountForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListServiceAccountForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListServiceAccountForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -580,7 +580,7 @@ impl crate::Response for ListCoreV1ServiceAccountForAllNamespacesResponse {
 impl ServiceAccount {
     /// partially update the specified ServiceAccount
     ///
-    /// Use [`PatchCoreV1NamespacedServiceAccountResponse`](./enum.PatchCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedServiceAccountResponse`](./enum.PatchNamespacedServiceAccountResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -597,13 +597,13 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_service_account(
+    pub fn patch_namespaced_service_account(
         name: &str,
         namespace: &str,
         body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedServiceAccountOptional<'_>,
+        optional: PatchNamespacedServiceAccountOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedServiceAccountOptional {
+        let PatchNamespacedServiceAccountOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}?", name = name, namespace = namespace);
@@ -619,22 +619,22 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::patch_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.patch_core_v1_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::patch_namespaced_service_account`](./struct.ServiceAccount.html#method.patch_namespaced_service_account)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedServiceAccountOptional<'a> {
+pub struct PatchNamespacedServiceAccountOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::patch_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.patch_core_v1_namespaced_service_account)
+/// Parses the HTTP response of [`ServiceAccount::patch_namespaced_service_account`](./struct.ServiceAccount.html#method.patch_namespaced_service_account)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedServiceAccountResponse {
+pub enum PatchNamespacedServiceAccountResponse {
     Ok(crate::v1_10::api::core::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedServiceAccountResponse {
+impl crate::Response for PatchNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -643,10 +643,10 @@ impl crate::Response for PatchCoreV1NamespacedServiceAccountResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedServiceAccountResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedServiceAccountResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedServiceAccountResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedServiceAccountResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedServiceAccountResponse::Other, 0)),
         }
     }
 }
@@ -656,7 +656,7 @@ impl crate::Response for PatchCoreV1NamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// read the specified ServiceAccount
     ///
-    /// Use [`ReadCoreV1NamespacedServiceAccountResponse`](./enum.ReadCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedServiceAccountResponse`](./enum.ReadNamespacedServiceAccountResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -671,12 +671,12 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_service_account(
+    pub fn read_namespaced_service_account(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedServiceAccountOptional<'_>,
+        optional: ReadNamespacedServiceAccountOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedServiceAccountOptional {
+        let ReadNamespacedServiceAccountOptional {
             exact,
             export,
             pretty,
@@ -700,9 +700,9 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::read_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.read_core_v1_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::read_namespaced_service_account`](./struct.ServiceAccount.html#method.read_namespaced_service_account)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedServiceAccountOptional<'a> {
+pub struct ReadNamespacedServiceAccountOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -711,15 +711,15 @@ pub struct ReadCoreV1NamespacedServiceAccountOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::read_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.read_core_v1_namespaced_service_account)
+/// Parses the HTTP response of [`ServiceAccount::read_namespaced_service_account`](./struct.ServiceAccount.html#method.read_namespaced_service_account)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedServiceAccountResponse {
+pub enum ReadNamespacedServiceAccountResponse {
     Ok(crate::v1_10::api::core::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedServiceAccountResponse {
+impl crate::Response for ReadNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -728,10 +728,10 @@ impl crate::Response for ReadCoreV1NamespacedServiceAccountResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedServiceAccountResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedServiceAccountResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedServiceAccountResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedServiceAccountResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedServiceAccountResponse::Other, 0)),
         }
     }
 }
@@ -741,7 +741,7 @@ impl crate::Response for ReadCoreV1NamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// replace the specified ServiceAccount
     ///
-    /// Use [`ReplaceCoreV1NamespacedServiceAccountResponse`](./enum.ReplaceCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedServiceAccountResponse`](./enum.ReplaceNamespacedServiceAccountResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -758,13 +758,13 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_service_account(
+    pub fn replace_namespaced_service_account(
         name: &str,
         namespace: &str,
         body: &crate::v1_10::api::core::v1::ServiceAccount,
-        optional: ReplaceCoreV1NamespacedServiceAccountOptional<'_>,
+        optional: ReplaceNamespacedServiceAccountOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedServiceAccountOptional {
+        let ReplaceNamespacedServiceAccountOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/serviceaccounts/{name}?", name = name, namespace = namespace);
@@ -780,23 +780,23 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::replace_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.replace_core_v1_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::replace_namespaced_service_account`](./struct.ServiceAccount.html#method.replace_namespaced_service_account)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedServiceAccountOptional<'a> {
+pub struct ReplaceNamespacedServiceAccountOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::replace_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.replace_core_v1_namespaced_service_account)
+/// Parses the HTTP response of [`ServiceAccount::replace_namespaced_service_account`](./struct.ServiceAccount.html#method.replace_namespaced_service_account)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedServiceAccountResponse {
+pub enum ReplaceNamespacedServiceAccountResponse {
     Ok(crate::v1_10::api::core::v1::ServiceAccount),
     Created(crate::v1_10::api::core::v1::ServiceAccount),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedServiceAccountResponse {
+impl crate::Response for ReplaceNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -805,7 +805,7 @@ impl crate::Response for ReplaceCoreV1NamespacedServiceAccountResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedServiceAccountResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedServiceAccountResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -813,10 +813,10 @@ impl crate::Response for ReplaceCoreV1NamespacedServiceAccountResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedServiceAccountResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedServiceAccountResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedServiceAccountResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedServiceAccountResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedServiceAccountResponse::Other, 0)),
         }
     }
 }
@@ -826,7 +826,7 @@ impl crate::Response for ReplaceCoreV1NamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// watch changes to an object of kind ServiceAccount
     ///
-    /// Use [`WatchCoreV1NamespacedServiceAccountResponse`](./enum.WatchCoreV1NamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedServiceAccountResponse`](./enum.WatchNamespacedServiceAccountResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -841,12 +841,12 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_service_account(
+    pub fn watch_namespaced_service_account(
         name: &str,
         namespace: &str,
-        optional: WatchCoreV1NamespacedServiceAccountOptional<'_>,
+        optional: WatchNamespacedServiceAccountOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedServiceAccountOptional {
+        let WatchNamespacedServiceAccountOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -894,9 +894,9 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::watch_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.watch_core_v1_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::watch_namespaced_service_account`](./struct.ServiceAccount.html#method.watch_namespaced_service_account)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedServiceAccountOptional<'a> {
+pub struct WatchNamespacedServiceAccountOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -919,15 +919,15 @@ pub struct WatchCoreV1NamespacedServiceAccountOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::watch_core_v1_namespaced_service_account`](./struct.ServiceAccount.html#method.watch_core_v1_namespaced_service_account)
+/// Parses the HTTP response of [`ServiceAccount::watch_namespaced_service_account`](./struct.ServiceAccount.html#method.watch_namespaced_service_account)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedServiceAccountResponse {
+pub enum WatchNamespacedServiceAccountResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedServiceAccountResponse {
+impl crate::Response for WatchNamespacedServiceAccountResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -938,10 +938,10 @@ impl crate::Response for WatchCoreV1NamespacedServiceAccountResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedServiceAccountResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedServiceAccountResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceAccountResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedServiceAccountResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedServiceAccountResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedServiceAccountResponse::Other, 0)),
         }
     }
 }
@@ -951,7 +951,7 @@ impl crate::Response for WatchCoreV1NamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// watch individual changes to a list of ServiceAccount
     ///
-    /// Use [`WatchCoreV1NamespacedServiceAccountListResponse`](./enum.WatchCoreV1NamespacedServiceAccountListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedServiceAccountListResponse`](./enum.WatchNamespacedServiceAccountListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -962,11 +962,11 @@ impl ServiceAccount {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_service_account_list(
+    pub fn watch_namespaced_service_account_list(
         namespace: &str,
-        optional: WatchCoreV1NamespacedServiceAccountListOptional<'_>,
+        optional: WatchNamespacedServiceAccountListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedServiceAccountListOptional {
+        let WatchNamespacedServiceAccountListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1014,9 +1014,9 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::watch_core_v1_namespaced_service_account_list`](./struct.ServiceAccount.html#method.watch_core_v1_namespaced_service_account_list)
+/// Optional parameters of [`ServiceAccount::watch_namespaced_service_account_list`](./struct.ServiceAccount.html#method.watch_namespaced_service_account_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedServiceAccountListOptional<'a> {
+pub struct WatchNamespacedServiceAccountListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1039,15 +1039,15 @@ pub struct WatchCoreV1NamespacedServiceAccountListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::watch_core_v1_namespaced_service_account_list`](./struct.ServiceAccount.html#method.watch_core_v1_namespaced_service_account_list)
+/// Parses the HTTP response of [`ServiceAccount::watch_namespaced_service_account_list`](./struct.ServiceAccount.html#method.watch_namespaced_service_account_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedServiceAccountListResponse {
+pub enum WatchNamespacedServiceAccountListResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedServiceAccountListResponse {
+impl crate::Response for WatchNamespacedServiceAccountListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1058,10 +1058,10 @@ impl crate::Response for WatchCoreV1NamespacedServiceAccountListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedServiceAccountListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedServiceAccountListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedServiceAccountListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedServiceAccountListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedServiceAccountListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedServiceAccountListResponse::Other, 0)),
         }
     }
 }
@@ -1071,17 +1071,17 @@ impl crate::Response for WatchCoreV1NamespacedServiceAccountListResponse {
 impl ServiceAccount {
     /// watch individual changes to a list of ServiceAccount
     ///
-    /// Use [`WatchCoreV1ServiceAccountListForAllNamespacesResponse`](./enum.WatchCoreV1ServiceAccountListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchServiceAccountListForAllNamespacesResponse`](./enum.WatchServiceAccountListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_service_account_list_for_all_namespaces(
-        optional: WatchCoreV1ServiceAccountListForAllNamespacesOptional<'_>,
+    pub fn watch_service_account_list_for_all_namespaces(
+        optional: WatchServiceAccountListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1ServiceAccountListForAllNamespacesOptional {
+        let WatchServiceAccountListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1129,9 +1129,9 @@ impl ServiceAccount {
     }
 }
 
-/// Optional parameters of [`ServiceAccount::watch_core_v1_service_account_list_for_all_namespaces`](./struct.ServiceAccount.html#method.watch_core_v1_service_account_list_for_all_namespaces)
+/// Optional parameters of [`ServiceAccount::watch_service_account_list_for_all_namespaces`](./struct.ServiceAccount.html#method.watch_service_account_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1ServiceAccountListForAllNamespacesOptional<'a> {
+pub struct WatchServiceAccountListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1154,15 +1154,15 @@ pub struct WatchCoreV1ServiceAccountListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::watch_core_v1_service_account_list_for_all_namespaces`](./struct.ServiceAccount.html#method.watch_core_v1_service_account_list_for_all_namespaces)
+/// Parses the HTTP response of [`ServiceAccount::watch_service_account_list_for_all_namespaces`](./struct.ServiceAccount.html#method.watch_service_account_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchCoreV1ServiceAccountListForAllNamespacesResponse {
+pub enum WatchServiceAccountListForAllNamespacesResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1ServiceAccountListForAllNamespacesResponse {
+impl crate::Response for WatchServiceAccountListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1173,10 +1173,10 @@ impl crate::Response for WatchCoreV1ServiceAccountListForAllNamespacesResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1ServiceAccountListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchServiceAccountListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1ServiceAccountListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1ServiceAccountListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchServiceAccountListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchServiceAccountListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

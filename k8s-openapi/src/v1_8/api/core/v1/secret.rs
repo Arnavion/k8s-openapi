@@ -23,7 +23,7 @@ pub struct Secret {
 impl Secret {
     /// create a Secret
     ///
-    /// Use [`CreateCoreV1NamespacedSecretResponse`](./enum.CreateCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedSecretResponse`](./enum.CreateNamespacedSecretResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -36,12 +36,12 @@ impl Secret {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_secret(
+    pub fn create_namespaced_secret(
         namespace: &str,
         body: &crate::v1_8::api::core::v1::Secret,
-        optional: CreateCoreV1NamespacedSecretOptional<'_>,
+        optional: CreateNamespacedSecretOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedSecretOptional {
+        let CreateNamespacedSecretOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/secrets?", namespace = namespace);
@@ -57,22 +57,22 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::create_core_v1_namespaced_secret`](./struct.Secret.html#method.create_core_v1_namespaced_secret)
+/// Optional parameters of [`Secret::create_namespaced_secret`](./struct.Secret.html#method.create_namespaced_secret)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedSecretOptional<'a> {
+pub struct CreateNamespacedSecretOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Secret::create_core_v1_namespaced_secret`](./struct.Secret.html#method.create_core_v1_namespaced_secret)
+/// Parses the HTTP response of [`Secret::create_namespaced_secret`](./struct.Secret.html#method.create_namespaced_secret)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedSecretResponse {
+pub enum CreateNamespacedSecretResponse {
     Ok(crate::v1_8::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedSecretResponse {
+impl crate::Response for CreateNamespacedSecretResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -81,10 +81,10 @@ impl crate::Response for CreateCoreV1NamespacedSecretResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedSecretResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedSecretResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedSecretResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedSecretResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedSecretResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedSecretResponse::Other, 0)),
         }
     }
 }
@@ -94,7 +94,7 @@ impl crate::Response for CreateCoreV1NamespacedSecretResponse {
 impl Secret {
     /// delete collection of Secret
     ///
-    /// Use [`DeleteCoreV1CollectionNamespacedSecretResponse`](./enum.DeleteCoreV1CollectionNamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedSecretResponse`](./enum.DeleteCollectionNamespacedSecretResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -105,11 +105,11 @@ impl Secret {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_collection_namespaced_secret(
+    pub fn delete_collection_namespaced_secret(
         namespace: &str,
-        optional: DeleteCoreV1CollectionNamespacedSecretOptional<'_>,
+        optional: DeleteCollectionNamespacedSecretOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1CollectionNamespacedSecretOptional {
+        let DeleteCollectionNamespacedSecretOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -157,9 +157,9 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::delete_core_v1_collection_namespaced_secret`](./struct.Secret.html#method.delete_core_v1_collection_namespaced_secret)
+/// Optional parameters of [`Secret::delete_collection_namespaced_secret`](./struct.Secret.html#method.delete_collection_namespaced_secret)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1CollectionNamespacedSecretOptional<'a> {
+pub struct DeleteCollectionNamespacedSecretOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -182,16 +182,16 @@ pub struct DeleteCoreV1CollectionNamespacedSecretOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::delete_core_v1_collection_namespaced_secret`](./struct.Secret.html#method.delete_core_v1_collection_namespaced_secret)
+/// Parses the HTTP response of [`Secret::delete_collection_namespaced_secret`](./struct.Secret.html#method.delete_collection_namespaced_secret)
 #[derive(Debug)]
-pub enum DeleteCoreV1CollectionNamespacedSecretResponse {
+pub enum DeleteCollectionNamespacedSecretResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1CollectionNamespacedSecretResponse {
+impl crate::Response for DeleteCollectionNamespacedSecretResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -207,16 +207,16 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedSecretResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedSecretResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedSecretResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedSecretResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedSecretResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedSecretResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1CollectionNamespacedSecretResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedSecretResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedSecretResponse::Other, 0)),
         }
     }
 }
@@ -226,7 +226,7 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedSecretResponse {
 impl Secret {
     /// delete a Secret
     ///
-    /// Use [`DeleteCoreV1NamespacedSecretResponse`](./enum.DeleteCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedSecretResponse`](./enum.DeleteNamespacedSecretResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -241,12 +241,12 @@ impl Secret {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_namespaced_secret(
+    pub fn delete_namespaced_secret(
         name: &str,
         namespace: &str,
-        optional: DeleteCoreV1NamespacedSecretOptional<'_>,
+        optional: DeleteNamespacedSecretOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NamespacedSecretOptional {
+        let DeleteNamespacedSecretOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -274,9 +274,9 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::delete_core_v1_namespaced_secret`](./struct.Secret.html#method.delete_core_v1_namespaced_secret)
+/// Optional parameters of [`Secret::delete_namespaced_secret`](./struct.Secret.html#method.delete_namespaced_secret)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NamespacedSecretOptional<'a> {
+pub struct DeleteNamespacedSecretOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -287,16 +287,16 @@ pub struct DeleteCoreV1NamespacedSecretOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Secret::delete_core_v1_namespaced_secret`](./struct.Secret.html#method.delete_core_v1_namespaced_secret)
+/// Parses the HTTP response of [`Secret::delete_namespaced_secret`](./struct.Secret.html#method.delete_namespaced_secret)
 #[derive(Debug)]
-pub enum DeleteCoreV1NamespacedSecretResponse {
+pub enum DeleteNamespacedSecretResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NamespacedSecretResponse {
+impl crate::Response for DeleteNamespacedSecretResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -312,16 +312,16 @@ impl crate::Response for DeleteCoreV1NamespacedSecretResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedSecretResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedSecretResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedSecretResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedSecretResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedSecretResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NamespacedSecretResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedSecretResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedSecretResponse::Other, 0)),
         }
     }
 }
@@ -331,7 +331,7 @@ impl crate::Response for DeleteCoreV1NamespacedSecretResponse {
 impl Secret {
     /// list or watch objects of kind Secret
     ///
-    /// Use [`ListCoreV1NamespacedSecretResponse`](./enum.ListCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedSecretResponse`](./enum.ListNamespacedSecretResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -342,11 +342,11 @@ impl Secret {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_namespaced_secret(
+    pub fn list_namespaced_secret(
         namespace: &str,
-        optional: ListCoreV1NamespacedSecretOptional<'_>,
+        optional: ListNamespacedSecretOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NamespacedSecretOptional {
+        let ListNamespacedSecretOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -394,9 +394,9 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::list_core_v1_namespaced_secret`](./struct.Secret.html#method.list_core_v1_namespaced_secret)
+/// Optional parameters of [`Secret::list_namespaced_secret`](./struct.Secret.html#method.list_namespaced_secret)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NamespacedSecretOptional<'a> {
+pub struct ListNamespacedSecretOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -419,15 +419,15 @@ pub struct ListCoreV1NamespacedSecretOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::list_core_v1_namespaced_secret`](./struct.Secret.html#method.list_core_v1_namespaced_secret)
+/// Parses the HTTP response of [`Secret::list_namespaced_secret`](./struct.Secret.html#method.list_namespaced_secret)
 #[derive(Debug)]
-pub enum ListCoreV1NamespacedSecretResponse {
+pub enum ListNamespacedSecretResponse {
     Ok(crate::v1_8::api::core::v1::SecretList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NamespacedSecretResponse {
+impl crate::Response for ListNamespacedSecretResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -436,10 +436,10 @@ impl crate::Response for ListCoreV1NamespacedSecretResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NamespacedSecretResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedSecretResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedSecretResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NamespacedSecretResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedSecretResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedSecretResponse::Other, 0)),
         }
     }
 }
@@ -449,17 +449,17 @@ impl crate::Response for ListCoreV1NamespacedSecretResponse {
 impl Secret {
     /// list or watch objects of kind Secret
     ///
-    /// Use [`ListCoreV1SecretForAllNamespacesResponse`](./enum.ListCoreV1SecretForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListSecretForAllNamespacesResponse`](./enum.ListSecretForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_secret_for_all_namespaces(
-        optional: ListCoreV1SecretForAllNamespacesOptional<'_>,
+    pub fn list_secret_for_all_namespaces(
+        optional: ListSecretForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1SecretForAllNamespacesOptional {
+        let ListSecretForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -507,9 +507,9 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::list_core_v1_secret_for_all_namespaces`](./struct.Secret.html#method.list_core_v1_secret_for_all_namespaces)
+/// Optional parameters of [`Secret::list_secret_for_all_namespaces`](./struct.Secret.html#method.list_secret_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListCoreV1SecretForAllNamespacesOptional<'a> {
+pub struct ListSecretForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -532,15 +532,15 @@ pub struct ListCoreV1SecretForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::list_core_v1_secret_for_all_namespaces`](./struct.Secret.html#method.list_core_v1_secret_for_all_namespaces)
+/// Parses the HTTP response of [`Secret::list_secret_for_all_namespaces`](./struct.Secret.html#method.list_secret_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListCoreV1SecretForAllNamespacesResponse {
+pub enum ListSecretForAllNamespacesResponse {
     Ok(crate::v1_8::api::core::v1::SecretList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1SecretForAllNamespacesResponse {
+impl crate::Response for ListSecretForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -549,10 +549,10 @@ impl crate::Response for ListCoreV1SecretForAllNamespacesResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1SecretForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListSecretForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1SecretForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1SecretForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListSecretForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListSecretForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -562,7 +562,7 @@ impl crate::Response for ListCoreV1SecretForAllNamespacesResponse {
 impl Secret {
     /// partially update the specified Secret
     ///
-    /// Use [`PatchCoreV1NamespacedSecretResponse`](./enum.PatchCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedSecretResponse`](./enum.PatchNamespacedSecretResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -579,13 +579,13 @@ impl Secret {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_secret(
+    pub fn patch_namespaced_secret(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedSecretOptional<'_>,
+        optional: PatchNamespacedSecretOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedSecretOptional {
+        let PatchNamespacedSecretOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/secrets/{name}?", name = name, namespace = namespace);
@@ -601,22 +601,22 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::patch_core_v1_namespaced_secret`](./struct.Secret.html#method.patch_core_v1_namespaced_secret)
+/// Optional parameters of [`Secret::patch_namespaced_secret`](./struct.Secret.html#method.patch_namespaced_secret)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedSecretOptional<'a> {
+pub struct PatchNamespacedSecretOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Secret::patch_core_v1_namespaced_secret`](./struct.Secret.html#method.patch_core_v1_namespaced_secret)
+/// Parses the HTTP response of [`Secret::patch_namespaced_secret`](./struct.Secret.html#method.patch_namespaced_secret)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedSecretResponse {
+pub enum PatchNamespacedSecretResponse {
     Ok(crate::v1_8::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedSecretResponse {
+impl crate::Response for PatchNamespacedSecretResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -625,10 +625,10 @@ impl crate::Response for PatchCoreV1NamespacedSecretResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedSecretResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedSecretResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedSecretResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedSecretResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedSecretResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedSecretResponse::Other, 0)),
         }
     }
 }
@@ -638,7 +638,7 @@ impl crate::Response for PatchCoreV1NamespacedSecretResponse {
 impl Secret {
     /// read the specified Secret
     ///
-    /// Use [`ReadCoreV1NamespacedSecretResponse`](./enum.ReadCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedSecretResponse`](./enum.ReadNamespacedSecretResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -653,12 +653,12 @@ impl Secret {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_secret(
+    pub fn read_namespaced_secret(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedSecretOptional<'_>,
+        optional: ReadNamespacedSecretOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedSecretOptional {
+        let ReadNamespacedSecretOptional {
             exact,
             export,
             pretty,
@@ -682,9 +682,9 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::read_core_v1_namespaced_secret`](./struct.Secret.html#method.read_core_v1_namespaced_secret)
+/// Optional parameters of [`Secret::read_namespaced_secret`](./struct.Secret.html#method.read_namespaced_secret)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedSecretOptional<'a> {
+pub struct ReadNamespacedSecretOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -693,15 +693,15 @@ pub struct ReadCoreV1NamespacedSecretOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Secret::read_core_v1_namespaced_secret`](./struct.Secret.html#method.read_core_v1_namespaced_secret)
+/// Parses the HTTP response of [`Secret::read_namespaced_secret`](./struct.Secret.html#method.read_namespaced_secret)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedSecretResponse {
+pub enum ReadNamespacedSecretResponse {
     Ok(crate::v1_8::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedSecretResponse {
+impl crate::Response for ReadNamespacedSecretResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -710,10 +710,10 @@ impl crate::Response for ReadCoreV1NamespacedSecretResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedSecretResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedSecretResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedSecretResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedSecretResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedSecretResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedSecretResponse::Other, 0)),
         }
     }
 }
@@ -723,7 +723,7 @@ impl crate::Response for ReadCoreV1NamespacedSecretResponse {
 impl Secret {
     /// replace the specified Secret
     ///
-    /// Use [`ReplaceCoreV1NamespacedSecretResponse`](./enum.ReplaceCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedSecretResponse`](./enum.ReplaceNamespacedSecretResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -740,13 +740,13 @@ impl Secret {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_secret(
+    pub fn replace_namespaced_secret(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::core::v1::Secret,
-        optional: ReplaceCoreV1NamespacedSecretOptional<'_>,
+        optional: ReplaceNamespacedSecretOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedSecretOptional {
+        let ReplaceNamespacedSecretOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/secrets/{name}?", name = name, namespace = namespace);
@@ -762,22 +762,22 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::replace_core_v1_namespaced_secret`](./struct.Secret.html#method.replace_core_v1_namespaced_secret)
+/// Optional parameters of [`Secret::replace_namespaced_secret`](./struct.Secret.html#method.replace_namespaced_secret)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedSecretOptional<'a> {
+pub struct ReplaceNamespacedSecretOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Secret::replace_core_v1_namespaced_secret`](./struct.Secret.html#method.replace_core_v1_namespaced_secret)
+/// Parses the HTTP response of [`Secret::replace_namespaced_secret`](./struct.Secret.html#method.replace_namespaced_secret)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedSecretResponse {
+pub enum ReplaceNamespacedSecretResponse {
     Ok(crate::v1_8::api::core::v1::Secret),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedSecretResponse {
+impl crate::Response for ReplaceNamespacedSecretResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -786,10 +786,10 @@ impl crate::Response for ReplaceCoreV1NamespacedSecretResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedSecretResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedSecretResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedSecretResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedSecretResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedSecretResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedSecretResponse::Other, 0)),
         }
     }
 }
@@ -799,7 +799,7 @@ impl crate::Response for ReplaceCoreV1NamespacedSecretResponse {
 impl Secret {
     /// watch changes to an object of kind Secret
     ///
-    /// Use [`WatchCoreV1NamespacedSecretResponse`](./enum.WatchCoreV1NamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedSecretResponse`](./enum.WatchNamespacedSecretResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -814,12 +814,12 @@ impl Secret {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_secret(
+    pub fn watch_namespaced_secret(
         name: &str,
         namespace: &str,
-        optional: WatchCoreV1NamespacedSecretOptional<'_>,
+        optional: WatchNamespacedSecretOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedSecretOptional {
+        let WatchNamespacedSecretOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -867,9 +867,9 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::watch_core_v1_namespaced_secret`](./struct.Secret.html#method.watch_core_v1_namespaced_secret)
+/// Optional parameters of [`Secret::watch_namespaced_secret`](./struct.Secret.html#method.watch_namespaced_secret)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedSecretOptional<'a> {
+pub struct WatchNamespacedSecretOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -892,15 +892,15 @@ pub struct WatchCoreV1NamespacedSecretOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::watch_core_v1_namespaced_secret`](./struct.Secret.html#method.watch_core_v1_namespaced_secret)
+/// Parses the HTTP response of [`Secret::watch_namespaced_secret`](./struct.Secret.html#method.watch_namespaced_secret)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedSecretResponse {
+pub enum WatchNamespacedSecretResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedSecretResponse {
+impl crate::Response for WatchNamespacedSecretResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -911,10 +911,10 @@ impl crate::Response for WatchCoreV1NamespacedSecretResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedSecretResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedSecretResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedSecretResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedSecretResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedSecretResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedSecretResponse::Other, 0)),
         }
     }
 }
@@ -924,7 +924,7 @@ impl crate::Response for WatchCoreV1NamespacedSecretResponse {
 impl Secret {
     /// watch individual changes to a list of Secret
     ///
-    /// Use [`WatchCoreV1NamespacedSecretListResponse`](./enum.WatchCoreV1NamespacedSecretListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedSecretListResponse`](./enum.WatchNamespacedSecretListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -935,11 +935,11 @@ impl Secret {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_secret_list(
+    pub fn watch_namespaced_secret_list(
         namespace: &str,
-        optional: WatchCoreV1NamespacedSecretListOptional<'_>,
+        optional: WatchNamespacedSecretListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedSecretListOptional {
+        let WatchNamespacedSecretListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -987,9 +987,9 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::watch_core_v1_namespaced_secret_list`](./struct.Secret.html#method.watch_core_v1_namespaced_secret_list)
+/// Optional parameters of [`Secret::watch_namespaced_secret_list`](./struct.Secret.html#method.watch_namespaced_secret_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedSecretListOptional<'a> {
+pub struct WatchNamespacedSecretListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1012,15 +1012,15 @@ pub struct WatchCoreV1NamespacedSecretListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::watch_core_v1_namespaced_secret_list`](./struct.Secret.html#method.watch_core_v1_namespaced_secret_list)
+/// Parses the HTTP response of [`Secret::watch_namespaced_secret_list`](./struct.Secret.html#method.watch_namespaced_secret_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedSecretListResponse {
+pub enum WatchNamespacedSecretListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedSecretListResponse {
+impl crate::Response for WatchNamespacedSecretListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1031,10 +1031,10 @@ impl crate::Response for WatchCoreV1NamespacedSecretListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedSecretListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedSecretListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedSecretListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedSecretListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedSecretListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedSecretListResponse::Other, 0)),
         }
     }
 }
@@ -1044,17 +1044,17 @@ impl crate::Response for WatchCoreV1NamespacedSecretListResponse {
 impl Secret {
     /// watch individual changes to a list of Secret
     ///
-    /// Use [`WatchCoreV1SecretListForAllNamespacesResponse`](./enum.WatchCoreV1SecretListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchSecretListForAllNamespacesResponse`](./enum.WatchSecretListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_secret_list_for_all_namespaces(
-        optional: WatchCoreV1SecretListForAllNamespacesOptional<'_>,
+    pub fn watch_secret_list_for_all_namespaces(
+        optional: WatchSecretListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1SecretListForAllNamespacesOptional {
+        let WatchSecretListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1102,9 +1102,9 @@ impl Secret {
     }
 }
 
-/// Optional parameters of [`Secret::watch_core_v1_secret_list_for_all_namespaces`](./struct.Secret.html#method.watch_core_v1_secret_list_for_all_namespaces)
+/// Optional parameters of [`Secret::watch_secret_list_for_all_namespaces`](./struct.Secret.html#method.watch_secret_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1SecretListForAllNamespacesOptional<'a> {
+pub struct WatchSecretListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1127,15 +1127,15 @@ pub struct WatchCoreV1SecretListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::watch_core_v1_secret_list_for_all_namespaces`](./struct.Secret.html#method.watch_core_v1_secret_list_for_all_namespaces)
+/// Parses the HTTP response of [`Secret::watch_secret_list_for_all_namespaces`](./struct.Secret.html#method.watch_secret_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchCoreV1SecretListForAllNamespacesResponse {
+pub enum WatchSecretListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1SecretListForAllNamespacesResponse {
+impl crate::Response for WatchSecretListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1146,10 +1146,10 @@ impl crate::Response for WatchCoreV1SecretListForAllNamespacesResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1SecretListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchSecretListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1SecretListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1SecretListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchSecretListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchSecretListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

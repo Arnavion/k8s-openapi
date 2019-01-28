@@ -19,7 +19,7 @@ pub struct SelfSubjectAccessReview {
 impl SelfSubjectAccessReview {
     /// create a SelfSubjectAccessReview
     ///
-    /// Use [`CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse`](./enum.CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse.html) to parse the HTTP response.
+    /// Use [`CreateSelfSubjectAccessReviewResponse`](./enum.CreateSelfSubjectAccessReviewResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -28,11 +28,11 @@ impl SelfSubjectAccessReview {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_authorization_v1beta1_self_subject_access_review(
+    pub fn create_self_subject_access_review(
         body: &crate::v1_12::api::authorization::v1beta1::SelfSubjectAccessReview,
-        optional: CreateAuthorizationV1beta1SelfSubjectAccessReviewOptional<'_>,
+        optional: CreateSelfSubjectAccessReviewOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAuthorizationV1beta1SelfSubjectAccessReviewOptional {
+        let CreateSelfSubjectAccessReviewOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -56,9 +56,9 @@ impl SelfSubjectAccessReview {
     }
 }
 
-/// Optional parameters of [`SelfSubjectAccessReview::create_authorization_v1beta1_self_subject_access_review`](./struct.SelfSubjectAccessReview.html#method.create_authorization_v1beta1_self_subject_access_review)
+/// Optional parameters of [`SelfSubjectAccessReview::create_self_subject_access_review`](./struct.SelfSubjectAccessReview.html#method.create_self_subject_access_review)
 #[derive(Debug, Default)]
-pub struct CreateAuthorizationV1beta1SelfSubjectAccessReviewOptional<'a> {
+pub struct CreateSelfSubjectAccessReviewOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If IncludeUninitialized is specified, the object may be returned without completing initialization.
@@ -67,9 +67,9 @@ pub struct CreateAuthorizationV1beta1SelfSubjectAccessReviewOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`SelfSubjectAccessReview::create_authorization_v1beta1_self_subject_access_review`](./struct.SelfSubjectAccessReview.html#method.create_authorization_v1beta1_self_subject_access_review)
+/// Parses the HTTP response of [`SelfSubjectAccessReview::create_self_subject_access_review`](./struct.SelfSubjectAccessReview.html#method.create_self_subject_access_review)
 #[derive(Debug)]
-pub enum CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse {
+pub enum CreateSelfSubjectAccessReviewResponse {
     Ok(crate::v1_12::api::authorization::v1beta1::SelfSubjectAccessReview),
     Created(crate::v1_12::api::authorization::v1beta1::SelfSubjectAccessReview),
     Accepted(crate::v1_12::api::authorization::v1beta1::SelfSubjectAccessReview),
@@ -77,7 +77,7 @@ pub enum CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse {
     Other,
 }
 
-impl crate::Response for CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse {
+impl crate::Response for CreateSelfSubjectAccessReviewResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -86,7 +86,7 @@ impl crate::Response for CreateAuthorizationV1beta1SelfSubjectAccessReviewRespon
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse::Ok(result), buf.len()))
+                Ok((CreateSelfSubjectAccessReviewResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -94,7 +94,7 @@ impl crate::Response for CreateAuthorizationV1beta1SelfSubjectAccessReviewRespon
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse::Created(result), buf.len()))
+                Ok((CreateSelfSubjectAccessReviewResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -102,10 +102,10 @@ impl crate::Response for CreateAuthorizationV1beta1SelfSubjectAccessReviewRespon
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse::Accepted(result), buf.len()))
+                Ok((CreateSelfSubjectAccessReviewResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse::Unauthorized, 0)),
-            _ => Ok((CreateAuthorizationV1beta1SelfSubjectAccessReviewResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateSelfSubjectAccessReviewResponse::Unauthorized, 0)),
+            _ => Ok((CreateSelfSubjectAccessReviewResponse::Other, 0)),
         }
     }
 }

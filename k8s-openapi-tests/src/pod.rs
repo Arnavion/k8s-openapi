@@ -3,11 +3,11 @@ fn list() {
 	use k8s_openapi::api::core::v1 as api;
 
 	crate::Client::with("pod-list", |client| {
-		let request = api::Pod::list_core_v1_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
+		let request = api::Pod::list_namespaced_pod("kube-system", Default::default()).expect("couldn't list pods");
 		let response = client.execute(request).expect("couldn't list pods");;
 		let pod_list =
 			crate::get_single_value(response, |response, status_code, _| match response {
-				api::ListCoreV1NamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
+				api::ListNamespacedPodResponse::Ok(pod_list) => Ok(crate::ValueResult::GotValue(pod_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't list pods");
 

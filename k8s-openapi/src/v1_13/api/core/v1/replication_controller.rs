@@ -20,7 +20,7 @@ pub struct ReplicationController {
 impl ReplicationController {
     /// create a ReplicationController
     ///
-    /// Use [`CreateCoreV1NamespacedReplicationControllerResponse`](./enum.CreateCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedReplicationControllerResponse`](./enum.CreateNamespacedReplicationControllerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespaced_replication_controller(
+    pub fn create_namespaced_replication_controller(
         namespace: &str,
         body: &crate::v1_13::api::core::v1::ReplicationController,
-        optional: CreateCoreV1NamespacedReplicationControllerOptional<'_>,
+        optional: CreateNamespacedReplicationControllerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespacedReplicationControllerOptional {
+        let CreateNamespacedReplicationControllerOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -62,9 +62,9 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::create_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.create_core_v1_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::create_namespaced_replication_controller`](./struct.ReplicationController.html#method.create_namespaced_replication_controller)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespacedReplicationControllerOptional<'a> {
+pub struct CreateNamespacedReplicationControllerOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -73,9 +73,9 @@ pub struct CreateCoreV1NamespacedReplicationControllerOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::create_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.create_core_v1_namespaced_replication_controller)
+/// Parses the HTTP response of [`ReplicationController::create_namespaced_replication_controller`](./struct.ReplicationController.html#method.create_namespaced_replication_controller)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespacedReplicationControllerResponse {
+pub enum CreateNamespacedReplicationControllerResponse {
     Ok(crate::v1_13::api::core::v1::ReplicationController),
     Created(crate::v1_13::api::core::v1::ReplicationController),
     Accepted(crate::v1_13::api::core::v1::ReplicationController),
@@ -83,7 +83,7 @@ pub enum CreateCoreV1NamespacedReplicationControllerResponse {
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespacedReplicationControllerResponse {
+impl crate::Response for CreateNamespacedReplicationControllerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -92,7 +92,7 @@ impl crate::Response for CreateCoreV1NamespacedReplicationControllerResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedReplicationControllerResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedReplicationControllerResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -100,7 +100,7 @@ impl crate::Response for CreateCoreV1NamespacedReplicationControllerResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedReplicationControllerResponse::Created(result), buf.len()))
+                Ok((CreateNamespacedReplicationControllerResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -108,10 +108,10 @@ impl crate::Response for CreateCoreV1NamespacedReplicationControllerResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespacedReplicationControllerResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespacedReplicationControllerResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespacedReplicationControllerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedReplicationControllerResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedReplicationControllerResponse::Other, 0)),
         }
     }
 }
@@ -121,7 +121,7 @@ impl crate::Response for CreateCoreV1NamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// delete collection of ReplicationController
     ///
-    /// Use [`DeleteCoreV1CollectionNamespacedReplicationControllerResponse`](./enum.DeleteCoreV1CollectionNamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedReplicationControllerResponse`](./enum.DeleteCollectionNamespacedReplicationControllerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -132,11 +132,11 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_collection_namespaced_replication_controller(
+    pub fn delete_collection_namespaced_replication_controller(
         namespace: &str,
-        optional: DeleteCoreV1CollectionNamespacedReplicationControllerOptional<'_>,
+        optional: DeleteCollectionNamespacedReplicationControllerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1CollectionNamespacedReplicationControllerOptional {
+        let DeleteCollectionNamespacedReplicationControllerOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -184,9 +184,9 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::delete_core_v1_collection_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_core_v1_collection_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::delete_collection_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_collection_namespaced_replication_controller)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1CollectionNamespacedReplicationControllerOptional<'a> {
+pub struct DeleteCollectionNamespacedReplicationControllerOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -211,16 +211,16 @@ pub struct DeleteCoreV1CollectionNamespacedReplicationControllerOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::delete_core_v1_collection_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_core_v1_collection_namespaced_replication_controller)
+/// Parses the HTTP response of [`ReplicationController::delete_collection_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_collection_namespaced_replication_controller)
 #[derive(Debug)]
-pub enum DeleteCoreV1CollectionNamespacedReplicationControllerResponse {
+pub enum DeleteCollectionNamespacedReplicationControllerResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::core::v1::ReplicationController),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1CollectionNamespacedReplicationControllerResponse {
+impl crate::Response for DeleteCollectionNamespacedReplicationControllerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -236,16 +236,16 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedReplicationControllerRe
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedReplicationControllerResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedReplicationControllerResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1CollectionNamespacedReplicationControllerResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedReplicationControllerResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1CollectionNamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1CollectionNamespacedReplicationControllerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedReplicationControllerResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedReplicationControllerResponse::Other, 0)),
         }
     }
 }
@@ -255,7 +255,7 @@ impl crate::Response for DeleteCoreV1CollectionNamespacedReplicationControllerRe
 impl ReplicationController {
     /// delete a ReplicationController
     ///
-    /// Use [`DeleteCoreV1NamespacedReplicationControllerResponse`](./enum.DeleteCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedReplicationControllerResponse`](./enum.DeleteNamespacedReplicationControllerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -270,12 +270,12 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_namespaced_replication_controller(
+    pub fn delete_namespaced_replication_controller(
         name: &str,
         namespace: &str,
-        optional: DeleteCoreV1NamespacedReplicationControllerOptional<'_>,
+        optional: DeleteNamespacedReplicationControllerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NamespacedReplicationControllerOptional {
+        let DeleteNamespacedReplicationControllerOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -307,9 +307,9 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::delete_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_core_v1_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::delete_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_namespaced_replication_controller)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NamespacedReplicationControllerOptional<'a> {
+pub struct DeleteNamespacedReplicationControllerOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -322,9 +322,9 @@ pub struct DeleteCoreV1NamespacedReplicationControllerOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::delete_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_core_v1_namespaced_replication_controller)
+/// Parses the HTTP response of [`ReplicationController::delete_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_namespaced_replication_controller)
 #[derive(Debug)]
-pub enum DeleteCoreV1NamespacedReplicationControllerResponse {
+pub enum DeleteNamespacedReplicationControllerResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::core::v1::ReplicationController),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -332,7 +332,7 @@ pub enum DeleteCoreV1NamespacedReplicationControllerResponse {
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NamespacedReplicationControllerResponse {
+impl crate::Response for DeleteNamespacedReplicationControllerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -348,12 +348,12 @@ impl crate::Response for DeleteCoreV1NamespacedReplicationControllerResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedReplicationControllerResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedReplicationControllerResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespacedReplicationControllerResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedReplicationControllerResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -362,10 +362,10 @@ impl crate::Response for DeleteCoreV1NamespacedReplicationControllerResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteCoreV1NamespacedReplicationControllerResponse::Accepted(result), buf.len()))
+                Ok((DeleteNamespacedReplicationControllerResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NamespacedReplicationControllerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedReplicationControllerResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedReplicationControllerResponse::Other, 0)),
         }
     }
 }
@@ -375,7 +375,7 @@ impl crate::Response for DeleteCoreV1NamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// list or watch objects of kind ReplicationController
     ///
-    /// Use [`ListCoreV1NamespacedReplicationControllerResponse`](./enum.ListCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedReplicationControllerResponse`](./enum.ListNamespacedReplicationControllerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -386,11 +386,11 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_namespaced_replication_controller(
+    pub fn list_namespaced_replication_controller(
         namespace: &str,
-        optional: ListCoreV1NamespacedReplicationControllerOptional<'_>,
+        optional: ListNamespacedReplicationControllerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NamespacedReplicationControllerOptional {
+        let ListNamespacedReplicationControllerOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -438,9 +438,9 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::list_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.list_core_v1_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::list_namespaced_replication_controller`](./struct.ReplicationController.html#method.list_namespaced_replication_controller)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NamespacedReplicationControllerOptional<'a> {
+pub struct ListNamespacedReplicationControllerOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -465,15 +465,15 @@ pub struct ListCoreV1NamespacedReplicationControllerOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::list_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.list_core_v1_namespaced_replication_controller)
+/// Parses the HTTP response of [`ReplicationController::list_namespaced_replication_controller`](./struct.ReplicationController.html#method.list_namespaced_replication_controller)
 #[derive(Debug)]
-pub enum ListCoreV1NamespacedReplicationControllerResponse {
+pub enum ListNamespacedReplicationControllerResponse {
     Ok(crate::v1_13::api::core::v1::ReplicationControllerList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NamespacedReplicationControllerResponse {
+impl crate::Response for ListNamespacedReplicationControllerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -482,10 +482,10 @@ impl crate::Response for ListCoreV1NamespacedReplicationControllerResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NamespacedReplicationControllerResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedReplicationControllerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NamespacedReplicationControllerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedReplicationControllerResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedReplicationControllerResponse::Other, 0)),
         }
     }
 }
@@ -495,17 +495,17 @@ impl crate::Response for ListCoreV1NamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// list or watch objects of kind ReplicationController
     ///
-    /// Use [`ListCoreV1ReplicationControllerForAllNamespacesResponse`](./enum.ListCoreV1ReplicationControllerForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListReplicationControllerForAllNamespacesResponse`](./enum.ListReplicationControllerForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_replication_controller_for_all_namespaces(
-        optional: ListCoreV1ReplicationControllerForAllNamespacesOptional<'_>,
+    pub fn list_replication_controller_for_all_namespaces(
+        optional: ListReplicationControllerForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1ReplicationControllerForAllNamespacesOptional {
+        let ListReplicationControllerForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -553,9 +553,9 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::list_core_v1_replication_controller_for_all_namespaces`](./struct.ReplicationController.html#method.list_core_v1_replication_controller_for_all_namespaces)
+/// Optional parameters of [`ReplicationController::list_replication_controller_for_all_namespaces`](./struct.ReplicationController.html#method.list_replication_controller_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListCoreV1ReplicationControllerForAllNamespacesOptional<'a> {
+pub struct ListReplicationControllerForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -580,15 +580,15 @@ pub struct ListCoreV1ReplicationControllerForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::list_core_v1_replication_controller_for_all_namespaces`](./struct.ReplicationController.html#method.list_core_v1_replication_controller_for_all_namespaces)
+/// Parses the HTTP response of [`ReplicationController::list_replication_controller_for_all_namespaces`](./struct.ReplicationController.html#method.list_replication_controller_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListCoreV1ReplicationControllerForAllNamespacesResponse {
+pub enum ListReplicationControllerForAllNamespacesResponse {
     Ok(crate::v1_13::api::core::v1::ReplicationControllerList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1ReplicationControllerForAllNamespacesResponse {
+impl crate::Response for ListReplicationControllerForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -597,10 +597,10 @@ impl crate::Response for ListCoreV1ReplicationControllerForAllNamespacesResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1ReplicationControllerForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListReplicationControllerForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1ReplicationControllerForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1ReplicationControllerForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListReplicationControllerForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListReplicationControllerForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -610,7 +610,7 @@ impl crate::Response for ListCoreV1ReplicationControllerForAllNamespacesResponse
 impl ReplicationController {
     /// partially update the specified ReplicationController
     ///
-    /// Use [`PatchCoreV1NamespacedReplicationControllerResponse`](./enum.PatchCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedReplicationControllerResponse`](./enum.PatchNamespacedReplicationControllerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -627,13 +627,13 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_replication_controller(
+    pub fn patch_namespaced_replication_controller(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedReplicationControllerOptional<'_>,
+        optional: PatchNamespacedReplicationControllerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedReplicationControllerOptional {
+        let PatchNamespacedReplicationControllerOptional {
             dry_run,
             pretty,
         } = optional;
@@ -653,24 +653,24 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::patch_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.patch_core_v1_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::patch_namespaced_replication_controller`](./struct.ReplicationController.html#method.patch_namespaced_replication_controller)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedReplicationControllerOptional<'a> {
+pub struct PatchNamespacedReplicationControllerOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::patch_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.patch_core_v1_namespaced_replication_controller)
+/// Parses the HTTP response of [`ReplicationController::patch_namespaced_replication_controller`](./struct.ReplicationController.html#method.patch_namespaced_replication_controller)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedReplicationControllerResponse {
+pub enum PatchNamespacedReplicationControllerResponse {
     Ok(crate::v1_13::api::core::v1::ReplicationController),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedReplicationControllerResponse {
+impl crate::Response for PatchNamespacedReplicationControllerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -679,10 +679,10 @@ impl crate::Response for PatchCoreV1NamespacedReplicationControllerResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedReplicationControllerResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedReplicationControllerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedReplicationControllerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedReplicationControllerResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedReplicationControllerResponse::Other, 0)),
         }
     }
 }
@@ -692,7 +692,7 @@ impl crate::Response for PatchCoreV1NamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// partially update status of the specified ReplicationController
     ///
-    /// Use [`PatchCoreV1NamespacedReplicationControllerStatusResponse`](./enum.PatchCoreV1NamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedReplicationControllerStatusResponse`](./enum.PatchNamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -709,13 +709,13 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespaced_replication_controller_status(
+    pub fn patch_namespaced_replication_controller_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespacedReplicationControllerStatusOptional<'_>,
+        optional: PatchNamespacedReplicationControllerStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespacedReplicationControllerStatusOptional {
+        let PatchNamespacedReplicationControllerStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -735,24 +735,24 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::patch_core_v1_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.patch_core_v1_namespaced_replication_controller_status)
+/// Optional parameters of [`ReplicationController::patch_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.patch_namespaced_replication_controller_status)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespacedReplicationControllerStatusOptional<'a> {
+pub struct PatchNamespacedReplicationControllerStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::patch_core_v1_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.patch_core_v1_namespaced_replication_controller_status)
+/// Parses the HTTP response of [`ReplicationController::patch_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.patch_namespaced_replication_controller_status)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespacedReplicationControllerStatusResponse {
+pub enum PatchNamespacedReplicationControllerStatusResponse {
     Ok(crate::v1_13::api::core::v1::ReplicationController),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespacedReplicationControllerStatusResponse {
+impl crate::Response for PatchNamespacedReplicationControllerStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -761,10 +761,10 @@ impl crate::Response for PatchCoreV1NamespacedReplicationControllerStatusRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespacedReplicationControllerStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedReplicationControllerStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespacedReplicationControllerStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespacedReplicationControllerStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedReplicationControllerStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedReplicationControllerStatusResponse::Other, 0)),
         }
     }
 }
@@ -774,7 +774,7 @@ impl crate::Response for PatchCoreV1NamespacedReplicationControllerStatusRespons
 impl ReplicationController {
     /// read the specified ReplicationController
     ///
-    /// Use [`ReadCoreV1NamespacedReplicationControllerResponse`](./enum.ReadCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedReplicationControllerResponse`](./enum.ReadNamespacedReplicationControllerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -789,12 +789,12 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_replication_controller(
+    pub fn read_namespaced_replication_controller(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedReplicationControllerOptional<'_>,
+        optional: ReadNamespacedReplicationControllerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedReplicationControllerOptional {
+        let ReadNamespacedReplicationControllerOptional {
             exact,
             export,
             pretty,
@@ -818,9 +818,9 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::read_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.read_core_v1_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::read_namespaced_replication_controller`](./struct.ReplicationController.html#method.read_namespaced_replication_controller)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedReplicationControllerOptional<'a> {
+pub struct ReadNamespacedReplicationControllerOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -829,15 +829,15 @@ pub struct ReadCoreV1NamespacedReplicationControllerOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::read_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.read_core_v1_namespaced_replication_controller)
+/// Parses the HTTP response of [`ReplicationController::read_namespaced_replication_controller`](./struct.ReplicationController.html#method.read_namespaced_replication_controller)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedReplicationControllerResponse {
+pub enum ReadNamespacedReplicationControllerResponse {
     Ok(crate::v1_13::api::core::v1::ReplicationController),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedReplicationControllerResponse {
+impl crate::Response for ReadNamespacedReplicationControllerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -846,10 +846,10 @@ impl crate::Response for ReadCoreV1NamespacedReplicationControllerResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedReplicationControllerResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedReplicationControllerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedReplicationControllerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedReplicationControllerResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedReplicationControllerResponse::Other, 0)),
         }
     }
 }
@@ -859,7 +859,7 @@ impl crate::Response for ReadCoreV1NamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// read status of the specified ReplicationController
     ///
-    /// Use [`ReadCoreV1NamespacedReplicationControllerStatusResponse`](./enum.ReadCoreV1NamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedReplicationControllerStatusResponse`](./enum.ReadNamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -874,12 +874,12 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespaced_replication_controller_status(
+    pub fn read_namespaced_replication_controller_status(
         name: &str,
         namespace: &str,
-        optional: ReadCoreV1NamespacedReplicationControllerStatusOptional<'_>,
+        optional: ReadNamespacedReplicationControllerStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespacedReplicationControllerStatusOptional {
+        let ReadNamespacedReplicationControllerStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/status?", name = name, namespace = namespace);
@@ -895,22 +895,22 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::read_core_v1_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.read_core_v1_namespaced_replication_controller_status)
+/// Optional parameters of [`ReplicationController::read_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.read_namespaced_replication_controller_status)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespacedReplicationControllerStatusOptional<'a> {
+pub struct ReadNamespacedReplicationControllerStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::read_core_v1_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.read_core_v1_namespaced_replication_controller_status)
+/// Parses the HTTP response of [`ReplicationController::read_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.read_namespaced_replication_controller_status)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespacedReplicationControllerStatusResponse {
+pub enum ReadNamespacedReplicationControllerStatusResponse {
     Ok(crate::v1_13::api::core::v1::ReplicationController),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespacedReplicationControllerStatusResponse {
+impl crate::Response for ReadNamespacedReplicationControllerStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -919,10 +919,10 @@ impl crate::Response for ReadCoreV1NamespacedReplicationControllerStatusResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespacedReplicationControllerStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedReplicationControllerStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespacedReplicationControllerStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespacedReplicationControllerStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedReplicationControllerStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedReplicationControllerStatusResponse::Other, 0)),
         }
     }
 }
@@ -932,7 +932,7 @@ impl crate::Response for ReadCoreV1NamespacedReplicationControllerStatusResponse
 impl ReplicationController {
     /// replace the specified ReplicationController
     ///
-    /// Use [`ReplaceCoreV1NamespacedReplicationControllerResponse`](./enum.ReplaceCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedReplicationControllerResponse`](./enum.ReplaceNamespacedReplicationControllerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -949,13 +949,13 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_replication_controller(
+    pub fn replace_namespaced_replication_controller(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::core::v1::ReplicationController,
-        optional: ReplaceCoreV1NamespacedReplicationControllerOptional<'_>,
+        optional: ReplaceNamespacedReplicationControllerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedReplicationControllerOptional {
+        let ReplaceNamespacedReplicationControllerOptional {
             dry_run,
             pretty,
         } = optional;
@@ -975,25 +975,25 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::replace_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.replace_core_v1_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::replace_namespaced_replication_controller`](./struct.ReplicationController.html#method.replace_namespaced_replication_controller)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedReplicationControllerOptional<'a> {
+pub struct ReplaceNamespacedReplicationControllerOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::replace_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.replace_core_v1_namespaced_replication_controller)
+/// Parses the HTTP response of [`ReplicationController::replace_namespaced_replication_controller`](./struct.ReplicationController.html#method.replace_namespaced_replication_controller)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedReplicationControllerResponse {
+pub enum ReplaceNamespacedReplicationControllerResponse {
     Ok(crate::v1_13::api::core::v1::ReplicationController),
     Created(crate::v1_13::api::core::v1::ReplicationController),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedReplicationControllerResponse {
+impl crate::Response for ReplaceNamespacedReplicationControllerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1002,7 +1002,7 @@ impl crate::Response for ReplaceCoreV1NamespacedReplicationControllerResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedReplicationControllerResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedReplicationControllerResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1010,10 +1010,10 @@ impl crate::Response for ReplaceCoreV1NamespacedReplicationControllerResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedReplicationControllerResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedReplicationControllerResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedReplicationControllerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedReplicationControllerResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedReplicationControllerResponse::Other, 0)),
         }
     }
 }
@@ -1023,7 +1023,7 @@ impl crate::Response for ReplaceCoreV1NamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// replace status of the specified ReplicationController
     ///
-    /// Use [`ReplaceCoreV1NamespacedReplicationControllerStatusResponse`](./enum.ReplaceCoreV1NamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedReplicationControllerStatusResponse`](./enum.ReplaceNamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1040,13 +1040,13 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespaced_replication_controller_status(
+    pub fn replace_namespaced_replication_controller_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_13::api::core::v1::ReplicationController,
-        optional: ReplaceCoreV1NamespacedReplicationControllerStatusOptional<'_>,
+        optional: ReplaceNamespacedReplicationControllerStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespacedReplicationControllerStatusOptional {
+        let ReplaceNamespacedReplicationControllerStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -1066,25 +1066,25 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::replace_core_v1_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.replace_core_v1_namespaced_replication_controller_status)
+/// Optional parameters of [`ReplicationController::replace_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.replace_namespaced_replication_controller_status)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespacedReplicationControllerStatusOptional<'a> {
+pub struct ReplaceNamespacedReplicationControllerStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::replace_core_v1_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.replace_core_v1_namespaced_replication_controller_status)
+/// Parses the HTTP response of [`ReplicationController::replace_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.replace_namespaced_replication_controller_status)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespacedReplicationControllerStatusResponse {
+pub enum ReplaceNamespacedReplicationControllerStatusResponse {
     Ok(crate::v1_13::api::core::v1::ReplicationController),
     Created(crate::v1_13::api::core::v1::ReplicationController),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespacedReplicationControllerStatusResponse {
+impl crate::Response for ReplaceNamespacedReplicationControllerStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1093,7 +1093,7 @@ impl crate::Response for ReplaceCoreV1NamespacedReplicationControllerStatusRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedReplicationControllerStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedReplicationControllerStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -1101,10 +1101,10 @@ impl crate::Response for ReplaceCoreV1NamespacedReplicationControllerStatusRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespacedReplicationControllerStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespacedReplicationControllerStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespacedReplicationControllerStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespacedReplicationControllerStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedReplicationControllerStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedReplicationControllerStatusResponse::Other, 0)),
         }
     }
 }
@@ -1114,7 +1114,7 @@ impl crate::Response for ReplaceCoreV1NamespacedReplicationControllerStatusRespo
 impl ReplicationController {
     /// watch changes to an object of kind ReplicationController. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchCoreV1NamespacedReplicationControllerResponse`](./enum.WatchCoreV1NamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedReplicationControllerResponse`](./enum.WatchNamespacedReplicationControllerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1129,12 +1129,12 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_replication_controller(
+    pub fn watch_namespaced_replication_controller(
         name: &str,
         namespace: &str,
-        optional: WatchCoreV1NamespacedReplicationControllerOptional<'_>,
+        optional: WatchNamespacedReplicationControllerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedReplicationControllerOptional {
+        let WatchNamespacedReplicationControllerOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1182,9 +1182,9 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::watch_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.watch_core_v1_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::watch_namespaced_replication_controller`](./struct.ReplicationController.html#method.watch_namespaced_replication_controller)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedReplicationControllerOptional<'a> {
+pub struct WatchNamespacedReplicationControllerOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1209,15 +1209,15 @@ pub struct WatchCoreV1NamespacedReplicationControllerOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::watch_core_v1_namespaced_replication_controller`](./struct.ReplicationController.html#method.watch_core_v1_namespaced_replication_controller)
+/// Parses the HTTP response of [`ReplicationController::watch_namespaced_replication_controller`](./struct.ReplicationController.html#method.watch_namespaced_replication_controller)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedReplicationControllerResponse {
+pub enum WatchNamespacedReplicationControllerResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedReplicationControllerResponse {
+impl crate::Response for WatchNamespacedReplicationControllerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1228,10 +1228,10 @@ impl crate::Response for WatchCoreV1NamespacedReplicationControllerResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedReplicationControllerResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedReplicationControllerResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedReplicationControllerResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedReplicationControllerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedReplicationControllerResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedReplicationControllerResponse::Other, 0)),
         }
     }
 }
@@ -1241,7 +1241,7 @@ impl crate::Response for WatchCoreV1NamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// watch individual changes to a list of ReplicationController. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchCoreV1NamespacedReplicationControllerListResponse`](./enum.WatchCoreV1NamespacedReplicationControllerListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedReplicationControllerListResponse`](./enum.WatchNamespacedReplicationControllerListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1252,11 +1252,11 @@ impl ReplicationController {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespaced_replication_controller_list(
+    pub fn watch_namespaced_replication_controller_list(
         namespace: &str,
-        optional: WatchCoreV1NamespacedReplicationControllerListOptional<'_>,
+        optional: WatchNamespacedReplicationControllerListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespacedReplicationControllerListOptional {
+        let WatchNamespacedReplicationControllerListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1304,9 +1304,9 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::watch_core_v1_namespaced_replication_controller_list`](./struct.ReplicationController.html#method.watch_core_v1_namespaced_replication_controller_list)
+/// Optional parameters of [`ReplicationController::watch_namespaced_replication_controller_list`](./struct.ReplicationController.html#method.watch_namespaced_replication_controller_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespacedReplicationControllerListOptional<'a> {
+pub struct WatchNamespacedReplicationControllerListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1331,15 +1331,15 @@ pub struct WatchCoreV1NamespacedReplicationControllerListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::watch_core_v1_namespaced_replication_controller_list`](./struct.ReplicationController.html#method.watch_core_v1_namespaced_replication_controller_list)
+/// Parses the HTTP response of [`ReplicationController::watch_namespaced_replication_controller_list`](./struct.ReplicationController.html#method.watch_namespaced_replication_controller_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespacedReplicationControllerListResponse {
+pub enum WatchNamespacedReplicationControllerListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespacedReplicationControllerListResponse {
+impl crate::Response for WatchNamespacedReplicationControllerListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1350,10 +1350,10 @@ impl crate::Response for WatchCoreV1NamespacedReplicationControllerListResponse 
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespacedReplicationControllerListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedReplicationControllerListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespacedReplicationControllerListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespacedReplicationControllerListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedReplicationControllerListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedReplicationControllerListResponse::Other, 0)),
         }
     }
 }
@@ -1363,17 +1363,17 @@ impl crate::Response for WatchCoreV1NamespacedReplicationControllerListResponse 
 impl ReplicationController {
     /// watch individual changes to a list of ReplicationController. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchCoreV1ReplicationControllerListForAllNamespacesResponse`](./enum.WatchCoreV1ReplicationControllerListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchReplicationControllerListForAllNamespacesResponse`](./enum.WatchReplicationControllerListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_replication_controller_list_for_all_namespaces(
-        optional: WatchCoreV1ReplicationControllerListForAllNamespacesOptional<'_>,
+    pub fn watch_replication_controller_list_for_all_namespaces(
+        optional: WatchReplicationControllerListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1ReplicationControllerListForAllNamespacesOptional {
+        let WatchReplicationControllerListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1421,9 +1421,9 @@ impl ReplicationController {
     }
 }
 
-/// Optional parameters of [`ReplicationController::watch_core_v1_replication_controller_list_for_all_namespaces`](./struct.ReplicationController.html#method.watch_core_v1_replication_controller_list_for_all_namespaces)
+/// Optional parameters of [`ReplicationController::watch_replication_controller_list_for_all_namespaces`](./struct.ReplicationController.html#method.watch_replication_controller_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1ReplicationControllerListForAllNamespacesOptional<'a> {
+pub struct WatchReplicationControllerListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1448,15 +1448,15 @@ pub struct WatchCoreV1ReplicationControllerListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::watch_core_v1_replication_controller_list_for_all_namespaces`](./struct.ReplicationController.html#method.watch_core_v1_replication_controller_list_for_all_namespaces)
+/// Parses the HTTP response of [`ReplicationController::watch_replication_controller_list_for_all_namespaces`](./struct.ReplicationController.html#method.watch_replication_controller_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchCoreV1ReplicationControllerListForAllNamespacesResponse {
+pub enum WatchReplicationControllerListForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1ReplicationControllerListForAllNamespacesResponse {
+impl crate::Response for WatchReplicationControllerListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1467,10 +1467,10 @@ impl crate::Response for WatchCoreV1ReplicationControllerListForAllNamespacesRes
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1ReplicationControllerListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchReplicationControllerListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1ReplicationControllerListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1ReplicationControllerListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchReplicationControllerListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchReplicationControllerListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

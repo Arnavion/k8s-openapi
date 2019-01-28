@@ -22,7 +22,7 @@ pub struct VolumeAttachment {
 impl VolumeAttachment {
     /// create a VolumeAttachment
     ///
-    /// Use [`CreateStorageV1VolumeAttachmentResponse`](./enum.CreateStorageV1VolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use [`CreateVolumeAttachmentResponse`](./enum.CreateVolumeAttachmentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,11 +31,11 @@ impl VolumeAttachment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_storage_v1_volume_attachment(
+    pub fn create_volume_attachment(
         body: &crate::v1_13::api::storage::v1::VolumeAttachment,
-        optional: CreateStorageV1VolumeAttachmentOptional<'_>,
+        optional: CreateVolumeAttachmentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateStorageV1VolumeAttachmentOptional {
+        let CreateVolumeAttachmentOptional {
             dry_run,
             include_uninitialized,
             pretty,
@@ -59,9 +59,9 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::create_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.create_storage_v1_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::create_volume_attachment`](./struct.VolumeAttachment.html#method.create_volume_attachment)
 #[derive(Debug, Default)]
-pub struct CreateStorageV1VolumeAttachmentOptional<'a> {
+pub struct CreateVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -70,9 +70,9 @@ pub struct CreateStorageV1VolumeAttachmentOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::create_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.create_storage_v1_volume_attachment)
+/// Parses the HTTP response of [`VolumeAttachment::create_volume_attachment`](./struct.VolumeAttachment.html#method.create_volume_attachment)
 #[derive(Debug)]
-pub enum CreateStorageV1VolumeAttachmentResponse {
+pub enum CreateVolumeAttachmentResponse {
     Ok(crate::v1_13::api::storage::v1::VolumeAttachment),
     Created(crate::v1_13::api::storage::v1::VolumeAttachment),
     Accepted(crate::v1_13::api::storage::v1::VolumeAttachment),
@@ -80,7 +80,7 @@ pub enum CreateStorageV1VolumeAttachmentResponse {
     Other,
 }
 
-impl crate::Response for CreateStorageV1VolumeAttachmentResponse {
+impl crate::Response for CreateVolumeAttachmentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -89,7 +89,7 @@ impl crate::Response for CreateStorageV1VolumeAttachmentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateStorageV1VolumeAttachmentResponse::Ok(result), buf.len()))
+                Ok((CreateVolumeAttachmentResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -97,7 +97,7 @@ impl crate::Response for CreateStorageV1VolumeAttachmentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateStorageV1VolumeAttachmentResponse::Created(result), buf.len()))
+                Ok((CreateVolumeAttachmentResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -105,10 +105,10 @@ impl crate::Response for CreateStorageV1VolumeAttachmentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateStorageV1VolumeAttachmentResponse::Accepted(result), buf.len()))
+                Ok((CreateVolumeAttachmentResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateStorageV1VolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((CreateStorageV1VolumeAttachmentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateVolumeAttachmentResponse::Unauthorized, 0)),
+            _ => Ok((CreateVolumeAttachmentResponse::Other, 0)),
         }
     }
 }
@@ -118,17 +118,17 @@ impl crate::Response for CreateStorageV1VolumeAttachmentResponse {
 impl VolumeAttachment {
     /// delete collection of VolumeAttachment
     ///
-    /// Use [`DeleteStorageV1CollectionVolumeAttachmentResponse`](./enum.DeleteStorageV1CollectionVolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionVolumeAttachmentResponse`](./enum.DeleteCollectionVolumeAttachmentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_storage_v1_collection_volume_attachment(
-        optional: DeleteStorageV1CollectionVolumeAttachmentOptional<'_>,
+    pub fn delete_collection_volume_attachment(
+        optional: DeleteCollectionVolumeAttachmentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteStorageV1CollectionVolumeAttachmentOptional {
+        let DeleteCollectionVolumeAttachmentOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -176,9 +176,9 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::delete_storage_v1_collection_volume_attachment`](./struct.VolumeAttachment.html#method.delete_storage_v1_collection_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::delete_collection_volume_attachment`](./struct.VolumeAttachment.html#method.delete_collection_volume_attachment)
 #[derive(Debug, Default)]
-pub struct DeleteStorageV1CollectionVolumeAttachmentOptional<'a> {
+pub struct DeleteCollectionVolumeAttachmentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -203,16 +203,16 @@ pub struct DeleteStorageV1CollectionVolumeAttachmentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::delete_storage_v1_collection_volume_attachment`](./struct.VolumeAttachment.html#method.delete_storage_v1_collection_volume_attachment)
+/// Parses the HTTP response of [`VolumeAttachment::delete_collection_volume_attachment`](./struct.VolumeAttachment.html#method.delete_collection_volume_attachment)
 #[derive(Debug)]
-pub enum DeleteStorageV1CollectionVolumeAttachmentResponse {
+pub enum DeleteCollectionVolumeAttachmentResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::storage::v1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteStorageV1CollectionVolumeAttachmentResponse {
+impl crate::Response for DeleteCollectionVolumeAttachmentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -228,16 +228,16 @@ impl crate::Response for DeleteStorageV1CollectionVolumeAttachmentResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteStorageV1CollectionVolumeAttachmentResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionVolumeAttachmentResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteStorageV1CollectionVolumeAttachmentResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionVolumeAttachmentResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1CollectionVolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((DeleteStorageV1CollectionVolumeAttachmentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionVolumeAttachmentResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionVolumeAttachmentResponse::Other, 0)),
         }
     }
 }
@@ -247,7 +247,7 @@ impl crate::Response for DeleteStorageV1CollectionVolumeAttachmentResponse {
 impl VolumeAttachment {
     /// delete a VolumeAttachment
     ///
-    /// Use [`DeleteStorageV1VolumeAttachmentResponse`](./enum.DeleteStorageV1VolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use [`DeleteVolumeAttachmentResponse`](./enum.DeleteVolumeAttachmentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -258,11 +258,11 @@ impl VolumeAttachment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_storage_v1_volume_attachment(
+    pub fn delete_volume_attachment(
         name: &str,
-        optional: DeleteStorageV1VolumeAttachmentOptional<'_>,
+        optional: DeleteVolumeAttachmentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteStorageV1VolumeAttachmentOptional {
+        let DeleteVolumeAttachmentOptional {
             dry_run,
             grace_period_seconds,
             orphan_dependents,
@@ -294,9 +294,9 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::delete_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.delete_storage_v1_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::delete_volume_attachment`](./struct.VolumeAttachment.html#method.delete_volume_attachment)
 #[derive(Debug, Default)]
-pub struct DeleteStorageV1VolumeAttachmentOptional<'a> {
+pub struct DeleteVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -309,9 +309,9 @@ pub struct DeleteStorageV1VolumeAttachmentOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::delete_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.delete_storage_v1_volume_attachment)
+/// Parses the HTTP response of [`VolumeAttachment::delete_volume_attachment`](./struct.VolumeAttachment.html#method.delete_volume_attachment)
 #[derive(Debug)]
-pub enum DeleteStorageV1VolumeAttachmentResponse {
+pub enum DeleteVolumeAttachmentResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_13::api::storage::v1::VolumeAttachment),
     Accepted(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -319,7 +319,7 @@ pub enum DeleteStorageV1VolumeAttachmentResponse {
     Other,
 }
 
-impl crate::Response for DeleteStorageV1VolumeAttachmentResponse {
+impl crate::Response for DeleteVolumeAttachmentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -335,12 +335,12 @@ impl crate::Response for DeleteStorageV1VolumeAttachmentResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteStorageV1VolumeAttachmentResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteVolumeAttachmentResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteStorageV1VolumeAttachmentResponse::OkValue(result), buf.len()))
+                    Ok((DeleteVolumeAttachmentResponse::OkValue(result), buf.len()))
                 }
             },
             http::StatusCode::ACCEPTED => {
@@ -349,10 +349,10 @@ impl crate::Response for DeleteStorageV1VolumeAttachmentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((DeleteStorageV1VolumeAttachmentResponse::Accepted(result), buf.len()))
+                Ok((DeleteVolumeAttachmentResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteStorageV1VolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((DeleteStorageV1VolumeAttachmentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteVolumeAttachmentResponse::Unauthorized, 0)),
+            _ => Ok((DeleteVolumeAttachmentResponse::Other, 0)),
         }
     }
 }
@@ -362,17 +362,17 @@ impl crate::Response for DeleteStorageV1VolumeAttachmentResponse {
 impl VolumeAttachment {
     /// list or watch objects of kind VolumeAttachment
     ///
-    /// Use [`ListStorageV1VolumeAttachmentResponse`](./enum.ListStorageV1VolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use [`ListVolumeAttachmentResponse`](./enum.ListVolumeAttachmentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_storage_v1_volume_attachment(
-        optional: ListStorageV1VolumeAttachmentOptional<'_>,
+    pub fn list_volume_attachment(
+        optional: ListVolumeAttachmentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListStorageV1VolumeAttachmentOptional {
+        let ListVolumeAttachmentOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -420,9 +420,9 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::list_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.list_storage_v1_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::list_volume_attachment`](./struct.VolumeAttachment.html#method.list_volume_attachment)
 #[derive(Debug, Default)]
-pub struct ListStorageV1VolumeAttachmentOptional<'a> {
+pub struct ListVolumeAttachmentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -447,15 +447,15 @@ pub struct ListStorageV1VolumeAttachmentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::list_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.list_storage_v1_volume_attachment)
+/// Parses the HTTP response of [`VolumeAttachment::list_volume_attachment`](./struct.VolumeAttachment.html#method.list_volume_attachment)
 #[derive(Debug)]
-pub enum ListStorageV1VolumeAttachmentResponse {
+pub enum ListVolumeAttachmentResponse {
     Ok(crate::v1_13::api::storage::v1::VolumeAttachmentList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListStorageV1VolumeAttachmentResponse {
+impl crate::Response for ListVolumeAttachmentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -464,10 +464,10 @@ impl crate::Response for ListStorageV1VolumeAttachmentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListStorageV1VolumeAttachmentResponse::Ok(result), buf.len()))
+                Ok((ListVolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListStorageV1VolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((ListStorageV1VolumeAttachmentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListVolumeAttachmentResponse::Unauthorized, 0)),
+            _ => Ok((ListVolumeAttachmentResponse::Other, 0)),
         }
     }
 }
@@ -477,7 +477,7 @@ impl crate::Response for ListStorageV1VolumeAttachmentResponse {
 impl VolumeAttachment {
     /// partially update the specified VolumeAttachment
     ///
-    /// Use [`PatchStorageV1VolumeAttachmentResponse`](./enum.PatchStorageV1VolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use [`PatchVolumeAttachmentResponse`](./enum.PatchVolumeAttachmentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -490,12 +490,12 @@ impl VolumeAttachment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_storage_v1_volume_attachment(
+    pub fn patch_volume_attachment(
         name: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchStorageV1VolumeAttachmentOptional<'_>,
+        optional: PatchVolumeAttachmentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchStorageV1VolumeAttachmentOptional {
+        let PatchVolumeAttachmentOptional {
             dry_run,
             pretty,
         } = optional;
@@ -515,24 +515,24 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::patch_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.patch_storage_v1_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::patch_volume_attachment`](./struct.VolumeAttachment.html#method.patch_volume_attachment)
 #[derive(Debug, Default)]
-pub struct PatchStorageV1VolumeAttachmentOptional<'a> {
+pub struct PatchVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::patch_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.patch_storage_v1_volume_attachment)
+/// Parses the HTTP response of [`VolumeAttachment::patch_volume_attachment`](./struct.VolumeAttachment.html#method.patch_volume_attachment)
 #[derive(Debug)]
-pub enum PatchStorageV1VolumeAttachmentResponse {
+pub enum PatchVolumeAttachmentResponse {
     Ok(crate::v1_13::api::storage::v1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchStorageV1VolumeAttachmentResponse {
+impl crate::Response for PatchVolumeAttachmentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -541,10 +541,10 @@ impl crate::Response for PatchStorageV1VolumeAttachmentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchStorageV1VolumeAttachmentResponse::Ok(result), buf.len()))
+                Ok((PatchVolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchStorageV1VolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((PatchStorageV1VolumeAttachmentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchVolumeAttachmentResponse::Unauthorized, 0)),
+            _ => Ok((PatchVolumeAttachmentResponse::Other, 0)),
         }
     }
 }
@@ -554,7 +554,7 @@ impl crate::Response for PatchStorageV1VolumeAttachmentResponse {
 impl VolumeAttachment {
     /// partially update status of the specified VolumeAttachment
     ///
-    /// Use [`PatchStorageV1VolumeAttachmentStatusResponse`](./enum.PatchStorageV1VolumeAttachmentStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchVolumeAttachmentStatusResponse`](./enum.PatchVolumeAttachmentStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -567,12 +567,12 @@ impl VolumeAttachment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_storage_v1_volume_attachment_status(
+    pub fn patch_volume_attachment_status(
         name: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchStorageV1VolumeAttachmentStatusOptional<'_>,
+        optional: PatchVolumeAttachmentStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchStorageV1VolumeAttachmentStatusOptional {
+        let PatchVolumeAttachmentStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -592,24 +592,24 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::patch_storage_v1_volume_attachment_status`](./struct.VolumeAttachment.html#method.patch_storage_v1_volume_attachment_status)
+/// Optional parameters of [`VolumeAttachment::patch_volume_attachment_status`](./struct.VolumeAttachment.html#method.patch_volume_attachment_status)
 #[derive(Debug, Default)]
-pub struct PatchStorageV1VolumeAttachmentStatusOptional<'a> {
+pub struct PatchVolumeAttachmentStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::patch_storage_v1_volume_attachment_status`](./struct.VolumeAttachment.html#method.patch_storage_v1_volume_attachment_status)
+/// Parses the HTTP response of [`VolumeAttachment::patch_volume_attachment_status`](./struct.VolumeAttachment.html#method.patch_volume_attachment_status)
 #[derive(Debug)]
-pub enum PatchStorageV1VolumeAttachmentStatusResponse {
+pub enum PatchVolumeAttachmentStatusResponse {
     Ok(crate::v1_13::api::storage::v1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchStorageV1VolumeAttachmentStatusResponse {
+impl crate::Response for PatchVolumeAttachmentStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -618,10 +618,10 @@ impl crate::Response for PatchStorageV1VolumeAttachmentStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchStorageV1VolumeAttachmentStatusResponse::Ok(result), buf.len()))
+                Ok((PatchVolumeAttachmentStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchStorageV1VolumeAttachmentStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchStorageV1VolumeAttachmentStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchVolumeAttachmentStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchVolumeAttachmentStatusResponse::Other, 0)),
         }
     }
 }
@@ -631,7 +631,7 @@ impl crate::Response for PatchStorageV1VolumeAttachmentStatusResponse {
 impl VolumeAttachment {
     /// read the specified VolumeAttachment
     ///
-    /// Use [`ReadStorageV1VolumeAttachmentResponse`](./enum.ReadStorageV1VolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use [`ReadVolumeAttachmentResponse`](./enum.ReadVolumeAttachmentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -642,11 +642,11 @@ impl VolumeAttachment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_storage_v1_volume_attachment(
+    pub fn read_volume_attachment(
         name: &str,
-        optional: ReadStorageV1VolumeAttachmentOptional<'_>,
+        optional: ReadVolumeAttachmentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadStorageV1VolumeAttachmentOptional {
+        let ReadVolumeAttachmentOptional {
             exact,
             export,
             pretty,
@@ -670,9 +670,9 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::read_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.read_storage_v1_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::read_volume_attachment`](./struct.VolumeAttachment.html#method.read_volume_attachment)
 #[derive(Debug, Default)]
-pub struct ReadStorageV1VolumeAttachmentOptional<'a> {
+pub struct ReadVolumeAttachmentOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -681,15 +681,15 @@ pub struct ReadStorageV1VolumeAttachmentOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::read_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.read_storage_v1_volume_attachment)
+/// Parses the HTTP response of [`VolumeAttachment::read_volume_attachment`](./struct.VolumeAttachment.html#method.read_volume_attachment)
 #[derive(Debug)]
-pub enum ReadStorageV1VolumeAttachmentResponse {
+pub enum ReadVolumeAttachmentResponse {
     Ok(crate::v1_13::api::storage::v1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadStorageV1VolumeAttachmentResponse {
+impl crate::Response for ReadVolumeAttachmentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -698,10 +698,10 @@ impl crate::Response for ReadStorageV1VolumeAttachmentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadStorageV1VolumeAttachmentResponse::Ok(result), buf.len()))
+                Ok((ReadVolumeAttachmentResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadStorageV1VolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((ReadStorageV1VolumeAttachmentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadVolumeAttachmentResponse::Unauthorized, 0)),
+            _ => Ok((ReadVolumeAttachmentResponse::Other, 0)),
         }
     }
 }
@@ -711,7 +711,7 @@ impl crate::Response for ReadStorageV1VolumeAttachmentResponse {
 impl VolumeAttachment {
     /// read status of the specified VolumeAttachment
     ///
-    /// Use [`ReadStorageV1VolumeAttachmentStatusResponse`](./enum.ReadStorageV1VolumeAttachmentStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadVolumeAttachmentStatusResponse`](./enum.ReadVolumeAttachmentStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -722,11 +722,11 @@ impl VolumeAttachment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_storage_v1_volume_attachment_status(
+    pub fn read_volume_attachment_status(
         name: &str,
-        optional: ReadStorageV1VolumeAttachmentStatusOptional<'_>,
+        optional: ReadVolumeAttachmentStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadStorageV1VolumeAttachmentStatusOptional {
+        let ReadVolumeAttachmentStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/storage.k8s.io/v1/volumeattachments/{name}/status?", name = name);
@@ -742,22 +742,22 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::read_storage_v1_volume_attachment_status`](./struct.VolumeAttachment.html#method.read_storage_v1_volume_attachment_status)
+/// Optional parameters of [`VolumeAttachment::read_volume_attachment_status`](./struct.VolumeAttachment.html#method.read_volume_attachment_status)
 #[derive(Debug, Default)]
-pub struct ReadStorageV1VolumeAttachmentStatusOptional<'a> {
+pub struct ReadVolumeAttachmentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::read_storage_v1_volume_attachment_status`](./struct.VolumeAttachment.html#method.read_storage_v1_volume_attachment_status)
+/// Parses the HTTP response of [`VolumeAttachment::read_volume_attachment_status`](./struct.VolumeAttachment.html#method.read_volume_attachment_status)
 #[derive(Debug)]
-pub enum ReadStorageV1VolumeAttachmentStatusResponse {
+pub enum ReadVolumeAttachmentStatusResponse {
     Ok(crate::v1_13::api::storage::v1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadStorageV1VolumeAttachmentStatusResponse {
+impl crate::Response for ReadVolumeAttachmentStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -766,10 +766,10 @@ impl crate::Response for ReadStorageV1VolumeAttachmentStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadStorageV1VolumeAttachmentStatusResponse::Ok(result), buf.len()))
+                Ok((ReadVolumeAttachmentStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadStorageV1VolumeAttachmentStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadStorageV1VolumeAttachmentStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadVolumeAttachmentStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadVolumeAttachmentStatusResponse::Other, 0)),
         }
     }
 }
@@ -779,7 +779,7 @@ impl crate::Response for ReadStorageV1VolumeAttachmentStatusResponse {
 impl VolumeAttachment {
     /// replace the specified VolumeAttachment
     ///
-    /// Use [`ReplaceStorageV1VolumeAttachmentResponse`](./enum.ReplaceStorageV1VolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceVolumeAttachmentResponse`](./enum.ReplaceVolumeAttachmentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -792,12 +792,12 @@ impl VolumeAttachment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_storage_v1_volume_attachment(
+    pub fn replace_volume_attachment(
         name: &str,
         body: &crate::v1_13::api::storage::v1::VolumeAttachment,
-        optional: ReplaceStorageV1VolumeAttachmentOptional<'_>,
+        optional: ReplaceVolumeAttachmentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceStorageV1VolumeAttachmentOptional {
+        let ReplaceVolumeAttachmentOptional {
             dry_run,
             pretty,
         } = optional;
@@ -817,25 +817,25 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::replace_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.replace_storage_v1_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::replace_volume_attachment`](./struct.VolumeAttachment.html#method.replace_volume_attachment)
 #[derive(Debug, Default)]
-pub struct ReplaceStorageV1VolumeAttachmentOptional<'a> {
+pub struct ReplaceVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::replace_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.replace_storage_v1_volume_attachment)
+/// Parses the HTTP response of [`VolumeAttachment::replace_volume_attachment`](./struct.VolumeAttachment.html#method.replace_volume_attachment)
 #[derive(Debug)]
-pub enum ReplaceStorageV1VolumeAttachmentResponse {
+pub enum ReplaceVolumeAttachmentResponse {
     Ok(crate::v1_13::api::storage::v1::VolumeAttachment),
     Created(crate::v1_13::api::storage::v1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceStorageV1VolumeAttachmentResponse {
+impl crate::Response for ReplaceVolumeAttachmentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -844,7 +844,7 @@ impl crate::Response for ReplaceStorageV1VolumeAttachmentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceStorageV1VolumeAttachmentResponse::Ok(result), buf.len()))
+                Ok((ReplaceVolumeAttachmentResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -852,10 +852,10 @@ impl crate::Response for ReplaceStorageV1VolumeAttachmentResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceStorageV1VolumeAttachmentResponse::Created(result), buf.len()))
+                Ok((ReplaceVolumeAttachmentResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceStorageV1VolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceStorageV1VolumeAttachmentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceVolumeAttachmentResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceVolumeAttachmentResponse::Other, 0)),
         }
     }
 }
@@ -865,7 +865,7 @@ impl crate::Response for ReplaceStorageV1VolumeAttachmentResponse {
 impl VolumeAttachment {
     /// replace status of the specified VolumeAttachment
     ///
-    /// Use [`ReplaceStorageV1VolumeAttachmentStatusResponse`](./enum.ReplaceStorageV1VolumeAttachmentStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceVolumeAttachmentStatusResponse`](./enum.ReplaceVolumeAttachmentStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -878,12 +878,12 @@ impl VolumeAttachment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_storage_v1_volume_attachment_status(
+    pub fn replace_volume_attachment_status(
         name: &str,
         body: &crate::v1_13::api::storage::v1::VolumeAttachment,
-        optional: ReplaceStorageV1VolumeAttachmentStatusOptional<'_>,
+        optional: ReplaceVolumeAttachmentStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceStorageV1VolumeAttachmentStatusOptional {
+        let ReplaceVolumeAttachmentStatusOptional {
             dry_run,
             pretty,
         } = optional;
@@ -903,25 +903,25 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::replace_storage_v1_volume_attachment_status`](./struct.VolumeAttachment.html#method.replace_storage_v1_volume_attachment_status)
+/// Optional parameters of [`VolumeAttachment::replace_volume_attachment_status`](./struct.VolumeAttachment.html#method.replace_volume_attachment_status)
 #[derive(Debug, Default)]
-pub struct ReplaceStorageV1VolumeAttachmentStatusOptional<'a> {
+pub struct ReplaceVolumeAttachmentStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::replace_storage_v1_volume_attachment_status`](./struct.VolumeAttachment.html#method.replace_storage_v1_volume_attachment_status)
+/// Parses the HTTP response of [`VolumeAttachment::replace_volume_attachment_status`](./struct.VolumeAttachment.html#method.replace_volume_attachment_status)
 #[derive(Debug)]
-pub enum ReplaceStorageV1VolumeAttachmentStatusResponse {
+pub enum ReplaceVolumeAttachmentStatusResponse {
     Ok(crate::v1_13::api::storage::v1::VolumeAttachment),
     Created(crate::v1_13::api::storage::v1::VolumeAttachment),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceStorageV1VolumeAttachmentStatusResponse {
+impl crate::Response for ReplaceVolumeAttachmentStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -930,7 +930,7 @@ impl crate::Response for ReplaceStorageV1VolumeAttachmentStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceStorageV1VolumeAttachmentStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceVolumeAttachmentStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -938,10 +938,10 @@ impl crate::Response for ReplaceStorageV1VolumeAttachmentStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceStorageV1VolumeAttachmentStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceVolumeAttachmentStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceStorageV1VolumeAttachmentStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceStorageV1VolumeAttachmentStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceVolumeAttachmentStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceVolumeAttachmentStatusResponse::Other, 0)),
         }
     }
 }
@@ -951,7 +951,7 @@ impl crate::Response for ReplaceStorageV1VolumeAttachmentStatusResponse {
 impl VolumeAttachment {
     /// watch changes to an object of kind VolumeAttachment. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchStorageV1VolumeAttachmentResponse`](./enum.WatchStorageV1VolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use [`WatchVolumeAttachmentResponse`](./enum.WatchVolumeAttachmentResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -962,11 +962,11 @@ impl VolumeAttachment {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_storage_v1_volume_attachment(
+    pub fn watch_volume_attachment(
         name: &str,
-        optional: WatchStorageV1VolumeAttachmentOptional<'_>,
+        optional: WatchVolumeAttachmentOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchStorageV1VolumeAttachmentOptional {
+        let WatchVolumeAttachmentOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1014,9 +1014,9 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::watch_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.watch_storage_v1_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::watch_volume_attachment`](./struct.VolumeAttachment.html#method.watch_volume_attachment)
 #[derive(Debug, Default)]
-pub struct WatchStorageV1VolumeAttachmentOptional<'a> {
+pub struct WatchVolumeAttachmentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1041,15 +1041,15 @@ pub struct WatchStorageV1VolumeAttachmentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::watch_storage_v1_volume_attachment`](./struct.VolumeAttachment.html#method.watch_storage_v1_volume_attachment)
+/// Parses the HTTP response of [`VolumeAttachment::watch_volume_attachment`](./struct.VolumeAttachment.html#method.watch_volume_attachment)
 #[derive(Debug)]
-pub enum WatchStorageV1VolumeAttachmentResponse {
+pub enum WatchVolumeAttachmentResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchStorageV1VolumeAttachmentResponse {
+impl crate::Response for WatchVolumeAttachmentResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1060,10 +1060,10 @@ impl crate::Response for WatchStorageV1VolumeAttachmentResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchStorageV1VolumeAttachmentResponse::Ok(result), byte_offset))
+                Ok((WatchVolumeAttachmentResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchStorageV1VolumeAttachmentResponse::Unauthorized, 0)),
-            _ => Ok((WatchStorageV1VolumeAttachmentResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchVolumeAttachmentResponse::Unauthorized, 0)),
+            _ => Ok((WatchVolumeAttachmentResponse::Other, 0)),
         }
     }
 }
@@ -1073,17 +1073,17 @@ impl crate::Response for WatchStorageV1VolumeAttachmentResponse {
 impl VolumeAttachment {
     /// watch individual changes to a list of VolumeAttachment. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchStorageV1VolumeAttachmentListResponse`](./enum.WatchStorageV1VolumeAttachmentListResponse.html) to parse the HTTP response.
+    /// Use [`WatchVolumeAttachmentListResponse`](./enum.WatchVolumeAttachmentListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_storage_v1_volume_attachment_list(
-        optional: WatchStorageV1VolumeAttachmentListOptional<'_>,
+    pub fn watch_volume_attachment_list(
+        optional: WatchVolumeAttachmentListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchStorageV1VolumeAttachmentListOptional {
+        let WatchVolumeAttachmentListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1131,9 +1131,9 @@ impl VolumeAttachment {
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::watch_storage_v1_volume_attachment_list`](./struct.VolumeAttachment.html#method.watch_storage_v1_volume_attachment_list)
+/// Optional parameters of [`VolumeAttachment::watch_volume_attachment_list`](./struct.VolumeAttachment.html#method.watch_volume_attachment_list)
 #[derive(Debug, Default)]
-pub struct WatchStorageV1VolumeAttachmentListOptional<'a> {
+pub struct WatchVolumeAttachmentListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1158,15 +1158,15 @@ pub struct WatchStorageV1VolumeAttachmentListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::watch_storage_v1_volume_attachment_list`](./struct.VolumeAttachment.html#method.watch_storage_v1_volume_attachment_list)
+/// Parses the HTTP response of [`VolumeAttachment::watch_volume_attachment_list`](./struct.VolumeAttachment.html#method.watch_volume_attachment_list)
 #[derive(Debug)]
-pub enum WatchStorageV1VolumeAttachmentListResponse {
+pub enum WatchVolumeAttachmentListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchStorageV1VolumeAttachmentListResponse {
+impl crate::Response for WatchVolumeAttachmentListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1177,10 +1177,10 @@ impl crate::Response for WatchStorageV1VolumeAttachmentListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchStorageV1VolumeAttachmentListResponse::Ok(result), byte_offset))
+                Ok((WatchVolumeAttachmentListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchStorageV1VolumeAttachmentListResponse::Unauthorized, 0)),
-            _ => Ok((WatchStorageV1VolumeAttachmentListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchVolumeAttachmentListResponse::Unauthorized, 0)),
+            _ => Ok((WatchVolumeAttachmentListResponse::Other, 0)),
         }
     }
 }

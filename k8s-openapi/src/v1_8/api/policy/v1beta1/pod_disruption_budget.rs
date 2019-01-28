@@ -19,7 +19,7 @@ pub struct PodDisruptionBudget {
 impl PodDisruptionBudget {
     /// create a PodDisruptionBudget
     ///
-    /// Use [`CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedPodDisruptionBudgetResponse`](./enum.CreateNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -32,12 +32,12 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_policy_v1beta1_namespaced_pod_disruption_budget(
+    pub fn create_namespaced_pod_disruption_budget(
         namespace: &str,
         body: &crate::v1_8::api::policy::v1beta1::PodDisruptionBudget,
-        optional: CreatePolicyV1beta1NamespacedPodDisruptionBudgetOptional<'_>,
+        optional: CreateNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreatePolicyV1beta1NamespacedPodDisruptionBudgetOptional {
+        let CreateNamespacedPodDisruptionBudgetOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets?", namespace = namespace);
@@ -53,22 +53,22 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::create_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.create_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::create_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.create_namespaced_pod_disruption_budget)
 #[derive(Debug, Default)]
-pub struct CreatePolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
+pub struct CreateNamespacedPodDisruptionBudgetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::create_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.create_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Parses the HTTP response of [`PodDisruptionBudget::create_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.create_namespaced_pod_disruption_budget)
 #[derive(Debug)]
-pub enum CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+pub enum CreateNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_8::api::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+impl crate::Response for CreateNamespacedPodDisruptionBudgetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -77,10 +77,10 @@ impl crate::Response for CreatePolicyV1beta1NamespacedPodDisruptionBudgetRespons
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((CreatePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
 }
@@ -90,7 +90,7 @@ impl crate::Response for CreatePolicyV1beta1NamespacedPodDisruptionBudgetRespons
 impl PodDisruptionBudget {
     /// delete collection of PodDisruptionBudget
     ///
-    /// Use [`DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse`](./enum.DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedPodDisruptionBudgetResponse`](./enum.DeleteCollectionNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -101,11 +101,11 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_policy_v1beta1_collection_namespaced_pod_disruption_budget(
+    pub fn delete_collection_namespaced_pod_disruption_budget(
         namespace: &str,
-        optional: DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetOptional<'_>,
+        optional: DeleteCollectionNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetOptional {
+        let DeleteCollectionNamespacedPodDisruptionBudgetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -153,9 +153,9 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::delete_policy_v1beta1_collection_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_policy_v1beta1_collection_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::delete_collection_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_collection_namespaced_pod_disruption_budget)
 #[derive(Debug, Default)]
-pub struct DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetOptional<'a> {
+pub struct DeleteCollectionNamespacedPodDisruptionBudgetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -178,16 +178,16 @@ pub struct DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetOptional<'a
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::delete_policy_v1beta1_collection_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_policy_v1beta1_collection_namespaced_pod_disruption_budget)
+/// Parses the HTTP response of [`PodDisruptionBudget::delete_collection_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_collection_namespaced_pod_disruption_budget)
 #[derive(Debug)]
-pub enum DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse {
+pub enum DeleteCollectionNamespacedPodDisruptionBudgetResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse {
+impl crate::Response for DeleteCollectionNamespacedPodDisruptionBudgetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -203,16 +203,16 @@ impl crate::Response for DeletePolicyV1beta1CollectionNamespacedPodDisruptionBud
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedPodDisruptionBudgetResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedPodDisruptionBudgetResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((DeletePolicyV1beta1CollectionNamespacedPodDisruptionBudgetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
 }
@@ -222,7 +222,7 @@ impl crate::Response for DeletePolicyV1beta1CollectionNamespacedPodDisruptionBud
 impl PodDisruptionBudget {
     /// delete a PodDisruptionBudget
     ///
-    /// Use [`DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedPodDisruptionBudgetResponse`](./enum.DeleteNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -237,12 +237,12 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_policy_v1beta1_namespaced_pod_disruption_budget(
+    pub fn delete_namespaced_pod_disruption_budget(
         name: &str,
         namespace: &str,
-        optional: DeletePolicyV1beta1NamespacedPodDisruptionBudgetOptional<'_>,
+        optional: DeleteNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeletePolicyV1beta1NamespacedPodDisruptionBudgetOptional {
+        let DeleteNamespacedPodDisruptionBudgetOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -270,9 +270,9 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::delete_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::delete_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_namespaced_pod_disruption_budget)
 #[derive(Debug, Default)]
-pub struct DeletePolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
+pub struct DeleteNamespacedPodDisruptionBudgetOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -283,16 +283,16 @@ pub struct DeletePolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::delete_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Parses the HTTP response of [`PodDisruptionBudget::delete_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_namespaced_pod_disruption_budget)
 #[derive(Debug)]
-pub enum DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+pub enum DeleteNamespacedPodDisruptionBudgetResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+impl crate::Response for DeleteNamespacedPodDisruptionBudgetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -308,16 +308,16 @@ impl crate::Response for DeletePolicyV1beta1NamespacedPodDisruptionBudgetRespons
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedPodDisruptionBudgetResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedPodDisruptionBudgetResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((DeletePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
 }
@@ -327,7 +327,7 @@ impl crate::Response for DeletePolicyV1beta1NamespacedPodDisruptionBudgetRespons
 impl PodDisruptionBudget {
     /// list or watch objects of kind PodDisruptionBudget
     ///
-    /// Use [`ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedPodDisruptionBudgetResponse`](./enum.ListNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -338,11 +338,11 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_policy_v1beta1_namespaced_pod_disruption_budget(
+    pub fn list_namespaced_pod_disruption_budget(
         namespace: &str,
-        optional: ListPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'_>,
+        optional: ListNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListPolicyV1beta1NamespacedPodDisruptionBudgetOptional {
+        let ListNamespacedPodDisruptionBudgetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -390,9 +390,9 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::list_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.list_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::list_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.list_namespaced_pod_disruption_budget)
 #[derive(Debug, Default)]
-pub struct ListPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
+pub struct ListNamespacedPodDisruptionBudgetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -415,15 +415,15 @@ pub struct ListPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::list_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.list_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Parses the HTTP response of [`PodDisruptionBudget::list_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.list_namespaced_pod_disruption_budget)
 #[derive(Debug)]
-pub enum ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+pub enum ListNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_8::api::policy::v1beta1::PodDisruptionBudgetList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+impl crate::Response for ListNamespacedPodDisruptionBudgetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -432,10 +432,10 @@ impl crate::Response for ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse 
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
 }
@@ -445,17 +445,17 @@ impl crate::Response for ListPolicyV1beta1NamespacedPodDisruptionBudgetResponse 
 impl PodDisruptionBudget {
     /// list or watch objects of kind PodDisruptionBudget
     ///
-    /// Use [`ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse`](./enum.ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListPodDisruptionBudgetForAllNamespacesResponse`](./enum.ListPodDisruptionBudgetForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_policy_v1beta1_pod_disruption_budget_for_all_namespaces(
-        optional: ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesOptional<'_>,
+    pub fn list_pod_disruption_budget_for_all_namespaces(
+        optional: ListPodDisruptionBudgetForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesOptional {
+        let ListPodDisruptionBudgetForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -503,9 +503,9 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::list_policy_v1beta1_pod_disruption_budget_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.list_policy_v1beta1_pod_disruption_budget_for_all_namespaces)
+/// Optional parameters of [`PodDisruptionBudget::list_pod_disruption_budget_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.list_pod_disruption_budget_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesOptional<'a> {
+pub struct ListPodDisruptionBudgetForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -528,15 +528,15 @@ pub struct ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::list_policy_v1beta1_pod_disruption_budget_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.list_policy_v1beta1_pod_disruption_budget_for_all_namespaces)
+/// Parses the HTTP response of [`PodDisruptionBudget::list_pod_disruption_budget_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.list_pod_disruption_budget_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse {
+pub enum ListPodDisruptionBudgetForAllNamespacesResponse {
     Ok(crate::v1_8::api::policy::v1beta1::PodDisruptionBudgetList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse {
+impl crate::Response for ListPodDisruptionBudgetForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -545,10 +545,10 @@ impl crate::Response for ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesRes
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListPodDisruptionBudgetForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListPodDisruptionBudgetForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListPodDisruptionBudgetForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -558,7 +558,7 @@ impl crate::Response for ListPolicyV1beta1PodDisruptionBudgetForAllNamespacesRes
 impl PodDisruptionBudget {
     /// partially update the specified PodDisruptionBudget
     ///
-    /// Use [`PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedPodDisruptionBudgetResponse`](./enum.PatchNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -575,13 +575,13 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_policy_v1beta1_namespaced_pod_disruption_budget(
+    pub fn patch_namespaced_pod_disruption_budget(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'_>,
+        optional: PatchNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchPolicyV1beta1NamespacedPodDisruptionBudgetOptional {
+        let PatchNamespacedPodDisruptionBudgetOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}?", name = name, namespace = namespace);
@@ -597,22 +597,22 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::patch_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.patch_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.patch_namespaced_pod_disruption_budget)
 #[derive(Debug, Default)]
-pub struct PatchPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
+pub struct PatchNamespacedPodDisruptionBudgetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::patch_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.patch_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Parses the HTTP response of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.patch_namespaced_pod_disruption_budget)
 #[derive(Debug)]
-pub enum PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+pub enum PatchNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_8::api::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+impl crate::Response for PatchNamespacedPodDisruptionBudgetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -621,10 +621,10 @@ impl crate::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
 }
@@ -634,7 +634,7 @@ impl crate::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse
 impl PodDisruptionBudget {
     /// partially update status of the specified PodDisruptionBudget
     ///
-    /// Use [`PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse`](./enum.PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedPodDisruptionBudgetStatusResponse`](./enum.PatchNamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -651,13 +651,13 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_policy_v1beta1_namespaced_pod_disruption_budget_status(
+    pub fn patch_namespaced_pod_disruption_budget_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusOptional<'_>,
+        optional: PatchNamespacedPodDisruptionBudgetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusOptional {
+        let PatchNamespacedPodDisruptionBudgetStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status?", name = name, namespace = namespace);
@@ -673,22 +673,22 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::patch_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.patch_policy_v1beta1_namespaced_pod_disruption_budget_status)
+/// Optional parameters of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.patch_namespaced_pod_disruption_budget_status)
 #[derive(Debug, Default)]
-pub struct PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusOptional<'a> {
+pub struct PatchNamespacedPodDisruptionBudgetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::patch_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.patch_policy_v1beta1_namespaced_pod_disruption_budget_status)
+/// Parses the HTTP response of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.patch_namespaced_pod_disruption_budget_status)
 #[derive(Debug)]
-pub enum PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
+pub enum PatchNamespacedPodDisruptionBudgetStatusResponse {
     Ok(crate::v1_8::api::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
+impl crate::Response for PatchNamespacedPodDisruptionBudgetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -697,10 +697,10 @@ impl crate::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusRe
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
         }
     }
 }
@@ -710,7 +710,7 @@ impl crate::Response for PatchPolicyV1beta1NamespacedPodDisruptionBudgetStatusRe
 impl PodDisruptionBudget {
     /// read the specified PodDisruptionBudget
     ///
-    /// Use [`ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedPodDisruptionBudgetResponse`](./enum.ReadNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -725,12 +725,12 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_policy_v1beta1_namespaced_pod_disruption_budget(
+    pub fn read_namespaced_pod_disruption_budget(
         name: &str,
         namespace: &str,
-        optional: ReadPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'_>,
+        optional: ReadNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadPolicyV1beta1NamespacedPodDisruptionBudgetOptional {
+        let ReadNamespacedPodDisruptionBudgetOptional {
             exact,
             export,
             pretty,
@@ -754,9 +754,9 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::read_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.read_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.read_namespaced_pod_disruption_budget)
 #[derive(Debug, Default)]
-pub struct ReadPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
+pub struct ReadNamespacedPodDisruptionBudgetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -765,15 +765,15 @@ pub struct ReadPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::read_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.read_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Parses the HTTP response of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.read_namespaced_pod_disruption_budget)
 #[derive(Debug)]
-pub enum ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+pub enum ReadNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_8::api::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+impl crate::Response for ReadNamespacedPodDisruptionBudgetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -782,10 +782,10 @@ impl crate::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse 
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
 }
@@ -795,7 +795,7 @@ impl crate::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetResponse 
 impl PodDisruptionBudget {
     /// read status of the specified PodDisruptionBudget
     ///
-    /// Use [`ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse`](./enum.ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedPodDisruptionBudgetStatusResponse`](./enum.ReadNamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -810,12 +810,12 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_policy_v1beta1_namespaced_pod_disruption_budget_status(
+    pub fn read_namespaced_pod_disruption_budget_status(
         name: &str,
         namespace: &str,
-        optional: ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusOptional<'_>,
+        optional: ReadNamespacedPodDisruptionBudgetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusOptional {
+        let ReadNamespacedPodDisruptionBudgetStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status?", name = name, namespace = namespace);
@@ -831,22 +831,22 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::read_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.read_policy_v1beta1_namespaced_pod_disruption_budget_status)
+/// Optional parameters of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.read_namespaced_pod_disruption_budget_status)
 #[derive(Debug, Default)]
-pub struct ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusOptional<'a> {
+pub struct ReadNamespacedPodDisruptionBudgetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::read_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.read_policy_v1beta1_namespaced_pod_disruption_budget_status)
+/// Parses the HTTP response of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.read_namespaced_pod_disruption_budget_status)
 #[derive(Debug)]
-pub enum ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
+pub enum ReadNamespacedPodDisruptionBudgetStatusResponse {
     Ok(crate::v1_8::api::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
+impl crate::Response for ReadNamespacedPodDisruptionBudgetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -855,10 +855,10 @@ impl crate::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusRes
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
         }
     }
 }
@@ -868,7 +868,7 @@ impl crate::Response for ReadPolicyV1beta1NamespacedPodDisruptionBudgetStatusRes
 impl PodDisruptionBudget {
     /// replace the specified PodDisruptionBudget
     ///
-    /// Use [`ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedPodDisruptionBudgetResponse`](./enum.ReplaceNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -885,13 +885,13 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_policy_v1beta1_namespaced_pod_disruption_budget(
+    pub fn replace_namespaced_pod_disruption_budget(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::policy::v1beta1::PodDisruptionBudget,
-        optional: ReplacePolicyV1beta1NamespacedPodDisruptionBudgetOptional<'_>,
+        optional: ReplaceNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplacePolicyV1beta1NamespacedPodDisruptionBudgetOptional {
+        let ReplaceNamespacedPodDisruptionBudgetOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}?", name = name, namespace = namespace);
@@ -907,22 +907,22 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::replace_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.replace_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.replace_namespaced_pod_disruption_budget)
 #[derive(Debug, Default)]
-pub struct ReplacePolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
+pub struct ReplaceNamespacedPodDisruptionBudgetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::replace_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.replace_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Parses the HTTP response of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.replace_namespaced_pod_disruption_budget)
 #[derive(Debug)]
-pub enum ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+pub enum ReplaceNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_8::api::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+impl crate::Response for ReplaceNamespacedPodDisruptionBudgetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -931,10 +931,10 @@ impl crate::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetRespon
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedPodDisruptionBudgetResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
 }
@@ -944,7 +944,7 @@ impl crate::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetRespon
 impl PodDisruptionBudget {
     /// replace status of the specified PodDisruptionBudget
     ///
-    /// Use [`ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse`](./enum.ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedPodDisruptionBudgetStatusResponse`](./enum.ReplaceNamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -961,13 +961,13 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_policy_v1beta1_namespaced_pod_disruption_budget_status(
+    pub fn replace_namespaced_pod_disruption_budget_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::policy::v1beta1::PodDisruptionBudget,
-        optional: ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusOptional<'_>,
+        optional: ReplaceNamespacedPodDisruptionBudgetStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusOptional {
+        let ReplaceNamespacedPodDisruptionBudgetStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status?", name = name, namespace = namespace);
@@ -983,22 +983,22 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::replace_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.replace_policy_v1beta1_namespaced_pod_disruption_budget_status)
+/// Optional parameters of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.replace_namespaced_pod_disruption_budget_status)
 #[derive(Debug, Default)]
-pub struct ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusOptional<'a> {
+pub struct ReplaceNamespacedPodDisruptionBudgetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::replace_policy_v1beta1_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.replace_policy_v1beta1_namespaced_pod_disruption_budget_status)
+/// Parses the HTTP response of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.replace_namespaced_pod_disruption_budget_status)
 #[derive(Debug)]
-pub enum ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
+pub enum ReplaceNamespacedPodDisruptionBudgetStatusResponse {
     Ok(crate::v1_8::api::policy::v1beta1::PodDisruptionBudget),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse {
+impl crate::Response for ReplaceNamespacedPodDisruptionBudgetStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1007,10 +1007,10 @@ impl crate::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatus
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedPodDisruptionBudgetStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedPodDisruptionBudgetStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedPodDisruptionBudgetStatusResponse::Other, 0)),
         }
     }
 }
@@ -1020,7 +1020,7 @@ impl crate::Response for ReplacePolicyV1beta1NamespacedPodDisruptionBudgetStatus
 impl PodDisruptionBudget {
     /// watch changes to an object of kind PodDisruptionBudget
     ///
-    /// Use [`WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse`](./enum.WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedPodDisruptionBudgetResponse`](./enum.WatchNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1035,12 +1035,12 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_policy_v1beta1_namespaced_pod_disruption_budget(
+    pub fn watch_namespaced_pod_disruption_budget(
         name: &str,
         namespace: &str,
-        optional: WatchPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'_>,
+        optional: WatchNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchPolicyV1beta1NamespacedPodDisruptionBudgetOptional {
+        let WatchNamespacedPodDisruptionBudgetOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1088,9 +1088,9 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::watch_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.watch_namespaced_pod_disruption_budget)
 #[derive(Debug, Default)]
-pub struct WatchPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
+pub struct WatchNamespacedPodDisruptionBudgetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1113,15 +1113,15 @@ pub struct WatchPolicyV1beta1NamespacedPodDisruptionBudgetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::watch_policy_v1beta1_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_namespaced_pod_disruption_budget)
+/// Parses the HTTP response of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.watch_namespaced_pod_disruption_budget)
 #[derive(Debug)]
-pub enum WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+pub enum WatchNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse {
+impl crate::Response for WatchNamespacedPodDisruptionBudgetResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1132,10 +1132,10 @@ impl crate::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedPodDisruptionBudgetResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
-            _ => Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPodDisruptionBudgetResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedPodDisruptionBudgetResponse::Other, 0)),
         }
     }
 }
@@ -1145,7 +1145,7 @@ impl crate::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetResponse
 impl PodDisruptionBudget {
     /// watch individual changes to a list of PodDisruptionBudget
     ///
-    /// Use [`WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse`](./enum.WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedPodDisruptionBudgetListResponse`](./enum.WatchNamespacedPodDisruptionBudgetListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1156,11 +1156,11 @@ impl PodDisruptionBudget {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_policy_v1beta1_namespaced_pod_disruption_budget_list(
+    pub fn watch_namespaced_pod_disruption_budget_list(
         namespace: &str,
-        optional: WatchPolicyV1beta1NamespacedPodDisruptionBudgetListOptional<'_>,
+        optional: WatchNamespacedPodDisruptionBudgetListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchPolicyV1beta1NamespacedPodDisruptionBudgetListOptional {
+        let WatchNamespacedPodDisruptionBudgetListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1208,9 +1208,9 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::watch_policy_v1beta1_namespaced_pod_disruption_budget_list`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_namespaced_pod_disruption_budget_list)
+/// Optional parameters of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget_list`](./struct.PodDisruptionBudget.html#method.watch_namespaced_pod_disruption_budget_list)
 #[derive(Debug, Default)]
-pub struct WatchPolicyV1beta1NamespacedPodDisruptionBudgetListOptional<'a> {
+pub struct WatchNamespacedPodDisruptionBudgetListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1233,15 +1233,15 @@ pub struct WatchPolicyV1beta1NamespacedPodDisruptionBudgetListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::watch_policy_v1beta1_namespaced_pod_disruption_budget_list`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_namespaced_pod_disruption_budget_list)
+/// Parses the HTTP response of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget_list`](./struct.PodDisruptionBudget.html#method.watch_namespaced_pod_disruption_budget_list)
 #[derive(Debug)]
-pub enum WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse {
+pub enum WatchNamespacedPodDisruptionBudgetListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse {
+impl crate::Response for WatchNamespacedPodDisruptionBudgetListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1252,10 +1252,10 @@ impl crate::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResp
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedPodDisruptionBudgetListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse::Unauthorized, 0)),
-            _ => Ok((WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedPodDisruptionBudgetListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedPodDisruptionBudgetListResponse::Other, 0)),
         }
     }
 }
@@ -1265,17 +1265,17 @@ impl crate::Response for WatchPolicyV1beta1NamespacedPodDisruptionBudgetListResp
 impl PodDisruptionBudget {
     /// watch individual changes to a list of PodDisruptionBudget
     ///
-    /// Use [`WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse`](./enum.WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchPodDisruptionBudgetListForAllNamespacesResponse`](./enum.WatchPodDisruptionBudgetListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_policy_v1beta1_pod_disruption_budget_list_for_all_namespaces(
-        optional: WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesOptional<'_>,
+    pub fn watch_pod_disruption_budget_list_for_all_namespaces(
+        optional: WatchPodDisruptionBudgetListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesOptional {
+        let WatchPodDisruptionBudgetListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1323,9 +1323,9 @@ impl PodDisruptionBudget {
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::watch_policy_v1beta1_pod_disruption_budget_list_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_pod_disruption_budget_list_for_all_namespaces)
+/// Optional parameters of [`PodDisruptionBudget::watch_pod_disruption_budget_list_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.watch_pod_disruption_budget_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesOptional<'a> {
+pub struct WatchPodDisruptionBudgetListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1348,15 +1348,15 @@ pub struct WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesOptional<'a>
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::watch_policy_v1beta1_pod_disruption_budget_list_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.watch_policy_v1beta1_pod_disruption_budget_list_for_all_namespaces)
+/// Parses the HTTP response of [`PodDisruptionBudget::watch_pod_disruption_budget_list_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.watch_pod_disruption_budget_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse {
+pub enum WatchPodDisruptionBudgetListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse {
+impl crate::Response for WatchPodDisruptionBudgetListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1367,10 +1367,10 @@ impl crate::Response for WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespac
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchPodDisruptionBudgetListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchPolicyV1beta1PodDisruptionBudgetListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchPodDisruptionBudgetListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchPodDisruptionBudgetListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

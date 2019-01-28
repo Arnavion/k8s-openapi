@@ -20,7 +20,7 @@ pub struct Namespace {
 impl Namespace {
     /// create a Namespace
     ///
-    /// Use [`CreateCoreV1NamespaceResponse`](./enum.CreateCoreV1NamespaceResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespaceResponse`](./enum.CreateNamespaceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,11 +29,11 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_core_v1_namespace(
+    pub fn create_namespace(
         body: &crate::v1_10::api::core::v1::Namespace,
-        optional: CreateCoreV1NamespaceOptional<'_>,
+        optional: CreateNamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateCoreV1NamespaceOptional {
+        let CreateNamespaceOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces?");
@@ -49,16 +49,16 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::create_core_v1_namespace`](./struct.Namespace.html#method.create_core_v1_namespace)
+/// Optional parameters of [`Namespace::create_namespace`](./struct.Namespace.html#method.create_namespace)
 #[derive(Debug, Default)]
-pub struct CreateCoreV1NamespaceOptional<'a> {
+pub struct CreateNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::create_core_v1_namespace`](./struct.Namespace.html#method.create_core_v1_namespace)
+/// Parses the HTTP response of [`Namespace::create_namespace`](./struct.Namespace.html#method.create_namespace)
 #[derive(Debug)]
-pub enum CreateCoreV1NamespaceResponse {
+pub enum CreateNamespaceResponse {
     Ok(crate::v1_10::api::core::v1::Namespace),
     Created(crate::v1_10::api::core::v1::Namespace),
     Accepted(crate::v1_10::api::core::v1::Namespace),
@@ -66,7 +66,7 @@ pub enum CreateCoreV1NamespaceResponse {
     Other,
 }
 
-impl crate::Response for CreateCoreV1NamespaceResponse {
+impl crate::Response for CreateNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -75,7 +75,7 @@ impl crate::Response for CreateCoreV1NamespaceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespaceResponse::Ok(result), buf.len()))
+                Ok((CreateNamespaceResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -83,7 +83,7 @@ impl crate::Response for CreateCoreV1NamespaceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespaceResponse::Created(result), buf.len()))
+                Ok((CreateNamespaceResponse::Created(result), buf.len()))
             },
             http::StatusCode::ACCEPTED => {
                 let result = match serde_json::from_slice(buf) {
@@ -91,10 +91,10 @@ impl crate::Response for CreateCoreV1NamespaceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateCoreV1NamespaceResponse::Accepted(result), buf.len()))
+                Ok((CreateNamespaceResponse::Accepted(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateCoreV1NamespaceResponse::Unauthorized, 0)),
-            _ => Ok((CreateCoreV1NamespaceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespaceResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespaceResponse::Other, 0)),
         }
     }
 }
@@ -104,7 +104,7 @@ impl crate::Response for CreateCoreV1NamespaceResponse {
 impl Namespace {
     /// delete a Namespace
     ///
-    /// Use [`DeleteCoreV1NamespaceResponse`](./enum.DeleteCoreV1NamespaceResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespaceResponse`](./enum.DeleteNamespaceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -115,11 +115,11 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_core_v1_namespace(
+    pub fn delete_namespace(
         name: &str,
-        optional: DeleteCoreV1NamespaceOptional<'_>,
+        optional: DeleteNamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteCoreV1NamespaceOptional {
+        let DeleteNamespaceOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -147,9 +147,9 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::delete_core_v1_namespace`](./struct.Namespace.html#method.delete_core_v1_namespace)
+/// Optional parameters of [`Namespace::delete_namespace`](./struct.Namespace.html#method.delete_namespace)
 #[derive(Debug, Default)]
-pub struct DeleteCoreV1NamespaceOptional<'a> {
+pub struct DeleteNamespaceOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -160,16 +160,16 @@ pub struct DeleteCoreV1NamespaceOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::delete_core_v1_namespace`](./struct.Namespace.html#method.delete_core_v1_namespace)
+/// Parses the HTTP response of [`Namespace::delete_namespace`](./struct.Namespace.html#method.delete_namespace)
 #[derive(Debug)]
-pub enum DeleteCoreV1NamespaceResponse {
+pub enum DeleteNamespaceResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_10::api::core::v1::Namespace),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteCoreV1NamespaceResponse {
+impl crate::Response for DeleteNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -185,16 +185,16 @@ impl crate::Response for DeleteCoreV1NamespaceResponse {
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespaceResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespaceResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteCoreV1NamespaceResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespaceResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteCoreV1NamespaceResponse::Unauthorized, 0)),
-            _ => Ok((DeleteCoreV1NamespaceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespaceResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespaceResponse::Other, 0)),
         }
     }
 }
@@ -204,17 +204,17 @@ impl crate::Response for DeleteCoreV1NamespaceResponse {
 impl Namespace {
     /// list or watch objects of kind Namespace
     ///
-    /// Use [`ListCoreV1NamespaceResponse`](./enum.ListCoreV1NamespaceResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespaceResponse`](./enum.ListNamespaceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_core_v1_namespace(
-        optional: ListCoreV1NamespaceOptional<'_>,
+    pub fn list_namespace(
+        optional: ListNamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListCoreV1NamespaceOptional {
+        let ListNamespaceOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -262,9 +262,9 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::list_core_v1_namespace`](./struct.Namespace.html#method.list_core_v1_namespace)
+/// Optional parameters of [`Namespace::list_namespace`](./struct.Namespace.html#method.list_namespace)
 #[derive(Debug, Default)]
-pub struct ListCoreV1NamespaceOptional<'a> {
+pub struct ListNamespaceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -287,15 +287,15 @@ pub struct ListCoreV1NamespaceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Namespace::list_core_v1_namespace`](./struct.Namespace.html#method.list_core_v1_namespace)
+/// Parses the HTTP response of [`Namespace::list_namespace`](./struct.Namespace.html#method.list_namespace)
 #[derive(Debug)]
-pub enum ListCoreV1NamespaceResponse {
+pub enum ListNamespaceResponse {
     Ok(crate::v1_10::api::core::v1::NamespaceList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListCoreV1NamespaceResponse {
+impl crate::Response for ListNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -304,10 +304,10 @@ impl crate::Response for ListCoreV1NamespaceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListCoreV1NamespaceResponse::Ok(result), buf.len()))
+                Ok((ListNamespaceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListCoreV1NamespaceResponse::Unauthorized, 0)),
-            _ => Ok((ListCoreV1NamespaceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespaceResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespaceResponse::Other, 0)),
         }
     }
 }
@@ -317,7 +317,7 @@ impl crate::Response for ListCoreV1NamespaceResponse {
 impl Namespace {
     /// partially update the specified Namespace
     ///
-    /// Use [`PatchCoreV1NamespaceResponse`](./enum.PatchCoreV1NamespaceResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespaceResponse`](./enum.PatchNamespaceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -330,12 +330,12 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespace(
+    pub fn patch_namespace(
         name: &str,
         body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespaceOptional<'_>,
+        optional: PatchNamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespaceOptional {
+        let PatchNamespaceOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{name}?", name = name);
@@ -351,22 +351,22 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::patch_core_v1_namespace`](./struct.Namespace.html#method.patch_core_v1_namespace)
+/// Optional parameters of [`Namespace::patch_namespace`](./struct.Namespace.html#method.patch_namespace)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespaceOptional<'a> {
+pub struct PatchNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::patch_core_v1_namespace`](./struct.Namespace.html#method.patch_core_v1_namespace)
+/// Parses the HTTP response of [`Namespace::patch_namespace`](./struct.Namespace.html#method.patch_namespace)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespaceResponse {
+pub enum PatchNamespaceResponse {
     Ok(crate::v1_10::api::core::v1::Namespace),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespaceResponse {
+impl crate::Response for PatchNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -375,10 +375,10 @@ impl crate::Response for PatchCoreV1NamespaceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespaceResponse::Ok(result), buf.len()))
+                Ok((PatchNamespaceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespaceResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespaceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespaceResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespaceResponse::Other, 0)),
         }
     }
 }
@@ -388,7 +388,7 @@ impl crate::Response for PatchCoreV1NamespaceResponse {
 impl Namespace {
     /// partially update status of the specified Namespace
     ///
-    /// Use [`PatchCoreV1NamespaceStatusResponse`](./enum.PatchCoreV1NamespaceStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespaceStatusResponse`](./enum.PatchNamespaceStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -401,12 +401,12 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_core_v1_namespace_status(
+    pub fn patch_namespace_status(
         name: &str,
         body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchCoreV1NamespaceStatusOptional<'_>,
+        optional: PatchNamespaceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchCoreV1NamespaceStatusOptional {
+        let PatchNamespaceStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{name}/status?", name = name);
@@ -422,22 +422,22 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::patch_core_v1_namespace_status`](./struct.Namespace.html#method.patch_core_v1_namespace_status)
+/// Optional parameters of [`Namespace::patch_namespace_status`](./struct.Namespace.html#method.patch_namespace_status)
 #[derive(Debug, Default)]
-pub struct PatchCoreV1NamespaceStatusOptional<'a> {
+pub struct PatchNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::patch_core_v1_namespace_status`](./struct.Namespace.html#method.patch_core_v1_namespace_status)
+/// Parses the HTTP response of [`Namespace::patch_namespace_status`](./struct.Namespace.html#method.patch_namespace_status)
 #[derive(Debug)]
-pub enum PatchCoreV1NamespaceStatusResponse {
+pub enum PatchNamespaceStatusResponse {
     Ok(crate::v1_10::api::core::v1::Namespace),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchCoreV1NamespaceStatusResponse {
+impl crate::Response for PatchNamespaceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -446,10 +446,10 @@ impl crate::Response for PatchCoreV1NamespaceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchCoreV1NamespaceStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespaceStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchCoreV1NamespaceStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchCoreV1NamespaceStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespaceStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespaceStatusResponse::Other, 0)),
         }
     }
 }
@@ -459,7 +459,7 @@ impl crate::Response for PatchCoreV1NamespaceStatusResponse {
 impl Namespace {
     /// read the specified Namespace
     ///
-    /// Use [`ReadCoreV1NamespaceResponse`](./enum.ReadCoreV1NamespaceResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespaceResponse`](./enum.ReadNamespaceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -470,11 +470,11 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespace(
+    pub fn read_namespace(
         name: &str,
-        optional: ReadCoreV1NamespaceOptional<'_>,
+        optional: ReadNamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespaceOptional {
+        let ReadNamespaceOptional {
             exact,
             export,
             pretty,
@@ -498,9 +498,9 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::read_core_v1_namespace`](./struct.Namespace.html#method.read_core_v1_namespace)
+/// Optional parameters of [`Namespace::read_namespace`](./struct.Namespace.html#method.read_namespace)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespaceOptional<'a> {
+pub struct ReadNamespaceOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -509,15 +509,15 @@ pub struct ReadCoreV1NamespaceOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::read_core_v1_namespace`](./struct.Namespace.html#method.read_core_v1_namespace)
+/// Parses the HTTP response of [`Namespace::read_namespace`](./struct.Namespace.html#method.read_namespace)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespaceResponse {
+pub enum ReadNamespaceResponse {
     Ok(crate::v1_10::api::core::v1::Namespace),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespaceResponse {
+impl crate::Response for ReadNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -526,10 +526,10 @@ impl crate::Response for ReadCoreV1NamespaceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespaceResponse::Ok(result), buf.len()))
+                Ok((ReadNamespaceResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespaceResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespaceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespaceResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespaceResponse::Other, 0)),
         }
     }
 }
@@ -539,7 +539,7 @@ impl crate::Response for ReadCoreV1NamespaceResponse {
 impl Namespace {
     /// read status of the specified Namespace
     ///
-    /// Use [`ReadCoreV1NamespaceStatusResponse`](./enum.ReadCoreV1NamespaceStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespaceStatusResponse`](./enum.ReadNamespaceStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -550,11 +550,11 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_core_v1_namespace_status(
+    pub fn read_namespace_status(
         name: &str,
-        optional: ReadCoreV1NamespaceStatusOptional<'_>,
+        optional: ReadNamespaceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadCoreV1NamespaceStatusOptional {
+        let ReadNamespaceStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{name}/status?", name = name);
@@ -570,22 +570,22 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::read_core_v1_namespace_status`](./struct.Namespace.html#method.read_core_v1_namespace_status)
+/// Optional parameters of [`Namespace::read_namespace_status`](./struct.Namespace.html#method.read_namespace_status)
 #[derive(Debug, Default)]
-pub struct ReadCoreV1NamespaceStatusOptional<'a> {
+pub struct ReadNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::read_core_v1_namespace_status`](./struct.Namespace.html#method.read_core_v1_namespace_status)
+/// Parses the HTTP response of [`Namespace::read_namespace_status`](./struct.Namespace.html#method.read_namespace_status)
 #[derive(Debug)]
-pub enum ReadCoreV1NamespaceStatusResponse {
+pub enum ReadNamespaceStatusResponse {
     Ok(crate::v1_10::api::core::v1::Namespace),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadCoreV1NamespaceStatusResponse {
+impl crate::Response for ReadNamespaceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -594,10 +594,10 @@ impl crate::Response for ReadCoreV1NamespaceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadCoreV1NamespaceStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespaceStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadCoreV1NamespaceStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadCoreV1NamespaceStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespaceStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespaceStatusResponse::Other, 0)),
         }
     }
 }
@@ -607,7 +607,7 @@ impl crate::Response for ReadCoreV1NamespaceStatusResponse {
 impl Namespace {
     /// replace the specified Namespace
     ///
-    /// Use [`ReplaceCoreV1NamespaceResponse`](./enum.ReplaceCoreV1NamespaceResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespaceResponse`](./enum.ReplaceNamespaceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -620,12 +620,12 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespace(
+    pub fn replace_namespace(
         name: &str,
         body: &crate::v1_10::api::core::v1::Namespace,
-        optional: ReplaceCoreV1NamespaceOptional<'_>,
+        optional: ReplaceNamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespaceOptional {
+        let ReplaceNamespaceOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{name}?", name = name);
@@ -641,23 +641,23 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::replace_core_v1_namespace`](./struct.Namespace.html#method.replace_core_v1_namespace)
+/// Optional parameters of [`Namespace::replace_namespace`](./struct.Namespace.html#method.replace_namespace)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespaceOptional<'a> {
+pub struct ReplaceNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::replace_core_v1_namespace`](./struct.Namespace.html#method.replace_core_v1_namespace)
+/// Parses the HTTP response of [`Namespace::replace_namespace`](./struct.Namespace.html#method.replace_namespace)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespaceResponse {
+pub enum ReplaceNamespaceResponse {
     Ok(crate::v1_10::api::core::v1::Namespace),
     Created(crate::v1_10::api::core::v1::Namespace),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespaceResponse {
+impl crate::Response for ReplaceNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -666,7 +666,7 @@ impl crate::Response for ReplaceCoreV1NamespaceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespaceResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespaceResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -674,10 +674,10 @@ impl crate::Response for ReplaceCoreV1NamespaceResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespaceResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespaceResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespaceResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespaceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespaceResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespaceResponse::Other, 0)),
         }
     }
 }
@@ -687,7 +687,7 @@ impl crate::Response for ReplaceCoreV1NamespaceResponse {
 impl Namespace {
     /// replace finalize of the specified Namespace
     ///
-    /// Use [`ReplaceCoreV1NamespaceFinalizeResponse`](./enum.ReplaceCoreV1NamespaceFinalizeResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespaceFinalizeResponse`](./enum.ReplaceNamespaceFinalizeResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -700,12 +700,12 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespace_finalize(
+    pub fn replace_namespace_finalize(
         name: &str,
         body: &crate::v1_10::api::core::v1::Namespace,
-        optional: ReplaceCoreV1NamespaceFinalizeOptional<'_>,
+        optional: ReplaceNamespaceFinalizeOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespaceFinalizeOptional {
+        let ReplaceNamespaceFinalizeOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{name}/finalize?", name = name);
@@ -721,23 +721,23 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::replace_core_v1_namespace_finalize`](./struct.Namespace.html#method.replace_core_v1_namespace_finalize)
+/// Optional parameters of [`Namespace::replace_namespace_finalize`](./struct.Namespace.html#method.replace_namespace_finalize)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespaceFinalizeOptional<'a> {
+pub struct ReplaceNamespaceFinalizeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::replace_core_v1_namespace_finalize`](./struct.Namespace.html#method.replace_core_v1_namespace_finalize)
+/// Parses the HTTP response of [`Namespace::replace_namespace_finalize`](./struct.Namespace.html#method.replace_namespace_finalize)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespaceFinalizeResponse {
+pub enum ReplaceNamespaceFinalizeResponse {
     Ok(crate::v1_10::api::core::v1::Namespace),
     Created(crate::v1_10::api::core::v1::Namespace),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespaceFinalizeResponse {
+impl crate::Response for ReplaceNamespaceFinalizeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -746,7 +746,7 @@ impl crate::Response for ReplaceCoreV1NamespaceFinalizeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespaceFinalizeResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespaceFinalizeResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -754,10 +754,10 @@ impl crate::Response for ReplaceCoreV1NamespaceFinalizeResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespaceFinalizeResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespaceFinalizeResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespaceFinalizeResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespaceFinalizeResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespaceFinalizeResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespaceFinalizeResponse::Other, 0)),
         }
     }
 }
@@ -767,7 +767,7 @@ impl crate::Response for ReplaceCoreV1NamespaceFinalizeResponse {
 impl Namespace {
     /// replace status of the specified Namespace
     ///
-    /// Use [`ReplaceCoreV1NamespaceStatusResponse`](./enum.ReplaceCoreV1NamespaceStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespaceStatusResponse`](./enum.ReplaceNamespaceStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -780,12 +780,12 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_core_v1_namespace_status(
+    pub fn replace_namespace_status(
         name: &str,
         body: &crate::v1_10::api::core::v1::Namespace,
-        optional: ReplaceCoreV1NamespaceStatusOptional<'_>,
+        optional: ReplaceNamespaceStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceCoreV1NamespaceStatusOptional {
+        let ReplaceNamespaceStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/api/v1/namespaces/{name}/status?", name = name);
@@ -801,23 +801,23 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::replace_core_v1_namespace_status`](./struct.Namespace.html#method.replace_core_v1_namespace_status)
+/// Optional parameters of [`Namespace::replace_namespace_status`](./struct.Namespace.html#method.replace_namespace_status)
 #[derive(Debug, Default)]
-pub struct ReplaceCoreV1NamespaceStatusOptional<'a> {
+pub struct ReplaceNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::replace_core_v1_namespace_status`](./struct.Namespace.html#method.replace_core_v1_namespace_status)
+/// Parses the HTTP response of [`Namespace::replace_namespace_status`](./struct.Namespace.html#method.replace_namespace_status)
 #[derive(Debug)]
-pub enum ReplaceCoreV1NamespaceStatusResponse {
+pub enum ReplaceNamespaceStatusResponse {
     Ok(crate::v1_10::api::core::v1::Namespace),
     Created(crate::v1_10::api::core::v1::Namespace),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceCoreV1NamespaceStatusResponse {
+impl crate::Response for ReplaceNamespaceStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -826,7 +826,7 @@ impl crate::Response for ReplaceCoreV1NamespaceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespaceStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespaceStatusResponse::Ok(result), buf.len()))
             },
             http::StatusCode::CREATED => {
                 let result = match serde_json::from_slice(buf) {
@@ -834,10 +834,10 @@ impl crate::Response for ReplaceCoreV1NamespaceStatusResponse {
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceCoreV1NamespaceStatusResponse::Created(result), buf.len()))
+                Ok((ReplaceNamespaceStatusResponse::Created(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceCoreV1NamespaceStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceCoreV1NamespaceStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespaceStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespaceStatusResponse::Other, 0)),
         }
     }
 }
@@ -847,7 +847,7 @@ impl crate::Response for ReplaceCoreV1NamespaceStatusResponse {
 impl Namespace {
     /// watch changes to an object of kind Namespace
     ///
-    /// Use [`WatchCoreV1NamespaceResponse`](./enum.WatchCoreV1NamespaceResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespaceResponse`](./enum.WatchNamespaceResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -858,11 +858,11 @@ impl Namespace {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespace(
+    pub fn watch_namespace(
         name: &str,
-        optional: WatchCoreV1NamespaceOptional<'_>,
+        optional: WatchNamespaceOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespaceOptional {
+        let WatchNamespaceOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -910,9 +910,9 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::watch_core_v1_namespace`](./struct.Namespace.html#method.watch_core_v1_namespace)
+/// Optional parameters of [`Namespace::watch_namespace`](./struct.Namespace.html#method.watch_namespace)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespaceOptional<'a> {
+pub struct WatchNamespaceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -935,15 +935,15 @@ pub struct WatchCoreV1NamespaceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Namespace::watch_core_v1_namespace`](./struct.Namespace.html#method.watch_core_v1_namespace)
+/// Parses the HTTP response of [`Namespace::watch_namespace`](./struct.Namespace.html#method.watch_namespace)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespaceResponse {
+pub enum WatchNamespaceResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespaceResponse {
+impl crate::Response for WatchNamespaceResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -954,10 +954,10 @@ impl crate::Response for WatchCoreV1NamespaceResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespaceResponse::Ok(result), byte_offset))
+                Ok((WatchNamespaceResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespaceResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespaceResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespaceResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespaceResponse::Other, 0)),
         }
     }
 }
@@ -967,17 +967,17 @@ impl crate::Response for WatchCoreV1NamespaceResponse {
 impl Namespace {
     /// watch individual changes to a list of Namespace
     ///
-    /// Use [`WatchCoreV1NamespaceListResponse`](./enum.WatchCoreV1NamespaceListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespaceListResponse`](./enum.WatchNamespaceListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_core_v1_namespace_list(
-        optional: WatchCoreV1NamespaceListOptional<'_>,
+    pub fn watch_namespace_list(
+        optional: WatchNamespaceListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchCoreV1NamespaceListOptional {
+        let WatchNamespaceListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1025,9 +1025,9 @@ impl Namespace {
     }
 }
 
-/// Optional parameters of [`Namespace::watch_core_v1_namespace_list`](./struct.Namespace.html#method.watch_core_v1_namespace_list)
+/// Optional parameters of [`Namespace::watch_namespace_list`](./struct.Namespace.html#method.watch_namespace_list)
 #[derive(Debug, Default)]
-pub struct WatchCoreV1NamespaceListOptional<'a> {
+pub struct WatchNamespaceListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1050,15 +1050,15 @@ pub struct WatchCoreV1NamespaceListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Namespace::watch_core_v1_namespace_list`](./struct.Namespace.html#method.watch_core_v1_namespace_list)
+/// Parses the HTTP response of [`Namespace::watch_namespace_list`](./struct.Namespace.html#method.watch_namespace_list)
 #[derive(Debug)]
-pub enum WatchCoreV1NamespaceListResponse {
+pub enum WatchNamespaceListResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchCoreV1NamespaceListResponse {
+impl crate::Response for WatchNamespaceListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1069,10 +1069,10 @@ impl crate::Response for WatchCoreV1NamespaceListResponse {
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchCoreV1NamespaceListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespaceListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchCoreV1NamespaceListResponse::Unauthorized, 0)),
-            _ => Ok((WatchCoreV1NamespaceListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespaceListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespaceListResponse::Other, 0)),
         }
     }
 }

@@ -20,7 +20,7 @@ pub struct HorizontalPodAutoscaler {
 impl HorizontalPodAutoscaler {
     /// create a HorizontalPodAutoscaler
     ///
-    /// Use [`CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
+    /// Use [`CreateNamespacedHorizontalPodAutoscalerResponse`](./enum.CreateNamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -33,12 +33,12 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn create_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
+    pub fn create_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
         body: &crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler,
-        optional: CreateAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'_>,
+        optional: CreateNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let CreateAutoscalingV1NamespacedHorizontalPodAutoscalerOptional {
+        let CreateNamespacedHorizontalPodAutoscalerOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers?", namespace = namespace);
@@ -54,22 +54,22 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::create_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.create_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Optional parameters of [`HorizontalPodAutoscaler::create_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.create_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug, Default)]
-pub struct CreateAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
+pub struct CreateNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::create_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.create_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::create_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.create_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
-pub enum CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+pub enum CreateNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+impl crate::Response for CreateNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -78,10 +78,10 @@ impl crate::Response for CreateAutoscalingV1NamespacedHorizontalPodAutoscalerRes
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
+                Ok((CreateNamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((CreateAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((CreateNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((CreateNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
         }
     }
 }
@@ -91,7 +91,7 @@ impl crate::Response for CreateAutoscalingV1NamespacedHorizontalPodAutoscalerRes
 impl HorizontalPodAutoscaler {
     /// delete collection of HorizontalPodAutoscaler
     ///
-    /// Use [`DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse`](./enum.DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
+    /// Use [`DeleteCollectionNamespacedHorizontalPodAutoscalerResponse`](./enum.DeleteCollectionNamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -102,11 +102,11 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_autoscaling_v1_collection_namespaced_horizontal_pod_autoscaler(
+    pub fn delete_collection_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
-        optional: DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerOptional<'_>,
+        optional: DeleteCollectionNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerOptional {
+        let DeleteCollectionNamespacedHorizontalPodAutoscalerOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -154,9 +154,9 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::delete_autoscaling_v1_collection_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.delete_autoscaling_v1_collection_namespaced_horizontal_pod_autoscaler)
+/// Optional parameters of [`HorizontalPodAutoscaler::delete_collection_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.delete_collection_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug, Default)]
-pub struct DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerOptional<'a> {
+pub struct DeleteCollectionNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -179,16 +179,16 @@ pub struct DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerOptiona
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::delete_autoscaling_v1_collection_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.delete_autoscaling_v1_collection_namespaced_horizontal_pod_autoscaler)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::delete_collection_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.delete_collection_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
-pub enum DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse {
+pub enum DeleteCollectionNamespacedHorizontalPodAutoscalerResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse {
+impl crate::Response for DeleteCollectionNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -204,16 +204,16 @@ impl crate::Response for DeleteAutoscalingV1CollectionNamespacedHorizontalPodAut
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedHorizontalPodAutoscalerResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse::OkValue(result), buf.len()))
+                    Ok((DeleteCollectionNamespacedHorizontalPodAutoscalerResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAutoscalingV1CollectionNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteCollectionNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((DeleteCollectionNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
         }
     }
 }
@@ -223,7 +223,7 @@ impl crate::Response for DeleteAutoscalingV1CollectionNamespacedHorizontalPodAut
 impl HorizontalPodAutoscaler {
     /// delete a HorizontalPodAutoscaler
     ///
-    /// Use [`DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
+    /// Use [`DeleteNamespacedHorizontalPodAutoscalerResponse`](./enum.DeleteNamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -238,12 +238,12 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn delete_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
+    pub fn delete_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
-        optional: DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'_>,
+        optional: DeleteNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerOptional {
+        let DeleteNamespacedHorizontalPodAutoscalerOptional {
             grace_period_seconds,
             orphan_dependents,
             pretty,
@@ -271,9 +271,9 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::delete_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.delete_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Optional parameters of [`HorizontalPodAutoscaler::delete_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.delete_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug, Default)]
-pub struct DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
+pub struct DeleteNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
     /// Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
@@ -284,16 +284,16 @@ pub struct DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::delete_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.delete_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::delete_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.delete_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
-pub enum DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+pub enum DeleteNamespacedHorizontalPodAutoscalerResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
     OkValue(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+impl crate::Response for DeleteNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -309,16 +309,16 @@ impl crate::Response for DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerRes
                 if is_status {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::OkStatus(result), buf.len()))
+                    Ok((DeleteNamespacedHorizontalPodAutoscalerResponse::OkStatus(result), buf.len()))
                 }
                 else {
                     let result = serde::Deserialize::deserialize(serde_json::Value::Object(result));
                     let result = result.map_err(crate::ResponseError::Json)?;
-                    Ok((DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::OkValue(result), buf.len()))
+                    Ok((DeleteNamespacedHorizontalPodAutoscalerResponse::OkValue(result), buf.len()))
                 }
             },
-            http::StatusCode::UNAUTHORIZED => Ok((DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((DeleteNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((DeleteNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
         }
     }
 }
@@ -328,17 +328,17 @@ impl crate::Response for DeleteAutoscalingV1NamespacedHorizontalPodAutoscalerRes
 impl HorizontalPodAutoscaler {
     /// list or watch objects of kind HorizontalPodAutoscaler
     ///
-    /// Use [`ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse`](./enum.ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`ListHorizontalPodAutoscalerForAllNamespacesResponse`](./enum.ListHorizontalPodAutoscalerForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_autoscaling_v1_horizontal_pod_autoscaler_for_all_namespaces(
-        optional: ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesOptional<'_>,
+    pub fn list_horizontal_pod_autoscaler_for_all_namespaces(
+        optional: ListHorizontalPodAutoscalerForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesOptional {
+        let ListHorizontalPodAutoscalerForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -386,9 +386,9 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::list_autoscaling_v1_horizontal_pod_autoscaler_for_all_namespaces`](./struct.HorizontalPodAutoscaler.html#method.list_autoscaling_v1_horizontal_pod_autoscaler_for_all_namespaces)
+/// Optional parameters of [`HorizontalPodAutoscaler::list_horizontal_pod_autoscaler_for_all_namespaces`](./struct.HorizontalPodAutoscaler.html#method.list_horizontal_pod_autoscaler_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesOptional<'a> {
+pub struct ListHorizontalPodAutoscalerForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -411,15 +411,15 @@ pub struct ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesOptional<'a> 
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::list_autoscaling_v1_horizontal_pod_autoscaler_for_all_namespaces`](./struct.HorizontalPodAutoscaler.html#method.list_autoscaling_v1_horizontal_pod_autoscaler_for_all_namespaces)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::list_horizontal_pod_autoscaler_for_all_namespaces`](./struct.HorizontalPodAutoscaler.html#method.list_horizontal_pod_autoscaler_for_all_namespaces)
 #[derive(Debug)]
-pub enum ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse {
+pub enum ListHorizontalPodAutoscalerForAllNamespacesResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscalerList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse {
+impl crate::Response for ListHorizontalPodAutoscalerForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -428,10 +428,10 @@ impl crate::Response for ListAutoscalingV1HorizontalPodAutoscalerForAllNamespace
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse::Ok(result), buf.len()))
+                Ok((ListHorizontalPodAutoscalerForAllNamespacesResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((ListAutoscalingV1HorizontalPodAutoscalerForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListHorizontalPodAutoscalerForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((ListHorizontalPodAutoscalerForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -441,7 +441,7 @@ impl crate::Response for ListAutoscalingV1HorizontalPodAutoscalerForAllNamespace
 impl HorizontalPodAutoscaler {
     /// list or watch objects of kind HorizontalPodAutoscaler
     ///
-    /// Use [`ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
+    /// Use [`ListNamespacedHorizontalPodAutoscalerResponse`](./enum.ListNamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -452,11 +452,11 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn list_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
+    pub fn list_namespaced_horizontal_pod_autoscaler(
         namespace: &str,
-        optional: ListAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'_>,
+        optional: ListNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ListAutoscalingV1NamespacedHorizontalPodAutoscalerOptional {
+        let ListNamespacedHorizontalPodAutoscalerOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -504,9 +504,9 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::list_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.list_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Optional parameters of [`HorizontalPodAutoscaler::list_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.list_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug, Default)]
-pub struct ListAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
+pub struct ListNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -529,15 +529,15 @@ pub struct ListAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::list_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.list_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::list_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.list_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
-pub enum ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+pub enum ListNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscalerList),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+impl crate::Response for ListNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -546,10 +546,10 @@ impl crate::Response for ListAutoscalingV1NamespacedHorizontalPodAutoscalerRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
+                Ok((ListNamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((ListAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ListNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((ListNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
         }
     }
 }
@@ -559,7 +559,7 @@ impl crate::Response for ListAutoscalingV1NamespacedHorizontalPodAutoscalerRespo
 impl HorizontalPodAutoscaler {
     /// partially update the specified HorizontalPodAutoscaler
     ///
-    /// Use [`PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedHorizontalPodAutoscalerResponse`](./enum.PatchNamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -576,13 +576,13 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
+    pub fn patch_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'_>,
+        optional: PatchNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAutoscalingV1NamespacedHorizontalPodAutoscalerOptional {
+        let PatchNamespacedHorizontalPodAutoscalerOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}?", name = name, namespace = namespace);
@@ -598,22 +598,22 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Optional parameters of [`HorizontalPodAutoscaler::patch_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.patch_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug, Default)]
-pub struct PatchAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
+pub struct PatchNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::patch_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.patch_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
-pub enum PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+pub enum PatchNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+impl crate::Response for PatchNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -622,10 +622,10 @@ impl crate::Response for PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResp
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
         }
     }
 }
@@ -635,7 +635,7 @@ impl crate::Response for PatchAutoscalingV1NamespacedHorizontalPodAutoscalerResp
 impl HorizontalPodAutoscaler {
     /// partially update status of the specified HorizontalPodAutoscaler
     ///
-    /// Use [`PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse`](./enum.PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse.html) to parse the HTTP response.
+    /// Use [`PatchNamespacedHorizontalPodAutoscalerStatusResponse`](./enum.PatchNamespacedHorizontalPodAutoscalerStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -652,13 +652,13 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status(
+    pub fn patch_namespaced_horizontal_pod_autoscaler_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
-        optional: PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusOptional<'_>,
+        optional: PatchNamespacedHorizontalPodAutoscalerStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusOptional {
+        let PatchNamespacedHorizontalPodAutoscalerStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status?", name = name, namespace = namespace);
@@ -674,22 +674,22 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status)
+/// Optional parameters of [`HorizontalPodAutoscaler::patch_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.patch_namespaced_horizontal_pod_autoscaler_status)
 #[derive(Debug, Default)]
-pub struct PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusOptional<'a> {
+pub struct PatchNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.patch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::patch_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.patch_namespaced_horizontal_pod_autoscaler_status)
 #[derive(Debug)]
-pub enum PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+pub enum PatchNamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+impl crate::Response for PatchNamespacedHorizontalPodAutoscalerStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -698,10 +698,10 @@ impl crate::Response for PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStat
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
+                Ok((PatchNamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
-            _ => Ok((PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((PatchNamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
+            _ => Ok((PatchNamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
         }
     }
 }
@@ -711,7 +711,7 @@ impl crate::Response for PatchAutoscalingV1NamespacedHorizontalPodAutoscalerStat
 impl HorizontalPodAutoscaler {
     /// read the specified HorizontalPodAutoscaler
     ///
-    /// Use [`ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedHorizontalPodAutoscalerResponse`](./enum.ReadNamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -726,12 +726,12 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
+    pub fn read_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
-        optional: ReadAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'_>,
+        optional: ReadNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAutoscalingV1NamespacedHorizontalPodAutoscalerOptional {
+        let ReadNamespacedHorizontalPodAutoscalerOptional {
             exact,
             export,
             pretty,
@@ -755,9 +755,9 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::read_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.read_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Optional parameters of [`HorizontalPodAutoscaler::read_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.read_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug, Default)]
-pub struct ReadAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
+pub struct ReadNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
     /// Should this value be exported.  Export strips fields that a user can not specify.
@@ -766,15 +766,15 @@ pub struct ReadAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::read_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.read_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::read_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.read_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
-pub enum ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+pub enum ReadNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+impl crate::Response for ReadNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -783,10 +783,10 @@ impl crate::Response for ReadAutoscalingV1NamespacedHorizontalPodAutoscalerRespo
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
         }
     }
 }
@@ -796,7 +796,7 @@ impl crate::Response for ReadAutoscalingV1NamespacedHorizontalPodAutoscalerRespo
 impl HorizontalPodAutoscaler {
     /// read status of the specified HorizontalPodAutoscaler
     ///
-    /// Use [`ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse`](./enum.ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReadNamespacedHorizontalPodAutoscalerStatusResponse`](./enum.ReadNamespacedHorizontalPodAutoscalerStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -811,12 +811,12 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn read_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status(
+    pub fn read_namespaced_horizontal_pod_autoscaler_status(
         name: &str,
         namespace: &str,
-        optional: ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusOptional<'_>,
+        optional: ReadNamespacedHorizontalPodAutoscalerStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusOptional {
+        let ReadNamespacedHorizontalPodAutoscalerStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status?", name = name, namespace = namespace);
@@ -832,22 +832,22 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::read_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.read_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status)
+/// Optional parameters of [`HorizontalPodAutoscaler::read_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.read_namespaced_horizontal_pod_autoscaler_status)
 #[derive(Debug, Default)]
-pub struct ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusOptional<'a> {
+pub struct ReadNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::read_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.read_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::read_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.read_namespaced_horizontal_pod_autoscaler_status)
 #[derive(Debug)]
-pub enum ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+pub enum ReadNamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+impl crate::Response for ReadNamespacedHorizontalPodAutoscalerStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -856,10 +856,10 @@ impl crate::Response for ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatu
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
+                Ok((ReadNamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReadNamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
         }
     }
 }
@@ -869,7 +869,7 @@ impl crate::Response for ReadAutoscalingV1NamespacedHorizontalPodAutoscalerStatu
 impl HorizontalPodAutoscaler {
     /// replace the specified HorizontalPodAutoscaler
     ///
-    /// Use [`ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedHorizontalPodAutoscalerResponse`](./enum.ReplaceNamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -886,13 +886,13 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
+    pub fn replace_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler,
-        optional: ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'_>,
+        optional: ReplaceNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerOptional {
+        let ReplaceNamespacedHorizontalPodAutoscalerOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}?", name = name, namespace = namespace);
@@ -908,22 +908,22 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Optional parameters of [`HorizontalPodAutoscaler::replace_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.replace_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug, Default)]
-pub struct ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
+pub struct ReplaceNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::replace_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.replace_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
-pub enum ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+pub enum ReplaceNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+impl crate::Response for ReplaceNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -932,10 +932,10 @@ impl crate::Response for ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerRe
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedHorizontalPodAutoscalerResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
         }
     }
 }
@@ -945,7 +945,7 @@ impl crate::Response for ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerRe
 impl HorizontalPodAutoscaler {
     /// replace status of the specified HorizontalPodAutoscaler
     ///
-    /// Use [`ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse`](./enum.ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse.html) to parse the HTTP response.
+    /// Use [`ReplaceNamespacedHorizontalPodAutoscalerStatusResponse`](./enum.ReplaceNamespacedHorizontalPodAutoscalerStatusResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -962,13 +962,13 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status(
+    pub fn replace_namespaced_horizontal_pod_autoscaler_status(
         name: &str,
         namespace: &str,
         body: &crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler,
-        optional: ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusOptional<'_>,
+        optional: ReplaceNamespacedHorizontalPodAutoscalerStatusOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusOptional {
+        let ReplaceNamespacedHorizontalPodAutoscalerStatusOptional {
             pretty,
         } = optional;
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status?", name = name, namespace = namespace);
@@ -984,22 +984,22 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status)
+/// Optional parameters of [`HorizontalPodAutoscaler::replace_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.replace_namespaced_horizontal_pod_autoscaler_status)
 #[derive(Debug, Default)]
-pub struct ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusOptional<'a> {
+pub struct ReplaceNamespacedHorizontalPodAutoscalerStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.replace_autoscaling_v1_namespaced_horizontal_pod_autoscaler_status)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::replace_namespaced_horizontal_pod_autoscaler_status`](./struct.HorizontalPodAutoscaler.html#method.replace_namespaced_horizontal_pod_autoscaler_status)
 #[derive(Debug)]
-pub enum ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+pub enum ReplaceNamespacedHorizontalPodAutoscalerStatusResponse {
     Ok(crate::v1_8::api::autoscaling::v1::HorizontalPodAutoscaler),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse {
+impl crate::Response for ReplaceNamespacedHorizontalPodAutoscalerStatusResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1008,10 +1008,10 @@ impl crate::Response for ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerSt
                     Err(ref err) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
                     Err(err) => return Err(crate::ResponseError::Json(err)),
                 };
-                Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
+                Ok((ReplaceNamespacedHorizontalPodAutoscalerStatusResponse::Ok(result), buf.len()))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
-            _ => Ok((ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((ReplaceNamespacedHorizontalPodAutoscalerStatusResponse::Unauthorized, 0)),
+            _ => Ok((ReplaceNamespacedHorizontalPodAutoscalerStatusResponse::Other, 0)),
         }
     }
 }
@@ -1021,17 +1021,17 @@ impl crate::Response for ReplaceAutoscalingV1NamespacedHorizontalPodAutoscalerSt
 impl HorizontalPodAutoscaler {
     /// watch individual changes to a list of HorizontalPodAutoscaler
     ///
-    /// Use [`WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse`](./enum.WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use [`WatchHorizontalPodAutoscalerListForAllNamespacesResponse`](./enum.WatchHorizontalPodAutoscalerListForAllNamespacesResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_autoscaling_v1_horizontal_pod_autoscaler_list_for_all_namespaces(
-        optional: WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesOptional<'_>,
+    pub fn watch_horizontal_pod_autoscaler_list_for_all_namespaces(
+        optional: WatchHorizontalPodAutoscalerListForAllNamespacesOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesOptional {
+        let WatchHorizontalPodAutoscalerListForAllNamespacesOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1079,9 +1079,9 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::watch_autoscaling_v1_horizontal_pod_autoscaler_list_for_all_namespaces`](./struct.HorizontalPodAutoscaler.html#method.watch_autoscaling_v1_horizontal_pod_autoscaler_list_for_all_namespaces)
+/// Optional parameters of [`HorizontalPodAutoscaler::watch_horizontal_pod_autoscaler_list_for_all_namespaces`](./struct.HorizontalPodAutoscaler.html#method.watch_horizontal_pod_autoscaler_list_for_all_namespaces)
 #[derive(Debug, Default)]
-pub struct WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesOptional<'a> {
+pub struct WatchHorizontalPodAutoscalerListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1104,15 +1104,15 @@ pub struct WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesOptional
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::watch_autoscaling_v1_horizontal_pod_autoscaler_list_for_all_namespaces`](./struct.HorizontalPodAutoscaler.html#method.watch_autoscaling_v1_horizontal_pod_autoscaler_list_for_all_namespaces)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::watch_horizontal_pod_autoscaler_list_for_all_namespaces`](./struct.HorizontalPodAutoscaler.html#method.watch_horizontal_pod_autoscaler_list_for_all_namespaces)
 #[derive(Debug)]
-pub enum WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse {
+pub enum WatchHorizontalPodAutoscalerListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse {
+impl crate::Response for WatchHorizontalPodAutoscalerListForAllNamespacesResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1123,10 +1123,10 @@ impl crate::Response for WatchAutoscalingV1HorizontalPodAutoscalerListForAllName
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse::Ok(result), byte_offset))
+                Ok((WatchHorizontalPodAutoscalerListForAllNamespacesResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchAutoscalingV1HorizontalPodAutoscalerListForAllNamespacesResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchHorizontalPodAutoscalerListForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchHorizontalPodAutoscalerListForAllNamespacesResponse::Other, 0)),
         }
     }
 }
@@ -1136,7 +1136,7 @@ impl crate::Response for WatchAutoscalingV1HorizontalPodAutoscalerListForAllName
 impl HorizontalPodAutoscaler {
     /// watch changes to an object of kind HorizontalPodAutoscaler
     ///
-    /// Use [`WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse`](./enum.WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedHorizontalPodAutoscalerResponse`](./enum.WatchNamespacedHorizontalPodAutoscalerResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1151,12 +1151,12 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler(
+    pub fn watch_namespaced_horizontal_pod_autoscaler(
         name: &str,
         namespace: &str,
-        optional: WatchAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'_>,
+        optional: WatchNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAutoscalingV1NamespacedHorizontalPodAutoscalerOptional {
+        let WatchNamespacedHorizontalPodAutoscalerOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1204,9 +1204,9 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Optional parameters of [`HorizontalPodAutoscaler::watch_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.watch_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug, Default)]
-pub struct WatchAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
+pub struct WatchNamespacedHorizontalPodAutoscalerOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1229,15 +1229,15 @@ pub struct WatchAutoscalingV1NamespacedHorizontalPodAutoscalerOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::watch_namespaced_horizontal_pod_autoscaler`](./struct.HorizontalPodAutoscaler.html#method.watch_namespaced_horizontal_pod_autoscaler)
 #[derive(Debug)]
-pub enum WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+pub enum WatchNamespacedHorizontalPodAutoscalerResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse {
+impl crate::Response for WatchNamespacedHorizontalPodAutoscalerResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1248,10 +1248,10 @@ impl crate::Response for WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResp
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedHorizontalPodAutoscalerResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
-            _ => Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedHorizontalPodAutoscalerResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedHorizontalPodAutoscalerResponse::Other, 0)),
         }
     }
 }
@@ -1261,7 +1261,7 @@ impl crate::Response for WatchAutoscalingV1NamespacedHorizontalPodAutoscalerResp
 impl HorizontalPodAutoscaler {
     /// watch individual changes to a list of HorizontalPodAutoscaler
     ///
-    /// Use [`WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse`](./enum.WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse.html) to parse the HTTP response.
+    /// Use [`WatchNamespacedHorizontalPodAutoscalerListResponse`](./enum.WatchNamespacedHorizontalPodAutoscalerListResponse.html) to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1272,11 +1272,11 @@ impl HorizontalPodAutoscaler {
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_list(
+    pub fn watch_namespaced_horizontal_pod_autoscaler_list(
         namespace: &str,
-        optional: WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListOptional<'_>,
+        optional: WatchNamespacedHorizontalPodAutoscalerListOptional<'_>,
     ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-        let WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListOptional {
+        let WatchNamespacedHorizontalPodAutoscalerListOptional {
             continue_,
             field_selector,
             include_uninitialized,
@@ -1324,9 +1324,9 @@ impl HorizontalPodAutoscaler {
     }
 }
 
-/// Optional parameters of [`HorizontalPodAutoscaler::watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_list`](./struct.HorizontalPodAutoscaler.html#method.watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_list)
+/// Optional parameters of [`HorizontalPodAutoscaler::watch_namespaced_horizontal_pod_autoscaler_list`](./struct.HorizontalPodAutoscaler.html#method.watch_namespaced_horizontal_pod_autoscaler_list)
 #[derive(Debug, Default)]
-pub struct WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListOptional<'a> {
+pub struct WatchNamespacedHorizontalPodAutoscalerListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
@@ -1349,15 +1349,15 @@ pub struct WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`HorizontalPodAutoscaler::watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_list`](./struct.HorizontalPodAutoscaler.html#method.watch_autoscaling_v1_namespaced_horizontal_pod_autoscaler_list)
+/// Parses the HTTP response of [`HorizontalPodAutoscaler::watch_namespaced_horizontal_pod_autoscaler_list`](./struct.HorizontalPodAutoscaler.html#method.watch_namespaced_horizontal_pod_autoscaler_list)
 #[derive(Debug)]
-pub enum WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse {
+pub enum WatchNamespacedHorizontalPodAutoscalerListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
     Unauthorized,
     Other,
 }
 
-impl crate::Response for WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse {
+impl crate::Response for WatchNamespacedHorizontalPodAutoscalerListResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
@@ -1368,10 +1368,10 @@ impl crate::Response for WatchAutoscalingV1NamespacedHorizontalPodAutoscalerList
                     Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
                     None => return Err(crate::ResponseError::NeedMoreData),
                 };
-                Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse::Ok(result), byte_offset))
+                Ok((WatchNamespacedHorizontalPodAutoscalerListResponse::Ok(result), byte_offset))
             },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse::Unauthorized, 0)),
-            _ => Ok((WatchAutoscalingV1NamespacedHorizontalPodAutoscalerListResponse::Other, 0)),
+            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedHorizontalPodAutoscalerListResponse::Unauthorized, 0)),
+            _ => Ok((WatchNamespacedHorizontalPodAutoscalerListResponse::Other, 0)),
         }
     }
 }
