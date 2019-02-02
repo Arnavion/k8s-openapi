@@ -4,6 +4,17 @@
 //!
 //! Each supported version of Kubernetes is represented by a feature name (like `v1_9`). Only one such feature can be enabled at a time.
 //!
+//! **These docs have been generated with the `
+
+#![cfg_attr(feature = "v1_8", doc = "v1_8")]
+#![cfg_attr(feature = "v1_9", doc = "v1_9")]
+#![cfg_attr(feature = "v1_10", doc = "v1_10")]
+#![cfg_attr(feature = "v1_11", doc = "v1_11")]
+#![cfg_attr(feature = "v1_12", doc = "v1_12")]
+#![cfg_attr(feature = "v1_13", doc = "v1_13")]
+
+//! ` feature enabled. To see docs for one of the other supported versions, please generate the docs locally with `cargo doc --features 'v1_<>'`**
+//!
 //! If you're writing a library crate that supports multiple versions of Kubernetes (eg >= v1.9), it's recommended that your crate does *not*
 //! enable the corresponding feature directly (eg `k8s-openapi = { features = ["v1_9"] }`). Instead, let the application crate that uses your library
 //! enable the feature corresponding to the version of Kubernetes that *it* supports. This ensures that the entire crate graph can use a common set
@@ -373,21 +384,6 @@ impl std::error::Error for ResponseError {
     }
 }
 
-#[cfg(feature = "dox")]
-macro_rules! mods {
-    () => {};
-
-    ($name:ident $name_str:expr, $($rest:tt)*) => {
-        /// This module is only emitted because the `dox` feature was enabled for generating docs.
-        /// When the corresponding feature for this version is enabled instead, this mod will be private
-        /// and its contents will be re-exported from the crate root.
-        pub mod $name;
-
-        mods! { $($rest)* }
-    };
-}
-
-#[cfg(not(feature = "dox"))]
 macro_rules! mods {
     () => {};
 

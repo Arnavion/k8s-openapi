@@ -29,3 +29,7 @@ popd
 pushd k8s-openapi-tests
 RUST_BACKTRACE=full timeout 120 cargo test --verbose --features "test_$FEATURE"
 popd
+
+pushd k8s-openapi
+cargo doc --verbose --no-deps --features "$FEATURE"
+popd

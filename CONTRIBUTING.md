@@ -36,7 +36,11 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi/Cargo.toml`: Add a new feature for the new version.
 
+1. `/k8s-openapi/Cargo.toml`: Update `package.metadata.docs.rs.features` to the new feature.
+
 1. `/k8s-openapi/build.rs`: Update the value of `MAX`
+
+1. `/k8s-openapi/src/lib.rs`: Add a new doc header attribute for the new version.
 
 1. `/k8s-openapi/src/lib.rs`: Add a new `mod` for the new version.
 

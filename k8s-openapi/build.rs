@@ -4,28 +4,24 @@ const MAX: usize = 13;
 fn main() -> Result<(), Box<std::error::Error>> {
     use std::io::Write;
 
-    let version =
-        if std::env::var("CARGO_FEATURE_DOX").is_ok() {
-            None
-        }
-        else {
-            let mut v1 = None;
+    let version = {
+        let mut v1 = None;
 
-            for v2 in MIN..=MAX {
-                if std::env::var(format!("CARGO_FEATURE_V1_{}", v2)).is_ok() {
-                    v1 = match v1 {
-                        Some(v1) => panic!(
-                            "Both v1_{} and v1_{} features are enabled on the k8s-openapi crate. Only one feature can be enabled at the same time.",
-                            v1,
-                            v2,
-                        ),
-                        None => Some(v2),
-                    };
-                }
+        for v2 in MIN..=MAX {
+            if std::env::var(format!("CARGO_FEATURE_V1_{}", v2)).is_ok() {
+                v1 = match v1 {
+                    Some(v1) => panic!(
+                        "Both v1_{} and v1_{} features are enabled on the k8s-openapi crate. Only one feature can be enabled at the same time.",
+                        v1,
+                        v2,
+                    ),
+                    None => Some(v2),
+                };
             }
+        }
 
-            Some(v1.expect("At least one v1_* feature must be enabled on the k8s-openapi crate."))
-        };
+        v1.expect("At least one v1_* feature must be enabled on the k8s-openapi crate.")
+    };
 
     let mut f = {
         let mut out_file: std::path::PathBuf = std::env::var_os("OUT_DIR").ok_or_else(|| "OUT_DIR not set")?.into();
@@ -41,15 +37,10 @@ fn main() -> Result<(), Box<std::error::Error>> {
         writeln!(f, "/// ```rust")?;
         writeln!(f, "/// # #[macro_use] extern crate k8s_openapi;")?;
         writeln!(f, "/// k8s_if_1_{}! {{", v)?;
-        if v == 7 {
-            writeln!(f, "///     use k8s_openapi::kubernetes::pkg::api::v1 as api;")?;
-        }
-        else {
-            writeln!(f, "///     use k8s_openapi::api::core::v1 as api;")?;
-        }
+        writeln!(f, "///     use k8s_openapi::api::core::v1 as api;")?;
         writeln!(f, "/// }}")?;
         writeln!(f, "/// ```")?;
-        if version == Some(v) {
+        if version == v {
             writeln!(f, "#[macro_export] macro_rules! k8s_if_1_{} {{ ($($tt:tt)*) => {{ $($tt)* }}; }}", v)?;
         }
         else {
@@ -126,7 +117,7 @@ fn main() -> Result<(), Box<std::error::Error>> {
     for v in MIN..=MAX {
         writeln!(f)?;
 
-        for (name, enabled) in &[("", version == Some(v)), ("_ge", cfg_ge(v, version)), ("_le", cfg_le(v, version))] {
+        for (name, enabled) in &[("", version == v), ("_ge", cfg_ge(v, version)), ("_le", cfg_le(v, version))] {
             writeln!(f, "    (@inner {{ $test:expr }} {{ $($arms:tt)* }} {{ k8s_if{}_1_{}!($($arm:tt)*), $($rest:tt)* }}) => {{", name, v)?;
             if *enabled {
                 writeln!(f, "        k8s_match!(@inner {{ $test }} {{ $($arms)* }} {{ $($arm)*, $($rest)* }})")?;
@@ -151,20 +142,10 @@ fn main() -> Result<(), Box<std::error::Error>> {
     Ok(())
 }
 
-fn cfg_ge(v: usize, version: Option<usize>) -> bool {
-    if let Some(version) = version {
-        v <= version
-    }
-    else {
-        false
-    }
+fn cfg_ge(v: usize, version: usize) -> bool {
+    v <= version
 }
 
-fn cfg_le(v: usize, version: Option<usize>) -> bool {
-    if let Some(version) = version {
-        v >= version
-    }
-    else {
-        false
-    }
+fn cfg_le(v: usize, version: usize) -> bool {
+    v >= version
 }

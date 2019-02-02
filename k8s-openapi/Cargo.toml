@@ -29,8 +29,6 @@ v1_11 = []
 v1_12 = []
 v1_13 = []
 
-# Only used to build docs
-dox = []
-
 [package.metadata.docs.rs]
-features = ["dox"]
+# docs.rs generates docs for the latest version. To see the docs for an older version, please generate them yourself.
+features = ["v1_13"]
