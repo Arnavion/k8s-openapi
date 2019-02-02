@@ -328,7 +328,9 @@ impl ResponseBody {
     }
 
     /// Append a slice of data from the HTTP response, and try to parse all the data buffered so far into a response type.
-    #[deprecated(since = "0.4.0", note = "Use append_slice() and parse()")]
+    #[deprecated(since = "0.4.0", note = "A single `append_slice()` can append data that requires more than one `parse()` to consume.
+    So you should call `append_slice()` and `parse()` individually instead of this function, and you should call `parse()` repeatedly while it returns `Ok`.
+    ")]
     pub fn append_slice_and_parse<T>(&mut self, buf: &[u8]) -> Result<T, ResponseError> where T: Response {
         self.append_slice(buf);
         self.parse()
