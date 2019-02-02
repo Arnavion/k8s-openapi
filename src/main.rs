@@ -861,8 +861,13 @@ fn get_comment_text<'a>(s: &'a str, indent: &'a str) -> impl Iterator<Item = std
 			"".into()
 		}
 		else {
-			let line = line.replace("[", r"\[");
-			let line = line.replace("]", r"\]");
+			let line =
+				line
+				.replace(r"\", r"\\")
+				.replace("[", r"\[")
+				.replace("]", r"\]")
+				.replace("<", r"\<")
+				.replace(">", r"\>");
 			format!("{} {}", indent, line).into()
 		})
 }

@@ -1,6 +1,6 @@
 // Generated from definition io.k8s.api.core.v1.PodAffinityTerm
 
-/// Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> tches that of any node on which a pod of the set of pods is running
+/// Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key \<topologyKey\> tches that of any node on which a pod of the set of pods is running
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct PodAffinityTerm {
     /// A label query over a set of resources, in this case pods.

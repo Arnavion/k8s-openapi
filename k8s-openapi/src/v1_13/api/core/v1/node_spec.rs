@@ -12,7 +12,7 @@ pub struct NodeSpec {
     /// PodCIDR represents the pod IP range assigned to the node.
     pub pod_cidr: Option<String>,
 
-    /// ID of the node assigned by the cloud provider in the format: <ProviderName>://<ProviderSpecificNodeID>
+    /// ID of the node assigned by the cloud provider in the format: \<ProviderName\>://\<ProviderSpecificNodeID\>
     pub provider_id: Option<String>,
 
     /// If specified, the node's taints.

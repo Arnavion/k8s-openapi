@@ -3,7 +3,7 @@
 /// Represents a Flocker volume mounted by the Flocker agent. One and only one of datasetName and datasetUUID should be set. Flocker volumes do not support ownership management or SELinux relabeling.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct FlockerVolumeSource {
-    /// Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated
+    /// Name of the dataset stored as metadata -\> name on the dataset for Flocker should be considered as deprecated
     pub dataset_name: Option<String>,
 
     /// UUID of the dataset. This is unique identifier of a Flocker dataset

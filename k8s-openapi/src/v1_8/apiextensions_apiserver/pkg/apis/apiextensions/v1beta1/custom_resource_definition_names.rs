@@ -6,7 +6,7 @@ pub struct CustomResourceDefinitionNames {
     /// Kind is the serialized kind of the resource.  It is normally CamelCase and singular.
     pub kind: String,
 
-    /// ListKind is the serialized kind of the list for this resource.  Defaults to <kind>List.
+    /// ListKind is the serialized kind of the list for this resource.  Defaults to \<kind\>List.
     pub list_kind: Option<String>,
 
     /// Plural is the plural name of the resource to serve.  It must match the name of the CustomResourceDefinition-registration too: plural.group and it must be all lowercase.
@@ -15,7 +15,7 @@ pub struct CustomResourceDefinitionNames {
     /// ShortNames are short names for the resource.  It must be all lowercase.
     pub short_names: Option<Vec<String>>,
 
-    /// Singular is the singular name of the resource.  It must be all lowercase  Defaults to lowercased <kind>
+    /// Singular is the singular name of the resource.  It must be all lowercase  Defaults to lowercased \<kind\>
     pub singular: Option<String>,
 }
 
