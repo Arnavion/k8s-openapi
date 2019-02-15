@@ -86,9 +86,7 @@ impl serde::Serialize for ServerAddressByClientCIDR {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ServerAddressByClientCIDR",
-            0 +
-            1 +
-            1,
+            2,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "clientCIDR", &self.client_cidr)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "serverAddress", &self.server_address)?;

@@ -36,7 +36,7 @@ impl PersistentVolume {
         let CreatePersistentVolumeOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/persistentvolumes?");
+        let __url = "/api/v1/persistentvolumes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -50,7 +50,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::create_persistent_volume`](./struct.PersistentVolume.html#method.create_persistent_volume)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreatePersistentVolumeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -107,7 +107,7 @@ impl PersistentVolume {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/persistentvolumes?");
+        let __url = "/api/v1/persistentvolumes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -145,7 +145,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::delete_collection_persistent_volume`](./struct.PersistentVolume.html#method.delete_collection_persistent_volume)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -257,7 +257,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::delete_persistent_volume`](./struct.PersistentVolume.html#method.delete_persistent_volume)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeletePersistentVolumeOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -334,7 +334,7 @@ impl PersistentVolume {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/persistentvolumes?");
+        let __url = "/api/v1/persistentvolumes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -372,7 +372,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::list_persistent_volume`](./struct.PersistentVolume.html#method.list_persistent_volume)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -461,7 +461,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::patch_persistent_volume`](./struct.PersistentVolume.html#method.patch_persistent_volume)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchPersistentVolumeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -532,7 +532,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::patch_persistent_volume_status`](./struct.PersistentVolume.html#method.patch_persistent_volume_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchPersistentVolumeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -608,7 +608,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::read_persistent_volume`](./struct.PersistentVolume.html#method.read_persistent_volume)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadPersistentVolumeOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -680,7 +680,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::read_persistent_volume_status`](./struct.PersistentVolume.html#method.read_persistent_volume_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadPersistentVolumeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -751,7 +751,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::replace_persistent_volume`](./struct.PersistentVolume.html#method.replace_persistent_volume)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplacePersistentVolumeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -822,7 +822,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::replace_persistent_volume_status`](./struct.PersistentVolume.html#method.replace_persistent_volume_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplacePersistentVolumeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -922,7 +922,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::watch_persistent_volume`](./struct.PersistentVolume.html#method.watch_persistent_volume)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -999,7 +999,7 @@ impl PersistentVolume {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/watch/persistentvolumes?");
+        let __url = "/api/v1/watch/persistentvolumes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1037,7 +1037,7 @@ impl PersistentVolume {
 }
 
 /// Optional parameters of [`PersistentVolume::watch_persistent_volume_list`](./struct.PersistentVolume.html#method.watch_persistent_volume_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPersistentVolumeListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1216,7 +1216,6 @@ impl serde::Serialize for PersistentVolume {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolume",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1) +

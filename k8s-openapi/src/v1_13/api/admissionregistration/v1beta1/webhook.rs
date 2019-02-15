@@ -152,10 +152,8 @@ impl serde::Serialize for Webhook {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Webhook",
-            0 +
-            1 +
+            2 +
             self.failure_policy.as_ref().map_or(0, |_| 1) +
-            1 +
             self.namespace_selector.as_ref().map_or(0, |_| 1) +
             self.rules.as_ref().map_or(0, |_| 1) +
             self.side_effects.as_ref().map_or(0, |_| 1),

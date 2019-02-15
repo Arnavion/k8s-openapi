@@ -95,7 +95,6 @@ impl serde::Serialize for MetricValueStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "MetricValueStatus",
-            0 +
             self.average_utilization.as_ref().map_or(0, |_| 1) +
             self.average_value.as_ref().map_or(0, |_| 1) +
             self.value.as_ref().map_or(0, |_| 1),

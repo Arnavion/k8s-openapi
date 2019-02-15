@@ -95,7 +95,6 @@ impl serde::Serialize for EnvVar {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EnvVar",
-            0 +
             1 +
             self.value.as_ref().map_or(0, |_| 1) +
             self.value_from.as_ref().map_or(0, |_| 1),

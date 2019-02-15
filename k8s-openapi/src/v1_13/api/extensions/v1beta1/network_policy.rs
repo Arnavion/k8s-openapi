@@ -60,7 +60,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::create_namespaced_network_policy`](./struct.NetworkPolicy.html#method.create_namespaced_network_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedNetworkPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -182,7 +182,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::delete_collection_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_collection_namespaced_network_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -305,7 +305,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::delete_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_namespaced_network_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedNetworkPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -436,7 +436,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::list_namespaced_network_policy`](./struct.NetworkPolicy.html#method.list_namespaced_network_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -513,7 +513,7 @@ impl NetworkPolicy {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/networkpolicies?");
+        let __url = "/apis/extensions/v1beta1/networkpolicies?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -551,7 +551,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::list_network_policy_for_all_namespaces`](./struct.NetworkPolicy.html#method.list_network_policy_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListNetworkPolicyForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -651,7 +651,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::patch_namespaced_network_policy`](./struct.NetworkPolicy.html#method.patch_namespaced_network_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedNetworkPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -734,7 +734,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::read_namespaced_network_policy`](./struct.NetworkPolicy.html#method.read_namespaced_network_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedNetworkPolicyOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -818,7 +818,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::replace_namespaced_network_policy`](./struct.NetworkPolicy.html#method.replace_namespaced_network_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedNetworkPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -934,7 +934,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::watch_namespaced_network_policy`](./struct.NetworkPolicy.html#method.watch_namespaced_network_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1056,7 +1056,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::watch_namespaced_network_policy_list`](./struct.NetworkPolicy.html#method.watch_namespaced_network_policy_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedNetworkPolicyListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1135,7 +1135,7 @@ impl NetworkPolicy {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/watch/networkpolicies?");
+        let __url = "/apis/extensions/v1beta1/watch/networkpolicies?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1173,7 +1173,7 @@ impl NetworkPolicy {
 }
 
 /// Optional parameters of [`NetworkPolicy::watch_network_policy_list_for_all_namespaces`](./struct.NetworkPolicy.html#method.watch_network_policy_list_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNetworkPolicyListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1348,7 +1348,6 @@ impl serde::Serialize for NetworkPolicy {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicy",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1),

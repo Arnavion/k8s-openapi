@@ -122,7 +122,6 @@ impl serde::Serialize for StatusDetails {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatusDetails",
-            0 +
             self.causes.as_ref().map_or(0, |_| 1) +
             self.group.as_ref().map_or(0, |_| 1) +
             self.kind.as_ref().map_or(0, |_| 1) +

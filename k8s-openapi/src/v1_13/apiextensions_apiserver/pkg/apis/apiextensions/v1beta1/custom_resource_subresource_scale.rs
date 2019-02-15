@@ -95,10 +95,8 @@ impl serde::Serialize for CustomResourceSubresourceScale {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceSubresourceScale",
-            0 +
-            self.label_selector_path.as_ref().map_or(0, |_| 1) +
-            1 +
-            1,
+            2 +
+            self.label_selector_path.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.label_selector_path {
             serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelectorPath", value)?;

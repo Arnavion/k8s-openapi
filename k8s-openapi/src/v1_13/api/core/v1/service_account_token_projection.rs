@@ -95,10 +95,9 @@ impl serde::Serialize for ServiceAccountTokenProjection {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ServiceAccountTokenProjection",
-            0 +
+            1 +
             self.audience.as_ref().map_or(0, |_| 1) +
-            self.expiration_seconds.as_ref().map_or(0, |_| 1) +
-            1,
+            self.expiration_seconds.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.audience {
             serde::ser::SerializeStruct::serialize_field(&mut state, "audience", value)?;

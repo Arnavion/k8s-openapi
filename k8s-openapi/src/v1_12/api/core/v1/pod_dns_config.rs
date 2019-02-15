@@ -95,7 +95,6 @@ impl serde::Serialize for PodDNSConfig {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodDNSConfig",
-            0 +
             self.nameservers.as_ref().map_or(0, |_| 1) +
             self.options.as_ref().map_or(0, |_| 1) +
             self.searches.as_ref().map_or(0, |_| 1),

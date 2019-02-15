@@ -37,7 +37,7 @@ impl CertificateSigningRequest {
             include_uninitialized,
             pretty,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?");
+        let __url = "/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -57,7 +57,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::create_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.create_certificate_signing_request)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateCertificateSigningRequestOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -163,7 +163,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::delete_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificate_signing_request)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCertificateSigningRequestOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -251,7 +251,7 @@ impl CertificateSigningRequest {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?");
+        let __url = "/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -289,7 +289,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::delete_collection_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_collection_certificate_signing_request)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionCertificateSigningRequestOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -380,7 +380,7 @@ impl CertificateSigningRequest {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?");
+        let __url = "/apis/certificates.k8s.io/v1beta1/certificatesigningrequests?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -418,7 +418,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::list_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.list_certificate_signing_request)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListCertificateSigningRequestOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -513,7 +513,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::patch_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.patch_certificate_signing_request)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchCertificateSigningRequestOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -590,7 +590,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::patch_certificate_signing_request_status`](./struct.CertificateSigningRequest.html#method.patch_certificate_signing_request_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchCertificateSigningRequestStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -668,7 +668,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::read_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.read_certificate_signing_request)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadCertificateSigningRequestOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -740,7 +740,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::read_certificate_signing_request_status`](./struct.CertificateSigningRequest.html#method.read_certificate_signing_request_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadCertificateSigningRequestStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -815,7 +815,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCertificateSigningRequestOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -901,7 +901,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request_approval`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request_approval)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCertificateSigningRequestApprovalOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -987,7 +987,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request_status`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCertificateSigningRequestStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -1098,7 +1098,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::watch_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.watch_certificate_signing_request)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchCertificateSigningRequestOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1177,7 +1177,7 @@ impl CertificateSigningRequest {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/certificates.k8s.io/v1beta1/watch/certificatesigningrequests?");
+        let __url = "/apis/certificates.k8s.io/v1beta1/watch/certificatesigningrequests?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1215,7 +1215,7 @@ impl CertificateSigningRequest {
 }
 
 /// Optional parameters of [`CertificateSigningRequest::watch_certificate_signing_request_list`](./struct.CertificateSigningRequest.html#method.watch_certificate_signing_request_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchCertificateSigningRequestListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1396,7 +1396,6 @@ impl serde::Serialize for CertificateSigningRequest {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CertificateSigningRequest",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1) +

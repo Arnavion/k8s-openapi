@@ -104,11 +104,10 @@ impl serde::Serialize for VsphereVirtualDiskVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "VsphereVirtualDiskVolumeSource",
-            0 +
+            1 +
             self.fs_type.as_ref().map_or(0, |_| 1) +
             self.storage_policy_id.as_ref().map_or(0, |_| 1) +
-            self.storage_policy_name.as_ref().map_or(0, |_| 1) +
-            1,
+            self.storage_policy_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {
             serde::ser::SerializeStruct::serialize_field(&mut state, "fsType", value)?;

@@ -149,14 +149,13 @@ impl serde::Serialize for StatefulSetStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatefulSetStatus",
-            0 +
+            1 +
             self.collision_count.as_ref().map_or(0, |_| 1) +
             self.conditions.as_ref().map_or(0, |_| 1) +
             self.current_replicas.as_ref().map_or(0, |_| 1) +
             self.current_revision.as_ref().map_or(0, |_| 1) +
             self.observed_generation.as_ref().map_or(0, |_| 1) +
             self.ready_replicas.as_ref().map_or(0, |_| 1) +
-            1 +
             self.update_revision.as_ref().map_or(0, |_| 1) +
             self.updated_replicas.as_ref().map_or(0, |_| 1),
         )?;

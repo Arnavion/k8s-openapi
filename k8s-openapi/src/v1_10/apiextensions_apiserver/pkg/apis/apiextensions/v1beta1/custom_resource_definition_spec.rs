@@ -122,13 +122,9 @@ impl serde::Serialize for CustomResourceDefinitionSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionSpec",
-            0 +
-            1 +
-            1 +
-            1 +
+            4 +
             self.subresources.as_ref().map_or(0, |_| 1) +
-            self.validation.as_ref().map_or(0, |_| 1) +
-            1,
+            self.validation.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "group", &self.group)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "names", &self.names)?;

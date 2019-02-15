@@ -158,7 +158,6 @@ impl serde::Serialize for NodeStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeStatus",
-            0 +
             self.addresses.as_ref().map_or(0, |_| 1) +
             self.allocatable.as_ref().map_or(0, |_| 1) +
             self.capacity.as_ref().map_or(0, |_| 1) +

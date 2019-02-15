@@ -60,7 +60,7 @@ impl DeploymentRollback {
 }
 
 /// Optional parameters of [`DeploymentRollback::create_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_namespaced_deployment_rollback)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedDeploymentRollbackOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -211,10 +211,7 @@ impl serde::Serialize for DeploymentRollback {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DeploymentRollback",
-            0 +
-            2 +
-            1 +
-            1 +
+            4 +
             self.updated_annotations.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;

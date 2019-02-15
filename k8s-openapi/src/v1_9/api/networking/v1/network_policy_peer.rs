@@ -95,7 +95,6 @@ impl serde::Serialize for NetworkPolicyPeer {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicyPeer",
-            0 +
             self.ip_block.as_ref().map_or(0, |_| 1) +
             self.namespace_selector.as_ref().map_or(0, |_| 1) +
             self.pod_selector.as_ref().map_or(0, |_| 1),

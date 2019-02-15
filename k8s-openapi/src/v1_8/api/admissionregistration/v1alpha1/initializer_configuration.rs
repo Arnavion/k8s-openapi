@@ -33,7 +33,7 @@ impl InitializerConfiguration {
         let CreateInitializerConfigurationOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?");
+        let __url = "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -47,7 +47,7 @@ impl InitializerConfiguration {
 }
 
 /// Optional parameters of [`InitializerConfiguration::create_initializer_configuration`](./struct.InitializerConfiguration.html#method.create_initializer_configuration)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateInitializerConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -104,7 +104,7 @@ impl InitializerConfiguration {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?");
+        let __url = "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -142,7 +142,7 @@ impl InitializerConfiguration {
 }
 
 /// Optional parameters of [`InitializerConfiguration::delete_collection_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_collection_initializer_configuration)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionInitializerConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -254,7 +254,7 @@ impl InitializerConfiguration {
 }
 
 /// Optional parameters of [`InitializerConfiguration::delete_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_initializer_configuration)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteInitializerConfigurationOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -331,7 +331,7 @@ impl InitializerConfiguration {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?");
+        let __url = "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -369,7 +369,7 @@ impl InitializerConfiguration {
 }
 
 /// Optional parameters of [`InitializerConfiguration::list_initializer_configuration`](./struct.InitializerConfiguration.html#method.list_initializer_configuration)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListInitializerConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -458,7 +458,7 @@ impl InitializerConfiguration {
 }
 
 /// Optional parameters of [`InitializerConfiguration::patch_initializer_configuration`](./struct.InitializerConfiguration.html#method.patch_initializer_configuration)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchInitializerConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -534,7 +534,7 @@ impl InitializerConfiguration {
 }
 
 /// Optional parameters of [`InitializerConfiguration::read_initializer_configuration`](./struct.InitializerConfiguration.html#method.read_initializer_configuration)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadInitializerConfigurationOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -609,7 +609,7 @@ impl InitializerConfiguration {
 }
 
 /// Optional parameters of [`InitializerConfiguration::replace_initializer_configuration`](./struct.InitializerConfiguration.html#method.replace_initializer_configuration)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceInitializerConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -709,7 +709,7 @@ impl InitializerConfiguration {
 }
 
 /// Optional parameters of [`InitializerConfiguration::watch_initializer_configuration`](./struct.InitializerConfiguration.html#method.watch_initializer_configuration)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchInitializerConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -786,7 +786,7 @@ impl InitializerConfiguration {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/watch/initializerconfigurations?");
+        let __url = "/apis/admissionregistration.k8s.io/v1alpha1/watch/initializerconfigurations?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -824,7 +824,7 @@ impl InitializerConfiguration {
 }
 
 /// Optional parameters of [`InitializerConfiguration::watch_initializer_configuration_list`](./struct.InitializerConfiguration.html#method.watch_initializer_configuration_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchInitializerConfigurationListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -997,7 +997,6 @@ impl serde::Serialize for InitializerConfiguration {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "InitializerConfiguration",
-            0 +
             2 +
             self.initializers.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1),

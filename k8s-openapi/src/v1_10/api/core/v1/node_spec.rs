@@ -122,7 +122,6 @@ impl serde::Serialize for NodeSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeSpec",
-            0 +
             self.config_source.as_ref().map_or(0, |_| 1) +
             self.external_id.as_ref().map_or(0, |_| 1) +
             self.pod_cidr.as_ref().map_or(0, |_| 1) +

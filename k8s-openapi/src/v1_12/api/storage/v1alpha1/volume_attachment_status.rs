@@ -104,9 +104,8 @@ impl serde::Serialize for VolumeAttachmentStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "VolumeAttachmentStatus",
-            0 +
-            self.attach_error.as_ref().map_or(0, |_| 1) +
             1 +
+            self.attach_error.as_ref().map_or(0, |_| 1) +
             self.attachment_metadata.as_ref().map_or(0, |_| 1) +
             self.detach_error.as_ref().map_or(0, |_| 1),
         )?;

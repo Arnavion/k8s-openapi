@@ -63,7 +63,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::create_namespaced_role_binding`](./struct.RoleBinding.html#method.create_namespaced_role_binding)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedRoleBindingOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -185,7 +185,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::delete_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_collection_namespaced_role_binding)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -308,7 +308,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::delete_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_namespaced_role_binding)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedRoleBindingOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -439,7 +439,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::list_namespaced_role_binding`](./struct.RoleBinding.html#method.list_namespaced_role_binding)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -516,7 +516,7 @@ impl RoleBinding {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/rolebindings?");
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/rolebindings?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -554,7 +554,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::list_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_role_binding_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListRoleBindingForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -654,7 +654,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::patch_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_namespaced_role_binding)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedRoleBindingOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -729,7 +729,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::read_namespaced_role_binding`](./struct.RoleBinding.html#method.read_namespaced_role_binding)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -809,7 +809,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::replace_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_namespaced_role_binding)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedRoleBindingOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -925,7 +925,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::watch_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_namespaced_role_binding)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1047,7 +1047,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::watch_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_namespaced_role_binding_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedRoleBindingListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1126,7 +1126,7 @@ impl RoleBinding {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/watch/rolebindings?");
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/watch/rolebindings?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1164,7 +1164,7 @@ impl RoleBinding {
 }
 
 /// Optional parameters of [`RoleBinding::watch_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_role_binding_list_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchRoleBindingListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1345,10 +1345,8 @@ impl serde::Serialize for RoleBinding {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "RoleBinding",
-            0 +
-            2 +
+            3 +
             self.metadata.as_ref().map_or(0, |_| 1) +
-            1 +
             self.subjects.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;

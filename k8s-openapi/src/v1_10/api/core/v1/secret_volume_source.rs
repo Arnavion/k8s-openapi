@@ -106,7 +106,6 @@ impl serde::Serialize for SecretVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SecretVolumeSource",
-            0 +
             self.default_mode.as_ref().map_or(0, |_| 1) +
             self.items.as_ref().map_or(0, |_| 1) +
             self.optional.as_ref().map_or(0, |_| 1) +

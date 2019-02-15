@@ -57,7 +57,7 @@ impl Eviction {
 }
 
 /// Optional parameters of [`Eviction::create_namespaced_pod_eviction`](./struct.Eviction.html#method.create_namespaced_pod_eviction)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPodEvictionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -210,7 +210,6 @@ impl serde::Serialize for Eviction {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Eviction",
-            0 +
             2 +
             self.delete_options.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1),

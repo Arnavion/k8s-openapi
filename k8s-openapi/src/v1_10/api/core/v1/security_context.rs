@@ -140,7 +140,6 @@ impl serde::Serialize for SecurityContext {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SecurityContext",
-            0 +
             self.allow_privilege_escalation.as_ref().map_or(0, |_| 1) +
             self.capabilities.as_ref().map_or(0, |_| 1) +
             self.privileged.as_ref().map_or(0, |_| 1) +

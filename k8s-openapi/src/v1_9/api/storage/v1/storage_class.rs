@@ -50,7 +50,7 @@ impl StorageClass {
         let CreateStorageClassOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1/storageclasses?");
+        let __url = "/apis/storage.k8s.io/v1/storageclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -64,7 +64,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::create_storage_class`](./struct.StorageClass.html#method.create_storage_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateStorageClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -139,7 +139,7 @@ impl StorageClass {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1/storageclasses?");
+        let __url = "/apis/storage.k8s.io/v1/storageclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -177,7 +177,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::delete_collection_storage_class`](./struct.StorageClass.html#method.delete_collection_storage_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionStorageClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -289,7 +289,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::delete_storage_class`](./struct.StorageClass.html#method.delete_storage_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteStorageClassOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -366,7 +366,7 @@ impl StorageClass {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1/storageclasses?");
+        let __url = "/apis/storage.k8s.io/v1/storageclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -404,7 +404,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::list_storage_class`](./struct.StorageClass.html#method.list_storage_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListStorageClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -493,7 +493,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::patch_storage_class`](./struct.StorageClass.html#method.patch_storage_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchStorageClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -569,7 +569,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::read_storage_class`](./struct.StorageClass.html#method.read_storage_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadStorageClassOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -644,7 +644,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::replace_storage_class`](./struct.StorageClass.html#method.replace_storage_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceStorageClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -753,7 +753,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::watch_storage_class`](./struct.StorageClass.html#method.watch_storage_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchStorageClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -830,7 +830,7 @@ impl StorageClass {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1/watch/storageclasses?");
+        let __url = "/apis/storage.k8s.io/v1/watch/storageclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -868,7 +868,7 @@ impl StorageClass {
 }
 
 /// Optional parameters of [`StorageClass::watch_storage_class_list`](./struct.StorageClass.html#method.watch_storage_class_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchStorageClassListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1071,13 +1071,11 @@ impl serde::Serialize for StorageClass {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StorageClass",
-            0 +
-            2 +
+            3 +
             self.allow_volume_expansion.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.mount_options.as_ref().map_or(0, |_| 1) +
             self.parameters.as_ref().map_or(0, |_| 1) +
-            1 +
             self.reclaim_policy.as_ref().map_or(0, |_| 1) +
             self.volume_binding_mode.as_ref().map_or(0, |_| 1),
         )?;

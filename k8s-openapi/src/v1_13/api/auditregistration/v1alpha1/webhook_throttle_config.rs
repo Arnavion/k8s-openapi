@@ -86,7 +86,6 @@ impl serde::Serialize for WebhookThrottleConfig {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "WebhookThrottleConfig",
-            0 +
             self.burst.as_ref().map_or(0, |_| 1) +
             self.qps.as_ref().map_or(0, |_| 1),
         )?;

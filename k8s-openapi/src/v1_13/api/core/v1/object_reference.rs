@@ -131,7 +131,6 @@ impl serde::Serialize for ObjectReference {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectReference",
-            0 +
             self.api_version.as_ref().map_or(0, |_| 1) +
             self.field_path.as_ref().map_or(0, |_| 1) +
             self.kind.as_ref().map_or(0, |_| 1) +

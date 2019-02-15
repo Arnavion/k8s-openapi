@@ -122,13 +122,10 @@ impl serde::Serialize for CustomResourceColumnDefinition {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceColumnDefinition",
-            0 +
-            1 +
+            3 +
             self.description.as_ref().map_or(0, |_| 1) +
             self.format.as_ref().map_or(0, |_| 1) +
-            1 +
-            self.priority.as_ref().map_or(0, |_| 1) +
-            1,
+            self.priority.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "JSONPath", &self.json_path)?;
         if let Some(value) = &self.description {

@@ -130,9 +130,7 @@ impl serde::Serialize for PersistentVolumeClaimList {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeClaimList",
-            0 +
-            2 +
-            1 +
+            3 +
             self.metadata.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;

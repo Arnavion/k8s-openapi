@@ -86,7 +86,6 @@ impl serde::Serialize for Capabilities {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Capabilities",
-            0 +
             self.add.as_ref().map_or(0, |_| 1) +
             self.drop.as_ref().map_or(0, |_| 1),
         )?;

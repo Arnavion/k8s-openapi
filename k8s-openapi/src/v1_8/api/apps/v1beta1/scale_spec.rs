@@ -77,7 +77,6 @@ impl serde::Serialize for ScaleSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ScaleSpec",
-            0 +
             self.replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.replicas {

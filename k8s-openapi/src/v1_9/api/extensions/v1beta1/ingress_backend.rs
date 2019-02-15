@@ -86,9 +86,7 @@ impl serde::Serialize for IngressBackend {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "IngressBackend",
-            0 +
-            1 +
-            1,
+            2,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "serviceName", &self.service_name)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "servicePort", &self.service_port)?;

@@ -95,9 +95,7 @@ impl serde::Serialize for GlusterfsVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "GlusterfsVolumeSource",
-            0 +
-            1 +
-            1 +
+            2 +
             self.read_only.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "endpoints", &self.endpoints)?;

@@ -86,7 +86,6 @@ impl serde::Serialize for TokenReviewSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TokenReviewSpec",
-            0 +
             self.audiences.as_ref().map_or(0, |_| 1) +
             self.token.as_ref().map_or(0, |_| 1),
         )?;

@@ -86,7 +86,6 @@ impl serde::Serialize for NetworkPolicyEgressRule {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicyEgressRule",
-            0 +
             self.ports.as_ref().map_or(0, |_| 1) +
             self.to.as_ref().map_or(0, |_| 1),
         )?;

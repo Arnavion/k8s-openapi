@@ -122,11 +122,10 @@ impl serde::Serialize for DaemonSetSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DaemonSetSpec",
-            0 +
+            1 +
             self.min_ready_seconds.as_ref().map_or(0, |_| 1) +
             self.revision_history_limit.as_ref().map_or(0, |_| 1) +
             self.selector.as_ref().map_or(0, |_| 1) +
-            1 +
             self.template_generation.as_ref().map_or(0, |_| 1) +
             self.update_strategy.as_ref().map_or(0, |_| 1),
         )?;

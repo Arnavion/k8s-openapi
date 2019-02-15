@@ -320,7 +320,7 @@ impl serde::Serialize for Volume {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Volume",
-            0 +
+            1 +
             self.aws_elastic_block_store.as_ref().map_or(0, |_| 1) +
             self.azure_disk.as_ref().map_or(0, |_| 1) +
             self.azure_file.as_ref().map_or(0, |_| 1) +
@@ -337,7 +337,6 @@ impl serde::Serialize for Volume {
             self.glusterfs.as_ref().map_or(0, |_| 1) +
             self.host_path.as_ref().map_or(0, |_| 1) +
             self.iscsi.as_ref().map_or(0, |_| 1) +
-            1 +
             self.nfs.as_ref().map_or(0, |_| 1) +
             self.persistent_volume_claim.as_ref().map_or(0, |_| 1) +
             self.photon_persistent_disk.as_ref().map_or(0, |_| 1) +

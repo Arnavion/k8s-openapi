@@ -77,7 +77,6 @@ impl serde::Serialize for TopologySelectorTerm {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TopologySelectorTerm",
-            0 +
             self.match_label_expressions.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.match_label_expressions {

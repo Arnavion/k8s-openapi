@@ -39,7 +39,7 @@ impl PriorityClass {
         let CreatePriorityClassOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses?");
+        let __url = "/apis/scheduling.k8s.io/v1alpha1/priorityclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -53,7 +53,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::create_priority_class`](./struct.PriorityClass.html#method.create_priority_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreatePriorityClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -110,7 +110,7 @@ impl PriorityClass {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses?");
+        let __url = "/apis/scheduling.k8s.io/v1alpha1/priorityclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -148,7 +148,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::delete_collection_priority_class`](./struct.PriorityClass.html#method.delete_collection_priority_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionPriorityClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -260,7 +260,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::delete_priority_class`](./struct.PriorityClass.html#method.delete_priority_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeletePriorityClassOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -337,7 +337,7 @@ impl PriorityClass {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/scheduling.k8s.io/v1alpha1/priorityclasses?");
+        let __url = "/apis/scheduling.k8s.io/v1alpha1/priorityclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -375,7 +375,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::list_priority_class`](./struct.PriorityClass.html#method.list_priority_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListPriorityClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -464,7 +464,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::patch_priority_class`](./struct.PriorityClass.html#method.patch_priority_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchPriorityClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -540,7 +540,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::read_priority_class`](./struct.PriorityClass.html#method.read_priority_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadPriorityClassOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -615,7 +615,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::replace_priority_class`](./struct.PriorityClass.html#method.replace_priority_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplacePriorityClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -715,7 +715,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::watch_priority_class`](./struct.PriorityClass.html#method.watch_priority_class)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPriorityClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -792,7 +792,7 @@ impl PriorityClass {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/scheduling.k8s.io/v1alpha1/watch/priorityclasses?");
+        let __url = "/apis/scheduling.k8s.io/v1alpha1/watch/priorityclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -830,7 +830,7 @@ impl PriorityClass {
 }
 
 /// Optional parameters of [`PriorityClass::watch_priority_class_list`](./struct.PriorityClass.html#method.watch_priority_class_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPriorityClassListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1015,12 +1015,10 @@ impl serde::Serialize for PriorityClass {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PriorityClass",
-            0 +
-            2 +
+            3 +
             self.description.as_ref().map_or(0, |_| 1) +
             self.global_default.as_ref().map_or(0, |_| 1) +
-            self.metadata.as_ref().map_or(0, |_| 1) +
-            1,
+            self.metadata.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;

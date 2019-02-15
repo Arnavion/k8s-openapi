@@ -86,7 +86,6 @@ impl serde::Serialize for ResourceRequirements {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ResourceRequirements",
-            0 +
             self.limits.as_ref().map_or(0, |_| 1) +
             self.requests.as_ref().map_or(0, |_| 1),
         )?;

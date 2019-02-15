@@ -122,13 +122,11 @@ impl serde::Serialize for NodeCondition {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeCondition",
-            0 +
+            2 +
             self.last_heartbeat_time.as_ref().map_or(0, |_| 1) +
             self.last_transition_time.as_ref().map_or(0, |_| 1) +
             self.message.as_ref().map_or(0, |_| 1) +
-            self.reason.as_ref().map_or(0, |_| 1) +
-            1 +
-            1,
+            self.reason.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.last_heartbeat_time {
             serde::ser::SerializeStruct::serialize_field(&mut state, "lastHeartbeatTime", value)?;

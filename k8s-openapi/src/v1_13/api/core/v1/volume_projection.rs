@@ -104,7 +104,6 @@ impl serde::Serialize for VolumeProjection {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "VolumeProjection",
-            0 +
             self.config_map.as_ref().map_or(0, |_| 1) +
             self.downward_api.as_ref().map_or(0, |_| 1) +
             self.secret.as_ref().map_or(0, |_| 1) +

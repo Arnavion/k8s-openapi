@@ -104,7 +104,6 @@ impl serde::Serialize for EnvVarSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EnvVarSource",
-            0 +
             self.config_map_key_ref.as_ref().map_or(0, |_| 1) +
             self.field_ref.as_ref().map_or(0, |_| 1) +
             self.resource_field_ref.as_ref().map_or(0, |_| 1) +

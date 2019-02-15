@@ -95,10 +95,7 @@ impl serde::Serialize for VolumeAttachmentSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "VolumeAttachmentSpec",
-            0 +
-            1 +
-            1 +
-            1,
+            3,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "attacher", &self.attacher)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "nodeName", &self.node_name)?;

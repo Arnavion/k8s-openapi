@@ -36,7 +36,7 @@ impl Namespace {
         let CreateNamespaceOptional {
             pretty,
         } = optional;
-        let __url = format!("/api/v1/namespaces?");
+        let __url = "/api/v1/namespaces?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -50,7 +50,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::create_namespace`](./struct.Namespace.html#method.create_namespace)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -130,7 +130,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::delete_namespace`](./struct.Namespace.html#method.delete_namespace)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespaceOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -207,7 +207,7 @@ impl Namespace {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/namespaces?");
+        let __url = "/api/v1/namespaces?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -245,7 +245,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::list_namespace`](./struct.Namespace.html#method.list_namespace)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespaceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -334,7 +334,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::patch_namespace`](./struct.Namespace.html#method.patch_namespace)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -405,7 +405,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::patch_namespace_status`](./struct.Namespace.html#method.patch_namespace_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -481,7 +481,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::read_namespace`](./struct.Namespace.html#method.read_namespace)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespaceOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -553,7 +553,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::read_namespace_status`](./struct.Namespace.html#method.read_namespace_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -624,7 +624,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::replace_namespace`](./struct.Namespace.html#method.replace_namespace)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -695,7 +695,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::replace_namespace_finalize`](./struct.Namespace.html#method.replace_namespace_finalize)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespaceFinalizeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -766,7 +766,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::replace_namespace_status`](./struct.Namespace.html#method.replace_namespace_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -866,7 +866,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::watch_namespace`](./struct.Namespace.html#method.watch_namespace)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespaceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -943,7 +943,7 @@ impl Namespace {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/watch/namespaces?");
+        let __url = "/api/v1/watch/namespaces?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -981,7 +981,7 @@ impl Namespace {
 }
 
 /// Optional parameters of [`Namespace::watch_namespace_list`](./struct.Namespace.html#method.watch_namespace_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespaceListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1160,7 +1160,6 @@ impl serde::Serialize for Namespace {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Namespace",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1) +

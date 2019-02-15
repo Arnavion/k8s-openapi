@@ -95,7 +95,6 @@ impl serde::Serialize for ScaleStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ScaleStatus",
-            0 +
             1 +
             self.selector.as_ref().map_or(0, |_| 1) +
             self.target_selector.as_ref().map_or(0, |_| 1),

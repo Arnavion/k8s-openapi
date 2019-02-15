@@ -122,11 +122,9 @@ impl serde::Serialize for CustomResourceDefinitionNames {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionNames",
-            0 +
+            2 +
             self.categories.as_ref().map_or(0, |_| 1) +
-            1 +
             self.list_kind.as_ref().map_or(0, |_| 1) +
-            1 +
             self.short_names.as_ref().map_or(0, |_| 1) +
             self.singular.as_ref().map_or(0, |_| 1),
         )?;

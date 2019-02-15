@@ -122,7 +122,6 @@ impl serde::Serialize for LimitRangeItem {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "LimitRangeItem",
-            0 +
             self.default.as_ref().map_or(0, |_| 1) +
             self.default_request.as_ref().map_or(0, |_| 1) +
             self.max.as_ref().map_or(0, |_| 1) +

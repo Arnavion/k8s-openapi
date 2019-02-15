@@ -86,9 +86,7 @@ impl serde::Serialize for WeightedPodAffinityTerm {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "WeightedPodAffinityTerm",
-            0 +
-            1 +
-            1,
+            2,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "podAffinityTerm", &self.pod_affinity_term)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "weight", &self.weight)?;

@@ -55,7 +55,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::create_namespaced_deployment`](./struct.Deployment.html#method.create_namespaced_deployment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedDeploymentOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -155,7 +155,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::delete_collection_namespaced_deployment`](./struct.Deployment.html#method.delete_collection_namespaced_deployment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedDeploymentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -272,7 +272,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::delete_namespaced_deployment`](./struct.Deployment.html#method.delete_namespaced_deployment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedDeploymentOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -349,7 +349,7 @@ impl Deployment {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/deployments?");
+        let __url = "/apis/extensions/v1beta1/deployments?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -387,7 +387,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::list_deployment_for_all_namespaces`](./struct.Deployment.html#method.list_deployment_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListDeploymentForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -505,7 +505,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::list_namespaced_deployment`](./struct.Deployment.html#method.list_namespaced_deployment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedDeploymentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -599,7 +599,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::patch_namespaced_deployment`](./struct.Deployment.html#method.patch_namespaced_deployment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedDeploymentOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -675,7 +675,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::patch_namespaced_deployment_status`](./struct.Deployment.html#method.patch_namespaced_deployment_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedDeploymentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -756,7 +756,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::read_namespaced_deployment`](./struct.Deployment.html#method.read_namespaced_deployment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedDeploymentOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -833,7 +833,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::read_namespaced_deployment_status`](./struct.Deployment.html#method.read_namespaced_deployment_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedDeploymentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -909,7 +909,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::replace_namespaced_deployment`](./struct.Deployment.html#method.replace_namespaced_deployment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedDeploymentOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -985,7 +985,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::replace_namespaced_deployment_status`](./struct.Deployment.html#method.replace_namespaced_deployment_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedDeploymentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -1042,7 +1042,7 @@ impl Deployment {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/watch/deployments?");
+        let __url = "/apis/extensions/v1beta1/watch/deployments?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1080,7 +1080,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::watch_deployment_list_for_all_namespaces`](./struct.Deployment.html#method.watch_deployment_list_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchDeploymentListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1205,7 +1205,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::watch_namespaced_deployment`](./struct.Deployment.html#method.watch_namespaced_deployment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedDeploymentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1325,7 +1325,7 @@ impl Deployment {
 }
 
 /// Optional parameters of [`Deployment::watch_namespaced_deployment_list`](./struct.Deployment.html#method.watch_namespaced_deployment_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedDeploymentListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1504,7 +1504,6 @@ impl serde::Serialize for Deployment {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Deployment",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1) +

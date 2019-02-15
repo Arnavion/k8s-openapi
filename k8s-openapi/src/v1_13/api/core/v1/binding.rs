@@ -60,7 +60,7 @@ impl Binding {
 }
 
 /// Optional parameters of [`Binding::create_namespaced_binding`](./struct.Binding.html#method.create_namespaced_binding)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedBindingOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -166,7 +166,7 @@ impl Binding {
 }
 
 /// Optional parameters of [`Binding::create_namespaced_pod_binding`](./struct.Binding.html#method.create_namespaced_pod_binding)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPodBindingOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -341,10 +341,8 @@ impl serde::Serialize for Binding {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Binding",
-            0 +
-            2 +
-            self.metadata.as_ref().map_or(0, |_| 1) +
-            1,
+            3 +
+            self.metadata.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;

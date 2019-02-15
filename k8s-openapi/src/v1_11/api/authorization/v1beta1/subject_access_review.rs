@@ -35,7 +35,7 @@ impl SubjectAccessReview {
         let CreateSubjectAccessReviewOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/authorization.k8s.io/v1beta1/subjectaccessreviews?");
+        let __url = "/apis/authorization.k8s.io/v1beta1/subjectaccessreviews?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -49,7 +49,7 @@ impl SubjectAccessReview {
 }
 
 /// Optional parameters of [`SubjectAccessReview::create_subject_access_review`](./struct.SubjectAccessReview.html#method.create_subject_access_review)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateSubjectAccessReviewOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -226,10 +226,8 @@ impl serde::Serialize for SubjectAccessReview {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SubjectAccessReview",
-            0 +
-            2 +
+            3 +
             self.metadata.as_ref().map_or(0, |_| 1) +
-            1 +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;

@@ -86,9 +86,8 @@ impl serde::Serialize for RunAsUserStrategyOptions {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "RunAsUserStrategyOptions",
-            0 +
-            self.ranges.as_ref().map_or(0, |_| 1) +
-            1,
+            1 +
+            self.ranges.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.ranges {
             serde::ser::SerializeStruct::serialize_field(&mut state, "ranges", value)?;

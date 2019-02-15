@@ -86,9 +86,7 @@ impl serde::Serialize for ExternalMetricStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ExternalMetricStatus",
-            0 +
-            1 +
-            1,
+            2,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "current", &self.current)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "metric", &self.metric)?;

@@ -35,7 +35,7 @@ impl PodSecurityPolicy {
             include_uninitialized,
             pretty,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/podsecuritypolicies?");
+        let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -55,7 +55,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::create_pod_security_policy`](./struct.PodSecurityPolicy.html#method.create_pod_security_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreatePodSecurityPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -134,7 +134,7 @@ impl PodSecurityPolicy {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/podsecuritypolicies?");
+        let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -172,7 +172,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::delete_collection_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_collection_pod_security_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -290,7 +290,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::delete_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_pod_security_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeletePodSecurityPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -378,7 +378,7 @@ impl PodSecurityPolicy {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/podsecuritypolicies?");
+        let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -416,7 +416,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::list_pod_security_policy`](./struct.PodSecurityPolicy.html#method.list_pod_security_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -511,7 +511,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::patch_pod_security_policy`](./struct.PodSecurityPolicy.html#method.patch_pod_security_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchPodSecurityPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -589,7 +589,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::read_pod_security_policy`](./struct.PodSecurityPolicy.html#method.read_pod_security_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadPodSecurityPolicyOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -668,7 +668,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::replace_pod_security_policy`](./struct.PodSecurityPolicy.html#method.replace_pod_security_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplacePodSecurityPolicyOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -779,7 +779,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::watch_pod_security_policy`](./struct.PodSecurityPolicy.html#method.watch_pod_security_policy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -858,7 +858,7 @@ impl PodSecurityPolicy {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/watch/podsecuritypolicies?");
+        let __url = "/apis/extensions/v1beta1/watch/podsecuritypolicies?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -896,7 +896,7 @@ impl PodSecurityPolicy {
 }
 
 /// Optional parameters of [`PodSecurityPolicy::watch_pod_security_policy_list`](./struct.PodSecurityPolicy.html#method.watch_pod_security_policy_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPodSecurityPolicyListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1071,7 +1071,6 @@ impl serde::Serialize for PodSecurityPolicy {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodSecurityPolicy",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1),

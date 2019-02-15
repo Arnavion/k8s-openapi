@@ -13,7 +13,7 @@ pub mod kube_aggregator;
 /// Use [`GetAPIVersionsResponse`](./enum.GetAPIVersionsResponse.html) to parse the HTTP response.
 pub fn get_api_versions(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/");
+    let __url = "/apis/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -52,7 +52,7 @@ impl crate::Response for GetAPIVersionsResponse {
 /// Use [`GetAdmissionregistrationAPIGroupResponse`](./enum.GetAdmissionregistrationAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_admissionregistration_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/admissionregistration.k8s.io/");
+    let __url = "/apis/admissionregistration.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -91,7 +91,7 @@ impl crate::Response for GetAdmissionregistrationAPIGroupResponse {
 /// Use [`GetAdmissionregistrationV1alpha1APIResourcesResponse`](./enum.GetAdmissionregistrationV1alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_admissionregistration_v1alpha1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/admissionregistration.k8s.io/v1alpha1/");
+    let __url = "/apis/admissionregistration.k8s.io/v1alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -130,7 +130,7 @@ impl crate::Response for GetAdmissionregistrationV1alpha1APIResourcesResponse {
 /// Use [`GetAdmissionregistrationV1beta1APIResourcesResponse`](./enum.GetAdmissionregistrationV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_admissionregistration_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/");
+    let __url = "/apis/admissionregistration.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -169,7 +169,7 @@ impl crate::Response for GetAdmissionregistrationV1beta1APIResourcesResponse {
 /// Use [`GetApiextensionsAPIGroupResponse`](./enum.GetApiextensionsAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_apiextensions_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/apiextensions.k8s.io/");
+    let __url = "/apis/apiextensions.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -208,7 +208,7 @@ impl crate::Response for GetApiextensionsAPIGroupResponse {
 /// Use [`GetApiextensionsV1beta1APIResourcesResponse`](./enum.GetApiextensionsV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_apiextensions_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/apiextensions.k8s.io/v1beta1/");
+    let __url = "/apis/apiextensions.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -247,7 +247,7 @@ impl crate::Response for GetApiextensionsV1beta1APIResourcesResponse {
 /// Use [`GetApiregistrationAPIGroupResponse`](./enum.GetApiregistrationAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_apiregistration_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/apiregistration.k8s.io/");
+    let __url = "/apis/apiregistration.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -286,7 +286,7 @@ impl crate::Response for GetApiregistrationAPIGroupResponse {
 /// Use [`GetApiregistrationV1APIResourcesResponse`](./enum.GetApiregistrationV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_apiregistration_v1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/apiregistration.k8s.io/v1/");
+    let __url = "/apis/apiregistration.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -325,7 +325,7 @@ impl crate::Response for GetApiregistrationV1APIResourcesResponse {
 /// Use [`GetApiregistrationV1beta1APIResourcesResponse`](./enum.GetApiregistrationV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_apiregistration_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/apiregistration.k8s.io/v1beta1/");
+    let __url = "/apis/apiregistration.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -364,7 +364,7 @@ impl crate::Response for GetApiregistrationV1beta1APIResourcesResponse {
 /// Use [`GetAppsAPIGroupResponse`](./enum.GetAppsAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_apps_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/apps/");
+    let __url = "/apis/apps/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -403,7 +403,7 @@ impl crate::Response for GetAppsAPIGroupResponse {
 /// Use [`GetAppsV1APIResourcesResponse`](./enum.GetAppsV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_apps_v1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/apps/v1/");
+    let __url = "/apis/apps/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -442,7 +442,7 @@ impl crate::Response for GetAppsV1APIResourcesResponse {
 /// Use [`GetAppsV1beta1APIResourcesResponse`](./enum.GetAppsV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_apps_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/apps/v1beta1/");
+    let __url = "/apis/apps/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -481,7 +481,7 @@ impl crate::Response for GetAppsV1beta1APIResourcesResponse {
 /// Use [`GetAppsV1beta2APIResourcesResponse`](./enum.GetAppsV1beta2APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_apps_v1beta2_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/apps/v1beta2/");
+    let __url = "/apis/apps/v1beta2/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -520,7 +520,7 @@ impl crate::Response for GetAppsV1beta2APIResourcesResponse {
 /// Use [`GetAuthenticationAPIGroupResponse`](./enum.GetAuthenticationAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_authentication_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/authentication.k8s.io/");
+    let __url = "/apis/authentication.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -559,7 +559,7 @@ impl crate::Response for GetAuthenticationAPIGroupResponse {
 /// Use [`GetAuthenticationV1APIResourcesResponse`](./enum.GetAuthenticationV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_authentication_v1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/authentication.k8s.io/v1/");
+    let __url = "/apis/authentication.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -598,7 +598,7 @@ impl crate::Response for GetAuthenticationV1APIResourcesResponse {
 /// Use [`GetAuthenticationV1beta1APIResourcesResponse`](./enum.GetAuthenticationV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_authentication_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/authentication.k8s.io/v1beta1/");
+    let __url = "/apis/authentication.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -637,7 +637,7 @@ impl crate::Response for GetAuthenticationV1beta1APIResourcesResponse {
 /// Use [`GetAuthorizationAPIGroupResponse`](./enum.GetAuthorizationAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_authorization_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/authorization.k8s.io/");
+    let __url = "/apis/authorization.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -676,7 +676,7 @@ impl crate::Response for GetAuthorizationAPIGroupResponse {
 /// Use [`GetAuthorizationV1APIResourcesResponse`](./enum.GetAuthorizationV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_authorization_v1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/authorization.k8s.io/v1/");
+    let __url = "/apis/authorization.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -715,7 +715,7 @@ impl crate::Response for GetAuthorizationV1APIResourcesResponse {
 /// Use [`GetAuthorizationV1beta1APIResourcesResponse`](./enum.GetAuthorizationV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_authorization_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/authorization.k8s.io/v1beta1/");
+    let __url = "/apis/authorization.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -754,7 +754,7 @@ impl crate::Response for GetAuthorizationV1beta1APIResourcesResponse {
 /// Use [`GetAutoscalingAPIGroupResponse`](./enum.GetAutoscalingAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_autoscaling_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/autoscaling/");
+    let __url = "/apis/autoscaling/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -793,7 +793,7 @@ impl crate::Response for GetAutoscalingAPIGroupResponse {
 /// Use [`GetAutoscalingV1APIResourcesResponse`](./enum.GetAutoscalingV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_autoscaling_v1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/autoscaling/v1/");
+    let __url = "/apis/autoscaling/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -832,7 +832,7 @@ impl crate::Response for GetAutoscalingV1APIResourcesResponse {
 /// Use [`GetAutoscalingV2beta1APIResourcesResponse`](./enum.GetAutoscalingV2beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_autoscaling_v2beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/autoscaling/v2beta1/");
+    let __url = "/apis/autoscaling/v2beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -871,7 +871,7 @@ impl crate::Response for GetAutoscalingV2beta1APIResourcesResponse {
 /// Use [`GetBatchAPIGroupResponse`](./enum.GetBatchAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_batch_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/batch/");
+    let __url = "/apis/batch/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -910,7 +910,7 @@ impl crate::Response for GetBatchAPIGroupResponse {
 /// Use [`GetBatchV1APIResourcesResponse`](./enum.GetBatchV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_batch_v1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/batch/v1/");
+    let __url = "/apis/batch/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -949,7 +949,7 @@ impl crate::Response for GetBatchV1APIResourcesResponse {
 /// Use [`GetBatchV1beta1APIResourcesResponse`](./enum.GetBatchV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_batch_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/batch/v1beta1/");
+    let __url = "/apis/batch/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -988,7 +988,7 @@ impl crate::Response for GetBatchV1beta1APIResourcesResponse {
 /// Use [`GetBatchV2alpha1APIResourcesResponse`](./enum.GetBatchV2alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_batch_v2alpha1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/batch/v2alpha1/");
+    let __url = "/apis/batch/v2alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1027,7 +1027,7 @@ impl crate::Response for GetBatchV2alpha1APIResourcesResponse {
 /// Use [`GetCertificatesAPIGroupResponse`](./enum.GetCertificatesAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_certificates_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/certificates.k8s.io/");
+    let __url = "/apis/certificates.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1066,7 +1066,7 @@ impl crate::Response for GetCertificatesAPIGroupResponse {
 /// Use [`GetCertificatesV1beta1APIResourcesResponse`](./enum.GetCertificatesV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_certificates_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/certificates.k8s.io/v1beta1/");
+    let __url = "/apis/certificates.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1105,7 +1105,7 @@ impl crate::Response for GetCertificatesV1beta1APIResourcesResponse {
 /// Use [`GetCodeVersionResponse`](./enum.GetCodeVersionResponse.html) to parse the HTTP response.
 pub fn get_code_version(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/version/");
+    let __url = "/version/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1144,7 +1144,7 @@ impl crate::Response for GetCodeVersionResponse {
 /// Use [`GetCoreAPIVersionsResponse`](./enum.GetCoreAPIVersionsResponse.html) to parse the HTTP response.
 pub fn get_core_api_versions(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/api/");
+    let __url = "/api/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1183,7 +1183,7 @@ impl crate::Response for GetCoreAPIVersionsResponse {
 /// Use [`GetCoreV1APIResourcesResponse`](./enum.GetCoreV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_core_v1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/api/v1/");
+    let __url = "/api/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1222,7 +1222,7 @@ impl crate::Response for GetCoreV1APIResourcesResponse {
 /// Use [`GetEventsAPIGroupResponse`](./enum.GetEventsAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_events_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/events.k8s.io/");
+    let __url = "/apis/events.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1261,7 +1261,7 @@ impl crate::Response for GetEventsAPIGroupResponse {
 /// Use [`GetEventsV1beta1APIResourcesResponse`](./enum.GetEventsV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_events_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/events.k8s.io/v1beta1/");
+    let __url = "/apis/events.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1300,7 +1300,7 @@ impl crate::Response for GetEventsV1beta1APIResourcesResponse {
 /// Use [`GetExtensionsAPIGroupResponse`](./enum.GetExtensionsAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_extensions_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/extensions/");
+    let __url = "/apis/extensions/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1339,7 +1339,7 @@ impl crate::Response for GetExtensionsAPIGroupResponse {
 /// Use [`GetExtensionsV1beta1APIResourcesResponse`](./enum.GetExtensionsV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_extensions_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/extensions/v1beta1/");
+    let __url = "/apis/extensions/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1378,7 +1378,7 @@ impl crate::Response for GetExtensionsV1beta1APIResourcesResponse {
 /// Use [`GetNetworkingAPIGroupResponse`](./enum.GetNetworkingAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_networking_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/networking.k8s.io/");
+    let __url = "/apis/networking.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1417,7 +1417,7 @@ impl crate::Response for GetNetworkingAPIGroupResponse {
 /// Use [`GetNetworkingV1APIResourcesResponse`](./enum.GetNetworkingV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_networking_v1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/networking.k8s.io/v1/");
+    let __url = "/apis/networking.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1456,7 +1456,7 @@ impl crate::Response for GetNetworkingV1APIResourcesResponse {
 /// Use [`GetPolicyAPIGroupResponse`](./enum.GetPolicyAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_policy_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/policy/");
+    let __url = "/apis/policy/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1495,7 +1495,7 @@ impl crate::Response for GetPolicyAPIGroupResponse {
 /// Use [`GetPolicyV1beta1APIResourcesResponse`](./enum.GetPolicyV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_policy_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/policy/v1beta1/");
+    let __url = "/apis/policy/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1534,7 +1534,7 @@ impl crate::Response for GetPolicyV1beta1APIResourcesResponse {
 /// Use [`GetRbacAuthorizationAPIGroupResponse`](./enum.GetRbacAuthorizationAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_rbac_authorization_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/rbac.authorization.k8s.io/");
+    let __url = "/apis/rbac.authorization.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1573,7 +1573,7 @@ impl crate::Response for GetRbacAuthorizationAPIGroupResponse {
 /// Use [`GetRbacAuthorizationV1APIResourcesResponse`](./enum.GetRbacAuthorizationV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_rbac_authorization_v1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/rbac.authorization.k8s.io/v1/");
+    let __url = "/apis/rbac.authorization.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1612,7 +1612,7 @@ impl crate::Response for GetRbacAuthorizationV1APIResourcesResponse {
 /// Use [`GetRbacAuthorizationV1alpha1APIResourcesResponse`](./enum.GetRbacAuthorizationV1alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_rbac_authorization_v1alpha1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/");
+    let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1651,7 +1651,7 @@ impl crate::Response for GetRbacAuthorizationV1alpha1APIResourcesResponse {
 /// Use [`GetRbacAuthorizationV1beta1APIResourcesResponse`](./enum.GetRbacAuthorizationV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_rbac_authorization_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/rbac.authorization.k8s.io/v1beta1/");
+    let __url = "/apis/rbac.authorization.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1690,7 +1690,7 @@ impl crate::Response for GetRbacAuthorizationV1beta1APIResourcesResponse {
 /// Use [`GetSchedulingAPIGroupResponse`](./enum.GetSchedulingAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_scheduling_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/scheduling.k8s.io/");
+    let __url = "/apis/scheduling.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1729,7 +1729,7 @@ impl crate::Response for GetSchedulingAPIGroupResponse {
 /// Use [`GetSchedulingV1alpha1APIResourcesResponse`](./enum.GetSchedulingV1alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_scheduling_v1alpha1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/scheduling.k8s.io/v1alpha1/");
+    let __url = "/apis/scheduling.k8s.io/v1alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1768,7 +1768,7 @@ impl crate::Response for GetSchedulingV1alpha1APIResourcesResponse {
 /// Use [`GetSettingsAPIGroupResponse`](./enum.GetSettingsAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_settings_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/settings.k8s.io/");
+    let __url = "/apis/settings.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1807,7 +1807,7 @@ impl crate::Response for GetSettingsAPIGroupResponse {
 /// Use [`GetSettingsV1alpha1APIResourcesResponse`](./enum.GetSettingsV1alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_settings_v1alpha1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/settings.k8s.io/v1alpha1/");
+    let __url = "/apis/settings.k8s.io/v1alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1846,7 +1846,7 @@ impl crate::Response for GetSettingsV1alpha1APIResourcesResponse {
 /// Use [`GetStorageAPIGroupResponse`](./enum.GetStorageAPIGroupResponse.html) to parse the HTTP response.
 pub fn get_storage_api_group(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/storage.k8s.io/");
+    let __url = "/apis/storage.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1885,7 +1885,7 @@ impl crate::Response for GetStorageAPIGroupResponse {
 /// Use [`GetStorageV1APIResourcesResponse`](./enum.GetStorageV1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_storage_v1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/storage.k8s.io/v1/");
+    let __url = "/apis/storage.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1924,7 +1924,7 @@ impl crate::Response for GetStorageV1APIResourcesResponse {
 /// Use [`GetStorageV1alpha1APIResourcesResponse`](./enum.GetStorageV1alpha1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_storage_v1alpha1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/storage.k8s.io/v1alpha1/");
+    let __url = "/apis/storage.k8s.io/v1alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -1963,7 +1963,7 @@ impl crate::Response for GetStorageV1alpha1APIResourcesResponse {
 /// Use [`GetStorageV1beta1APIResourcesResponse`](./enum.GetStorageV1beta1APIResourcesResponse.html) to parse the HTTP response.
 pub fn get_storage_v1beta1_api_resources(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/apis/storage.k8s.io/v1beta1/");
+    let __url = "/apis/storage.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
@@ -2035,7 +2035,7 @@ impl crate::Response for LogFileHandlerResponse {
 /// Use [`LogFileListHandlerResponse`](./enum.LogFileListHandlerResponse.html) to parse the HTTP response.
 pub fn log_file_list_handler(
 ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
-    let __url = format!("/logs/");
+    let __url = "/logs/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];

@@ -95,10 +95,9 @@ impl serde::Serialize for PodAffinityTerm {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodAffinityTerm",
-            0 +
+            1 +
             self.label_selector.as_ref().map_or(0, |_| 1) +
-            self.namespaces.as_ref().map_or(0, |_| 1) +
-            1,
+            self.namespaces.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.label_selector {
             serde::ser::SerializeStruct::serialize_field(&mut state, "labelSelector", value)?;

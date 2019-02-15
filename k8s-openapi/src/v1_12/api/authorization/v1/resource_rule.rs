@@ -105,11 +105,10 @@ impl serde::Serialize for ResourceRule {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ResourceRule",
-            0 +
+            1 +
             self.api_groups.as_ref().map_or(0, |_| 1) +
             self.resource_names.as_ref().map_or(0, |_| 1) +
-            self.resources.as_ref().map_or(0, |_| 1) +
-            1,
+            self.resources.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_groups {
             serde::ser::SerializeStruct::serialize_field(&mut state, "apiGroups", value)?;

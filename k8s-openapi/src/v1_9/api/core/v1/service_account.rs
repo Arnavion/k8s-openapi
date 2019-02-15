@@ -58,7 +58,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::create_namespaced_service_account`](./struct.ServiceAccount.html#method.create_namespaced_service_account)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedServiceAccountOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -176,7 +176,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::delete_collection_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_collection_namespaced_service_account)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedServiceAccountOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -293,7 +293,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::delete_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_namespaced_service_account)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedServiceAccountOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -413,7 +413,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::list_namespaced_service_account`](./struct.ServiceAccount.html#method.list_namespaced_service_account)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedServiceAccountOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -488,7 +488,7 @@ impl ServiceAccount {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/serviceaccounts?");
+        let __url = "/api/v1/serviceaccounts?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -526,7 +526,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::list_service_account_for_all_namespaces`](./struct.ServiceAccount.html#method.list_service_account_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListServiceAccountForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -620,7 +620,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::patch_namespaced_service_account`](./struct.ServiceAccount.html#method.patch_namespaced_service_account)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedServiceAccountOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -701,7 +701,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::read_namespaced_service_account`](./struct.ServiceAccount.html#method.read_namespaced_service_account)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedServiceAccountOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -781,7 +781,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::replace_namespaced_service_account`](./struct.ServiceAccount.html#method.replace_namespaced_service_account)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedServiceAccountOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -895,7 +895,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::watch_namespaced_service_account`](./struct.ServiceAccount.html#method.watch_namespaced_service_account)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedServiceAccountOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1015,7 +1015,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::watch_namespaced_service_account_list`](./struct.ServiceAccount.html#method.watch_namespaced_service_account_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedServiceAccountListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1092,7 +1092,7 @@ impl ServiceAccount {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/watch/serviceaccounts?");
+        let __url = "/api/v1/watch/serviceaccounts?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1130,7 +1130,7 @@ impl ServiceAccount {
 }
 
 /// Optional parameters of [`ServiceAccount::watch_service_account_list_for_all_namespaces`](./struct.ServiceAccount.html#method.watch_service_account_list_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchServiceAccountListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1315,7 +1315,6 @@ impl serde::Serialize for ServiceAccount {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ServiceAccount",
-            0 +
             2 +
             self.automount_service_account_token.as_ref().map_or(0, |_| 1) +
             self.image_pull_secrets.as_ref().map_or(0, |_| 1) +

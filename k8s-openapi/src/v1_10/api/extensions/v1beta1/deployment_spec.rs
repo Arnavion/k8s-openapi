@@ -149,7 +149,7 @@ impl serde::Serialize for DeploymentSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DeploymentSpec",
-            0 +
+            1 +
             self.min_ready_seconds.as_ref().map_or(0, |_| 1) +
             self.paused.as_ref().map_or(0, |_| 1) +
             self.progress_deadline_seconds.as_ref().map_or(0, |_| 1) +
@@ -157,8 +157,7 @@ impl serde::Serialize for DeploymentSpec {
             self.revision_history_limit.as_ref().map_or(0, |_| 1) +
             self.rollback_to.as_ref().map_or(0, |_| 1) +
             self.selector.as_ref().map_or(0, |_| 1) +
-            self.strategy.as_ref().map_or(0, |_| 1) +
-            1,
+            self.strategy.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.min_ready_seconds {
             serde::ser::SerializeStruct::serialize_field(&mut state, "minReadySeconds", value)?;

@@ -86,9 +86,8 @@ impl serde::Serialize for ObjectFieldSelector {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectFieldSelector",
-            0 +
-            self.api_version.as_ref().map_or(0, |_| 1) +
-            1,
+            1 +
+            self.api_version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.api_version {
             serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", value)?;

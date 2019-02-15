@@ -131,11 +131,9 @@ impl serde::Serialize for CronJobSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CronJobSpec",
-            0 +
+            2 +
             self.concurrency_policy.as_ref().map_or(0, |_| 1) +
             self.failed_jobs_history_limit.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
             self.starting_deadline_seconds.as_ref().map_or(0, |_| 1) +
             self.successful_jobs_history_limit.as_ref().map_or(0, |_| 1) +
             self.suspend.as_ref().map_or(0, |_| 1),

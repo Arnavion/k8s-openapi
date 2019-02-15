@@ -123,10 +123,9 @@ impl serde::Serialize for CertificateSigningRequestSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CertificateSigningRequestSpec",
-            0 +
+            1 +
             self.extra.as_ref().map_or(0, |_| 1) +
             self.groups.as_ref().map_or(0, |_| 1) +
-            1 +
             self.uid.as_ref().map_or(0, |_| 1) +
             self.usages.as_ref().map_or(0, |_| 1) +
             self.username.as_ref().map_or(0, |_| 1),

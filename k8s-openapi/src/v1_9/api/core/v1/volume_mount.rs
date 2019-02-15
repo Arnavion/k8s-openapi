@@ -113,10 +113,8 @@ impl serde::Serialize for VolumeMount {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "VolumeMount",
-            0 +
-            1 +
+            2 +
             self.mount_propagation.as_ref().map_or(0, |_| 1) +
-            1 +
             self.read_only.as_ref().map_or(0, |_| 1) +
             self.sub_path.as_ref().map_or(0, |_| 1),
         )?;

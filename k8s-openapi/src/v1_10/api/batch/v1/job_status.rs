@@ -122,7 +122,6 @@ impl serde::Serialize for JobStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "JobStatus",
-            0 +
             self.active.as_ref().map_or(0, |_| 1) +
             self.completion_time.as_ref().map_or(0, |_| 1) +
             self.conditions.as_ref().map_or(0, |_| 1) +

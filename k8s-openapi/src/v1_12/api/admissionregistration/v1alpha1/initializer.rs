@@ -86,7 +86,6 @@ impl serde::Serialize for Initializer {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Initializer",
-            0 +
             1 +
             self.rules.as_ref().map_or(0, |_| 1),
         )?;

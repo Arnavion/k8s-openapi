@@ -40,7 +40,7 @@ impl VolumeAttachment {
             include_uninitialized,
             pretty,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments?");
+        let __url = "/apis/storage.k8s.io/v1alpha1/volumeattachments?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -60,7 +60,7 @@ impl VolumeAttachment {
 }
 
 /// Optional parameters of [`VolumeAttachment::create_volume_attachment`](./struct.VolumeAttachment.html#method.create_volume_attachment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -139,7 +139,7 @@ impl VolumeAttachment {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments?");
+        let __url = "/apis/storage.k8s.io/v1alpha1/volumeattachments?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -177,7 +177,7 @@ impl VolumeAttachment {
 }
 
 /// Optional parameters of [`VolumeAttachment::delete_collection_volume_attachment`](./struct.VolumeAttachment.html#method.delete_collection_volume_attachment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionVolumeAttachmentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -295,7 +295,7 @@ impl VolumeAttachment {
 }
 
 /// Optional parameters of [`VolumeAttachment::delete_volume_attachment`](./struct.VolumeAttachment.html#method.delete_volume_attachment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -383,7 +383,7 @@ impl VolumeAttachment {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1alpha1/volumeattachments?");
+        let __url = "/apis/storage.k8s.io/v1alpha1/volumeattachments?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -421,7 +421,7 @@ impl VolumeAttachment {
 }
 
 /// Optional parameters of [`VolumeAttachment::list_volume_attachment`](./struct.VolumeAttachment.html#method.list_volume_attachment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListVolumeAttachmentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -516,7 +516,7 @@ impl VolumeAttachment {
 }
 
 /// Optional parameters of [`VolumeAttachment::patch_volume_attachment`](./struct.VolumeAttachment.html#method.patch_volume_attachment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -594,7 +594,7 @@ impl VolumeAttachment {
 }
 
 /// Optional parameters of [`VolumeAttachment::read_volume_attachment`](./struct.VolumeAttachment.html#method.read_volume_attachment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadVolumeAttachmentOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -673,7 +673,7 @@ impl VolumeAttachment {
 }
 
 /// Optional parameters of [`VolumeAttachment::replace_volume_attachment`](./struct.VolumeAttachment.html#method.replace_volume_attachment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -784,7 +784,7 @@ impl VolumeAttachment {
 }
 
 /// Optional parameters of [`VolumeAttachment::watch_volume_attachment`](./struct.VolumeAttachment.html#method.watch_volume_attachment)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchVolumeAttachmentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -863,7 +863,7 @@ impl VolumeAttachment {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1alpha1/watch/volumeattachments?");
+        let __url = "/apis/storage.k8s.io/v1alpha1/watch/volumeattachments?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -901,7 +901,7 @@ impl VolumeAttachment {
 }
 
 /// Optional parameters of [`VolumeAttachment::watch_volume_attachment_list`](./struct.VolumeAttachment.html#method.watch_volume_attachment_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchVolumeAttachmentListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1082,10 +1082,8 @@ impl serde::Serialize for VolumeAttachment {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "VolumeAttachment",
-            0 +
-            2 +
+            3 +
             self.metadata.as_ref().map_or(0, |_| 1) +
-            1 +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;

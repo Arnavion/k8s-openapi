@@ -77,7 +77,6 @@ impl serde::Serialize for IngressStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "IngressStatus",
-            0 +
             self.load_balancer.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.load_balancer {

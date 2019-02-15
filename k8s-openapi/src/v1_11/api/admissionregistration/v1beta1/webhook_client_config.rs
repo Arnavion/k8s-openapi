@@ -109,7 +109,6 @@ impl serde::Serialize for WebhookClientConfig {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "WebhookClientConfig",
-            0 +
             1 +
             self.service.as_ref().map_or(0, |_| 1) +
             self.url.as_ref().map_or(0, |_| 1),

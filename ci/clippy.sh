@@ -12,6 +12,6 @@ export PATH="$PATH:$(realpath ~/.cargo/bin)"
 rustup install stable
 rustup default stable
 
-rustup component add clippy-preview
+rustup component add clippy
 
 cargo clippy

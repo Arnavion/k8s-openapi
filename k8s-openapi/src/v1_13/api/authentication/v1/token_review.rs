@@ -37,7 +37,7 @@ impl TokenReview {
             include_uninitialized,
             pretty,
         } = optional;
-        let __url = format!("/apis/authentication.k8s.io/v1/tokenreviews?");
+        let __url = "/apis/authentication.k8s.io/v1/tokenreviews?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -57,7 +57,7 @@ impl TokenReview {
 }
 
 /// Optional parameters of [`TokenReview::create_token_review`](./struct.TokenReview.html#method.create_token_review)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateTokenReviewOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -238,10 +238,8 @@ impl serde::Serialize for TokenReview {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TokenReview",
-            0 +
-            2 +
+            3 +
             self.metadata.as_ref().map_or(0, |_| 1) +
-            1 +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;

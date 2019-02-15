@@ -228,7 +228,6 @@ impl serde::Serialize for ObjectMeta {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ObjectMeta",
-            0 +
             self.annotations.as_ref().map_or(0, |_| 1) +
             self.cluster_name.as_ref().map_or(0, |_| 1) +
             self.creation_timestamp.as_ref().map_or(0, |_| 1) +

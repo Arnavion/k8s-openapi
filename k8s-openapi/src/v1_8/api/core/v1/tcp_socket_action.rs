@@ -86,9 +86,8 @@ impl serde::Serialize for TCPSocketAction {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TCPSocketAction",
-            0 +
-            self.host.as_ref().map_or(0, |_| 1) +
-            1,
+            1 +
+            self.host.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.host {
             serde::ser::SerializeStruct::serialize_field(&mut state, "host", value)?;

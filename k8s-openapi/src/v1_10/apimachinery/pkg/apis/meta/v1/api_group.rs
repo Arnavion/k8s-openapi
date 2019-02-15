@@ -140,12 +140,9 @@ impl serde::Serialize for APIGroup {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "APIGroup",
-            0 +
-            2 +
-            1 +
+            4 +
             self.preferred_version.as_ref().map_or(0, |_| 1) +
-            self.server_address_by_client_cidrs.as_ref().map_or(0, |_| 1) +
-            1,
+            self.server_address_by_client_cidrs.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;

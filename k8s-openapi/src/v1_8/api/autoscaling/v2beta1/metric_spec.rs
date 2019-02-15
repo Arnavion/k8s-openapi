@@ -104,11 +104,10 @@ impl serde::Serialize for MetricSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "MetricSpec",
-            0 +
+            1 +
             self.object.as_ref().map_or(0, |_| 1) +
             self.pods.as_ref().map_or(0, |_| 1) +
-            self.resource.as_ref().map_or(0, |_| 1) +
-            1,
+            self.resource.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.object {
             serde::ser::SerializeStruct::serialize_field(&mut state, "object", value)?;

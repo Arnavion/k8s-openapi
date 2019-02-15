@@ -35,7 +35,7 @@ impl CustomResourceDefinition {
         let CreateCustomResourceDefinitionOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?");
+        let __url = "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -49,7 +49,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::create_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.create_custom_resource_definition)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -124,7 +124,7 @@ impl CustomResourceDefinition {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?");
+        let __url = "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -162,7 +162,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::delete_collection_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_collection_custom_resource_definition)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionCustomResourceDefinitionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -274,7 +274,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::delete_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_custom_resource_definition)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCustomResourceDefinitionOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -351,7 +351,7 @@ impl CustomResourceDefinition {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?");
+        let __url = "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -389,7 +389,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::list_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.list_custom_resource_definition)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListCustomResourceDefinitionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -478,7 +478,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::patch_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.patch_custom_resource_definition)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -549,7 +549,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::patch_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.patch_custom_resource_definition_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchCustomResourceDefinitionStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -625,7 +625,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::read_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.read_custom_resource_definition)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadCustomResourceDefinitionOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -697,7 +697,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::read_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.read_custom_resource_definition_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadCustomResourceDefinitionStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -768,7 +768,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::replace_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.replace_custom_resource_definition)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -848,7 +848,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::replace_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.replace_custom_resource_definition_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCustomResourceDefinitionStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -957,7 +957,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::watch_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.watch_custom_resource_definition)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchCustomResourceDefinitionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1034,7 +1034,7 @@ impl CustomResourceDefinition {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/apiextensions.k8s.io/v1beta1/watch/customresourcedefinitions?");
+        let __url = "/apis/apiextensions.k8s.io/v1beta1/watch/customresourcedefinitions?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1072,7 +1072,7 @@ impl CustomResourceDefinition {
 }
 
 /// Optional parameters of [`CustomResourceDefinition::watch_custom_resource_definition_list`](./struct.CustomResourceDefinition.html#method.watch_custom_resource_definition_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchCustomResourceDefinitionListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1251,7 +1251,6 @@ impl serde::Serialize for CustomResourceDefinition {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinition",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1) +

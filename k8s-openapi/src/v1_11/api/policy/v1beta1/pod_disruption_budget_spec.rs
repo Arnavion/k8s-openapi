@@ -95,7 +95,6 @@ impl serde::Serialize for PodDisruptionBudgetSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodDisruptionBudgetSpec",
-            0 +
             self.max_unavailable.as_ref().map_or(0, |_| 1) +
             self.min_available.as_ref().map_or(0, |_| 1) +
             self.selector.as_ref().map_or(0, |_| 1),

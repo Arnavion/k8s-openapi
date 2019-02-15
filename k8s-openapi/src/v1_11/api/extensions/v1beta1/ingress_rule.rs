@@ -90,7 +90,6 @@ impl serde::Serialize for IngressRule {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "IngressRule",
-            0 +
             self.host.as_ref().map_or(0, |_| 1) +
             self.http.as_ref().map_or(0, |_| 1),
         )?;

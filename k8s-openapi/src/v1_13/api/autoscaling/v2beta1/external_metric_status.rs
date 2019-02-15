@@ -104,10 +104,8 @@ impl serde::Serialize for ExternalMetricStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ExternalMetricStatus",
-            0 +
+            2 +
             self.current_average_value.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
             self.metric_selector.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.current_average_value {

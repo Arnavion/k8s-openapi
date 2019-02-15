@@ -86,7 +86,6 @@ impl serde::Serialize for NonResourceAttributes {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NonResourceAttributes",
-            0 +
             self.path.as_ref().map_or(0, |_| 1) +
             self.verb.as_ref().map_or(0, |_| 1),
         )?;

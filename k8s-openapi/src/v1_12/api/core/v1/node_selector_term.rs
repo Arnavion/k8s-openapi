@@ -86,7 +86,6 @@ impl serde::Serialize for NodeSelectorTerm {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeSelectorTerm",
-            0 +
             self.match_expressions.as_ref().map_or(0, |_| 1) +
             self.match_fields.as_ref().map_or(0, |_| 1),
         )?;

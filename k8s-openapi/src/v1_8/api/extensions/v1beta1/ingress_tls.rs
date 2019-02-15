@@ -86,7 +86,6 @@ impl serde::Serialize for IngressTLS {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "IngressTLS",
-            0 +
             self.hosts.as_ref().map_or(0, |_| 1) +
             self.secret_name.as_ref().map_or(0, |_| 1),
         )?;

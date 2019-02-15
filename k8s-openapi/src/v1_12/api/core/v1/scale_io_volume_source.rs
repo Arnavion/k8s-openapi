@@ -158,16 +158,13 @@ impl serde::Serialize for ScaleIOVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ScaleIOVolumeSource",
-            0 +
+            3 +
             self.fs_type.as_ref().map_or(0, |_| 1) +
-            1 +
             self.protection_domain.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +
-            1 +
             self.ssl_enabled.as_ref().map_or(0, |_| 1) +
             self.storage_mode.as_ref().map_or(0, |_| 1) +
             self.storage_pool.as_ref().map_or(0, |_| 1) +
-            1 +
             self.volume_name.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.fs_type {

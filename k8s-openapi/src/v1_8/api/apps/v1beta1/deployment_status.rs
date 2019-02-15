@@ -140,7 +140,6 @@ impl serde::Serialize for DeploymentStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DeploymentStatus",
-            0 +
             self.available_replicas.as_ref().map_or(0, |_| 1) +
             self.collision_count.as_ref().map_or(0, |_| 1) +
             self.conditions.as_ref().map_or(0, |_| 1) +

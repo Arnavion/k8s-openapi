@@ -52,7 +52,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::create_namespaced_limit_range`](./struct.LimitRange.html#method.create_namespaced_limit_range)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -152,7 +152,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::delete_collection_namespaced_limit_range`](./struct.LimitRange.html#method.delete_collection_namespaced_limit_range)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedLimitRangeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -269,7 +269,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::delete_namespaced_limit_range`](./struct.LimitRange.html#method.delete_namespaced_limit_range)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedLimitRangeOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -346,7 +346,7 @@ impl LimitRange {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/limitranges?");
+        let __url = "/api/v1/limitranges?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -384,7 +384,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::list_limit_range_for_all_namespaces`](./struct.LimitRange.html#method.list_limit_range_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListLimitRangeForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -502,7 +502,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::list_namespaced_limit_range`](./struct.LimitRange.html#method.list_namespaced_limit_range)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedLimitRangeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -596,7 +596,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::patch_namespaced_limit_range`](./struct.LimitRange.html#method.patch_namespaced_limit_range)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -677,7 +677,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::read_namespaced_limit_range`](./struct.LimitRange.html#method.read_namespaced_limit_range)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedLimitRangeOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -757,7 +757,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::replace_namespaced_limit_range`](./struct.LimitRange.html#method.replace_namespaced_limit_range)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -814,7 +814,7 @@ impl LimitRange {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/watch/limitranges?");
+        let __url = "/api/v1/watch/limitranges?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -852,7 +852,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::watch_limit_range_list_for_all_namespaces`](./struct.LimitRange.html#method.watch_limit_range_list_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchLimitRangeListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -977,7 +977,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::watch_namespaced_limit_range`](./struct.LimitRange.html#method.watch_namespaced_limit_range)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedLimitRangeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1097,7 +1097,7 @@ impl LimitRange {
 }
 
 /// Optional parameters of [`LimitRange::watch_namespaced_limit_range_list`](./struct.LimitRange.html#method.watch_namespaced_limit_range_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedLimitRangeListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1270,7 +1270,6 @@ impl serde::Serialize for LimitRange {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "LimitRange",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1),

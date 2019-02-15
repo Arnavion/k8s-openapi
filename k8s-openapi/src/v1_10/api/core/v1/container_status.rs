@@ -140,14 +140,9 @@ impl serde::Serialize for ContainerStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ContainerStatus",
-            0 +
+            5 +
             self.container_id.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
             self.last_state.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
-            1 +
             self.state.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.container_id {

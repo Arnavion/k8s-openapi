@@ -158,17 +158,7 @@ impl serde::Serialize for NodeSystemInfo {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeSystemInfo",
-            0 +
-            1 +
-            1 +
-            1 +
-            1 +
-            1 +
-            1 +
-            1 +
-            1 +
-            1 +
-            1,
+            10,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "architecture", &self.architecture)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "bootID", &self.boot_id)?;

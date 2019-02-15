@@ -104,11 +104,8 @@ impl serde::Serialize for SubjectRulesReviewStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SubjectRulesReviewStatus",
-            0 +
-            self.evaluation_error.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
-            1,
+            3 +
+            self.evaluation_error.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.evaluation_error {
             serde::ser::SerializeStruct::serialize_field(&mut state, "evaluationError", value)?;

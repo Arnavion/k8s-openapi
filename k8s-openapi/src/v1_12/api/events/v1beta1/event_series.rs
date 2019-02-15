@@ -95,10 +95,7 @@ impl serde::Serialize for EventSeries {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EventSeries",
-            0 +
-            1 +
-            1 +
-            1,
+            3,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "count", &self.count)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "lastObservedTime", &self.last_observed_time)?;

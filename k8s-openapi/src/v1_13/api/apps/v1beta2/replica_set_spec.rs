@@ -104,10 +104,9 @@ impl serde::Serialize for ReplicaSetSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ReplicaSetSpec",
-            0 +
+            1 +
             self.min_ready_seconds.as_ref().map_or(0, |_| 1) +
             self.replicas.as_ref().map_or(0, |_| 1) +
-            1 +
             self.template.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.min_ready_seconds {

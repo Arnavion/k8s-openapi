@@ -86,9 +86,7 @@ impl serde::Serialize for AttachedVolume {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "AttachedVolume",
-            0 +
-            1 +
-            1,
+            2,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "devicePath", &self.device_path)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;

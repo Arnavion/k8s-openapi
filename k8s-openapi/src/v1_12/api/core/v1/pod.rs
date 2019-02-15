@@ -57,7 +57,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_delete_namespaced_pod_proxy`](./struct.Pod.html#method.connect_delete_namespaced_pod_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNamespacedPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
@@ -140,7 +140,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_delete_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_delete_namespaced_pod_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
@@ -234,7 +234,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_get_namespaced_pod_attach`](./struct.Pod.html#method.connect_get_namespaced_pod_attach)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedPodAttachOptional<'a> {
     /// The container in which to execute the command. Defaults to only container if there is only one container in the pod.
     pub container: Option<&'a str>,
@@ -340,7 +340,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_get_namespaced_pod_exec`](./struct.Pod.html#method.connect_get_namespaced_pod_exec)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedPodExecOptional<'a> {
     /// Command is the remote command to execute. argv array. Not executed within a shell.
     pub command: Option<&'a str>,
@@ -428,7 +428,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_get_namespaced_pod_portforward`](./struct.Pod.html#method.connect_get_namespaced_pod_portforward)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedPodPortforwardOptional {
     /// List of ports to forward Required when using WebSockets
     pub ports: Option<i64>,
@@ -506,7 +506,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_get_namespaced_pod_proxy`](./struct.Pod.html#method.connect_get_namespaced_pod_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
@@ -589,7 +589,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_get_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_get_namespaced_pod_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
@@ -667,7 +667,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_patch_namespaced_pod_proxy`](./struct.Pod.html#method.connect_patch_namespaced_pod_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNamespacedPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
@@ -750,7 +750,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_patch_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_patch_namespaced_pod_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
@@ -844,7 +844,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_post_namespaced_pod_attach`](./struct.Pod.html#method.connect_post_namespaced_pod_attach)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedPodAttachOptional<'a> {
     /// The container in which to execute the command. Defaults to only container if there is only one container in the pod.
     pub container: Option<&'a str>,
@@ -950,7 +950,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_post_namespaced_pod_exec`](./struct.Pod.html#method.connect_post_namespaced_pod_exec)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedPodExecOptional<'a> {
     /// Command is the remote command to execute. argv array. Not executed within a shell.
     pub command: Option<&'a str>,
@@ -1038,7 +1038,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_post_namespaced_pod_portforward`](./struct.Pod.html#method.connect_post_namespaced_pod_portforward)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedPodPortforwardOptional {
     /// List of ports to forward Required when using WebSockets
     pub ports: Option<i64>,
@@ -1116,7 +1116,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_post_namespaced_pod_proxy`](./struct.Pod.html#method.connect_post_namespaced_pod_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
@@ -1199,7 +1199,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_post_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_post_namespaced_pod_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
@@ -1277,7 +1277,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_put_namespaced_pod_proxy`](./struct.Pod.html#method.connect_put_namespaced_pod_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNamespacedPodProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path: Option<&'a str>,
@@ -1360,7 +1360,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::connect_put_namespaced_pod_proxy_with_path`](./struct.Pod.html#method.connect_put_namespaced_pod_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNamespacedPodProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to pod.
     pub path_: Option<&'a str>,
@@ -1444,7 +1444,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::create_namespaced_pod`](./struct.Pod.html#method.create_namespaced_pod)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPodOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -1566,7 +1566,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::delete_collection_namespaced_pod`](./struct.Pod.html#method.delete_collection_namespaced_pod)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedPodOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1689,7 +1689,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::delete_namespaced_pod`](./struct.Pod.html#method.delete_namespaced_pod)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedPodOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -1820,7 +1820,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::list_namespaced_pod`](./struct.Pod.html#method.list_namespaced_pod)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedPodOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1897,7 +1897,7 @@ impl Pod {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/pods?");
+        let __url = "/api/v1/pods?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1935,7 +1935,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::list_pod_for_all_namespaces`](./struct.Pod.html#method.list_pod_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListPodForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -2035,7 +2035,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::patch_namespaced_pod`](./struct.Pod.html#method.patch_namespaced_pod)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedPodOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -2117,7 +2117,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::patch_namespaced_pod_status`](./struct.Pod.html#method.patch_namespaced_pod_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedPodStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -2200,7 +2200,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::read_namespaced_pod`](./struct.Pod.html#method.read_namespaced_pod)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedPodOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -2305,7 +2305,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::read_namespaced_pod_log`](./struct.Pod.html#method.read_namespaced_pod_log)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedPodLogOptional<'a> {
     /// The container for which to stream logs. Defaults to only container if there is one container in the pod.
     pub container: Option<&'a str>,
@@ -2397,7 +2397,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::read_namespaced_pod_status`](./struct.Pod.html#method.read_namespaced_pod_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedPodStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -2477,7 +2477,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::replace_namespaced_pod`](./struct.Pod.html#method.replace_namespaced_pod)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedPodOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -2568,7 +2568,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::replace_namespaced_pod_status`](./struct.Pod.html#method.replace_namespaced_pod_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedPodStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -2684,7 +2684,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::watch_namespaced_pod`](./struct.Pod.html#method.watch_namespaced_pod)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedPodOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -2806,7 +2806,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::watch_namespaced_pod_list`](./struct.Pod.html#method.watch_namespaced_pod_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedPodListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -2885,7 +2885,7 @@ impl Pod {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/watch/pods?");
+        let __url = "/api/v1/watch/pods?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -2923,7 +2923,7 @@ impl Pod {
 }
 
 /// Optional parameters of [`Pod::watch_pod_list_for_all_namespaces`](./struct.Pod.html#method.watch_pod_list_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPodListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -3104,7 +3104,6 @@ impl serde::Serialize for Pod {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Pod",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1) +

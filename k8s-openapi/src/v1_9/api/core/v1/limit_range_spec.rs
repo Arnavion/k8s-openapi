@@ -77,7 +77,6 @@ impl serde::Serialize for LimitRangeSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "LimitRangeSpec",
-            0 +
             1,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "limits", &self.limits)?;

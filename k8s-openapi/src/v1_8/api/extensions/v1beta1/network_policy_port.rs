@@ -85,7 +85,6 @@ impl serde::Serialize for NetworkPolicyPort {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NetworkPolicyPort",
-            0 +
             self.port.as_ref().map_or(0, |_| 1) +
             self.protocol.as_ref().map_or(0, |_| 1),
         )?;

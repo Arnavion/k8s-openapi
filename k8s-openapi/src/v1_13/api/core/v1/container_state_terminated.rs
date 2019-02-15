@@ -131,9 +131,8 @@ impl serde::Serialize for ContainerStateTerminated {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ContainerStateTerminated",
-            0 +
-            self.container_id.as_ref().map_or(0, |_| 1) +
             1 +
+            self.container_id.as_ref().map_or(0, |_| 1) +
             self.finished_at.as_ref().map_or(0, |_| 1) +
             self.message.as_ref().map_or(0, |_| 1) +
             self.reason.as_ref().map_or(0, |_| 1) +

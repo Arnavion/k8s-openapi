@@ -95,9 +95,7 @@ impl serde::Serialize for PodsMetricStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodsMetricStatus",
-            0 +
-            1 +
-            1 +
+            2 +
             self.selector.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "currentAverageValue", &self.current_average_value)?;

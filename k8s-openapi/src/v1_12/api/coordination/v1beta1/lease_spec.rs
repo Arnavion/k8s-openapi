@@ -113,7 +113,6 @@ impl serde::Serialize for LeaseSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "LeaseSpec",
-            0 +
             self.acquire_time.as_ref().map_or(0, |_| 1) +
             self.holder_identity.as_ref().map_or(0, |_| 1) +
             self.lease_duration_seconds.as_ref().map_or(0, |_| 1) +

@@ -38,7 +38,7 @@ impl ComponentStatus {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/componentstatuses?");
+        let __url = "/api/v1/componentstatuses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -76,7 +76,7 @@ impl ComponentStatus {
 }
 
 /// Optional parameters of [`ComponentStatus::list_component_status`](./struct.ComponentStatus.html#method.list_component_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListComponentStatusOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -162,7 +162,7 @@ impl ComponentStatus {
 }
 
 /// Optional parameters of [`ComponentStatus::read_component_status`](./struct.ComponentStatus.html#method.read_component_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadComponentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -315,7 +315,6 @@ impl serde::Serialize for ComponentStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ComponentStatus",
-            0 +
             2 +
             self.conditions.as_ref().map_or(0, |_| 1) +
             self.metadata.as_ref().map_or(0, |_| 1),

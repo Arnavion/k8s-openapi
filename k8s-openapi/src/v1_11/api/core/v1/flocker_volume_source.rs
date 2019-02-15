@@ -86,7 +86,6 @@ impl serde::Serialize for FlockerVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "FlockerVolumeSource",
-            0 +
             self.dataset_name.as_ref().map_or(0, |_| 1) +
             self.dataset_uuid.as_ref().map_or(0, |_| 1),
         )?;

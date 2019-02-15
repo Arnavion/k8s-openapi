@@ -88,7 +88,6 @@ impl serde::Serialize for AllowedHostPath {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "AllowedHostPath",
-            0 +
             self.path_prefix.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1),
         )?;

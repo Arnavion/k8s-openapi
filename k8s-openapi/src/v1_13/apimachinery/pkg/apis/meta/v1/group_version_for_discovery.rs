@@ -86,9 +86,7 @@ impl serde::Serialize for GroupVersionForDiscovery {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "GroupVersionForDiscovery",
-            0 +
-            1 +
-            1,
+            2,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "groupVersion", &self.group_version)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "version", &self.version)?;

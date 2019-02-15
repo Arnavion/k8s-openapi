@@ -104,11 +104,9 @@ impl serde::Serialize for ComponentCondition {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ComponentCondition",
-            0 +
+            2 +
             self.error.as_ref().map_or(0, |_| 1) +
-            self.message.as_ref().map_or(0, |_| 1) +
-            1 +
-            1,
+            self.message.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.error {
             serde::ser::SerializeStruct::serialize_field(&mut state, "error", value)?;

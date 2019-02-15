@@ -302,11 +302,10 @@ impl serde::Serialize for PodSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodSpec",
-            0 +
+            1 +
             self.active_deadline_seconds.as_ref().map_or(0, |_| 1) +
             self.affinity.as_ref().map_or(0, |_| 1) +
             self.automount_service_account_token.as_ref().map_or(0, |_| 1) +
-            1 +
             self.dns_config.as_ref().map_or(0, |_| 1) +
             self.dns_policy.as_ref().map_or(0, |_| 1) +
             self.host_aliases.as_ref().map_or(0, |_| 1) +

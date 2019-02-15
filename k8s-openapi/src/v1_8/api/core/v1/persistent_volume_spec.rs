@@ -311,7 +311,6 @@ impl serde::Serialize for PersistentVolumeSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeSpec",
-            0 +
             self.access_modes.as_ref().map_or(0, |_| 1) +
             self.aws_elastic_block_store.as_ref().map_or(0, |_| 1) +
             self.azure_disk.as_ref().map_or(0, |_| 1) +

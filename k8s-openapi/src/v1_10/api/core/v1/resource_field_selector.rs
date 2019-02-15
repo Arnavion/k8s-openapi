@@ -95,10 +95,9 @@ impl serde::Serialize for ResourceFieldSelector {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ResourceFieldSelector",
-            0 +
+            1 +
             self.container_name.as_ref().map_or(0, |_| 1) +
-            self.divisor.as_ref().map_or(0, |_| 1) +
-            1,
+            self.divisor.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.container_name {
             serde::ser::SerializeStruct::serialize_field(&mut state, "containerName", value)?;

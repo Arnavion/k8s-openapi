@@ -122,7 +122,6 @@ impl serde::Serialize for CephFSVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CephFSVolumeSource",
-            0 +
             1 +
             self.path.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +

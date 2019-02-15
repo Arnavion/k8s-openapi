@@ -86,7 +86,6 @@ impl serde::Serialize for Lifecycle {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Lifecycle",
-            0 +
             self.post_start.as_ref().map_or(0, |_| 1) +
             self.pre_stop.as_ref().map_or(0, |_| 1),
         )?;

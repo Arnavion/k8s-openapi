@@ -122,13 +122,9 @@ impl serde::Serialize for OwnerReference {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "OwnerReference",
-            0 +
-            1 +
+            4 +
             self.block_owner_deletion.as_ref().map_or(0, |_| 1) +
-            self.controller.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
-            1,
+            self.controller.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", &self.api_version)?;
         if let Some(value) = &self.block_owner_deletion {

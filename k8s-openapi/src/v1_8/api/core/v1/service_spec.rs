@@ -185,7 +185,6 @@ impl serde::Serialize for ServiceSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ServiceSpec",
-            0 +
             self.cluster_ip.as_ref().map_or(0, |_| 1) +
             self.external_ips.as_ref().map_or(0, |_| 1) +
             self.external_name.as_ref().map_or(0, |_| 1) +

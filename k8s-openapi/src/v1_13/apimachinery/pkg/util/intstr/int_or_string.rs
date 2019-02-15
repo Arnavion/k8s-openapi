@@ -29,18 +29,23 @@ impl<'de> serde::Deserialize<'de> for IntOrString {
             }
 
             fn visit_i64<E>(self, v: i64) -> Result<Self::Value, E> where E: serde::de::Error {
-                if v < std::i32::MIN as i64 || v > std::i32::MAX as i64 {
+                if v < i64::from(i32::min_value()) || v > i64::from(i32::max_value()) {
                     return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &"a 32-bit integer"));
                 }
 
+                #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
                 Ok(IntOrString::Int(v as i32))
             }
 
             fn visit_u64<E>(self, v: u64) -> Result<Self::Value, E> where E: serde::de::Error {
-                if v > std::i32::MAX as u64 {
-                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &"a 32-bit integer"));
+                #[allow(clippy::cast_sign_loss)]
+                {
+                    if v > i32::max_value() as u64 {
+                        return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &"a 32-bit integer"));
+                    }
                 }
 
+                #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
                 Ok(IntOrString::Int(v as i32))
             }
 

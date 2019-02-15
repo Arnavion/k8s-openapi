@@ -95,7 +95,6 @@ impl serde::Serialize for ContainerState {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ContainerState",
-            0 +
             self.running.as_ref().map_or(0, |_| 1) +
             self.terminated.as_ref().map_or(0, |_| 1) +
             self.waiting.as_ref().map_or(0, |_| 1),

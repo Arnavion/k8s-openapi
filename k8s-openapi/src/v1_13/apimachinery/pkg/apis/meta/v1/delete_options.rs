@@ -131,7 +131,6 @@ impl serde::Serialize for DeleteOptions {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DeleteOptions",
-            0 +
             self.api_version.as_ref().map_or(0, |_| 1) +
             self.dry_run.as_ref().map_or(0, |_| 1) +
             self.grace_period_seconds.as_ref().map_or(0, |_| 1) +

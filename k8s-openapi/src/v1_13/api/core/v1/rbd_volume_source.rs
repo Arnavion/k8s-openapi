@@ -140,11 +140,9 @@ impl serde::Serialize for RBDVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "RBDVolumeSource",
-            0 +
+            2 +
             self.fs_type.as_ref().map_or(0, |_| 1) +
-            1 +
             self.keyring.as_ref().map_or(0, |_| 1) +
-            1 +
             self.pool.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +
             self.secret_ref.as_ref().map_or(0, |_| 1) +

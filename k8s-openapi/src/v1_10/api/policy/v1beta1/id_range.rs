@@ -86,9 +86,7 @@ impl serde::Serialize for IDRange {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "IDRange",
-            0 +
-            1 +
-            1,
+            2,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "max", &self.max)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "min", &self.min)?;

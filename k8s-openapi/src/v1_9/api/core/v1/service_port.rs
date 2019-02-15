@@ -113,10 +113,9 @@ impl serde::Serialize for ServicePort {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ServicePort",
-            0 +
+            1 +
             self.name.as_ref().map_or(0, |_| 1) +
             self.node_port.as_ref().map_or(0, |_| 1) +
-            1 +
             self.protocol.as_ref().map_or(0, |_| 1) +
             self.target_port.as_ref().map_or(0, |_| 1),
         )?;

@@ -95,10 +95,8 @@ impl serde::Serialize for PodsMetricSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodsMetricSource",
-            0 +
-            1 +
-            self.selector.as_ref().map_or(0, |_| 1) +
-            1,
+            2 +
+            self.selector.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "metricName", &self.metric_name)?;
         if let Some(value) = &self.selector {

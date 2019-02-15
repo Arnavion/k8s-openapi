@@ -95,7 +95,6 @@ impl serde::Serialize for Affinity {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Affinity",
-            0 +
             self.node_affinity.as_ref().map_or(0, |_| 1) +
             self.pod_affinity.as_ref().map_or(0, |_| 1) +
             self.pod_anti_affinity.as_ref().map_or(0, |_| 1),

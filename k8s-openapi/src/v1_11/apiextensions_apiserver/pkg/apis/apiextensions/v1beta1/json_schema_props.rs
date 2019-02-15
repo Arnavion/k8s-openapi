@@ -356,7 +356,6 @@ impl serde::Serialize for JSONSchemaProps {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "JSONSchemaProps",
-            0 +
             self.ref_path.as_ref().map_or(0, |_| 1) +
             self.schema.as_ref().map_or(0, |_| 1) +
             self.additional_items.as_ref().map_or(0, |_| 1) +

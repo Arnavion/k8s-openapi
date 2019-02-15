@@ -52,7 +52,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::connect_delete_node_proxy`](./struct.Node.html#method.connect_delete_node_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
@@ -130,7 +130,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::connect_delete_node_proxy_with_path`](./struct.Node.html#method.connect_delete_node_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
@@ -203,7 +203,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::connect_get_node_proxy`](./struct.Node.html#method.connect_get_node_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
@@ -281,7 +281,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::connect_get_node_proxy_with_path`](./struct.Node.html#method.connect_get_node_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
@@ -354,7 +354,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::connect_patch_node_proxy`](./struct.Node.html#method.connect_patch_node_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
@@ -432,7 +432,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::connect_patch_node_proxy_with_path`](./struct.Node.html#method.connect_patch_node_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
@@ -505,7 +505,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::connect_post_node_proxy`](./struct.Node.html#method.connect_post_node_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
@@ -583,7 +583,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::connect_post_node_proxy_with_path`](./struct.Node.html#method.connect_post_node_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
@@ -656,7 +656,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::connect_put_node_proxy`](./struct.Node.html#method.connect_put_node_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
@@ -734,7 +734,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::connect_put_node_proxy_with_path`](./struct.Node.html#method.connect_put_node_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
@@ -793,7 +793,7 @@ impl Node {
             include_uninitialized,
             pretty,
         } = optional;
-        let __url = format!("/api/v1/nodes?");
+        let __url = "/api/v1/nodes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(dry_run) = dry_run {
             __query_pairs.append_pair("dryRun", dry_run);
@@ -813,7 +813,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::create_node`](./struct.Node.html#method.create_node)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNodeOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -892,7 +892,7 @@ impl Node {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/nodes?");
+        let __url = "/api/v1/nodes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -930,7 +930,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::delete_collection_node`](./struct.Node.html#method.delete_collection_node)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNodeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1048,7 +1048,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::delete_node`](./struct.Node.html#method.delete_node)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNodeOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -1136,7 +1136,7 @@ impl Node {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/nodes?");
+        let __url = "/api/v1/nodes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1174,7 +1174,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::list_node`](./struct.Node.html#method.list_node)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListNodeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1269,7 +1269,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::patch_node`](./struct.Node.html#method.patch_node)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNodeOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -1346,7 +1346,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::patch_node_status`](./struct.Node.html#method.patch_node_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNodeStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -1424,7 +1424,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::read_node`](./struct.Node.html#method.read_node)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNodeOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -1496,7 +1496,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::read_node_status`](./struct.Node.html#method.read_node_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNodeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -1571,7 +1571,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::replace_node`](./struct.Node.html#method.replace_node)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNodeOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -1657,7 +1657,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::replace_node_status`](./struct.Node.html#method.replace_node_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNodeStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -1768,7 +1768,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::watch_node`](./struct.Node.html#method.watch_node)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNodeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -1847,7 +1847,7 @@ impl Node {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/watch/nodes?");
+        let __url = "/api/v1/watch/nodes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1885,7 +1885,7 @@ impl Node {
 }
 
 /// Optional parameters of [`Node::watch_node_list`](./struct.Node.html#method.watch_node_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNodeListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
     ///
@@ -2066,7 +2066,6 @@ impl serde::Serialize for Node {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Node",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1) +

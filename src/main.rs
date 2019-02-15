@@ -478,21 +478,44 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 						writeln!(file, "        let mut state = serializer.serialize_struct(")?;
 					}
 					writeln!(file, r#"            "{}","#, type_name)?;
-					write!(file, "            0")?;
-					if resource_metadata.is_some() {
-						writeln!(file, " +")?;
-						write!(file, "            2")?;
-					}
-					for Property { required, field_name, .. } in &properties {
-						writeln!(file, " +")?;
-						if *required {
-							write!(file, "            1")?;
-						}
-						else {
-							write!(file, "            self.{}.as_ref().map_or(0, |_| 1)", field_name)?;
-						}
+
+					let num_required_fields =
+						resource_metadata.as_ref().map_or(0, |_| 2) +
+						properties.iter().filter(|Property { required, .. }| *required).count();
+					let have_optional_fields = properties.iter().any(|Property { required, .. }| !*required);
+					match (num_required_fields, have_optional_fields) {
+						(0, true) => {
+							let mut wrote_first_field = false;
+							for Property { required, field_name, .. } in &properties {
+								if !*required {
+									if wrote_first_field {
+										writeln!(file, " +")?;
+									}
+									else {
+										wrote_first_field = true;
+									}
+									write!(file, "            self.{}.as_ref().map_or(0, |_| 1)", field_name)?;
+								}
+							}
+						},
+
+						(0, false) =>
+							write!(file, "            0")?,
+
+						(num_required_fields, have_optional_fields) => {
+							write!(file, "            {}", num_required_fields)?;
+							if have_optional_fields {
+								for Property { required, field_name, .. } in &properties {
+									if !*required {
+										writeln!(file, " +")?;
+										write!(file, "            self.{}.as_ref().map_or(0, |_| 1)", field_name)?;
+									}
+								}
+							}
+						},
 					}
 					writeln!(file, ",")?;
+
 					writeln!(file, "        )?;")?;
 					if resource_metadata.is_some() {
 						writeln!(file, r#"        serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;"#)?;
@@ -546,18 +569,23 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					writeln!(file, "            }}")?;
 					writeln!(file)?;
 					writeln!(file, "            fn visit_i64<E>(self, v: i64) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
-					writeln!(file, "                if v < std::i32::MIN as i64 || v > std::i32::MAX as i64 {{")?;
+					writeln!(file, "                if v < i64::from(i32::min_value()) || v > i64::from(i32::max_value()) {{")?;
 					writeln!(file, r#"                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &"a 32-bit integer"));"#)?;
 					writeln!(file, "                }}")?;
 					writeln!(file)?;
+					writeln!(file, "                #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]")?;
 					writeln!(file, "                Ok({}::Int(v as i32))", type_name)?;
 					writeln!(file, "            }}")?;
 					writeln!(file)?;
 					writeln!(file, "            fn visit_u64<E>(self, v: u64) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
-					writeln!(file, "                if v > std::i32::MAX as u64 {{")?;
-					writeln!(file, r#"                    return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &"a 32-bit integer"));"#)?;
+					writeln!(file, "                #[allow(clippy::cast_sign_loss)]")?;
+					writeln!(file, "                {{")?;
+					writeln!(file, "                    if v > i32::max_value() as u64 {{")?;
+					writeln!(file, r#"                        return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &"a 32-bit integer"));"#)?;
+					writeln!(file, "                    }}")?;
 					writeln!(file, "                }}")?;
 					writeln!(file)?;
+					writeln!(file, "                #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]")?;
 					writeln!(file, "                Ok({}::Int(v as i32))", type_name)?;
 					writeln!(file, "            }}")?;
 					writeln!(file)?;
@@ -1230,6 +1258,7 @@ fn write_operation(
 	}
 	writeln!(file, "{}) -> Result<http::Request<Vec<u8>>, crate::RequestError> {{", indent)?;
 
+	let have_path_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Path);
 	let have_query_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Query);
 
 	if !optional_parameters.is_empty() {
@@ -1241,17 +1270,26 @@ fn write_operation(
 		writeln!(file, "{}    }} = optional;", indent)?;
 	}
 
-	write!(file, r#"{}    let __url = format!("{}"#, indent, path)?;
-	if have_query_parameters {
-		write!(file, "?")?;
-	}
-	write!(file, r#"""#)?;
-	for (parameter_name, _, parameter) in &parameters {
-		if parameter.location == swagger20::ParameterLocation::Path {
-			write!(file, ", {} = {}", parameter_name, parameter_name)?;
+	if have_path_parameters {
+		write!(file, r#"{}    let __url = format!("{}"#, indent, path)?;
+		if have_query_parameters {
+			write!(file, "?")?;
 		}
+		write!(file, r#"""#)?;
+		for (parameter_name, _, parameter) in &parameters {
+			if parameter.location == swagger20::ParameterLocation::Path {
+				write!(file, ", {} = {}", parameter_name, parameter_name)?;
+			}
+		}
+		writeln!(file, ");")?;
 	}
-	writeln!(file, ");")?;
+	else {
+		write!(file, r#"{}    let __url = "{}"#, indent, path)?;
+		if have_query_parameters {
+			write!(file, "?")?;
+		}
+		writeln!(file, r#"".to_string();"#)?;
+	}
 
 	if have_query_parameters {
 		writeln!(file, "{}    let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);", indent)?;
@@ -1343,7 +1381,7 @@ fn write_operation(
 			writeln!(file, "/// Optional parameters of [`{}`](./fn.{}.html)", operation_fn_name, operation_fn_name)?;
 		}
 
-		writeln!(file, "#[derive(Debug, Default)]")?;
+		writeln!(file, "#[derive(Clone, Copy, Debug, Default)]")?;
 		write!(file, "pub struct {}", operation_optional_parameters_name)?;
 		if any_optional_fields_have_lifetimes {
 			write!(file, "<'a>")?;

@@ -94,10 +94,7 @@ impl serde::Serialize for CustomResourceDefinitionVersion {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionVersion",
-            0 +
-            1 +
-            1 +
-            1,
+            3,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "name", &self.name)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "served", &self.served)?;

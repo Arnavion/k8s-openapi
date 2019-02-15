@@ -57,7 +57,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_delete_namespaced_service_proxy`](./struct.Service.html#method.connect_delete_namespaced_service_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
@@ -140,7 +140,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_delete_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_delete_namespaced_service_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
@@ -218,7 +218,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_get_namespaced_service_proxy`](./struct.Service.html#method.connect_get_namespaced_service_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
@@ -301,7 +301,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_get_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_get_namespaced_service_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
@@ -379,7 +379,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_patch_namespaced_service_proxy`](./struct.Service.html#method.connect_patch_namespaced_service_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
@@ -462,7 +462,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_patch_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_patch_namespaced_service_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
@@ -540,7 +540,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_post_namespaced_service_proxy`](./struct.Service.html#method.connect_post_namespaced_service_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
@@ -623,7 +623,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_post_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_post_namespaced_service_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
@@ -701,7 +701,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_put_namespaced_service_proxy`](./struct.Service.html#method.connect_put_namespaced_service_proxy)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
@@ -784,7 +784,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::connect_put_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_put_namespaced_service_proxy_with_path)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
@@ -860,7 +860,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::create_namespaced_service`](./struct.Service.html#method.create_namespaced_service)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedServiceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -933,7 +933,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::delete_namespaced_service`](./struct.Service.html#method.delete_namespaced_service)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedServiceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -1047,7 +1047,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::list_namespaced_service`](./struct.Service.html#method.list_namespaced_service)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1122,7 +1122,7 @@ impl Service {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/services?");
+        let __url = "/api/v1/services?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -1160,7 +1160,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::list_service_for_all_namespaces`](./struct.Service.html#method.list_service_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListServiceForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1254,7 +1254,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::patch_namespaced_service`](./struct.Service.html#method.patch_namespaced_service)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedServiceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -1330,7 +1330,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::patch_namespaced_service_status`](./struct.Service.html#method.patch_namespaced_service_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedServiceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -2016,7 +2016,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::read_namespaced_service`](./struct.Service.html#method.read_namespaced_service)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedServiceOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
     pub exact: Option<bool>,
@@ -2093,7 +2093,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::read_namespaced_service_status`](./struct.Service.html#method.read_namespaced_service_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedServiceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -2169,7 +2169,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::replace_namespaced_service`](./struct.Service.html#method.replace_namespaced_service)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedServiceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -2245,7 +2245,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::replace_namespaced_service_status`](./struct.Service.html#method.replace_namespaced_service_status)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedServiceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -2350,7 +2350,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::watch_namespaced_service`](./struct.Service.html#method.watch_namespaced_service)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -2470,7 +2470,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::watch_namespaced_service_list`](./struct.Service.html#method.watch_namespaced_service_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedServiceListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -2547,7 +2547,7 @@ impl Service {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/api/v1/watch/services?");
+        let __url = "/api/v1/watch/services?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -2585,7 +2585,7 @@ impl Service {
 }
 
 /// Optional parameters of [`Service::watch_service_list_for_all_namespaces`](./struct.Service.html#method.watch_service_list_for_all_namespaces)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchServiceListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -2764,7 +2764,6 @@ impl serde::Serialize for Service {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Service",
-            0 +
             2 +
             self.metadata.as_ref().map_or(0, |_| 1) +
             self.spec.as_ref().map_or(0, |_| 1) +

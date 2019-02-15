@@ -77,7 +77,6 @@ impl serde::Serialize for NodeDaemonEndpoints {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeDaemonEndpoints",
-            0 +
             self.kubelet_endpoint.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.kubelet_endpoint {

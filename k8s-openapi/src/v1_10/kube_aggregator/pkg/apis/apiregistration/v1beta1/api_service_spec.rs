@@ -131,14 +131,10 @@ impl serde::Serialize for APIServiceSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "APIServiceSpec",
-            0 +
-            1 +
+            4 +
             self.group.as_ref().map_or(0, |_| 1) +
-            1 +
             self.insecure_skip_tls_verify.as_ref().map_or(0, |_| 1) +
-            1 +
-            self.version.as_ref().map_or(0, |_| 1) +
-            1,
+            self.version.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "caBundle", &self.ca_bundle)?;
         if let Some(value) = &self.group {

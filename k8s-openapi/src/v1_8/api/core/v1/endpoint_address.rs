@@ -104,9 +104,8 @@ impl serde::Serialize for EndpointAddress {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EndpointAddress",
-            0 +
-            self.hostname.as_ref().map_or(0, |_| 1) +
             1 +
+            self.hostname.as_ref().map_or(0, |_| 1) +
             self.node_name.as_ref().map_or(0, |_| 1) +
             self.target_ref.as_ref().map_or(0, |_| 1),
         )?;

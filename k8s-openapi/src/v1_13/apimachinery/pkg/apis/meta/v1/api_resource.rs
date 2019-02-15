@@ -149,15 +149,10 @@ impl serde::Serialize for APIResource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "APIResource",
-            0 +
+            5 +
             self.categories.as_ref().map_or(0, |_| 1) +
             self.group.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
-            1 +
             self.short_names.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
             self.version.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.categories {

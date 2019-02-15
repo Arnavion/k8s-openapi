@@ -104,10 +104,8 @@ impl serde::Serialize for HorizontalPodAutoscalerSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "HorizontalPodAutoscalerSpec",
-            0 +
-            1 +
+            2 +
             self.min_replicas.as_ref().map_or(0, |_| 1) +
-            1 +
             self.target_cpu_utilization_percentage.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "maxReplicas", &self.max_replicas)?;

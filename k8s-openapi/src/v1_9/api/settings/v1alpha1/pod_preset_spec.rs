@@ -113,7 +113,6 @@ impl serde::Serialize for PodPresetSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodPresetSpec",
-            0 +
             self.env.as_ref().map_or(0, |_| 1) +
             self.env_from.as_ref().map_or(0, |_| 1) +
             self.selector.as_ref().map_or(0, |_| 1) +

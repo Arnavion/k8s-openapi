@@ -122,12 +122,8 @@ impl serde::Serialize for PodDisruptionBudgetStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PodDisruptionBudgetStatus",
-            0 +
-            1 +
-            1 +
+            4 +
             self.disrupted_pods.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
             self.observed_generation.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "currentHealthy", &self.current_healthy)?;

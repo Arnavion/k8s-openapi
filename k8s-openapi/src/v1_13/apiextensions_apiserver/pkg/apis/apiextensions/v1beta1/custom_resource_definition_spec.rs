@@ -149,12 +149,9 @@ impl serde::Serialize for CustomResourceDefinitionSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CustomResourceDefinitionSpec",
-            0 +
+            3 +
             self.additional_printer_columns.as_ref().map_or(0, |_| 1) +
             self.conversion.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
-            1 +
             self.subresources.as_ref().map_or(0, |_| 1) +
             self.validation.as_ref().map_or(0, |_| 1) +
             self.version.as_ref().map_or(0, |_| 1) +

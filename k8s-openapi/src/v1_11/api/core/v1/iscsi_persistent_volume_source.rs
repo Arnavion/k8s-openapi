@@ -167,18 +167,15 @@ impl serde::Serialize for ISCSIPersistentVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ISCSIPersistentVolumeSource",
-            0 +
+            3 +
             self.chap_auth_discovery.as_ref().map_or(0, |_| 1) +
             self.chap_auth_session.as_ref().map_or(0, |_| 1) +
             self.fs_type.as_ref().map_or(0, |_| 1) +
             self.initiator_name.as_ref().map_or(0, |_| 1) +
-            1 +
             self.iscsi_interface.as_ref().map_or(0, |_| 1) +
-            1 +
             self.portals.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +
-            self.secret_ref.as_ref().map_or(0, |_| 1) +
-            1,
+            self.secret_ref.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.chap_auth_discovery {
             serde::ser::SerializeStruct::serialize_field(&mut state, "chapAuthDiscovery", value)?;

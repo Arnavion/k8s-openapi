@@ -140,15 +140,13 @@ impl serde::Serialize for CSIPersistentVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "CSIPersistentVolumeSource",
-            0 +
+            2 +
             self.controller_publish_secret_ref.as_ref().map_or(0, |_| 1) +
-            1 +
             self.fs_type.as_ref().map_or(0, |_| 1) +
             self.node_publish_secret_ref.as_ref().map_or(0, |_| 1) +
             self.node_stage_secret_ref.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +
-            self.volume_attributes.as_ref().map_or(0, |_| 1) +
-            1,
+            self.volume_attributes.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.controller_publish_secret_ref {
             serde::ser::SerializeStruct::serialize_field(&mut state, "controllerPublishSecretRef", value)?;

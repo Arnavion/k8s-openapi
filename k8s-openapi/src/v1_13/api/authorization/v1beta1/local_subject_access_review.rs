@@ -62,7 +62,7 @@ impl LocalSubjectAccessReview {
 }
 
 /// Optional parameters of [`LocalSubjectAccessReview::create_namespaced_local_subject_access_review`](./struct.LocalSubjectAccessReview.html#method.create_namespaced_local_subject_access_review)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedLocalSubjectAccessReviewOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     pub dry_run: Option<&'a str>,
@@ -243,10 +243,8 @@ impl serde::Serialize for LocalSubjectAccessReview {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "LocalSubjectAccessReview",
-            0 +
-            2 +
+            3 +
             self.metadata.as_ref().map_or(0, |_| 1) +
-            1 +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;

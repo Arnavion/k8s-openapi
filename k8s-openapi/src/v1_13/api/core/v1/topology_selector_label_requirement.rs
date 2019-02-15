@@ -86,9 +86,7 @@ impl serde::Serialize for TopologySelectorLabelRequirement {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "TopologySelectorLabelRequirement",
-            0 +
-            1 +
-            1,
+            2,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "key", &self.key)?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "values", &self.values)?;

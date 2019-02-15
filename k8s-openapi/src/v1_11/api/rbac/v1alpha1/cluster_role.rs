@@ -36,7 +36,7 @@ impl ClusterRole {
         let CreateClusterRoleOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?");
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -50,7 +50,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::create_cluster_role`](./struct.ClusterRole.html#method.create_cluster_role)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateClusterRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -148,7 +148,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::delete_cluster_role`](./struct.ClusterRole.html#method.delete_cluster_role)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteClusterRoleOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     pub grace_period_seconds: Option<i64>,
@@ -225,7 +225,7 @@ impl ClusterRole {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?");
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -263,7 +263,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::delete_collection_cluster_role`](./struct.ClusterRole.html#method.delete_collection_cluster_role)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionClusterRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -352,7 +352,7 @@ impl ClusterRole {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?");
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -390,7 +390,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::list_cluster_role`](./struct.ClusterRole.html#method.list_cluster_role)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ListClusterRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -479,7 +479,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::patch_cluster_role`](./struct.ClusterRole.html#method.patch_cluster_role)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct PatchClusterRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -547,7 +547,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::read_cluster_role`](./struct.ClusterRole.html#method.read_cluster_role)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReadClusterRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -618,7 +618,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::replace_cluster_role`](./struct.ClusterRole.html#method.replace_cluster_role)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceClusterRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -727,7 +727,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::watch_cluster_role`](./struct.ClusterRole.html#method.watch_cluster_role)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchClusterRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -804,7 +804,7 @@ impl ClusterRole {
             timeout_seconds,
             watch,
         } = optional;
-        let __url = format!("/apis/rbac.authorization.k8s.io/v1alpha1/watch/clusterroles?");
+        let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/watch/clusterroles?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
@@ -842,7 +842,7 @@ impl ClusterRole {
 }
 
 /// Optional parameters of [`ClusterRole::watch_cluster_role_list`](./struct.ClusterRole.html#method.watch_cluster_role_list)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct WatchClusterRoleListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
@@ -1021,11 +1021,9 @@ impl serde::Serialize for ClusterRole {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ClusterRole",
-            0 +
-            2 +
+            3 +
             self.aggregation_rule.as_ref().map_or(0, |_| 1) +
-            self.metadata.as_ref().map_or(0, |_| 1) +
-            1,
+            self.metadata.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "kind", <Self as crate::Resource>::kind())?;

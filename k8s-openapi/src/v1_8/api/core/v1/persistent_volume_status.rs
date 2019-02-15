@@ -95,7 +95,6 @@ impl serde::Serialize for PersistentVolumeStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeStatus",
-            0 +
             self.message.as_ref().map_or(0, |_| 1) +
             self.phase.as_ref().map_or(0, |_| 1) +
             self.reason.as_ref().map_or(0, |_| 1),

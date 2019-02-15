@@ -113,12 +113,10 @@ impl serde::Serialize for QuobyteVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "QuobyteVolumeSource",
-            0 +
+            2 +
             self.group.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1) +
-            1 +
-            self.user.as_ref().map_or(0, |_| 1) +
-            1,
+            self.user.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.group {
             serde::ser::SerializeStruct::serialize_field(&mut state, "group", value)?;

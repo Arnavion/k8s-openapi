@@ -113,7 +113,6 @@ impl serde::Serialize for FlexPersistentVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "FlexPersistentVolumeSource",
-            0 +
             1 +
             self.fs_type.as_ref().map_or(0, |_| 1) +
             self.options.as_ref().map_or(0, |_| 1) +

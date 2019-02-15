@@ -113,7 +113,6 @@ impl serde::Serialize for Toleration {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Toleration",
-            0 +
             self.effect.as_ref().map_or(0, |_| 1) +
             self.key.as_ref().map_or(0, |_| 1) +
             self.operator.as_ref().map_or(0, |_| 1) +

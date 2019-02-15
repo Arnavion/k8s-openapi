@@ -35,7 +35,7 @@ impl SelfSubjectAccessReview {
         let CreateSelfSubjectAccessReviewOptional {
             pretty,
         } = optional;
-        let __url = format!("/apis/authorization.k8s.io/v1beta1/selfsubjectaccessreviews?");
+        let __url = "/apis/authorization.k8s.io/v1beta1/selfsubjectaccessreviews?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(pretty) = pretty {
             __query_pairs.append_pair("pretty", pretty);
@@ -49,7 +49,7 @@ impl SelfSubjectAccessReview {
 }
 
 /// Optional parameters of [`SelfSubjectAccessReview::create_self_subject_access_review`](./struct.SelfSubjectAccessReview.html#method.create_self_subject_access_review)
-#[derive(Debug, Default)]
+#[derive(Clone, Copy, Debug, Default)]
 pub struct CreateSelfSubjectAccessReviewOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
@@ -208,10 +208,8 @@ impl serde::Serialize for SelfSubjectAccessReview {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "SelfSubjectAccessReview",
-            0 +
-            2 +
+            3 +
             self.metadata.as_ref().map_or(0, |_| 1) +
-            1 +
             self.status.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "apiVersion", <Self as crate::Resource>::api_version())?;

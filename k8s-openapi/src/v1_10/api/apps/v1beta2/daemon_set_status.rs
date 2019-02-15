@@ -158,14 +158,10 @@ impl serde::Serialize for DaemonSetStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "DaemonSetStatus",
-            0 +
+            4 +
             self.collision_count.as_ref().map_or(0, |_| 1) +
             self.conditions.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
             self.number_available.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
             self.number_unavailable.as_ref().map_or(0, |_| 1) +
             self.observed_generation.as_ref().map_or(0, |_| 1) +
             self.updated_number_scheduled.as_ref().map_or(0, |_| 1),

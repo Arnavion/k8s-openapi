@@ -95,10 +95,8 @@ impl serde::Serialize for NFSVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NFSVolumeSource",
-            0 +
-            1 +
-            self.read_only.as_ref().map_or(0, |_| 1) +
-            1,
+            2 +
+            self.read_only.as_ref().map_or(0, |_| 1),
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "path", &self.path)?;
         if let Some(value) = &self.read_only {

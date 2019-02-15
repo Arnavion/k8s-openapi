@@ -113,10 +113,8 @@ impl serde::Serialize for HorizontalPodAutoscalerStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "HorizontalPodAutoscalerStatus",
-            0 +
+            2 +
             self.current_cpu_utilization_percentage.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
             self.last_scale_time.as_ref().map_or(0, |_| 1) +
             self.observed_generation.as_ref().map_or(0, |_| 1),
         )?;

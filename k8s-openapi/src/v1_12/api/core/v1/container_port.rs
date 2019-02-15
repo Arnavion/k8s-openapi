@@ -113,7 +113,6 @@ impl serde::Serialize for ContainerPort {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ContainerPort",
-            0 +
             1 +
             self.host_ip.as_ref().map_or(0, |_| 1) +
             self.host_port.as_ref().map_or(0, |_| 1) +

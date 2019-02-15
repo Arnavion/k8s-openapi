@@ -122,13 +122,12 @@ impl serde::Serialize for ReplicationControllerStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ReplicationControllerStatus",
-            0 +
+            1 +
             self.available_replicas.as_ref().map_or(0, |_| 1) +
             self.conditions.as_ref().map_or(0, |_| 1) +
             self.fully_labeled_replicas.as_ref().map_or(0, |_| 1) +
             self.observed_generation.as_ref().map_or(0, |_| 1) +
-            self.ready_replicas.as_ref().map_or(0, |_| 1) +
-            1,
+            self.ready_replicas.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.available_replicas {
             serde::ser::SerializeStruct::serialize_field(&mut state, "availableReplicas", value)?;

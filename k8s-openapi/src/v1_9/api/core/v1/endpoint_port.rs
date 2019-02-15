@@ -95,9 +95,8 @@ impl serde::Serialize for EndpointPort {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "EndpointPort",
-            0 +
-            self.name.as_ref().map_or(0, |_| 1) +
             1 +
+            self.name.as_ref().map_or(0, |_| 1) +
             self.protocol.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.name {

@@ -95,7 +95,6 @@ impl serde::Serialize for ResourceMetricSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ResourceMetricSource",
-            0 +
             1 +
             self.target_average_utilization.as_ref().map_or(0, |_| 1) +
             self.target_average_value.as_ref().map_or(0, |_| 1),

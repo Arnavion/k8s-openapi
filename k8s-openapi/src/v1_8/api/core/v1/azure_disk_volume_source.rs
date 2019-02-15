@@ -122,10 +122,8 @@ impl serde::Serialize for AzureDiskVolumeSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "AzureDiskVolumeSource",
-            0 +
+            2 +
             self.caching_mode.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
             self.fs_type.as_ref().map_or(0, |_| 1) +
             self.kind.as_ref().map_or(0, |_| 1) +
             self.read_only.as_ref().map_or(0, |_| 1),

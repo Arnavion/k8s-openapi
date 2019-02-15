@@ -122,7 +122,6 @@ impl serde::Serialize for PersistentVolumeClaimSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "PersistentVolumeClaimSpec",
-            0 +
             self.access_modes.as_ref().map_or(0, |_| 1) +
             self.resources.as_ref().map_or(0, |_| 1) +
             self.selector.as_ref().map_or(0, |_| 1) +

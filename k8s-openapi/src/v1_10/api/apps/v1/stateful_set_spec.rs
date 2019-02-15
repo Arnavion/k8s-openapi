@@ -140,13 +140,10 @@ impl serde::Serialize for StatefulSetSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "StatefulSetSpec",
-            0 +
+            3 +
             self.pod_management_policy.as_ref().map_or(0, |_| 1) +
             self.replicas.as_ref().map_or(0, |_| 1) +
             self.revision_history_limit.as_ref().map_or(0, |_| 1) +
-            1 +
-            1 +
-            1 +
             self.update_strategy.as_ref().map_or(0, |_| 1) +
             self.volume_claim_templates.as_ref().map_or(0, |_| 1),
         )?;

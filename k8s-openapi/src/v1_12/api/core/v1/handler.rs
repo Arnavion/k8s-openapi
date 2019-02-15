@@ -95,7 +95,6 @@ impl serde::Serialize for Handler {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Handler",
-            0 +
             self.exec.as_ref().map_or(0, |_| 1) +
             self.http_get.as_ref().map_or(0, |_| 1) +
             self.tcp_socket.as_ref().map_or(0, |_| 1),

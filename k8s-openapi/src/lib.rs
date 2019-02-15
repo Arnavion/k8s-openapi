@@ -1,4 +1,12 @@
 #![deny(rust_2018_idioms)]
+#![deny(clippy::all, clippy::pedantic)]
+#![allow(
+    clippy::cyclomatic_complexity,
+    clippy::default_trait_access,
+    clippy::doc_markdown,
+    clippy::large_enum_variant,
+    clippy::use_self,
+)]
 
 //! Bindings for the Kubernetes client API, generated from the OpenAPI spec.
 //!

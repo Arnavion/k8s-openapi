@@ -77,7 +77,6 @@ impl serde::Serialize for NodeSelector {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "NodeSelector",
-            0 +
             1,
         )?;
         serde::ser::SerializeStruct::serialize_field(&mut state, "nodeSelectorTerms", &self.node_selector_terms)?;

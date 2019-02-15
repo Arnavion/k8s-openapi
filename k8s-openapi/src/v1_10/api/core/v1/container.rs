@@ -257,7 +257,7 @@ impl serde::Serialize for Container {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "Container",
-            0 +
+            1 +
             self.args.as_ref().map_or(0, |_| 1) +
             self.command.as_ref().map_or(0, |_| 1) +
             self.env.as_ref().map_or(0, |_| 1) +
@@ -266,7 +266,6 @@ impl serde::Serialize for Container {
             self.image_pull_policy.as_ref().map_or(0, |_| 1) +
             self.lifecycle.as_ref().map_or(0, |_| 1) +
             self.liveness_probe.as_ref().map_or(0, |_| 1) +
-            1 +
             self.ports.as_ref().map_or(0, |_| 1) +
             self.readiness_probe.as_ref().map_or(0, |_| 1) +
             self.resources.as_ref().map_or(0, |_| 1) +

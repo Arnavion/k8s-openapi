@@ -104,7 +104,6 @@ impl serde::Serialize for ExternalMetricSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "ExternalMetricSource",
-            0 +
             1 +
             self.metric_selector.as_ref().map_or(0, |_| 1) +
             self.target_average_value.as_ref().map_or(0, |_| 1) +

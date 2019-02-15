@@ -140,14 +140,13 @@ impl serde::Serialize for JobSpec {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {
         let mut state = serializer.serialize_struct(
             "JobSpec",
-            0 +
+            1 +
             self.active_deadline_seconds.as_ref().map_or(0, |_| 1) +
             self.backoff_limit.as_ref().map_or(0, |_| 1) +
             self.completions.as_ref().map_or(0, |_| 1) +
             self.manual_selector.as_ref().map_or(0, |_| 1) +
             self.parallelism.as_ref().map_or(0, |_| 1) +
             self.selector.as_ref().map_or(0, |_| 1) +
-            1 +
             self.ttl_seconds_after_finished.as_ref().map_or(0, |_| 1),
         )?;
         if let Some(value) = &self.active_deadline_seconds {
