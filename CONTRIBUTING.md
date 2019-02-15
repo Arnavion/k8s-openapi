@@ -53,3 +53,5 @@ The repository supports the latest patch versions of each of the separate 1.x re
 1. `/k8s-openapi-tests/test-replays/README.md`: Add a row to the versions table with the Kubernetes and minikube versions.
 
 1. Destroy the cluster, and re-run the tests in replay mode.
+
+1. `/azure-pipelines.yml`: Add a new `strategy` for the new version.
