@@ -23,7 +23,7 @@ pub struct Secret {
 impl Secret {
     /// create a Secret
     ///
-    /// Use [`CreateNamespacedSecretResponse`](./enum.CreateNamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedSecretResponse`]`>` constructor, or [`CreateNamespacedSecretResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -40,7 +40,7 @@ impl Secret {
         namespace: &str,
         body: &crate::v1_12::api::core::v1::Secret,
         optional: CreateNamespacedSecretOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedSecretResponse>), crate::RequestError> {
         let CreateNamespacedSecretOptional {
             dry_run,
             include_uninitialized,
@@ -61,11 +61,14 @@ impl Secret {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::create_namespaced_secret`](./struct.Secret.html#method.create_namespaced_secret)
+/// Optional parameters of [`Secret::create_namespaced_secret`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedSecretOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -76,7 +79,7 @@ pub struct CreateNamespacedSecretOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Secret::create_namespaced_secret`](./struct.Secret.html#method.create_namespaced_secret)
+/// Use `<CreateNamespacedSecretResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::create_namespaced_secret`]
 #[derive(Debug)]
 pub enum CreateNamespacedSecretResponse {
     Ok(crate::v1_12::api::core::v1::Secret),
@@ -124,7 +127,7 @@ impl crate::Response for CreateNamespacedSecretResponse {
 impl Secret {
     /// delete collection of Secret
     ///
-    /// Use [`DeleteCollectionNamespacedSecretResponse`](./enum.DeleteCollectionNamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedSecretResponse`]`>` constructor, or [`DeleteCollectionNamespacedSecretResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -138,7 +141,7 @@ impl Secret {
     pub fn delete_collection_namespaced_secret(
         namespace: &str,
         optional: DeleteCollectionNamespacedSecretOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedSecretResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedSecretOptional {
             continue_,
             field_selector,
@@ -183,11 +186,14 @@ impl Secret {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::delete_collection_namespaced_secret`](./struct.Secret.html#method.delete_collection_namespaced_secret)
+/// Optional parameters of [`Secret::delete_collection_namespaced_secret`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedSecretOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -214,7 +220,7 @@ pub struct DeleteCollectionNamespacedSecretOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::delete_collection_namespaced_secret`](./struct.Secret.html#method.delete_collection_namespaced_secret)
+/// Use `<DeleteCollectionNamespacedSecretResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::delete_collection_namespaced_secret`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedSecretResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -258,7 +264,7 @@ impl crate::Response for DeleteCollectionNamespacedSecretResponse {
 impl Secret {
     /// delete a Secret
     ///
-    /// Use [`DeleteNamespacedSecretResponse`](./enum.DeleteNamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedSecretResponse`]`>` constructor, or [`DeleteNamespacedSecretResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -277,7 +283,7 @@ impl Secret {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedSecretOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedSecretResponse>), crate::RequestError> {
         let DeleteNamespacedSecretOptional {
             dry_run,
             grace_period_seconds,
@@ -306,11 +312,14 @@ impl Secret {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::delete_namespaced_secret`](./struct.Secret.html#method.delete_namespaced_secret)
+/// Optional parameters of [`Secret::delete_namespaced_secret`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedSecretOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -325,7 +334,7 @@ pub struct DeleteNamespacedSecretOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Secret::delete_namespaced_secret`](./struct.Secret.html#method.delete_namespaced_secret)
+/// Use `<DeleteNamespacedSecretResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::delete_namespaced_secret`]
 #[derive(Debug)]
 pub enum DeleteNamespacedSecretResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -378,7 +387,7 @@ impl crate::Response for DeleteNamespacedSecretResponse {
 impl Secret {
     /// list or watch objects of kind Secret
     ///
-    /// Use [`ListNamespacedSecretResponse`](./enum.ListNamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedSecretResponse`]`>` constructor, or [`ListNamespacedSecretResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -392,7 +401,7 @@ impl Secret {
     pub fn list_namespaced_secret(
         namespace: &str,
         optional: ListNamespacedSecretOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedSecretResponse>), crate::RequestError> {
         let ListNamespacedSecretOptional {
             continue_,
             field_selector,
@@ -437,11 +446,14 @@ impl Secret {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::list_namespaced_secret`](./struct.Secret.html#method.list_namespaced_secret)
+/// Optional parameters of [`Secret::list_namespaced_secret`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedSecretOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -468,7 +480,7 @@ pub struct ListNamespacedSecretOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::list_namespaced_secret`](./struct.Secret.html#method.list_namespaced_secret)
+/// Use `<ListNamespacedSecretResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::list_namespaced_secret`]
 #[derive(Debug)]
 pub enum ListNamespacedSecretResponse {
     Ok(crate::v1_12::api::core::v1::SecretList),
@@ -498,7 +510,7 @@ impl crate::Response for ListNamespacedSecretResponse {
 impl Secret {
     /// list or watch objects of kind Secret
     ///
-    /// Use [`ListSecretForAllNamespacesResponse`](./enum.ListSecretForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListSecretForAllNamespacesResponse`]`>` constructor, or [`ListSecretForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -507,7 +519,7 @@ impl Secret {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_secret_for_all_namespaces(
         optional: ListSecretForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListSecretForAllNamespacesResponse>), crate::RequestError> {
         let ListSecretForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -552,11 +564,14 @@ impl Secret {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::list_secret_for_all_namespaces`](./struct.Secret.html#method.list_secret_for_all_namespaces)
+/// Optional parameters of [`Secret::list_secret_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListSecretForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -583,7 +598,7 @@ pub struct ListSecretForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::list_secret_for_all_namespaces`](./struct.Secret.html#method.list_secret_for_all_namespaces)
+/// Use `<ListSecretForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::list_secret_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListSecretForAllNamespacesResponse {
     Ok(crate::v1_12::api::core::v1::SecretList),
@@ -613,7 +628,7 @@ impl crate::Response for ListSecretForAllNamespacesResponse {
 impl Secret {
     /// partially update the specified Secret
     ///
-    /// Use [`PatchNamespacedSecretResponse`](./enum.PatchNamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedSecretResponse`]`>` constructor, or [`PatchNamespacedSecretResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -635,7 +650,7 @@ impl Secret {
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedSecretOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedSecretResponse>), crate::RequestError> {
         let PatchNamespacedSecretOptional {
             dry_run,
             pretty,
@@ -652,11 +667,14 @@ impl Secret {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::patch_namespaced_secret`](./struct.Secret.html#method.patch_namespaced_secret)
+/// Optional parameters of [`Secret::patch_namespaced_secret`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedSecretOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -665,7 +683,7 @@ pub struct PatchNamespacedSecretOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Secret::patch_namespaced_secret`](./struct.Secret.html#method.patch_namespaced_secret)
+/// Use `<PatchNamespacedSecretResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::patch_namespaced_secret`]
 #[derive(Debug)]
 pub enum PatchNamespacedSecretResponse {
     Ok(crate::v1_12::api::core::v1::Secret),
@@ -695,7 +713,7 @@ impl crate::Response for PatchNamespacedSecretResponse {
 impl Secret {
     /// read the specified Secret
     ///
-    /// Use [`ReadNamespacedSecretResponse`](./enum.ReadNamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedSecretResponse`]`>` constructor, or [`ReadNamespacedSecretResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -714,7 +732,7 @@ impl Secret {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedSecretOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedSecretResponse>), crate::RequestError> {
         let ReadNamespacedSecretOptional {
             exact,
             export,
@@ -735,11 +753,14 @@ impl Secret {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::read_namespaced_secret`](./struct.Secret.html#method.read_namespaced_secret)
+/// Optional parameters of [`Secret::read_namespaced_secret`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedSecretOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -750,7 +771,7 @@ pub struct ReadNamespacedSecretOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Secret::read_namespaced_secret`](./struct.Secret.html#method.read_namespaced_secret)
+/// Use `<ReadNamespacedSecretResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::read_namespaced_secret`]
 #[derive(Debug)]
 pub enum ReadNamespacedSecretResponse {
     Ok(crate::v1_12::api::core::v1::Secret),
@@ -780,7 +801,7 @@ impl crate::Response for ReadNamespacedSecretResponse {
 impl Secret {
     /// replace the specified Secret
     ///
-    /// Use [`ReplaceNamespacedSecretResponse`](./enum.ReplaceNamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedSecretResponse`]`>` constructor, or [`ReplaceNamespacedSecretResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -802,7 +823,7 @@ impl Secret {
         namespace: &str,
         body: &crate::v1_12::api::core::v1::Secret,
         optional: ReplaceNamespacedSecretOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedSecretResponse>), crate::RequestError> {
         let ReplaceNamespacedSecretOptional {
             dry_run,
             pretty,
@@ -819,11 +840,14 @@ impl Secret {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::replace_namespaced_secret`](./struct.Secret.html#method.replace_namespaced_secret)
+/// Optional parameters of [`Secret::replace_namespaced_secret`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedSecretOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -832,7 +856,7 @@ pub struct ReplaceNamespacedSecretOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Secret::replace_namespaced_secret`](./struct.Secret.html#method.replace_namespaced_secret)
+/// Use `<ReplaceNamespacedSecretResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::replace_namespaced_secret`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedSecretResponse {
     Ok(crate::v1_12::api::core::v1::Secret),
@@ -871,7 +895,7 @@ impl crate::Response for ReplaceNamespacedSecretResponse {
 impl Secret {
     /// watch changes to an object of kind Secret. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchNamespacedSecretResponse`](./enum.WatchNamespacedSecretResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedSecretResponse`]`>` constructor, or [`WatchNamespacedSecretResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -890,7 +914,7 @@ impl Secret {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedSecretOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedSecretResponse>), crate::RequestError> {
         let WatchNamespacedSecretOptional {
             continue_,
             field_selector,
@@ -935,11 +959,14 @@ impl Secret {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::watch_namespaced_secret`](./struct.Secret.html#method.watch_namespaced_secret)
+/// Optional parameters of [`Secret::watch_namespaced_secret`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedSecretOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -966,7 +993,7 @@ pub struct WatchNamespacedSecretOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::watch_namespaced_secret`](./struct.Secret.html#method.watch_namespaced_secret)
+/// Use `<WatchNamespacedSecretResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::watch_namespaced_secret`]
 #[derive(Debug)]
 pub enum WatchNamespacedSecretResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -998,7 +1025,7 @@ impl crate::Response for WatchNamespacedSecretResponse {
 impl Secret {
     /// watch individual changes to a list of Secret. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchNamespacedSecretListResponse`](./enum.WatchNamespacedSecretListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedSecretListResponse`]`>` constructor, or [`WatchNamespacedSecretListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1012,7 +1039,7 @@ impl Secret {
     pub fn watch_namespaced_secret_list(
         namespace: &str,
         optional: WatchNamespacedSecretListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedSecretListResponse>), crate::RequestError> {
         let WatchNamespacedSecretListOptional {
             continue_,
             field_selector,
@@ -1057,11 +1084,14 @@ impl Secret {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::watch_namespaced_secret_list`](./struct.Secret.html#method.watch_namespaced_secret_list)
+/// Optional parameters of [`Secret::watch_namespaced_secret_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedSecretListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1088,7 +1118,7 @@ pub struct WatchNamespacedSecretListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::watch_namespaced_secret_list`](./struct.Secret.html#method.watch_namespaced_secret_list)
+/// Use `<WatchNamespacedSecretListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::watch_namespaced_secret_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedSecretListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1120,7 +1150,7 @@ impl crate::Response for WatchNamespacedSecretListResponse {
 impl Secret {
     /// watch individual changes to a list of Secret. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchSecretListForAllNamespacesResponse`](./enum.WatchSecretListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchSecretListForAllNamespacesResponse`]`>` constructor, or [`WatchSecretListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1129,7 +1159,7 @@ impl Secret {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_secret_list_for_all_namespaces(
         optional: WatchSecretListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchSecretListForAllNamespacesResponse>), crate::RequestError> {
         let WatchSecretListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1174,11 +1204,14 @@ impl Secret {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Secret::watch_secret_list_for_all_namespaces`](./struct.Secret.html#method.watch_secret_list_for_all_namespaces)
+/// Optional parameters of [`Secret::watch_secret_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchSecretListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1205,7 +1238,7 @@ pub struct WatchSecretListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Secret::watch_secret_list_for_all_namespaces`](./struct.Secret.html#method.watch_secret_list_for_all_namespaces)
+/// Use `<WatchSecretListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::watch_secret_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchSecretListForAllNamespacesResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),

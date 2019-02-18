@@ -20,7 +20,7 @@ pub struct Deployment {
 impl Deployment {
     /// create a Deployment
     ///
-    /// Use [`CreateNamespacedDeploymentResponse`](./enum.CreateNamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedDeploymentResponse`]`>` constructor, or [`CreateNamespacedDeploymentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,7 +37,7 @@ impl Deployment {
         namespace: &str,
         body: &crate::v1_11::api::apps::v1beta2::Deployment,
         optional: CreateNamespacedDeploymentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedDeploymentResponse>), crate::RequestError> {
         let CreateNamespacedDeploymentOptional {
             pretty,
         } = optional;
@@ -50,18 +50,21 @@ impl Deployment {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::create_namespaced_deployment`](./struct.Deployment.html#method.create_namespaced_deployment)
+/// Optional parameters of [`Deployment::create_namespaced_deployment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedDeploymentOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::create_namespaced_deployment`](./struct.Deployment.html#method.create_namespaced_deployment)
+/// Use `<CreateNamespacedDeploymentResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::create_namespaced_deployment`]
 #[derive(Debug)]
 pub enum CreateNamespacedDeploymentResponse {
     Ok(crate::v1_11::api::apps::v1beta2::Deployment),
@@ -109,7 +112,7 @@ impl crate::Response for CreateNamespacedDeploymentResponse {
 impl Deployment {
     /// delete collection of Deployment
     ///
-    /// Use [`DeleteCollectionNamespacedDeploymentResponse`](./enum.DeleteCollectionNamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedDeploymentResponse`]`>` constructor, or [`DeleteCollectionNamespacedDeploymentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -123,7 +126,7 @@ impl Deployment {
     pub fn delete_collection_namespaced_deployment(
         namespace: &str,
         optional: DeleteCollectionNamespacedDeploymentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedDeploymentResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedDeploymentOptional {
             continue_,
             field_selector,
@@ -168,11 +171,14 @@ impl Deployment {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::delete_collection_namespaced_deployment`](./struct.Deployment.html#method.delete_collection_namespaced_deployment)
+/// Optional parameters of [`Deployment::delete_collection_namespaced_deployment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedDeploymentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -197,7 +203,7 @@ pub struct DeleteCollectionNamespacedDeploymentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::delete_collection_namespaced_deployment`](./struct.Deployment.html#method.delete_collection_namespaced_deployment)
+/// Use `<DeleteCollectionNamespacedDeploymentResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::delete_collection_namespaced_deployment`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedDeploymentResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -241,7 +247,7 @@ impl crate::Response for DeleteCollectionNamespacedDeploymentResponse {
 impl Deployment {
     /// delete a Deployment
     ///
-    /// Use [`DeleteNamespacedDeploymentResponse`](./enum.DeleteNamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedDeploymentResponse`]`>` constructor, or [`DeleteNamespacedDeploymentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -260,7 +266,7 @@ impl Deployment {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedDeploymentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedDeploymentResponse>), crate::RequestError> {
         let DeleteNamespacedDeploymentOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -285,11 +291,14 @@ impl Deployment {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::delete_namespaced_deployment`](./struct.Deployment.html#method.delete_namespaced_deployment)
+/// Optional parameters of [`Deployment::delete_namespaced_deployment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedDeploymentOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -302,7 +311,7 @@ pub struct DeleteNamespacedDeploymentOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::delete_namespaced_deployment`](./struct.Deployment.html#method.delete_namespaced_deployment)
+/// Use `<DeleteNamespacedDeploymentResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::delete_namespaced_deployment`]
 #[derive(Debug)]
 pub enum DeleteNamespacedDeploymentResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -346,7 +355,7 @@ impl crate::Response for DeleteNamespacedDeploymentResponse {
 impl Deployment {
     /// list or watch objects of kind Deployment
     ///
-    /// Use [`ListDeploymentForAllNamespacesResponse`](./enum.ListDeploymentForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListDeploymentForAllNamespacesResponse`]`>` constructor, or [`ListDeploymentForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -355,7 +364,7 @@ impl Deployment {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_deployment_for_all_namespaces(
         optional: ListDeploymentForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListDeploymentForAllNamespacesResponse>), crate::RequestError> {
         let ListDeploymentForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -400,11 +409,14 @@ impl Deployment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::list_deployment_for_all_namespaces`](./struct.Deployment.html#method.list_deployment_for_all_namespaces)
+/// Optional parameters of [`Deployment::list_deployment_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListDeploymentForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -429,7 +441,7 @@ pub struct ListDeploymentForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::list_deployment_for_all_namespaces`](./struct.Deployment.html#method.list_deployment_for_all_namespaces)
+/// Use `<ListDeploymentForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::list_deployment_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListDeploymentForAllNamespacesResponse {
     Ok(crate::v1_11::api::apps::v1beta2::DeploymentList),
@@ -459,7 +471,7 @@ impl crate::Response for ListDeploymentForAllNamespacesResponse {
 impl Deployment {
     /// list or watch objects of kind Deployment
     ///
-    /// Use [`ListNamespacedDeploymentResponse`](./enum.ListNamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedDeploymentResponse`]`>` constructor, or [`ListNamespacedDeploymentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -473,7 +485,7 @@ impl Deployment {
     pub fn list_namespaced_deployment(
         namespace: &str,
         optional: ListNamespacedDeploymentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedDeploymentResponse>), crate::RequestError> {
         let ListNamespacedDeploymentOptional {
             continue_,
             field_selector,
@@ -518,11 +530,14 @@ impl Deployment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::list_namespaced_deployment`](./struct.Deployment.html#method.list_namespaced_deployment)
+/// Optional parameters of [`Deployment::list_namespaced_deployment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedDeploymentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -547,7 +562,7 @@ pub struct ListNamespacedDeploymentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::list_namespaced_deployment`](./struct.Deployment.html#method.list_namespaced_deployment)
+/// Use `<ListNamespacedDeploymentResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::list_namespaced_deployment`]
 #[derive(Debug)]
 pub enum ListNamespacedDeploymentResponse {
     Ok(crate::v1_11::api::apps::v1beta2::DeploymentList),
@@ -577,7 +592,7 @@ impl crate::Response for ListNamespacedDeploymentResponse {
 impl Deployment {
     /// partially update the specified Deployment
     ///
-    /// Use [`PatchNamespacedDeploymentResponse`](./enum.PatchNamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedDeploymentResponse`]`>` constructor, or [`PatchNamespacedDeploymentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -599,7 +614,7 @@ impl Deployment {
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedDeploymentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedDeploymentResponse>), crate::RequestError> {
         let PatchNamespacedDeploymentOptional {
             pretty,
         } = optional;
@@ -612,18 +627,21 @@ impl Deployment {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::patch_namespaced_deployment`](./struct.Deployment.html#method.patch_namespaced_deployment)
+/// Optional parameters of [`Deployment::patch_namespaced_deployment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedDeploymentOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::patch_namespaced_deployment`](./struct.Deployment.html#method.patch_namespaced_deployment)
+/// Use `<PatchNamespacedDeploymentResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::patch_namespaced_deployment`]
 #[derive(Debug)]
 pub enum PatchNamespacedDeploymentResponse {
     Ok(crate::v1_11::api::apps::v1beta2::Deployment),
@@ -653,7 +671,7 @@ impl crate::Response for PatchNamespacedDeploymentResponse {
 impl Deployment {
     /// partially update status of the specified Deployment
     ///
-    /// Use [`PatchNamespacedDeploymentStatusResponse`](./enum.PatchNamespacedDeploymentStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedDeploymentStatusResponse`]`>` constructor, or [`PatchNamespacedDeploymentStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -675,7 +693,7 @@ impl Deployment {
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedDeploymentStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedDeploymentStatusResponse>), crate::RequestError> {
         let PatchNamespacedDeploymentStatusOptional {
             pretty,
         } = optional;
@@ -688,18 +706,21 @@ impl Deployment {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::patch_namespaced_deployment_status`](./struct.Deployment.html#method.patch_namespaced_deployment_status)
+/// Optional parameters of [`Deployment::patch_namespaced_deployment_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedDeploymentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::patch_namespaced_deployment_status`](./struct.Deployment.html#method.patch_namespaced_deployment_status)
+/// Use `<PatchNamespacedDeploymentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::patch_namespaced_deployment_status`]
 #[derive(Debug)]
 pub enum PatchNamespacedDeploymentStatusResponse {
     Ok(crate::v1_11::api::apps::v1beta2::Deployment),
@@ -729,7 +750,7 @@ impl crate::Response for PatchNamespacedDeploymentStatusResponse {
 impl Deployment {
     /// read the specified Deployment
     ///
-    /// Use [`ReadNamespacedDeploymentResponse`](./enum.ReadNamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedDeploymentResponse`]`>` constructor, or [`ReadNamespacedDeploymentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -748,7 +769,7 @@ impl Deployment {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedDeploymentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedDeploymentResponse>), crate::RequestError> {
         let ReadNamespacedDeploymentOptional {
             exact,
             export,
@@ -769,11 +790,14 @@ impl Deployment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::read_namespaced_deployment`](./struct.Deployment.html#method.read_namespaced_deployment)
+/// Optional parameters of [`Deployment::read_namespaced_deployment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedDeploymentOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -784,7 +808,7 @@ pub struct ReadNamespacedDeploymentOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::read_namespaced_deployment`](./struct.Deployment.html#method.read_namespaced_deployment)
+/// Use `<ReadNamespacedDeploymentResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::read_namespaced_deployment`]
 #[derive(Debug)]
 pub enum ReadNamespacedDeploymentResponse {
     Ok(crate::v1_11::api::apps::v1beta2::Deployment),
@@ -814,7 +838,7 @@ impl crate::Response for ReadNamespacedDeploymentResponse {
 impl Deployment {
     /// read status of the specified Deployment
     ///
-    /// Use [`ReadNamespacedDeploymentStatusResponse`](./enum.ReadNamespacedDeploymentStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedDeploymentStatusResponse`]`>` constructor, or [`ReadNamespacedDeploymentStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -833,7 +857,7 @@ impl Deployment {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedDeploymentStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedDeploymentStatusResponse>), crate::RequestError> {
         let ReadNamespacedDeploymentStatusOptional {
             pretty,
         } = optional;
@@ -846,18 +870,21 @@ impl Deployment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::read_namespaced_deployment_status`](./struct.Deployment.html#method.read_namespaced_deployment_status)
+/// Optional parameters of [`Deployment::read_namespaced_deployment_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedDeploymentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::read_namespaced_deployment_status`](./struct.Deployment.html#method.read_namespaced_deployment_status)
+/// Use `<ReadNamespacedDeploymentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::read_namespaced_deployment_status`]
 #[derive(Debug)]
 pub enum ReadNamespacedDeploymentStatusResponse {
     Ok(crate::v1_11::api::apps::v1beta2::Deployment),
@@ -887,7 +914,7 @@ impl crate::Response for ReadNamespacedDeploymentStatusResponse {
 impl Deployment {
     /// replace the specified Deployment
     ///
-    /// Use [`ReplaceNamespacedDeploymentResponse`](./enum.ReplaceNamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedDeploymentResponse`]`>` constructor, or [`ReplaceNamespacedDeploymentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -909,7 +936,7 @@ impl Deployment {
         namespace: &str,
         body: &crate::v1_11::api::apps::v1beta2::Deployment,
         optional: ReplaceNamespacedDeploymentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedDeploymentResponse>), crate::RequestError> {
         let ReplaceNamespacedDeploymentOptional {
             pretty,
         } = optional;
@@ -922,18 +949,21 @@ impl Deployment {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::replace_namespaced_deployment`](./struct.Deployment.html#method.replace_namespaced_deployment)
+/// Optional parameters of [`Deployment::replace_namespaced_deployment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedDeploymentOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::replace_namespaced_deployment`](./struct.Deployment.html#method.replace_namespaced_deployment)
+/// Use `<ReplaceNamespacedDeploymentResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::replace_namespaced_deployment`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedDeploymentResponse {
     Ok(crate::v1_11::api::apps::v1beta2::Deployment),
@@ -972,7 +1002,7 @@ impl crate::Response for ReplaceNamespacedDeploymentResponse {
 impl Deployment {
     /// replace status of the specified Deployment
     ///
-    /// Use [`ReplaceNamespacedDeploymentStatusResponse`](./enum.ReplaceNamespacedDeploymentStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedDeploymentStatusResponse`]`>` constructor, or [`ReplaceNamespacedDeploymentStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -994,7 +1024,7 @@ impl Deployment {
         namespace: &str,
         body: &crate::v1_11::api::apps::v1beta2::Deployment,
         optional: ReplaceNamespacedDeploymentStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedDeploymentStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedDeploymentStatusOptional {
             pretty,
         } = optional;
@@ -1007,18 +1037,21 @@ impl Deployment {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::replace_namespaced_deployment_status`](./struct.Deployment.html#method.replace_namespaced_deployment_status)
+/// Optional parameters of [`Deployment::replace_namespaced_deployment_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedDeploymentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Deployment::replace_namespaced_deployment_status`](./struct.Deployment.html#method.replace_namespaced_deployment_status)
+/// Use `<ReplaceNamespacedDeploymentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::replace_namespaced_deployment_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedDeploymentStatusResponse {
     Ok(crate::v1_11::api::apps::v1beta2::Deployment),
@@ -1057,7 +1090,7 @@ impl crate::Response for ReplaceNamespacedDeploymentStatusResponse {
 impl Deployment {
     /// watch individual changes to a list of Deployment
     ///
-    /// Use [`WatchDeploymentListForAllNamespacesResponse`](./enum.WatchDeploymentListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchDeploymentListForAllNamespacesResponse`]`>` constructor, or [`WatchDeploymentListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1066,7 +1099,7 @@ impl Deployment {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_deployment_list_for_all_namespaces(
         optional: WatchDeploymentListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchDeploymentListForAllNamespacesResponse>), crate::RequestError> {
         let WatchDeploymentListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1111,11 +1144,14 @@ impl Deployment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::watch_deployment_list_for_all_namespaces`](./struct.Deployment.html#method.watch_deployment_list_for_all_namespaces)
+/// Optional parameters of [`Deployment::watch_deployment_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchDeploymentListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1140,7 +1176,7 @@ pub struct WatchDeploymentListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::watch_deployment_list_for_all_namespaces`](./struct.Deployment.html#method.watch_deployment_list_for_all_namespaces)
+/// Use `<WatchDeploymentListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::watch_deployment_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchDeploymentListForAllNamespacesResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1172,7 +1208,7 @@ impl crate::Response for WatchDeploymentListForAllNamespacesResponse {
 impl Deployment {
     /// watch changes to an object of kind Deployment
     ///
-    /// Use [`WatchNamespacedDeploymentResponse`](./enum.WatchNamespacedDeploymentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedDeploymentResponse`]`>` constructor, or [`WatchNamespacedDeploymentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1191,7 +1227,7 @@ impl Deployment {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedDeploymentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedDeploymentResponse>), crate::RequestError> {
         let WatchNamespacedDeploymentOptional {
             continue_,
             field_selector,
@@ -1236,11 +1272,14 @@ impl Deployment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::watch_namespaced_deployment`](./struct.Deployment.html#method.watch_namespaced_deployment)
+/// Optional parameters of [`Deployment::watch_namespaced_deployment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedDeploymentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1265,7 +1304,7 @@ pub struct WatchNamespacedDeploymentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::watch_namespaced_deployment`](./struct.Deployment.html#method.watch_namespaced_deployment)
+/// Use `<WatchNamespacedDeploymentResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::watch_namespaced_deployment`]
 #[derive(Debug)]
 pub enum WatchNamespacedDeploymentResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1297,7 +1336,7 @@ impl crate::Response for WatchNamespacedDeploymentResponse {
 impl Deployment {
     /// watch individual changes to a list of Deployment
     ///
-    /// Use [`WatchNamespacedDeploymentListResponse`](./enum.WatchNamespacedDeploymentListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedDeploymentListResponse`]`>` constructor, or [`WatchNamespacedDeploymentListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1311,7 +1350,7 @@ impl Deployment {
     pub fn watch_namespaced_deployment_list(
         namespace: &str,
         optional: WatchNamespacedDeploymentListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedDeploymentListResponse>), crate::RequestError> {
         let WatchNamespacedDeploymentListOptional {
             continue_,
             field_selector,
@@ -1356,11 +1395,14 @@ impl Deployment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Deployment::watch_namespaced_deployment_list`](./struct.Deployment.html#method.watch_namespaced_deployment_list)
+/// Optional parameters of [`Deployment::watch_namespaced_deployment_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedDeploymentListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1385,7 +1427,7 @@ pub struct WatchNamespacedDeploymentListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Deployment::watch_namespaced_deployment_list`](./struct.Deployment.html#method.watch_namespaced_deployment_list)
+/// Use `<WatchNamespacedDeploymentListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::watch_namespaced_deployment_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedDeploymentListResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

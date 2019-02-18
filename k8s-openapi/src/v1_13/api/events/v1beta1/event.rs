@@ -55,7 +55,7 @@ pub struct Event {
 impl Event {
     /// create an Event
     ///
-    /// Use [`CreateNamespacedEventResponse`](./enum.CreateNamespacedEventResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedEventResponse`]`>` constructor, or [`CreateNamespacedEventResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -72,7 +72,7 @@ impl Event {
         namespace: &str,
         body: &crate::v1_13::api::events::v1beta1::Event,
         optional: CreateNamespacedEventOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedEventResponse>), crate::RequestError> {
         let CreateNamespacedEventOptional {
             dry_run,
             include_uninitialized,
@@ -93,11 +93,14 @@ impl Event {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::create_namespaced_event`](./struct.Event.html#method.create_namespaced_event)
+/// Optional parameters of [`Event::create_namespaced_event`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedEventOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -108,7 +111,7 @@ pub struct CreateNamespacedEventOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Event::create_namespaced_event`](./struct.Event.html#method.create_namespaced_event)
+/// Use `<CreateNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::create_namespaced_event`]
 #[derive(Debug)]
 pub enum CreateNamespacedEventResponse {
     Ok(crate::v1_13::api::events::v1beta1::Event),
@@ -156,7 +159,7 @@ impl crate::Response for CreateNamespacedEventResponse {
 impl Event {
     /// delete collection of Event
     ///
-    /// Use [`DeleteCollectionNamespacedEventResponse`](./enum.DeleteCollectionNamespacedEventResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedEventResponse`]`>` constructor, or [`DeleteCollectionNamespacedEventResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -170,7 +173,7 @@ impl Event {
     pub fn delete_collection_namespaced_event(
         namespace: &str,
         optional: DeleteCollectionNamespacedEventOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedEventResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedEventOptional {
             continue_,
             field_selector,
@@ -215,11 +218,14 @@ impl Event {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::delete_collection_namespaced_event`](./struct.Event.html#method.delete_collection_namespaced_event)
+/// Optional parameters of [`Event::delete_collection_namespaced_event`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedEventOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -246,7 +252,7 @@ pub struct DeleteCollectionNamespacedEventOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Event::delete_collection_namespaced_event`](./struct.Event.html#method.delete_collection_namespaced_event)
+/// Use `<DeleteCollectionNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::delete_collection_namespaced_event`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedEventResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -290,7 +296,7 @@ impl crate::Response for DeleteCollectionNamespacedEventResponse {
 impl Event {
     /// delete an Event
     ///
-    /// Use [`DeleteNamespacedEventResponse`](./enum.DeleteNamespacedEventResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedEventResponse`]`>` constructor, or [`DeleteNamespacedEventResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -309,7 +315,7 @@ impl Event {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedEventOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedEventResponse>), crate::RequestError> {
         let DeleteNamespacedEventOptional {
             dry_run,
             grace_period_seconds,
@@ -338,11 +344,14 @@ impl Event {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::delete_namespaced_event`](./struct.Event.html#method.delete_namespaced_event)
+/// Optional parameters of [`Event::delete_namespaced_event`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedEventOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -357,7 +366,7 @@ pub struct DeleteNamespacedEventOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Event::delete_namespaced_event`](./struct.Event.html#method.delete_namespaced_event)
+/// Use `<DeleteNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::delete_namespaced_event`]
 #[derive(Debug)]
 pub enum DeleteNamespacedEventResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -410,7 +419,7 @@ impl crate::Response for DeleteNamespacedEventResponse {
 impl Event {
     /// list or watch objects of kind Event
     ///
-    /// Use [`ListEventForAllNamespacesResponse`](./enum.ListEventForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListEventForAllNamespacesResponse`]`>` constructor, or [`ListEventForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -419,7 +428,7 @@ impl Event {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_event_for_all_namespaces(
         optional: ListEventForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListEventForAllNamespacesResponse>), crate::RequestError> {
         let ListEventForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -464,11 +473,14 @@ impl Event {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::list_event_for_all_namespaces`](./struct.Event.html#method.list_event_for_all_namespaces)
+/// Optional parameters of [`Event::list_event_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListEventForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -495,7 +507,7 @@ pub struct ListEventForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Event::list_event_for_all_namespaces`](./struct.Event.html#method.list_event_for_all_namespaces)
+/// Use `<ListEventForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::list_event_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListEventForAllNamespacesResponse {
     Ok(crate::v1_13::api::events::v1beta1::EventList),
@@ -525,7 +537,7 @@ impl crate::Response for ListEventForAllNamespacesResponse {
 impl Event {
     /// list or watch objects of kind Event
     ///
-    /// Use [`ListNamespacedEventResponse`](./enum.ListNamespacedEventResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedEventResponse`]`>` constructor, or [`ListNamespacedEventResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -539,7 +551,7 @@ impl Event {
     pub fn list_namespaced_event(
         namespace: &str,
         optional: ListNamespacedEventOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedEventResponse>), crate::RequestError> {
         let ListNamespacedEventOptional {
             continue_,
             field_selector,
@@ -584,11 +596,14 @@ impl Event {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::list_namespaced_event`](./struct.Event.html#method.list_namespaced_event)
+/// Optional parameters of [`Event::list_namespaced_event`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedEventOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -615,7 +630,7 @@ pub struct ListNamespacedEventOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Event::list_namespaced_event`](./struct.Event.html#method.list_namespaced_event)
+/// Use `<ListNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::list_namespaced_event`]
 #[derive(Debug)]
 pub enum ListNamespacedEventResponse {
     Ok(crate::v1_13::api::events::v1beta1::EventList),
@@ -645,7 +660,7 @@ impl crate::Response for ListNamespacedEventResponse {
 impl Event {
     /// partially update the specified Event
     ///
-    /// Use [`PatchNamespacedEventResponse`](./enum.PatchNamespacedEventResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedEventResponse`]`>` constructor, or [`PatchNamespacedEventResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -667,7 +682,7 @@ impl Event {
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedEventOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedEventResponse>), crate::RequestError> {
         let PatchNamespacedEventOptional {
             dry_run,
             pretty,
@@ -684,11 +699,14 @@ impl Event {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::patch_namespaced_event`](./struct.Event.html#method.patch_namespaced_event)
+/// Optional parameters of [`Event::patch_namespaced_event`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedEventOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -697,7 +715,7 @@ pub struct PatchNamespacedEventOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Event::patch_namespaced_event`](./struct.Event.html#method.patch_namespaced_event)
+/// Use `<PatchNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::patch_namespaced_event`]
 #[derive(Debug)]
 pub enum PatchNamespacedEventResponse {
     Ok(crate::v1_13::api::events::v1beta1::Event),
@@ -727,7 +745,7 @@ impl crate::Response for PatchNamespacedEventResponse {
 impl Event {
     /// read the specified Event
     ///
-    /// Use [`ReadNamespacedEventResponse`](./enum.ReadNamespacedEventResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedEventResponse`]`>` constructor, or [`ReadNamespacedEventResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -746,7 +764,7 @@ impl Event {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedEventOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedEventResponse>), crate::RequestError> {
         let ReadNamespacedEventOptional {
             exact,
             export,
@@ -767,11 +785,14 @@ impl Event {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::read_namespaced_event`](./struct.Event.html#method.read_namespaced_event)
+/// Optional parameters of [`Event::read_namespaced_event`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedEventOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -782,7 +803,7 @@ pub struct ReadNamespacedEventOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Event::read_namespaced_event`](./struct.Event.html#method.read_namespaced_event)
+/// Use `<ReadNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::read_namespaced_event`]
 #[derive(Debug)]
 pub enum ReadNamespacedEventResponse {
     Ok(crate::v1_13::api::events::v1beta1::Event),
@@ -812,7 +833,7 @@ impl crate::Response for ReadNamespacedEventResponse {
 impl Event {
     /// replace the specified Event
     ///
-    /// Use [`ReplaceNamespacedEventResponse`](./enum.ReplaceNamespacedEventResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedEventResponse`]`>` constructor, or [`ReplaceNamespacedEventResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -834,7 +855,7 @@ impl Event {
         namespace: &str,
         body: &crate::v1_13::api::events::v1beta1::Event,
         optional: ReplaceNamespacedEventOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedEventResponse>), crate::RequestError> {
         let ReplaceNamespacedEventOptional {
             dry_run,
             pretty,
@@ -851,11 +872,14 @@ impl Event {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::replace_namespaced_event`](./struct.Event.html#method.replace_namespaced_event)
+/// Optional parameters of [`Event::replace_namespaced_event`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedEventOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -864,7 +888,7 @@ pub struct ReplaceNamespacedEventOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Event::replace_namespaced_event`](./struct.Event.html#method.replace_namespaced_event)
+/// Use `<ReplaceNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::replace_namespaced_event`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedEventResponse {
     Ok(crate::v1_13::api::events::v1beta1::Event),
@@ -903,7 +927,7 @@ impl crate::Response for ReplaceNamespacedEventResponse {
 impl Event {
     /// watch individual changes to a list of Event. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchEventListForAllNamespacesResponse`](./enum.WatchEventListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchEventListForAllNamespacesResponse`]`>` constructor, or [`WatchEventListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -912,7 +936,7 @@ impl Event {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_event_list_for_all_namespaces(
         optional: WatchEventListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchEventListForAllNamespacesResponse>), crate::RequestError> {
         let WatchEventListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -957,11 +981,14 @@ impl Event {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::watch_event_list_for_all_namespaces`](./struct.Event.html#method.watch_event_list_for_all_namespaces)
+/// Optional parameters of [`Event::watch_event_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchEventListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -988,7 +1015,7 @@ pub struct WatchEventListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Event::watch_event_list_for_all_namespaces`](./struct.Event.html#method.watch_event_list_for_all_namespaces)
+/// Use `<WatchEventListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::watch_event_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchEventListForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1020,7 +1047,7 @@ impl crate::Response for WatchEventListForAllNamespacesResponse {
 impl Event {
     /// watch changes to an object of kind Event. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchNamespacedEventResponse`](./enum.WatchNamespacedEventResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedEventResponse`]`>` constructor, or [`WatchNamespacedEventResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1039,7 +1066,7 @@ impl Event {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedEventOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedEventResponse>), crate::RequestError> {
         let WatchNamespacedEventOptional {
             continue_,
             field_selector,
@@ -1084,11 +1111,14 @@ impl Event {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::watch_namespaced_event`](./struct.Event.html#method.watch_namespaced_event)
+/// Optional parameters of [`Event::watch_namespaced_event`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedEventOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1115,7 +1145,7 @@ pub struct WatchNamespacedEventOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Event::watch_namespaced_event`](./struct.Event.html#method.watch_namespaced_event)
+/// Use `<WatchNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::watch_namespaced_event`]
 #[derive(Debug)]
 pub enum WatchNamespacedEventResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1147,7 +1177,7 @@ impl crate::Response for WatchNamespacedEventResponse {
 impl Event {
     /// watch individual changes to a list of Event. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchNamespacedEventListResponse`](./enum.WatchNamespacedEventListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedEventListResponse`]`>` constructor, or [`WatchNamespacedEventListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1161,7 +1191,7 @@ impl Event {
     pub fn watch_namespaced_event_list(
         namespace: &str,
         optional: WatchNamespacedEventListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedEventListResponse>), crate::RequestError> {
         let WatchNamespacedEventListOptional {
             continue_,
             field_selector,
@@ -1206,11 +1236,14 @@ impl Event {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Event::watch_namespaced_event_list`](./struct.Event.html#method.watch_namespaced_event_list)
+/// Optional parameters of [`Event::watch_namespaced_event_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedEventListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1237,7 +1270,7 @@ pub struct WatchNamespacedEventListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Event::watch_namespaced_event_list`](./struct.Event.html#method.watch_namespaced_event_list)
+/// Use `<WatchNamespacedEventListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::watch_namespaced_event_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedEventListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),

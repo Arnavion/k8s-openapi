@@ -22,7 +22,7 @@ pub struct VolumeAttachment {
 impl VolumeAttachment {
     /// create a VolumeAttachment
     ///
-    /// Use [`CreateVolumeAttachmentResponse`](./enum.CreateVolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateVolumeAttachmentResponse`]`>` constructor, or [`CreateVolumeAttachmentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -34,7 +34,7 @@ impl VolumeAttachment {
     pub fn create_volume_attachment(
         body: &crate::v1_12::api::storage::v1beta1::VolumeAttachment,
         optional: CreateVolumeAttachmentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateVolumeAttachmentResponse>), crate::RequestError> {
         let CreateVolumeAttachmentOptional {
             dry_run,
             include_uninitialized,
@@ -55,11 +55,14 @@ impl VolumeAttachment {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::create_volume_attachment`](./struct.VolumeAttachment.html#method.create_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::create_volume_attachment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -70,7 +73,7 @@ pub struct CreateVolumeAttachmentOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::create_volume_attachment`](./struct.VolumeAttachment.html#method.create_volume_attachment)
+/// Use `<CreateVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::create_volume_attachment`]
 #[derive(Debug)]
 pub enum CreateVolumeAttachmentResponse {
     Ok(crate::v1_12::api::storage::v1beta1::VolumeAttachment),
@@ -118,7 +121,7 @@ impl crate::Response for CreateVolumeAttachmentResponse {
 impl VolumeAttachment {
     /// delete collection of VolumeAttachment
     ///
-    /// Use [`DeleteCollectionVolumeAttachmentResponse`](./enum.DeleteCollectionVolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionVolumeAttachmentResponse`]`>` constructor, or [`DeleteCollectionVolumeAttachmentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -127,7 +130,7 @@ impl VolumeAttachment {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_volume_attachment(
         optional: DeleteCollectionVolumeAttachmentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionVolumeAttachmentResponse>), crate::RequestError> {
         let DeleteCollectionVolumeAttachmentOptional {
             continue_,
             field_selector,
@@ -172,11 +175,14 @@ impl VolumeAttachment {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::delete_collection_volume_attachment`](./struct.VolumeAttachment.html#method.delete_collection_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::delete_collection_volume_attachment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionVolumeAttachmentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -203,7 +209,7 @@ pub struct DeleteCollectionVolumeAttachmentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::delete_collection_volume_attachment`](./struct.VolumeAttachment.html#method.delete_collection_volume_attachment)
+/// Use `<DeleteCollectionVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::delete_collection_volume_attachment`]
 #[derive(Debug)]
 pub enum DeleteCollectionVolumeAttachmentResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -247,7 +253,7 @@ impl crate::Response for DeleteCollectionVolumeAttachmentResponse {
 impl VolumeAttachment {
     /// delete a VolumeAttachment
     ///
-    /// Use [`DeleteVolumeAttachmentResponse`](./enum.DeleteVolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteVolumeAttachmentResponse`]`>` constructor, or [`DeleteVolumeAttachmentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -261,7 +267,7 @@ impl VolumeAttachment {
     pub fn delete_volume_attachment(
         name: &str,
         optional: DeleteVolumeAttachmentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteVolumeAttachmentResponse>), crate::RequestError> {
         let DeleteVolumeAttachmentOptional {
             dry_run,
             grace_period_seconds,
@@ -290,11 +296,14 @@ impl VolumeAttachment {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::delete_volume_attachment`](./struct.VolumeAttachment.html#method.delete_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::delete_volume_attachment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -309,7 +318,7 @@ pub struct DeleteVolumeAttachmentOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::delete_volume_attachment`](./struct.VolumeAttachment.html#method.delete_volume_attachment)
+/// Use `<DeleteVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::delete_volume_attachment`]
 #[derive(Debug)]
 pub enum DeleteVolumeAttachmentResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -362,7 +371,7 @@ impl crate::Response for DeleteVolumeAttachmentResponse {
 impl VolumeAttachment {
     /// list or watch objects of kind VolumeAttachment
     ///
-    /// Use [`ListVolumeAttachmentResponse`](./enum.ListVolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListVolumeAttachmentResponse`]`>` constructor, or [`ListVolumeAttachmentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -371,7 +380,7 @@ impl VolumeAttachment {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_volume_attachment(
         optional: ListVolumeAttachmentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListVolumeAttachmentResponse>), crate::RequestError> {
         let ListVolumeAttachmentOptional {
             continue_,
             field_selector,
@@ -416,11 +425,14 @@ impl VolumeAttachment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::list_volume_attachment`](./struct.VolumeAttachment.html#method.list_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::list_volume_attachment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListVolumeAttachmentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -447,7 +459,7 @@ pub struct ListVolumeAttachmentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::list_volume_attachment`](./struct.VolumeAttachment.html#method.list_volume_attachment)
+/// Use `<ListVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::list_volume_attachment`]
 #[derive(Debug)]
 pub enum ListVolumeAttachmentResponse {
     Ok(crate::v1_12::api::storage::v1beta1::VolumeAttachmentList),
@@ -477,7 +489,7 @@ impl crate::Response for ListVolumeAttachmentResponse {
 impl VolumeAttachment {
     /// partially update the specified VolumeAttachment
     ///
-    /// Use [`PatchVolumeAttachmentResponse`](./enum.PatchVolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchVolumeAttachmentResponse`]`>` constructor, or [`PatchVolumeAttachmentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -494,7 +506,7 @@ impl VolumeAttachment {
         name: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchVolumeAttachmentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchVolumeAttachmentResponse>), crate::RequestError> {
         let PatchVolumeAttachmentOptional {
             dry_run,
             pretty,
@@ -511,11 +523,14 @@ impl VolumeAttachment {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::patch_volume_attachment`](./struct.VolumeAttachment.html#method.patch_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::patch_volume_attachment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -524,7 +539,7 @@ pub struct PatchVolumeAttachmentOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::patch_volume_attachment`](./struct.VolumeAttachment.html#method.patch_volume_attachment)
+/// Use `<PatchVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::patch_volume_attachment`]
 #[derive(Debug)]
 pub enum PatchVolumeAttachmentResponse {
     Ok(crate::v1_12::api::storage::v1beta1::VolumeAttachment),
@@ -554,7 +569,7 @@ impl crate::Response for PatchVolumeAttachmentResponse {
 impl VolumeAttachment {
     /// read the specified VolumeAttachment
     ///
-    /// Use [`ReadVolumeAttachmentResponse`](./enum.ReadVolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadVolumeAttachmentResponse`]`>` constructor, or [`ReadVolumeAttachmentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -568,7 +583,7 @@ impl VolumeAttachment {
     pub fn read_volume_attachment(
         name: &str,
         optional: ReadVolumeAttachmentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadVolumeAttachmentResponse>), crate::RequestError> {
         let ReadVolumeAttachmentOptional {
             exact,
             export,
@@ -589,11 +604,14 @@ impl VolumeAttachment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::read_volume_attachment`](./struct.VolumeAttachment.html#method.read_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::read_volume_attachment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadVolumeAttachmentOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -604,7 +622,7 @@ pub struct ReadVolumeAttachmentOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::read_volume_attachment`](./struct.VolumeAttachment.html#method.read_volume_attachment)
+/// Use `<ReadVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::read_volume_attachment`]
 #[derive(Debug)]
 pub enum ReadVolumeAttachmentResponse {
     Ok(crate::v1_12::api::storage::v1beta1::VolumeAttachment),
@@ -634,7 +652,7 @@ impl crate::Response for ReadVolumeAttachmentResponse {
 impl VolumeAttachment {
     /// replace the specified VolumeAttachment
     ///
-    /// Use [`ReplaceVolumeAttachmentResponse`](./enum.ReplaceVolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceVolumeAttachmentResponse`]`>` constructor, or [`ReplaceVolumeAttachmentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -651,7 +669,7 @@ impl VolumeAttachment {
         name: &str,
         body: &crate::v1_12::api::storage::v1beta1::VolumeAttachment,
         optional: ReplaceVolumeAttachmentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceVolumeAttachmentResponse>), crate::RequestError> {
         let ReplaceVolumeAttachmentOptional {
             dry_run,
             pretty,
@@ -668,11 +686,14 @@ impl VolumeAttachment {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::replace_volume_attachment`](./struct.VolumeAttachment.html#method.replace_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::replace_volume_attachment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceVolumeAttachmentOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -681,7 +702,7 @@ pub struct ReplaceVolumeAttachmentOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::replace_volume_attachment`](./struct.VolumeAttachment.html#method.replace_volume_attachment)
+/// Use `<ReplaceVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::replace_volume_attachment`]
 #[derive(Debug)]
 pub enum ReplaceVolumeAttachmentResponse {
     Ok(crate::v1_12::api::storage::v1beta1::VolumeAttachment),
@@ -720,7 +741,7 @@ impl crate::Response for ReplaceVolumeAttachmentResponse {
 impl VolumeAttachment {
     /// watch changes to an object of kind VolumeAttachment. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchVolumeAttachmentResponse`](./enum.WatchVolumeAttachmentResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchVolumeAttachmentResponse`]`>` constructor, or [`WatchVolumeAttachmentResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -734,7 +755,7 @@ impl VolumeAttachment {
     pub fn watch_volume_attachment(
         name: &str,
         optional: WatchVolumeAttachmentOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchVolumeAttachmentResponse>), crate::RequestError> {
         let WatchVolumeAttachmentOptional {
             continue_,
             field_selector,
@@ -779,11 +800,14 @@ impl VolumeAttachment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::watch_volume_attachment`](./struct.VolumeAttachment.html#method.watch_volume_attachment)
+/// Optional parameters of [`VolumeAttachment::watch_volume_attachment`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchVolumeAttachmentOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -810,7 +834,7 @@ pub struct WatchVolumeAttachmentOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::watch_volume_attachment`](./struct.VolumeAttachment.html#method.watch_volume_attachment)
+/// Use `<WatchVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::watch_volume_attachment`]
 #[derive(Debug)]
 pub enum WatchVolumeAttachmentResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -842,7 +866,7 @@ impl crate::Response for WatchVolumeAttachmentResponse {
 impl VolumeAttachment {
     /// watch individual changes to a list of VolumeAttachment. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchVolumeAttachmentListResponse`](./enum.WatchVolumeAttachmentListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchVolumeAttachmentListResponse`]`>` constructor, or [`WatchVolumeAttachmentListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -851,7 +875,7 @@ impl VolumeAttachment {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_volume_attachment_list(
         optional: WatchVolumeAttachmentListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchVolumeAttachmentListResponse>), crate::RequestError> {
         let WatchVolumeAttachmentListOptional {
             continue_,
             field_selector,
@@ -896,11 +920,14 @@ impl VolumeAttachment {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`VolumeAttachment::watch_volume_attachment_list`](./struct.VolumeAttachment.html#method.watch_volume_attachment_list)
+/// Optional parameters of [`VolumeAttachment::watch_volume_attachment_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchVolumeAttachmentListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -927,7 +954,7 @@ pub struct WatchVolumeAttachmentListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`VolumeAttachment::watch_volume_attachment_list`](./struct.VolumeAttachment.html#method.watch_volume_attachment_list)
+/// Use `<WatchVolumeAttachmentListResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::watch_volume_attachment_list`]
 #[derive(Debug)]
 pub enum WatchVolumeAttachmentListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),

@@ -1222,7 +1222,9 @@ fn write_operation(
 	if wrote_description {
 		writeln!(file, "{}///", indent)?;
 	}
-	writeln!(file, "{}/// Use [`{}`](./enum.{}.html) to parse the HTTP response.", indent, operation_result_name, operation_result_name)?;
+	writeln!(file,
+		"{}/// Use the returned [`crate::ResponseBody`]`<`[`{}`]`>` constructor, or [`{}`] directly, to parse the HTTP response.",
+		indent, operation_result_name, operation_result_name)?;
 
 	if !parameters.is_empty() {
 		writeln!(file, "{}///", indent)?;
@@ -1256,7 +1258,7 @@ fn write_operation(
 		}
 		writeln!(file, ",")?;
 	}
-	writeln!(file, "{}) -> Result<http::Request<Vec<u8>>, crate::RequestError> {{", indent)?;
+	writeln!(file, "{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<{}>), crate::RequestError> {{", indent, operation_result_name)?;
 
 	let have_path_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Path);
 	let have_query_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Query);
@@ -1355,7 +1357,10 @@ fn write_operation(
 		writeln!(file, "vec![];")?;
 	}
 
-	writeln!(file, "{}    __request.body(__body).map_err(crate::RequestError::Http)", indent)?;
+	writeln!(file, "{}    match __request.body(__body) {{", indent)?;
+	writeln!(file, "{}        Ok(body) => Ok((body, crate::ResponseBody::new)),", indent)?;
+	writeln!(file, "{}        Err(err) => Err(crate::RequestError::Http(err)),", indent)?;
+	writeln!(file, "{}    }}", indent)?;
 	writeln!(file, "{}}}", indent)?;
 
 	if type_name_and_ref_path_and_parent_mod_rs.is_some() {
@@ -1375,10 +1380,10 @@ fn write_operation(
 		writeln!(file)?;
 
 		if let Some((type_name, _, _)) = &type_name_and_ref_path_and_parent_mod_rs {
-			writeln!(file, "/// Optional parameters of [`{}::{}`](./struct.{}.html#method.{})", type_name, operation_fn_name, type_name, operation_fn_name)?;
+			writeln!(file, "/// Optional parameters of [`{}::{}`]", type_name, operation_fn_name)?;
 		}
 		else {
-			writeln!(file, "/// Optional parameters of [`{}`](./fn.{}.html)", operation_fn_name, operation_fn_name)?;
+			writeln!(file, "/// Optional parameters of [`{}`]", operation_fn_name)?;
 		}
 
 		writeln!(file, "#[derive(Clone, Copy, Debug, Default)]")?;
@@ -1408,10 +1413,10 @@ fn write_operation(
 	writeln!(file)?;
 
 	if let Some((type_name, _, _)) = &type_name_and_ref_path_and_parent_mod_rs {
-		writeln!(file, "/// Parses the HTTP response of [`{}::{}`](./struct.{}.html#method.{})", type_name, operation_fn_name, type_name, operation_fn_name)?;
+		writeln!(file, "/// Use `<{} as Response>::try_from_parts` to parse the HTTP response body of [`{}::{}`]", operation_result_name, type_name, operation_fn_name)?;
 	}
 	else {
-		writeln!(file, "/// Parses the HTTP response of [`{}`](./fn.{}.html)", operation_fn_name, operation_fn_name)?;
+		writeln!(file, "/// Use `<{} as Response>::try_from_parts` to parse the HTTP response body of [`{}`]", operation_result_name, operation_fn_name)?;
 	}
 
 	writeln!(file, "#[derive(Debug)]")?;

@@ -20,7 +20,7 @@ pub struct Ingress {
 impl Ingress {
     /// create an Ingress
     ///
-    /// Use [`CreateNamespacedIngressResponse`](./enum.CreateNamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedIngressResponse`]`>` constructor, or [`CreateNamespacedIngressResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,7 +37,7 @@ impl Ingress {
         namespace: &str,
         body: &crate::v1_12::api::extensions::v1beta1::Ingress,
         optional: CreateNamespacedIngressOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedIngressResponse>), crate::RequestError> {
         let CreateNamespacedIngressOptional {
             dry_run,
             include_uninitialized,
@@ -58,11 +58,14 @@ impl Ingress {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::create_namespaced_ingress`](./struct.Ingress.html#method.create_namespaced_ingress)
+/// Optional parameters of [`Ingress::create_namespaced_ingress`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedIngressOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -73,7 +76,7 @@ pub struct CreateNamespacedIngressOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::create_namespaced_ingress`](./struct.Ingress.html#method.create_namespaced_ingress)
+/// Use `<CreateNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::create_namespaced_ingress`]
 #[derive(Debug)]
 pub enum CreateNamespacedIngressResponse {
     Ok(crate::v1_12::api::extensions::v1beta1::Ingress),
@@ -121,7 +124,7 @@ impl crate::Response for CreateNamespacedIngressResponse {
 impl Ingress {
     /// delete collection of Ingress
     ///
-    /// Use [`DeleteCollectionNamespacedIngressResponse`](./enum.DeleteCollectionNamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedIngressResponse`]`>` constructor, or [`DeleteCollectionNamespacedIngressResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -135,7 +138,7 @@ impl Ingress {
     pub fn delete_collection_namespaced_ingress(
         namespace: &str,
         optional: DeleteCollectionNamespacedIngressOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedIngressResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedIngressOptional {
             continue_,
             field_selector,
@@ -180,11 +183,14 @@ impl Ingress {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::delete_collection_namespaced_ingress`](./struct.Ingress.html#method.delete_collection_namespaced_ingress)
+/// Optional parameters of [`Ingress::delete_collection_namespaced_ingress`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedIngressOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -211,7 +217,7 @@ pub struct DeleteCollectionNamespacedIngressOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::delete_collection_namespaced_ingress`](./struct.Ingress.html#method.delete_collection_namespaced_ingress)
+/// Use `<DeleteCollectionNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::delete_collection_namespaced_ingress`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedIngressResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -255,7 +261,7 @@ impl crate::Response for DeleteCollectionNamespacedIngressResponse {
 impl Ingress {
     /// delete an Ingress
     ///
-    /// Use [`DeleteNamespacedIngressResponse`](./enum.DeleteNamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedIngressResponse`]`>` constructor, or [`DeleteNamespacedIngressResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -274,7 +280,7 @@ impl Ingress {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedIngressOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedIngressResponse>), crate::RequestError> {
         let DeleteNamespacedIngressOptional {
             dry_run,
             grace_period_seconds,
@@ -303,11 +309,14 @@ impl Ingress {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::delete_namespaced_ingress`](./struct.Ingress.html#method.delete_namespaced_ingress)
+/// Optional parameters of [`Ingress::delete_namespaced_ingress`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedIngressOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -322,7 +331,7 @@ pub struct DeleteNamespacedIngressOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::delete_namespaced_ingress`](./struct.Ingress.html#method.delete_namespaced_ingress)
+/// Use `<DeleteNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::delete_namespaced_ingress`]
 #[derive(Debug)]
 pub enum DeleteNamespacedIngressResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -375,7 +384,7 @@ impl crate::Response for DeleteNamespacedIngressResponse {
 impl Ingress {
     /// list or watch objects of kind Ingress
     ///
-    /// Use [`ListIngressForAllNamespacesResponse`](./enum.ListIngressForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListIngressForAllNamespacesResponse`]`>` constructor, or [`ListIngressForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -384,7 +393,7 @@ impl Ingress {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_ingress_for_all_namespaces(
         optional: ListIngressForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListIngressForAllNamespacesResponse>), crate::RequestError> {
         let ListIngressForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -429,11 +438,14 @@ impl Ingress {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::list_ingress_for_all_namespaces`](./struct.Ingress.html#method.list_ingress_for_all_namespaces)
+/// Optional parameters of [`Ingress::list_ingress_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListIngressForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -460,7 +472,7 @@ pub struct ListIngressForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::list_ingress_for_all_namespaces`](./struct.Ingress.html#method.list_ingress_for_all_namespaces)
+/// Use `<ListIngressForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::list_ingress_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListIngressForAllNamespacesResponse {
     Ok(crate::v1_12::api::extensions::v1beta1::IngressList),
@@ -490,7 +502,7 @@ impl crate::Response for ListIngressForAllNamespacesResponse {
 impl Ingress {
     /// list or watch objects of kind Ingress
     ///
-    /// Use [`ListNamespacedIngressResponse`](./enum.ListNamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedIngressResponse`]`>` constructor, or [`ListNamespacedIngressResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -504,7 +516,7 @@ impl Ingress {
     pub fn list_namespaced_ingress(
         namespace: &str,
         optional: ListNamespacedIngressOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedIngressResponse>), crate::RequestError> {
         let ListNamespacedIngressOptional {
             continue_,
             field_selector,
@@ -549,11 +561,14 @@ impl Ingress {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::list_namespaced_ingress`](./struct.Ingress.html#method.list_namespaced_ingress)
+/// Optional parameters of [`Ingress::list_namespaced_ingress`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedIngressOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -580,7 +595,7 @@ pub struct ListNamespacedIngressOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::list_namespaced_ingress`](./struct.Ingress.html#method.list_namespaced_ingress)
+/// Use `<ListNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::list_namespaced_ingress`]
 #[derive(Debug)]
 pub enum ListNamespacedIngressResponse {
     Ok(crate::v1_12::api::extensions::v1beta1::IngressList),
@@ -610,7 +625,7 @@ impl crate::Response for ListNamespacedIngressResponse {
 impl Ingress {
     /// partially update the specified Ingress
     ///
-    /// Use [`PatchNamespacedIngressResponse`](./enum.PatchNamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedIngressResponse`]`>` constructor, or [`PatchNamespacedIngressResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -632,7 +647,7 @@ impl Ingress {
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedIngressOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedIngressResponse>), crate::RequestError> {
         let PatchNamespacedIngressOptional {
             dry_run,
             pretty,
@@ -649,11 +664,14 @@ impl Ingress {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::patch_namespaced_ingress`](./struct.Ingress.html#method.patch_namespaced_ingress)
+/// Optional parameters of [`Ingress::patch_namespaced_ingress`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedIngressOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -662,7 +680,7 @@ pub struct PatchNamespacedIngressOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::patch_namespaced_ingress`](./struct.Ingress.html#method.patch_namespaced_ingress)
+/// Use `<PatchNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::patch_namespaced_ingress`]
 #[derive(Debug)]
 pub enum PatchNamespacedIngressResponse {
     Ok(crate::v1_12::api::extensions::v1beta1::Ingress),
@@ -692,7 +710,7 @@ impl crate::Response for PatchNamespacedIngressResponse {
 impl Ingress {
     /// partially update status of the specified Ingress
     ///
-    /// Use [`PatchNamespacedIngressStatusResponse`](./enum.PatchNamespacedIngressStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedIngressStatusResponse`]`>` constructor, or [`PatchNamespacedIngressStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -714,7 +732,7 @@ impl Ingress {
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedIngressStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedIngressStatusResponse>), crate::RequestError> {
         let PatchNamespacedIngressStatusOptional {
             dry_run,
             pretty,
@@ -731,11 +749,14 @@ impl Ingress {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::patch_namespaced_ingress_status`](./struct.Ingress.html#method.patch_namespaced_ingress_status)
+/// Optional parameters of [`Ingress::patch_namespaced_ingress_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedIngressStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -744,7 +765,7 @@ pub struct PatchNamespacedIngressStatusOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::patch_namespaced_ingress_status`](./struct.Ingress.html#method.patch_namespaced_ingress_status)
+/// Use `<PatchNamespacedIngressStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::patch_namespaced_ingress_status`]
 #[derive(Debug)]
 pub enum PatchNamespacedIngressStatusResponse {
     Ok(crate::v1_12::api::extensions::v1beta1::Ingress),
@@ -774,7 +795,7 @@ impl crate::Response for PatchNamespacedIngressStatusResponse {
 impl Ingress {
     /// read the specified Ingress
     ///
-    /// Use [`ReadNamespacedIngressResponse`](./enum.ReadNamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedIngressResponse`]`>` constructor, or [`ReadNamespacedIngressResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -793,7 +814,7 @@ impl Ingress {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedIngressOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedIngressResponse>), crate::RequestError> {
         let ReadNamespacedIngressOptional {
             exact,
             export,
@@ -814,11 +835,14 @@ impl Ingress {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::read_namespaced_ingress`](./struct.Ingress.html#method.read_namespaced_ingress)
+/// Optional parameters of [`Ingress::read_namespaced_ingress`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedIngressOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -829,7 +853,7 @@ pub struct ReadNamespacedIngressOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::read_namespaced_ingress`](./struct.Ingress.html#method.read_namespaced_ingress)
+/// Use `<ReadNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::read_namespaced_ingress`]
 #[derive(Debug)]
 pub enum ReadNamespacedIngressResponse {
     Ok(crate::v1_12::api::extensions::v1beta1::Ingress),
@@ -859,7 +883,7 @@ impl crate::Response for ReadNamespacedIngressResponse {
 impl Ingress {
     /// read status of the specified Ingress
     ///
-    /// Use [`ReadNamespacedIngressStatusResponse`](./enum.ReadNamespacedIngressStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedIngressStatusResponse`]`>` constructor, or [`ReadNamespacedIngressStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -878,7 +902,7 @@ impl Ingress {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedIngressStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedIngressStatusResponse>), crate::RequestError> {
         let ReadNamespacedIngressStatusOptional {
             pretty,
         } = optional;
@@ -891,18 +915,21 @@ impl Ingress {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::read_namespaced_ingress_status`](./struct.Ingress.html#method.read_namespaced_ingress_status)
+/// Optional parameters of [`Ingress::read_namespaced_ingress_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedIngressStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::read_namespaced_ingress_status`](./struct.Ingress.html#method.read_namespaced_ingress_status)
+/// Use `<ReadNamespacedIngressStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::read_namespaced_ingress_status`]
 #[derive(Debug)]
 pub enum ReadNamespacedIngressStatusResponse {
     Ok(crate::v1_12::api::extensions::v1beta1::Ingress),
@@ -932,7 +959,7 @@ impl crate::Response for ReadNamespacedIngressStatusResponse {
 impl Ingress {
     /// replace the specified Ingress
     ///
-    /// Use [`ReplaceNamespacedIngressResponse`](./enum.ReplaceNamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedIngressResponse`]`>` constructor, or [`ReplaceNamespacedIngressResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -954,7 +981,7 @@ impl Ingress {
         namespace: &str,
         body: &crate::v1_12::api::extensions::v1beta1::Ingress,
         optional: ReplaceNamespacedIngressOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedIngressResponse>), crate::RequestError> {
         let ReplaceNamespacedIngressOptional {
             dry_run,
             pretty,
@@ -971,11 +998,14 @@ impl Ingress {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::replace_namespaced_ingress`](./struct.Ingress.html#method.replace_namespaced_ingress)
+/// Optional parameters of [`Ingress::replace_namespaced_ingress`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedIngressOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -984,7 +1014,7 @@ pub struct ReplaceNamespacedIngressOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::replace_namespaced_ingress`](./struct.Ingress.html#method.replace_namespaced_ingress)
+/// Use `<ReplaceNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::replace_namespaced_ingress`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedIngressResponse {
     Ok(crate::v1_12::api::extensions::v1beta1::Ingress),
@@ -1023,7 +1053,7 @@ impl crate::Response for ReplaceNamespacedIngressResponse {
 impl Ingress {
     /// replace status of the specified Ingress
     ///
-    /// Use [`ReplaceNamespacedIngressStatusResponse`](./enum.ReplaceNamespacedIngressStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedIngressStatusResponse`]`>` constructor, or [`ReplaceNamespacedIngressStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1045,7 +1075,7 @@ impl Ingress {
         namespace: &str,
         body: &crate::v1_12::api::extensions::v1beta1::Ingress,
         optional: ReplaceNamespacedIngressStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedIngressStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedIngressStatusOptional {
             dry_run,
             pretty,
@@ -1062,11 +1092,14 @@ impl Ingress {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::replace_namespaced_ingress_status`](./struct.Ingress.html#method.replace_namespaced_ingress_status)
+/// Optional parameters of [`Ingress::replace_namespaced_ingress_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedIngressStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -1075,7 +1108,7 @@ pub struct ReplaceNamespacedIngressStatusOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Ingress::replace_namespaced_ingress_status`](./struct.Ingress.html#method.replace_namespaced_ingress_status)
+/// Use `<ReplaceNamespacedIngressStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::replace_namespaced_ingress_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedIngressStatusResponse {
     Ok(crate::v1_12::api::extensions::v1beta1::Ingress),
@@ -1114,7 +1147,7 @@ impl crate::Response for ReplaceNamespacedIngressStatusResponse {
 impl Ingress {
     /// watch individual changes to a list of Ingress. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchIngressListForAllNamespacesResponse`](./enum.WatchIngressListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchIngressListForAllNamespacesResponse`]`>` constructor, or [`WatchIngressListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1123,7 +1156,7 @@ impl Ingress {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_ingress_list_for_all_namespaces(
         optional: WatchIngressListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchIngressListForAllNamespacesResponse>), crate::RequestError> {
         let WatchIngressListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1168,11 +1201,14 @@ impl Ingress {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::watch_ingress_list_for_all_namespaces`](./struct.Ingress.html#method.watch_ingress_list_for_all_namespaces)
+/// Optional parameters of [`Ingress::watch_ingress_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchIngressListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1199,7 +1235,7 @@ pub struct WatchIngressListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::watch_ingress_list_for_all_namespaces`](./struct.Ingress.html#method.watch_ingress_list_for_all_namespaces)
+/// Use `<WatchIngressListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::watch_ingress_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchIngressListForAllNamespacesResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1231,7 +1267,7 @@ impl crate::Response for WatchIngressListForAllNamespacesResponse {
 impl Ingress {
     /// watch changes to an object of kind Ingress. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchNamespacedIngressResponse`](./enum.WatchNamespacedIngressResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedIngressResponse`]`>` constructor, or [`WatchNamespacedIngressResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1250,7 +1286,7 @@ impl Ingress {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedIngressOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedIngressResponse>), crate::RequestError> {
         let WatchNamespacedIngressOptional {
             continue_,
             field_selector,
@@ -1295,11 +1331,14 @@ impl Ingress {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::watch_namespaced_ingress`](./struct.Ingress.html#method.watch_namespaced_ingress)
+/// Optional parameters of [`Ingress::watch_namespaced_ingress`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedIngressOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1326,7 +1365,7 @@ pub struct WatchNamespacedIngressOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::watch_namespaced_ingress`](./struct.Ingress.html#method.watch_namespaced_ingress)
+/// Use `<WatchNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::watch_namespaced_ingress`]
 #[derive(Debug)]
 pub enum WatchNamespacedIngressResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1358,7 +1397,7 @@ impl crate::Response for WatchNamespacedIngressResponse {
 impl Ingress {
     /// watch individual changes to a list of Ingress. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchNamespacedIngressListResponse`](./enum.WatchNamespacedIngressListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedIngressListResponse`]`>` constructor, or [`WatchNamespacedIngressListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1372,7 +1411,7 @@ impl Ingress {
     pub fn watch_namespaced_ingress_list(
         namespace: &str,
         optional: WatchNamespacedIngressListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedIngressListResponse>), crate::RequestError> {
         let WatchNamespacedIngressListOptional {
             continue_,
             field_selector,
@@ -1417,11 +1456,14 @@ impl Ingress {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Ingress::watch_namespaced_ingress_list`](./struct.Ingress.html#method.watch_namespaced_ingress_list)
+/// Optional parameters of [`Ingress::watch_namespaced_ingress_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedIngressListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1448,7 +1490,7 @@ pub struct WatchNamespacedIngressListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Ingress::watch_namespaced_ingress_list`](./struct.Ingress.html#method.watch_namespaced_ingress_list)
+/// Use `<WatchNamespacedIngressListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::watch_namespaced_ingress_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedIngressListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),

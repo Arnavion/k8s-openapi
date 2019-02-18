@@ -20,7 +20,7 @@ pub struct Scale {
 impl Scale {
     /// partially update scale of the specified ReplicationController
     ///
-    /// Use [`PatchNamespacedReplicationControllerScaleResponse`](./enum.PatchNamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedReplicationControllerScaleResponse`]`>` constructor, or [`PatchNamespacedReplicationControllerScaleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -42,7 +42,7 @@ impl Scale {
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedReplicationControllerScaleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicationControllerScaleResponse>), crate::RequestError> {
         let PatchNamespacedReplicationControllerScaleOptional {
             pretty,
         } = optional;
@@ -55,18 +55,21 @@ impl Scale {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Scale::patch_namespaced_replication_controller_scale`](./struct.Scale.html#method.patch_namespaced_replication_controller_scale)
+/// Optional parameters of [`Scale::patch_namespaced_replication_controller_scale`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedReplicationControllerScaleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Scale::patch_namespaced_replication_controller_scale`](./struct.Scale.html#method.patch_namespaced_replication_controller_scale)
+/// Use `<PatchNamespacedReplicationControllerScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::patch_namespaced_replication_controller_scale`]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicationControllerScaleResponse {
     Ok(crate::v1_8::api::autoscaling::v1::Scale),
@@ -96,7 +99,7 @@ impl crate::Response for PatchNamespacedReplicationControllerScaleResponse {
 impl Scale {
     /// read scale of the specified ReplicationController
     ///
-    /// Use [`ReadNamespacedReplicationControllerScaleResponse`](./enum.ReadNamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicationControllerScaleResponse`]`>` constructor, or [`ReadNamespacedReplicationControllerScaleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -115,7 +118,7 @@ impl Scale {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedReplicationControllerScaleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicationControllerScaleResponse>), crate::RequestError> {
         let ReadNamespacedReplicationControllerScaleOptional {
             pretty,
         } = optional;
@@ -128,18 +131,21 @@ impl Scale {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Scale::read_namespaced_replication_controller_scale`](./struct.Scale.html#method.read_namespaced_replication_controller_scale)
+/// Optional parameters of [`Scale::read_namespaced_replication_controller_scale`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedReplicationControllerScaleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Scale::read_namespaced_replication_controller_scale`](./struct.Scale.html#method.read_namespaced_replication_controller_scale)
+/// Use `<ReadNamespacedReplicationControllerScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::read_namespaced_replication_controller_scale`]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicationControllerScaleResponse {
     Ok(crate::v1_8::api::autoscaling::v1::Scale),
@@ -169,7 +175,7 @@ impl crate::Response for ReadNamespacedReplicationControllerScaleResponse {
 impl Scale {
     /// replace scale of the specified ReplicationController
     ///
-    /// Use [`ReplaceNamespacedReplicationControllerScaleResponse`](./enum.ReplaceNamespacedReplicationControllerScaleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedReplicationControllerScaleResponse`]`>` constructor, or [`ReplaceNamespacedReplicationControllerScaleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -191,7 +197,7 @@ impl Scale {
         namespace: &str,
         body: &crate::v1_8::api::autoscaling::v1::Scale,
         optional: ReplaceNamespacedReplicationControllerScaleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicationControllerScaleResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicationControllerScaleOptional {
             pretty,
         } = optional;
@@ -204,18 +210,21 @@ impl Scale {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Scale::replace_namespaced_replication_controller_scale`](./struct.Scale.html#method.replace_namespaced_replication_controller_scale)
+/// Optional parameters of [`Scale::replace_namespaced_replication_controller_scale`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedReplicationControllerScaleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Scale::replace_namespaced_replication_controller_scale`](./struct.Scale.html#method.replace_namespaced_replication_controller_scale)
+/// Use `<ReplaceNamespacedReplicationControllerScaleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Scale::replace_namespaced_replication_controller_scale`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicationControllerScaleResponse {
     Ok(crate::v1_8::api::autoscaling::v1::Scale),

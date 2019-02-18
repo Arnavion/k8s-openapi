@@ -37,7 +37,7 @@ pub struct StorageClass {
 impl StorageClass {
     /// create a StorageClass
     ///
-    /// Use [`CreateStorageClassResponse`](./enum.CreateStorageClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateStorageClassResponse`]`>` constructor, or [`CreateStorageClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -49,7 +49,7 @@ impl StorageClass {
     pub fn create_storage_class(
         body: &crate::v1_11::api::storage::v1beta1::StorageClass,
         optional: CreateStorageClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateStorageClassResponse>), crate::RequestError> {
         let CreateStorageClassOptional {
             pretty,
         } = optional;
@@ -62,18 +62,21 @@ impl StorageClass {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StorageClass::create_storage_class`](./struct.StorageClass.html#method.create_storage_class)
+/// Optional parameters of [`StorageClass::create_storage_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateStorageClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StorageClass::create_storage_class`](./struct.StorageClass.html#method.create_storage_class)
+/// Use `<CreateStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::create_storage_class`]
 #[derive(Debug)]
 pub enum CreateStorageClassResponse {
     Ok(crate::v1_11::api::storage::v1beta1::StorageClass),
@@ -121,7 +124,7 @@ impl crate::Response for CreateStorageClassResponse {
 impl StorageClass {
     /// delete collection of StorageClass
     ///
-    /// Use [`DeleteCollectionStorageClassResponse`](./enum.DeleteCollectionStorageClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionStorageClassResponse`]`>` constructor, or [`DeleteCollectionStorageClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -130,7 +133,7 @@ impl StorageClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_storage_class(
         optional: DeleteCollectionStorageClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionStorageClassResponse>), crate::RequestError> {
         let DeleteCollectionStorageClassOptional {
             continue_,
             field_selector,
@@ -175,11 +178,14 @@ impl StorageClass {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StorageClass::delete_collection_storage_class`](./struct.StorageClass.html#method.delete_collection_storage_class)
+/// Optional parameters of [`StorageClass::delete_collection_storage_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionStorageClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -204,7 +210,7 @@ pub struct DeleteCollectionStorageClassOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StorageClass::delete_collection_storage_class`](./struct.StorageClass.html#method.delete_collection_storage_class)
+/// Use `<DeleteCollectionStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::delete_collection_storage_class`]
 #[derive(Debug)]
 pub enum DeleteCollectionStorageClassResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -248,7 +254,7 @@ impl crate::Response for DeleteCollectionStorageClassResponse {
 impl StorageClass {
     /// delete a StorageClass
     ///
-    /// Use [`DeleteStorageClassResponse`](./enum.DeleteStorageClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteStorageClassResponse`]`>` constructor, or [`DeleteStorageClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -262,7 +268,7 @@ impl StorageClass {
     pub fn delete_storage_class(
         name: &str,
         optional: DeleteStorageClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteStorageClassResponse>), crate::RequestError> {
         let DeleteStorageClassOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -287,11 +293,14 @@ impl StorageClass {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StorageClass::delete_storage_class`](./struct.StorageClass.html#method.delete_storage_class)
+/// Optional parameters of [`StorageClass::delete_storage_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteStorageClassOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -304,7 +313,7 @@ pub struct DeleteStorageClassOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StorageClass::delete_storage_class`](./struct.StorageClass.html#method.delete_storage_class)
+/// Use `<DeleteStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::delete_storage_class`]
 #[derive(Debug)]
 pub enum DeleteStorageClassResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -348,7 +357,7 @@ impl crate::Response for DeleteStorageClassResponse {
 impl StorageClass {
     /// list or watch objects of kind StorageClass
     ///
-    /// Use [`ListStorageClassResponse`](./enum.ListStorageClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListStorageClassResponse`]`>` constructor, or [`ListStorageClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -357,7 +366,7 @@ impl StorageClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_storage_class(
         optional: ListStorageClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListStorageClassResponse>), crate::RequestError> {
         let ListStorageClassOptional {
             continue_,
             field_selector,
@@ -402,11 +411,14 @@ impl StorageClass {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StorageClass::list_storage_class`](./struct.StorageClass.html#method.list_storage_class)
+/// Optional parameters of [`StorageClass::list_storage_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListStorageClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -431,7 +443,7 @@ pub struct ListStorageClassOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StorageClass::list_storage_class`](./struct.StorageClass.html#method.list_storage_class)
+/// Use `<ListStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::list_storage_class`]
 #[derive(Debug)]
 pub enum ListStorageClassResponse {
     Ok(crate::v1_11::api::storage::v1beta1::StorageClassList),
@@ -461,7 +473,7 @@ impl crate::Response for ListStorageClassResponse {
 impl StorageClass {
     /// partially update the specified StorageClass
     ///
-    /// Use [`PatchStorageClassResponse`](./enum.PatchStorageClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchStorageClassResponse`]`>` constructor, or [`PatchStorageClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -478,7 +490,7 @@ impl StorageClass {
         name: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchStorageClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchStorageClassResponse>), crate::RequestError> {
         let PatchStorageClassOptional {
             pretty,
         } = optional;
@@ -491,18 +503,21 @@ impl StorageClass {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StorageClass::patch_storage_class`](./struct.StorageClass.html#method.patch_storage_class)
+/// Optional parameters of [`StorageClass::patch_storage_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchStorageClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StorageClass::patch_storage_class`](./struct.StorageClass.html#method.patch_storage_class)
+/// Use `<PatchStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::patch_storage_class`]
 #[derive(Debug)]
 pub enum PatchStorageClassResponse {
     Ok(crate::v1_11::api::storage::v1beta1::StorageClass),
@@ -532,7 +547,7 @@ impl crate::Response for PatchStorageClassResponse {
 impl StorageClass {
     /// read the specified StorageClass
     ///
-    /// Use [`ReadStorageClassResponse`](./enum.ReadStorageClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadStorageClassResponse`]`>` constructor, or [`ReadStorageClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -546,7 +561,7 @@ impl StorageClass {
     pub fn read_storage_class(
         name: &str,
         optional: ReadStorageClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadStorageClassResponse>), crate::RequestError> {
         let ReadStorageClassOptional {
             exact,
             export,
@@ -567,11 +582,14 @@ impl StorageClass {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StorageClass::read_storage_class`](./struct.StorageClass.html#method.read_storage_class)
+/// Optional parameters of [`StorageClass::read_storage_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadStorageClassOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -582,7 +600,7 @@ pub struct ReadStorageClassOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StorageClass::read_storage_class`](./struct.StorageClass.html#method.read_storage_class)
+/// Use `<ReadStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::read_storage_class`]
 #[derive(Debug)]
 pub enum ReadStorageClassResponse {
     Ok(crate::v1_11::api::storage::v1beta1::StorageClass),
@@ -612,7 +630,7 @@ impl crate::Response for ReadStorageClassResponse {
 impl StorageClass {
     /// replace the specified StorageClass
     ///
-    /// Use [`ReplaceStorageClassResponse`](./enum.ReplaceStorageClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceStorageClassResponse`]`>` constructor, or [`ReplaceStorageClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -629,7 +647,7 @@ impl StorageClass {
         name: &str,
         body: &crate::v1_11::api::storage::v1beta1::StorageClass,
         optional: ReplaceStorageClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceStorageClassResponse>), crate::RequestError> {
         let ReplaceStorageClassOptional {
             pretty,
         } = optional;
@@ -642,18 +660,21 @@ impl StorageClass {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StorageClass::replace_storage_class`](./struct.StorageClass.html#method.replace_storage_class)
+/// Optional parameters of [`StorageClass::replace_storage_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceStorageClassOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StorageClass::replace_storage_class`](./struct.StorageClass.html#method.replace_storage_class)
+/// Use `<ReplaceStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::replace_storage_class`]
 #[derive(Debug)]
 pub enum ReplaceStorageClassResponse {
     Ok(crate::v1_11::api::storage::v1beta1::StorageClass),
@@ -692,7 +713,7 @@ impl crate::Response for ReplaceStorageClassResponse {
 impl StorageClass {
     /// watch changes to an object of kind StorageClass
     ///
-    /// Use [`WatchStorageClassResponse`](./enum.WatchStorageClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchStorageClassResponse`]`>` constructor, or [`WatchStorageClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -706,7 +727,7 @@ impl StorageClass {
     pub fn watch_storage_class(
         name: &str,
         optional: WatchStorageClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchStorageClassResponse>), crate::RequestError> {
         let WatchStorageClassOptional {
             continue_,
             field_selector,
@@ -751,11 +772,14 @@ impl StorageClass {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StorageClass::watch_storage_class`](./struct.StorageClass.html#method.watch_storage_class)
+/// Optional parameters of [`StorageClass::watch_storage_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchStorageClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -780,7 +804,7 @@ pub struct WatchStorageClassOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StorageClass::watch_storage_class`](./struct.StorageClass.html#method.watch_storage_class)
+/// Use `<WatchStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::watch_storage_class`]
 #[derive(Debug)]
 pub enum WatchStorageClassResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -812,7 +836,7 @@ impl crate::Response for WatchStorageClassResponse {
 impl StorageClass {
     /// watch individual changes to a list of StorageClass
     ///
-    /// Use [`WatchStorageClassListResponse`](./enum.WatchStorageClassListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchStorageClassListResponse`]`>` constructor, or [`WatchStorageClassListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -821,7 +845,7 @@ impl StorageClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_storage_class_list(
         optional: WatchStorageClassListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchStorageClassListResponse>), crate::RequestError> {
         let WatchStorageClassListOptional {
             continue_,
             field_selector,
@@ -866,11 +890,14 @@ impl StorageClass {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StorageClass::watch_storage_class_list`](./struct.StorageClass.html#method.watch_storage_class_list)
+/// Optional parameters of [`StorageClass::watch_storage_class_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchStorageClassListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -895,7 +922,7 @@ pub struct WatchStorageClassListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StorageClass::watch_storage_class_list`](./struct.StorageClass.html#method.watch_storage_class_list)
+/// Use `<WatchStorageClassListResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::watch_storage_class_list`]
 #[derive(Debug)]
 pub enum WatchStorageClassListResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

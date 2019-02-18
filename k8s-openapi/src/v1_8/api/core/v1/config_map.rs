@@ -17,7 +17,7 @@ pub struct ConfigMap {
 impl ConfigMap {
     /// create a ConfigMap
     ///
-    /// Use [`CreateNamespacedConfigMapResponse`](./enum.CreateNamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedConfigMapResponse`]`>` constructor, or [`CreateNamespacedConfigMapResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -34,7 +34,7 @@ impl ConfigMap {
         namespace: &str,
         body: &crate::v1_8::api::core::v1::ConfigMap,
         optional: CreateNamespacedConfigMapOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedConfigMapResponse>), crate::RequestError> {
         let CreateNamespacedConfigMapOptional {
             pretty,
         } = optional;
@@ -47,18 +47,21 @@ impl ConfigMap {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::create_namespaced_config_map`](./struct.ConfigMap.html#method.create_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::create_namespaced_config_map`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedConfigMapOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::create_namespaced_config_map`](./struct.ConfigMap.html#method.create_namespaced_config_map)
+/// Use `<CreateNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::create_namespaced_config_map`]
 #[derive(Debug)]
 pub enum CreateNamespacedConfigMapResponse {
     Ok(crate::v1_8::api::core::v1::ConfigMap),
@@ -88,7 +91,7 @@ impl crate::Response for CreateNamespacedConfigMapResponse {
 impl ConfigMap {
     /// delete collection of ConfigMap
     ///
-    /// Use [`DeleteCollectionNamespacedConfigMapResponse`](./enum.DeleteCollectionNamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedConfigMapResponse`]`>` constructor, or [`DeleteCollectionNamespacedConfigMapResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -102,7 +105,7 @@ impl ConfigMap {
     pub fn delete_collection_namespaced_config_map(
         namespace: &str,
         optional: DeleteCollectionNamespacedConfigMapOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedConfigMapResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedConfigMapOptional {
             continue_,
             field_selector,
@@ -147,11 +150,14 @@ impl ConfigMap {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::delete_collection_namespaced_config_map`](./struct.ConfigMap.html#method.delete_collection_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::delete_collection_namespaced_config_map`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedConfigMapOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -176,7 +182,7 @@ pub struct DeleteCollectionNamespacedConfigMapOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::delete_collection_namespaced_config_map`](./struct.ConfigMap.html#method.delete_collection_namespaced_config_map)
+/// Use `<DeleteCollectionNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::delete_collection_namespaced_config_map`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedConfigMapResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -220,7 +226,7 @@ impl crate::Response for DeleteCollectionNamespacedConfigMapResponse {
 impl ConfigMap {
     /// delete a ConfigMap
     ///
-    /// Use [`DeleteNamespacedConfigMapResponse`](./enum.DeleteNamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedConfigMapResponse`]`>` constructor, or [`DeleteNamespacedConfigMapResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -239,7 +245,7 @@ impl ConfigMap {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedConfigMapOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedConfigMapResponse>), crate::RequestError> {
         let DeleteNamespacedConfigMapOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -264,11 +270,14 @@ impl ConfigMap {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::delete_namespaced_config_map`](./struct.ConfigMap.html#method.delete_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::delete_namespaced_config_map`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedConfigMapOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -281,7 +290,7 @@ pub struct DeleteNamespacedConfigMapOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::delete_namespaced_config_map`](./struct.ConfigMap.html#method.delete_namespaced_config_map)
+/// Use `<DeleteNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::delete_namespaced_config_map`]
 #[derive(Debug)]
 pub enum DeleteNamespacedConfigMapResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -325,7 +334,7 @@ impl crate::Response for DeleteNamespacedConfigMapResponse {
 impl ConfigMap {
     /// list or watch objects of kind ConfigMap
     ///
-    /// Use [`ListConfigMapForAllNamespacesResponse`](./enum.ListConfigMapForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListConfigMapForAllNamespacesResponse`]`>` constructor, or [`ListConfigMapForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -334,7 +343,7 @@ impl ConfigMap {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_config_map_for_all_namespaces(
         optional: ListConfigMapForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListConfigMapForAllNamespacesResponse>), crate::RequestError> {
         let ListConfigMapForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -379,11 +388,14 @@ impl ConfigMap {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::list_config_map_for_all_namespaces`](./struct.ConfigMap.html#method.list_config_map_for_all_namespaces)
+/// Optional parameters of [`ConfigMap::list_config_map_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListConfigMapForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -408,7 +420,7 @@ pub struct ListConfigMapForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::list_config_map_for_all_namespaces`](./struct.ConfigMap.html#method.list_config_map_for_all_namespaces)
+/// Use `<ListConfigMapForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::list_config_map_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListConfigMapForAllNamespacesResponse {
     Ok(crate::v1_8::api::core::v1::ConfigMapList),
@@ -438,7 +450,7 @@ impl crate::Response for ListConfigMapForAllNamespacesResponse {
 impl ConfigMap {
     /// list or watch objects of kind ConfigMap
     ///
-    /// Use [`ListNamespacedConfigMapResponse`](./enum.ListNamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedConfigMapResponse`]`>` constructor, or [`ListNamespacedConfigMapResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -452,7 +464,7 @@ impl ConfigMap {
     pub fn list_namespaced_config_map(
         namespace: &str,
         optional: ListNamespacedConfigMapOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedConfigMapResponse>), crate::RequestError> {
         let ListNamespacedConfigMapOptional {
             continue_,
             field_selector,
@@ -497,11 +509,14 @@ impl ConfigMap {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::list_namespaced_config_map`](./struct.ConfigMap.html#method.list_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::list_namespaced_config_map`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedConfigMapOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -526,7 +541,7 @@ pub struct ListNamespacedConfigMapOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::list_namespaced_config_map`](./struct.ConfigMap.html#method.list_namespaced_config_map)
+/// Use `<ListNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::list_namespaced_config_map`]
 #[derive(Debug)]
 pub enum ListNamespacedConfigMapResponse {
     Ok(crate::v1_8::api::core::v1::ConfigMapList),
@@ -556,7 +571,7 @@ impl crate::Response for ListNamespacedConfigMapResponse {
 impl ConfigMap {
     /// partially update the specified ConfigMap
     ///
-    /// Use [`PatchNamespacedConfigMapResponse`](./enum.PatchNamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedConfigMapResponse`]`>` constructor, or [`PatchNamespacedConfigMapResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -578,7 +593,7 @@ impl ConfigMap {
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedConfigMapOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedConfigMapResponse>), crate::RequestError> {
         let PatchNamespacedConfigMapOptional {
             pretty,
         } = optional;
@@ -591,18 +606,21 @@ impl ConfigMap {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::patch_namespaced_config_map`](./struct.ConfigMap.html#method.patch_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::patch_namespaced_config_map`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedConfigMapOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::patch_namespaced_config_map`](./struct.ConfigMap.html#method.patch_namespaced_config_map)
+/// Use `<PatchNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::patch_namespaced_config_map`]
 #[derive(Debug)]
 pub enum PatchNamespacedConfigMapResponse {
     Ok(crate::v1_8::api::core::v1::ConfigMap),
@@ -632,7 +650,7 @@ impl crate::Response for PatchNamespacedConfigMapResponse {
 impl ConfigMap {
     /// read the specified ConfigMap
     ///
-    /// Use [`ReadNamespacedConfigMapResponse`](./enum.ReadNamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedConfigMapResponse`]`>` constructor, or [`ReadNamespacedConfigMapResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -651,7 +669,7 @@ impl ConfigMap {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedConfigMapOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedConfigMapResponse>), crate::RequestError> {
         let ReadNamespacedConfigMapOptional {
             exact,
             export,
@@ -672,11 +690,14 @@ impl ConfigMap {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::read_namespaced_config_map`](./struct.ConfigMap.html#method.read_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::read_namespaced_config_map`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedConfigMapOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -687,7 +708,7 @@ pub struct ReadNamespacedConfigMapOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::read_namespaced_config_map`](./struct.ConfigMap.html#method.read_namespaced_config_map)
+/// Use `<ReadNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::read_namespaced_config_map`]
 #[derive(Debug)]
 pub enum ReadNamespacedConfigMapResponse {
     Ok(crate::v1_8::api::core::v1::ConfigMap),
@@ -717,7 +738,7 @@ impl crate::Response for ReadNamespacedConfigMapResponse {
 impl ConfigMap {
     /// replace the specified ConfigMap
     ///
-    /// Use [`ReplaceNamespacedConfigMapResponse`](./enum.ReplaceNamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedConfigMapResponse`]`>` constructor, or [`ReplaceNamespacedConfigMapResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -739,7 +760,7 @@ impl ConfigMap {
         namespace: &str,
         body: &crate::v1_8::api::core::v1::ConfigMap,
         optional: ReplaceNamespacedConfigMapOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedConfigMapResponse>), crate::RequestError> {
         let ReplaceNamespacedConfigMapOptional {
             pretty,
         } = optional;
@@ -752,18 +773,21 @@ impl ConfigMap {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::replace_namespaced_config_map`](./struct.ConfigMap.html#method.replace_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::replace_namespaced_config_map`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedConfigMapOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::replace_namespaced_config_map`](./struct.ConfigMap.html#method.replace_namespaced_config_map)
+/// Use `<ReplaceNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::replace_namespaced_config_map`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedConfigMapResponse {
     Ok(crate::v1_8::api::core::v1::ConfigMap),
@@ -793,7 +817,7 @@ impl crate::Response for ReplaceNamespacedConfigMapResponse {
 impl ConfigMap {
     /// watch individual changes to a list of ConfigMap
     ///
-    /// Use [`WatchConfigMapListForAllNamespacesResponse`](./enum.WatchConfigMapListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchConfigMapListForAllNamespacesResponse`]`>` constructor, or [`WatchConfigMapListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -802,7 +826,7 @@ impl ConfigMap {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_config_map_list_for_all_namespaces(
         optional: WatchConfigMapListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchConfigMapListForAllNamespacesResponse>), crate::RequestError> {
         let WatchConfigMapListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -847,11 +871,14 @@ impl ConfigMap {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::watch_config_map_list_for_all_namespaces`](./struct.ConfigMap.html#method.watch_config_map_list_for_all_namespaces)
+/// Optional parameters of [`ConfigMap::watch_config_map_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchConfigMapListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -876,7 +903,7 @@ pub struct WatchConfigMapListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::watch_config_map_list_for_all_namespaces`](./struct.ConfigMap.html#method.watch_config_map_list_for_all_namespaces)
+/// Use `<WatchConfigMapListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::watch_config_map_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchConfigMapListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -908,7 +935,7 @@ impl crate::Response for WatchConfigMapListForAllNamespacesResponse {
 impl ConfigMap {
     /// watch changes to an object of kind ConfigMap
     ///
-    /// Use [`WatchNamespacedConfigMapResponse`](./enum.WatchNamespacedConfigMapResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedConfigMapResponse`]`>` constructor, or [`WatchNamespacedConfigMapResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -927,7 +954,7 @@ impl ConfigMap {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedConfigMapOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedConfigMapResponse>), crate::RequestError> {
         let WatchNamespacedConfigMapOptional {
             continue_,
             field_selector,
@@ -972,11 +999,14 @@ impl ConfigMap {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::watch_namespaced_config_map`](./struct.ConfigMap.html#method.watch_namespaced_config_map)
+/// Optional parameters of [`ConfigMap::watch_namespaced_config_map`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedConfigMapOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1001,7 +1031,7 @@ pub struct WatchNamespacedConfigMapOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::watch_namespaced_config_map`](./struct.ConfigMap.html#method.watch_namespaced_config_map)
+/// Use `<WatchNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::watch_namespaced_config_map`]
 #[derive(Debug)]
 pub enum WatchNamespacedConfigMapResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1033,7 +1063,7 @@ impl crate::Response for WatchNamespacedConfigMapResponse {
 impl ConfigMap {
     /// watch individual changes to a list of ConfigMap
     ///
-    /// Use [`WatchNamespacedConfigMapListResponse`](./enum.WatchNamespacedConfigMapListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedConfigMapListResponse`]`>` constructor, or [`WatchNamespacedConfigMapListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1047,7 +1077,7 @@ impl ConfigMap {
     pub fn watch_namespaced_config_map_list(
         namespace: &str,
         optional: WatchNamespacedConfigMapListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedConfigMapListResponse>), crate::RequestError> {
         let WatchNamespacedConfigMapListOptional {
             continue_,
             field_selector,
@@ -1092,11 +1122,14 @@ impl ConfigMap {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ConfigMap::watch_namespaced_config_map_list`](./struct.ConfigMap.html#method.watch_namespaced_config_map_list)
+/// Optional parameters of [`ConfigMap::watch_namespaced_config_map_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedConfigMapListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1121,7 +1154,7 @@ pub struct WatchNamespacedConfigMapListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ConfigMap::watch_namespaced_config_map_list`](./struct.ConfigMap.html#method.watch_namespaced_config_map_list)
+/// Use `<WatchNamespacedConfigMapListResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::watch_namespaced_config_map_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedConfigMapListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

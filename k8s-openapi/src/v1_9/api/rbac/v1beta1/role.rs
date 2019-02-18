@@ -17,7 +17,7 @@ pub struct Role {
 impl Role {
     /// create a Role
     ///
-    /// Use [`CreateNamespacedRoleResponse`](./enum.CreateNamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedRoleResponse`]`>` constructor, or [`CreateNamespacedRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -34,7 +34,7 @@ impl Role {
         namespace: &str,
         body: &crate::v1_9::api::rbac::v1beta1::Role,
         optional: CreateNamespacedRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedRoleResponse>), crate::RequestError> {
         let CreateNamespacedRoleOptional {
             pretty,
         } = optional;
@@ -47,18 +47,21 @@ impl Role {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::create_namespaced_role`](./struct.Role.html#method.create_namespaced_role)
+/// Optional parameters of [`Role::create_namespaced_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Role::create_namespaced_role`](./struct.Role.html#method.create_namespaced_role)
+/// Use `<CreateNamespacedRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::create_namespaced_role`]
 #[derive(Debug)]
 pub enum CreateNamespacedRoleResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::Role),
@@ -106,7 +109,7 @@ impl crate::Response for CreateNamespacedRoleResponse {
 impl Role {
     /// delete collection of Role
     ///
-    /// Use [`DeleteCollectionNamespacedRoleResponse`](./enum.DeleteCollectionNamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedRoleResponse`]`>` constructor, or [`DeleteCollectionNamespacedRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -120,7 +123,7 @@ impl Role {
     pub fn delete_collection_namespaced_role(
         namespace: &str,
         optional: DeleteCollectionNamespacedRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedRoleResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedRoleOptional {
             continue_,
             field_selector,
@@ -165,11 +168,14 @@ impl Role {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::delete_collection_namespaced_role`](./struct.Role.html#method.delete_collection_namespaced_role)
+/// Optional parameters of [`Role::delete_collection_namespaced_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -194,7 +200,7 @@ pub struct DeleteCollectionNamespacedRoleOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::delete_collection_namespaced_role`](./struct.Role.html#method.delete_collection_namespaced_role)
+/// Use `<DeleteCollectionNamespacedRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::delete_collection_namespaced_role`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedRoleResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -238,7 +244,7 @@ impl crate::Response for DeleteCollectionNamespacedRoleResponse {
 impl Role {
     /// delete a Role
     ///
-    /// Use [`DeleteNamespacedRoleResponse`](./enum.DeleteNamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedRoleResponse`]`>` constructor, or [`DeleteNamespacedRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -257,7 +263,7 @@ impl Role {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedRoleResponse>), crate::RequestError> {
         let DeleteNamespacedRoleOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -282,11 +288,14 @@ impl Role {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::delete_namespaced_role`](./struct.Role.html#method.delete_namespaced_role)
+/// Optional parameters of [`Role::delete_namespaced_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedRoleOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -299,7 +308,7 @@ pub struct DeleteNamespacedRoleOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Role::delete_namespaced_role`](./struct.Role.html#method.delete_namespaced_role)
+/// Use `<DeleteNamespacedRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::delete_namespaced_role`]
 #[derive(Debug)]
 pub enum DeleteNamespacedRoleResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -343,7 +352,7 @@ impl crate::Response for DeleteNamespacedRoleResponse {
 impl Role {
     /// list or watch objects of kind Role
     ///
-    /// Use [`ListNamespacedRoleResponse`](./enum.ListNamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedRoleResponse`]`>` constructor, or [`ListNamespacedRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -357,7 +366,7 @@ impl Role {
     pub fn list_namespaced_role(
         namespace: &str,
         optional: ListNamespacedRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedRoleResponse>), crate::RequestError> {
         let ListNamespacedRoleOptional {
             continue_,
             field_selector,
@@ -402,11 +411,14 @@ impl Role {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::list_namespaced_role`](./struct.Role.html#method.list_namespaced_role)
+/// Optional parameters of [`Role::list_namespaced_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -431,7 +443,7 @@ pub struct ListNamespacedRoleOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::list_namespaced_role`](./struct.Role.html#method.list_namespaced_role)
+/// Use `<ListNamespacedRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::list_namespaced_role`]
 #[derive(Debug)]
 pub enum ListNamespacedRoleResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::RoleList),
@@ -461,7 +473,7 @@ impl crate::Response for ListNamespacedRoleResponse {
 impl Role {
     /// list or watch objects of kind Role
     ///
-    /// Use [`ListRoleForAllNamespacesResponse`](./enum.ListRoleForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListRoleForAllNamespacesResponse`]`>` constructor, or [`ListRoleForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -470,7 +482,7 @@ impl Role {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_role_for_all_namespaces(
         optional: ListRoleForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListRoleForAllNamespacesResponse>), crate::RequestError> {
         let ListRoleForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -515,11 +527,14 @@ impl Role {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::list_role_for_all_namespaces`](./struct.Role.html#method.list_role_for_all_namespaces)
+/// Optional parameters of [`Role::list_role_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListRoleForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -544,7 +559,7 @@ pub struct ListRoleForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::list_role_for_all_namespaces`](./struct.Role.html#method.list_role_for_all_namespaces)
+/// Use `<ListRoleForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::list_role_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListRoleForAllNamespacesResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::RoleList),
@@ -574,7 +589,7 @@ impl crate::Response for ListRoleForAllNamespacesResponse {
 impl Role {
     /// partially update the specified Role
     ///
-    /// Use [`PatchNamespacedRoleResponse`](./enum.PatchNamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedRoleResponse`]`>` constructor, or [`PatchNamespacedRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -596,7 +611,7 @@ impl Role {
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedRoleResponse>), crate::RequestError> {
         let PatchNamespacedRoleOptional {
             pretty,
         } = optional;
@@ -609,18 +624,21 @@ impl Role {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::patch_namespaced_role`](./struct.Role.html#method.patch_namespaced_role)
+/// Optional parameters of [`Role::patch_namespaced_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Role::patch_namespaced_role`](./struct.Role.html#method.patch_namespaced_role)
+/// Use `<PatchNamespacedRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::patch_namespaced_role`]
 #[derive(Debug)]
 pub enum PatchNamespacedRoleResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::Role),
@@ -650,7 +668,7 @@ impl crate::Response for PatchNamespacedRoleResponse {
 impl Role {
     /// read the specified Role
     ///
-    /// Use [`ReadNamespacedRoleResponse`](./enum.ReadNamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedRoleResponse`]`>` constructor, or [`ReadNamespacedRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -669,7 +687,7 @@ impl Role {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedRoleResponse>), crate::RequestError> {
         let ReadNamespacedRoleOptional {
             pretty,
         } = optional;
@@ -682,18 +700,21 @@ impl Role {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::read_namespaced_role`](./struct.Role.html#method.read_namespaced_role)
+/// Optional parameters of [`Role::read_namespaced_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Role::read_namespaced_role`](./struct.Role.html#method.read_namespaced_role)
+/// Use `<ReadNamespacedRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::read_namespaced_role`]
 #[derive(Debug)]
 pub enum ReadNamespacedRoleResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::Role),
@@ -723,7 +744,7 @@ impl crate::Response for ReadNamespacedRoleResponse {
 impl Role {
     /// replace the specified Role
     ///
-    /// Use [`ReplaceNamespacedRoleResponse`](./enum.ReplaceNamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedRoleResponse`]`>` constructor, or [`ReplaceNamespacedRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -745,7 +766,7 @@ impl Role {
         namespace: &str,
         body: &crate::v1_9::api::rbac::v1beta1::Role,
         optional: ReplaceNamespacedRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedRoleResponse>), crate::RequestError> {
         let ReplaceNamespacedRoleOptional {
             pretty,
         } = optional;
@@ -758,18 +779,21 @@ impl Role {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::replace_namespaced_role`](./struct.Role.html#method.replace_namespaced_role)
+/// Optional parameters of [`Role::replace_namespaced_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Role::replace_namespaced_role`](./struct.Role.html#method.replace_namespaced_role)
+/// Use `<ReplaceNamespacedRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::replace_namespaced_role`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedRoleResponse {
     Ok(crate::v1_9::api::rbac::v1beta1::Role),
@@ -808,7 +832,7 @@ impl crate::Response for ReplaceNamespacedRoleResponse {
 impl Role {
     /// watch changes to an object of kind Role
     ///
-    /// Use [`WatchNamespacedRoleResponse`](./enum.WatchNamespacedRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedRoleResponse`]`>` constructor, or [`WatchNamespacedRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -827,7 +851,7 @@ impl Role {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedRoleResponse>), crate::RequestError> {
         let WatchNamespacedRoleOptional {
             continue_,
             field_selector,
@@ -872,11 +896,14 @@ impl Role {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::watch_namespaced_role`](./struct.Role.html#method.watch_namespaced_role)
+/// Optional parameters of [`Role::watch_namespaced_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -901,7 +928,7 @@ pub struct WatchNamespacedRoleOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::watch_namespaced_role`](./struct.Role.html#method.watch_namespaced_role)
+/// Use `<WatchNamespacedRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::watch_namespaced_role`]
 #[derive(Debug)]
 pub enum WatchNamespacedRoleResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -933,7 +960,7 @@ impl crate::Response for WatchNamespacedRoleResponse {
 impl Role {
     /// watch individual changes to a list of Role
     ///
-    /// Use [`WatchNamespacedRoleListResponse`](./enum.WatchNamespacedRoleListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedRoleListResponse`]`>` constructor, or [`WatchNamespacedRoleListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -947,7 +974,7 @@ impl Role {
     pub fn watch_namespaced_role_list(
         namespace: &str,
         optional: WatchNamespacedRoleListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedRoleListResponse>), crate::RequestError> {
         let WatchNamespacedRoleListOptional {
             continue_,
             field_selector,
@@ -992,11 +1019,14 @@ impl Role {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::watch_namespaced_role_list`](./struct.Role.html#method.watch_namespaced_role_list)
+/// Optional parameters of [`Role::watch_namespaced_role_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedRoleListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1021,7 +1051,7 @@ pub struct WatchNamespacedRoleListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::watch_namespaced_role_list`](./struct.Role.html#method.watch_namespaced_role_list)
+/// Use `<WatchNamespacedRoleListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::watch_namespaced_role_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedRoleListResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1053,7 +1083,7 @@ impl crate::Response for WatchNamespacedRoleListResponse {
 impl Role {
     /// watch individual changes to a list of Role
     ///
-    /// Use [`WatchRoleListForAllNamespacesResponse`](./enum.WatchRoleListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchRoleListForAllNamespacesResponse`]`>` constructor, or [`WatchRoleListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1062,7 +1092,7 @@ impl Role {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_role_list_for_all_namespaces(
         optional: WatchRoleListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchRoleListForAllNamespacesResponse>), crate::RequestError> {
         let WatchRoleListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1107,11 +1137,14 @@ impl Role {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Role::watch_role_list_for_all_namespaces`](./struct.Role.html#method.watch_role_list_for_all_namespaces)
+/// Optional parameters of [`Role::watch_role_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchRoleListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1136,7 +1169,7 @@ pub struct WatchRoleListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Role::watch_role_list_for_all_namespaces`](./struct.Role.html#method.watch_role_list_for_all_namespaces)
+/// Use `<WatchRoleListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::watch_role_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchRoleListForAllNamespacesResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),

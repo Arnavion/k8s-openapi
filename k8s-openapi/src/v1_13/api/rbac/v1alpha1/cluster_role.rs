@@ -20,7 +20,7 @@ pub struct ClusterRole {
 impl ClusterRole {
     /// create a ClusterRole
     ///
-    /// Use [`CreateClusterRoleResponse`](./enum.CreateClusterRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateClusterRoleResponse`]`>` constructor, or [`CreateClusterRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -32,7 +32,7 @@ impl ClusterRole {
     pub fn create_cluster_role(
         body: &crate::v1_13::api::rbac::v1alpha1::ClusterRole,
         optional: CreateClusterRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateClusterRoleResponse>), crate::RequestError> {
         let CreateClusterRoleOptional {
             dry_run,
             include_uninitialized,
@@ -53,11 +53,14 @@ impl ClusterRole {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ClusterRole::create_cluster_role`](./struct.ClusterRole.html#method.create_cluster_role)
+/// Optional parameters of [`ClusterRole::create_cluster_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateClusterRoleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -68,7 +71,7 @@ pub struct CreateClusterRoleOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ClusterRole::create_cluster_role`](./struct.ClusterRole.html#method.create_cluster_role)
+/// Use `<CreateClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::create_cluster_role`]
 #[derive(Debug)]
 pub enum CreateClusterRoleResponse {
     Ok(crate::v1_13::api::rbac::v1alpha1::ClusterRole),
@@ -116,7 +119,7 @@ impl crate::Response for CreateClusterRoleResponse {
 impl ClusterRole {
     /// delete a ClusterRole
     ///
-    /// Use [`DeleteClusterRoleResponse`](./enum.DeleteClusterRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteClusterRoleResponse`]`>` constructor, or [`DeleteClusterRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -130,7 +133,7 @@ impl ClusterRole {
     pub fn delete_cluster_role(
         name: &str,
         optional: DeleteClusterRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteClusterRoleResponse>), crate::RequestError> {
         let DeleteClusterRoleOptional {
             dry_run,
             grace_period_seconds,
@@ -159,11 +162,14 @@ impl ClusterRole {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ClusterRole::delete_cluster_role`](./struct.ClusterRole.html#method.delete_cluster_role)
+/// Optional parameters of [`ClusterRole::delete_cluster_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteClusterRoleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -178,7 +184,7 @@ pub struct DeleteClusterRoleOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ClusterRole::delete_cluster_role`](./struct.ClusterRole.html#method.delete_cluster_role)
+/// Use `<DeleteClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::delete_cluster_role`]
 #[derive(Debug)]
 pub enum DeleteClusterRoleResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -231,7 +237,7 @@ impl crate::Response for DeleteClusterRoleResponse {
 impl ClusterRole {
     /// delete collection of ClusterRole
     ///
-    /// Use [`DeleteCollectionClusterRoleResponse`](./enum.DeleteCollectionClusterRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionClusterRoleResponse`]`>` constructor, or [`DeleteCollectionClusterRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -240,7 +246,7 @@ impl ClusterRole {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_cluster_role(
         optional: DeleteCollectionClusterRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionClusterRoleResponse>), crate::RequestError> {
         let DeleteCollectionClusterRoleOptional {
             continue_,
             field_selector,
@@ -285,11 +291,14 @@ impl ClusterRole {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ClusterRole::delete_collection_cluster_role`](./struct.ClusterRole.html#method.delete_collection_cluster_role)
+/// Optional parameters of [`ClusterRole::delete_collection_cluster_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionClusterRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -316,7 +325,7 @@ pub struct DeleteCollectionClusterRoleOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ClusterRole::delete_collection_cluster_role`](./struct.ClusterRole.html#method.delete_collection_cluster_role)
+/// Use `<DeleteCollectionClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::delete_collection_cluster_role`]
 #[derive(Debug)]
 pub enum DeleteCollectionClusterRoleResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -360,7 +369,7 @@ impl crate::Response for DeleteCollectionClusterRoleResponse {
 impl ClusterRole {
     /// list or watch objects of kind ClusterRole
     ///
-    /// Use [`ListClusterRoleResponse`](./enum.ListClusterRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListClusterRoleResponse`]`>` constructor, or [`ListClusterRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -369,7 +378,7 @@ impl ClusterRole {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_cluster_role(
         optional: ListClusterRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListClusterRoleResponse>), crate::RequestError> {
         let ListClusterRoleOptional {
             continue_,
             field_selector,
@@ -414,11 +423,14 @@ impl ClusterRole {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ClusterRole::list_cluster_role`](./struct.ClusterRole.html#method.list_cluster_role)
+/// Optional parameters of [`ClusterRole::list_cluster_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListClusterRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -445,7 +457,7 @@ pub struct ListClusterRoleOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ClusterRole::list_cluster_role`](./struct.ClusterRole.html#method.list_cluster_role)
+/// Use `<ListClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::list_cluster_role`]
 #[derive(Debug)]
 pub enum ListClusterRoleResponse {
     Ok(crate::v1_13::api::rbac::v1alpha1::ClusterRoleList),
@@ -475,7 +487,7 @@ impl crate::Response for ListClusterRoleResponse {
 impl ClusterRole {
     /// partially update the specified ClusterRole
     ///
-    /// Use [`PatchClusterRoleResponse`](./enum.PatchClusterRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchClusterRoleResponse`]`>` constructor, or [`PatchClusterRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -492,7 +504,7 @@ impl ClusterRole {
         name: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchClusterRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchClusterRoleResponse>), crate::RequestError> {
         let PatchClusterRoleOptional {
             dry_run,
             pretty,
@@ -509,11 +521,14 @@ impl ClusterRole {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ClusterRole::patch_cluster_role`](./struct.ClusterRole.html#method.patch_cluster_role)
+/// Optional parameters of [`ClusterRole::patch_cluster_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchClusterRoleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -522,7 +537,7 @@ pub struct PatchClusterRoleOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ClusterRole::patch_cluster_role`](./struct.ClusterRole.html#method.patch_cluster_role)
+/// Use `<PatchClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::patch_cluster_role`]
 #[derive(Debug)]
 pub enum PatchClusterRoleResponse {
     Ok(crate::v1_13::api::rbac::v1alpha1::ClusterRole),
@@ -552,7 +567,7 @@ impl crate::Response for PatchClusterRoleResponse {
 impl ClusterRole {
     /// read the specified ClusterRole
     ///
-    /// Use [`ReadClusterRoleResponse`](./enum.ReadClusterRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadClusterRoleResponse`]`>` constructor, or [`ReadClusterRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -566,7 +581,7 @@ impl ClusterRole {
     pub fn read_cluster_role(
         name: &str,
         optional: ReadClusterRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadClusterRoleResponse>), crate::RequestError> {
         let ReadClusterRoleOptional {
             pretty,
         } = optional;
@@ -579,18 +594,21 @@ impl ClusterRole {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ClusterRole::read_cluster_role`](./struct.ClusterRole.html#method.read_cluster_role)
+/// Optional parameters of [`ClusterRole::read_cluster_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadClusterRoleOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ClusterRole::read_cluster_role`](./struct.ClusterRole.html#method.read_cluster_role)
+/// Use `<ReadClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::read_cluster_role`]
 #[derive(Debug)]
 pub enum ReadClusterRoleResponse {
     Ok(crate::v1_13::api::rbac::v1alpha1::ClusterRole),
@@ -620,7 +638,7 @@ impl crate::Response for ReadClusterRoleResponse {
 impl ClusterRole {
     /// replace the specified ClusterRole
     ///
-    /// Use [`ReplaceClusterRoleResponse`](./enum.ReplaceClusterRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceClusterRoleResponse`]`>` constructor, or [`ReplaceClusterRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -637,7 +655,7 @@ impl ClusterRole {
         name: &str,
         body: &crate::v1_13::api::rbac::v1alpha1::ClusterRole,
         optional: ReplaceClusterRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceClusterRoleResponse>), crate::RequestError> {
         let ReplaceClusterRoleOptional {
             dry_run,
             pretty,
@@ -654,11 +672,14 @@ impl ClusterRole {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ClusterRole::replace_cluster_role`](./struct.ClusterRole.html#method.replace_cluster_role)
+/// Optional parameters of [`ClusterRole::replace_cluster_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceClusterRoleOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -667,7 +688,7 @@ pub struct ReplaceClusterRoleOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ClusterRole::replace_cluster_role`](./struct.ClusterRole.html#method.replace_cluster_role)
+/// Use `<ReplaceClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::replace_cluster_role`]
 #[derive(Debug)]
 pub enum ReplaceClusterRoleResponse {
     Ok(crate::v1_13::api::rbac::v1alpha1::ClusterRole),
@@ -706,7 +727,7 @@ impl crate::Response for ReplaceClusterRoleResponse {
 impl ClusterRole {
     /// watch changes to an object of kind ClusterRole. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchClusterRoleResponse`](./enum.WatchClusterRoleResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchClusterRoleResponse`]`>` constructor, or [`WatchClusterRoleResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -720,7 +741,7 @@ impl ClusterRole {
     pub fn watch_cluster_role(
         name: &str,
         optional: WatchClusterRoleOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchClusterRoleResponse>), crate::RequestError> {
         let WatchClusterRoleOptional {
             continue_,
             field_selector,
@@ -765,11 +786,14 @@ impl ClusterRole {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ClusterRole::watch_cluster_role`](./struct.ClusterRole.html#method.watch_cluster_role)
+/// Optional parameters of [`ClusterRole::watch_cluster_role`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchClusterRoleOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -796,7 +820,7 @@ pub struct WatchClusterRoleOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ClusterRole::watch_cluster_role`](./struct.ClusterRole.html#method.watch_cluster_role)
+/// Use `<WatchClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::watch_cluster_role`]
 #[derive(Debug)]
 pub enum WatchClusterRoleResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -828,7 +852,7 @@ impl crate::Response for WatchClusterRoleResponse {
 impl ClusterRole {
     /// watch individual changes to a list of ClusterRole. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchClusterRoleListResponse`](./enum.WatchClusterRoleListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchClusterRoleListResponse`]`>` constructor, or [`WatchClusterRoleListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -837,7 +861,7 @@ impl ClusterRole {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_cluster_role_list(
         optional: WatchClusterRoleListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchClusterRoleListResponse>), crate::RequestError> {
         let WatchClusterRoleListOptional {
             continue_,
             field_selector,
@@ -882,11 +906,14 @@ impl ClusterRole {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ClusterRole::watch_cluster_role_list`](./struct.ClusterRole.html#method.watch_cluster_role_list)
+/// Optional parameters of [`ClusterRole::watch_cluster_role_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchClusterRoleListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -913,7 +940,7 @@ pub struct WatchClusterRoleListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ClusterRole::watch_cluster_role_list`](./struct.ClusterRole.html#method.watch_cluster_role_list)
+/// Use `<WatchClusterRoleListResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::watch_cluster_role_list`]
 #[derive(Debug)]
 pub enum WatchClusterRoleListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),

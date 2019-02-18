@@ -17,7 +17,7 @@ pub struct LimitRange {
 impl LimitRange {
     /// create a LimitRange
     ///
-    /// Use [`CreateNamespacedLimitRangeResponse`](./enum.CreateNamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedLimitRangeResponse`]`>` constructor, or [`CreateNamespacedLimitRangeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -34,7 +34,7 @@ impl LimitRange {
         namespace: &str,
         body: &crate::v1_8::api::core::v1::LimitRange,
         optional: CreateNamespacedLimitRangeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedLimitRangeResponse>), crate::RequestError> {
         let CreateNamespacedLimitRangeOptional {
             pretty,
         } = optional;
@@ -47,18 +47,21 @@ impl LimitRange {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::create_namespaced_limit_range`](./struct.LimitRange.html#method.create_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::create_namespaced_limit_range`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LimitRange::create_namespaced_limit_range`](./struct.LimitRange.html#method.create_namespaced_limit_range)
+/// Use `<CreateNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::create_namespaced_limit_range`]
 #[derive(Debug)]
 pub enum CreateNamespacedLimitRangeResponse {
     Ok(crate::v1_8::api::core::v1::LimitRange),
@@ -88,7 +91,7 @@ impl crate::Response for CreateNamespacedLimitRangeResponse {
 impl LimitRange {
     /// delete collection of LimitRange
     ///
-    /// Use [`DeleteCollectionNamespacedLimitRangeResponse`](./enum.DeleteCollectionNamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedLimitRangeResponse`]`>` constructor, or [`DeleteCollectionNamespacedLimitRangeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -102,7 +105,7 @@ impl LimitRange {
     pub fn delete_collection_namespaced_limit_range(
         namespace: &str,
         optional: DeleteCollectionNamespacedLimitRangeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedLimitRangeResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedLimitRangeOptional {
             continue_,
             field_selector,
@@ -147,11 +150,14 @@ impl LimitRange {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::delete_collection_namespaced_limit_range`](./struct.LimitRange.html#method.delete_collection_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::delete_collection_namespaced_limit_range`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedLimitRangeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -176,7 +182,7 @@ pub struct DeleteCollectionNamespacedLimitRangeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::delete_collection_namespaced_limit_range`](./struct.LimitRange.html#method.delete_collection_namespaced_limit_range)
+/// Use `<DeleteCollectionNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::delete_collection_namespaced_limit_range`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedLimitRangeResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -220,7 +226,7 @@ impl crate::Response for DeleteCollectionNamespacedLimitRangeResponse {
 impl LimitRange {
     /// delete a LimitRange
     ///
-    /// Use [`DeleteNamespacedLimitRangeResponse`](./enum.DeleteNamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedLimitRangeResponse`]`>` constructor, or [`DeleteNamespacedLimitRangeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -239,7 +245,7 @@ impl LimitRange {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedLimitRangeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedLimitRangeResponse>), crate::RequestError> {
         let DeleteNamespacedLimitRangeOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -264,11 +270,14 @@ impl LimitRange {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::delete_namespaced_limit_range`](./struct.LimitRange.html#method.delete_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::delete_namespaced_limit_range`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedLimitRangeOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -281,7 +290,7 @@ pub struct DeleteNamespacedLimitRangeOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LimitRange::delete_namespaced_limit_range`](./struct.LimitRange.html#method.delete_namespaced_limit_range)
+/// Use `<DeleteNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::delete_namespaced_limit_range`]
 #[derive(Debug)]
 pub enum DeleteNamespacedLimitRangeResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -325,7 +334,7 @@ impl crate::Response for DeleteNamespacedLimitRangeResponse {
 impl LimitRange {
     /// list or watch objects of kind LimitRange
     ///
-    /// Use [`ListLimitRangeForAllNamespacesResponse`](./enum.ListLimitRangeForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListLimitRangeForAllNamespacesResponse`]`>` constructor, or [`ListLimitRangeForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -334,7 +343,7 @@ impl LimitRange {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_limit_range_for_all_namespaces(
         optional: ListLimitRangeForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListLimitRangeForAllNamespacesResponse>), crate::RequestError> {
         let ListLimitRangeForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -379,11 +388,14 @@ impl LimitRange {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::list_limit_range_for_all_namespaces`](./struct.LimitRange.html#method.list_limit_range_for_all_namespaces)
+/// Optional parameters of [`LimitRange::list_limit_range_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListLimitRangeForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -408,7 +420,7 @@ pub struct ListLimitRangeForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::list_limit_range_for_all_namespaces`](./struct.LimitRange.html#method.list_limit_range_for_all_namespaces)
+/// Use `<ListLimitRangeForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::list_limit_range_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListLimitRangeForAllNamespacesResponse {
     Ok(crate::v1_8::api::core::v1::LimitRangeList),
@@ -438,7 +450,7 @@ impl crate::Response for ListLimitRangeForAllNamespacesResponse {
 impl LimitRange {
     /// list or watch objects of kind LimitRange
     ///
-    /// Use [`ListNamespacedLimitRangeResponse`](./enum.ListNamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedLimitRangeResponse`]`>` constructor, or [`ListNamespacedLimitRangeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -452,7 +464,7 @@ impl LimitRange {
     pub fn list_namespaced_limit_range(
         namespace: &str,
         optional: ListNamespacedLimitRangeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedLimitRangeResponse>), crate::RequestError> {
         let ListNamespacedLimitRangeOptional {
             continue_,
             field_selector,
@@ -497,11 +509,14 @@ impl LimitRange {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::list_namespaced_limit_range`](./struct.LimitRange.html#method.list_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::list_namespaced_limit_range`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedLimitRangeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -526,7 +541,7 @@ pub struct ListNamespacedLimitRangeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::list_namespaced_limit_range`](./struct.LimitRange.html#method.list_namespaced_limit_range)
+/// Use `<ListNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::list_namespaced_limit_range`]
 #[derive(Debug)]
 pub enum ListNamespacedLimitRangeResponse {
     Ok(crate::v1_8::api::core::v1::LimitRangeList),
@@ -556,7 +571,7 @@ impl crate::Response for ListNamespacedLimitRangeResponse {
 impl LimitRange {
     /// partially update the specified LimitRange
     ///
-    /// Use [`PatchNamespacedLimitRangeResponse`](./enum.PatchNamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedLimitRangeResponse`]`>` constructor, or [`PatchNamespacedLimitRangeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -578,7 +593,7 @@ impl LimitRange {
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedLimitRangeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedLimitRangeResponse>), crate::RequestError> {
         let PatchNamespacedLimitRangeOptional {
             pretty,
         } = optional;
@@ -591,18 +606,21 @@ impl LimitRange {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::patch_namespaced_limit_range`](./struct.LimitRange.html#method.patch_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::patch_namespaced_limit_range`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LimitRange::patch_namespaced_limit_range`](./struct.LimitRange.html#method.patch_namespaced_limit_range)
+/// Use `<PatchNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::patch_namespaced_limit_range`]
 #[derive(Debug)]
 pub enum PatchNamespacedLimitRangeResponse {
     Ok(crate::v1_8::api::core::v1::LimitRange),
@@ -632,7 +650,7 @@ impl crate::Response for PatchNamespacedLimitRangeResponse {
 impl LimitRange {
     /// read the specified LimitRange
     ///
-    /// Use [`ReadNamespacedLimitRangeResponse`](./enum.ReadNamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedLimitRangeResponse`]`>` constructor, or [`ReadNamespacedLimitRangeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -651,7 +669,7 @@ impl LimitRange {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedLimitRangeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedLimitRangeResponse>), crate::RequestError> {
         let ReadNamespacedLimitRangeOptional {
             exact,
             export,
@@ -672,11 +690,14 @@ impl LimitRange {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::read_namespaced_limit_range`](./struct.LimitRange.html#method.read_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::read_namespaced_limit_range`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedLimitRangeOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -687,7 +708,7 @@ pub struct ReadNamespacedLimitRangeOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LimitRange::read_namespaced_limit_range`](./struct.LimitRange.html#method.read_namespaced_limit_range)
+/// Use `<ReadNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::read_namespaced_limit_range`]
 #[derive(Debug)]
 pub enum ReadNamespacedLimitRangeResponse {
     Ok(crate::v1_8::api::core::v1::LimitRange),
@@ -717,7 +738,7 @@ impl crate::Response for ReadNamespacedLimitRangeResponse {
 impl LimitRange {
     /// replace the specified LimitRange
     ///
-    /// Use [`ReplaceNamespacedLimitRangeResponse`](./enum.ReplaceNamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedLimitRangeResponse`]`>` constructor, or [`ReplaceNamespacedLimitRangeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -739,7 +760,7 @@ impl LimitRange {
         namespace: &str,
         body: &crate::v1_8::api::core::v1::LimitRange,
         optional: ReplaceNamespacedLimitRangeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedLimitRangeResponse>), crate::RequestError> {
         let ReplaceNamespacedLimitRangeOptional {
             pretty,
         } = optional;
@@ -752,18 +773,21 @@ impl LimitRange {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::replace_namespaced_limit_range`](./struct.LimitRange.html#method.replace_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::replace_namespaced_limit_range`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedLimitRangeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LimitRange::replace_namespaced_limit_range`](./struct.LimitRange.html#method.replace_namespaced_limit_range)
+/// Use `<ReplaceNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::replace_namespaced_limit_range`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedLimitRangeResponse {
     Ok(crate::v1_8::api::core::v1::LimitRange),
@@ -793,7 +817,7 @@ impl crate::Response for ReplaceNamespacedLimitRangeResponse {
 impl LimitRange {
     /// watch individual changes to a list of LimitRange
     ///
-    /// Use [`WatchLimitRangeListForAllNamespacesResponse`](./enum.WatchLimitRangeListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchLimitRangeListForAllNamespacesResponse`]`>` constructor, or [`WatchLimitRangeListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -802,7 +826,7 @@ impl LimitRange {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_limit_range_list_for_all_namespaces(
         optional: WatchLimitRangeListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchLimitRangeListForAllNamespacesResponse>), crate::RequestError> {
         let WatchLimitRangeListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -847,11 +871,14 @@ impl LimitRange {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::watch_limit_range_list_for_all_namespaces`](./struct.LimitRange.html#method.watch_limit_range_list_for_all_namespaces)
+/// Optional parameters of [`LimitRange::watch_limit_range_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchLimitRangeListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -876,7 +903,7 @@ pub struct WatchLimitRangeListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::watch_limit_range_list_for_all_namespaces`](./struct.LimitRange.html#method.watch_limit_range_list_for_all_namespaces)
+/// Use `<WatchLimitRangeListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::watch_limit_range_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchLimitRangeListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -908,7 +935,7 @@ impl crate::Response for WatchLimitRangeListForAllNamespacesResponse {
 impl LimitRange {
     /// watch changes to an object of kind LimitRange
     ///
-    /// Use [`WatchNamespacedLimitRangeResponse`](./enum.WatchNamespacedLimitRangeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedLimitRangeResponse`]`>` constructor, or [`WatchNamespacedLimitRangeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -927,7 +954,7 @@ impl LimitRange {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedLimitRangeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedLimitRangeResponse>), crate::RequestError> {
         let WatchNamespacedLimitRangeOptional {
             continue_,
             field_selector,
@@ -972,11 +999,14 @@ impl LimitRange {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::watch_namespaced_limit_range`](./struct.LimitRange.html#method.watch_namespaced_limit_range)
+/// Optional parameters of [`LimitRange::watch_namespaced_limit_range`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedLimitRangeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1001,7 +1031,7 @@ pub struct WatchNamespacedLimitRangeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::watch_namespaced_limit_range`](./struct.LimitRange.html#method.watch_namespaced_limit_range)
+/// Use `<WatchNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::watch_namespaced_limit_range`]
 #[derive(Debug)]
 pub enum WatchNamespacedLimitRangeResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1033,7 +1063,7 @@ impl crate::Response for WatchNamespacedLimitRangeResponse {
 impl LimitRange {
     /// watch individual changes to a list of LimitRange
     ///
-    /// Use [`WatchNamespacedLimitRangeListResponse`](./enum.WatchNamespacedLimitRangeListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedLimitRangeListResponse`]`>` constructor, or [`WatchNamespacedLimitRangeListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1047,7 +1077,7 @@ impl LimitRange {
     pub fn watch_namespaced_limit_range_list(
         namespace: &str,
         optional: WatchNamespacedLimitRangeListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedLimitRangeListResponse>), crate::RequestError> {
         let WatchNamespacedLimitRangeListOptional {
             continue_,
             field_selector,
@@ -1092,11 +1122,14 @@ impl LimitRange {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LimitRange::watch_namespaced_limit_range_list`](./struct.LimitRange.html#method.watch_namespaced_limit_range_list)
+/// Optional parameters of [`LimitRange::watch_namespaced_limit_range_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedLimitRangeListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1121,7 +1154,7 @@ pub struct WatchNamespacedLimitRangeListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`LimitRange::watch_namespaced_limit_range_list`](./struct.LimitRange.html#method.watch_namespaced_limit_range_list)
+/// Use `<WatchNamespacedLimitRangeListResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::watch_namespaced_limit_range_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedLimitRangeListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

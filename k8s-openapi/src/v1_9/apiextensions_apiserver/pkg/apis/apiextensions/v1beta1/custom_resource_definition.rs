@@ -19,7 +19,7 @@ pub struct CustomResourceDefinition {
 impl CustomResourceDefinition {
     /// create a CustomResourceDefinition
     ///
-    /// Use [`CreateCustomResourceDefinitionResponse`](./enum.CreateCustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateCustomResourceDefinitionResponse`]`>` constructor, or [`CreateCustomResourceDefinitionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,7 +31,7 @@ impl CustomResourceDefinition {
     pub fn create_custom_resource_definition(
         body: &crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         optional: CreateCustomResourceDefinitionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateCustomResourceDefinitionResponse>), crate::RequestError> {
         let CreateCustomResourceDefinitionOptional {
             pretty,
         } = optional;
@@ -44,18 +44,21 @@ impl CustomResourceDefinition {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::create_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.create_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::create_custom_resource_definition`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::create_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.create_custom_resource_definition)
+/// Use `<CreateCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::create_custom_resource_definition`]
 #[derive(Debug)]
 pub enum CreateCustomResourceDefinitionResponse {
     Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -103,7 +106,7 @@ impl crate::Response for CreateCustomResourceDefinitionResponse {
 impl CustomResourceDefinition {
     /// delete collection of CustomResourceDefinition
     ///
-    /// Use [`DeleteCollectionCustomResourceDefinitionResponse`](./enum.DeleteCollectionCustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionCustomResourceDefinitionResponse`]`>` constructor, or [`DeleteCollectionCustomResourceDefinitionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -112,7 +115,7 @@ impl CustomResourceDefinition {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_custom_resource_definition(
         optional: DeleteCollectionCustomResourceDefinitionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionCustomResourceDefinitionResponse>), crate::RequestError> {
         let DeleteCollectionCustomResourceDefinitionOptional {
             continue_,
             field_selector,
@@ -157,11 +160,14 @@ impl CustomResourceDefinition {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::delete_collection_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_collection_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::delete_collection_custom_resource_definition`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionCustomResourceDefinitionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -186,7 +192,7 @@ pub struct DeleteCollectionCustomResourceDefinitionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::delete_collection_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_collection_custom_resource_definition)
+/// Use `<DeleteCollectionCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::delete_collection_custom_resource_definition`]
 #[derive(Debug)]
 pub enum DeleteCollectionCustomResourceDefinitionResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -230,7 +236,7 @@ impl crate::Response for DeleteCollectionCustomResourceDefinitionResponse {
 impl CustomResourceDefinition {
     /// delete a CustomResourceDefinition
     ///
-    /// Use [`DeleteCustomResourceDefinitionResponse`](./enum.DeleteCustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCustomResourceDefinitionResponse`]`>` constructor, or [`DeleteCustomResourceDefinitionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -244,7 +250,7 @@ impl CustomResourceDefinition {
     pub fn delete_custom_resource_definition(
         name: &str,
         optional: DeleteCustomResourceDefinitionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCustomResourceDefinitionResponse>), crate::RequestError> {
         let DeleteCustomResourceDefinitionOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -269,11 +275,14 @@ impl CustomResourceDefinition {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::delete_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::delete_custom_resource_definition`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCustomResourceDefinitionOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -286,7 +295,7 @@ pub struct DeleteCustomResourceDefinitionOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::delete_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.delete_custom_resource_definition)
+/// Use `<DeleteCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::delete_custom_resource_definition`]
 #[derive(Debug)]
 pub enum DeleteCustomResourceDefinitionResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -330,7 +339,7 @@ impl crate::Response for DeleteCustomResourceDefinitionResponse {
 impl CustomResourceDefinition {
     /// list or watch objects of kind CustomResourceDefinition
     ///
-    /// Use [`ListCustomResourceDefinitionResponse`](./enum.ListCustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListCustomResourceDefinitionResponse`]`>` constructor, or [`ListCustomResourceDefinitionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -339,7 +348,7 @@ impl CustomResourceDefinition {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_custom_resource_definition(
         optional: ListCustomResourceDefinitionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListCustomResourceDefinitionResponse>), crate::RequestError> {
         let ListCustomResourceDefinitionOptional {
             continue_,
             field_selector,
@@ -384,11 +393,14 @@ impl CustomResourceDefinition {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::list_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.list_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::list_custom_resource_definition`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListCustomResourceDefinitionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -413,7 +425,7 @@ pub struct ListCustomResourceDefinitionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::list_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.list_custom_resource_definition)
+/// Use `<ListCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::list_custom_resource_definition`]
 #[derive(Debug)]
 pub enum ListCustomResourceDefinitionResponse {
     Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinitionList),
@@ -443,7 +455,7 @@ impl crate::Response for ListCustomResourceDefinitionResponse {
 impl CustomResourceDefinition {
     /// partially update the specified CustomResourceDefinition
     ///
-    /// Use [`PatchCustomResourceDefinitionResponse`](./enum.PatchCustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchCustomResourceDefinitionResponse`]`>` constructor, or [`PatchCustomResourceDefinitionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -460,7 +472,7 @@ impl CustomResourceDefinition {
         name: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchCustomResourceDefinitionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchCustomResourceDefinitionResponse>), crate::RequestError> {
         let PatchCustomResourceDefinitionOptional {
             pretty,
         } = optional;
@@ -473,18 +485,21 @@ impl CustomResourceDefinition {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::patch_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.patch_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::patch_custom_resource_definition`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::patch_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.patch_custom_resource_definition)
+/// Use `<PatchCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::patch_custom_resource_definition`]
 #[derive(Debug)]
 pub enum PatchCustomResourceDefinitionResponse {
     Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -514,7 +529,7 @@ impl crate::Response for PatchCustomResourceDefinitionResponse {
 impl CustomResourceDefinition {
     /// read the specified CustomResourceDefinition
     ///
-    /// Use [`ReadCustomResourceDefinitionResponse`](./enum.ReadCustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadCustomResourceDefinitionResponse`]`>` constructor, or [`ReadCustomResourceDefinitionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -528,7 +543,7 @@ impl CustomResourceDefinition {
     pub fn read_custom_resource_definition(
         name: &str,
         optional: ReadCustomResourceDefinitionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadCustomResourceDefinitionResponse>), crate::RequestError> {
         let ReadCustomResourceDefinitionOptional {
             exact,
             export,
@@ -549,11 +564,14 @@ impl CustomResourceDefinition {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::read_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.read_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::read_custom_resource_definition`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadCustomResourceDefinitionOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -564,7 +582,7 @@ pub struct ReadCustomResourceDefinitionOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::read_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.read_custom_resource_definition)
+/// Use `<ReadCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::read_custom_resource_definition`]
 #[derive(Debug)]
 pub enum ReadCustomResourceDefinitionResponse {
     Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -594,7 +612,7 @@ impl crate::Response for ReadCustomResourceDefinitionResponse {
 impl CustomResourceDefinition {
     /// replace the specified CustomResourceDefinition
     ///
-    /// Use [`ReplaceCustomResourceDefinitionResponse`](./enum.ReplaceCustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceCustomResourceDefinitionResponse`]`>` constructor, or [`ReplaceCustomResourceDefinitionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -611,7 +629,7 @@ impl CustomResourceDefinition {
         name: &str,
         body: &crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         optional: ReplaceCustomResourceDefinitionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCustomResourceDefinitionResponse>), crate::RequestError> {
         let ReplaceCustomResourceDefinitionOptional {
             pretty,
         } = optional;
@@ -624,18 +642,21 @@ impl CustomResourceDefinition {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::replace_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.replace_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::replace_custom_resource_definition`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCustomResourceDefinitionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::replace_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.replace_custom_resource_definition)
+/// Use `<ReplaceCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::replace_custom_resource_definition`]
 #[derive(Debug)]
 pub enum ReplaceCustomResourceDefinitionResponse {
     Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -674,7 +695,7 @@ impl crate::Response for ReplaceCustomResourceDefinitionResponse {
 impl CustomResourceDefinition {
     /// replace status of the specified CustomResourceDefinition
     ///
-    /// Use [`ReplaceCustomResourceDefinitionStatusResponse`](./enum.ReplaceCustomResourceDefinitionStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceCustomResourceDefinitionStatusResponse`]`>` constructor, or [`ReplaceCustomResourceDefinitionStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -691,7 +712,7 @@ impl CustomResourceDefinition {
         name: &str,
         body: &crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition,
         optional: ReplaceCustomResourceDefinitionStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCustomResourceDefinitionStatusResponse>), crate::RequestError> {
         let ReplaceCustomResourceDefinitionStatusOptional {
             pretty,
         } = optional;
@@ -704,18 +725,21 @@ impl CustomResourceDefinition {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::replace_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.replace_custom_resource_definition_status)
+/// Optional parameters of [`CustomResourceDefinition::replace_custom_resource_definition_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCustomResourceDefinitionStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::replace_custom_resource_definition_status`](./struct.CustomResourceDefinition.html#method.replace_custom_resource_definition_status)
+/// Use `<ReplaceCustomResourceDefinitionStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::replace_custom_resource_definition_status`]
 #[derive(Debug)]
 pub enum ReplaceCustomResourceDefinitionStatusResponse {
     Ok(crate::v1_9::apiextensions_apiserver::pkg::apis::apiextensions::v1beta1::CustomResourceDefinition),
@@ -754,7 +778,7 @@ impl crate::Response for ReplaceCustomResourceDefinitionStatusResponse {
 impl CustomResourceDefinition {
     /// watch changes to an object of kind CustomResourceDefinition
     ///
-    /// Use [`WatchCustomResourceDefinitionResponse`](./enum.WatchCustomResourceDefinitionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchCustomResourceDefinitionResponse`]`>` constructor, or [`WatchCustomResourceDefinitionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -768,7 +792,7 @@ impl CustomResourceDefinition {
     pub fn watch_custom_resource_definition(
         name: &str,
         optional: WatchCustomResourceDefinitionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCustomResourceDefinitionResponse>), crate::RequestError> {
         let WatchCustomResourceDefinitionOptional {
             continue_,
             field_selector,
@@ -813,11 +837,14 @@ impl CustomResourceDefinition {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::watch_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.watch_custom_resource_definition)
+/// Optional parameters of [`CustomResourceDefinition::watch_custom_resource_definition`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchCustomResourceDefinitionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -842,7 +869,7 @@ pub struct WatchCustomResourceDefinitionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::watch_custom_resource_definition`](./struct.CustomResourceDefinition.html#method.watch_custom_resource_definition)
+/// Use `<WatchCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::watch_custom_resource_definition`]
 #[derive(Debug)]
 pub enum WatchCustomResourceDefinitionResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -874,7 +901,7 @@ impl crate::Response for WatchCustomResourceDefinitionResponse {
 impl CustomResourceDefinition {
     /// watch individual changes to a list of CustomResourceDefinition
     ///
-    /// Use [`WatchCustomResourceDefinitionListResponse`](./enum.WatchCustomResourceDefinitionListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchCustomResourceDefinitionListResponse`]`>` constructor, or [`WatchCustomResourceDefinitionListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -883,7 +910,7 @@ impl CustomResourceDefinition {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_custom_resource_definition_list(
         optional: WatchCustomResourceDefinitionListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCustomResourceDefinitionListResponse>), crate::RequestError> {
         let WatchCustomResourceDefinitionListOptional {
             continue_,
             field_selector,
@@ -928,11 +955,14 @@ impl CustomResourceDefinition {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CustomResourceDefinition::watch_custom_resource_definition_list`](./struct.CustomResourceDefinition.html#method.watch_custom_resource_definition_list)
+/// Optional parameters of [`CustomResourceDefinition::watch_custom_resource_definition_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchCustomResourceDefinitionListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -957,7 +987,7 @@ pub struct WatchCustomResourceDefinitionListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CustomResourceDefinition::watch_custom_resource_definition_list`](./struct.CustomResourceDefinition.html#method.watch_custom_resource_definition_list)
+/// Use `<WatchCustomResourceDefinitionListResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::watch_custom_resource_definition_list`]
 #[derive(Debug)]
 pub enum WatchCustomResourceDefinitionListResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),

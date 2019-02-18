@@ -17,7 +17,7 @@ pub struct ValidatingWebhookConfiguration {
 impl ValidatingWebhookConfiguration {
     /// create a ValidatingWebhookConfiguration
     ///
-    /// Use [`CreateValidatingWebhookConfigurationResponse`](./enum.CreateValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateValidatingWebhookConfigurationResponse`]`>` constructor, or [`CreateValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,7 +29,7 @@ impl ValidatingWebhookConfiguration {
     pub fn create_validating_webhook_configuration(
         body: &crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration,
         optional: CreateValidatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let CreateValidatingWebhookConfigurationOptional {
             pretty,
         } = optional;
@@ -42,18 +42,21 @@ impl ValidatingWebhookConfiguration {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ValidatingWebhookConfiguration::create_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.create_validating_webhook_configuration)
+/// Optional parameters of [`ValidatingWebhookConfiguration::create_validating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateValidatingWebhookConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ValidatingWebhookConfiguration::create_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.create_validating_webhook_configuration)
+/// Use `<CreateValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::create_validating_webhook_configuration`]
 #[derive(Debug)]
 pub enum CreateValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
@@ -101,7 +104,7 @@ impl crate::Response for CreateValidatingWebhookConfigurationResponse {
 impl ValidatingWebhookConfiguration {
     /// delete collection of ValidatingWebhookConfiguration
     ///
-    /// Use [`DeleteCollectionValidatingWebhookConfigurationResponse`](./enum.DeleteCollectionValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionValidatingWebhookConfigurationResponse`]`>` constructor, or [`DeleteCollectionValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -110,7 +113,7 @@ impl ValidatingWebhookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_validating_webhook_configuration(
         optional: DeleteCollectionValidatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let DeleteCollectionValidatingWebhookConfigurationOptional {
             continue_,
             field_selector,
@@ -155,11 +158,14 @@ impl ValidatingWebhookConfiguration {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ValidatingWebhookConfiguration::delete_collection_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.delete_collection_validating_webhook_configuration)
+/// Optional parameters of [`ValidatingWebhookConfiguration::delete_collection_validating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionValidatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -184,7 +190,7 @@ pub struct DeleteCollectionValidatingWebhookConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ValidatingWebhookConfiguration::delete_collection_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.delete_collection_validating_webhook_configuration)
+/// Use `<DeleteCollectionValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::delete_collection_validating_webhook_configuration`]
 #[derive(Debug)]
 pub enum DeleteCollectionValidatingWebhookConfigurationResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -228,7 +234,7 @@ impl crate::Response for DeleteCollectionValidatingWebhookConfigurationResponse 
 impl ValidatingWebhookConfiguration {
     /// delete a ValidatingWebhookConfiguration
     ///
-    /// Use [`DeleteValidatingWebhookConfigurationResponse`](./enum.DeleteValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteValidatingWebhookConfigurationResponse`]`>` constructor, or [`DeleteValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -242,7 +248,7 @@ impl ValidatingWebhookConfiguration {
     pub fn delete_validating_webhook_configuration(
         name: &str,
         optional: DeleteValidatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let DeleteValidatingWebhookConfigurationOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -267,11 +273,14 @@ impl ValidatingWebhookConfiguration {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ValidatingWebhookConfiguration::delete_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.delete_validating_webhook_configuration)
+/// Optional parameters of [`ValidatingWebhookConfiguration::delete_validating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteValidatingWebhookConfigurationOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -284,7 +293,7 @@ pub struct DeleteValidatingWebhookConfigurationOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ValidatingWebhookConfiguration::delete_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.delete_validating_webhook_configuration)
+/// Use `<DeleteValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::delete_validating_webhook_configuration`]
 #[derive(Debug)]
 pub enum DeleteValidatingWebhookConfigurationResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -328,7 +337,7 @@ impl crate::Response for DeleteValidatingWebhookConfigurationResponse {
 impl ValidatingWebhookConfiguration {
     /// list or watch objects of kind ValidatingWebhookConfiguration
     ///
-    /// Use [`ListValidatingWebhookConfigurationResponse`](./enum.ListValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListValidatingWebhookConfigurationResponse`]`>` constructor, or [`ListValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -337,7 +346,7 @@ impl ValidatingWebhookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_validating_webhook_configuration(
         optional: ListValidatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let ListValidatingWebhookConfigurationOptional {
             continue_,
             field_selector,
@@ -382,11 +391,14 @@ impl ValidatingWebhookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ValidatingWebhookConfiguration::list_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.list_validating_webhook_configuration)
+/// Optional parameters of [`ValidatingWebhookConfiguration::list_validating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListValidatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -411,7 +423,7 @@ pub struct ListValidatingWebhookConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ValidatingWebhookConfiguration::list_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.list_validating_webhook_configuration)
+/// Use `<ListValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::list_validating_webhook_configuration`]
 #[derive(Debug)]
 pub enum ListValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfigurationList),
@@ -441,7 +453,7 @@ impl crate::Response for ListValidatingWebhookConfigurationResponse {
 impl ValidatingWebhookConfiguration {
     /// partially update the specified ValidatingWebhookConfiguration
     ///
-    /// Use [`PatchValidatingWebhookConfigurationResponse`](./enum.PatchValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchValidatingWebhookConfigurationResponse`]`>` constructor, or [`PatchValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -458,7 +470,7 @@ impl ValidatingWebhookConfiguration {
         name: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchValidatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let PatchValidatingWebhookConfigurationOptional {
             pretty,
         } = optional;
@@ -471,18 +483,21 @@ impl ValidatingWebhookConfiguration {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ValidatingWebhookConfiguration::patch_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.patch_validating_webhook_configuration)
+/// Optional parameters of [`ValidatingWebhookConfiguration::patch_validating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchValidatingWebhookConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ValidatingWebhookConfiguration::patch_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.patch_validating_webhook_configuration)
+/// Use `<PatchValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::patch_validating_webhook_configuration`]
 #[derive(Debug)]
 pub enum PatchValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
@@ -512,7 +527,7 @@ impl crate::Response for PatchValidatingWebhookConfigurationResponse {
 impl ValidatingWebhookConfiguration {
     /// read the specified ValidatingWebhookConfiguration
     ///
-    /// Use [`ReadValidatingWebhookConfigurationResponse`](./enum.ReadValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadValidatingWebhookConfigurationResponse`]`>` constructor, or [`ReadValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -526,7 +541,7 @@ impl ValidatingWebhookConfiguration {
     pub fn read_validating_webhook_configuration(
         name: &str,
         optional: ReadValidatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let ReadValidatingWebhookConfigurationOptional {
             exact,
             export,
@@ -547,11 +562,14 @@ impl ValidatingWebhookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ValidatingWebhookConfiguration::read_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.read_validating_webhook_configuration)
+/// Optional parameters of [`ValidatingWebhookConfiguration::read_validating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadValidatingWebhookConfigurationOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -562,7 +580,7 @@ pub struct ReadValidatingWebhookConfigurationOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ValidatingWebhookConfiguration::read_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.read_validating_webhook_configuration)
+/// Use `<ReadValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::read_validating_webhook_configuration`]
 #[derive(Debug)]
 pub enum ReadValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
@@ -592,7 +610,7 @@ impl crate::Response for ReadValidatingWebhookConfigurationResponse {
 impl ValidatingWebhookConfiguration {
     /// replace the specified ValidatingWebhookConfiguration
     ///
-    /// Use [`ReplaceValidatingWebhookConfigurationResponse`](./enum.ReplaceValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceValidatingWebhookConfigurationResponse`]`>` constructor, or [`ReplaceValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -609,7 +627,7 @@ impl ValidatingWebhookConfiguration {
         name: &str,
         body: &crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration,
         optional: ReplaceValidatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let ReplaceValidatingWebhookConfigurationOptional {
             pretty,
         } = optional;
@@ -622,18 +640,21 @@ impl ValidatingWebhookConfiguration {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ValidatingWebhookConfiguration::replace_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.replace_validating_webhook_configuration)
+/// Optional parameters of [`ValidatingWebhookConfiguration::replace_validating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceValidatingWebhookConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ValidatingWebhookConfiguration::replace_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.replace_validating_webhook_configuration)
+/// Use `<ReplaceValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::replace_validating_webhook_configuration`]
 #[derive(Debug)]
 pub enum ReplaceValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::api::admissionregistration::v1beta1::ValidatingWebhookConfiguration),
@@ -672,7 +693,7 @@ impl crate::Response for ReplaceValidatingWebhookConfigurationResponse {
 impl ValidatingWebhookConfiguration {
     /// watch changes to an object of kind ValidatingWebhookConfiguration
     ///
-    /// Use [`WatchValidatingWebhookConfigurationResponse`](./enum.WatchValidatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchValidatingWebhookConfigurationResponse`]`>` constructor, or [`WatchValidatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -686,7 +707,7 @@ impl ValidatingWebhookConfiguration {
     pub fn watch_validating_webhook_configuration(
         name: &str,
         optional: WatchValidatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchValidatingWebhookConfigurationResponse>), crate::RequestError> {
         let WatchValidatingWebhookConfigurationOptional {
             continue_,
             field_selector,
@@ -731,11 +752,14 @@ impl ValidatingWebhookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.watch_validating_webhook_configuration)
+/// Optional parameters of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchValidatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -760,7 +784,7 @@ pub struct WatchValidatingWebhookConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration`](./struct.ValidatingWebhookConfiguration.html#method.watch_validating_webhook_configuration)
+/// Use `<WatchValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration`]
 #[derive(Debug)]
 pub enum WatchValidatingWebhookConfigurationResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -792,7 +816,7 @@ impl crate::Response for WatchValidatingWebhookConfigurationResponse {
 impl ValidatingWebhookConfiguration {
     /// watch individual changes to a list of ValidatingWebhookConfiguration
     ///
-    /// Use [`WatchValidatingWebhookConfigurationListResponse`](./enum.WatchValidatingWebhookConfigurationListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchValidatingWebhookConfigurationListResponse`]`>` constructor, or [`WatchValidatingWebhookConfigurationListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -801,7 +825,7 @@ impl ValidatingWebhookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_validating_webhook_configuration_list(
         optional: WatchValidatingWebhookConfigurationListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchValidatingWebhookConfigurationListResponse>), crate::RequestError> {
         let WatchValidatingWebhookConfigurationListOptional {
             continue_,
             field_selector,
@@ -846,11 +870,14 @@ impl ValidatingWebhookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration_list`](./struct.ValidatingWebhookConfiguration.html#method.watch_validating_webhook_configuration_list)
+/// Optional parameters of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchValidatingWebhookConfigurationListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -875,7 +902,7 @@ pub struct WatchValidatingWebhookConfigurationListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration_list`](./struct.ValidatingWebhookConfiguration.html#method.watch_validating_webhook_configuration_list)
+/// Use `<WatchValidatingWebhookConfigurationListResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration_list`]
 #[derive(Debug)]
 pub enum WatchValidatingWebhookConfigurationListResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

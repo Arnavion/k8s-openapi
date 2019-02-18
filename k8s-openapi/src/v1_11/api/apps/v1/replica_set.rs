@@ -20,7 +20,7 @@ pub struct ReplicaSet {
 impl ReplicaSet {
     /// create a ReplicaSet
     ///
-    /// Use [`CreateNamespacedReplicaSetResponse`](./enum.CreateNamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedReplicaSetResponse`]`>` constructor, or [`CreateNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,7 +37,7 @@ impl ReplicaSet {
         namespace: &str,
         body: &crate::v1_11::api::apps::v1::ReplicaSet,
         optional: CreateNamespacedReplicaSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedReplicaSetResponse>), crate::RequestError> {
         let CreateNamespacedReplicaSetOptional {
             pretty,
         } = optional;
@@ -50,18 +50,21 @@ impl ReplicaSet {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::create_namespaced_replica_set`](./struct.ReplicaSet.html#method.create_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::create_namespaced_replica_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedReplicaSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::create_namespaced_replica_set`](./struct.ReplicaSet.html#method.create_namespaced_replica_set)
+/// Use `<CreateNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::create_namespaced_replica_set`]
 #[derive(Debug)]
 pub enum CreateNamespacedReplicaSetResponse {
     Ok(crate::v1_11::api::apps::v1::ReplicaSet),
@@ -109,7 +112,7 @@ impl crate::Response for CreateNamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// delete collection of ReplicaSet
     ///
-    /// Use [`DeleteCollectionNamespacedReplicaSetResponse`](./enum.DeleteCollectionNamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedReplicaSetResponse`]`>` constructor, or [`DeleteCollectionNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -123,7 +126,7 @@ impl ReplicaSet {
     pub fn delete_collection_namespaced_replica_set(
         namespace: &str,
         optional: DeleteCollectionNamespacedReplicaSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedReplicaSetResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedReplicaSetOptional {
             continue_,
             field_selector,
@@ -168,11 +171,14 @@ impl ReplicaSet {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::delete_collection_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_collection_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::delete_collection_namespaced_replica_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedReplicaSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -197,7 +203,7 @@ pub struct DeleteCollectionNamespacedReplicaSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::delete_collection_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_collection_namespaced_replica_set)
+/// Use `<DeleteCollectionNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::delete_collection_namespaced_replica_set`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedReplicaSetResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -241,7 +247,7 @@ impl crate::Response for DeleteCollectionNamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// delete a ReplicaSet
     ///
-    /// Use [`DeleteNamespacedReplicaSetResponse`](./enum.DeleteNamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedReplicaSetResponse`]`>` constructor, or [`DeleteNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -260,7 +266,7 @@ impl ReplicaSet {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedReplicaSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedReplicaSetResponse>), crate::RequestError> {
         let DeleteNamespacedReplicaSetOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -285,11 +291,14 @@ impl ReplicaSet {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::delete_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::delete_namespaced_replica_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedReplicaSetOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -302,7 +311,7 @@ pub struct DeleteNamespacedReplicaSetOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::delete_namespaced_replica_set`](./struct.ReplicaSet.html#method.delete_namespaced_replica_set)
+/// Use `<DeleteNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::delete_namespaced_replica_set`]
 #[derive(Debug)]
 pub enum DeleteNamespacedReplicaSetResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -346,7 +355,7 @@ impl crate::Response for DeleteNamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// list or watch objects of kind ReplicaSet
     ///
-    /// Use [`ListNamespacedReplicaSetResponse`](./enum.ListNamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedReplicaSetResponse`]`>` constructor, or [`ListNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -360,7 +369,7 @@ impl ReplicaSet {
     pub fn list_namespaced_replica_set(
         namespace: &str,
         optional: ListNamespacedReplicaSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedReplicaSetResponse>), crate::RequestError> {
         let ListNamespacedReplicaSetOptional {
             continue_,
             field_selector,
@@ -405,11 +414,14 @@ impl ReplicaSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::list_namespaced_replica_set`](./struct.ReplicaSet.html#method.list_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::list_namespaced_replica_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedReplicaSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -434,7 +446,7 @@ pub struct ListNamespacedReplicaSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::list_namespaced_replica_set`](./struct.ReplicaSet.html#method.list_namespaced_replica_set)
+/// Use `<ListNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::list_namespaced_replica_set`]
 #[derive(Debug)]
 pub enum ListNamespacedReplicaSetResponse {
     Ok(crate::v1_11::api::apps::v1::ReplicaSetList),
@@ -464,7 +476,7 @@ impl crate::Response for ListNamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// list or watch objects of kind ReplicaSet
     ///
-    /// Use [`ListReplicaSetForAllNamespacesResponse`](./enum.ListReplicaSetForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListReplicaSetForAllNamespacesResponse`]`>` constructor, or [`ListReplicaSetForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -473,7 +485,7 @@ impl ReplicaSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_replica_set_for_all_namespaces(
         optional: ListReplicaSetForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListReplicaSetForAllNamespacesResponse>), crate::RequestError> {
         let ListReplicaSetForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -518,11 +530,14 @@ impl ReplicaSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::list_replica_set_for_all_namespaces`](./struct.ReplicaSet.html#method.list_replica_set_for_all_namespaces)
+/// Optional parameters of [`ReplicaSet::list_replica_set_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListReplicaSetForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -547,7 +562,7 @@ pub struct ListReplicaSetForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::list_replica_set_for_all_namespaces`](./struct.ReplicaSet.html#method.list_replica_set_for_all_namespaces)
+/// Use `<ListReplicaSetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::list_replica_set_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListReplicaSetForAllNamespacesResponse {
     Ok(crate::v1_11::api::apps::v1::ReplicaSetList),
@@ -577,7 +592,7 @@ impl crate::Response for ListReplicaSetForAllNamespacesResponse {
 impl ReplicaSet {
     /// partially update the specified ReplicaSet
     ///
-    /// Use [`PatchNamespacedReplicaSetResponse`](./enum.PatchNamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedReplicaSetResponse`]`>` constructor, or [`PatchNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -599,7 +614,7 @@ impl ReplicaSet {
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedReplicaSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicaSetResponse>), crate::RequestError> {
         let PatchNamespacedReplicaSetOptional {
             pretty,
         } = optional;
@@ -612,18 +627,21 @@ impl ReplicaSet {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::patch_namespaced_replica_set`](./struct.ReplicaSet.html#method.patch_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::patch_namespaced_replica_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedReplicaSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::patch_namespaced_replica_set`](./struct.ReplicaSet.html#method.patch_namespaced_replica_set)
+/// Use `<PatchNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::patch_namespaced_replica_set`]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicaSetResponse {
     Ok(crate::v1_11::api::apps::v1::ReplicaSet),
@@ -653,7 +671,7 @@ impl crate::Response for PatchNamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// partially update status of the specified ReplicaSet
     ///
-    /// Use [`PatchNamespacedReplicaSetStatusResponse`](./enum.PatchNamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedReplicaSetStatusResponse`]`>` constructor, or [`PatchNamespacedReplicaSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -675,7 +693,7 @@ impl ReplicaSet {
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedReplicaSetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicaSetStatusResponse>), crate::RequestError> {
         let PatchNamespacedReplicaSetStatusOptional {
             pretty,
         } = optional;
@@ -688,18 +706,21 @@ impl ReplicaSet {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::patch_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.patch_namespaced_replica_set_status)
+/// Optional parameters of [`ReplicaSet::patch_namespaced_replica_set_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedReplicaSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::patch_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.patch_namespaced_replica_set_status)
+/// Use `<PatchNamespacedReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::patch_namespaced_replica_set_status`]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicaSetStatusResponse {
     Ok(crate::v1_11::api::apps::v1::ReplicaSet),
@@ -729,7 +750,7 @@ impl crate::Response for PatchNamespacedReplicaSetStatusResponse {
 impl ReplicaSet {
     /// read the specified ReplicaSet
     ///
-    /// Use [`ReadNamespacedReplicaSetResponse`](./enum.ReadNamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicaSetResponse`]`>` constructor, or [`ReadNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -748,7 +769,7 @@ impl ReplicaSet {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedReplicaSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicaSetResponse>), crate::RequestError> {
         let ReadNamespacedReplicaSetOptional {
             exact,
             export,
@@ -769,11 +790,14 @@ impl ReplicaSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::read_namespaced_replica_set`](./struct.ReplicaSet.html#method.read_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::read_namespaced_replica_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedReplicaSetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -784,7 +808,7 @@ pub struct ReadNamespacedReplicaSetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::read_namespaced_replica_set`](./struct.ReplicaSet.html#method.read_namespaced_replica_set)
+/// Use `<ReadNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::read_namespaced_replica_set`]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicaSetResponse {
     Ok(crate::v1_11::api::apps::v1::ReplicaSet),
@@ -814,7 +838,7 @@ impl crate::Response for ReadNamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// read status of the specified ReplicaSet
     ///
-    /// Use [`ReadNamespacedReplicaSetStatusResponse`](./enum.ReadNamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicaSetStatusResponse`]`>` constructor, or [`ReadNamespacedReplicaSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -833,7 +857,7 @@ impl ReplicaSet {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedReplicaSetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicaSetStatusResponse>), crate::RequestError> {
         let ReadNamespacedReplicaSetStatusOptional {
             pretty,
         } = optional;
@@ -846,18 +870,21 @@ impl ReplicaSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::read_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.read_namespaced_replica_set_status)
+/// Optional parameters of [`ReplicaSet::read_namespaced_replica_set_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedReplicaSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::read_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.read_namespaced_replica_set_status)
+/// Use `<ReadNamespacedReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::read_namespaced_replica_set_status`]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicaSetStatusResponse {
     Ok(crate::v1_11::api::apps::v1::ReplicaSet),
@@ -887,7 +914,7 @@ impl crate::Response for ReadNamespacedReplicaSetStatusResponse {
 impl ReplicaSet {
     /// replace the specified ReplicaSet
     ///
-    /// Use [`ReplaceNamespacedReplicaSetResponse`](./enum.ReplaceNamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedReplicaSetResponse`]`>` constructor, or [`ReplaceNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -909,7 +936,7 @@ impl ReplicaSet {
         namespace: &str,
         body: &crate::v1_11::api::apps::v1::ReplicaSet,
         optional: ReplaceNamespacedReplicaSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicaSetResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicaSetOptional {
             pretty,
         } = optional;
@@ -922,18 +949,21 @@ impl ReplicaSet {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::replace_namespaced_replica_set`](./struct.ReplicaSet.html#method.replace_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::replace_namespaced_replica_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedReplicaSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::replace_namespaced_replica_set`](./struct.ReplicaSet.html#method.replace_namespaced_replica_set)
+/// Use `<ReplaceNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::replace_namespaced_replica_set`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicaSetResponse {
     Ok(crate::v1_11::api::apps::v1::ReplicaSet),
@@ -972,7 +1002,7 @@ impl crate::Response for ReplaceNamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// replace status of the specified ReplicaSet
     ///
-    /// Use [`ReplaceNamespacedReplicaSetStatusResponse`](./enum.ReplaceNamespacedReplicaSetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedReplicaSetStatusResponse`]`>` constructor, or [`ReplaceNamespacedReplicaSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -994,7 +1024,7 @@ impl ReplicaSet {
         namespace: &str,
         body: &crate::v1_11::api::apps::v1::ReplicaSet,
         optional: ReplaceNamespacedReplicaSetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicaSetStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicaSetStatusOptional {
             pretty,
         } = optional;
@@ -1007,18 +1037,21 @@ impl ReplicaSet {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::replace_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.replace_namespaced_replica_set_status)
+/// Optional parameters of [`ReplicaSet::replace_namespaced_replica_set_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedReplicaSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::replace_namespaced_replica_set_status`](./struct.ReplicaSet.html#method.replace_namespaced_replica_set_status)
+/// Use `<ReplaceNamespacedReplicaSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::replace_namespaced_replica_set_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicaSetStatusResponse {
     Ok(crate::v1_11::api::apps::v1::ReplicaSet),
@@ -1057,7 +1090,7 @@ impl crate::Response for ReplaceNamespacedReplicaSetStatusResponse {
 impl ReplicaSet {
     /// watch changes to an object of kind ReplicaSet
     ///
-    /// Use [`WatchNamespacedReplicaSetResponse`](./enum.WatchNamespacedReplicaSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedReplicaSetResponse`]`>` constructor, or [`WatchNamespacedReplicaSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1076,7 +1109,7 @@ impl ReplicaSet {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedReplicaSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedReplicaSetResponse>), crate::RequestError> {
         let WatchNamespacedReplicaSetOptional {
             continue_,
             field_selector,
@@ -1121,11 +1154,14 @@ impl ReplicaSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::watch_namespaced_replica_set`](./struct.ReplicaSet.html#method.watch_namespaced_replica_set)
+/// Optional parameters of [`ReplicaSet::watch_namespaced_replica_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedReplicaSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1150,7 +1186,7 @@ pub struct WatchNamespacedReplicaSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::watch_namespaced_replica_set`](./struct.ReplicaSet.html#method.watch_namespaced_replica_set)
+/// Use `<WatchNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::watch_namespaced_replica_set`]
 #[derive(Debug)]
 pub enum WatchNamespacedReplicaSetResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1182,7 +1218,7 @@ impl crate::Response for WatchNamespacedReplicaSetResponse {
 impl ReplicaSet {
     /// watch individual changes to a list of ReplicaSet
     ///
-    /// Use [`WatchNamespacedReplicaSetListResponse`](./enum.WatchNamespacedReplicaSetListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedReplicaSetListResponse`]`>` constructor, or [`WatchNamespacedReplicaSetListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1196,7 +1232,7 @@ impl ReplicaSet {
     pub fn watch_namespaced_replica_set_list(
         namespace: &str,
         optional: WatchNamespacedReplicaSetListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedReplicaSetListResponse>), crate::RequestError> {
         let WatchNamespacedReplicaSetListOptional {
             continue_,
             field_selector,
@@ -1241,11 +1277,14 @@ impl ReplicaSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::watch_namespaced_replica_set_list`](./struct.ReplicaSet.html#method.watch_namespaced_replica_set_list)
+/// Optional parameters of [`ReplicaSet::watch_namespaced_replica_set_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedReplicaSetListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1270,7 +1309,7 @@ pub struct WatchNamespacedReplicaSetListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::watch_namespaced_replica_set_list`](./struct.ReplicaSet.html#method.watch_namespaced_replica_set_list)
+/// Use `<WatchNamespacedReplicaSetListResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::watch_namespaced_replica_set_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedReplicaSetListResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1302,7 +1341,7 @@ impl crate::Response for WatchNamespacedReplicaSetListResponse {
 impl ReplicaSet {
     /// watch individual changes to a list of ReplicaSet
     ///
-    /// Use [`WatchReplicaSetListForAllNamespacesResponse`](./enum.WatchReplicaSetListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchReplicaSetListForAllNamespacesResponse`]`>` constructor, or [`WatchReplicaSetListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1311,7 +1350,7 @@ impl ReplicaSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_replica_set_list_for_all_namespaces(
         optional: WatchReplicaSetListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchReplicaSetListForAllNamespacesResponse>), crate::RequestError> {
         let WatchReplicaSetListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1356,11 +1395,14 @@ impl ReplicaSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicaSet::watch_replica_set_list_for_all_namespaces`](./struct.ReplicaSet.html#method.watch_replica_set_list_for_all_namespaces)
+/// Optional parameters of [`ReplicaSet::watch_replica_set_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchReplicaSetListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1385,7 +1427,7 @@ pub struct WatchReplicaSetListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicaSet::watch_replica_set_list_for_all_namespaces`](./struct.ReplicaSet.html#method.watch_replica_set_list_for_all_namespaces)
+/// Use `<WatchReplicaSetListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::watch_replica_set_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchReplicaSetListForAllNamespacesResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

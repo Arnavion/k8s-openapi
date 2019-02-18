@@ -23,7 +23,7 @@ pub struct ServiceAccount {
 impl ServiceAccount {
     /// create a ServiceAccount
     ///
-    /// Use [`CreateNamespacedServiceAccountResponse`](./enum.CreateNamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedServiceAccountResponse`]`>` constructor, or [`CreateNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -40,7 +40,7 @@ impl ServiceAccount {
         namespace: &str,
         body: &crate::v1_12::api::core::v1::ServiceAccount,
         optional: CreateNamespacedServiceAccountOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedServiceAccountResponse>), crate::RequestError> {
         let CreateNamespacedServiceAccountOptional {
             dry_run,
             include_uninitialized,
@@ -61,11 +61,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::create_namespaced_service_account`](./struct.ServiceAccount.html#method.create_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::create_namespaced_service_account`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedServiceAccountOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -76,7 +79,7 @@ pub struct CreateNamespacedServiceAccountOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::create_namespaced_service_account`](./struct.ServiceAccount.html#method.create_namespaced_service_account)
+/// Use `<CreateNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::create_namespaced_service_account`]
 #[derive(Debug)]
 pub enum CreateNamespacedServiceAccountResponse {
     Ok(crate::v1_12::api::core::v1::ServiceAccount),
@@ -124,7 +127,7 @@ impl crate::Response for CreateNamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// delete collection of ServiceAccount
     ///
-    /// Use [`DeleteCollectionNamespacedServiceAccountResponse`](./enum.DeleteCollectionNamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedServiceAccountResponse`]`>` constructor, or [`DeleteCollectionNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -138,7 +141,7 @@ impl ServiceAccount {
     pub fn delete_collection_namespaced_service_account(
         namespace: &str,
         optional: DeleteCollectionNamespacedServiceAccountOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedServiceAccountResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedServiceAccountOptional {
             continue_,
             field_selector,
@@ -183,11 +186,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::delete_collection_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_collection_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::delete_collection_namespaced_service_account`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedServiceAccountOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -214,7 +220,7 @@ pub struct DeleteCollectionNamespacedServiceAccountOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::delete_collection_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_collection_namespaced_service_account)
+/// Use `<DeleteCollectionNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::delete_collection_namespaced_service_account`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedServiceAccountResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -258,7 +264,7 @@ impl crate::Response for DeleteCollectionNamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// delete a ServiceAccount
     ///
-    /// Use [`DeleteNamespacedServiceAccountResponse`](./enum.DeleteNamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedServiceAccountResponse`]`>` constructor, or [`DeleteNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -277,7 +283,7 @@ impl ServiceAccount {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedServiceAccountOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedServiceAccountResponse>), crate::RequestError> {
         let DeleteNamespacedServiceAccountOptional {
             dry_run,
             grace_period_seconds,
@@ -306,11 +312,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::delete_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::delete_namespaced_service_account`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedServiceAccountOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -325,7 +334,7 @@ pub struct DeleteNamespacedServiceAccountOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::delete_namespaced_service_account`](./struct.ServiceAccount.html#method.delete_namespaced_service_account)
+/// Use `<DeleteNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::delete_namespaced_service_account`]
 #[derive(Debug)]
 pub enum DeleteNamespacedServiceAccountResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -378,7 +387,7 @@ impl crate::Response for DeleteNamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// list or watch objects of kind ServiceAccount
     ///
-    /// Use [`ListNamespacedServiceAccountResponse`](./enum.ListNamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedServiceAccountResponse`]`>` constructor, or [`ListNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -392,7 +401,7 @@ impl ServiceAccount {
     pub fn list_namespaced_service_account(
         namespace: &str,
         optional: ListNamespacedServiceAccountOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedServiceAccountResponse>), crate::RequestError> {
         let ListNamespacedServiceAccountOptional {
             continue_,
             field_selector,
@@ -437,11 +446,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::list_namespaced_service_account`](./struct.ServiceAccount.html#method.list_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::list_namespaced_service_account`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedServiceAccountOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -468,7 +480,7 @@ pub struct ListNamespacedServiceAccountOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::list_namespaced_service_account`](./struct.ServiceAccount.html#method.list_namespaced_service_account)
+/// Use `<ListNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::list_namespaced_service_account`]
 #[derive(Debug)]
 pub enum ListNamespacedServiceAccountResponse {
     Ok(crate::v1_12::api::core::v1::ServiceAccountList),
@@ -498,7 +510,7 @@ impl crate::Response for ListNamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// list or watch objects of kind ServiceAccount
     ///
-    /// Use [`ListServiceAccountForAllNamespacesResponse`](./enum.ListServiceAccountForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListServiceAccountForAllNamespacesResponse`]`>` constructor, or [`ListServiceAccountForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -507,7 +519,7 @@ impl ServiceAccount {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_service_account_for_all_namespaces(
         optional: ListServiceAccountForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListServiceAccountForAllNamespacesResponse>), crate::RequestError> {
         let ListServiceAccountForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -552,11 +564,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::list_service_account_for_all_namespaces`](./struct.ServiceAccount.html#method.list_service_account_for_all_namespaces)
+/// Optional parameters of [`ServiceAccount::list_service_account_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListServiceAccountForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -583,7 +598,7 @@ pub struct ListServiceAccountForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::list_service_account_for_all_namespaces`](./struct.ServiceAccount.html#method.list_service_account_for_all_namespaces)
+/// Use `<ListServiceAccountForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::list_service_account_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListServiceAccountForAllNamespacesResponse {
     Ok(crate::v1_12::api::core::v1::ServiceAccountList),
@@ -613,7 +628,7 @@ impl crate::Response for ListServiceAccountForAllNamespacesResponse {
 impl ServiceAccount {
     /// partially update the specified ServiceAccount
     ///
-    /// Use [`PatchNamespacedServiceAccountResponse`](./enum.PatchNamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedServiceAccountResponse`]`>` constructor, or [`PatchNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -635,7 +650,7 @@ impl ServiceAccount {
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedServiceAccountOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedServiceAccountResponse>), crate::RequestError> {
         let PatchNamespacedServiceAccountOptional {
             dry_run,
             pretty,
@@ -652,11 +667,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::patch_namespaced_service_account`](./struct.ServiceAccount.html#method.patch_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::patch_namespaced_service_account`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedServiceAccountOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -665,7 +683,7 @@ pub struct PatchNamespacedServiceAccountOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::patch_namespaced_service_account`](./struct.ServiceAccount.html#method.patch_namespaced_service_account)
+/// Use `<PatchNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::patch_namespaced_service_account`]
 #[derive(Debug)]
 pub enum PatchNamespacedServiceAccountResponse {
     Ok(crate::v1_12::api::core::v1::ServiceAccount),
@@ -695,7 +713,7 @@ impl crate::Response for PatchNamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// read the specified ServiceAccount
     ///
-    /// Use [`ReadNamespacedServiceAccountResponse`](./enum.ReadNamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedServiceAccountResponse`]`>` constructor, or [`ReadNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -714,7 +732,7 @@ impl ServiceAccount {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedServiceAccountOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedServiceAccountResponse>), crate::RequestError> {
         let ReadNamespacedServiceAccountOptional {
             exact,
             export,
@@ -735,11 +753,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::read_namespaced_service_account`](./struct.ServiceAccount.html#method.read_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::read_namespaced_service_account`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedServiceAccountOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -750,7 +771,7 @@ pub struct ReadNamespacedServiceAccountOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::read_namespaced_service_account`](./struct.ServiceAccount.html#method.read_namespaced_service_account)
+/// Use `<ReadNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::read_namespaced_service_account`]
 #[derive(Debug)]
 pub enum ReadNamespacedServiceAccountResponse {
     Ok(crate::v1_12::api::core::v1::ServiceAccount),
@@ -780,7 +801,7 @@ impl crate::Response for ReadNamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// replace the specified ServiceAccount
     ///
-    /// Use [`ReplaceNamespacedServiceAccountResponse`](./enum.ReplaceNamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedServiceAccountResponse`]`>` constructor, or [`ReplaceNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -802,7 +823,7 @@ impl ServiceAccount {
         namespace: &str,
         body: &crate::v1_12::api::core::v1::ServiceAccount,
         optional: ReplaceNamespacedServiceAccountOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedServiceAccountResponse>), crate::RequestError> {
         let ReplaceNamespacedServiceAccountOptional {
             dry_run,
             pretty,
@@ -819,11 +840,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::replace_namespaced_service_account`](./struct.ServiceAccount.html#method.replace_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::replace_namespaced_service_account`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedServiceAccountOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -832,7 +856,7 @@ pub struct ReplaceNamespacedServiceAccountOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::replace_namespaced_service_account`](./struct.ServiceAccount.html#method.replace_namespaced_service_account)
+/// Use `<ReplaceNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::replace_namespaced_service_account`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedServiceAccountResponse {
     Ok(crate::v1_12::api::core::v1::ServiceAccount),
@@ -871,7 +895,7 @@ impl crate::Response for ReplaceNamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// watch changes to an object of kind ServiceAccount. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchNamespacedServiceAccountResponse`](./enum.WatchNamespacedServiceAccountResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedServiceAccountResponse`]`>` constructor, or [`WatchNamespacedServiceAccountResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -890,7 +914,7 @@ impl ServiceAccount {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedServiceAccountOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedServiceAccountResponse>), crate::RequestError> {
         let WatchNamespacedServiceAccountOptional {
             continue_,
             field_selector,
@@ -935,11 +959,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::watch_namespaced_service_account`](./struct.ServiceAccount.html#method.watch_namespaced_service_account)
+/// Optional parameters of [`ServiceAccount::watch_namespaced_service_account`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedServiceAccountOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -966,7 +993,7 @@ pub struct WatchNamespacedServiceAccountOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::watch_namespaced_service_account`](./struct.ServiceAccount.html#method.watch_namespaced_service_account)
+/// Use `<WatchNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::watch_namespaced_service_account`]
 #[derive(Debug)]
 pub enum WatchNamespacedServiceAccountResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -998,7 +1025,7 @@ impl crate::Response for WatchNamespacedServiceAccountResponse {
 impl ServiceAccount {
     /// watch individual changes to a list of ServiceAccount. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchNamespacedServiceAccountListResponse`](./enum.WatchNamespacedServiceAccountListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedServiceAccountListResponse`]`>` constructor, or [`WatchNamespacedServiceAccountListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1012,7 +1039,7 @@ impl ServiceAccount {
     pub fn watch_namespaced_service_account_list(
         namespace: &str,
         optional: WatchNamespacedServiceAccountListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedServiceAccountListResponse>), crate::RequestError> {
         let WatchNamespacedServiceAccountListOptional {
             continue_,
             field_selector,
@@ -1057,11 +1084,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::watch_namespaced_service_account_list`](./struct.ServiceAccount.html#method.watch_namespaced_service_account_list)
+/// Optional parameters of [`ServiceAccount::watch_namespaced_service_account_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedServiceAccountListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1088,7 +1118,7 @@ pub struct WatchNamespacedServiceAccountListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::watch_namespaced_service_account_list`](./struct.ServiceAccount.html#method.watch_namespaced_service_account_list)
+/// Use `<WatchNamespacedServiceAccountListResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::watch_namespaced_service_account_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedServiceAccountListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1120,7 +1150,7 @@ impl crate::Response for WatchNamespacedServiceAccountListResponse {
 impl ServiceAccount {
     /// watch individual changes to a list of ServiceAccount. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchServiceAccountListForAllNamespacesResponse`](./enum.WatchServiceAccountListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchServiceAccountListForAllNamespacesResponse`]`>` constructor, or [`WatchServiceAccountListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1129,7 +1159,7 @@ impl ServiceAccount {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_service_account_list_for_all_namespaces(
         optional: WatchServiceAccountListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchServiceAccountListForAllNamespacesResponse>), crate::RequestError> {
         let WatchServiceAccountListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1174,11 +1204,14 @@ impl ServiceAccount {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ServiceAccount::watch_service_account_list_for_all_namespaces`](./struct.ServiceAccount.html#method.watch_service_account_list_for_all_namespaces)
+/// Optional parameters of [`ServiceAccount::watch_service_account_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchServiceAccountListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1205,7 +1238,7 @@ pub struct WatchServiceAccountListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ServiceAccount::watch_service_account_list_for_all_namespaces`](./struct.ServiceAccount.html#method.watch_service_account_list_for_all_namespaces)
+/// Use `<WatchServiceAccountListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::watch_service_account_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchServiceAccountListForAllNamespacesResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),

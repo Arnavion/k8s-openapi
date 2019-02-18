@@ -236,18 +236,26 @@ enum ValueResult<T> {
 	NeedMoreData,
 }
 
-fn get_single_value<'a, R, F, T>(response: ClientResponse<'a>, f: F) -> Result<T, Error> where
+fn get_single_value<'a, R, F, T>(
+	response: ClientResponse<'a>,
+	response_body: fn (http::StatusCode) -> k8s_openapi::ResponseBody<R>,
+	f: F,
+) -> Result<T, Error> where
 	R: k8s_openapi::Response,
 	F: FnMut(R, http::StatusCode, &[u8]) -> Result<ValueResult<T>, Error>,
 {
-	get_multiple_values(response, f)?.next().unwrap_or_else(|| Err("unexpected EOF".into()))
+	get_multiple_values(response, response_body, f)?.next().unwrap_or_else(|| Err("unexpected EOF".into()))
 }
 
-fn get_multiple_values<'a, R, F, T>(response: ClientResponse<'a>, f: F) -> Result<MultipleValuesIterator<'a, R, F, T>, Error> where
+fn get_multiple_values<'a, R, F, T>(
+	response: ClientResponse<'a>,
+	response_body: fn (http::StatusCode) -> k8s_openapi::ResponseBody<R>,
+	f: F,
+) -> Result<MultipleValuesIterator<'a, R, F, T>, Error> where
 	R: k8s_openapi::Response,
 	F: FnMut(R, http::StatusCode, &[u8]) -> Result<ValueResult<T>, Error>,
 {
-	let response_body = k8s_openapi::ResponseBody::new(response.status_code);
+	let response_body = response_body(response.status_code);
 
 	let buf = Box::new([0u8; 4096]);
 
@@ -263,9 +271,9 @@ fn get_multiple_values<'a, R, F, T>(response: ClientResponse<'a>, f: F) -> Resul
 struct MultipleValuesIterator<'a, R, F, T> {
 	response: ClientResponse<'a>,
 	f: F,
-	response_body: k8s_openapi::ResponseBody,
+	response_body: k8s_openapi::ResponseBody<R>,
 	buf: Box<[u8; 4096]>,
-	_pd: std::marker::PhantomData<(R, T)>,
+	_pd: std::marker::PhantomData<fn() -> T>,
 }
 
 impl<'a, R, F, T> Iterator for MultipleValuesIterator<'a, R, F, T> where

@@ -20,7 +20,7 @@ pub struct Node {
 impl Node {
     /// connect DELETE requests to proxy of Node
     ///
-    /// Use [`ConnectDeleteNodeProxyResponse`](./enum.ConnectDeleteNodeProxyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectDeleteNodeProxyResponse`]`>` constructor, or [`ConnectDeleteNodeProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -34,7 +34,7 @@ impl Node {
     pub fn connect_delete_node_proxy(
         name: &str,
         optional: ConnectDeleteNodeProxyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectDeleteNodeProxyResponse>), crate::RequestError> {
         let ConnectDeleteNodeProxyOptional {
             path,
         } = optional;
@@ -47,18 +47,21 @@ impl Node {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::connect_delete_node_proxy`](./struct.Node.html#method.connect_delete_node_proxy)
+/// Optional parameters of [`Node::connect_delete_node_proxy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_delete_node_proxy`](./struct.Node.html#method.connect_delete_node_proxy)
+/// Use `<ConnectDeleteNodeProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_delete_node_proxy`]
 #[derive(Debug)]
 pub enum ConnectDeleteNodeProxyResponse {
     Ok(String),
@@ -93,7 +96,7 @@ impl crate::Response for ConnectDeleteNodeProxyResponse {
 impl Node {
     /// connect DELETE requests to proxy of Node
     ///
-    /// Use [`ConnectDeleteNodeProxyWithPathResponse`](./enum.ConnectDeleteNodeProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectDeleteNodeProxyWithPathResponse`]`>` constructor, or [`ConnectDeleteNodeProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -112,7 +115,7 @@ impl Node {
         name: &str,
         path: &str,
         optional: ConnectDeleteNodeProxyWithPathOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectDeleteNodeProxyWithPathResponse>), crate::RequestError> {
         let ConnectDeleteNodeProxyWithPathOptional {
             path_,
         } = optional;
@@ -125,18 +128,21 @@ impl Node {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::connect_delete_node_proxy_with_path`](./struct.Node.html#method.connect_delete_node_proxy_with_path)
+/// Optional parameters of [`Node::connect_delete_node_proxy_with_path`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_delete_node_proxy_with_path`](./struct.Node.html#method.connect_delete_node_proxy_with_path)
+/// Use `<ConnectDeleteNodeProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_delete_node_proxy_with_path`]
 #[derive(Debug)]
 pub enum ConnectDeleteNodeProxyWithPathResponse {
     Ok(String),
@@ -171,7 +177,7 @@ impl crate::Response for ConnectDeleteNodeProxyWithPathResponse {
 impl Node {
     /// connect GET requests to proxy of Node
     ///
-    /// Use [`ConnectGetNodeProxyResponse`](./enum.ConnectGetNodeProxyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNodeProxyResponse`]`>` constructor, or [`ConnectGetNodeProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -185,7 +191,7 @@ impl Node {
     pub fn connect_get_node_proxy(
         name: &str,
         optional: ConnectGetNodeProxyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNodeProxyResponse>), crate::RequestError> {
         let ConnectGetNodeProxyOptional {
             path,
         } = optional;
@@ -198,18 +204,21 @@ impl Node {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::connect_get_node_proxy`](./struct.Node.html#method.connect_get_node_proxy)
+/// Optional parameters of [`Node::connect_get_node_proxy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_get_node_proxy`](./struct.Node.html#method.connect_get_node_proxy)
+/// Use `<ConnectGetNodeProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_get_node_proxy`]
 #[derive(Debug)]
 pub enum ConnectGetNodeProxyResponse {
     Ok(String),
@@ -244,7 +253,7 @@ impl crate::Response for ConnectGetNodeProxyResponse {
 impl Node {
     /// connect GET requests to proxy of Node
     ///
-    /// Use [`ConnectGetNodeProxyWithPathResponse`](./enum.ConnectGetNodeProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNodeProxyWithPathResponse`]`>` constructor, or [`ConnectGetNodeProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -263,7 +272,7 @@ impl Node {
         name: &str,
         path: &str,
         optional: ConnectGetNodeProxyWithPathOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNodeProxyWithPathResponse>), crate::RequestError> {
         let ConnectGetNodeProxyWithPathOptional {
             path_,
         } = optional;
@@ -276,18 +285,21 @@ impl Node {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::connect_get_node_proxy_with_path`](./struct.Node.html#method.connect_get_node_proxy_with_path)
+/// Optional parameters of [`Node::connect_get_node_proxy_with_path`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_get_node_proxy_with_path`](./struct.Node.html#method.connect_get_node_proxy_with_path)
+/// Use `<ConnectGetNodeProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_get_node_proxy_with_path`]
 #[derive(Debug)]
 pub enum ConnectGetNodeProxyWithPathResponse {
     Ok(String),
@@ -322,7 +334,7 @@ impl crate::Response for ConnectGetNodeProxyWithPathResponse {
 impl Node {
     /// connect PATCH requests to proxy of Node
     ///
-    /// Use [`ConnectPatchNodeProxyResponse`](./enum.ConnectPatchNodeProxyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPatchNodeProxyResponse`]`>` constructor, or [`ConnectPatchNodeProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -336,7 +348,7 @@ impl Node {
     pub fn connect_patch_node_proxy(
         name: &str,
         optional: ConnectPatchNodeProxyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPatchNodeProxyResponse>), crate::RequestError> {
         let ConnectPatchNodeProxyOptional {
             path,
         } = optional;
@@ -349,18 +361,21 @@ impl Node {
 
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::connect_patch_node_proxy`](./struct.Node.html#method.connect_patch_node_proxy)
+/// Optional parameters of [`Node::connect_patch_node_proxy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_patch_node_proxy`](./struct.Node.html#method.connect_patch_node_proxy)
+/// Use `<ConnectPatchNodeProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_patch_node_proxy`]
 #[derive(Debug)]
 pub enum ConnectPatchNodeProxyResponse {
     Ok(String),
@@ -395,7 +410,7 @@ impl crate::Response for ConnectPatchNodeProxyResponse {
 impl Node {
     /// connect PATCH requests to proxy of Node
     ///
-    /// Use [`ConnectPatchNodeProxyWithPathResponse`](./enum.ConnectPatchNodeProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPatchNodeProxyWithPathResponse`]`>` constructor, or [`ConnectPatchNodeProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -414,7 +429,7 @@ impl Node {
         name: &str,
         path: &str,
         optional: ConnectPatchNodeProxyWithPathOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPatchNodeProxyWithPathResponse>), crate::RequestError> {
         let ConnectPatchNodeProxyWithPathOptional {
             path_,
         } = optional;
@@ -427,18 +442,21 @@ impl Node {
 
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::connect_patch_node_proxy_with_path`](./struct.Node.html#method.connect_patch_node_proxy_with_path)
+/// Optional parameters of [`Node::connect_patch_node_proxy_with_path`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_patch_node_proxy_with_path`](./struct.Node.html#method.connect_patch_node_proxy_with_path)
+/// Use `<ConnectPatchNodeProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_patch_node_proxy_with_path`]
 #[derive(Debug)]
 pub enum ConnectPatchNodeProxyWithPathResponse {
     Ok(String),
@@ -473,7 +491,7 @@ impl crate::Response for ConnectPatchNodeProxyWithPathResponse {
 impl Node {
     /// connect POST requests to proxy of Node
     ///
-    /// Use [`ConnectPostNodeProxyResponse`](./enum.ConnectPostNodeProxyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNodeProxyResponse`]`>` constructor, or [`ConnectPostNodeProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -487,7 +505,7 @@ impl Node {
     pub fn connect_post_node_proxy(
         name: &str,
         optional: ConnectPostNodeProxyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNodeProxyResponse>), crate::RequestError> {
         let ConnectPostNodeProxyOptional {
             path,
         } = optional;
@@ -500,18 +518,21 @@ impl Node {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::connect_post_node_proxy`](./struct.Node.html#method.connect_post_node_proxy)
+/// Optional parameters of [`Node::connect_post_node_proxy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_post_node_proxy`](./struct.Node.html#method.connect_post_node_proxy)
+/// Use `<ConnectPostNodeProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_post_node_proxy`]
 #[derive(Debug)]
 pub enum ConnectPostNodeProxyResponse {
     Ok(String),
@@ -546,7 +567,7 @@ impl crate::Response for ConnectPostNodeProxyResponse {
 impl Node {
     /// connect POST requests to proxy of Node
     ///
-    /// Use [`ConnectPostNodeProxyWithPathResponse`](./enum.ConnectPostNodeProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNodeProxyWithPathResponse`]`>` constructor, or [`ConnectPostNodeProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -565,7 +586,7 @@ impl Node {
         name: &str,
         path: &str,
         optional: ConnectPostNodeProxyWithPathOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNodeProxyWithPathResponse>), crate::RequestError> {
         let ConnectPostNodeProxyWithPathOptional {
             path_,
         } = optional;
@@ -578,18 +599,21 @@ impl Node {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::connect_post_node_proxy_with_path`](./struct.Node.html#method.connect_post_node_proxy_with_path)
+/// Optional parameters of [`Node::connect_post_node_proxy_with_path`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_post_node_proxy_with_path`](./struct.Node.html#method.connect_post_node_proxy_with_path)
+/// Use `<ConnectPostNodeProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_post_node_proxy_with_path`]
 #[derive(Debug)]
 pub enum ConnectPostNodeProxyWithPathResponse {
     Ok(String),
@@ -624,7 +648,7 @@ impl crate::Response for ConnectPostNodeProxyWithPathResponse {
 impl Node {
     /// connect PUT requests to proxy of Node
     ///
-    /// Use [`ConnectPutNodeProxyResponse`](./enum.ConnectPutNodeProxyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPutNodeProxyResponse`]`>` constructor, or [`ConnectPutNodeProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -638,7 +662,7 @@ impl Node {
     pub fn connect_put_node_proxy(
         name: &str,
         optional: ConnectPutNodeProxyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPutNodeProxyResponse>), crate::RequestError> {
         let ConnectPutNodeProxyOptional {
             path,
         } = optional;
@@ -651,18 +675,21 @@ impl Node {
 
         let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::connect_put_node_proxy`](./struct.Node.html#method.connect_put_node_proxy)
+/// Optional parameters of [`Node::connect_put_node_proxy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNodeProxyOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_put_node_proxy`](./struct.Node.html#method.connect_put_node_proxy)
+/// Use `<ConnectPutNodeProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_put_node_proxy`]
 #[derive(Debug)]
 pub enum ConnectPutNodeProxyResponse {
     Ok(String),
@@ -697,7 +724,7 @@ impl crate::Response for ConnectPutNodeProxyResponse {
 impl Node {
     /// connect PUT requests to proxy of Node
     ///
-    /// Use [`ConnectPutNodeProxyWithPathResponse`](./enum.ConnectPutNodeProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPutNodeProxyWithPathResponse`]`>` constructor, or [`ConnectPutNodeProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -716,7 +743,7 @@ impl Node {
         name: &str,
         path: &str,
         optional: ConnectPutNodeProxyWithPathOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPutNodeProxyWithPathResponse>), crate::RequestError> {
         let ConnectPutNodeProxyWithPathOptional {
             path_,
         } = optional;
@@ -729,18 +756,21 @@ impl Node {
 
         let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::connect_put_node_proxy_with_path`](./struct.Node.html#method.connect_put_node_proxy_with_path)
+/// Optional parameters of [`Node::connect_put_node_proxy_with_path`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNodeProxyWithPathOptional<'a> {
     /// Path is the URL path to use for the current proxy request to node.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::connect_put_node_proxy_with_path`](./struct.Node.html#method.connect_put_node_proxy_with_path)
+/// Use `<ConnectPutNodeProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::connect_put_node_proxy_with_path`]
 #[derive(Debug)]
 pub enum ConnectPutNodeProxyWithPathResponse {
     Ok(String),
@@ -775,7 +805,7 @@ impl crate::Response for ConnectPutNodeProxyWithPathResponse {
 impl Node {
     /// create a Node
     ///
-    /// Use [`CreateNodeResponse`](./enum.CreateNodeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNodeResponse`]`>` constructor, or [`CreateNodeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -787,7 +817,7 @@ impl Node {
     pub fn create_node(
         body: &crate::v1_11::api::core::v1::Node,
         optional: CreateNodeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNodeResponse>), crate::RequestError> {
         let CreateNodeOptional {
             pretty,
         } = optional;
@@ -800,18 +830,21 @@ impl Node {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::create_node`](./struct.Node.html#method.create_node)
+/// Optional parameters of [`Node::create_node`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNodeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::create_node`](./struct.Node.html#method.create_node)
+/// Use `<CreateNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::create_node`]
 #[derive(Debug)]
 pub enum CreateNodeResponse {
     Ok(crate::v1_11::api::core::v1::Node),
@@ -859,7 +892,7 @@ impl crate::Response for CreateNodeResponse {
 impl Node {
     /// delete collection of Node
     ///
-    /// Use [`DeleteCollectionNodeResponse`](./enum.DeleteCollectionNodeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNodeResponse`]`>` constructor, or [`DeleteCollectionNodeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -868,7 +901,7 @@ impl Node {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_node(
         optional: DeleteCollectionNodeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNodeResponse>), crate::RequestError> {
         let DeleteCollectionNodeOptional {
             continue_,
             field_selector,
@@ -913,11 +946,14 @@ impl Node {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::delete_collection_node`](./struct.Node.html#method.delete_collection_node)
+/// Optional parameters of [`Node::delete_collection_node`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNodeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -942,7 +978,7 @@ pub struct DeleteCollectionNodeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Node::delete_collection_node`](./struct.Node.html#method.delete_collection_node)
+/// Use `<DeleteCollectionNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::delete_collection_node`]
 #[derive(Debug)]
 pub enum DeleteCollectionNodeResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -986,7 +1022,7 @@ impl crate::Response for DeleteCollectionNodeResponse {
 impl Node {
     /// delete a Node
     ///
-    /// Use [`DeleteNodeResponse`](./enum.DeleteNodeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNodeResponse`]`>` constructor, or [`DeleteNodeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1000,7 +1036,7 @@ impl Node {
     pub fn delete_node(
         name: &str,
         optional: DeleteNodeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNodeResponse>), crate::RequestError> {
         let DeleteNodeOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -1025,11 +1061,14 @@ impl Node {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::delete_node`](./struct.Node.html#method.delete_node)
+/// Optional parameters of [`Node::delete_node`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNodeOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -1042,7 +1081,7 @@ pub struct DeleteNodeOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::delete_node`](./struct.Node.html#method.delete_node)
+/// Use `<DeleteNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::delete_node`]
 #[derive(Debug)]
 pub enum DeleteNodeResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -1086,7 +1125,7 @@ impl crate::Response for DeleteNodeResponse {
 impl Node {
     /// list or watch objects of kind Node
     ///
-    /// Use [`ListNodeResponse`](./enum.ListNodeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNodeResponse`]`>` constructor, or [`ListNodeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1095,7 +1134,7 @@ impl Node {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_node(
         optional: ListNodeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNodeResponse>), crate::RequestError> {
         let ListNodeOptional {
             continue_,
             field_selector,
@@ -1140,11 +1179,14 @@ impl Node {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::list_node`](./struct.Node.html#method.list_node)
+/// Optional parameters of [`Node::list_node`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNodeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1169,7 +1211,7 @@ pub struct ListNodeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Node::list_node`](./struct.Node.html#method.list_node)
+/// Use `<ListNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::list_node`]
 #[derive(Debug)]
 pub enum ListNodeResponse {
     Ok(crate::v1_11::api::core::v1::NodeList),
@@ -1199,7 +1241,7 @@ impl crate::Response for ListNodeResponse {
 impl Node {
     /// partially update the specified Node
     ///
-    /// Use [`PatchNodeResponse`](./enum.PatchNodeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNodeResponse`]`>` constructor, or [`PatchNodeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1216,7 +1258,7 @@ impl Node {
         name: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNodeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNodeResponse>), crate::RequestError> {
         let PatchNodeOptional {
             pretty,
         } = optional;
@@ -1229,18 +1271,21 @@ impl Node {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::patch_node`](./struct.Node.html#method.patch_node)
+/// Optional parameters of [`Node::patch_node`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNodeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::patch_node`](./struct.Node.html#method.patch_node)
+/// Use `<PatchNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::patch_node`]
 #[derive(Debug)]
 pub enum PatchNodeResponse {
     Ok(crate::v1_11::api::core::v1::Node),
@@ -1270,7 +1315,7 @@ impl crate::Response for PatchNodeResponse {
 impl Node {
     /// partially update status of the specified Node
     ///
-    /// Use [`PatchNodeStatusResponse`](./enum.PatchNodeStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNodeStatusResponse`]`>` constructor, or [`PatchNodeStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1287,7 +1332,7 @@ impl Node {
         name: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNodeStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNodeStatusResponse>), crate::RequestError> {
         let PatchNodeStatusOptional {
             pretty,
         } = optional;
@@ -1300,18 +1345,21 @@ impl Node {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::patch_node_status`](./struct.Node.html#method.patch_node_status)
+/// Optional parameters of [`Node::patch_node_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNodeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::patch_node_status`](./struct.Node.html#method.patch_node_status)
+/// Use `<PatchNodeStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::patch_node_status`]
 #[derive(Debug)]
 pub enum PatchNodeStatusResponse {
     Ok(crate::v1_11::api::core::v1::Node),
@@ -1341,7 +1389,7 @@ impl crate::Response for PatchNodeStatusResponse {
 impl Node {
     /// read the specified Node
     ///
-    /// Use [`ReadNodeResponse`](./enum.ReadNodeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNodeResponse`]`>` constructor, or [`ReadNodeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1355,7 +1403,7 @@ impl Node {
     pub fn read_node(
         name: &str,
         optional: ReadNodeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNodeResponse>), crate::RequestError> {
         let ReadNodeOptional {
             exact,
             export,
@@ -1376,11 +1424,14 @@ impl Node {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::read_node`](./struct.Node.html#method.read_node)
+/// Optional parameters of [`Node::read_node`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNodeOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -1391,7 +1442,7 @@ pub struct ReadNodeOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::read_node`](./struct.Node.html#method.read_node)
+/// Use `<ReadNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::read_node`]
 #[derive(Debug)]
 pub enum ReadNodeResponse {
     Ok(crate::v1_11::api::core::v1::Node),
@@ -1421,7 +1472,7 @@ impl crate::Response for ReadNodeResponse {
 impl Node {
     /// read status of the specified Node
     ///
-    /// Use [`ReadNodeStatusResponse`](./enum.ReadNodeStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNodeStatusResponse`]`>` constructor, or [`ReadNodeStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1435,7 +1486,7 @@ impl Node {
     pub fn read_node_status(
         name: &str,
         optional: ReadNodeStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNodeStatusResponse>), crate::RequestError> {
         let ReadNodeStatusOptional {
             pretty,
         } = optional;
@@ -1448,18 +1499,21 @@ impl Node {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::read_node_status`](./struct.Node.html#method.read_node_status)
+/// Optional parameters of [`Node::read_node_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNodeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::read_node_status`](./struct.Node.html#method.read_node_status)
+/// Use `<ReadNodeStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::read_node_status`]
 #[derive(Debug)]
 pub enum ReadNodeStatusResponse {
     Ok(crate::v1_11::api::core::v1::Node),
@@ -1489,7 +1543,7 @@ impl crate::Response for ReadNodeStatusResponse {
 impl Node {
     /// replace the specified Node
     ///
-    /// Use [`ReplaceNodeResponse`](./enum.ReplaceNodeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNodeResponse`]`>` constructor, or [`ReplaceNodeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1506,7 +1560,7 @@ impl Node {
         name: &str,
         body: &crate::v1_11::api::core::v1::Node,
         optional: ReplaceNodeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNodeResponse>), crate::RequestError> {
         let ReplaceNodeOptional {
             pretty,
         } = optional;
@@ -1519,18 +1573,21 @@ impl Node {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::replace_node`](./struct.Node.html#method.replace_node)
+/// Optional parameters of [`Node::replace_node`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNodeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::replace_node`](./struct.Node.html#method.replace_node)
+/// Use `<ReplaceNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::replace_node`]
 #[derive(Debug)]
 pub enum ReplaceNodeResponse {
     Ok(crate::v1_11::api::core::v1::Node),
@@ -1569,7 +1626,7 @@ impl crate::Response for ReplaceNodeResponse {
 impl Node {
     /// replace status of the specified Node
     ///
-    /// Use [`ReplaceNodeStatusResponse`](./enum.ReplaceNodeStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNodeStatusResponse`]`>` constructor, or [`ReplaceNodeStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1586,7 +1643,7 @@ impl Node {
         name: &str,
         body: &crate::v1_11::api::core::v1::Node,
         optional: ReplaceNodeStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNodeStatusResponse>), crate::RequestError> {
         let ReplaceNodeStatusOptional {
             pretty,
         } = optional;
@@ -1599,18 +1656,21 @@ impl Node {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::replace_node_status`](./struct.Node.html#method.replace_node_status)
+/// Optional parameters of [`Node::replace_node_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNodeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Node::replace_node_status`](./struct.Node.html#method.replace_node_status)
+/// Use `<ReplaceNodeStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::replace_node_status`]
 #[derive(Debug)]
 pub enum ReplaceNodeStatusResponse {
     Ok(crate::v1_11::api::core::v1::Node),
@@ -1649,7 +1709,7 @@ impl crate::Response for ReplaceNodeStatusResponse {
 impl Node {
     /// watch changes to an object of kind Node
     ///
-    /// Use [`WatchNodeResponse`](./enum.WatchNodeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNodeResponse`]`>` constructor, or [`WatchNodeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1663,7 +1723,7 @@ impl Node {
     pub fn watch_node(
         name: &str,
         optional: WatchNodeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNodeResponse>), crate::RequestError> {
         let WatchNodeOptional {
             continue_,
             field_selector,
@@ -1708,11 +1768,14 @@ impl Node {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::watch_node`](./struct.Node.html#method.watch_node)
+/// Optional parameters of [`Node::watch_node`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNodeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1737,7 +1800,7 @@ pub struct WatchNodeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Node::watch_node`](./struct.Node.html#method.watch_node)
+/// Use `<WatchNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::watch_node`]
 #[derive(Debug)]
 pub enum WatchNodeResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1769,7 +1832,7 @@ impl crate::Response for WatchNodeResponse {
 impl Node {
     /// watch individual changes to a list of Node
     ///
-    /// Use [`WatchNodeListResponse`](./enum.WatchNodeListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNodeListResponse`]`>` constructor, or [`WatchNodeListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1778,7 +1841,7 @@ impl Node {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_node_list(
         optional: WatchNodeListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNodeListResponse>), crate::RequestError> {
         let WatchNodeListOptional {
             continue_,
             field_selector,
@@ -1823,11 +1886,14 @@ impl Node {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Node::watch_node_list`](./struct.Node.html#method.watch_node_list)
+/// Optional parameters of [`Node::watch_node_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNodeListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1852,7 +1918,7 @@ pub struct WatchNodeListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Node::watch_node_list`](./struct.Node.html#method.watch_node_list)
+/// Use `<WatchNodeListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::watch_node_list`]
 #[derive(Debug)]
 pub enum WatchNodeListResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

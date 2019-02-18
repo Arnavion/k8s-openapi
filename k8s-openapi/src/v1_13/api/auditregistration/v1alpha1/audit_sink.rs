@@ -16,7 +16,7 @@ pub struct AuditSink {
 impl AuditSink {
     /// create an AuditSink
     ///
-    /// Use [`CreateAuditSinkResponse`](./enum.CreateAuditSinkResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateAuditSinkResponse`]`>` constructor, or [`CreateAuditSinkResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -28,7 +28,7 @@ impl AuditSink {
     pub fn create_audit_sink(
         body: &crate::v1_13::api::auditregistration::v1alpha1::AuditSink,
         optional: CreateAuditSinkOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateAuditSinkResponse>), crate::RequestError> {
         let CreateAuditSinkOptional {
             dry_run,
             include_uninitialized,
@@ -49,11 +49,14 @@ impl AuditSink {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`AuditSink::create_audit_sink`](./struct.AuditSink.html#method.create_audit_sink)
+/// Optional parameters of [`AuditSink::create_audit_sink`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateAuditSinkOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -64,7 +67,7 @@ pub struct CreateAuditSinkOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`AuditSink::create_audit_sink`](./struct.AuditSink.html#method.create_audit_sink)
+/// Use `<CreateAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::create_audit_sink`]
 #[derive(Debug)]
 pub enum CreateAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
@@ -112,7 +115,7 @@ impl crate::Response for CreateAuditSinkResponse {
 impl AuditSink {
     /// delete an AuditSink
     ///
-    /// Use [`DeleteAuditSinkResponse`](./enum.DeleteAuditSinkResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteAuditSinkResponse`]`>` constructor, or [`DeleteAuditSinkResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -126,7 +129,7 @@ impl AuditSink {
     pub fn delete_audit_sink(
         name: &str,
         optional: DeleteAuditSinkOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteAuditSinkResponse>), crate::RequestError> {
         let DeleteAuditSinkOptional {
             dry_run,
             grace_period_seconds,
@@ -155,11 +158,14 @@ impl AuditSink {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`AuditSink::delete_audit_sink`](./struct.AuditSink.html#method.delete_audit_sink)
+/// Optional parameters of [`AuditSink::delete_audit_sink`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteAuditSinkOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -174,7 +180,7 @@ pub struct DeleteAuditSinkOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`AuditSink::delete_audit_sink`](./struct.AuditSink.html#method.delete_audit_sink)
+/// Use `<DeleteAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::delete_audit_sink`]
 #[derive(Debug)]
 pub enum DeleteAuditSinkResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -227,7 +233,7 @@ impl crate::Response for DeleteAuditSinkResponse {
 impl AuditSink {
     /// delete collection of AuditSink
     ///
-    /// Use [`DeleteCollectionAuditSinkResponse`](./enum.DeleteCollectionAuditSinkResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionAuditSinkResponse`]`>` constructor, or [`DeleteCollectionAuditSinkResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -236,7 +242,7 @@ impl AuditSink {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_audit_sink(
         optional: DeleteCollectionAuditSinkOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionAuditSinkResponse>), crate::RequestError> {
         let DeleteCollectionAuditSinkOptional {
             continue_,
             field_selector,
@@ -281,11 +287,14 @@ impl AuditSink {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`AuditSink::delete_collection_audit_sink`](./struct.AuditSink.html#method.delete_collection_audit_sink)
+/// Optional parameters of [`AuditSink::delete_collection_audit_sink`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionAuditSinkOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -312,7 +321,7 @@ pub struct DeleteCollectionAuditSinkOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`AuditSink::delete_collection_audit_sink`](./struct.AuditSink.html#method.delete_collection_audit_sink)
+/// Use `<DeleteCollectionAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::delete_collection_audit_sink`]
 #[derive(Debug)]
 pub enum DeleteCollectionAuditSinkResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -356,7 +365,7 @@ impl crate::Response for DeleteCollectionAuditSinkResponse {
 impl AuditSink {
     /// list or watch objects of kind AuditSink
     ///
-    /// Use [`ListAuditSinkResponse`](./enum.ListAuditSinkResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListAuditSinkResponse`]`>` constructor, or [`ListAuditSinkResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -365,7 +374,7 @@ impl AuditSink {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_audit_sink(
         optional: ListAuditSinkOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListAuditSinkResponse>), crate::RequestError> {
         let ListAuditSinkOptional {
             continue_,
             field_selector,
@@ -410,11 +419,14 @@ impl AuditSink {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`AuditSink::list_audit_sink`](./struct.AuditSink.html#method.list_audit_sink)
+/// Optional parameters of [`AuditSink::list_audit_sink`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListAuditSinkOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -441,7 +453,7 @@ pub struct ListAuditSinkOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`AuditSink::list_audit_sink`](./struct.AuditSink.html#method.list_audit_sink)
+/// Use `<ListAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::list_audit_sink`]
 #[derive(Debug)]
 pub enum ListAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSinkList),
@@ -471,7 +483,7 @@ impl crate::Response for ListAuditSinkResponse {
 impl AuditSink {
     /// partially update the specified AuditSink
     ///
-    /// Use [`PatchAuditSinkResponse`](./enum.PatchAuditSinkResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchAuditSinkResponse`]`>` constructor, or [`PatchAuditSinkResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -488,7 +500,7 @@ impl AuditSink {
         name: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchAuditSinkOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchAuditSinkResponse>), crate::RequestError> {
         let PatchAuditSinkOptional {
             dry_run,
             pretty,
@@ -505,11 +517,14 @@ impl AuditSink {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`AuditSink::patch_audit_sink`](./struct.AuditSink.html#method.patch_audit_sink)
+/// Optional parameters of [`AuditSink::patch_audit_sink`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchAuditSinkOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -518,7 +533,7 @@ pub struct PatchAuditSinkOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`AuditSink::patch_audit_sink`](./struct.AuditSink.html#method.patch_audit_sink)
+/// Use `<PatchAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::patch_audit_sink`]
 #[derive(Debug)]
 pub enum PatchAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
@@ -548,7 +563,7 @@ impl crate::Response for PatchAuditSinkResponse {
 impl AuditSink {
     /// read the specified AuditSink
     ///
-    /// Use [`ReadAuditSinkResponse`](./enum.ReadAuditSinkResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadAuditSinkResponse`]`>` constructor, or [`ReadAuditSinkResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -562,7 +577,7 @@ impl AuditSink {
     pub fn read_audit_sink(
         name: &str,
         optional: ReadAuditSinkOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadAuditSinkResponse>), crate::RequestError> {
         let ReadAuditSinkOptional {
             exact,
             export,
@@ -583,11 +598,14 @@ impl AuditSink {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`AuditSink::read_audit_sink`](./struct.AuditSink.html#method.read_audit_sink)
+/// Optional parameters of [`AuditSink::read_audit_sink`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadAuditSinkOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -598,7 +616,7 @@ pub struct ReadAuditSinkOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`AuditSink::read_audit_sink`](./struct.AuditSink.html#method.read_audit_sink)
+/// Use `<ReadAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::read_audit_sink`]
 #[derive(Debug)]
 pub enum ReadAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
@@ -628,7 +646,7 @@ impl crate::Response for ReadAuditSinkResponse {
 impl AuditSink {
     /// replace the specified AuditSink
     ///
-    /// Use [`ReplaceAuditSinkResponse`](./enum.ReplaceAuditSinkResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceAuditSinkResponse`]`>` constructor, or [`ReplaceAuditSinkResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -645,7 +663,7 @@ impl AuditSink {
         name: &str,
         body: &crate::v1_13::api::auditregistration::v1alpha1::AuditSink,
         optional: ReplaceAuditSinkOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceAuditSinkResponse>), crate::RequestError> {
         let ReplaceAuditSinkOptional {
             dry_run,
             pretty,
@@ -662,11 +680,14 @@ impl AuditSink {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`AuditSink::replace_audit_sink`](./struct.AuditSink.html#method.replace_audit_sink)
+/// Optional parameters of [`AuditSink::replace_audit_sink`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceAuditSinkOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -675,7 +696,7 @@ pub struct ReplaceAuditSinkOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`AuditSink::replace_audit_sink`](./struct.AuditSink.html#method.replace_audit_sink)
+/// Use `<ReplaceAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::replace_audit_sink`]
 #[derive(Debug)]
 pub enum ReplaceAuditSinkResponse {
     Ok(crate::v1_13::api::auditregistration::v1alpha1::AuditSink),
@@ -714,7 +735,7 @@ impl crate::Response for ReplaceAuditSinkResponse {
 impl AuditSink {
     /// watch changes to an object of kind AuditSink. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchAuditSinkResponse`](./enum.WatchAuditSinkResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchAuditSinkResponse`]`>` constructor, or [`WatchAuditSinkResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -728,7 +749,7 @@ impl AuditSink {
     pub fn watch_audit_sink(
         name: &str,
         optional: WatchAuditSinkOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchAuditSinkResponse>), crate::RequestError> {
         let WatchAuditSinkOptional {
             continue_,
             field_selector,
@@ -773,11 +794,14 @@ impl AuditSink {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`AuditSink::watch_audit_sink`](./struct.AuditSink.html#method.watch_audit_sink)
+/// Optional parameters of [`AuditSink::watch_audit_sink`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchAuditSinkOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -804,7 +828,7 @@ pub struct WatchAuditSinkOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`AuditSink::watch_audit_sink`](./struct.AuditSink.html#method.watch_audit_sink)
+/// Use `<WatchAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::watch_audit_sink`]
 #[derive(Debug)]
 pub enum WatchAuditSinkResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -836,7 +860,7 @@ impl crate::Response for WatchAuditSinkResponse {
 impl AuditSink {
     /// watch individual changes to a list of AuditSink. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchAuditSinkListResponse`](./enum.WatchAuditSinkListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchAuditSinkListResponse`]`>` constructor, or [`WatchAuditSinkListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -845,7 +869,7 @@ impl AuditSink {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_audit_sink_list(
         optional: WatchAuditSinkListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchAuditSinkListResponse>), crate::RequestError> {
         let WatchAuditSinkListOptional {
             continue_,
             field_selector,
@@ -890,11 +914,14 @@ impl AuditSink {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`AuditSink::watch_audit_sink_list`](./struct.AuditSink.html#method.watch_audit_sink_list)
+/// Optional parameters of [`AuditSink::watch_audit_sink_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchAuditSinkListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -921,7 +948,7 @@ pub struct WatchAuditSinkListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`AuditSink::watch_audit_sink_list`](./struct.AuditSink.html#method.watch_audit_sink_list)
+/// Use `<WatchAuditSinkListResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::watch_audit_sink_list`]
 #[derive(Debug)]
 pub enum WatchAuditSinkListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),

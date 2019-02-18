@@ -5,15 +5,16 @@ fn watch_pods() {
 	use k8s_openapi::api::core::v1 as api;
 
 	crate::Client::with("watch_event-watch_pods", |client| {
-		let request = api::Pod::list_namespaced_pod("kube-system", api::ListNamespacedPodOptional {
-			watch: Some(true),
-			..Default::default()
-		}).expect("couldn't watch pods");
+		// Ignore the `ResponseBody<ListNamespacedPodResponse>` constructor returned by `list_namespaced_pod`.
+		// The actual response is a WatchNamespacedPodListResponse because of the watch=true parameter.
+		let (request, _) =
+			api::Pod::list_namespaced_pod("kube-system", api::ListNamespacedPodOptional {
+				watch: Some(true),
+				..Default::default()
+			}).expect("couldn't watch pods");
 		let response = client.execute(request).expect("couldn't watch pods");
 		let pod_watch_events =
-			crate::get_multiple_values(response, |response, status_code, _| match response {
-				// The response is a WatchNamespacedPodListResponse, not a ListNamespacedPodResponse,
-				// because of the watch=true parameter
+			crate::get_multiple_values(response, k8s_openapi::ResponseBody::new, |response, status_code, _| match response {
 				api::WatchNamespacedPodListResponse::Ok(pod_watch_event) =>
 					Ok(crate::ValueResult::GotValue(pod_watch_event)),
 				other => Err(format!("{:?} {}", other, status_code).into()),

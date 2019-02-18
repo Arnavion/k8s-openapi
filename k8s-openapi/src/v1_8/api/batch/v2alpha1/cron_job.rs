@@ -20,7 +20,7 @@ pub struct CronJob {
 impl CronJob {
     /// create a CronJob
     ///
-    /// Use [`CreateNamespacedCronJobResponse`](./enum.CreateNamespacedCronJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedCronJobResponse`]`>` constructor, or [`CreateNamespacedCronJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,7 +37,7 @@ impl CronJob {
         namespace: &str,
         body: &crate::v1_8::api::batch::v2alpha1::CronJob,
         optional: CreateNamespacedCronJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedCronJobResponse>), crate::RequestError> {
         let CreateNamespacedCronJobOptional {
             pretty,
         } = optional;
@@ -50,18 +50,21 @@ impl CronJob {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::create_namespaced_cron_job`](./struct.CronJob.html#method.create_namespaced_cron_job)
+/// Optional parameters of [`CronJob::create_namespaced_cron_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedCronJobOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CronJob::create_namespaced_cron_job`](./struct.CronJob.html#method.create_namespaced_cron_job)
+/// Use `<CreateNamespacedCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::create_namespaced_cron_job`]
 #[derive(Debug)]
 pub enum CreateNamespacedCronJobResponse {
     Ok(crate::v1_8::api::batch::v2alpha1::CronJob),
@@ -91,7 +94,7 @@ impl crate::Response for CreateNamespacedCronJobResponse {
 impl CronJob {
     /// delete collection of CronJob
     ///
-    /// Use [`DeleteCollectionNamespacedCronJobResponse`](./enum.DeleteCollectionNamespacedCronJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedCronJobResponse`]`>` constructor, or [`DeleteCollectionNamespacedCronJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -105,7 +108,7 @@ impl CronJob {
     pub fn delete_collection_namespaced_cron_job(
         namespace: &str,
         optional: DeleteCollectionNamespacedCronJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedCronJobResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedCronJobOptional {
             continue_,
             field_selector,
@@ -150,11 +153,14 @@ impl CronJob {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::delete_collection_namespaced_cron_job`](./struct.CronJob.html#method.delete_collection_namespaced_cron_job)
+/// Optional parameters of [`CronJob::delete_collection_namespaced_cron_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedCronJobOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -179,7 +185,7 @@ pub struct DeleteCollectionNamespacedCronJobOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CronJob::delete_collection_namespaced_cron_job`](./struct.CronJob.html#method.delete_collection_namespaced_cron_job)
+/// Use `<DeleteCollectionNamespacedCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::delete_collection_namespaced_cron_job`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedCronJobResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -223,7 +229,7 @@ impl crate::Response for DeleteCollectionNamespacedCronJobResponse {
 impl CronJob {
     /// delete a CronJob
     ///
-    /// Use [`DeleteNamespacedCronJobResponse`](./enum.DeleteNamespacedCronJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedCronJobResponse`]`>` constructor, or [`DeleteNamespacedCronJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -242,7 +248,7 @@ impl CronJob {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedCronJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedCronJobResponse>), crate::RequestError> {
         let DeleteNamespacedCronJobOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -267,11 +273,14 @@ impl CronJob {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::delete_namespaced_cron_job`](./struct.CronJob.html#method.delete_namespaced_cron_job)
+/// Optional parameters of [`CronJob::delete_namespaced_cron_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedCronJobOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -284,7 +293,7 @@ pub struct DeleteNamespacedCronJobOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CronJob::delete_namespaced_cron_job`](./struct.CronJob.html#method.delete_namespaced_cron_job)
+/// Use `<DeleteNamespacedCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::delete_namespaced_cron_job`]
 #[derive(Debug)]
 pub enum DeleteNamespacedCronJobResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -328,7 +337,7 @@ impl crate::Response for DeleteNamespacedCronJobResponse {
 impl CronJob {
     /// list or watch objects of kind CronJob
     ///
-    /// Use [`ListCronJobForAllNamespacesResponse`](./enum.ListCronJobForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListCronJobForAllNamespacesResponse`]`>` constructor, or [`ListCronJobForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -337,7 +346,7 @@ impl CronJob {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_cron_job_for_all_namespaces(
         optional: ListCronJobForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListCronJobForAllNamespacesResponse>), crate::RequestError> {
         let ListCronJobForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -382,11 +391,14 @@ impl CronJob {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::list_cron_job_for_all_namespaces`](./struct.CronJob.html#method.list_cron_job_for_all_namespaces)
+/// Optional parameters of [`CronJob::list_cron_job_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListCronJobForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -411,7 +423,7 @@ pub struct ListCronJobForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CronJob::list_cron_job_for_all_namespaces`](./struct.CronJob.html#method.list_cron_job_for_all_namespaces)
+/// Use `<ListCronJobForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::list_cron_job_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListCronJobForAllNamespacesResponse {
     Ok(crate::v1_8::api::batch::v2alpha1::CronJobList),
@@ -441,7 +453,7 @@ impl crate::Response for ListCronJobForAllNamespacesResponse {
 impl CronJob {
     /// list or watch objects of kind CronJob
     ///
-    /// Use [`ListNamespacedCronJobResponse`](./enum.ListNamespacedCronJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedCronJobResponse`]`>` constructor, or [`ListNamespacedCronJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -455,7 +467,7 @@ impl CronJob {
     pub fn list_namespaced_cron_job(
         namespace: &str,
         optional: ListNamespacedCronJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedCronJobResponse>), crate::RequestError> {
         let ListNamespacedCronJobOptional {
             continue_,
             field_selector,
@@ -500,11 +512,14 @@ impl CronJob {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::list_namespaced_cron_job`](./struct.CronJob.html#method.list_namespaced_cron_job)
+/// Optional parameters of [`CronJob::list_namespaced_cron_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedCronJobOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -529,7 +544,7 @@ pub struct ListNamespacedCronJobOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CronJob::list_namespaced_cron_job`](./struct.CronJob.html#method.list_namespaced_cron_job)
+/// Use `<ListNamespacedCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::list_namespaced_cron_job`]
 #[derive(Debug)]
 pub enum ListNamespacedCronJobResponse {
     Ok(crate::v1_8::api::batch::v2alpha1::CronJobList),
@@ -559,7 +574,7 @@ impl crate::Response for ListNamespacedCronJobResponse {
 impl CronJob {
     /// partially update the specified CronJob
     ///
-    /// Use [`PatchNamespacedCronJobResponse`](./enum.PatchNamespacedCronJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedCronJobResponse`]`>` constructor, or [`PatchNamespacedCronJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -581,7 +596,7 @@ impl CronJob {
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedCronJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedCronJobResponse>), crate::RequestError> {
         let PatchNamespacedCronJobOptional {
             pretty,
         } = optional;
@@ -594,18 +609,21 @@ impl CronJob {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::patch_namespaced_cron_job`](./struct.CronJob.html#method.patch_namespaced_cron_job)
+/// Optional parameters of [`CronJob::patch_namespaced_cron_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedCronJobOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CronJob::patch_namespaced_cron_job`](./struct.CronJob.html#method.patch_namespaced_cron_job)
+/// Use `<PatchNamespacedCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::patch_namespaced_cron_job`]
 #[derive(Debug)]
 pub enum PatchNamespacedCronJobResponse {
     Ok(crate::v1_8::api::batch::v2alpha1::CronJob),
@@ -635,7 +653,7 @@ impl crate::Response for PatchNamespacedCronJobResponse {
 impl CronJob {
     /// partially update status of the specified CronJob
     ///
-    /// Use [`PatchNamespacedCronJobStatusResponse`](./enum.PatchNamespacedCronJobStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedCronJobStatusResponse`]`>` constructor, or [`PatchNamespacedCronJobStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -657,7 +675,7 @@ impl CronJob {
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedCronJobStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedCronJobStatusResponse>), crate::RequestError> {
         let PatchNamespacedCronJobStatusOptional {
             pretty,
         } = optional;
@@ -670,18 +688,21 @@ impl CronJob {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::patch_namespaced_cron_job_status`](./struct.CronJob.html#method.patch_namespaced_cron_job_status)
+/// Optional parameters of [`CronJob::patch_namespaced_cron_job_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedCronJobStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CronJob::patch_namespaced_cron_job_status`](./struct.CronJob.html#method.patch_namespaced_cron_job_status)
+/// Use `<PatchNamespacedCronJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::patch_namespaced_cron_job_status`]
 #[derive(Debug)]
 pub enum PatchNamespacedCronJobStatusResponse {
     Ok(crate::v1_8::api::batch::v2alpha1::CronJob),
@@ -711,7 +732,7 @@ impl crate::Response for PatchNamespacedCronJobStatusResponse {
 impl CronJob {
     /// read the specified CronJob
     ///
-    /// Use [`ReadNamespacedCronJobResponse`](./enum.ReadNamespacedCronJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedCronJobResponse`]`>` constructor, or [`ReadNamespacedCronJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -730,7 +751,7 @@ impl CronJob {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedCronJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedCronJobResponse>), crate::RequestError> {
         let ReadNamespacedCronJobOptional {
             exact,
             export,
@@ -751,11 +772,14 @@ impl CronJob {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::read_namespaced_cron_job`](./struct.CronJob.html#method.read_namespaced_cron_job)
+/// Optional parameters of [`CronJob::read_namespaced_cron_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedCronJobOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -766,7 +790,7 @@ pub struct ReadNamespacedCronJobOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CronJob::read_namespaced_cron_job`](./struct.CronJob.html#method.read_namespaced_cron_job)
+/// Use `<ReadNamespacedCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::read_namespaced_cron_job`]
 #[derive(Debug)]
 pub enum ReadNamespacedCronJobResponse {
     Ok(crate::v1_8::api::batch::v2alpha1::CronJob),
@@ -796,7 +820,7 @@ impl crate::Response for ReadNamespacedCronJobResponse {
 impl CronJob {
     /// read status of the specified CronJob
     ///
-    /// Use [`ReadNamespacedCronJobStatusResponse`](./enum.ReadNamespacedCronJobStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedCronJobStatusResponse`]`>` constructor, or [`ReadNamespacedCronJobStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -815,7 +839,7 @@ impl CronJob {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedCronJobStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedCronJobStatusResponse>), crate::RequestError> {
         let ReadNamespacedCronJobStatusOptional {
             pretty,
         } = optional;
@@ -828,18 +852,21 @@ impl CronJob {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::read_namespaced_cron_job_status`](./struct.CronJob.html#method.read_namespaced_cron_job_status)
+/// Optional parameters of [`CronJob::read_namespaced_cron_job_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedCronJobStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CronJob::read_namespaced_cron_job_status`](./struct.CronJob.html#method.read_namespaced_cron_job_status)
+/// Use `<ReadNamespacedCronJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::read_namespaced_cron_job_status`]
 #[derive(Debug)]
 pub enum ReadNamespacedCronJobStatusResponse {
     Ok(crate::v1_8::api::batch::v2alpha1::CronJob),
@@ -869,7 +896,7 @@ impl crate::Response for ReadNamespacedCronJobStatusResponse {
 impl CronJob {
     /// replace the specified CronJob
     ///
-    /// Use [`ReplaceNamespacedCronJobResponse`](./enum.ReplaceNamespacedCronJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedCronJobResponse`]`>` constructor, or [`ReplaceNamespacedCronJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -891,7 +918,7 @@ impl CronJob {
         namespace: &str,
         body: &crate::v1_8::api::batch::v2alpha1::CronJob,
         optional: ReplaceNamespacedCronJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedCronJobResponse>), crate::RequestError> {
         let ReplaceNamespacedCronJobOptional {
             pretty,
         } = optional;
@@ -904,18 +931,21 @@ impl CronJob {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::replace_namespaced_cron_job`](./struct.CronJob.html#method.replace_namespaced_cron_job)
+/// Optional parameters of [`CronJob::replace_namespaced_cron_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedCronJobOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CronJob::replace_namespaced_cron_job`](./struct.CronJob.html#method.replace_namespaced_cron_job)
+/// Use `<ReplaceNamespacedCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::replace_namespaced_cron_job`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedCronJobResponse {
     Ok(crate::v1_8::api::batch::v2alpha1::CronJob),
@@ -945,7 +975,7 @@ impl crate::Response for ReplaceNamespacedCronJobResponse {
 impl CronJob {
     /// replace status of the specified CronJob
     ///
-    /// Use [`ReplaceNamespacedCronJobStatusResponse`](./enum.ReplaceNamespacedCronJobStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedCronJobStatusResponse`]`>` constructor, or [`ReplaceNamespacedCronJobStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -967,7 +997,7 @@ impl CronJob {
         namespace: &str,
         body: &crate::v1_8::api::batch::v2alpha1::CronJob,
         optional: ReplaceNamespacedCronJobStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedCronJobStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedCronJobStatusOptional {
             pretty,
         } = optional;
@@ -980,18 +1010,21 @@ impl CronJob {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::replace_namespaced_cron_job_status`](./struct.CronJob.html#method.replace_namespaced_cron_job_status)
+/// Optional parameters of [`CronJob::replace_namespaced_cron_job_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedCronJobStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CronJob::replace_namespaced_cron_job_status`](./struct.CronJob.html#method.replace_namespaced_cron_job_status)
+/// Use `<ReplaceNamespacedCronJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::replace_namespaced_cron_job_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedCronJobStatusResponse {
     Ok(crate::v1_8::api::batch::v2alpha1::CronJob),
@@ -1021,7 +1054,7 @@ impl crate::Response for ReplaceNamespacedCronJobStatusResponse {
 impl CronJob {
     /// watch individual changes to a list of CronJob
     ///
-    /// Use [`WatchCronJobListForAllNamespacesResponse`](./enum.WatchCronJobListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchCronJobListForAllNamespacesResponse`]`>` constructor, or [`WatchCronJobListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1030,7 +1063,7 @@ impl CronJob {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_cron_job_list_for_all_namespaces(
         optional: WatchCronJobListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCronJobListForAllNamespacesResponse>), crate::RequestError> {
         let WatchCronJobListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1075,11 +1108,14 @@ impl CronJob {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::watch_cron_job_list_for_all_namespaces`](./struct.CronJob.html#method.watch_cron_job_list_for_all_namespaces)
+/// Optional parameters of [`CronJob::watch_cron_job_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchCronJobListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1104,7 +1140,7 @@ pub struct WatchCronJobListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CronJob::watch_cron_job_list_for_all_namespaces`](./struct.CronJob.html#method.watch_cron_job_list_for_all_namespaces)
+/// Use `<WatchCronJobListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::watch_cron_job_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchCronJobListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1136,7 +1172,7 @@ impl crate::Response for WatchCronJobListForAllNamespacesResponse {
 impl CronJob {
     /// watch changes to an object of kind CronJob
     ///
-    /// Use [`WatchNamespacedCronJobResponse`](./enum.WatchNamespacedCronJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedCronJobResponse`]`>` constructor, or [`WatchNamespacedCronJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1155,7 +1191,7 @@ impl CronJob {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedCronJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedCronJobResponse>), crate::RequestError> {
         let WatchNamespacedCronJobOptional {
             continue_,
             field_selector,
@@ -1200,11 +1236,14 @@ impl CronJob {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::watch_namespaced_cron_job`](./struct.CronJob.html#method.watch_namespaced_cron_job)
+/// Optional parameters of [`CronJob::watch_namespaced_cron_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedCronJobOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1229,7 +1268,7 @@ pub struct WatchNamespacedCronJobOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CronJob::watch_namespaced_cron_job`](./struct.CronJob.html#method.watch_namespaced_cron_job)
+/// Use `<WatchNamespacedCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::watch_namespaced_cron_job`]
 #[derive(Debug)]
 pub enum WatchNamespacedCronJobResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1261,7 +1300,7 @@ impl crate::Response for WatchNamespacedCronJobResponse {
 impl CronJob {
     /// watch individual changes to a list of CronJob
     ///
-    /// Use [`WatchNamespacedCronJobListResponse`](./enum.WatchNamespacedCronJobListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedCronJobListResponse`]`>` constructor, or [`WatchNamespacedCronJobListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1275,7 +1314,7 @@ impl CronJob {
     pub fn watch_namespaced_cron_job_list(
         namespace: &str,
         optional: WatchNamespacedCronJobListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedCronJobListResponse>), crate::RequestError> {
         let WatchNamespacedCronJobListOptional {
             continue_,
             field_selector,
@@ -1320,11 +1359,14 @@ impl CronJob {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CronJob::watch_namespaced_cron_job_list`](./struct.CronJob.html#method.watch_namespaced_cron_job_list)
+/// Optional parameters of [`CronJob::watch_namespaced_cron_job_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedCronJobListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1349,7 +1391,7 @@ pub struct WatchNamespacedCronJobListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CronJob::watch_namespaced_cron_job_list`](./struct.CronJob.html#method.watch_namespaced_cron_job_list)
+/// Use `<WatchNamespacedCronJobListResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::watch_namespaced_cron_job_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedCronJobListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

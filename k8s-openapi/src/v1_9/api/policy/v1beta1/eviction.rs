@@ -17,7 +17,7 @@ pub struct Eviction {
 impl Eviction {
     /// create eviction of a Pod
     ///
-    /// Use [`CreateNamespacedPodEvictionResponse`](./enum.CreateNamespacedPodEvictionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedPodEvictionResponse`]`>` constructor, or [`CreateNamespacedPodEvictionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -39,7 +39,7 @@ impl Eviction {
         namespace: &str,
         body: &crate::v1_9::api::policy::v1beta1::Eviction,
         optional: CreateNamespacedPodEvictionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodEvictionResponse>), crate::RequestError> {
         let CreateNamespacedPodEvictionOptional {
             pretty,
         } = optional;
@@ -52,18 +52,21 @@ impl Eviction {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Eviction::create_namespaced_pod_eviction`](./struct.Eviction.html#method.create_namespaced_pod_eviction)
+/// Optional parameters of [`Eviction::create_namespaced_pod_eviction`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPodEvictionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Eviction::create_namespaced_pod_eviction`](./struct.Eviction.html#method.create_namespaced_pod_eviction)
+/// Use `<CreateNamespacedPodEvictionResponse as Response>::try_from_parts` to parse the HTTP response body of [`Eviction::create_namespaced_pod_eviction`]
 #[derive(Debug)]
 pub enum CreateNamespacedPodEvictionResponse {
     Ok(crate::v1_9::api::policy::v1beta1::Eviction),

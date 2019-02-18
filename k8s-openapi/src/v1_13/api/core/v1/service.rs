@@ -20,7 +20,7 @@ pub struct Service {
 impl Service {
     /// connect DELETE requests to proxy of Service
     ///
-    /// Use [`ConnectDeleteNamespacedServiceProxyResponse`](./enum.ConnectDeleteNamespacedServiceProxyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectDeleteNamespacedServiceProxyResponse`]`>` constructor, or [`ConnectDeleteNamespacedServiceProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -39,7 +39,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ConnectDeleteNamespacedServiceProxyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectDeleteNamespacedServiceProxyResponse>), crate::RequestError> {
         let ConnectDeleteNamespacedServiceProxyOptional {
             path,
         } = optional;
@@ -52,18 +52,21 @@ impl Service {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::connect_delete_namespaced_service_proxy`](./struct.Service.html#method.connect_delete_namespaced_service_proxy)
+/// Optional parameters of [`Service::connect_delete_namespaced_service_proxy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_delete_namespaced_service_proxy`](./struct.Service.html#method.connect_delete_namespaced_service_proxy)
+/// Use `<ConnectDeleteNamespacedServiceProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_delete_namespaced_service_proxy`]
 #[derive(Debug)]
 pub enum ConnectDeleteNamespacedServiceProxyResponse {
     Ok(String),
@@ -98,7 +101,7 @@ impl crate::Response for ConnectDeleteNamespacedServiceProxyResponse {
 impl Service {
     /// connect DELETE requests to proxy of Service
     ///
-    /// Use [`ConnectDeleteNamespacedServiceProxyWithPathResponse`](./enum.ConnectDeleteNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectDeleteNamespacedServiceProxyWithPathResponse`]`>` constructor, or [`ConnectDeleteNamespacedServiceProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -122,7 +125,7 @@ impl Service {
         namespace: &str,
         path: &str,
         optional: ConnectDeleteNamespacedServiceProxyWithPathOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectDeleteNamespacedServiceProxyWithPathResponse>), crate::RequestError> {
         let ConnectDeleteNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
@@ -135,18 +138,21 @@ impl Service {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::connect_delete_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_delete_namespaced_service_proxy_with_path)
+/// Optional parameters of [`Service::connect_delete_namespaced_service_proxy_with_path`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectDeleteNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_delete_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_delete_namespaced_service_proxy_with_path)
+/// Use `<ConnectDeleteNamespacedServiceProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_delete_namespaced_service_proxy_with_path`]
 #[derive(Debug)]
 pub enum ConnectDeleteNamespacedServiceProxyWithPathResponse {
     Ok(String),
@@ -181,7 +187,7 @@ impl crate::Response for ConnectDeleteNamespacedServiceProxyWithPathResponse {
 impl Service {
     /// connect GET requests to proxy of Service
     ///
-    /// Use [`ConnectGetNamespacedServiceProxyResponse`](./enum.ConnectGetNamespacedServiceProxyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNamespacedServiceProxyResponse`]`>` constructor, or [`ConnectGetNamespacedServiceProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -200,7 +206,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ConnectGetNamespacedServiceProxyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNamespacedServiceProxyResponse>), crate::RequestError> {
         let ConnectGetNamespacedServiceProxyOptional {
             path,
         } = optional;
@@ -213,18 +219,21 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::connect_get_namespaced_service_proxy`](./struct.Service.html#method.connect_get_namespaced_service_proxy)
+/// Optional parameters of [`Service::connect_get_namespaced_service_proxy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_get_namespaced_service_proxy`](./struct.Service.html#method.connect_get_namespaced_service_proxy)
+/// Use `<ConnectGetNamespacedServiceProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_get_namespaced_service_proxy`]
 #[derive(Debug)]
 pub enum ConnectGetNamespacedServiceProxyResponse {
     Ok(String),
@@ -259,7 +268,7 @@ impl crate::Response for ConnectGetNamespacedServiceProxyResponse {
 impl Service {
     /// connect GET requests to proxy of Service
     ///
-    /// Use [`ConnectGetNamespacedServiceProxyWithPathResponse`](./enum.ConnectGetNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectGetNamespacedServiceProxyWithPathResponse`]`>` constructor, or [`ConnectGetNamespacedServiceProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -283,7 +292,7 @@ impl Service {
         namespace: &str,
         path: &str,
         optional: ConnectGetNamespacedServiceProxyWithPathOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectGetNamespacedServiceProxyWithPathResponse>), crate::RequestError> {
         let ConnectGetNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
@@ -296,18 +305,21 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::connect_get_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_get_namespaced_service_proxy_with_path)
+/// Optional parameters of [`Service::connect_get_namespaced_service_proxy_with_path`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectGetNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_get_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_get_namespaced_service_proxy_with_path)
+/// Use `<ConnectGetNamespacedServiceProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_get_namespaced_service_proxy_with_path`]
 #[derive(Debug)]
 pub enum ConnectGetNamespacedServiceProxyWithPathResponse {
     Ok(String),
@@ -342,7 +354,7 @@ impl crate::Response for ConnectGetNamespacedServiceProxyWithPathResponse {
 impl Service {
     /// connect PATCH requests to proxy of Service
     ///
-    /// Use [`ConnectPatchNamespacedServiceProxyResponse`](./enum.ConnectPatchNamespacedServiceProxyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPatchNamespacedServiceProxyResponse`]`>` constructor, or [`ConnectPatchNamespacedServiceProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -361,7 +373,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ConnectPatchNamespacedServiceProxyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPatchNamespacedServiceProxyResponse>), crate::RequestError> {
         let ConnectPatchNamespacedServiceProxyOptional {
             path,
         } = optional;
@@ -374,18 +386,21 @@ impl Service {
 
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::connect_patch_namespaced_service_proxy`](./struct.Service.html#method.connect_patch_namespaced_service_proxy)
+/// Optional parameters of [`Service::connect_patch_namespaced_service_proxy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_patch_namespaced_service_proxy`](./struct.Service.html#method.connect_patch_namespaced_service_proxy)
+/// Use `<ConnectPatchNamespacedServiceProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_patch_namespaced_service_proxy`]
 #[derive(Debug)]
 pub enum ConnectPatchNamespacedServiceProxyResponse {
     Ok(String),
@@ -420,7 +435,7 @@ impl crate::Response for ConnectPatchNamespacedServiceProxyResponse {
 impl Service {
     /// connect PATCH requests to proxy of Service
     ///
-    /// Use [`ConnectPatchNamespacedServiceProxyWithPathResponse`](./enum.ConnectPatchNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPatchNamespacedServiceProxyWithPathResponse`]`>` constructor, or [`ConnectPatchNamespacedServiceProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -444,7 +459,7 @@ impl Service {
         namespace: &str,
         path: &str,
         optional: ConnectPatchNamespacedServiceProxyWithPathOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPatchNamespacedServiceProxyWithPathResponse>), crate::RequestError> {
         let ConnectPatchNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
@@ -457,18 +472,21 @@ impl Service {
 
         let mut __request = http::Request::patch(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::connect_patch_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_patch_namespaced_service_proxy_with_path)
+/// Optional parameters of [`Service::connect_patch_namespaced_service_proxy_with_path`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPatchNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_patch_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_patch_namespaced_service_proxy_with_path)
+/// Use `<ConnectPatchNamespacedServiceProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_patch_namespaced_service_proxy_with_path`]
 #[derive(Debug)]
 pub enum ConnectPatchNamespacedServiceProxyWithPathResponse {
     Ok(String),
@@ -503,7 +521,7 @@ impl crate::Response for ConnectPatchNamespacedServiceProxyWithPathResponse {
 impl Service {
     /// connect POST requests to proxy of Service
     ///
-    /// Use [`ConnectPostNamespacedServiceProxyResponse`](./enum.ConnectPostNamespacedServiceProxyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNamespacedServiceProxyResponse`]`>` constructor, or [`ConnectPostNamespacedServiceProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -522,7 +540,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ConnectPostNamespacedServiceProxyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNamespacedServiceProxyResponse>), crate::RequestError> {
         let ConnectPostNamespacedServiceProxyOptional {
             path,
         } = optional;
@@ -535,18 +553,21 @@ impl Service {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::connect_post_namespaced_service_proxy`](./struct.Service.html#method.connect_post_namespaced_service_proxy)
+/// Optional parameters of [`Service::connect_post_namespaced_service_proxy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_post_namespaced_service_proxy`](./struct.Service.html#method.connect_post_namespaced_service_proxy)
+/// Use `<ConnectPostNamespacedServiceProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_post_namespaced_service_proxy`]
 #[derive(Debug)]
 pub enum ConnectPostNamespacedServiceProxyResponse {
     Ok(String),
@@ -581,7 +602,7 @@ impl crate::Response for ConnectPostNamespacedServiceProxyResponse {
 impl Service {
     /// connect POST requests to proxy of Service
     ///
-    /// Use [`ConnectPostNamespacedServiceProxyWithPathResponse`](./enum.ConnectPostNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPostNamespacedServiceProxyWithPathResponse`]`>` constructor, or [`ConnectPostNamespacedServiceProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -605,7 +626,7 @@ impl Service {
         namespace: &str,
         path: &str,
         optional: ConnectPostNamespacedServiceProxyWithPathOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPostNamespacedServiceProxyWithPathResponse>), crate::RequestError> {
         let ConnectPostNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
@@ -618,18 +639,21 @@ impl Service {
 
         let mut __request = http::Request::post(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::connect_post_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_post_namespaced_service_proxy_with_path)
+/// Optional parameters of [`Service::connect_post_namespaced_service_proxy_with_path`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPostNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_post_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_post_namespaced_service_proxy_with_path)
+/// Use `<ConnectPostNamespacedServiceProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_post_namespaced_service_proxy_with_path`]
 #[derive(Debug)]
 pub enum ConnectPostNamespacedServiceProxyWithPathResponse {
     Ok(String),
@@ -664,7 +688,7 @@ impl crate::Response for ConnectPostNamespacedServiceProxyWithPathResponse {
 impl Service {
     /// connect PUT requests to proxy of Service
     ///
-    /// Use [`ConnectPutNamespacedServiceProxyResponse`](./enum.ConnectPutNamespacedServiceProxyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPutNamespacedServiceProxyResponse`]`>` constructor, or [`ConnectPutNamespacedServiceProxyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -683,7 +707,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ConnectPutNamespacedServiceProxyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPutNamespacedServiceProxyResponse>), crate::RequestError> {
         let ConnectPutNamespacedServiceProxyOptional {
             path,
         } = optional;
@@ -696,18 +720,21 @@ impl Service {
 
         let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::connect_put_namespaced_service_proxy`](./struct.Service.html#method.connect_put_namespaced_service_proxy)
+/// Optional parameters of [`Service::connect_put_namespaced_service_proxy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNamespacedServiceProxyOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_put_namespaced_service_proxy`](./struct.Service.html#method.connect_put_namespaced_service_proxy)
+/// Use `<ConnectPutNamespacedServiceProxyResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_put_namespaced_service_proxy`]
 #[derive(Debug)]
 pub enum ConnectPutNamespacedServiceProxyResponse {
     Ok(String),
@@ -742,7 +769,7 @@ impl crate::Response for ConnectPutNamespacedServiceProxyResponse {
 impl Service {
     /// connect PUT requests to proxy of Service
     ///
-    /// Use [`ConnectPutNamespacedServiceProxyWithPathResponse`](./enum.ConnectPutNamespacedServiceProxyWithPathResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ConnectPutNamespacedServiceProxyWithPathResponse`]`>` constructor, or [`ConnectPutNamespacedServiceProxyWithPathResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -766,7 +793,7 @@ impl Service {
         namespace: &str,
         path: &str,
         optional: ConnectPutNamespacedServiceProxyWithPathOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ConnectPutNamespacedServiceProxyWithPathResponse>), crate::RequestError> {
         let ConnectPutNamespacedServiceProxyWithPathOptional {
             path_,
         } = optional;
@@ -779,18 +806,21 @@ impl Service {
 
         let mut __request = http::Request::put(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::connect_put_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_put_namespaced_service_proxy_with_path)
+/// Optional parameters of [`Service::connect_put_namespaced_service_proxy_with_path`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ConnectPutNamespacedServiceProxyWithPathOptional<'a> {
     /// Path is the part of URLs that include service endpoints, suffixes, and parameters to use for the current proxy request to service. For example, the whole request URL is http://localhost/api/v1/namespaces/kube-system/services/elasticsearch-logging/_search?q=user:kimchy. Path is _search?q=user:kimchy.
     pub path_: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::connect_put_namespaced_service_proxy_with_path`](./struct.Service.html#method.connect_put_namespaced_service_proxy_with_path)
+/// Use `<ConnectPutNamespacedServiceProxyWithPathResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::connect_put_namespaced_service_proxy_with_path`]
 #[derive(Debug)]
 pub enum ConnectPutNamespacedServiceProxyWithPathResponse {
     Ok(String),
@@ -825,7 +855,7 @@ impl crate::Response for ConnectPutNamespacedServiceProxyWithPathResponse {
 impl Service {
     /// create a Service
     ///
-    /// Use [`CreateNamespacedServiceResponse`](./enum.CreateNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedServiceResponse`]`>` constructor, or [`CreateNamespacedServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -842,7 +872,7 @@ impl Service {
         namespace: &str,
         body: &crate::v1_13::api::core::v1::Service,
         optional: CreateNamespacedServiceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedServiceResponse>), crate::RequestError> {
         let CreateNamespacedServiceOptional {
             dry_run,
             include_uninitialized,
@@ -863,11 +893,14 @@ impl Service {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::create_namespaced_service`](./struct.Service.html#method.create_namespaced_service)
+/// Optional parameters of [`Service::create_namespaced_service`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedServiceOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -878,7 +911,7 @@ pub struct CreateNamespacedServiceOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::create_namespaced_service`](./struct.Service.html#method.create_namespaced_service)
+/// Use `<CreateNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::create_namespaced_service`]
 #[derive(Debug)]
 pub enum CreateNamespacedServiceResponse {
     Ok(crate::v1_13::api::core::v1::Service),
@@ -926,7 +959,7 @@ impl crate::Response for CreateNamespacedServiceResponse {
 impl Service {
     /// delete a Service
     ///
-    /// Use [`DeleteNamespacedServiceResponse`](./enum.DeleteNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedServiceResponse`]`>` constructor, or [`DeleteNamespacedServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -945,7 +978,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedServiceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedServiceResponse>), crate::RequestError> {
         let DeleteNamespacedServiceOptional {
             dry_run,
             grace_period_seconds,
@@ -974,11 +1007,14 @@ impl Service {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::delete_namespaced_service`](./struct.Service.html#method.delete_namespaced_service)
+/// Optional parameters of [`Service::delete_namespaced_service`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedServiceOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -993,7 +1029,7 @@ pub struct DeleteNamespacedServiceOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::delete_namespaced_service`](./struct.Service.html#method.delete_namespaced_service)
+/// Use `<DeleteNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::delete_namespaced_service`]
 #[derive(Debug)]
 pub enum DeleteNamespacedServiceResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -1046,7 +1082,7 @@ impl crate::Response for DeleteNamespacedServiceResponse {
 impl Service {
     /// list or watch objects of kind Service
     ///
-    /// Use [`ListNamespacedServiceResponse`](./enum.ListNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedServiceResponse`]`>` constructor, or [`ListNamespacedServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1060,7 +1096,7 @@ impl Service {
     pub fn list_namespaced_service(
         namespace: &str,
         optional: ListNamespacedServiceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedServiceResponse>), crate::RequestError> {
         let ListNamespacedServiceOptional {
             continue_,
             field_selector,
@@ -1105,11 +1141,14 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::list_namespaced_service`](./struct.Service.html#method.list_namespaced_service)
+/// Optional parameters of [`Service::list_namespaced_service`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1136,7 +1175,7 @@ pub struct ListNamespacedServiceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Service::list_namespaced_service`](./struct.Service.html#method.list_namespaced_service)
+/// Use `<ListNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::list_namespaced_service`]
 #[derive(Debug)]
 pub enum ListNamespacedServiceResponse {
     Ok(crate::v1_13::api::core::v1::ServiceList),
@@ -1166,7 +1205,7 @@ impl crate::Response for ListNamespacedServiceResponse {
 impl Service {
     /// list or watch objects of kind Service
     ///
-    /// Use [`ListServiceForAllNamespacesResponse`](./enum.ListServiceForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListServiceForAllNamespacesResponse`]`>` constructor, or [`ListServiceForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1175,7 +1214,7 @@ impl Service {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_service_for_all_namespaces(
         optional: ListServiceForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListServiceForAllNamespacesResponse>), crate::RequestError> {
         let ListServiceForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1220,11 +1259,14 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::list_service_for_all_namespaces`](./struct.Service.html#method.list_service_for_all_namespaces)
+/// Optional parameters of [`Service::list_service_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListServiceForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1251,7 +1293,7 @@ pub struct ListServiceForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Service::list_service_for_all_namespaces`](./struct.Service.html#method.list_service_for_all_namespaces)
+/// Use `<ListServiceForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::list_service_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListServiceForAllNamespacesResponse {
     Ok(crate::v1_13::api::core::v1::ServiceList),
@@ -1281,7 +1323,7 @@ impl crate::Response for ListServiceForAllNamespacesResponse {
 impl Service {
     /// partially update the specified Service
     ///
-    /// Use [`PatchNamespacedServiceResponse`](./enum.PatchNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedServiceResponse`]`>` constructor, or [`PatchNamespacedServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1303,7 +1345,7 @@ impl Service {
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedServiceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedServiceResponse>), crate::RequestError> {
         let PatchNamespacedServiceOptional {
             dry_run,
             pretty,
@@ -1320,11 +1362,14 @@ impl Service {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::patch_namespaced_service`](./struct.Service.html#method.patch_namespaced_service)
+/// Optional parameters of [`Service::patch_namespaced_service`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedServiceOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -1333,7 +1378,7 @@ pub struct PatchNamespacedServiceOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::patch_namespaced_service`](./struct.Service.html#method.patch_namespaced_service)
+/// Use `<PatchNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::patch_namespaced_service`]
 #[derive(Debug)]
 pub enum PatchNamespacedServiceResponse {
     Ok(crate::v1_13::api::core::v1::Service),
@@ -1363,7 +1408,7 @@ impl crate::Response for PatchNamespacedServiceResponse {
 impl Service {
     /// partially update status of the specified Service
     ///
-    /// Use [`PatchNamespacedServiceStatusResponse`](./enum.PatchNamespacedServiceStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedServiceStatusResponse`]`>` constructor, or [`PatchNamespacedServiceStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1385,7 +1430,7 @@ impl Service {
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedServiceStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedServiceStatusResponse>), crate::RequestError> {
         let PatchNamespacedServiceStatusOptional {
             dry_run,
             pretty,
@@ -1402,11 +1447,14 @@ impl Service {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::patch_namespaced_service_status`](./struct.Service.html#method.patch_namespaced_service_status)
+/// Optional parameters of [`Service::patch_namespaced_service_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedServiceStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -1415,7 +1463,7 @@ pub struct PatchNamespacedServiceStatusOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::patch_namespaced_service_status`](./struct.Service.html#method.patch_namespaced_service_status)
+/// Use `<PatchNamespacedServiceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::patch_namespaced_service_status`]
 #[derive(Debug)]
 pub enum PatchNamespacedServiceStatusResponse {
     Ok(crate::v1_13::api::core::v1::Service),
@@ -1445,7 +1493,7 @@ impl crate::Response for PatchNamespacedServiceStatusResponse {
 impl Service {
     /// read the specified Service
     ///
-    /// Use [`ReadNamespacedServiceResponse`](./enum.ReadNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedServiceResponse`]`>` constructor, or [`ReadNamespacedServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1464,7 +1512,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedServiceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedServiceResponse>), crate::RequestError> {
         let ReadNamespacedServiceOptional {
             exact,
             export,
@@ -1485,11 +1533,14 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::read_namespaced_service`](./struct.Service.html#method.read_namespaced_service)
+/// Optional parameters of [`Service::read_namespaced_service`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedServiceOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -1500,7 +1551,7 @@ pub struct ReadNamespacedServiceOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::read_namespaced_service`](./struct.Service.html#method.read_namespaced_service)
+/// Use `<ReadNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::read_namespaced_service`]
 #[derive(Debug)]
 pub enum ReadNamespacedServiceResponse {
     Ok(crate::v1_13::api::core::v1::Service),
@@ -1530,7 +1581,7 @@ impl crate::Response for ReadNamespacedServiceResponse {
 impl Service {
     /// read status of the specified Service
     ///
-    /// Use [`ReadNamespacedServiceStatusResponse`](./enum.ReadNamespacedServiceStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedServiceStatusResponse`]`>` constructor, or [`ReadNamespacedServiceStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1549,7 +1600,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedServiceStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedServiceStatusResponse>), crate::RequestError> {
         let ReadNamespacedServiceStatusOptional {
             pretty,
         } = optional;
@@ -1562,18 +1613,21 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::read_namespaced_service_status`](./struct.Service.html#method.read_namespaced_service_status)
+/// Optional parameters of [`Service::read_namespaced_service_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedServiceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::read_namespaced_service_status`](./struct.Service.html#method.read_namespaced_service_status)
+/// Use `<ReadNamespacedServiceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::read_namespaced_service_status`]
 #[derive(Debug)]
 pub enum ReadNamespacedServiceStatusResponse {
     Ok(crate::v1_13::api::core::v1::Service),
@@ -1603,7 +1657,7 @@ impl crate::Response for ReadNamespacedServiceStatusResponse {
 impl Service {
     /// replace the specified Service
     ///
-    /// Use [`ReplaceNamespacedServiceResponse`](./enum.ReplaceNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedServiceResponse`]`>` constructor, or [`ReplaceNamespacedServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1625,7 +1679,7 @@ impl Service {
         namespace: &str,
         body: &crate::v1_13::api::core::v1::Service,
         optional: ReplaceNamespacedServiceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedServiceResponse>), crate::RequestError> {
         let ReplaceNamespacedServiceOptional {
             dry_run,
             pretty,
@@ -1642,11 +1696,14 @@ impl Service {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::replace_namespaced_service`](./struct.Service.html#method.replace_namespaced_service)
+/// Optional parameters of [`Service::replace_namespaced_service`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedServiceOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -1655,7 +1712,7 @@ pub struct ReplaceNamespacedServiceOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::replace_namespaced_service`](./struct.Service.html#method.replace_namespaced_service)
+/// Use `<ReplaceNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::replace_namespaced_service`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedServiceResponse {
     Ok(crate::v1_13::api::core::v1::Service),
@@ -1694,7 +1751,7 @@ impl crate::Response for ReplaceNamespacedServiceResponse {
 impl Service {
     /// replace status of the specified Service
     ///
-    /// Use [`ReplaceNamespacedServiceStatusResponse`](./enum.ReplaceNamespacedServiceStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedServiceStatusResponse`]`>` constructor, or [`ReplaceNamespacedServiceStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1716,7 +1773,7 @@ impl Service {
         namespace: &str,
         body: &crate::v1_13::api::core::v1::Service,
         optional: ReplaceNamespacedServiceStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedServiceStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedServiceStatusOptional {
             dry_run,
             pretty,
@@ -1733,11 +1790,14 @@ impl Service {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::replace_namespaced_service_status`](./struct.Service.html#method.replace_namespaced_service_status)
+/// Optional parameters of [`Service::replace_namespaced_service_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedServiceStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -1746,7 +1806,7 @@ pub struct ReplaceNamespacedServiceStatusOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Service::replace_namespaced_service_status`](./struct.Service.html#method.replace_namespaced_service_status)
+/// Use `<ReplaceNamespacedServiceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::replace_namespaced_service_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedServiceStatusResponse {
     Ok(crate::v1_13::api::core::v1::Service),
@@ -1785,7 +1845,7 @@ impl crate::Response for ReplaceNamespacedServiceStatusResponse {
 impl Service {
     /// watch changes to an object of kind Service. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchNamespacedServiceResponse`](./enum.WatchNamespacedServiceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedServiceResponse`]`>` constructor, or [`WatchNamespacedServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1804,7 +1864,7 @@ impl Service {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedServiceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedServiceResponse>), crate::RequestError> {
         let WatchNamespacedServiceOptional {
             continue_,
             field_selector,
@@ -1849,11 +1909,14 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::watch_namespaced_service`](./struct.Service.html#method.watch_namespaced_service)
+/// Optional parameters of [`Service::watch_namespaced_service`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1880,7 +1943,7 @@ pub struct WatchNamespacedServiceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Service::watch_namespaced_service`](./struct.Service.html#method.watch_namespaced_service)
+/// Use `<WatchNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_namespaced_service`]
 #[derive(Debug)]
 pub enum WatchNamespacedServiceResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1912,7 +1975,7 @@ impl crate::Response for WatchNamespacedServiceResponse {
 impl Service {
     /// watch individual changes to a list of Service. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchNamespacedServiceListResponse`](./enum.WatchNamespacedServiceListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedServiceListResponse`]`>` constructor, or [`WatchNamespacedServiceListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1926,7 +1989,7 @@ impl Service {
     pub fn watch_namespaced_service_list(
         namespace: &str,
         optional: WatchNamespacedServiceListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedServiceListResponse>), crate::RequestError> {
         let WatchNamespacedServiceListOptional {
             continue_,
             field_selector,
@@ -1971,11 +2034,14 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::watch_namespaced_service_list`](./struct.Service.html#method.watch_namespaced_service_list)
+/// Optional parameters of [`Service::watch_namespaced_service_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedServiceListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -2002,7 +2068,7 @@ pub struct WatchNamespacedServiceListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Service::watch_namespaced_service_list`](./struct.Service.html#method.watch_namespaced_service_list)
+/// Use `<WatchNamespacedServiceListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_namespaced_service_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedServiceListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -2034,7 +2100,7 @@ impl crate::Response for WatchNamespacedServiceListResponse {
 impl Service {
     /// watch individual changes to a list of Service. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchServiceListForAllNamespacesResponse`](./enum.WatchServiceListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchServiceListForAllNamespacesResponse`]`>` constructor, or [`WatchServiceListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -2043,7 +2109,7 @@ impl Service {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_service_list_for_all_namespaces(
         optional: WatchServiceListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchServiceListForAllNamespacesResponse>), crate::RequestError> {
         let WatchServiceListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -2088,11 +2154,14 @@ impl Service {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Service::watch_service_list_for_all_namespaces`](./struct.Service.html#method.watch_service_list_for_all_namespaces)
+/// Optional parameters of [`Service::watch_service_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchServiceListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -2119,7 +2188,7 @@ pub struct WatchServiceListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Service::watch_service_list_for_all_namespaces`](./struct.Service.html#method.watch_service_list_for_all_namespaces)
+/// Use `<WatchServiceListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_service_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchServiceListForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),

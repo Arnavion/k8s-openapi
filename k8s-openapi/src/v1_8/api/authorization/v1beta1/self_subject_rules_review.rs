@@ -19,7 +19,7 @@ pub struct SelfSubjectRulesReview {
 impl SelfSubjectRulesReview {
     /// create a SelfSubjectRulesReview
     ///
-    /// Use [`CreateSelfSubjectRulesReviewResponse`](./enum.CreateSelfSubjectRulesReviewResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateSelfSubjectRulesReviewResponse`]`>` constructor, or [`CreateSelfSubjectRulesReviewResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,7 +31,7 @@ impl SelfSubjectRulesReview {
     pub fn create_self_subject_rules_review(
         body: &crate::v1_8::api::authorization::v1beta1::SelfSubjectRulesReview,
         optional: CreateSelfSubjectRulesReviewOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateSelfSubjectRulesReviewResponse>), crate::RequestError> {
         let CreateSelfSubjectRulesReviewOptional {
             pretty,
         } = optional;
@@ -44,18 +44,21 @@ impl SelfSubjectRulesReview {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`SelfSubjectRulesReview::create_self_subject_rules_review`](./struct.SelfSubjectRulesReview.html#method.create_self_subject_rules_review)
+/// Optional parameters of [`SelfSubjectRulesReview::create_self_subject_rules_review`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateSelfSubjectRulesReviewOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`SelfSubjectRulesReview::create_self_subject_rules_review`](./struct.SelfSubjectRulesReview.html#method.create_self_subject_rules_review)
+/// Use `<CreateSelfSubjectRulesReviewResponse as Response>::try_from_parts` to parse the HTTP response body of [`SelfSubjectRulesReview::create_self_subject_rules_review`]
 #[derive(Debug)]
 pub enum CreateSelfSubjectRulesReviewResponse {
     Ok(crate::v1_8::api::authorization::v1beta1::SelfSubjectRulesReview),

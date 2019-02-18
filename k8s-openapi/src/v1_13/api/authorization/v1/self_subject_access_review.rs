@@ -19,7 +19,7 @@ pub struct SelfSubjectAccessReview {
 impl SelfSubjectAccessReview {
     /// create a SelfSubjectAccessReview
     ///
-    /// Use [`CreateSelfSubjectAccessReviewResponse`](./enum.CreateSelfSubjectAccessReviewResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateSelfSubjectAccessReviewResponse`]`>` constructor, or [`CreateSelfSubjectAccessReviewResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,7 +31,7 @@ impl SelfSubjectAccessReview {
     pub fn create_self_subject_access_review(
         body: &crate::v1_13::api::authorization::v1::SelfSubjectAccessReview,
         optional: CreateSelfSubjectAccessReviewOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateSelfSubjectAccessReviewResponse>), crate::RequestError> {
         let CreateSelfSubjectAccessReviewOptional {
             dry_run,
             include_uninitialized,
@@ -52,11 +52,14 @@ impl SelfSubjectAccessReview {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`SelfSubjectAccessReview::create_self_subject_access_review`](./struct.SelfSubjectAccessReview.html#method.create_self_subject_access_review)
+/// Optional parameters of [`SelfSubjectAccessReview::create_self_subject_access_review`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateSelfSubjectAccessReviewOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -67,7 +70,7 @@ pub struct CreateSelfSubjectAccessReviewOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`SelfSubjectAccessReview::create_self_subject_access_review`](./struct.SelfSubjectAccessReview.html#method.create_self_subject_access_review)
+/// Use `<CreateSelfSubjectAccessReviewResponse as Response>::try_from_parts` to parse the HTTP response body of [`SelfSubjectAccessReview::create_self_subject_access_review`]
 #[derive(Debug)]
 pub enum CreateSelfSubjectAccessReviewResponse {
     Ok(crate::v1_13::api::authorization::v1::SelfSubjectAccessReview),

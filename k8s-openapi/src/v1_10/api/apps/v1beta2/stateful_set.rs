@@ -22,7 +22,7 @@ pub struct StatefulSet {
 impl StatefulSet {
     /// create a StatefulSet
     ///
-    /// Use [`CreateNamespacedStatefulSetResponse`](./enum.CreateNamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedStatefulSetResponse`]`>` constructor, or [`CreateNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -39,7 +39,7 @@ impl StatefulSet {
         namespace: &str,
         body: &crate::v1_10::api::apps::v1beta2::StatefulSet,
         optional: CreateNamespacedStatefulSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedStatefulSetResponse>), crate::RequestError> {
         let CreateNamespacedStatefulSetOptional {
             pretty,
         } = optional;
@@ -52,18 +52,21 @@ impl StatefulSet {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::create_namespaced_stateful_set`](./struct.StatefulSet.html#method.create_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::create_namespaced_stateful_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedStatefulSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::create_namespaced_stateful_set`](./struct.StatefulSet.html#method.create_namespaced_stateful_set)
+/// Use `<CreateNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::create_namespaced_stateful_set`]
 #[derive(Debug)]
 pub enum CreateNamespacedStatefulSetResponse {
     Ok(crate::v1_10::api::apps::v1beta2::StatefulSet),
@@ -111,7 +114,7 @@ impl crate::Response for CreateNamespacedStatefulSetResponse {
 impl StatefulSet {
     /// delete collection of StatefulSet
     ///
-    /// Use [`DeleteCollectionNamespacedStatefulSetResponse`](./enum.DeleteCollectionNamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedStatefulSetResponse`]`>` constructor, or [`DeleteCollectionNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -125,7 +128,7 @@ impl StatefulSet {
     pub fn delete_collection_namespaced_stateful_set(
         namespace: &str,
         optional: DeleteCollectionNamespacedStatefulSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedStatefulSetResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedStatefulSetOptional {
             continue_,
             field_selector,
@@ -170,11 +173,14 @@ impl StatefulSet {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::delete_collection_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_collection_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::delete_collection_namespaced_stateful_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedStatefulSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -199,7 +205,7 @@ pub struct DeleteCollectionNamespacedStatefulSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::delete_collection_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_collection_namespaced_stateful_set)
+/// Use `<DeleteCollectionNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::delete_collection_namespaced_stateful_set`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedStatefulSetResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -243,7 +249,7 @@ impl crate::Response for DeleteCollectionNamespacedStatefulSetResponse {
 impl StatefulSet {
     /// delete a StatefulSet
     ///
-    /// Use [`DeleteNamespacedStatefulSetResponse`](./enum.DeleteNamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedStatefulSetResponse`]`>` constructor, or [`DeleteNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -262,7 +268,7 @@ impl StatefulSet {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedStatefulSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedStatefulSetResponse>), crate::RequestError> {
         let DeleteNamespacedStatefulSetOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -287,11 +293,14 @@ impl StatefulSet {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::delete_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::delete_namespaced_stateful_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedStatefulSetOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -304,7 +313,7 @@ pub struct DeleteNamespacedStatefulSetOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::delete_namespaced_stateful_set`](./struct.StatefulSet.html#method.delete_namespaced_stateful_set)
+/// Use `<DeleteNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::delete_namespaced_stateful_set`]
 #[derive(Debug)]
 pub enum DeleteNamespacedStatefulSetResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -348,7 +357,7 @@ impl crate::Response for DeleteNamespacedStatefulSetResponse {
 impl StatefulSet {
     /// list or watch objects of kind StatefulSet
     ///
-    /// Use [`ListNamespacedStatefulSetResponse`](./enum.ListNamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedStatefulSetResponse`]`>` constructor, or [`ListNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -362,7 +371,7 @@ impl StatefulSet {
     pub fn list_namespaced_stateful_set(
         namespace: &str,
         optional: ListNamespacedStatefulSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedStatefulSetResponse>), crate::RequestError> {
         let ListNamespacedStatefulSetOptional {
             continue_,
             field_selector,
@@ -407,11 +416,14 @@ impl StatefulSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::list_namespaced_stateful_set`](./struct.StatefulSet.html#method.list_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::list_namespaced_stateful_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedStatefulSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -436,7 +448,7 @@ pub struct ListNamespacedStatefulSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::list_namespaced_stateful_set`](./struct.StatefulSet.html#method.list_namespaced_stateful_set)
+/// Use `<ListNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::list_namespaced_stateful_set`]
 #[derive(Debug)]
 pub enum ListNamespacedStatefulSetResponse {
     Ok(crate::v1_10::api::apps::v1beta2::StatefulSetList),
@@ -466,7 +478,7 @@ impl crate::Response for ListNamespacedStatefulSetResponse {
 impl StatefulSet {
     /// list or watch objects of kind StatefulSet
     ///
-    /// Use [`ListStatefulSetForAllNamespacesResponse`](./enum.ListStatefulSetForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListStatefulSetForAllNamespacesResponse`]`>` constructor, or [`ListStatefulSetForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -475,7 +487,7 @@ impl StatefulSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_stateful_set_for_all_namespaces(
         optional: ListStatefulSetForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListStatefulSetForAllNamespacesResponse>), crate::RequestError> {
         let ListStatefulSetForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -520,11 +532,14 @@ impl StatefulSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::list_stateful_set_for_all_namespaces`](./struct.StatefulSet.html#method.list_stateful_set_for_all_namespaces)
+/// Optional parameters of [`StatefulSet::list_stateful_set_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListStatefulSetForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -549,7 +564,7 @@ pub struct ListStatefulSetForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::list_stateful_set_for_all_namespaces`](./struct.StatefulSet.html#method.list_stateful_set_for_all_namespaces)
+/// Use `<ListStatefulSetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::list_stateful_set_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListStatefulSetForAllNamespacesResponse {
     Ok(crate::v1_10::api::apps::v1beta2::StatefulSetList),
@@ -579,7 +594,7 @@ impl crate::Response for ListStatefulSetForAllNamespacesResponse {
 impl StatefulSet {
     /// partially update the specified StatefulSet
     ///
-    /// Use [`PatchNamespacedStatefulSetResponse`](./enum.PatchNamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedStatefulSetResponse`]`>` constructor, or [`PatchNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -601,7 +616,7 @@ impl StatefulSet {
         namespace: &str,
         body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedStatefulSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedStatefulSetResponse>), crate::RequestError> {
         let PatchNamespacedStatefulSetOptional {
             pretty,
         } = optional;
@@ -614,18 +629,21 @@ impl StatefulSet {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::patch_namespaced_stateful_set`](./struct.StatefulSet.html#method.patch_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::patch_namespaced_stateful_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedStatefulSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::patch_namespaced_stateful_set`](./struct.StatefulSet.html#method.patch_namespaced_stateful_set)
+/// Use `<PatchNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::patch_namespaced_stateful_set`]
 #[derive(Debug)]
 pub enum PatchNamespacedStatefulSetResponse {
     Ok(crate::v1_10::api::apps::v1beta2::StatefulSet),
@@ -655,7 +673,7 @@ impl crate::Response for PatchNamespacedStatefulSetResponse {
 impl StatefulSet {
     /// partially update status of the specified StatefulSet
     ///
-    /// Use [`PatchNamespacedStatefulSetStatusResponse`](./enum.PatchNamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedStatefulSetStatusResponse`]`>` constructor, or [`PatchNamespacedStatefulSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -677,7 +695,7 @@ impl StatefulSet {
         namespace: &str,
         body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedStatefulSetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedStatefulSetStatusResponse>), crate::RequestError> {
         let PatchNamespacedStatefulSetStatusOptional {
             pretty,
         } = optional;
@@ -690,18 +708,21 @@ impl StatefulSet {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::patch_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.patch_namespaced_stateful_set_status)
+/// Optional parameters of [`StatefulSet::patch_namespaced_stateful_set_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedStatefulSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::patch_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.patch_namespaced_stateful_set_status)
+/// Use `<PatchNamespacedStatefulSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::patch_namespaced_stateful_set_status`]
 #[derive(Debug)]
 pub enum PatchNamespacedStatefulSetStatusResponse {
     Ok(crate::v1_10::api::apps::v1beta2::StatefulSet),
@@ -731,7 +752,7 @@ impl crate::Response for PatchNamespacedStatefulSetStatusResponse {
 impl StatefulSet {
     /// read the specified StatefulSet
     ///
-    /// Use [`ReadNamespacedStatefulSetResponse`](./enum.ReadNamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedStatefulSetResponse`]`>` constructor, or [`ReadNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -750,7 +771,7 @@ impl StatefulSet {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedStatefulSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedStatefulSetResponse>), crate::RequestError> {
         let ReadNamespacedStatefulSetOptional {
             exact,
             export,
@@ -771,11 +792,14 @@ impl StatefulSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::read_namespaced_stateful_set`](./struct.StatefulSet.html#method.read_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::read_namespaced_stateful_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedStatefulSetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -786,7 +810,7 @@ pub struct ReadNamespacedStatefulSetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::read_namespaced_stateful_set`](./struct.StatefulSet.html#method.read_namespaced_stateful_set)
+/// Use `<ReadNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::read_namespaced_stateful_set`]
 #[derive(Debug)]
 pub enum ReadNamespacedStatefulSetResponse {
     Ok(crate::v1_10::api::apps::v1beta2::StatefulSet),
@@ -816,7 +840,7 @@ impl crate::Response for ReadNamespacedStatefulSetResponse {
 impl StatefulSet {
     /// read status of the specified StatefulSet
     ///
-    /// Use [`ReadNamespacedStatefulSetStatusResponse`](./enum.ReadNamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedStatefulSetStatusResponse`]`>` constructor, or [`ReadNamespacedStatefulSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -835,7 +859,7 @@ impl StatefulSet {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedStatefulSetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedStatefulSetStatusResponse>), crate::RequestError> {
         let ReadNamespacedStatefulSetStatusOptional {
             pretty,
         } = optional;
@@ -848,18 +872,21 @@ impl StatefulSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::read_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.read_namespaced_stateful_set_status)
+/// Optional parameters of [`StatefulSet::read_namespaced_stateful_set_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedStatefulSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::read_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.read_namespaced_stateful_set_status)
+/// Use `<ReadNamespacedStatefulSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::read_namespaced_stateful_set_status`]
 #[derive(Debug)]
 pub enum ReadNamespacedStatefulSetStatusResponse {
     Ok(crate::v1_10::api::apps::v1beta2::StatefulSet),
@@ -889,7 +916,7 @@ impl crate::Response for ReadNamespacedStatefulSetStatusResponse {
 impl StatefulSet {
     /// replace the specified StatefulSet
     ///
-    /// Use [`ReplaceNamespacedStatefulSetResponse`](./enum.ReplaceNamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedStatefulSetResponse`]`>` constructor, or [`ReplaceNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -911,7 +938,7 @@ impl StatefulSet {
         namespace: &str,
         body: &crate::v1_10::api::apps::v1beta2::StatefulSet,
         optional: ReplaceNamespacedStatefulSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedStatefulSetResponse>), crate::RequestError> {
         let ReplaceNamespacedStatefulSetOptional {
             pretty,
         } = optional;
@@ -924,18 +951,21 @@ impl StatefulSet {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::replace_namespaced_stateful_set`](./struct.StatefulSet.html#method.replace_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::replace_namespaced_stateful_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedStatefulSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::replace_namespaced_stateful_set`](./struct.StatefulSet.html#method.replace_namespaced_stateful_set)
+/// Use `<ReplaceNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::replace_namespaced_stateful_set`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedStatefulSetResponse {
     Ok(crate::v1_10::api::apps::v1beta2::StatefulSet),
@@ -974,7 +1004,7 @@ impl crate::Response for ReplaceNamespacedStatefulSetResponse {
 impl StatefulSet {
     /// replace status of the specified StatefulSet
     ///
-    /// Use [`ReplaceNamespacedStatefulSetStatusResponse`](./enum.ReplaceNamespacedStatefulSetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedStatefulSetStatusResponse`]`>` constructor, or [`ReplaceNamespacedStatefulSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -996,7 +1026,7 @@ impl StatefulSet {
         namespace: &str,
         body: &crate::v1_10::api::apps::v1beta2::StatefulSet,
         optional: ReplaceNamespacedStatefulSetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedStatefulSetStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedStatefulSetStatusOptional {
             pretty,
         } = optional;
@@ -1009,18 +1039,21 @@ impl StatefulSet {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::replace_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.replace_namespaced_stateful_set_status)
+/// Optional parameters of [`StatefulSet::replace_namespaced_stateful_set_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedStatefulSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::replace_namespaced_stateful_set_status`](./struct.StatefulSet.html#method.replace_namespaced_stateful_set_status)
+/// Use `<ReplaceNamespacedStatefulSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::replace_namespaced_stateful_set_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedStatefulSetStatusResponse {
     Ok(crate::v1_10::api::apps::v1beta2::StatefulSet),
@@ -1059,7 +1092,7 @@ impl crate::Response for ReplaceNamespacedStatefulSetStatusResponse {
 impl StatefulSet {
     /// watch changes to an object of kind StatefulSet
     ///
-    /// Use [`WatchNamespacedStatefulSetResponse`](./enum.WatchNamespacedStatefulSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedStatefulSetResponse`]`>` constructor, or [`WatchNamespacedStatefulSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1078,7 +1111,7 @@ impl StatefulSet {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedStatefulSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedStatefulSetResponse>), crate::RequestError> {
         let WatchNamespacedStatefulSetOptional {
             continue_,
             field_selector,
@@ -1123,11 +1156,14 @@ impl StatefulSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::watch_namespaced_stateful_set`](./struct.StatefulSet.html#method.watch_namespaced_stateful_set)
+/// Optional parameters of [`StatefulSet::watch_namespaced_stateful_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedStatefulSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1152,7 +1188,7 @@ pub struct WatchNamespacedStatefulSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::watch_namespaced_stateful_set`](./struct.StatefulSet.html#method.watch_namespaced_stateful_set)
+/// Use `<WatchNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::watch_namespaced_stateful_set`]
 #[derive(Debug)]
 pub enum WatchNamespacedStatefulSetResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1184,7 +1220,7 @@ impl crate::Response for WatchNamespacedStatefulSetResponse {
 impl StatefulSet {
     /// watch individual changes to a list of StatefulSet
     ///
-    /// Use [`WatchNamespacedStatefulSetListResponse`](./enum.WatchNamespacedStatefulSetListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedStatefulSetListResponse`]`>` constructor, or [`WatchNamespacedStatefulSetListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1198,7 +1234,7 @@ impl StatefulSet {
     pub fn watch_namespaced_stateful_set_list(
         namespace: &str,
         optional: WatchNamespacedStatefulSetListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedStatefulSetListResponse>), crate::RequestError> {
         let WatchNamespacedStatefulSetListOptional {
             continue_,
             field_selector,
@@ -1243,11 +1279,14 @@ impl StatefulSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::watch_namespaced_stateful_set_list`](./struct.StatefulSet.html#method.watch_namespaced_stateful_set_list)
+/// Optional parameters of [`StatefulSet::watch_namespaced_stateful_set_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedStatefulSetListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1272,7 +1311,7 @@ pub struct WatchNamespacedStatefulSetListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::watch_namespaced_stateful_set_list`](./struct.StatefulSet.html#method.watch_namespaced_stateful_set_list)
+/// Use `<WatchNamespacedStatefulSetListResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::watch_namespaced_stateful_set_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedStatefulSetListResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1304,7 +1343,7 @@ impl crate::Response for WatchNamespacedStatefulSetListResponse {
 impl StatefulSet {
     /// watch individual changes to a list of StatefulSet
     ///
-    /// Use [`WatchStatefulSetListForAllNamespacesResponse`](./enum.WatchStatefulSetListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchStatefulSetListForAllNamespacesResponse`]`>` constructor, or [`WatchStatefulSetListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1313,7 +1352,7 @@ impl StatefulSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_stateful_set_list_for_all_namespaces(
         optional: WatchStatefulSetListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchStatefulSetListForAllNamespacesResponse>), crate::RequestError> {
         let WatchStatefulSetListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1358,11 +1397,14 @@ impl StatefulSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`StatefulSet::watch_stateful_set_list_for_all_namespaces`](./struct.StatefulSet.html#method.watch_stateful_set_list_for_all_namespaces)
+/// Optional parameters of [`StatefulSet::watch_stateful_set_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchStatefulSetListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1387,7 +1429,7 @@ pub struct WatchStatefulSetListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`StatefulSet::watch_stateful_set_list_for_all_namespaces`](./struct.StatefulSet.html#method.watch_stateful_set_list_for_all_namespaces)
+/// Use `<WatchStatefulSetListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::watch_stateful_set_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchStatefulSetListForAllNamespacesResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),

@@ -19,7 +19,7 @@ pub struct TokenReview {
 impl TokenReview {
     /// create a TokenReview
     ///
-    /// Use [`CreateTokenReviewResponse`](./enum.CreateTokenReviewResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateTokenReviewResponse`]`>` constructor, or [`CreateTokenReviewResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,7 +31,7 @@ impl TokenReview {
     pub fn create_token_review(
         body: &crate::v1_10::api::authentication::v1beta1::TokenReview,
         optional: CreateTokenReviewOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateTokenReviewResponse>), crate::RequestError> {
         let CreateTokenReviewOptional {
             pretty,
         } = optional;
@@ -44,18 +44,21 @@ impl TokenReview {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`TokenReview::create_token_review`](./struct.TokenReview.html#method.create_token_review)
+/// Optional parameters of [`TokenReview::create_token_review`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateTokenReviewOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`TokenReview::create_token_review`](./struct.TokenReview.html#method.create_token_review)
+/// Use `<CreateTokenReviewResponse as Response>::try_from_parts` to parse the HTTP response body of [`TokenReview::create_token_review`]
 #[derive(Debug)]
 pub enum CreateTokenReviewResponse {
     Ok(crate::v1_10::api::authentication::v1beta1::TokenReview),

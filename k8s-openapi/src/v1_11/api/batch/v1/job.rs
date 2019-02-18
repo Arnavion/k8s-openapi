@@ -20,7 +20,7 @@ pub struct Job {
 impl Job {
     /// create a Job
     ///
-    /// Use [`CreateNamespacedJobResponse`](./enum.CreateNamespacedJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedJobResponse`]`>` constructor, or [`CreateNamespacedJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,7 +37,7 @@ impl Job {
         namespace: &str,
         body: &crate::v1_11::api::batch::v1::Job,
         optional: CreateNamespacedJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedJobResponse>), crate::RequestError> {
         let CreateNamespacedJobOptional {
             pretty,
         } = optional;
@@ -50,18 +50,21 @@ impl Job {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::create_namespaced_job`](./struct.Job.html#method.create_namespaced_job)
+/// Optional parameters of [`Job::create_namespaced_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedJobOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::create_namespaced_job`](./struct.Job.html#method.create_namespaced_job)
+/// Use `<CreateNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::create_namespaced_job`]
 #[derive(Debug)]
 pub enum CreateNamespacedJobResponse {
     Ok(crate::v1_11::api::batch::v1::Job),
@@ -109,7 +112,7 @@ impl crate::Response for CreateNamespacedJobResponse {
 impl Job {
     /// delete collection of Job
     ///
-    /// Use [`DeleteCollectionNamespacedJobResponse`](./enum.DeleteCollectionNamespacedJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedJobResponse`]`>` constructor, or [`DeleteCollectionNamespacedJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -123,7 +126,7 @@ impl Job {
     pub fn delete_collection_namespaced_job(
         namespace: &str,
         optional: DeleteCollectionNamespacedJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedJobResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedJobOptional {
             continue_,
             field_selector,
@@ -168,11 +171,14 @@ impl Job {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::delete_collection_namespaced_job`](./struct.Job.html#method.delete_collection_namespaced_job)
+/// Optional parameters of [`Job::delete_collection_namespaced_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedJobOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -197,7 +203,7 @@ pub struct DeleteCollectionNamespacedJobOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::delete_collection_namespaced_job`](./struct.Job.html#method.delete_collection_namespaced_job)
+/// Use `<DeleteCollectionNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::delete_collection_namespaced_job`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedJobResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -241,7 +247,7 @@ impl crate::Response for DeleteCollectionNamespacedJobResponse {
 impl Job {
     /// delete a Job
     ///
-    /// Use [`DeleteNamespacedJobResponse`](./enum.DeleteNamespacedJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedJobResponse`]`>` constructor, or [`DeleteNamespacedJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -260,7 +266,7 @@ impl Job {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedJobResponse>), crate::RequestError> {
         let DeleteNamespacedJobOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -285,11 +291,14 @@ impl Job {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::delete_namespaced_job`](./struct.Job.html#method.delete_namespaced_job)
+/// Optional parameters of [`Job::delete_namespaced_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedJobOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -302,7 +311,7 @@ pub struct DeleteNamespacedJobOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::delete_namespaced_job`](./struct.Job.html#method.delete_namespaced_job)
+/// Use `<DeleteNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::delete_namespaced_job`]
 #[derive(Debug)]
 pub enum DeleteNamespacedJobResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -346,7 +355,7 @@ impl crate::Response for DeleteNamespacedJobResponse {
 impl Job {
     /// list or watch objects of kind Job
     ///
-    /// Use [`ListJobForAllNamespacesResponse`](./enum.ListJobForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListJobForAllNamespacesResponse`]`>` constructor, or [`ListJobForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -355,7 +364,7 @@ impl Job {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_job_for_all_namespaces(
         optional: ListJobForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListJobForAllNamespacesResponse>), crate::RequestError> {
         let ListJobForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -400,11 +409,14 @@ impl Job {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::list_job_for_all_namespaces`](./struct.Job.html#method.list_job_for_all_namespaces)
+/// Optional parameters of [`Job::list_job_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListJobForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -429,7 +441,7 @@ pub struct ListJobForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::list_job_for_all_namespaces`](./struct.Job.html#method.list_job_for_all_namespaces)
+/// Use `<ListJobForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::list_job_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListJobForAllNamespacesResponse {
     Ok(crate::v1_11::api::batch::v1::JobList),
@@ -459,7 +471,7 @@ impl crate::Response for ListJobForAllNamespacesResponse {
 impl Job {
     /// list or watch objects of kind Job
     ///
-    /// Use [`ListNamespacedJobResponse`](./enum.ListNamespacedJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedJobResponse`]`>` constructor, or [`ListNamespacedJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -473,7 +485,7 @@ impl Job {
     pub fn list_namespaced_job(
         namespace: &str,
         optional: ListNamespacedJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedJobResponse>), crate::RequestError> {
         let ListNamespacedJobOptional {
             continue_,
             field_selector,
@@ -518,11 +530,14 @@ impl Job {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::list_namespaced_job`](./struct.Job.html#method.list_namespaced_job)
+/// Optional parameters of [`Job::list_namespaced_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedJobOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -547,7 +562,7 @@ pub struct ListNamespacedJobOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::list_namespaced_job`](./struct.Job.html#method.list_namespaced_job)
+/// Use `<ListNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::list_namespaced_job`]
 #[derive(Debug)]
 pub enum ListNamespacedJobResponse {
     Ok(crate::v1_11::api::batch::v1::JobList),
@@ -577,7 +592,7 @@ impl crate::Response for ListNamespacedJobResponse {
 impl Job {
     /// partially update the specified Job
     ///
-    /// Use [`PatchNamespacedJobResponse`](./enum.PatchNamespacedJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedJobResponse`]`>` constructor, or [`PatchNamespacedJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -599,7 +614,7 @@ impl Job {
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedJobResponse>), crate::RequestError> {
         let PatchNamespacedJobOptional {
             pretty,
         } = optional;
@@ -612,18 +627,21 @@ impl Job {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::patch_namespaced_job`](./struct.Job.html#method.patch_namespaced_job)
+/// Optional parameters of [`Job::patch_namespaced_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedJobOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::patch_namespaced_job`](./struct.Job.html#method.patch_namespaced_job)
+/// Use `<PatchNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::patch_namespaced_job`]
 #[derive(Debug)]
 pub enum PatchNamespacedJobResponse {
     Ok(crate::v1_11::api::batch::v1::Job),
@@ -653,7 +671,7 @@ impl crate::Response for PatchNamespacedJobResponse {
 impl Job {
     /// partially update status of the specified Job
     ///
-    /// Use [`PatchNamespacedJobStatusResponse`](./enum.PatchNamespacedJobStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedJobStatusResponse`]`>` constructor, or [`PatchNamespacedJobStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -675,7 +693,7 @@ impl Job {
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedJobStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedJobStatusResponse>), crate::RequestError> {
         let PatchNamespacedJobStatusOptional {
             pretty,
         } = optional;
@@ -688,18 +706,21 @@ impl Job {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::patch_namespaced_job_status`](./struct.Job.html#method.patch_namespaced_job_status)
+/// Optional parameters of [`Job::patch_namespaced_job_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedJobStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::patch_namespaced_job_status`](./struct.Job.html#method.patch_namespaced_job_status)
+/// Use `<PatchNamespacedJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::patch_namespaced_job_status`]
 #[derive(Debug)]
 pub enum PatchNamespacedJobStatusResponse {
     Ok(crate::v1_11::api::batch::v1::Job),
@@ -729,7 +750,7 @@ impl crate::Response for PatchNamespacedJobStatusResponse {
 impl Job {
     /// read the specified Job
     ///
-    /// Use [`ReadNamespacedJobResponse`](./enum.ReadNamespacedJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedJobResponse`]`>` constructor, or [`ReadNamespacedJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -748,7 +769,7 @@ impl Job {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedJobResponse>), crate::RequestError> {
         let ReadNamespacedJobOptional {
             exact,
             export,
@@ -769,11 +790,14 @@ impl Job {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::read_namespaced_job`](./struct.Job.html#method.read_namespaced_job)
+/// Optional parameters of [`Job::read_namespaced_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedJobOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -784,7 +808,7 @@ pub struct ReadNamespacedJobOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::read_namespaced_job`](./struct.Job.html#method.read_namespaced_job)
+/// Use `<ReadNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::read_namespaced_job`]
 #[derive(Debug)]
 pub enum ReadNamespacedJobResponse {
     Ok(crate::v1_11::api::batch::v1::Job),
@@ -814,7 +838,7 @@ impl crate::Response for ReadNamespacedJobResponse {
 impl Job {
     /// read status of the specified Job
     ///
-    /// Use [`ReadNamespacedJobStatusResponse`](./enum.ReadNamespacedJobStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedJobStatusResponse`]`>` constructor, or [`ReadNamespacedJobStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -833,7 +857,7 @@ impl Job {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedJobStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedJobStatusResponse>), crate::RequestError> {
         let ReadNamespacedJobStatusOptional {
             pretty,
         } = optional;
@@ -846,18 +870,21 @@ impl Job {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::read_namespaced_job_status`](./struct.Job.html#method.read_namespaced_job_status)
+/// Optional parameters of [`Job::read_namespaced_job_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedJobStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::read_namespaced_job_status`](./struct.Job.html#method.read_namespaced_job_status)
+/// Use `<ReadNamespacedJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::read_namespaced_job_status`]
 #[derive(Debug)]
 pub enum ReadNamespacedJobStatusResponse {
     Ok(crate::v1_11::api::batch::v1::Job),
@@ -887,7 +914,7 @@ impl crate::Response for ReadNamespacedJobStatusResponse {
 impl Job {
     /// replace the specified Job
     ///
-    /// Use [`ReplaceNamespacedJobResponse`](./enum.ReplaceNamespacedJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedJobResponse`]`>` constructor, or [`ReplaceNamespacedJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -909,7 +936,7 @@ impl Job {
         namespace: &str,
         body: &crate::v1_11::api::batch::v1::Job,
         optional: ReplaceNamespacedJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedJobResponse>), crate::RequestError> {
         let ReplaceNamespacedJobOptional {
             pretty,
         } = optional;
@@ -922,18 +949,21 @@ impl Job {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::replace_namespaced_job`](./struct.Job.html#method.replace_namespaced_job)
+/// Optional parameters of [`Job::replace_namespaced_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedJobOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::replace_namespaced_job`](./struct.Job.html#method.replace_namespaced_job)
+/// Use `<ReplaceNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::replace_namespaced_job`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedJobResponse {
     Ok(crate::v1_11::api::batch::v1::Job),
@@ -972,7 +1002,7 @@ impl crate::Response for ReplaceNamespacedJobResponse {
 impl Job {
     /// replace status of the specified Job
     ///
-    /// Use [`ReplaceNamespacedJobStatusResponse`](./enum.ReplaceNamespacedJobStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedJobStatusResponse`]`>` constructor, or [`ReplaceNamespacedJobStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -994,7 +1024,7 @@ impl Job {
         namespace: &str,
         body: &crate::v1_11::api::batch::v1::Job,
         optional: ReplaceNamespacedJobStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedJobStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedJobStatusOptional {
             pretty,
         } = optional;
@@ -1007,18 +1037,21 @@ impl Job {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::replace_namespaced_job_status`](./struct.Job.html#method.replace_namespaced_job_status)
+/// Optional parameters of [`Job::replace_namespaced_job_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedJobStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Job::replace_namespaced_job_status`](./struct.Job.html#method.replace_namespaced_job_status)
+/// Use `<ReplaceNamespacedJobStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::replace_namespaced_job_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedJobStatusResponse {
     Ok(crate::v1_11::api::batch::v1::Job),
@@ -1057,7 +1090,7 @@ impl crate::Response for ReplaceNamespacedJobStatusResponse {
 impl Job {
     /// watch individual changes to a list of Job
     ///
-    /// Use [`WatchJobListForAllNamespacesResponse`](./enum.WatchJobListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchJobListForAllNamespacesResponse`]`>` constructor, or [`WatchJobListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1066,7 +1099,7 @@ impl Job {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_job_list_for_all_namespaces(
         optional: WatchJobListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchJobListForAllNamespacesResponse>), crate::RequestError> {
         let WatchJobListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1111,11 +1144,14 @@ impl Job {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::watch_job_list_for_all_namespaces`](./struct.Job.html#method.watch_job_list_for_all_namespaces)
+/// Optional parameters of [`Job::watch_job_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchJobListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1140,7 +1176,7 @@ pub struct WatchJobListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::watch_job_list_for_all_namespaces`](./struct.Job.html#method.watch_job_list_for_all_namespaces)
+/// Use `<WatchJobListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::watch_job_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchJobListForAllNamespacesResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1172,7 +1208,7 @@ impl crate::Response for WatchJobListForAllNamespacesResponse {
 impl Job {
     /// watch changes to an object of kind Job
     ///
-    /// Use [`WatchNamespacedJobResponse`](./enum.WatchNamespacedJobResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedJobResponse`]`>` constructor, or [`WatchNamespacedJobResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1191,7 +1227,7 @@ impl Job {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedJobOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedJobResponse>), crate::RequestError> {
         let WatchNamespacedJobOptional {
             continue_,
             field_selector,
@@ -1236,11 +1272,14 @@ impl Job {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::watch_namespaced_job`](./struct.Job.html#method.watch_namespaced_job)
+/// Optional parameters of [`Job::watch_namespaced_job`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedJobOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1265,7 +1304,7 @@ pub struct WatchNamespacedJobOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::watch_namespaced_job`](./struct.Job.html#method.watch_namespaced_job)
+/// Use `<WatchNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::watch_namespaced_job`]
 #[derive(Debug)]
 pub enum WatchNamespacedJobResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1297,7 +1336,7 @@ impl crate::Response for WatchNamespacedJobResponse {
 impl Job {
     /// watch individual changes to a list of Job
     ///
-    /// Use [`WatchNamespacedJobListResponse`](./enum.WatchNamespacedJobListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedJobListResponse`]`>` constructor, or [`WatchNamespacedJobListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1311,7 +1350,7 @@ impl Job {
     pub fn watch_namespaced_job_list(
         namespace: &str,
         optional: WatchNamespacedJobListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedJobListResponse>), crate::RequestError> {
         let WatchNamespacedJobListOptional {
             continue_,
             field_selector,
@@ -1356,11 +1395,14 @@ impl Job {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Job::watch_namespaced_job_list`](./struct.Job.html#method.watch_namespaced_job_list)
+/// Optional parameters of [`Job::watch_namespaced_job_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedJobListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1385,7 +1427,7 @@ pub struct WatchNamespacedJobListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Job::watch_namespaced_job_list`](./struct.Job.html#method.watch_namespaced_job_list)
+/// Use `<WatchNamespacedJobListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::watch_namespaced_job_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedJobListResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

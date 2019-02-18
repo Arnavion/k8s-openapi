@@ -17,7 +17,7 @@ pub struct PodSecurityPolicy {
 impl PodSecurityPolicy {
     /// create a PodSecurityPolicy
     ///
-    /// Use [`CreatePodSecurityPolicyResponse`](./enum.CreatePodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreatePodSecurityPolicyResponse`]`>` constructor, or [`CreatePodSecurityPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,7 +29,7 @@ impl PodSecurityPolicy {
     pub fn create_pod_security_policy(
         body: &crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy,
         optional: CreatePodSecurityPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreatePodSecurityPolicyResponse>), crate::RequestError> {
         let CreatePodSecurityPolicyOptional {
             pretty,
         } = optional;
@@ -42,18 +42,21 @@ impl PodSecurityPolicy {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::create_pod_security_policy`](./struct.PodSecurityPolicy.html#method.create_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::create_pod_security_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreatePodSecurityPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::create_pod_security_policy`](./struct.PodSecurityPolicy.html#method.create_pod_security_policy)
+/// Use `<CreatePodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::create_pod_security_policy`]
 #[derive(Debug)]
 pub enum CreatePodSecurityPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy),
@@ -101,7 +104,7 @@ impl crate::Response for CreatePodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// delete collection of PodSecurityPolicy
     ///
-    /// Use [`DeleteCollectionPodSecurityPolicyResponse`](./enum.DeleteCollectionPodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionPodSecurityPolicyResponse`]`>` constructor, or [`DeleteCollectionPodSecurityPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -110,7 +113,7 @@ impl PodSecurityPolicy {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_pod_security_policy(
         optional: DeleteCollectionPodSecurityPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionPodSecurityPolicyResponse>), crate::RequestError> {
         let DeleteCollectionPodSecurityPolicyOptional {
             continue_,
             field_selector,
@@ -155,11 +158,14 @@ impl PodSecurityPolicy {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::delete_collection_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_collection_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::delete_collection_pod_security_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -184,7 +190,7 @@ pub struct DeleteCollectionPodSecurityPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::delete_collection_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_collection_pod_security_policy)
+/// Use `<DeleteCollectionPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::delete_collection_pod_security_policy`]
 #[derive(Debug)]
 pub enum DeleteCollectionPodSecurityPolicyResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -228,7 +234,7 @@ impl crate::Response for DeleteCollectionPodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// delete a PodSecurityPolicy
     ///
-    /// Use [`DeletePodSecurityPolicyResponse`](./enum.DeletePodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeletePodSecurityPolicyResponse`]`>` constructor, or [`DeletePodSecurityPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -242,7 +248,7 @@ impl PodSecurityPolicy {
     pub fn delete_pod_security_policy(
         name: &str,
         optional: DeletePodSecurityPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeletePodSecurityPolicyResponse>), crate::RequestError> {
         let DeletePodSecurityPolicyOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -267,11 +273,14 @@ impl PodSecurityPolicy {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::delete_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::delete_pod_security_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeletePodSecurityPolicyOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -284,7 +293,7 @@ pub struct DeletePodSecurityPolicyOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::delete_pod_security_policy`](./struct.PodSecurityPolicy.html#method.delete_pod_security_policy)
+/// Use `<DeletePodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::delete_pod_security_policy`]
 #[derive(Debug)]
 pub enum DeletePodSecurityPolicyResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -328,7 +337,7 @@ impl crate::Response for DeletePodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// list or watch objects of kind PodSecurityPolicy
     ///
-    /// Use [`ListPodSecurityPolicyResponse`](./enum.ListPodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListPodSecurityPolicyResponse`]`>` constructor, or [`ListPodSecurityPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -337,7 +346,7 @@ impl PodSecurityPolicy {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_pod_security_policy(
         optional: ListPodSecurityPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodSecurityPolicyResponse>), crate::RequestError> {
         let ListPodSecurityPolicyOptional {
             continue_,
             field_selector,
@@ -382,11 +391,14 @@ impl PodSecurityPolicy {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::list_pod_security_policy`](./struct.PodSecurityPolicy.html#method.list_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::list_pod_security_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -411,7 +423,7 @@ pub struct ListPodSecurityPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::list_pod_security_policy`](./struct.PodSecurityPolicy.html#method.list_pod_security_policy)
+/// Use `<ListPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::list_pod_security_policy`]
 #[derive(Debug)]
 pub enum ListPodSecurityPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::PodSecurityPolicyList),
@@ -441,7 +453,7 @@ impl crate::Response for ListPodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// partially update the specified PodSecurityPolicy
     ///
-    /// Use [`PatchPodSecurityPolicyResponse`](./enum.PatchPodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchPodSecurityPolicyResponse`]`>` constructor, or [`PatchPodSecurityPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -458,7 +470,7 @@ impl PodSecurityPolicy {
         name: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchPodSecurityPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchPodSecurityPolicyResponse>), crate::RequestError> {
         let PatchPodSecurityPolicyOptional {
             pretty,
         } = optional;
@@ -471,18 +483,21 @@ impl PodSecurityPolicy {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::patch_pod_security_policy`](./struct.PodSecurityPolicy.html#method.patch_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::patch_pod_security_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchPodSecurityPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::patch_pod_security_policy`](./struct.PodSecurityPolicy.html#method.patch_pod_security_policy)
+/// Use `<PatchPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::patch_pod_security_policy`]
 #[derive(Debug)]
 pub enum PatchPodSecurityPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy),
@@ -512,7 +527,7 @@ impl crate::Response for PatchPodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// read the specified PodSecurityPolicy
     ///
-    /// Use [`ReadPodSecurityPolicyResponse`](./enum.ReadPodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPodSecurityPolicyResponse`]`>` constructor, or [`ReadPodSecurityPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -526,7 +541,7 @@ impl PodSecurityPolicy {
     pub fn read_pod_security_policy(
         name: &str,
         optional: ReadPodSecurityPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadPodSecurityPolicyResponse>), crate::RequestError> {
         let ReadPodSecurityPolicyOptional {
             exact,
             export,
@@ -547,11 +562,14 @@ impl PodSecurityPolicy {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::read_pod_security_policy`](./struct.PodSecurityPolicy.html#method.read_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::read_pod_security_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadPodSecurityPolicyOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -562,7 +580,7 @@ pub struct ReadPodSecurityPolicyOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::read_pod_security_policy`](./struct.PodSecurityPolicy.html#method.read_pod_security_policy)
+/// Use `<ReadPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::read_pod_security_policy`]
 #[derive(Debug)]
 pub enum ReadPodSecurityPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy),
@@ -592,7 +610,7 @@ impl crate::Response for ReadPodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// replace the specified PodSecurityPolicy
     ///
-    /// Use [`ReplacePodSecurityPolicyResponse`](./enum.ReplacePodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplacePodSecurityPolicyResponse`]`>` constructor, or [`ReplacePodSecurityPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -609,7 +627,7 @@ impl PodSecurityPolicy {
         name: &str,
         body: &crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy,
         optional: ReplacePodSecurityPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplacePodSecurityPolicyResponse>), crate::RequestError> {
         let ReplacePodSecurityPolicyOptional {
             pretty,
         } = optional;
@@ -622,18 +640,21 @@ impl PodSecurityPolicy {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::replace_pod_security_policy`](./struct.PodSecurityPolicy.html#method.replace_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::replace_pod_security_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplacePodSecurityPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::replace_pod_security_policy`](./struct.PodSecurityPolicy.html#method.replace_pod_security_policy)
+/// Use `<ReplacePodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::replace_pod_security_policy`]
 #[derive(Debug)]
 pub enum ReplacePodSecurityPolicyResponse {
     Ok(crate::v1_9::api::extensions::v1beta1::PodSecurityPolicy),
@@ -672,7 +693,7 @@ impl crate::Response for ReplacePodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// watch changes to an object of kind PodSecurityPolicy
     ///
-    /// Use [`WatchPodSecurityPolicyResponse`](./enum.WatchPodSecurityPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchPodSecurityPolicyResponse`]`>` constructor, or [`WatchPodSecurityPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -686,7 +707,7 @@ impl PodSecurityPolicy {
     pub fn watch_pod_security_policy(
         name: &str,
         optional: WatchPodSecurityPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodSecurityPolicyResponse>), crate::RequestError> {
         let WatchPodSecurityPolicyOptional {
             continue_,
             field_selector,
@@ -731,11 +752,14 @@ impl PodSecurityPolicy {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::watch_pod_security_policy`](./struct.PodSecurityPolicy.html#method.watch_pod_security_policy)
+/// Optional parameters of [`PodSecurityPolicy::watch_pod_security_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -760,7 +784,7 @@ pub struct WatchPodSecurityPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::watch_pod_security_policy`](./struct.PodSecurityPolicy.html#method.watch_pod_security_policy)
+/// Use `<WatchPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::watch_pod_security_policy`]
 #[derive(Debug)]
 pub enum WatchPodSecurityPolicyResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -792,7 +816,7 @@ impl crate::Response for WatchPodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// watch individual changes to a list of PodSecurityPolicy
     ///
-    /// Use [`WatchPodSecurityPolicyListResponse`](./enum.WatchPodSecurityPolicyListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchPodSecurityPolicyListResponse`]`>` constructor, or [`WatchPodSecurityPolicyListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -801,7 +825,7 @@ impl PodSecurityPolicy {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_pod_security_policy_list(
         optional: WatchPodSecurityPolicyListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodSecurityPolicyListResponse>), crate::RequestError> {
         let WatchPodSecurityPolicyListOptional {
             continue_,
             field_selector,
@@ -846,11 +870,14 @@ impl PodSecurityPolicy {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodSecurityPolicy::watch_pod_security_policy_list`](./struct.PodSecurityPolicy.html#method.watch_pod_security_policy_list)
+/// Optional parameters of [`PodSecurityPolicy::watch_pod_security_policy_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPodSecurityPolicyListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -875,7 +902,7 @@ pub struct WatchPodSecurityPolicyListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodSecurityPolicy::watch_pod_security_policy_list`](./struct.PodSecurityPolicy.html#method.watch_pod_security_policy_list)
+/// Use `<WatchPodSecurityPolicyListResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::watch_pod_security_policy_list`]
 #[derive(Debug)]
 pub enum WatchPodSecurityPolicyListResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),

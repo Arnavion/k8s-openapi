@@ -17,7 +17,7 @@ pub struct PodTemplate {
 impl PodTemplate {
     /// create a PodTemplate
     ///
-    /// Use [`CreateNamespacedPodTemplateResponse`](./enum.CreateNamespacedPodTemplateResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedPodTemplateResponse`]`>` constructor, or [`CreateNamespacedPodTemplateResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -34,7 +34,7 @@ impl PodTemplate {
         namespace: &str,
         body: &crate::v1_10::api::core::v1::PodTemplate,
         optional: CreateNamespacedPodTemplateOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodTemplateResponse>), crate::RequestError> {
         let CreateNamespacedPodTemplateOptional {
             pretty,
         } = optional;
@@ -47,18 +47,21 @@ impl PodTemplate {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::create_namespaced_pod_template`](./struct.PodTemplate.html#method.create_namespaced_pod_template)
+/// Optional parameters of [`PodTemplate::create_namespaced_pod_template`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPodTemplateOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::create_namespaced_pod_template`](./struct.PodTemplate.html#method.create_namespaced_pod_template)
+/// Use `<CreateNamespacedPodTemplateResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::create_namespaced_pod_template`]
 #[derive(Debug)]
 pub enum CreateNamespacedPodTemplateResponse {
     Ok(crate::v1_10::api::core::v1::PodTemplate),
@@ -106,7 +109,7 @@ impl crate::Response for CreateNamespacedPodTemplateResponse {
 impl PodTemplate {
     /// delete collection of PodTemplate
     ///
-    /// Use [`DeleteCollectionNamespacedPodTemplateResponse`](./enum.DeleteCollectionNamespacedPodTemplateResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedPodTemplateResponse`]`>` constructor, or [`DeleteCollectionNamespacedPodTemplateResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -120,7 +123,7 @@ impl PodTemplate {
     pub fn delete_collection_namespaced_pod_template(
         namespace: &str,
         optional: DeleteCollectionNamespacedPodTemplateOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedPodTemplateResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedPodTemplateOptional {
             continue_,
             field_selector,
@@ -165,11 +168,14 @@ impl PodTemplate {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::delete_collection_namespaced_pod_template`](./struct.PodTemplate.html#method.delete_collection_namespaced_pod_template)
+/// Optional parameters of [`PodTemplate::delete_collection_namespaced_pod_template`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedPodTemplateOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -194,7 +200,7 @@ pub struct DeleteCollectionNamespacedPodTemplateOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::delete_collection_namespaced_pod_template`](./struct.PodTemplate.html#method.delete_collection_namespaced_pod_template)
+/// Use `<DeleteCollectionNamespacedPodTemplateResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::delete_collection_namespaced_pod_template`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPodTemplateResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -238,7 +244,7 @@ impl crate::Response for DeleteCollectionNamespacedPodTemplateResponse {
 impl PodTemplate {
     /// delete a PodTemplate
     ///
-    /// Use [`DeleteNamespacedPodTemplateResponse`](./enum.DeleteNamespacedPodTemplateResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedPodTemplateResponse`]`>` constructor, or [`DeleteNamespacedPodTemplateResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -257,7 +263,7 @@ impl PodTemplate {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedPodTemplateOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedPodTemplateResponse>), crate::RequestError> {
         let DeleteNamespacedPodTemplateOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -282,11 +288,14 @@ impl PodTemplate {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::delete_namespaced_pod_template`](./struct.PodTemplate.html#method.delete_namespaced_pod_template)
+/// Optional parameters of [`PodTemplate::delete_namespaced_pod_template`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedPodTemplateOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -299,7 +308,7 @@ pub struct DeleteNamespacedPodTemplateOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::delete_namespaced_pod_template`](./struct.PodTemplate.html#method.delete_namespaced_pod_template)
+/// Use `<DeleteNamespacedPodTemplateResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::delete_namespaced_pod_template`]
 #[derive(Debug)]
 pub enum DeleteNamespacedPodTemplateResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -343,7 +352,7 @@ impl crate::Response for DeleteNamespacedPodTemplateResponse {
 impl PodTemplate {
     /// list or watch objects of kind PodTemplate
     ///
-    /// Use [`ListNamespacedPodTemplateResponse`](./enum.ListNamespacedPodTemplateResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedPodTemplateResponse`]`>` constructor, or [`ListNamespacedPodTemplateResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -357,7 +366,7 @@ impl PodTemplate {
     pub fn list_namespaced_pod_template(
         namespace: &str,
         optional: ListNamespacedPodTemplateOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedPodTemplateResponse>), crate::RequestError> {
         let ListNamespacedPodTemplateOptional {
             continue_,
             field_selector,
@@ -402,11 +411,14 @@ impl PodTemplate {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::list_namespaced_pod_template`](./struct.PodTemplate.html#method.list_namespaced_pod_template)
+/// Optional parameters of [`PodTemplate::list_namespaced_pod_template`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedPodTemplateOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -431,7 +443,7 @@ pub struct ListNamespacedPodTemplateOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::list_namespaced_pod_template`](./struct.PodTemplate.html#method.list_namespaced_pod_template)
+/// Use `<ListNamespacedPodTemplateResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::list_namespaced_pod_template`]
 #[derive(Debug)]
 pub enum ListNamespacedPodTemplateResponse {
     Ok(crate::v1_10::api::core::v1::PodTemplateList),
@@ -461,7 +473,7 @@ impl crate::Response for ListNamespacedPodTemplateResponse {
 impl PodTemplate {
     /// list or watch objects of kind PodTemplate
     ///
-    /// Use [`ListPodTemplateForAllNamespacesResponse`](./enum.ListPodTemplateForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListPodTemplateForAllNamespacesResponse`]`>` constructor, or [`ListPodTemplateForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -470,7 +482,7 @@ impl PodTemplate {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_pod_template_for_all_namespaces(
         optional: ListPodTemplateForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodTemplateForAllNamespacesResponse>), crate::RequestError> {
         let ListPodTemplateForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -515,11 +527,14 @@ impl PodTemplate {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::list_pod_template_for_all_namespaces`](./struct.PodTemplate.html#method.list_pod_template_for_all_namespaces)
+/// Optional parameters of [`PodTemplate::list_pod_template_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListPodTemplateForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -544,7 +559,7 @@ pub struct ListPodTemplateForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::list_pod_template_for_all_namespaces`](./struct.PodTemplate.html#method.list_pod_template_for_all_namespaces)
+/// Use `<ListPodTemplateForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::list_pod_template_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListPodTemplateForAllNamespacesResponse {
     Ok(crate::v1_10::api::core::v1::PodTemplateList),
@@ -574,7 +589,7 @@ impl crate::Response for ListPodTemplateForAllNamespacesResponse {
 impl PodTemplate {
     /// partially update the specified PodTemplate
     ///
-    /// Use [`PatchNamespacedPodTemplateResponse`](./enum.PatchNamespacedPodTemplateResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedPodTemplateResponse`]`>` constructor, or [`PatchNamespacedPodTemplateResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -596,7 +611,7 @@ impl PodTemplate {
         namespace: &str,
         body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedPodTemplateOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodTemplateResponse>), crate::RequestError> {
         let PatchNamespacedPodTemplateOptional {
             pretty,
         } = optional;
@@ -609,18 +624,21 @@ impl PodTemplate {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::patch_namespaced_pod_template`](./struct.PodTemplate.html#method.patch_namespaced_pod_template)
+/// Optional parameters of [`PodTemplate::patch_namespaced_pod_template`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedPodTemplateOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::patch_namespaced_pod_template`](./struct.PodTemplate.html#method.patch_namespaced_pod_template)
+/// Use `<PatchNamespacedPodTemplateResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::patch_namespaced_pod_template`]
 #[derive(Debug)]
 pub enum PatchNamespacedPodTemplateResponse {
     Ok(crate::v1_10::api::core::v1::PodTemplate),
@@ -650,7 +668,7 @@ impl crate::Response for PatchNamespacedPodTemplateResponse {
 impl PodTemplate {
     /// read the specified PodTemplate
     ///
-    /// Use [`ReadNamespacedPodTemplateResponse`](./enum.ReadNamespacedPodTemplateResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodTemplateResponse`]`>` constructor, or [`ReadNamespacedPodTemplateResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -669,7 +687,7 @@ impl PodTemplate {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedPodTemplateOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodTemplateResponse>), crate::RequestError> {
         let ReadNamespacedPodTemplateOptional {
             exact,
             export,
@@ -690,11 +708,14 @@ impl PodTemplate {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::read_namespaced_pod_template`](./struct.PodTemplate.html#method.read_namespaced_pod_template)
+/// Optional parameters of [`PodTemplate::read_namespaced_pod_template`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedPodTemplateOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -705,7 +726,7 @@ pub struct ReadNamespacedPodTemplateOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::read_namespaced_pod_template`](./struct.PodTemplate.html#method.read_namespaced_pod_template)
+/// Use `<ReadNamespacedPodTemplateResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::read_namespaced_pod_template`]
 #[derive(Debug)]
 pub enum ReadNamespacedPodTemplateResponse {
     Ok(crate::v1_10::api::core::v1::PodTemplate),
@@ -735,7 +756,7 @@ impl crate::Response for ReadNamespacedPodTemplateResponse {
 impl PodTemplate {
     /// replace the specified PodTemplate
     ///
-    /// Use [`ReplaceNamespacedPodTemplateResponse`](./enum.ReplaceNamespacedPodTemplateResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedPodTemplateResponse`]`>` constructor, or [`ReplaceNamespacedPodTemplateResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -757,7 +778,7 @@ impl PodTemplate {
         namespace: &str,
         body: &crate::v1_10::api::core::v1::PodTemplate,
         optional: ReplaceNamespacedPodTemplateOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPodTemplateResponse>), crate::RequestError> {
         let ReplaceNamespacedPodTemplateOptional {
             pretty,
         } = optional;
@@ -770,18 +791,21 @@ impl PodTemplate {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::replace_namespaced_pod_template`](./struct.PodTemplate.html#method.replace_namespaced_pod_template)
+/// Optional parameters of [`PodTemplate::replace_namespaced_pod_template`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedPodTemplateOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::replace_namespaced_pod_template`](./struct.PodTemplate.html#method.replace_namespaced_pod_template)
+/// Use `<ReplaceNamespacedPodTemplateResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::replace_namespaced_pod_template`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPodTemplateResponse {
     Ok(crate::v1_10::api::core::v1::PodTemplate),
@@ -820,7 +844,7 @@ impl crate::Response for ReplaceNamespacedPodTemplateResponse {
 impl PodTemplate {
     /// watch changes to an object of kind PodTemplate
     ///
-    /// Use [`WatchNamespacedPodTemplateResponse`](./enum.WatchNamespacedPodTemplateResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedPodTemplateResponse`]`>` constructor, or [`WatchNamespacedPodTemplateResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -839,7 +863,7 @@ impl PodTemplate {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedPodTemplateOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodTemplateResponse>), crate::RequestError> {
         let WatchNamespacedPodTemplateOptional {
             continue_,
             field_selector,
@@ -884,11 +908,14 @@ impl PodTemplate {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::watch_namespaced_pod_template`](./struct.PodTemplate.html#method.watch_namespaced_pod_template)
+/// Optional parameters of [`PodTemplate::watch_namespaced_pod_template`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedPodTemplateOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -913,7 +940,7 @@ pub struct WatchNamespacedPodTemplateOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::watch_namespaced_pod_template`](./struct.PodTemplate.html#method.watch_namespaced_pod_template)
+/// Use `<WatchNamespacedPodTemplateResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::watch_namespaced_pod_template`]
 #[derive(Debug)]
 pub enum WatchNamespacedPodTemplateResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -945,7 +972,7 @@ impl crate::Response for WatchNamespacedPodTemplateResponse {
 impl PodTemplate {
     /// watch individual changes to a list of PodTemplate
     ///
-    /// Use [`WatchNamespacedPodTemplateListResponse`](./enum.WatchNamespacedPodTemplateListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedPodTemplateListResponse`]`>` constructor, or [`WatchNamespacedPodTemplateListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -959,7 +986,7 @@ impl PodTemplate {
     pub fn watch_namespaced_pod_template_list(
         namespace: &str,
         optional: WatchNamespacedPodTemplateListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodTemplateListResponse>), crate::RequestError> {
         let WatchNamespacedPodTemplateListOptional {
             continue_,
             field_selector,
@@ -1004,11 +1031,14 @@ impl PodTemplate {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::watch_namespaced_pod_template_list`](./struct.PodTemplate.html#method.watch_namespaced_pod_template_list)
+/// Optional parameters of [`PodTemplate::watch_namespaced_pod_template_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedPodTemplateListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1033,7 +1063,7 @@ pub struct WatchNamespacedPodTemplateListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::watch_namespaced_pod_template_list`](./struct.PodTemplate.html#method.watch_namespaced_pod_template_list)
+/// Use `<WatchNamespacedPodTemplateListResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::watch_namespaced_pod_template_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedPodTemplateListResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1065,7 +1095,7 @@ impl crate::Response for WatchNamespacedPodTemplateListResponse {
 impl PodTemplate {
     /// watch individual changes to a list of PodTemplate
     ///
-    /// Use [`WatchPodTemplateListForAllNamespacesResponse`](./enum.WatchPodTemplateListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchPodTemplateListForAllNamespacesResponse`]`>` constructor, or [`WatchPodTemplateListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1074,7 +1104,7 @@ impl PodTemplate {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_pod_template_list_for_all_namespaces(
         optional: WatchPodTemplateListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodTemplateListForAllNamespacesResponse>), crate::RequestError> {
         let WatchPodTemplateListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1119,11 +1149,14 @@ impl PodTemplate {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodTemplate::watch_pod_template_list_for_all_namespaces`](./struct.PodTemplate.html#method.watch_pod_template_list_for_all_namespaces)
+/// Optional parameters of [`PodTemplate::watch_pod_template_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPodTemplateListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1148,7 +1181,7 @@ pub struct WatchPodTemplateListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodTemplate::watch_pod_template_list_for_all_namespaces`](./struct.PodTemplate.html#method.watch_pod_template_list_for_all_namespaces)
+/// Use `<WatchPodTemplateListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::watch_pod_template_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchPodTemplateListForAllNamespacesResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),

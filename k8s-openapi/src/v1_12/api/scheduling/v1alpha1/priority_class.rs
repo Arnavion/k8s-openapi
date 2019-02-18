@@ -23,7 +23,7 @@ pub struct PriorityClass {
 impl PriorityClass {
     /// create a PriorityClass
     ///
-    /// Use [`CreatePriorityClassResponse`](./enum.CreatePriorityClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreatePriorityClassResponse`]`>` constructor, or [`CreatePriorityClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -35,7 +35,7 @@ impl PriorityClass {
     pub fn create_priority_class(
         body: &crate::v1_12::api::scheduling::v1alpha1::PriorityClass,
         optional: CreatePriorityClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreatePriorityClassResponse>), crate::RequestError> {
         let CreatePriorityClassOptional {
             dry_run,
             include_uninitialized,
@@ -56,11 +56,14 @@ impl PriorityClass {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PriorityClass::create_priority_class`](./struct.PriorityClass.html#method.create_priority_class)
+/// Optional parameters of [`PriorityClass::create_priority_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreatePriorityClassOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -71,7 +74,7 @@ pub struct CreatePriorityClassOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::create_priority_class`](./struct.PriorityClass.html#method.create_priority_class)
+/// Use `<CreatePriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::create_priority_class`]
 #[derive(Debug)]
 pub enum CreatePriorityClassResponse {
     Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
@@ -119,7 +122,7 @@ impl crate::Response for CreatePriorityClassResponse {
 impl PriorityClass {
     /// delete collection of PriorityClass
     ///
-    /// Use [`DeleteCollectionPriorityClassResponse`](./enum.DeleteCollectionPriorityClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionPriorityClassResponse`]`>` constructor, or [`DeleteCollectionPriorityClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -128,7 +131,7 @@ impl PriorityClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_priority_class(
         optional: DeleteCollectionPriorityClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionPriorityClassResponse>), crate::RequestError> {
         let DeleteCollectionPriorityClassOptional {
             continue_,
             field_selector,
@@ -173,11 +176,14 @@ impl PriorityClass {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PriorityClass::delete_collection_priority_class`](./struct.PriorityClass.html#method.delete_collection_priority_class)
+/// Optional parameters of [`PriorityClass::delete_collection_priority_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionPriorityClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -204,7 +210,7 @@ pub struct DeleteCollectionPriorityClassOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::delete_collection_priority_class`](./struct.PriorityClass.html#method.delete_collection_priority_class)
+/// Use `<DeleteCollectionPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::delete_collection_priority_class`]
 #[derive(Debug)]
 pub enum DeleteCollectionPriorityClassResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -248,7 +254,7 @@ impl crate::Response for DeleteCollectionPriorityClassResponse {
 impl PriorityClass {
     /// delete a PriorityClass
     ///
-    /// Use [`DeletePriorityClassResponse`](./enum.DeletePriorityClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeletePriorityClassResponse`]`>` constructor, or [`DeletePriorityClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -262,7 +268,7 @@ impl PriorityClass {
     pub fn delete_priority_class(
         name: &str,
         optional: DeletePriorityClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeletePriorityClassResponse>), crate::RequestError> {
         let DeletePriorityClassOptional {
             dry_run,
             grace_period_seconds,
@@ -291,11 +297,14 @@ impl PriorityClass {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PriorityClass::delete_priority_class`](./struct.PriorityClass.html#method.delete_priority_class)
+/// Optional parameters of [`PriorityClass::delete_priority_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeletePriorityClassOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -310,7 +319,7 @@ pub struct DeletePriorityClassOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::delete_priority_class`](./struct.PriorityClass.html#method.delete_priority_class)
+/// Use `<DeletePriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::delete_priority_class`]
 #[derive(Debug)]
 pub enum DeletePriorityClassResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -363,7 +372,7 @@ impl crate::Response for DeletePriorityClassResponse {
 impl PriorityClass {
     /// list or watch objects of kind PriorityClass
     ///
-    /// Use [`ListPriorityClassResponse`](./enum.ListPriorityClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListPriorityClassResponse`]`>` constructor, or [`ListPriorityClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -372,7 +381,7 @@ impl PriorityClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_priority_class(
         optional: ListPriorityClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPriorityClassResponse>), crate::RequestError> {
         let ListPriorityClassOptional {
             continue_,
             field_selector,
@@ -417,11 +426,14 @@ impl PriorityClass {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PriorityClass::list_priority_class`](./struct.PriorityClass.html#method.list_priority_class)
+/// Optional parameters of [`PriorityClass::list_priority_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListPriorityClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -448,7 +460,7 @@ pub struct ListPriorityClassOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::list_priority_class`](./struct.PriorityClass.html#method.list_priority_class)
+/// Use `<ListPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::list_priority_class`]
 #[derive(Debug)]
 pub enum ListPriorityClassResponse {
     Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClassList),
@@ -478,7 +490,7 @@ impl crate::Response for ListPriorityClassResponse {
 impl PriorityClass {
     /// partially update the specified PriorityClass
     ///
-    /// Use [`PatchPriorityClassResponse`](./enum.PatchPriorityClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchPriorityClassResponse`]`>` constructor, or [`PatchPriorityClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -495,7 +507,7 @@ impl PriorityClass {
         name: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchPriorityClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchPriorityClassResponse>), crate::RequestError> {
         let PatchPriorityClassOptional {
             dry_run,
             pretty,
@@ -512,11 +524,14 @@ impl PriorityClass {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PriorityClass::patch_priority_class`](./struct.PriorityClass.html#method.patch_priority_class)
+/// Optional parameters of [`PriorityClass::patch_priority_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchPriorityClassOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -525,7 +540,7 @@ pub struct PatchPriorityClassOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::patch_priority_class`](./struct.PriorityClass.html#method.patch_priority_class)
+/// Use `<PatchPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::patch_priority_class`]
 #[derive(Debug)]
 pub enum PatchPriorityClassResponse {
     Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
@@ -555,7 +570,7 @@ impl crate::Response for PatchPriorityClassResponse {
 impl PriorityClass {
     /// read the specified PriorityClass
     ///
-    /// Use [`ReadPriorityClassResponse`](./enum.ReadPriorityClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPriorityClassResponse`]`>` constructor, or [`ReadPriorityClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -569,7 +584,7 @@ impl PriorityClass {
     pub fn read_priority_class(
         name: &str,
         optional: ReadPriorityClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadPriorityClassResponse>), crate::RequestError> {
         let ReadPriorityClassOptional {
             exact,
             export,
@@ -590,11 +605,14 @@ impl PriorityClass {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PriorityClass::read_priority_class`](./struct.PriorityClass.html#method.read_priority_class)
+/// Optional parameters of [`PriorityClass::read_priority_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadPriorityClassOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -605,7 +623,7 @@ pub struct ReadPriorityClassOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::read_priority_class`](./struct.PriorityClass.html#method.read_priority_class)
+/// Use `<ReadPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::read_priority_class`]
 #[derive(Debug)]
 pub enum ReadPriorityClassResponse {
     Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
@@ -635,7 +653,7 @@ impl crate::Response for ReadPriorityClassResponse {
 impl PriorityClass {
     /// replace the specified PriorityClass
     ///
-    /// Use [`ReplacePriorityClassResponse`](./enum.ReplacePriorityClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplacePriorityClassResponse`]`>` constructor, or [`ReplacePriorityClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -652,7 +670,7 @@ impl PriorityClass {
         name: &str,
         body: &crate::v1_12::api::scheduling::v1alpha1::PriorityClass,
         optional: ReplacePriorityClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplacePriorityClassResponse>), crate::RequestError> {
         let ReplacePriorityClassOptional {
             dry_run,
             pretty,
@@ -669,11 +687,14 @@ impl PriorityClass {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PriorityClass::replace_priority_class`](./struct.PriorityClass.html#method.replace_priority_class)
+/// Optional parameters of [`PriorityClass::replace_priority_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplacePriorityClassOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -682,7 +703,7 @@ pub struct ReplacePriorityClassOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::replace_priority_class`](./struct.PriorityClass.html#method.replace_priority_class)
+/// Use `<ReplacePriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::replace_priority_class`]
 #[derive(Debug)]
 pub enum ReplacePriorityClassResponse {
     Ok(crate::v1_12::api::scheduling::v1alpha1::PriorityClass),
@@ -721,7 +742,7 @@ impl crate::Response for ReplacePriorityClassResponse {
 impl PriorityClass {
     /// watch changes to an object of kind PriorityClass. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchPriorityClassResponse`](./enum.WatchPriorityClassResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchPriorityClassResponse`]`>` constructor, or [`WatchPriorityClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -735,7 +756,7 @@ impl PriorityClass {
     pub fn watch_priority_class(
         name: &str,
         optional: WatchPriorityClassOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPriorityClassResponse>), crate::RequestError> {
         let WatchPriorityClassOptional {
             continue_,
             field_selector,
@@ -780,11 +801,14 @@ impl PriorityClass {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PriorityClass::watch_priority_class`](./struct.PriorityClass.html#method.watch_priority_class)
+/// Optional parameters of [`PriorityClass::watch_priority_class`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPriorityClassOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -811,7 +835,7 @@ pub struct WatchPriorityClassOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::watch_priority_class`](./struct.PriorityClass.html#method.watch_priority_class)
+/// Use `<WatchPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::watch_priority_class`]
 #[derive(Debug)]
 pub enum WatchPriorityClassResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -843,7 +867,7 @@ impl crate::Response for WatchPriorityClassResponse {
 impl PriorityClass {
     /// watch individual changes to a list of PriorityClass. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchPriorityClassListResponse`](./enum.WatchPriorityClassListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchPriorityClassListResponse`]`>` constructor, or [`WatchPriorityClassListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -852,7 +876,7 @@ impl PriorityClass {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_priority_class_list(
         optional: WatchPriorityClassListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPriorityClassListResponse>), crate::RequestError> {
         let WatchPriorityClassListOptional {
             continue_,
             field_selector,
@@ -897,11 +921,14 @@ impl PriorityClass {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PriorityClass::watch_priority_class_list`](./struct.PriorityClass.html#method.watch_priority_class_list)
+/// Optional parameters of [`PriorityClass::watch_priority_class_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPriorityClassListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -928,7 +955,7 @@ pub struct WatchPriorityClassListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PriorityClass::watch_priority_class_list`](./struct.PriorityClass.html#method.watch_priority_class_list)
+/// Use `<WatchPriorityClassListResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::watch_priority_class_list`]
 #[derive(Debug)]
 pub enum WatchPriorityClassListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),

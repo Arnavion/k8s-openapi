@@ -28,7 +28,7 @@ pub struct Endpoints {
 impl Endpoints {
     /// create Endpoints
     ///
-    /// Use [`CreateNamespacedEndpointsResponse`](./enum.CreateNamespacedEndpointsResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedEndpointsResponse`]`>` constructor, or [`CreateNamespacedEndpointsResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -45,7 +45,7 @@ impl Endpoints {
         namespace: &str,
         body: &crate::v1_13::api::core::v1::Endpoints,
         optional: CreateNamespacedEndpointsOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedEndpointsResponse>), crate::RequestError> {
         let CreateNamespacedEndpointsOptional {
             dry_run,
             include_uninitialized,
@@ -66,11 +66,14 @@ impl Endpoints {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::create_namespaced_endpoints`](./struct.Endpoints.html#method.create_namespaced_endpoints)
+/// Optional parameters of [`Endpoints::create_namespaced_endpoints`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedEndpointsOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -81,7 +84,7 @@ pub struct CreateNamespacedEndpointsOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Endpoints::create_namespaced_endpoints`](./struct.Endpoints.html#method.create_namespaced_endpoints)
+/// Use `<CreateNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::create_namespaced_endpoints`]
 #[derive(Debug)]
 pub enum CreateNamespacedEndpointsResponse {
     Ok(crate::v1_13::api::core::v1::Endpoints),
@@ -129,7 +132,7 @@ impl crate::Response for CreateNamespacedEndpointsResponse {
 impl Endpoints {
     /// delete collection of Endpoints
     ///
-    /// Use [`DeleteCollectionNamespacedEndpointsResponse`](./enum.DeleteCollectionNamespacedEndpointsResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedEndpointsResponse`]`>` constructor, or [`DeleteCollectionNamespacedEndpointsResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -143,7 +146,7 @@ impl Endpoints {
     pub fn delete_collection_namespaced_endpoints(
         namespace: &str,
         optional: DeleteCollectionNamespacedEndpointsOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedEndpointsResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedEndpointsOptional {
             continue_,
             field_selector,
@@ -188,11 +191,14 @@ impl Endpoints {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::delete_collection_namespaced_endpoints`](./struct.Endpoints.html#method.delete_collection_namespaced_endpoints)
+/// Optional parameters of [`Endpoints::delete_collection_namespaced_endpoints`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedEndpointsOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -219,7 +225,7 @@ pub struct DeleteCollectionNamespacedEndpointsOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Endpoints::delete_collection_namespaced_endpoints`](./struct.Endpoints.html#method.delete_collection_namespaced_endpoints)
+/// Use `<DeleteCollectionNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::delete_collection_namespaced_endpoints`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedEndpointsResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -263,7 +269,7 @@ impl crate::Response for DeleteCollectionNamespacedEndpointsResponse {
 impl Endpoints {
     /// delete Endpoints
     ///
-    /// Use [`DeleteNamespacedEndpointsResponse`](./enum.DeleteNamespacedEndpointsResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedEndpointsResponse`]`>` constructor, or [`DeleteNamespacedEndpointsResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -282,7 +288,7 @@ impl Endpoints {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedEndpointsOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedEndpointsResponse>), crate::RequestError> {
         let DeleteNamespacedEndpointsOptional {
             dry_run,
             grace_period_seconds,
@@ -311,11 +317,14 @@ impl Endpoints {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::delete_namespaced_endpoints`](./struct.Endpoints.html#method.delete_namespaced_endpoints)
+/// Optional parameters of [`Endpoints::delete_namespaced_endpoints`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedEndpointsOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -330,7 +339,7 @@ pub struct DeleteNamespacedEndpointsOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Endpoints::delete_namespaced_endpoints`](./struct.Endpoints.html#method.delete_namespaced_endpoints)
+/// Use `<DeleteNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::delete_namespaced_endpoints`]
 #[derive(Debug)]
 pub enum DeleteNamespacedEndpointsResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -383,7 +392,7 @@ impl crate::Response for DeleteNamespacedEndpointsResponse {
 impl Endpoints {
     /// list or watch objects of kind Endpoints
     ///
-    /// Use [`ListEndpointsForAllNamespacesResponse`](./enum.ListEndpointsForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListEndpointsForAllNamespacesResponse`]`>` constructor, or [`ListEndpointsForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -392,7 +401,7 @@ impl Endpoints {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_endpoints_for_all_namespaces(
         optional: ListEndpointsForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListEndpointsForAllNamespacesResponse>), crate::RequestError> {
         let ListEndpointsForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -437,11 +446,14 @@ impl Endpoints {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::list_endpoints_for_all_namespaces`](./struct.Endpoints.html#method.list_endpoints_for_all_namespaces)
+/// Optional parameters of [`Endpoints::list_endpoints_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListEndpointsForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -468,7 +480,7 @@ pub struct ListEndpointsForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Endpoints::list_endpoints_for_all_namespaces`](./struct.Endpoints.html#method.list_endpoints_for_all_namespaces)
+/// Use `<ListEndpointsForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::list_endpoints_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListEndpointsForAllNamespacesResponse {
     Ok(crate::v1_13::api::core::v1::EndpointsList),
@@ -498,7 +510,7 @@ impl crate::Response for ListEndpointsForAllNamespacesResponse {
 impl Endpoints {
     /// list or watch objects of kind Endpoints
     ///
-    /// Use [`ListNamespacedEndpointsResponse`](./enum.ListNamespacedEndpointsResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedEndpointsResponse`]`>` constructor, or [`ListNamespacedEndpointsResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -512,7 +524,7 @@ impl Endpoints {
     pub fn list_namespaced_endpoints(
         namespace: &str,
         optional: ListNamespacedEndpointsOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedEndpointsResponse>), crate::RequestError> {
         let ListNamespacedEndpointsOptional {
             continue_,
             field_selector,
@@ -557,11 +569,14 @@ impl Endpoints {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::list_namespaced_endpoints`](./struct.Endpoints.html#method.list_namespaced_endpoints)
+/// Optional parameters of [`Endpoints::list_namespaced_endpoints`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedEndpointsOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -588,7 +603,7 @@ pub struct ListNamespacedEndpointsOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Endpoints::list_namespaced_endpoints`](./struct.Endpoints.html#method.list_namespaced_endpoints)
+/// Use `<ListNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::list_namespaced_endpoints`]
 #[derive(Debug)]
 pub enum ListNamespacedEndpointsResponse {
     Ok(crate::v1_13::api::core::v1::EndpointsList),
@@ -618,7 +633,7 @@ impl crate::Response for ListNamespacedEndpointsResponse {
 impl Endpoints {
     /// partially update the specified Endpoints
     ///
-    /// Use [`PatchNamespacedEndpointsResponse`](./enum.PatchNamespacedEndpointsResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedEndpointsResponse`]`>` constructor, or [`PatchNamespacedEndpointsResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -640,7 +655,7 @@ impl Endpoints {
         namespace: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedEndpointsOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedEndpointsResponse>), crate::RequestError> {
         let PatchNamespacedEndpointsOptional {
             dry_run,
             pretty,
@@ -657,11 +672,14 @@ impl Endpoints {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::patch_namespaced_endpoints`](./struct.Endpoints.html#method.patch_namespaced_endpoints)
+/// Optional parameters of [`Endpoints::patch_namespaced_endpoints`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedEndpointsOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -670,7 +688,7 @@ pub struct PatchNamespacedEndpointsOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Endpoints::patch_namespaced_endpoints`](./struct.Endpoints.html#method.patch_namespaced_endpoints)
+/// Use `<PatchNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::patch_namespaced_endpoints`]
 #[derive(Debug)]
 pub enum PatchNamespacedEndpointsResponse {
     Ok(crate::v1_13::api::core::v1::Endpoints),
@@ -700,7 +718,7 @@ impl crate::Response for PatchNamespacedEndpointsResponse {
 impl Endpoints {
     /// read the specified Endpoints
     ///
-    /// Use [`ReadNamespacedEndpointsResponse`](./enum.ReadNamespacedEndpointsResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedEndpointsResponse`]`>` constructor, or [`ReadNamespacedEndpointsResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -719,7 +737,7 @@ impl Endpoints {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedEndpointsOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedEndpointsResponse>), crate::RequestError> {
         let ReadNamespacedEndpointsOptional {
             exact,
             export,
@@ -740,11 +758,14 @@ impl Endpoints {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::read_namespaced_endpoints`](./struct.Endpoints.html#method.read_namespaced_endpoints)
+/// Optional parameters of [`Endpoints::read_namespaced_endpoints`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedEndpointsOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -755,7 +776,7 @@ pub struct ReadNamespacedEndpointsOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Endpoints::read_namespaced_endpoints`](./struct.Endpoints.html#method.read_namespaced_endpoints)
+/// Use `<ReadNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::read_namespaced_endpoints`]
 #[derive(Debug)]
 pub enum ReadNamespacedEndpointsResponse {
     Ok(crate::v1_13::api::core::v1::Endpoints),
@@ -785,7 +806,7 @@ impl crate::Response for ReadNamespacedEndpointsResponse {
 impl Endpoints {
     /// replace the specified Endpoints
     ///
-    /// Use [`ReplaceNamespacedEndpointsResponse`](./enum.ReplaceNamespacedEndpointsResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedEndpointsResponse`]`>` constructor, or [`ReplaceNamespacedEndpointsResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -807,7 +828,7 @@ impl Endpoints {
         namespace: &str,
         body: &crate::v1_13::api::core::v1::Endpoints,
         optional: ReplaceNamespacedEndpointsOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedEndpointsResponse>), crate::RequestError> {
         let ReplaceNamespacedEndpointsOptional {
             dry_run,
             pretty,
@@ -824,11 +845,14 @@ impl Endpoints {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::replace_namespaced_endpoints`](./struct.Endpoints.html#method.replace_namespaced_endpoints)
+/// Optional parameters of [`Endpoints::replace_namespaced_endpoints`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedEndpointsOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -837,7 +861,7 @@ pub struct ReplaceNamespacedEndpointsOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Endpoints::replace_namespaced_endpoints`](./struct.Endpoints.html#method.replace_namespaced_endpoints)
+/// Use `<ReplaceNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::replace_namespaced_endpoints`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedEndpointsResponse {
     Ok(crate::v1_13::api::core::v1::Endpoints),
@@ -876,7 +900,7 @@ impl crate::Response for ReplaceNamespacedEndpointsResponse {
 impl Endpoints {
     /// watch individual changes to a list of Endpoints. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchEndpointsListForAllNamespacesResponse`](./enum.WatchEndpointsListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchEndpointsListForAllNamespacesResponse`]`>` constructor, or [`WatchEndpointsListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -885,7 +909,7 @@ impl Endpoints {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_endpoints_list_for_all_namespaces(
         optional: WatchEndpointsListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchEndpointsListForAllNamespacesResponse>), crate::RequestError> {
         let WatchEndpointsListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -930,11 +954,14 @@ impl Endpoints {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::watch_endpoints_list_for_all_namespaces`](./struct.Endpoints.html#method.watch_endpoints_list_for_all_namespaces)
+/// Optional parameters of [`Endpoints::watch_endpoints_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchEndpointsListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -961,7 +988,7 @@ pub struct WatchEndpointsListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Endpoints::watch_endpoints_list_for_all_namespaces`](./struct.Endpoints.html#method.watch_endpoints_list_for_all_namespaces)
+/// Use `<WatchEndpointsListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::watch_endpoints_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchEndpointsListForAllNamespacesResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -993,7 +1020,7 @@ impl crate::Response for WatchEndpointsListForAllNamespacesResponse {
 impl Endpoints {
     /// watch changes to an object of kind Endpoints. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchNamespacedEndpointsResponse`](./enum.WatchNamespacedEndpointsResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedEndpointsResponse`]`>` constructor, or [`WatchNamespacedEndpointsResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1012,7 +1039,7 @@ impl Endpoints {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedEndpointsOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedEndpointsResponse>), crate::RequestError> {
         let WatchNamespacedEndpointsOptional {
             continue_,
             field_selector,
@@ -1057,11 +1084,14 @@ impl Endpoints {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::watch_namespaced_endpoints`](./struct.Endpoints.html#method.watch_namespaced_endpoints)
+/// Optional parameters of [`Endpoints::watch_namespaced_endpoints`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedEndpointsOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1088,7 +1118,7 @@ pub struct WatchNamespacedEndpointsOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Endpoints::watch_namespaced_endpoints`](./struct.Endpoints.html#method.watch_namespaced_endpoints)
+/// Use `<WatchNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::watch_namespaced_endpoints`]
 #[derive(Debug)]
 pub enum WatchNamespacedEndpointsResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1120,7 +1150,7 @@ impl crate::Response for WatchNamespacedEndpointsResponse {
 impl Endpoints {
     /// watch individual changes to a list of Endpoints. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchNamespacedEndpointsListResponse`](./enum.WatchNamespacedEndpointsListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedEndpointsListResponse`]`>` constructor, or [`WatchNamespacedEndpointsListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1134,7 +1164,7 @@ impl Endpoints {
     pub fn watch_namespaced_endpoints_list(
         namespace: &str,
         optional: WatchNamespacedEndpointsListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedEndpointsListResponse>), crate::RequestError> {
         let WatchNamespacedEndpointsListOptional {
             continue_,
             field_selector,
@@ -1179,11 +1209,14 @@ impl Endpoints {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Endpoints::watch_namespaced_endpoints_list`](./struct.Endpoints.html#method.watch_namespaced_endpoints_list)
+/// Optional parameters of [`Endpoints::watch_namespaced_endpoints_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedEndpointsListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1210,7 +1243,7 @@ pub struct WatchNamespacedEndpointsListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Endpoints::watch_namespaced_endpoints_list`](./struct.Endpoints.html#method.watch_namespaced_endpoints_list)
+/// Use `<WatchNamespacedEndpointsListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::watch_namespaced_endpoints_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedEndpointsListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),

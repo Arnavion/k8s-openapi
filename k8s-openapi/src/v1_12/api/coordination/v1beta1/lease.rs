@@ -17,7 +17,7 @@ pub struct Lease {
 impl Lease {
     /// create a Lease
     ///
-    /// Use [`CreateNamespacedLeaseResponse`](./enum.CreateNamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedLeaseResponse`]`>` constructor, or [`CreateNamespacedLeaseResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -34,7 +34,7 @@ impl Lease {
         namespace: &str,
         body: &crate::v1_12::api::coordination::v1beta1::Lease,
         optional: CreateNamespacedLeaseOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedLeaseResponse>), crate::RequestError> {
         let CreateNamespacedLeaseOptional {
             dry_run,
             include_uninitialized,
@@ -55,11 +55,14 @@ impl Lease {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::create_namespaced_lease`](./struct.Lease.html#method.create_namespaced_lease)
+/// Optional parameters of [`Lease::create_namespaced_lease`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedLeaseOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -70,7 +73,7 @@ pub struct CreateNamespacedLeaseOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Lease::create_namespaced_lease`](./struct.Lease.html#method.create_namespaced_lease)
+/// Use `<CreateNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::create_namespaced_lease`]
 #[derive(Debug)]
 pub enum CreateNamespacedLeaseResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::Lease),
@@ -118,7 +121,7 @@ impl crate::Response for CreateNamespacedLeaseResponse {
 impl Lease {
     /// delete collection of Lease
     ///
-    /// Use [`DeleteCollectionNamespacedLeaseResponse`](./enum.DeleteCollectionNamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedLeaseResponse`]`>` constructor, or [`DeleteCollectionNamespacedLeaseResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -132,7 +135,7 @@ impl Lease {
     pub fn delete_collection_namespaced_lease(
         namespace: &str,
         optional: DeleteCollectionNamespacedLeaseOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedLeaseResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedLeaseOptional {
             continue_,
             field_selector,
@@ -177,11 +180,14 @@ impl Lease {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::delete_collection_namespaced_lease`](./struct.Lease.html#method.delete_collection_namespaced_lease)
+/// Optional parameters of [`Lease::delete_collection_namespaced_lease`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedLeaseOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -208,7 +214,7 @@ pub struct DeleteCollectionNamespacedLeaseOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::delete_collection_namespaced_lease`](./struct.Lease.html#method.delete_collection_namespaced_lease)
+/// Use `<DeleteCollectionNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::delete_collection_namespaced_lease`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedLeaseResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -252,7 +258,7 @@ impl crate::Response for DeleteCollectionNamespacedLeaseResponse {
 impl Lease {
     /// delete a Lease
     ///
-    /// Use [`DeleteNamespacedLeaseResponse`](./enum.DeleteNamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedLeaseResponse`]`>` constructor, or [`DeleteNamespacedLeaseResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -271,7 +277,7 @@ impl Lease {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedLeaseOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedLeaseResponse>), crate::RequestError> {
         let DeleteNamespacedLeaseOptional {
             dry_run,
             grace_period_seconds,
@@ -300,11 +306,14 @@ impl Lease {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::delete_namespaced_lease`](./struct.Lease.html#method.delete_namespaced_lease)
+/// Optional parameters of [`Lease::delete_namespaced_lease`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedLeaseOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -319,7 +328,7 @@ pub struct DeleteNamespacedLeaseOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Lease::delete_namespaced_lease`](./struct.Lease.html#method.delete_namespaced_lease)
+/// Use `<DeleteNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::delete_namespaced_lease`]
 #[derive(Debug)]
 pub enum DeleteNamespacedLeaseResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -372,7 +381,7 @@ impl crate::Response for DeleteNamespacedLeaseResponse {
 impl Lease {
     /// list or watch objects of kind Lease
     ///
-    /// Use [`ListLeaseForAllNamespacesResponse`](./enum.ListLeaseForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListLeaseForAllNamespacesResponse`]`>` constructor, or [`ListLeaseForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -381,7 +390,7 @@ impl Lease {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_lease_for_all_namespaces(
         optional: ListLeaseForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListLeaseForAllNamespacesResponse>), crate::RequestError> {
         let ListLeaseForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -426,11 +435,14 @@ impl Lease {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::list_lease_for_all_namespaces`](./struct.Lease.html#method.list_lease_for_all_namespaces)
+/// Optional parameters of [`Lease::list_lease_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListLeaseForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -457,7 +469,7 @@ pub struct ListLeaseForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::list_lease_for_all_namespaces`](./struct.Lease.html#method.list_lease_for_all_namespaces)
+/// Use `<ListLeaseForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::list_lease_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListLeaseForAllNamespacesResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::LeaseList),
@@ -487,7 +499,7 @@ impl crate::Response for ListLeaseForAllNamespacesResponse {
 impl Lease {
     /// list or watch objects of kind Lease
     ///
-    /// Use [`ListNamespacedLeaseResponse`](./enum.ListNamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedLeaseResponse`]`>` constructor, or [`ListNamespacedLeaseResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -501,7 +513,7 @@ impl Lease {
     pub fn list_namespaced_lease(
         namespace: &str,
         optional: ListNamespacedLeaseOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedLeaseResponse>), crate::RequestError> {
         let ListNamespacedLeaseOptional {
             continue_,
             field_selector,
@@ -546,11 +558,14 @@ impl Lease {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::list_namespaced_lease`](./struct.Lease.html#method.list_namespaced_lease)
+/// Optional parameters of [`Lease::list_namespaced_lease`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedLeaseOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -577,7 +592,7 @@ pub struct ListNamespacedLeaseOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::list_namespaced_lease`](./struct.Lease.html#method.list_namespaced_lease)
+/// Use `<ListNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::list_namespaced_lease`]
 #[derive(Debug)]
 pub enum ListNamespacedLeaseResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::LeaseList),
@@ -607,7 +622,7 @@ impl crate::Response for ListNamespacedLeaseResponse {
 impl Lease {
     /// partially update the specified Lease
     ///
-    /// Use [`PatchNamespacedLeaseResponse`](./enum.PatchNamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedLeaseResponse`]`>` constructor, or [`PatchNamespacedLeaseResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -629,7 +644,7 @@ impl Lease {
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedLeaseOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedLeaseResponse>), crate::RequestError> {
         let PatchNamespacedLeaseOptional {
             dry_run,
             pretty,
@@ -646,11 +661,14 @@ impl Lease {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::patch_namespaced_lease`](./struct.Lease.html#method.patch_namespaced_lease)
+/// Optional parameters of [`Lease::patch_namespaced_lease`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedLeaseOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -659,7 +677,7 @@ pub struct PatchNamespacedLeaseOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Lease::patch_namespaced_lease`](./struct.Lease.html#method.patch_namespaced_lease)
+/// Use `<PatchNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::patch_namespaced_lease`]
 #[derive(Debug)]
 pub enum PatchNamespacedLeaseResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::Lease),
@@ -689,7 +707,7 @@ impl crate::Response for PatchNamespacedLeaseResponse {
 impl Lease {
     /// read the specified Lease
     ///
-    /// Use [`ReadNamespacedLeaseResponse`](./enum.ReadNamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedLeaseResponse`]`>` constructor, or [`ReadNamespacedLeaseResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -708,7 +726,7 @@ impl Lease {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedLeaseOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedLeaseResponse>), crate::RequestError> {
         let ReadNamespacedLeaseOptional {
             exact,
             export,
@@ -729,11 +747,14 @@ impl Lease {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::read_namespaced_lease`](./struct.Lease.html#method.read_namespaced_lease)
+/// Optional parameters of [`Lease::read_namespaced_lease`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedLeaseOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -744,7 +765,7 @@ pub struct ReadNamespacedLeaseOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Lease::read_namespaced_lease`](./struct.Lease.html#method.read_namespaced_lease)
+/// Use `<ReadNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::read_namespaced_lease`]
 #[derive(Debug)]
 pub enum ReadNamespacedLeaseResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::Lease),
@@ -774,7 +795,7 @@ impl crate::Response for ReadNamespacedLeaseResponse {
 impl Lease {
     /// replace the specified Lease
     ///
-    /// Use [`ReplaceNamespacedLeaseResponse`](./enum.ReplaceNamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedLeaseResponse`]`>` constructor, or [`ReplaceNamespacedLeaseResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -796,7 +817,7 @@ impl Lease {
         namespace: &str,
         body: &crate::v1_12::api::coordination::v1beta1::Lease,
         optional: ReplaceNamespacedLeaseOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedLeaseResponse>), crate::RequestError> {
         let ReplaceNamespacedLeaseOptional {
             dry_run,
             pretty,
@@ -813,11 +834,14 @@ impl Lease {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::replace_namespaced_lease`](./struct.Lease.html#method.replace_namespaced_lease)
+/// Optional parameters of [`Lease::replace_namespaced_lease`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedLeaseOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -826,7 +850,7 @@ pub struct ReplaceNamespacedLeaseOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Lease::replace_namespaced_lease`](./struct.Lease.html#method.replace_namespaced_lease)
+/// Use `<ReplaceNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::replace_namespaced_lease`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedLeaseResponse {
     Ok(crate::v1_12::api::coordination::v1beta1::Lease),
@@ -865,7 +889,7 @@ impl crate::Response for ReplaceNamespacedLeaseResponse {
 impl Lease {
     /// watch individual changes to a list of Lease. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchLeaseListForAllNamespacesResponse`](./enum.WatchLeaseListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchLeaseListForAllNamespacesResponse`]`>` constructor, or [`WatchLeaseListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -874,7 +898,7 @@ impl Lease {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_lease_list_for_all_namespaces(
         optional: WatchLeaseListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchLeaseListForAllNamespacesResponse>), crate::RequestError> {
         let WatchLeaseListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -919,11 +943,14 @@ impl Lease {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::watch_lease_list_for_all_namespaces`](./struct.Lease.html#method.watch_lease_list_for_all_namespaces)
+/// Optional parameters of [`Lease::watch_lease_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchLeaseListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -950,7 +977,7 @@ pub struct WatchLeaseListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::watch_lease_list_for_all_namespaces`](./struct.Lease.html#method.watch_lease_list_for_all_namespaces)
+/// Use `<WatchLeaseListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::watch_lease_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchLeaseListForAllNamespacesResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -982,7 +1009,7 @@ impl crate::Response for WatchLeaseListForAllNamespacesResponse {
 impl Lease {
     /// watch changes to an object of kind Lease. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchNamespacedLeaseResponse`](./enum.WatchNamespacedLeaseResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedLeaseResponse`]`>` constructor, or [`WatchNamespacedLeaseResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1001,7 +1028,7 @@ impl Lease {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedLeaseOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedLeaseResponse>), crate::RequestError> {
         let WatchNamespacedLeaseOptional {
             continue_,
             field_selector,
@@ -1046,11 +1073,14 @@ impl Lease {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::watch_namespaced_lease`](./struct.Lease.html#method.watch_namespaced_lease)
+/// Optional parameters of [`Lease::watch_namespaced_lease`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedLeaseOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1077,7 +1107,7 @@ pub struct WatchNamespacedLeaseOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::watch_namespaced_lease`](./struct.Lease.html#method.watch_namespaced_lease)
+/// Use `<WatchNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::watch_namespaced_lease`]
 #[derive(Debug)]
 pub enum WatchNamespacedLeaseResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1109,7 +1139,7 @@ impl crate::Response for WatchNamespacedLeaseResponse {
 impl Lease {
     /// watch individual changes to a list of Lease. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchNamespacedLeaseListResponse`](./enum.WatchNamespacedLeaseListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedLeaseListResponse`]`>` constructor, or [`WatchNamespacedLeaseListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1123,7 +1153,7 @@ impl Lease {
     pub fn watch_namespaced_lease_list(
         namespace: &str,
         optional: WatchNamespacedLeaseListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedLeaseListResponse>), crate::RequestError> {
         let WatchNamespacedLeaseListOptional {
             continue_,
             field_selector,
@@ -1168,11 +1198,14 @@ impl Lease {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Lease::watch_namespaced_lease_list`](./struct.Lease.html#method.watch_namespaced_lease_list)
+/// Optional parameters of [`Lease::watch_namespaced_lease_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedLeaseListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1199,7 +1232,7 @@ pub struct WatchNamespacedLeaseListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Lease::watch_namespaced_lease_list`](./struct.Lease.html#method.watch_namespaced_lease_list)
+/// Use `<WatchNamespacedLeaseListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::watch_namespaced_lease_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedLeaseListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),

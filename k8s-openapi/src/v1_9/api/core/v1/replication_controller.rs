@@ -20,7 +20,7 @@ pub struct ReplicationController {
 impl ReplicationController {
     /// create a ReplicationController
     ///
-    /// Use [`CreateNamespacedReplicationControllerResponse`](./enum.CreateNamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedReplicationControllerResponse`]`>` constructor, or [`CreateNamespacedReplicationControllerResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,7 +37,7 @@ impl ReplicationController {
         namespace: &str,
         body: &crate::v1_9::api::core::v1::ReplicationController,
         optional: CreateNamespacedReplicationControllerOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedReplicationControllerResponse>), crate::RequestError> {
         let CreateNamespacedReplicationControllerOptional {
             pretty,
         } = optional;
@@ -50,18 +50,21 @@ impl ReplicationController {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::create_namespaced_replication_controller`](./struct.ReplicationController.html#method.create_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::create_namespaced_replication_controller`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedReplicationControllerOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::create_namespaced_replication_controller`](./struct.ReplicationController.html#method.create_namespaced_replication_controller)
+/// Use `<CreateNamespacedReplicationControllerResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::create_namespaced_replication_controller`]
 #[derive(Debug)]
 pub enum CreateNamespacedReplicationControllerResponse {
     Ok(crate::v1_9::api::core::v1::ReplicationController),
@@ -109,7 +112,7 @@ impl crate::Response for CreateNamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// delete collection of ReplicationController
     ///
-    /// Use [`DeleteCollectionNamespacedReplicationControllerResponse`](./enum.DeleteCollectionNamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedReplicationControllerResponse`]`>` constructor, or [`DeleteCollectionNamespacedReplicationControllerResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -123,7 +126,7 @@ impl ReplicationController {
     pub fn delete_collection_namespaced_replication_controller(
         namespace: &str,
         optional: DeleteCollectionNamespacedReplicationControllerOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedReplicationControllerResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedReplicationControllerOptional {
             continue_,
             field_selector,
@@ -168,11 +171,14 @@ impl ReplicationController {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::delete_collection_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_collection_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::delete_collection_namespaced_replication_controller`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedReplicationControllerOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -197,7 +203,7 @@ pub struct DeleteCollectionNamespacedReplicationControllerOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::delete_collection_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_collection_namespaced_replication_controller)
+/// Use `<DeleteCollectionNamespacedReplicationControllerResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::delete_collection_namespaced_replication_controller`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedReplicationControllerResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -241,7 +247,7 @@ impl crate::Response for DeleteCollectionNamespacedReplicationControllerResponse
 impl ReplicationController {
     /// delete a ReplicationController
     ///
-    /// Use [`DeleteNamespacedReplicationControllerResponse`](./enum.DeleteNamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedReplicationControllerResponse`]`>` constructor, or [`DeleteNamespacedReplicationControllerResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -260,7 +266,7 @@ impl ReplicationController {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedReplicationControllerOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedReplicationControllerResponse>), crate::RequestError> {
         let DeleteNamespacedReplicationControllerOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -285,11 +291,14 @@ impl ReplicationController {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::delete_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::delete_namespaced_replication_controller`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedReplicationControllerOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -302,7 +311,7 @@ pub struct DeleteNamespacedReplicationControllerOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::delete_namespaced_replication_controller`](./struct.ReplicationController.html#method.delete_namespaced_replication_controller)
+/// Use `<DeleteNamespacedReplicationControllerResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::delete_namespaced_replication_controller`]
 #[derive(Debug)]
 pub enum DeleteNamespacedReplicationControllerResponse {
     OkStatus(crate::v1_9::apimachinery::pkg::apis::meta::v1::Status),
@@ -346,7 +355,7 @@ impl crate::Response for DeleteNamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// list or watch objects of kind ReplicationController
     ///
-    /// Use [`ListNamespacedReplicationControllerResponse`](./enum.ListNamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedReplicationControllerResponse`]`>` constructor, or [`ListNamespacedReplicationControllerResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -360,7 +369,7 @@ impl ReplicationController {
     pub fn list_namespaced_replication_controller(
         namespace: &str,
         optional: ListNamespacedReplicationControllerOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedReplicationControllerResponse>), crate::RequestError> {
         let ListNamespacedReplicationControllerOptional {
             continue_,
             field_selector,
@@ -405,11 +414,14 @@ impl ReplicationController {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::list_namespaced_replication_controller`](./struct.ReplicationController.html#method.list_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::list_namespaced_replication_controller`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedReplicationControllerOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -434,7 +446,7 @@ pub struct ListNamespacedReplicationControllerOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::list_namespaced_replication_controller`](./struct.ReplicationController.html#method.list_namespaced_replication_controller)
+/// Use `<ListNamespacedReplicationControllerResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::list_namespaced_replication_controller`]
 #[derive(Debug)]
 pub enum ListNamespacedReplicationControllerResponse {
     Ok(crate::v1_9::api::core::v1::ReplicationControllerList),
@@ -464,7 +476,7 @@ impl crate::Response for ListNamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// list or watch objects of kind ReplicationController
     ///
-    /// Use [`ListReplicationControllerForAllNamespacesResponse`](./enum.ListReplicationControllerForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListReplicationControllerForAllNamespacesResponse`]`>` constructor, or [`ListReplicationControllerForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -473,7 +485,7 @@ impl ReplicationController {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_replication_controller_for_all_namespaces(
         optional: ListReplicationControllerForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListReplicationControllerForAllNamespacesResponse>), crate::RequestError> {
         let ListReplicationControllerForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -518,11 +530,14 @@ impl ReplicationController {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::list_replication_controller_for_all_namespaces`](./struct.ReplicationController.html#method.list_replication_controller_for_all_namespaces)
+/// Optional parameters of [`ReplicationController::list_replication_controller_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListReplicationControllerForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -547,7 +562,7 @@ pub struct ListReplicationControllerForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::list_replication_controller_for_all_namespaces`](./struct.ReplicationController.html#method.list_replication_controller_for_all_namespaces)
+/// Use `<ListReplicationControllerForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::list_replication_controller_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListReplicationControllerForAllNamespacesResponse {
     Ok(crate::v1_9::api::core::v1::ReplicationControllerList),
@@ -577,7 +592,7 @@ impl crate::Response for ListReplicationControllerForAllNamespacesResponse {
 impl ReplicationController {
     /// partially update the specified ReplicationController
     ///
-    /// Use [`PatchNamespacedReplicationControllerResponse`](./enum.PatchNamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedReplicationControllerResponse`]`>` constructor, or [`PatchNamespacedReplicationControllerResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -599,7 +614,7 @@ impl ReplicationController {
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedReplicationControllerOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicationControllerResponse>), crate::RequestError> {
         let PatchNamespacedReplicationControllerOptional {
             pretty,
         } = optional;
@@ -612,18 +627,21 @@ impl ReplicationController {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::patch_namespaced_replication_controller`](./struct.ReplicationController.html#method.patch_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::patch_namespaced_replication_controller`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedReplicationControllerOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::patch_namespaced_replication_controller`](./struct.ReplicationController.html#method.patch_namespaced_replication_controller)
+/// Use `<PatchNamespacedReplicationControllerResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::patch_namespaced_replication_controller`]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicationControllerResponse {
     Ok(crate::v1_9::api::core::v1::ReplicationController),
@@ -653,7 +671,7 @@ impl crate::Response for PatchNamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// partially update status of the specified ReplicationController
     ///
-    /// Use [`PatchNamespacedReplicationControllerStatusResponse`](./enum.PatchNamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedReplicationControllerStatusResponse`]`>` constructor, or [`PatchNamespacedReplicationControllerStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -675,7 +693,7 @@ impl ReplicationController {
         namespace: &str,
         body: &crate::v1_9::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedReplicationControllerStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedReplicationControllerStatusResponse>), crate::RequestError> {
         let PatchNamespacedReplicationControllerStatusOptional {
             pretty,
         } = optional;
@@ -688,18 +706,21 @@ impl ReplicationController {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::patch_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.patch_namespaced_replication_controller_status)
+/// Optional parameters of [`ReplicationController::patch_namespaced_replication_controller_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedReplicationControllerStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::patch_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.patch_namespaced_replication_controller_status)
+/// Use `<PatchNamespacedReplicationControllerStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::patch_namespaced_replication_controller_status`]
 #[derive(Debug)]
 pub enum PatchNamespacedReplicationControllerStatusResponse {
     Ok(crate::v1_9::api::core::v1::ReplicationController),
@@ -729,7 +750,7 @@ impl crate::Response for PatchNamespacedReplicationControllerStatusResponse {
 impl ReplicationController {
     /// read the specified ReplicationController
     ///
-    /// Use [`ReadNamespacedReplicationControllerResponse`](./enum.ReadNamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicationControllerResponse`]`>` constructor, or [`ReadNamespacedReplicationControllerResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -748,7 +769,7 @@ impl ReplicationController {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedReplicationControllerOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicationControllerResponse>), crate::RequestError> {
         let ReadNamespacedReplicationControllerOptional {
             exact,
             export,
@@ -769,11 +790,14 @@ impl ReplicationController {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::read_namespaced_replication_controller`](./struct.ReplicationController.html#method.read_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::read_namespaced_replication_controller`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedReplicationControllerOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -784,7 +808,7 @@ pub struct ReadNamespacedReplicationControllerOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::read_namespaced_replication_controller`](./struct.ReplicationController.html#method.read_namespaced_replication_controller)
+/// Use `<ReadNamespacedReplicationControllerResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::read_namespaced_replication_controller`]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicationControllerResponse {
     Ok(crate::v1_9::api::core::v1::ReplicationController),
@@ -814,7 +838,7 @@ impl crate::Response for ReadNamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// read status of the specified ReplicationController
     ///
-    /// Use [`ReadNamespacedReplicationControllerStatusResponse`](./enum.ReadNamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedReplicationControllerStatusResponse`]`>` constructor, or [`ReadNamespacedReplicationControllerStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -833,7 +857,7 @@ impl ReplicationController {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedReplicationControllerStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedReplicationControllerStatusResponse>), crate::RequestError> {
         let ReadNamespacedReplicationControllerStatusOptional {
             pretty,
         } = optional;
@@ -846,18 +870,21 @@ impl ReplicationController {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::read_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.read_namespaced_replication_controller_status)
+/// Optional parameters of [`ReplicationController::read_namespaced_replication_controller_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedReplicationControllerStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::read_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.read_namespaced_replication_controller_status)
+/// Use `<ReadNamespacedReplicationControllerStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::read_namespaced_replication_controller_status`]
 #[derive(Debug)]
 pub enum ReadNamespacedReplicationControllerStatusResponse {
     Ok(crate::v1_9::api::core::v1::ReplicationController),
@@ -887,7 +914,7 @@ impl crate::Response for ReadNamespacedReplicationControllerStatusResponse {
 impl ReplicationController {
     /// replace the specified ReplicationController
     ///
-    /// Use [`ReplaceNamespacedReplicationControllerResponse`](./enum.ReplaceNamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedReplicationControllerResponse`]`>` constructor, or [`ReplaceNamespacedReplicationControllerResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -909,7 +936,7 @@ impl ReplicationController {
         namespace: &str,
         body: &crate::v1_9::api::core::v1::ReplicationController,
         optional: ReplaceNamespacedReplicationControllerOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicationControllerResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicationControllerOptional {
             pretty,
         } = optional;
@@ -922,18 +949,21 @@ impl ReplicationController {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::replace_namespaced_replication_controller`](./struct.ReplicationController.html#method.replace_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::replace_namespaced_replication_controller`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedReplicationControllerOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::replace_namespaced_replication_controller`](./struct.ReplicationController.html#method.replace_namespaced_replication_controller)
+/// Use `<ReplaceNamespacedReplicationControllerResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::replace_namespaced_replication_controller`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicationControllerResponse {
     Ok(crate::v1_9::api::core::v1::ReplicationController),
@@ -972,7 +1002,7 @@ impl crate::Response for ReplaceNamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// replace status of the specified ReplicationController
     ///
-    /// Use [`ReplaceNamespacedReplicationControllerStatusResponse`](./enum.ReplaceNamespacedReplicationControllerStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedReplicationControllerStatusResponse`]`>` constructor, or [`ReplaceNamespacedReplicationControllerStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -994,7 +1024,7 @@ impl ReplicationController {
         namespace: &str,
         body: &crate::v1_9::api::core::v1::ReplicationController,
         optional: ReplaceNamespacedReplicationControllerStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedReplicationControllerStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedReplicationControllerStatusOptional {
             pretty,
         } = optional;
@@ -1007,18 +1037,21 @@ impl ReplicationController {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::replace_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.replace_namespaced_replication_controller_status)
+/// Optional parameters of [`ReplicationController::replace_namespaced_replication_controller_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedReplicationControllerStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::replace_namespaced_replication_controller_status`](./struct.ReplicationController.html#method.replace_namespaced_replication_controller_status)
+/// Use `<ReplaceNamespacedReplicationControllerStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::replace_namespaced_replication_controller_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedReplicationControllerStatusResponse {
     Ok(crate::v1_9::api::core::v1::ReplicationController),
@@ -1057,7 +1090,7 @@ impl crate::Response for ReplaceNamespacedReplicationControllerStatusResponse {
 impl ReplicationController {
     /// watch changes to an object of kind ReplicationController
     ///
-    /// Use [`WatchNamespacedReplicationControllerResponse`](./enum.WatchNamespacedReplicationControllerResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedReplicationControllerResponse`]`>` constructor, or [`WatchNamespacedReplicationControllerResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1076,7 +1109,7 @@ impl ReplicationController {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedReplicationControllerOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedReplicationControllerResponse>), crate::RequestError> {
         let WatchNamespacedReplicationControllerOptional {
             continue_,
             field_selector,
@@ -1121,11 +1154,14 @@ impl ReplicationController {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::watch_namespaced_replication_controller`](./struct.ReplicationController.html#method.watch_namespaced_replication_controller)
+/// Optional parameters of [`ReplicationController::watch_namespaced_replication_controller`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedReplicationControllerOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1150,7 +1186,7 @@ pub struct WatchNamespacedReplicationControllerOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::watch_namespaced_replication_controller`](./struct.ReplicationController.html#method.watch_namespaced_replication_controller)
+/// Use `<WatchNamespacedReplicationControllerResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::watch_namespaced_replication_controller`]
 #[derive(Debug)]
 pub enum WatchNamespacedReplicationControllerResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1182,7 +1218,7 @@ impl crate::Response for WatchNamespacedReplicationControllerResponse {
 impl ReplicationController {
     /// watch individual changes to a list of ReplicationController
     ///
-    /// Use [`WatchNamespacedReplicationControllerListResponse`](./enum.WatchNamespacedReplicationControllerListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedReplicationControllerListResponse`]`>` constructor, or [`WatchNamespacedReplicationControllerListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1196,7 +1232,7 @@ impl ReplicationController {
     pub fn watch_namespaced_replication_controller_list(
         namespace: &str,
         optional: WatchNamespacedReplicationControllerListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedReplicationControllerListResponse>), crate::RequestError> {
         let WatchNamespacedReplicationControllerListOptional {
             continue_,
             field_selector,
@@ -1241,11 +1277,14 @@ impl ReplicationController {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::watch_namespaced_replication_controller_list`](./struct.ReplicationController.html#method.watch_namespaced_replication_controller_list)
+/// Optional parameters of [`ReplicationController::watch_namespaced_replication_controller_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedReplicationControllerListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1270,7 +1309,7 @@ pub struct WatchNamespacedReplicationControllerListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::watch_namespaced_replication_controller_list`](./struct.ReplicationController.html#method.watch_namespaced_replication_controller_list)
+/// Use `<WatchNamespacedReplicationControllerListResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::watch_namespaced_replication_controller_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedReplicationControllerListResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1302,7 +1341,7 @@ impl crate::Response for WatchNamespacedReplicationControllerListResponse {
 impl ReplicationController {
     /// watch individual changes to a list of ReplicationController
     ///
-    /// Use [`WatchReplicationControllerListForAllNamespacesResponse`](./enum.WatchReplicationControllerListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchReplicationControllerListForAllNamespacesResponse`]`>` constructor, or [`WatchReplicationControllerListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1311,7 +1350,7 @@ impl ReplicationController {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_replication_controller_list_for_all_namespaces(
         optional: WatchReplicationControllerListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchReplicationControllerListForAllNamespacesResponse>), crate::RequestError> {
         let WatchReplicationControllerListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1356,11 +1395,14 @@ impl ReplicationController {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ReplicationController::watch_replication_controller_list_for_all_namespaces`](./struct.ReplicationController.html#method.watch_replication_controller_list_for_all_namespaces)
+/// Optional parameters of [`ReplicationController::watch_replication_controller_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchReplicationControllerListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1385,7 +1427,7 @@ pub struct WatchReplicationControllerListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ReplicationController::watch_replication_controller_list_for_all_namespaces`](./struct.ReplicationController.html#method.watch_replication_controller_list_for_all_namespaces)
+/// Use `<WatchReplicationControllerListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::watch_replication_controller_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchReplicationControllerListForAllNamespacesResponse {
     Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),

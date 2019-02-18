@@ -15,7 +15,7 @@ pub struct PodPreset {
 impl PodPreset {
     /// create a PodPreset
     ///
-    /// Use [`CreateNamespacedPodPresetResponse`](./enum.CreateNamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedPodPresetResponse`]`>` constructor, or [`CreateNamespacedPodPresetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -32,7 +32,7 @@ impl PodPreset {
         namespace: &str,
         body: &crate::v1_12::api::settings::v1alpha1::PodPreset,
         optional: CreateNamespacedPodPresetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodPresetResponse>), crate::RequestError> {
         let CreateNamespacedPodPresetOptional {
             dry_run,
             include_uninitialized,
@@ -53,11 +53,14 @@ impl PodPreset {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::create_namespaced_pod_preset`](./struct.PodPreset.html#method.create_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::create_namespaced_pod_preset`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPodPresetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -68,7 +71,7 @@ pub struct CreateNamespacedPodPresetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodPreset::create_namespaced_pod_preset`](./struct.PodPreset.html#method.create_namespaced_pod_preset)
+/// Use `<CreateNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::create_namespaced_pod_preset`]
 #[derive(Debug)]
 pub enum CreateNamespacedPodPresetResponse {
     Ok(crate::v1_12::api::settings::v1alpha1::PodPreset),
@@ -116,7 +119,7 @@ impl crate::Response for CreateNamespacedPodPresetResponse {
 impl PodPreset {
     /// delete collection of PodPreset
     ///
-    /// Use [`DeleteCollectionNamespacedPodPresetResponse`](./enum.DeleteCollectionNamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedPodPresetResponse`]`>` constructor, or [`DeleteCollectionNamespacedPodPresetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -130,7 +133,7 @@ impl PodPreset {
     pub fn delete_collection_namespaced_pod_preset(
         namespace: &str,
         optional: DeleteCollectionNamespacedPodPresetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedPodPresetResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedPodPresetOptional {
             continue_,
             field_selector,
@@ -175,11 +178,14 @@ impl PodPreset {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::delete_collection_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_collection_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::delete_collection_namespaced_pod_preset`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedPodPresetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -206,7 +212,7 @@ pub struct DeleteCollectionNamespacedPodPresetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::delete_collection_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_collection_namespaced_pod_preset)
+/// Use `<DeleteCollectionNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::delete_collection_namespaced_pod_preset`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPodPresetResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -250,7 +256,7 @@ impl crate::Response for DeleteCollectionNamespacedPodPresetResponse {
 impl PodPreset {
     /// delete a PodPreset
     ///
-    /// Use [`DeleteNamespacedPodPresetResponse`](./enum.DeleteNamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedPodPresetResponse`]`>` constructor, or [`DeleteNamespacedPodPresetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -269,7 +275,7 @@ impl PodPreset {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedPodPresetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedPodPresetResponse>), crate::RequestError> {
         let DeleteNamespacedPodPresetOptional {
             dry_run,
             grace_period_seconds,
@@ -298,11 +304,14 @@ impl PodPreset {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::delete_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::delete_namespaced_pod_preset`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedPodPresetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -317,7 +326,7 @@ pub struct DeleteNamespacedPodPresetOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodPreset::delete_namespaced_pod_preset`](./struct.PodPreset.html#method.delete_namespaced_pod_preset)
+/// Use `<DeleteNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::delete_namespaced_pod_preset`]
 #[derive(Debug)]
 pub enum DeleteNamespacedPodPresetResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -370,7 +379,7 @@ impl crate::Response for DeleteNamespacedPodPresetResponse {
 impl PodPreset {
     /// list or watch objects of kind PodPreset
     ///
-    /// Use [`ListNamespacedPodPresetResponse`](./enum.ListNamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedPodPresetResponse`]`>` constructor, or [`ListNamespacedPodPresetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -384,7 +393,7 @@ impl PodPreset {
     pub fn list_namespaced_pod_preset(
         namespace: &str,
         optional: ListNamespacedPodPresetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedPodPresetResponse>), crate::RequestError> {
         let ListNamespacedPodPresetOptional {
             continue_,
             field_selector,
@@ -429,11 +438,14 @@ impl PodPreset {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::list_namespaced_pod_preset`](./struct.PodPreset.html#method.list_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::list_namespaced_pod_preset`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedPodPresetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -460,7 +472,7 @@ pub struct ListNamespacedPodPresetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::list_namespaced_pod_preset`](./struct.PodPreset.html#method.list_namespaced_pod_preset)
+/// Use `<ListNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::list_namespaced_pod_preset`]
 #[derive(Debug)]
 pub enum ListNamespacedPodPresetResponse {
     Ok(crate::v1_12::api::settings::v1alpha1::PodPresetList),
@@ -490,7 +502,7 @@ impl crate::Response for ListNamespacedPodPresetResponse {
 impl PodPreset {
     /// list or watch objects of kind PodPreset
     ///
-    /// Use [`ListPodPresetForAllNamespacesResponse`](./enum.ListPodPresetForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListPodPresetForAllNamespacesResponse`]`>` constructor, or [`ListPodPresetForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -499,7 +511,7 @@ impl PodPreset {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_pod_preset_for_all_namespaces(
         optional: ListPodPresetForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodPresetForAllNamespacesResponse>), crate::RequestError> {
         let ListPodPresetForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -544,11 +556,14 @@ impl PodPreset {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::list_pod_preset_for_all_namespaces`](./struct.PodPreset.html#method.list_pod_preset_for_all_namespaces)
+/// Optional parameters of [`PodPreset::list_pod_preset_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListPodPresetForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -575,7 +590,7 @@ pub struct ListPodPresetForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::list_pod_preset_for_all_namespaces`](./struct.PodPreset.html#method.list_pod_preset_for_all_namespaces)
+/// Use `<ListPodPresetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::list_pod_preset_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListPodPresetForAllNamespacesResponse {
     Ok(crate::v1_12::api::settings::v1alpha1::PodPresetList),
@@ -605,7 +620,7 @@ impl crate::Response for ListPodPresetForAllNamespacesResponse {
 impl PodPreset {
     /// partially update the specified PodPreset
     ///
-    /// Use [`PatchNamespacedPodPresetResponse`](./enum.PatchNamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedPodPresetResponse`]`>` constructor, or [`PatchNamespacedPodPresetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -627,7 +642,7 @@ impl PodPreset {
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedPodPresetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodPresetResponse>), crate::RequestError> {
         let PatchNamespacedPodPresetOptional {
             dry_run,
             pretty,
@@ -644,11 +659,14 @@ impl PodPreset {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::patch_namespaced_pod_preset`](./struct.PodPreset.html#method.patch_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::patch_namespaced_pod_preset`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedPodPresetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -657,7 +675,7 @@ pub struct PatchNamespacedPodPresetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodPreset::patch_namespaced_pod_preset`](./struct.PodPreset.html#method.patch_namespaced_pod_preset)
+/// Use `<PatchNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::patch_namespaced_pod_preset`]
 #[derive(Debug)]
 pub enum PatchNamespacedPodPresetResponse {
     Ok(crate::v1_12::api::settings::v1alpha1::PodPreset),
@@ -687,7 +705,7 @@ impl crate::Response for PatchNamespacedPodPresetResponse {
 impl PodPreset {
     /// read the specified PodPreset
     ///
-    /// Use [`ReadNamespacedPodPresetResponse`](./enum.ReadNamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodPresetResponse`]`>` constructor, or [`ReadNamespacedPodPresetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -706,7 +724,7 @@ impl PodPreset {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedPodPresetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodPresetResponse>), crate::RequestError> {
         let ReadNamespacedPodPresetOptional {
             exact,
             export,
@@ -727,11 +745,14 @@ impl PodPreset {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::read_namespaced_pod_preset`](./struct.PodPreset.html#method.read_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::read_namespaced_pod_preset`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedPodPresetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -742,7 +763,7 @@ pub struct ReadNamespacedPodPresetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodPreset::read_namespaced_pod_preset`](./struct.PodPreset.html#method.read_namespaced_pod_preset)
+/// Use `<ReadNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::read_namespaced_pod_preset`]
 #[derive(Debug)]
 pub enum ReadNamespacedPodPresetResponse {
     Ok(crate::v1_12::api::settings::v1alpha1::PodPreset),
@@ -772,7 +793,7 @@ impl crate::Response for ReadNamespacedPodPresetResponse {
 impl PodPreset {
     /// replace the specified PodPreset
     ///
-    /// Use [`ReplaceNamespacedPodPresetResponse`](./enum.ReplaceNamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedPodPresetResponse`]`>` constructor, or [`ReplaceNamespacedPodPresetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -794,7 +815,7 @@ impl PodPreset {
         namespace: &str,
         body: &crate::v1_12::api::settings::v1alpha1::PodPreset,
         optional: ReplaceNamespacedPodPresetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPodPresetResponse>), crate::RequestError> {
         let ReplaceNamespacedPodPresetOptional {
             dry_run,
             pretty,
@@ -811,11 +832,14 @@ impl PodPreset {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::replace_namespaced_pod_preset`](./struct.PodPreset.html#method.replace_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::replace_namespaced_pod_preset`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedPodPresetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -824,7 +848,7 @@ pub struct ReplaceNamespacedPodPresetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodPreset::replace_namespaced_pod_preset`](./struct.PodPreset.html#method.replace_namespaced_pod_preset)
+/// Use `<ReplaceNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::replace_namespaced_pod_preset`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPodPresetResponse {
     Ok(crate::v1_12::api::settings::v1alpha1::PodPreset),
@@ -863,7 +887,7 @@ impl crate::Response for ReplaceNamespacedPodPresetResponse {
 impl PodPreset {
     /// watch changes to an object of kind PodPreset. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchNamespacedPodPresetResponse`](./enum.WatchNamespacedPodPresetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedPodPresetResponse`]`>` constructor, or [`WatchNamespacedPodPresetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -882,7 +906,7 @@ impl PodPreset {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedPodPresetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodPresetResponse>), crate::RequestError> {
         let WatchNamespacedPodPresetOptional {
             continue_,
             field_selector,
@@ -927,11 +951,14 @@ impl PodPreset {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::watch_namespaced_pod_preset`](./struct.PodPreset.html#method.watch_namespaced_pod_preset)
+/// Optional parameters of [`PodPreset::watch_namespaced_pod_preset`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedPodPresetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -958,7 +985,7 @@ pub struct WatchNamespacedPodPresetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::watch_namespaced_pod_preset`](./struct.PodPreset.html#method.watch_namespaced_pod_preset)
+/// Use `<WatchNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::watch_namespaced_pod_preset`]
 #[derive(Debug)]
 pub enum WatchNamespacedPodPresetResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -990,7 +1017,7 @@ impl crate::Response for WatchNamespacedPodPresetResponse {
 impl PodPreset {
     /// watch individual changes to a list of PodPreset. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchNamespacedPodPresetListResponse`](./enum.WatchNamespacedPodPresetListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedPodPresetListResponse`]`>` constructor, or [`WatchNamespacedPodPresetListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1004,7 +1031,7 @@ impl PodPreset {
     pub fn watch_namespaced_pod_preset_list(
         namespace: &str,
         optional: WatchNamespacedPodPresetListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodPresetListResponse>), crate::RequestError> {
         let WatchNamespacedPodPresetListOptional {
             continue_,
             field_selector,
@@ -1049,11 +1076,14 @@ impl PodPreset {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::watch_namespaced_pod_preset_list`](./struct.PodPreset.html#method.watch_namespaced_pod_preset_list)
+/// Optional parameters of [`PodPreset::watch_namespaced_pod_preset_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedPodPresetListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1080,7 +1110,7 @@ pub struct WatchNamespacedPodPresetListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::watch_namespaced_pod_preset_list`](./struct.PodPreset.html#method.watch_namespaced_pod_preset_list)
+/// Use `<WatchNamespacedPodPresetListResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::watch_namespaced_pod_preset_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedPodPresetListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1112,7 +1142,7 @@ impl crate::Response for WatchNamespacedPodPresetListResponse {
 impl PodPreset {
     /// watch individual changes to a list of PodPreset. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchPodPresetListForAllNamespacesResponse`](./enum.WatchPodPresetListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchPodPresetListForAllNamespacesResponse`]`>` constructor, or [`WatchPodPresetListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1121,7 +1151,7 @@ impl PodPreset {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_pod_preset_list_for_all_namespaces(
         optional: WatchPodPresetListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodPresetListForAllNamespacesResponse>), crate::RequestError> {
         let WatchPodPresetListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1166,11 +1196,14 @@ impl PodPreset {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodPreset::watch_pod_preset_list_for_all_namespaces`](./struct.PodPreset.html#method.watch_pod_preset_list_for_all_namespaces)
+/// Optional parameters of [`PodPreset::watch_pod_preset_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPodPresetListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1197,7 +1230,7 @@ pub struct WatchPodPresetListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodPreset::watch_pod_preset_list_for_all_namespaces`](./struct.PodPreset.html#method.watch_pod_preset_list_for_all_namespaces)
+/// Use `<WatchPodPresetListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::watch_pod_preset_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchPodPresetListForAllNamespacesResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),

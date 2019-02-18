@@ -9,12 +9,12 @@ fn list() {
 	use k8s_openapi::apimachinery::pkg::util as util;
 
 	crate::Client::with("deployment-list", |client| {
-		let request =
+		let (request, response_body) =
 			apps::Deployment::list_namespaced_deployment("kube-system", Default::default())
 			.expect("couldn't list deployments");
 		let response = client.execute(request).expect("couldn't list deployments");;
 		let deployment_list =
-			crate::get_single_value(response, |response, status_code, _| match response {
+			crate::get_single_value(response, response_body, |response, status_code, _| match response {
 				apps::ListNamespacedDeploymentResponse::Ok(deployment_list) =>
 					Ok(crate::ValueResult::GotValue(deployment_list)),
 				other => Err(format!("{:?} {}", other, status_code).into()),

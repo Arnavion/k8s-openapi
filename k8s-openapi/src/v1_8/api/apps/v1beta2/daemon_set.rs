@@ -20,7 +20,7 @@ pub struct DaemonSet {
 impl DaemonSet {
     /// create a DaemonSet
     ///
-    /// Use [`CreateNamespacedDaemonSetResponse`](./enum.CreateNamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedDaemonSetResponse`]`>` constructor, or [`CreateNamespacedDaemonSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,7 +37,7 @@ impl DaemonSet {
         namespace: &str,
         body: &crate::v1_8::api::apps::v1beta2::DaemonSet,
         optional: CreateNamespacedDaemonSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedDaemonSetResponse>), crate::RequestError> {
         let CreateNamespacedDaemonSetOptional {
             pretty,
         } = optional;
@@ -50,18 +50,21 @@ impl DaemonSet {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::create_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::create_namespaced_daemon_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedDaemonSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::create_namespaced_daemon_set`](./struct.DaemonSet.html#method.create_namespaced_daemon_set)
+/// Use `<CreateNamespacedDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::create_namespaced_daemon_set`]
 #[derive(Debug)]
 pub enum CreateNamespacedDaemonSetResponse {
     Ok(crate::v1_8::api::apps::v1beta2::DaemonSet),
@@ -91,7 +94,7 @@ impl crate::Response for CreateNamespacedDaemonSetResponse {
 impl DaemonSet {
     /// delete collection of DaemonSet
     ///
-    /// Use [`DeleteCollectionNamespacedDaemonSetResponse`](./enum.DeleteCollectionNamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedDaemonSetResponse`]`>` constructor, or [`DeleteCollectionNamespacedDaemonSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -105,7 +108,7 @@ impl DaemonSet {
     pub fn delete_collection_namespaced_daemon_set(
         namespace: &str,
         optional: DeleteCollectionNamespacedDaemonSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedDaemonSetResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedDaemonSetOptional {
             continue_,
             field_selector,
@@ -150,11 +153,14 @@ impl DaemonSet {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::delete_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_collection_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::delete_collection_namespaced_daemon_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedDaemonSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -179,7 +185,7 @@ pub struct DeleteCollectionNamespacedDaemonSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::delete_collection_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_collection_namespaced_daemon_set)
+/// Use `<DeleteCollectionNamespacedDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::delete_collection_namespaced_daemon_set`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedDaemonSetResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -223,7 +229,7 @@ impl crate::Response for DeleteCollectionNamespacedDaemonSetResponse {
 impl DaemonSet {
     /// delete a DaemonSet
     ///
-    /// Use [`DeleteNamespacedDaemonSetResponse`](./enum.DeleteNamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedDaemonSetResponse`]`>` constructor, or [`DeleteNamespacedDaemonSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -242,7 +248,7 @@ impl DaemonSet {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedDaemonSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedDaemonSetResponse>), crate::RequestError> {
         let DeleteNamespacedDaemonSetOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -267,11 +273,14 @@ impl DaemonSet {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::delete_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::delete_namespaced_daemon_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedDaemonSetOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -284,7 +293,7 @@ pub struct DeleteNamespacedDaemonSetOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::delete_namespaced_daemon_set`](./struct.DaemonSet.html#method.delete_namespaced_daemon_set)
+/// Use `<DeleteNamespacedDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::delete_namespaced_daemon_set`]
 #[derive(Debug)]
 pub enum DeleteNamespacedDaemonSetResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -328,7 +337,7 @@ impl crate::Response for DeleteNamespacedDaemonSetResponse {
 impl DaemonSet {
     /// list or watch objects of kind DaemonSet
     ///
-    /// Use [`ListDaemonSetForAllNamespacesResponse`](./enum.ListDaemonSetForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListDaemonSetForAllNamespacesResponse`]`>` constructor, or [`ListDaemonSetForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -337,7 +346,7 @@ impl DaemonSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_daemon_set_for_all_namespaces(
         optional: ListDaemonSetForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListDaemonSetForAllNamespacesResponse>), crate::RequestError> {
         let ListDaemonSetForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -382,11 +391,14 @@ impl DaemonSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::list_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_daemon_set_for_all_namespaces)
+/// Optional parameters of [`DaemonSet::list_daemon_set_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListDaemonSetForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -411,7 +423,7 @@ pub struct ListDaemonSetForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::list_daemon_set_for_all_namespaces`](./struct.DaemonSet.html#method.list_daemon_set_for_all_namespaces)
+/// Use `<ListDaemonSetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::list_daemon_set_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListDaemonSetForAllNamespacesResponse {
     Ok(crate::v1_8::api::apps::v1beta2::DaemonSetList),
@@ -441,7 +453,7 @@ impl crate::Response for ListDaemonSetForAllNamespacesResponse {
 impl DaemonSet {
     /// list or watch objects of kind DaemonSet
     ///
-    /// Use [`ListNamespacedDaemonSetResponse`](./enum.ListNamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedDaemonSetResponse`]`>` constructor, or [`ListNamespacedDaemonSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -455,7 +467,7 @@ impl DaemonSet {
     pub fn list_namespaced_daemon_set(
         namespace: &str,
         optional: ListNamespacedDaemonSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedDaemonSetResponse>), crate::RequestError> {
         let ListNamespacedDaemonSetOptional {
             continue_,
             field_selector,
@@ -500,11 +512,14 @@ impl DaemonSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::list_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::list_namespaced_daemon_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedDaemonSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -529,7 +544,7 @@ pub struct ListNamespacedDaemonSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::list_namespaced_daemon_set`](./struct.DaemonSet.html#method.list_namespaced_daemon_set)
+/// Use `<ListNamespacedDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::list_namespaced_daemon_set`]
 #[derive(Debug)]
 pub enum ListNamespacedDaemonSetResponse {
     Ok(crate::v1_8::api::apps::v1beta2::DaemonSetList),
@@ -559,7 +574,7 @@ impl crate::Response for ListNamespacedDaemonSetResponse {
 impl DaemonSet {
     /// partially update the specified DaemonSet
     ///
-    /// Use [`PatchNamespacedDaemonSetResponse`](./enum.PatchNamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedDaemonSetResponse`]`>` constructor, or [`PatchNamespacedDaemonSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -581,7 +596,7 @@ impl DaemonSet {
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedDaemonSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedDaemonSetResponse>), crate::RequestError> {
         let PatchNamespacedDaemonSetOptional {
             pretty,
         } = optional;
@@ -594,18 +609,21 @@ impl DaemonSet {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::patch_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::patch_namespaced_daemon_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedDaemonSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::patch_namespaced_daemon_set`](./struct.DaemonSet.html#method.patch_namespaced_daemon_set)
+/// Use `<PatchNamespacedDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::patch_namespaced_daemon_set`]
 #[derive(Debug)]
 pub enum PatchNamespacedDaemonSetResponse {
     Ok(crate::v1_8::api::apps::v1beta2::DaemonSet),
@@ -635,7 +653,7 @@ impl crate::Response for PatchNamespacedDaemonSetResponse {
 impl DaemonSet {
     /// partially update status of the specified DaemonSet
     ///
-    /// Use [`PatchNamespacedDaemonSetStatusResponse`](./enum.PatchNamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedDaemonSetStatusResponse`]`>` constructor, or [`PatchNamespacedDaemonSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -657,7 +675,7 @@ impl DaemonSet {
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedDaemonSetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedDaemonSetStatusResponse>), crate::RequestError> {
         let PatchNamespacedDaemonSetStatusOptional {
             pretty,
         } = optional;
@@ -670,18 +688,21 @@ impl DaemonSet {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::patch_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_namespaced_daemon_set_status)
+/// Optional parameters of [`DaemonSet::patch_namespaced_daemon_set_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedDaemonSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::patch_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.patch_namespaced_daemon_set_status)
+/// Use `<PatchNamespacedDaemonSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::patch_namespaced_daemon_set_status`]
 #[derive(Debug)]
 pub enum PatchNamespacedDaemonSetStatusResponse {
     Ok(crate::v1_8::api::apps::v1beta2::DaemonSet),
@@ -711,7 +732,7 @@ impl crate::Response for PatchNamespacedDaemonSetStatusResponse {
 impl DaemonSet {
     /// read the specified DaemonSet
     ///
-    /// Use [`ReadNamespacedDaemonSetResponse`](./enum.ReadNamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedDaemonSetResponse`]`>` constructor, or [`ReadNamespacedDaemonSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -730,7 +751,7 @@ impl DaemonSet {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedDaemonSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedDaemonSetResponse>), crate::RequestError> {
         let ReadNamespacedDaemonSetOptional {
             exact,
             export,
@@ -751,11 +772,14 @@ impl DaemonSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::read_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::read_namespaced_daemon_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedDaemonSetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -766,7 +790,7 @@ pub struct ReadNamespacedDaemonSetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::read_namespaced_daemon_set`](./struct.DaemonSet.html#method.read_namespaced_daemon_set)
+/// Use `<ReadNamespacedDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::read_namespaced_daemon_set`]
 #[derive(Debug)]
 pub enum ReadNamespacedDaemonSetResponse {
     Ok(crate::v1_8::api::apps::v1beta2::DaemonSet),
@@ -796,7 +820,7 @@ impl crate::Response for ReadNamespacedDaemonSetResponse {
 impl DaemonSet {
     /// read status of the specified DaemonSet
     ///
-    /// Use [`ReadNamespacedDaemonSetStatusResponse`](./enum.ReadNamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedDaemonSetStatusResponse`]`>` constructor, or [`ReadNamespacedDaemonSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -815,7 +839,7 @@ impl DaemonSet {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedDaemonSetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedDaemonSetStatusResponse>), crate::RequestError> {
         let ReadNamespacedDaemonSetStatusOptional {
             pretty,
         } = optional;
@@ -828,18 +852,21 @@ impl DaemonSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::read_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_namespaced_daemon_set_status)
+/// Optional parameters of [`DaemonSet::read_namespaced_daemon_set_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedDaemonSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::read_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.read_namespaced_daemon_set_status)
+/// Use `<ReadNamespacedDaemonSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::read_namespaced_daemon_set_status`]
 #[derive(Debug)]
 pub enum ReadNamespacedDaemonSetStatusResponse {
     Ok(crate::v1_8::api::apps::v1beta2::DaemonSet),
@@ -869,7 +896,7 @@ impl crate::Response for ReadNamespacedDaemonSetStatusResponse {
 impl DaemonSet {
     /// replace the specified DaemonSet
     ///
-    /// Use [`ReplaceNamespacedDaemonSetResponse`](./enum.ReplaceNamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedDaemonSetResponse`]`>` constructor, or [`ReplaceNamespacedDaemonSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -891,7 +918,7 @@ impl DaemonSet {
         namespace: &str,
         body: &crate::v1_8::api::apps::v1beta2::DaemonSet,
         optional: ReplaceNamespacedDaemonSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedDaemonSetResponse>), crate::RequestError> {
         let ReplaceNamespacedDaemonSetOptional {
             pretty,
         } = optional;
@@ -904,18 +931,21 @@ impl DaemonSet {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::replace_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::replace_namespaced_daemon_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedDaemonSetOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::replace_namespaced_daemon_set`](./struct.DaemonSet.html#method.replace_namespaced_daemon_set)
+/// Use `<ReplaceNamespacedDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::replace_namespaced_daemon_set`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedDaemonSetResponse {
     Ok(crate::v1_8::api::apps::v1beta2::DaemonSet),
@@ -945,7 +975,7 @@ impl crate::Response for ReplaceNamespacedDaemonSetResponse {
 impl DaemonSet {
     /// replace status of the specified DaemonSet
     ///
-    /// Use [`ReplaceNamespacedDaemonSetStatusResponse`](./enum.ReplaceNamespacedDaemonSetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedDaemonSetStatusResponse`]`>` constructor, or [`ReplaceNamespacedDaemonSetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -967,7 +997,7 @@ impl DaemonSet {
         namespace: &str,
         body: &crate::v1_8::api::apps::v1beta2::DaemonSet,
         optional: ReplaceNamespacedDaemonSetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedDaemonSetStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedDaemonSetStatusOptional {
             pretty,
         } = optional;
@@ -980,18 +1010,21 @@ impl DaemonSet {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::replace_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_namespaced_daemon_set_status)
+/// Optional parameters of [`DaemonSet::replace_namespaced_daemon_set_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedDaemonSetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::replace_namespaced_daemon_set_status`](./struct.DaemonSet.html#method.replace_namespaced_daemon_set_status)
+/// Use `<ReplaceNamespacedDaemonSetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::replace_namespaced_daemon_set_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedDaemonSetStatusResponse {
     Ok(crate::v1_8::api::apps::v1beta2::DaemonSet),
@@ -1021,7 +1054,7 @@ impl crate::Response for ReplaceNamespacedDaemonSetStatusResponse {
 impl DaemonSet {
     /// watch individual changes to a list of DaemonSet
     ///
-    /// Use [`WatchDaemonSetListForAllNamespacesResponse`](./enum.WatchDaemonSetListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchDaemonSetListForAllNamespacesResponse`]`>` constructor, or [`WatchDaemonSetListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1030,7 +1063,7 @@ impl DaemonSet {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_daemon_set_list_for_all_namespaces(
         optional: WatchDaemonSetListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchDaemonSetListForAllNamespacesResponse>), crate::RequestError> {
         let WatchDaemonSetListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1075,11 +1108,14 @@ impl DaemonSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::watch_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_daemon_set_list_for_all_namespaces)
+/// Optional parameters of [`DaemonSet::watch_daemon_set_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchDaemonSetListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1104,7 +1140,7 @@ pub struct WatchDaemonSetListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::watch_daemon_set_list_for_all_namespaces`](./struct.DaemonSet.html#method.watch_daemon_set_list_for_all_namespaces)
+/// Use `<WatchDaemonSetListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::watch_daemon_set_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchDaemonSetListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1136,7 +1172,7 @@ impl crate::Response for WatchDaemonSetListForAllNamespacesResponse {
 impl DaemonSet {
     /// watch changes to an object of kind DaemonSet
     ///
-    /// Use [`WatchNamespacedDaemonSetResponse`](./enum.WatchNamespacedDaemonSetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedDaemonSetResponse`]`>` constructor, or [`WatchNamespacedDaemonSetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1155,7 +1191,7 @@ impl DaemonSet {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedDaemonSetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedDaemonSetResponse>), crate::RequestError> {
         let WatchNamespacedDaemonSetOptional {
             continue_,
             field_selector,
@@ -1200,11 +1236,14 @@ impl DaemonSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::watch_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_namespaced_daemon_set)
+/// Optional parameters of [`DaemonSet::watch_namespaced_daemon_set`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedDaemonSetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1229,7 +1268,7 @@ pub struct WatchNamespacedDaemonSetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::watch_namespaced_daemon_set`](./struct.DaemonSet.html#method.watch_namespaced_daemon_set)
+/// Use `<WatchNamespacedDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::watch_namespaced_daemon_set`]
 #[derive(Debug)]
 pub enum WatchNamespacedDaemonSetResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1261,7 +1300,7 @@ impl crate::Response for WatchNamespacedDaemonSetResponse {
 impl DaemonSet {
     /// watch individual changes to a list of DaemonSet
     ///
-    /// Use [`WatchNamespacedDaemonSetListResponse`](./enum.WatchNamespacedDaemonSetListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedDaemonSetListResponse`]`>` constructor, or [`WatchNamespacedDaemonSetListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1275,7 +1314,7 @@ impl DaemonSet {
     pub fn watch_namespaced_daemon_set_list(
         namespace: &str,
         optional: WatchNamespacedDaemonSetListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedDaemonSetListResponse>), crate::RequestError> {
         let WatchNamespacedDaemonSetListOptional {
             continue_,
             field_selector,
@@ -1320,11 +1359,14 @@ impl DaemonSet {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DaemonSet::watch_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_namespaced_daemon_set_list)
+/// Optional parameters of [`DaemonSet::watch_namespaced_daemon_set_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedDaemonSetListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1349,7 +1391,7 @@ pub struct WatchNamespacedDaemonSetListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`DaemonSet::watch_namespaced_daemon_set_list`](./struct.DaemonSet.html#method.watch_namespaced_daemon_set_list)
+/// Use `<WatchNamespacedDaemonSetListResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::watch_namespaced_daemon_set_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedDaemonSetListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

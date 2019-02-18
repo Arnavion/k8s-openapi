@@ -17,7 +17,7 @@ pub struct NetworkPolicy {
 impl NetworkPolicy {
     /// create a NetworkPolicy
     ///
-    /// Use [`CreateNamespacedNetworkPolicyResponse`](./enum.CreateNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedNetworkPolicyResponse`]`>` constructor, or [`CreateNamespacedNetworkPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -34,7 +34,7 @@ impl NetworkPolicy {
         namespace: &str,
         body: &crate::v1_11::api::extensions::v1beta1::NetworkPolicy,
         optional: CreateNamespacedNetworkPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let CreateNamespacedNetworkPolicyOptional {
             pretty,
         } = optional;
@@ -47,18 +47,21 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::create_namespaced_network_policy`](./struct.NetworkPolicy.html#method.create_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::create_namespaced_network_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedNetworkPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::create_namespaced_network_policy`](./struct.NetworkPolicy.html#method.create_namespaced_network_policy)
+/// Use `<CreateNamespacedNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::create_namespaced_network_policy`]
 #[derive(Debug)]
 pub enum CreateNamespacedNetworkPolicyResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::NetworkPolicy),
@@ -106,7 +109,7 @@ impl crate::Response for CreateNamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// delete collection of NetworkPolicy
     ///
-    /// Use [`DeleteCollectionNamespacedNetworkPolicyResponse`](./enum.DeleteCollectionNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedNetworkPolicyResponse`]`>` constructor, or [`DeleteCollectionNamespacedNetworkPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -120,7 +123,7 @@ impl NetworkPolicy {
     pub fn delete_collection_namespaced_network_policy(
         namespace: &str,
         optional: DeleteCollectionNamespacedNetworkPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedNetworkPolicyOptional {
             continue_,
             field_selector,
@@ -165,11 +168,14 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::delete_collection_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_collection_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::delete_collection_namespaced_network_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -194,7 +200,7 @@ pub struct DeleteCollectionNamespacedNetworkPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::delete_collection_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_collection_namespaced_network_policy)
+/// Use `<DeleteCollectionNamespacedNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::delete_collection_namespaced_network_policy`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedNetworkPolicyResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -238,7 +244,7 @@ impl crate::Response for DeleteCollectionNamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// delete a NetworkPolicy
     ///
-    /// Use [`DeleteNamespacedNetworkPolicyResponse`](./enum.DeleteNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedNetworkPolicyResponse`]`>` constructor, or [`DeleteNamespacedNetworkPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -257,7 +263,7 @@ impl NetworkPolicy {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedNetworkPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let DeleteNamespacedNetworkPolicyOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -282,11 +288,14 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::delete_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::delete_namespaced_network_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedNetworkPolicyOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -299,7 +308,7 @@ pub struct DeleteNamespacedNetworkPolicyOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::delete_namespaced_network_policy`](./struct.NetworkPolicy.html#method.delete_namespaced_network_policy)
+/// Use `<DeleteNamespacedNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::delete_namespaced_network_policy`]
 #[derive(Debug)]
 pub enum DeleteNamespacedNetworkPolicyResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -343,7 +352,7 @@ impl crate::Response for DeleteNamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
     ///
-    /// Use [`ListNamespacedNetworkPolicyResponse`](./enum.ListNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedNetworkPolicyResponse`]`>` constructor, or [`ListNamespacedNetworkPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -357,7 +366,7 @@ impl NetworkPolicy {
     pub fn list_namespaced_network_policy(
         namespace: &str,
         optional: ListNamespacedNetworkPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let ListNamespacedNetworkPolicyOptional {
             continue_,
             field_selector,
@@ -402,11 +411,14 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::list_namespaced_network_policy`](./struct.NetworkPolicy.html#method.list_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::list_namespaced_network_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -431,7 +443,7 @@ pub struct ListNamespacedNetworkPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::list_namespaced_network_policy`](./struct.NetworkPolicy.html#method.list_namespaced_network_policy)
+/// Use `<ListNamespacedNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::list_namespaced_network_policy`]
 #[derive(Debug)]
 pub enum ListNamespacedNetworkPolicyResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::NetworkPolicyList),
@@ -461,7 +473,7 @@ impl crate::Response for ListNamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
     ///
-    /// Use [`ListNetworkPolicyForAllNamespacesResponse`](./enum.ListNetworkPolicyForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNetworkPolicyForAllNamespacesResponse`]`>` constructor, or [`ListNetworkPolicyForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -470,7 +482,7 @@ impl NetworkPolicy {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_network_policy_for_all_namespaces(
         optional: ListNetworkPolicyForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNetworkPolicyForAllNamespacesResponse>), crate::RequestError> {
         let ListNetworkPolicyForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -515,11 +527,14 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::list_network_policy_for_all_namespaces`](./struct.NetworkPolicy.html#method.list_network_policy_for_all_namespaces)
+/// Optional parameters of [`NetworkPolicy::list_network_policy_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNetworkPolicyForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -544,7 +559,7 @@ pub struct ListNetworkPolicyForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::list_network_policy_for_all_namespaces`](./struct.NetworkPolicy.html#method.list_network_policy_for_all_namespaces)
+/// Use `<ListNetworkPolicyForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::list_network_policy_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListNetworkPolicyForAllNamespacesResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::NetworkPolicyList),
@@ -574,7 +589,7 @@ impl crate::Response for ListNetworkPolicyForAllNamespacesResponse {
 impl NetworkPolicy {
     /// partially update the specified NetworkPolicy
     ///
-    /// Use [`PatchNamespacedNetworkPolicyResponse`](./enum.PatchNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedNetworkPolicyResponse`]`>` constructor, or [`PatchNamespacedNetworkPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -596,7 +611,7 @@ impl NetworkPolicy {
         namespace: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedNetworkPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let PatchNamespacedNetworkPolicyOptional {
             pretty,
         } = optional;
@@ -609,18 +624,21 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::patch_namespaced_network_policy`](./struct.NetworkPolicy.html#method.patch_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::patch_namespaced_network_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedNetworkPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::patch_namespaced_network_policy`](./struct.NetworkPolicy.html#method.patch_namespaced_network_policy)
+/// Use `<PatchNamespacedNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::patch_namespaced_network_policy`]
 #[derive(Debug)]
 pub enum PatchNamespacedNetworkPolicyResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::NetworkPolicy),
@@ -650,7 +668,7 @@ impl crate::Response for PatchNamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// read the specified NetworkPolicy
     ///
-    /// Use [`ReadNamespacedNetworkPolicyResponse`](./enum.ReadNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedNetworkPolicyResponse`]`>` constructor, or [`ReadNamespacedNetworkPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -669,7 +687,7 @@ impl NetworkPolicy {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedNetworkPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let ReadNamespacedNetworkPolicyOptional {
             exact,
             export,
@@ -690,11 +708,14 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::read_namespaced_network_policy`](./struct.NetworkPolicy.html#method.read_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::read_namespaced_network_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedNetworkPolicyOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -705,7 +726,7 @@ pub struct ReadNamespacedNetworkPolicyOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::read_namespaced_network_policy`](./struct.NetworkPolicy.html#method.read_namespaced_network_policy)
+/// Use `<ReadNamespacedNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::read_namespaced_network_policy`]
 #[derive(Debug)]
 pub enum ReadNamespacedNetworkPolicyResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::NetworkPolicy),
@@ -735,7 +756,7 @@ impl crate::Response for ReadNamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// replace the specified NetworkPolicy
     ///
-    /// Use [`ReplaceNamespacedNetworkPolicyResponse`](./enum.ReplaceNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedNetworkPolicyResponse`]`>` constructor, or [`ReplaceNamespacedNetworkPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -757,7 +778,7 @@ impl NetworkPolicy {
         namespace: &str,
         body: &crate::v1_11::api::extensions::v1beta1::NetworkPolicy,
         optional: ReplaceNamespacedNetworkPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let ReplaceNamespacedNetworkPolicyOptional {
             pretty,
         } = optional;
@@ -770,18 +791,21 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::replace_namespaced_network_policy`](./struct.NetworkPolicy.html#method.replace_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::replace_namespaced_network_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedNetworkPolicyOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::replace_namespaced_network_policy`](./struct.NetworkPolicy.html#method.replace_namespaced_network_policy)
+/// Use `<ReplaceNamespacedNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::replace_namespaced_network_policy`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedNetworkPolicyResponse {
     Ok(crate::v1_11::api::extensions::v1beta1::NetworkPolicy),
@@ -820,7 +844,7 @@ impl crate::Response for ReplaceNamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// watch changes to an object of kind NetworkPolicy
     ///
-    /// Use [`WatchNamespacedNetworkPolicyResponse`](./enum.WatchNamespacedNetworkPolicyResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedNetworkPolicyResponse`]`>` constructor, or [`WatchNamespacedNetworkPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -839,7 +863,7 @@ impl NetworkPolicy {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedNetworkPolicyOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let WatchNamespacedNetworkPolicyOptional {
             continue_,
             field_selector,
@@ -884,11 +908,14 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::watch_namespaced_network_policy`](./struct.NetworkPolicy.html#method.watch_namespaced_network_policy)
+/// Optional parameters of [`NetworkPolicy::watch_namespaced_network_policy`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -913,7 +940,7 @@ pub struct WatchNamespacedNetworkPolicyOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::watch_namespaced_network_policy`](./struct.NetworkPolicy.html#method.watch_namespaced_network_policy)
+/// Use `<WatchNamespacedNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::watch_namespaced_network_policy`]
 #[derive(Debug)]
 pub enum WatchNamespacedNetworkPolicyResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -945,7 +972,7 @@ impl crate::Response for WatchNamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// watch individual changes to a list of NetworkPolicy
     ///
-    /// Use [`WatchNamespacedNetworkPolicyListResponse`](./enum.WatchNamespacedNetworkPolicyListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedNetworkPolicyListResponse`]`>` constructor, or [`WatchNamespacedNetworkPolicyListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -959,7 +986,7 @@ impl NetworkPolicy {
     pub fn watch_namespaced_network_policy_list(
         namespace: &str,
         optional: WatchNamespacedNetworkPolicyListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedNetworkPolicyListResponse>), crate::RequestError> {
         let WatchNamespacedNetworkPolicyListOptional {
             continue_,
             field_selector,
@@ -1004,11 +1031,14 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::watch_namespaced_network_policy_list`](./struct.NetworkPolicy.html#method.watch_namespaced_network_policy_list)
+/// Optional parameters of [`NetworkPolicy::watch_namespaced_network_policy_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedNetworkPolicyListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1033,7 +1063,7 @@ pub struct WatchNamespacedNetworkPolicyListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::watch_namespaced_network_policy_list`](./struct.NetworkPolicy.html#method.watch_namespaced_network_policy_list)
+/// Use `<WatchNamespacedNetworkPolicyListResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::watch_namespaced_network_policy_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedNetworkPolicyListResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1065,7 +1095,7 @@ impl crate::Response for WatchNamespacedNetworkPolicyListResponse {
 impl NetworkPolicy {
     /// watch individual changes to a list of NetworkPolicy
     ///
-    /// Use [`WatchNetworkPolicyListForAllNamespacesResponse`](./enum.WatchNetworkPolicyListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNetworkPolicyListForAllNamespacesResponse`]`>` constructor, or [`WatchNetworkPolicyListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1074,7 +1104,7 @@ impl NetworkPolicy {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_network_policy_list_for_all_namespaces(
         optional: WatchNetworkPolicyListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNetworkPolicyListForAllNamespacesResponse>), crate::RequestError> {
         let WatchNetworkPolicyListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1119,11 +1149,14 @@ impl NetworkPolicy {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`NetworkPolicy::watch_network_policy_list_for_all_namespaces`](./struct.NetworkPolicy.html#method.watch_network_policy_list_for_all_namespaces)
+/// Optional parameters of [`NetworkPolicy::watch_network_policy_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNetworkPolicyListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1148,7 +1181,7 @@ pub struct WatchNetworkPolicyListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`NetworkPolicy::watch_network_policy_list_for_all_namespaces`](./struct.NetworkPolicy.html#method.watch_network_policy_list_for_all_namespaces)
+/// Use `<WatchNetworkPolicyListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::watch_network_policy_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchNetworkPolicyListForAllNamespacesResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

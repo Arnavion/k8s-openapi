@@ -20,7 +20,7 @@ pub struct RoleBinding {
 impl RoleBinding {
     /// create a RoleBinding
     ///
-    /// Use [`CreateNamespacedRoleBindingResponse`](./enum.CreateNamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedRoleBindingResponse`]`>` constructor, or [`CreateNamespacedRoleBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,7 +37,7 @@ impl RoleBinding {
         namespace: &str,
         body: &crate::v1_8::api::rbac::v1alpha1::RoleBinding,
         optional: CreateNamespacedRoleBindingOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedRoleBindingResponse>), crate::RequestError> {
         let CreateNamespacedRoleBindingOptional {
             pretty,
         } = optional;
@@ -50,18 +50,21 @@ impl RoleBinding {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::create_namespaced_role_binding`](./struct.RoleBinding.html#method.create_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::create_namespaced_role_binding`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::create_namespaced_role_binding`](./struct.RoleBinding.html#method.create_namespaced_role_binding)
+/// Use `<CreateNamespacedRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::create_namespaced_role_binding`]
 #[derive(Debug)]
 pub enum CreateNamespacedRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1alpha1::RoleBinding),
@@ -91,7 +94,7 @@ impl crate::Response for CreateNamespacedRoleBindingResponse {
 impl RoleBinding {
     /// delete collection of RoleBinding
     ///
-    /// Use [`DeleteCollectionNamespacedRoleBindingResponse`](./enum.DeleteCollectionNamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedRoleBindingResponse`]`>` constructor, or [`DeleteCollectionNamespacedRoleBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -105,7 +108,7 @@ impl RoleBinding {
     pub fn delete_collection_namespaced_role_binding(
         namespace: &str,
         optional: DeleteCollectionNamespacedRoleBindingOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedRoleBindingResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedRoleBindingOptional {
             continue_,
             field_selector,
@@ -150,11 +153,14 @@ impl RoleBinding {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::delete_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_collection_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::delete_collection_namespaced_role_binding`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -179,7 +185,7 @@ pub struct DeleteCollectionNamespacedRoleBindingOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::delete_collection_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_collection_namespaced_role_binding)
+/// Use `<DeleteCollectionNamespacedRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::delete_collection_namespaced_role_binding`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedRoleBindingResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -223,7 +229,7 @@ impl crate::Response for DeleteCollectionNamespacedRoleBindingResponse {
 impl RoleBinding {
     /// delete a RoleBinding
     ///
-    /// Use [`DeleteNamespacedRoleBindingResponse`](./enum.DeleteNamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedRoleBindingResponse`]`>` constructor, or [`DeleteNamespacedRoleBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -242,7 +248,7 @@ impl RoleBinding {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedRoleBindingOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedRoleBindingResponse>), crate::RequestError> {
         let DeleteNamespacedRoleBindingOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -267,11 +273,14 @@ impl RoleBinding {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::delete_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::delete_namespaced_role_binding`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedRoleBindingOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -284,7 +293,7 @@ pub struct DeleteNamespacedRoleBindingOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::delete_namespaced_role_binding`](./struct.RoleBinding.html#method.delete_namespaced_role_binding)
+/// Use `<DeleteNamespacedRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::delete_namespaced_role_binding`]
 #[derive(Debug)]
 pub enum DeleteNamespacedRoleBindingResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -328,7 +337,7 @@ impl crate::Response for DeleteNamespacedRoleBindingResponse {
 impl RoleBinding {
     /// list or watch objects of kind RoleBinding
     ///
-    /// Use [`ListNamespacedRoleBindingResponse`](./enum.ListNamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedRoleBindingResponse`]`>` constructor, or [`ListNamespacedRoleBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -342,7 +351,7 @@ impl RoleBinding {
     pub fn list_namespaced_role_binding(
         namespace: &str,
         optional: ListNamespacedRoleBindingOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedRoleBindingResponse>), crate::RequestError> {
         let ListNamespacedRoleBindingOptional {
             continue_,
             field_selector,
@@ -387,11 +396,14 @@ impl RoleBinding {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::list_namespaced_role_binding`](./struct.RoleBinding.html#method.list_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::list_namespaced_role_binding`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -416,7 +428,7 @@ pub struct ListNamespacedRoleBindingOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::list_namespaced_role_binding`](./struct.RoleBinding.html#method.list_namespaced_role_binding)
+/// Use `<ListNamespacedRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::list_namespaced_role_binding`]
 #[derive(Debug)]
 pub enum ListNamespacedRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1alpha1::RoleBindingList),
@@ -446,7 +458,7 @@ impl crate::Response for ListNamespacedRoleBindingResponse {
 impl RoleBinding {
     /// list or watch objects of kind RoleBinding
     ///
-    /// Use [`ListRoleBindingForAllNamespacesResponse`](./enum.ListRoleBindingForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListRoleBindingForAllNamespacesResponse`]`>` constructor, or [`ListRoleBindingForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -455,7 +467,7 @@ impl RoleBinding {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_role_binding_for_all_namespaces(
         optional: ListRoleBindingForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListRoleBindingForAllNamespacesResponse>), crate::RequestError> {
         let ListRoleBindingForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -500,11 +512,14 @@ impl RoleBinding {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::list_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_role_binding_for_all_namespaces)
+/// Optional parameters of [`RoleBinding::list_role_binding_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListRoleBindingForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -529,7 +544,7 @@ pub struct ListRoleBindingForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::list_role_binding_for_all_namespaces`](./struct.RoleBinding.html#method.list_role_binding_for_all_namespaces)
+/// Use `<ListRoleBindingForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::list_role_binding_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListRoleBindingForAllNamespacesResponse {
     Ok(crate::v1_8::api::rbac::v1alpha1::RoleBindingList),
@@ -559,7 +574,7 @@ impl crate::Response for ListRoleBindingForAllNamespacesResponse {
 impl RoleBinding {
     /// partially update the specified RoleBinding
     ///
-    /// Use [`PatchNamespacedRoleBindingResponse`](./enum.PatchNamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedRoleBindingResponse`]`>` constructor, or [`PatchNamespacedRoleBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -581,7 +596,7 @@ impl RoleBinding {
         namespace: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedRoleBindingOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedRoleBindingResponse>), crate::RequestError> {
         let PatchNamespacedRoleBindingOptional {
             pretty,
         } = optional;
@@ -594,18 +609,21 @@ impl RoleBinding {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::patch_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::patch_namespaced_role_binding`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::patch_namespaced_role_binding`](./struct.RoleBinding.html#method.patch_namespaced_role_binding)
+/// Use `<PatchNamespacedRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::patch_namespaced_role_binding`]
 #[derive(Debug)]
 pub enum PatchNamespacedRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1alpha1::RoleBinding),
@@ -635,7 +653,7 @@ impl crate::Response for PatchNamespacedRoleBindingResponse {
 impl RoleBinding {
     /// read the specified RoleBinding
     ///
-    /// Use [`ReadNamespacedRoleBindingResponse`](./enum.ReadNamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedRoleBindingResponse`]`>` constructor, or [`ReadNamespacedRoleBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -654,7 +672,7 @@ impl RoleBinding {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedRoleBindingOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedRoleBindingResponse>), crate::RequestError> {
         let ReadNamespacedRoleBindingOptional {
             pretty,
         } = optional;
@@ -667,18 +685,21 @@ impl RoleBinding {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::read_namespaced_role_binding`](./struct.RoleBinding.html#method.read_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::read_namespaced_role_binding`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::read_namespaced_role_binding`](./struct.RoleBinding.html#method.read_namespaced_role_binding)
+/// Use `<ReadNamespacedRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::read_namespaced_role_binding`]
 #[derive(Debug)]
 pub enum ReadNamespacedRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1alpha1::RoleBinding),
@@ -708,7 +729,7 @@ impl crate::Response for ReadNamespacedRoleBindingResponse {
 impl RoleBinding {
     /// replace the specified RoleBinding
     ///
-    /// Use [`ReplaceNamespacedRoleBindingResponse`](./enum.ReplaceNamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedRoleBindingResponse`]`>` constructor, or [`ReplaceNamespacedRoleBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -730,7 +751,7 @@ impl RoleBinding {
         namespace: &str,
         body: &crate::v1_8::api::rbac::v1alpha1::RoleBinding,
         optional: ReplaceNamespacedRoleBindingOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedRoleBindingResponse>), crate::RequestError> {
         let ReplaceNamespacedRoleBindingOptional {
             pretty,
         } = optional;
@@ -743,18 +764,21 @@ impl RoleBinding {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::replace_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::replace_namespaced_role_binding`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedRoleBindingOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::replace_namespaced_role_binding`](./struct.RoleBinding.html#method.replace_namespaced_role_binding)
+/// Use `<ReplaceNamespacedRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::replace_namespaced_role_binding`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedRoleBindingResponse {
     Ok(crate::v1_8::api::rbac::v1alpha1::RoleBinding),
@@ -784,7 +808,7 @@ impl crate::Response for ReplaceNamespacedRoleBindingResponse {
 impl RoleBinding {
     /// watch changes to an object of kind RoleBinding
     ///
-    /// Use [`WatchNamespacedRoleBindingResponse`](./enum.WatchNamespacedRoleBindingResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedRoleBindingResponse`]`>` constructor, or [`WatchNamespacedRoleBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -803,7 +827,7 @@ impl RoleBinding {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedRoleBindingOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedRoleBindingResponse>), crate::RequestError> {
         let WatchNamespacedRoleBindingOptional {
             continue_,
             field_selector,
@@ -848,11 +872,14 @@ impl RoleBinding {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::watch_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_namespaced_role_binding)
+/// Optional parameters of [`RoleBinding::watch_namespaced_role_binding`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedRoleBindingOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -877,7 +904,7 @@ pub struct WatchNamespacedRoleBindingOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::watch_namespaced_role_binding`](./struct.RoleBinding.html#method.watch_namespaced_role_binding)
+/// Use `<WatchNamespacedRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::watch_namespaced_role_binding`]
 #[derive(Debug)]
 pub enum WatchNamespacedRoleBindingResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -909,7 +936,7 @@ impl crate::Response for WatchNamespacedRoleBindingResponse {
 impl RoleBinding {
     /// watch individual changes to a list of RoleBinding
     ///
-    /// Use [`WatchNamespacedRoleBindingListResponse`](./enum.WatchNamespacedRoleBindingListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedRoleBindingListResponse`]`>` constructor, or [`WatchNamespacedRoleBindingListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -923,7 +950,7 @@ impl RoleBinding {
     pub fn watch_namespaced_role_binding_list(
         namespace: &str,
         optional: WatchNamespacedRoleBindingListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedRoleBindingListResponse>), crate::RequestError> {
         let WatchNamespacedRoleBindingListOptional {
             continue_,
             field_selector,
@@ -968,11 +995,14 @@ impl RoleBinding {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::watch_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_namespaced_role_binding_list)
+/// Optional parameters of [`RoleBinding::watch_namespaced_role_binding_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedRoleBindingListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -997,7 +1027,7 @@ pub struct WatchNamespacedRoleBindingListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::watch_namespaced_role_binding_list`](./struct.RoleBinding.html#method.watch_namespaced_role_binding_list)
+/// Use `<WatchNamespacedRoleBindingListResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::watch_namespaced_role_binding_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedRoleBindingListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1029,7 +1059,7 @@ impl crate::Response for WatchNamespacedRoleBindingListResponse {
 impl RoleBinding {
     /// watch individual changes to a list of RoleBinding
     ///
-    /// Use [`WatchRoleBindingListForAllNamespacesResponse`](./enum.WatchRoleBindingListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchRoleBindingListForAllNamespacesResponse`]`>` constructor, or [`WatchRoleBindingListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1038,7 +1068,7 @@ impl RoleBinding {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_role_binding_list_for_all_namespaces(
         optional: WatchRoleBindingListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchRoleBindingListForAllNamespacesResponse>), crate::RequestError> {
         let WatchRoleBindingListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1083,11 +1113,14 @@ impl RoleBinding {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`RoleBinding::watch_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_role_binding_list_for_all_namespaces)
+/// Optional parameters of [`RoleBinding::watch_role_binding_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchRoleBindingListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1112,7 +1145,7 @@ pub struct WatchRoleBindingListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`RoleBinding::watch_role_binding_list_for_all_namespaces`](./struct.RoleBinding.html#method.watch_role_binding_list_for_all_namespaces)
+/// Use `<WatchRoleBindingListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::watch_role_binding_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchRoleBindingListForAllNamespacesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

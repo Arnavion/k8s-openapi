@@ -20,7 +20,7 @@ pub struct DeploymentRollback {
 impl DeploymentRollback {
     /// create rollback of a Deployment
     ///
-    /// Use [`CreateNamespacedDeploymentRollbackResponse`](./enum.CreateNamespacedDeploymentRollbackResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedDeploymentRollbackResponse`]`>` constructor, or [`CreateNamespacedDeploymentRollbackResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -42,7 +42,7 @@ impl DeploymentRollback {
         namespace: &str,
         body: &crate::v1_13::api::apps::v1beta1::DeploymentRollback,
         optional: CreateNamespacedDeploymentRollbackOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedDeploymentRollbackResponse>), crate::RequestError> {
         let CreateNamespacedDeploymentRollbackOptional {
             dry_run,
             include_uninitialized,
@@ -63,11 +63,14 @@ impl DeploymentRollback {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`DeploymentRollback::create_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_namespaced_deployment_rollback)
+/// Optional parameters of [`DeploymentRollback::create_namespaced_deployment_rollback`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedDeploymentRollbackOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -78,7 +81,7 @@ pub struct CreateNamespacedDeploymentRollbackOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`DeploymentRollback::create_namespaced_deployment_rollback`](./struct.DeploymentRollback.html#method.create_namespaced_deployment_rollback)
+/// Use `<CreateNamespacedDeploymentRollbackResponse as Response>::try_from_parts` to parse the HTTP response body of [`DeploymentRollback::create_namespaced_deployment_rollback`]
 #[derive(Debug)]
 pub enum CreateNamespacedDeploymentRollbackResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),

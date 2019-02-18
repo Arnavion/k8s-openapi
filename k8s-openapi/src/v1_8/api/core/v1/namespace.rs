@@ -20,7 +20,7 @@ pub struct Namespace {
 impl Namespace {
     /// create a Namespace
     ///
-    /// Use [`CreateNamespaceResponse`](./enum.CreateNamespaceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespaceResponse`]`>` constructor, or [`CreateNamespaceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -32,7 +32,7 @@ impl Namespace {
     pub fn create_namespace(
         body: &crate::v1_8::api::core::v1::Namespace,
         optional: CreateNamespaceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespaceResponse>), crate::RequestError> {
         let CreateNamespaceOptional {
             pretty,
         } = optional;
@@ -45,18 +45,21 @@ impl Namespace {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::create_namespace`](./struct.Namespace.html#method.create_namespace)
+/// Optional parameters of [`Namespace::create_namespace`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::create_namespace`](./struct.Namespace.html#method.create_namespace)
+/// Use `<CreateNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::create_namespace`]
 #[derive(Debug)]
 pub enum CreateNamespaceResponse {
     Ok(crate::v1_8::api::core::v1::Namespace),
@@ -86,7 +89,7 @@ impl crate::Response for CreateNamespaceResponse {
 impl Namespace {
     /// delete a Namespace
     ///
-    /// Use [`DeleteNamespaceResponse`](./enum.DeleteNamespaceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespaceResponse`]`>` constructor, or [`DeleteNamespaceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -100,7 +103,7 @@ impl Namespace {
     pub fn delete_namespace(
         name: &str,
         optional: DeleteNamespaceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespaceResponse>), crate::RequestError> {
         let DeleteNamespaceOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -125,11 +128,14 @@ impl Namespace {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::delete_namespace`](./struct.Namespace.html#method.delete_namespace)
+/// Optional parameters of [`Namespace::delete_namespace`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespaceOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -142,7 +148,7 @@ pub struct DeleteNamespaceOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::delete_namespace`](./struct.Namespace.html#method.delete_namespace)
+/// Use `<DeleteNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::delete_namespace`]
 #[derive(Debug)]
 pub enum DeleteNamespaceResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -186,7 +192,7 @@ impl crate::Response for DeleteNamespaceResponse {
 impl Namespace {
     /// list or watch objects of kind Namespace
     ///
-    /// Use [`ListNamespaceResponse`](./enum.ListNamespaceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespaceResponse`]`>` constructor, or [`ListNamespaceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -195,7 +201,7 @@ impl Namespace {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_namespace(
         optional: ListNamespaceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespaceResponse>), crate::RequestError> {
         let ListNamespaceOptional {
             continue_,
             field_selector,
@@ -240,11 +246,14 @@ impl Namespace {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::list_namespace`](./struct.Namespace.html#method.list_namespace)
+/// Optional parameters of [`Namespace::list_namespace`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespaceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -269,7 +278,7 @@ pub struct ListNamespaceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Namespace::list_namespace`](./struct.Namespace.html#method.list_namespace)
+/// Use `<ListNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::list_namespace`]
 #[derive(Debug)]
 pub enum ListNamespaceResponse {
     Ok(crate::v1_8::api::core::v1::NamespaceList),
@@ -299,7 +308,7 @@ impl crate::Response for ListNamespaceResponse {
 impl Namespace {
     /// partially update the specified Namespace
     ///
-    /// Use [`PatchNamespaceResponse`](./enum.PatchNamespaceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespaceResponse`]`>` constructor, or [`PatchNamespaceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -316,7 +325,7 @@ impl Namespace {
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespaceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespaceResponse>), crate::RequestError> {
         let PatchNamespaceOptional {
             pretty,
         } = optional;
@@ -329,18 +338,21 @@ impl Namespace {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::patch_namespace`](./struct.Namespace.html#method.patch_namespace)
+/// Optional parameters of [`Namespace::patch_namespace`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::patch_namespace`](./struct.Namespace.html#method.patch_namespace)
+/// Use `<PatchNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::patch_namespace`]
 #[derive(Debug)]
 pub enum PatchNamespaceResponse {
     Ok(crate::v1_8::api::core::v1::Namespace),
@@ -370,7 +382,7 @@ impl crate::Response for PatchNamespaceResponse {
 impl Namespace {
     /// partially update status of the specified Namespace
     ///
-    /// Use [`PatchNamespaceStatusResponse`](./enum.PatchNamespaceStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespaceStatusResponse`]`>` constructor, or [`PatchNamespaceStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -387,7 +399,7 @@ impl Namespace {
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespaceStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespaceStatusResponse>), crate::RequestError> {
         let PatchNamespaceStatusOptional {
             pretty,
         } = optional;
@@ -400,18 +412,21 @@ impl Namespace {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::patch_namespace_status`](./struct.Namespace.html#method.patch_namespace_status)
+/// Optional parameters of [`Namespace::patch_namespace_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::patch_namespace_status`](./struct.Namespace.html#method.patch_namespace_status)
+/// Use `<PatchNamespaceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::patch_namespace_status`]
 #[derive(Debug)]
 pub enum PatchNamespaceStatusResponse {
     Ok(crate::v1_8::api::core::v1::Namespace),
@@ -441,7 +456,7 @@ impl crate::Response for PatchNamespaceStatusResponse {
 impl Namespace {
     /// read the specified Namespace
     ///
-    /// Use [`ReadNamespaceResponse`](./enum.ReadNamespaceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespaceResponse`]`>` constructor, or [`ReadNamespaceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -455,7 +470,7 @@ impl Namespace {
     pub fn read_namespace(
         name: &str,
         optional: ReadNamespaceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespaceResponse>), crate::RequestError> {
         let ReadNamespaceOptional {
             exact,
             export,
@@ -476,11 +491,14 @@ impl Namespace {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::read_namespace`](./struct.Namespace.html#method.read_namespace)
+/// Optional parameters of [`Namespace::read_namespace`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespaceOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -491,7 +509,7 @@ pub struct ReadNamespaceOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::read_namespace`](./struct.Namespace.html#method.read_namespace)
+/// Use `<ReadNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::read_namespace`]
 #[derive(Debug)]
 pub enum ReadNamespaceResponse {
     Ok(crate::v1_8::api::core::v1::Namespace),
@@ -521,7 +539,7 @@ impl crate::Response for ReadNamespaceResponse {
 impl Namespace {
     /// read status of the specified Namespace
     ///
-    /// Use [`ReadNamespaceStatusResponse`](./enum.ReadNamespaceStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespaceStatusResponse`]`>` constructor, or [`ReadNamespaceStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -535,7 +553,7 @@ impl Namespace {
     pub fn read_namespace_status(
         name: &str,
         optional: ReadNamespaceStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespaceStatusResponse>), crate::RequestError> {
         let ReadNamespaceStatusOptional {
             pretty,
         } = optional;
@@ -548,18 +566,21 @@ impl Namespace {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::read_namespace_status`](./struct.Namespace.html#method.read_namespace_status)
+/// Optional parameters of [`Namespace::read_namespace_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::read_namespace_status`](./struct.Namespace.html#method.read_namespace_status)
+/// Use `<ReadNamespaceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::read_namespace_status`]
 #[derive(Debug)]
 pub enum ReadNamespaceStatusResponse {
     Ok(crate::v1_8::api::core::v1::Namespace),
@@ -589,7 +610,7 @@ impl crate::Response for ReadNamespaceStatusResponse {
 impl Namespace {
     /// replace the specified Namespace
     ///
-    /// Use [`ReplaceNamespaceResponse`](./enum.ReplaceNamespaceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespaceResponse`]`>` constructor, or [`ReplaceNamespaceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -606,7 +627,7 @@ impl Namespace {
         name: &str,
         body: &crate::v1_8::api::core::v1::Namespace,
         optional: ReplaceNamespaceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespaceResponse>), crate::RequestError> {
         let ReplaceNamespaceOptional {
             pretty,
         } = optional;
@@ -619,18 +640,21 @@ impl Namespace {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::replace_namespace`](./struct.Namespace.html#method.replace_namespace)
+/// Optional parameters of [`Namespace::replace_namespace`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespaceOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::replace_namespace`](./struct.Namespace.html#method.replace_namespace)
+/// Use `<ReplaceNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::replace_namespace`]
 #[derive(Debug)]
 pub enum ReplaceNamespaceResponse {
     Ok(crate::v1_8::api::core::v1::Namespace),
@@ -660,7 +684,7 @@ impl crate::Response for ReplaceNamespaceResponse {
 impl Namespace {
     /// replace finalize of the specified Namespace
     ///
-    /// Use [`ReplaceNamespaceFinalizeResponse`](./enum.ReplaceNamespaceFinalizeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespaceFinalizeResponse`]`>` constructor, or [`ReplaceNamespaceFinalizeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -677,7 +701,7 @@ impl Namespace {
         name: &str,
         body: &crate::v1_8::api::core::v1::Namespace,
         optional: ReplaceNamespaceFinalizeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespaceFinalizeResponse>), crate::RequestError> {
         let ReplaceNamespaceFinalizeOptional {
             pretty,
         } = optional;
@@ -690,18 +714,21 @@ impl Namespace {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::replace_namespace_finalize`](./struct.Namespace.html#method.replace_namespace_finalize)
+/// Optional parameters of [`Namespace::replace_namespace_finalize`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespaceFinalizeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::replace_namespace_finalize`](./struct.Namespace.html#method.replace_namespace_finalize)
+/// Use `<ReplaceNamespaceFinalizeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::replace_namespace_finalize`]
 #[derive(Debug)]
 pub enum ReplaceNamespaceFinalizeResponse {
     Ok(crate::v1_8::api::core::v1::Namespace),
@@ -731,7 +758,7 @@ impl crate::Response for ReplaceNamespaceFinalizeResponse {
 impl Namespace {
     /// replace status of the specified Namespace
     ///
-    /// Use [`ReplaceNamespaceStatusResponse`](./enum.ReplaceNamespaceStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespaceStatusResponse`]`>` constructor, or [`ReplaceNamespaceStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -748,7 +775,7 @@ impl Namespace {
         name: &str,
         body: &crate::v1_8::api::core::v1::Namespace,
         optional: ReplaceNamespaceStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespaceStatusResponse>), crate::RequestError> {
         let ReplaceNamespaceStatusOptional {
             pretty,
         } = optional;
@@ -761,18 +788,21 @@ impl Namespace {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::replace_namespace_status`](./struct.Namespace.html#method.replace_namespace_status)
+/// Optional parameters of [`Namespace::replace_namespace_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespaceStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Namespace::replace_namespace_status`](./struct.Namespace.html#method.replace_namespace_status)
+/// Use `<ReplaceNamespaceStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::replace_namespace_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespaceStatusResponse {
     Ok(crate::v1_8::api::core::v1::Namespace),
@@ -802,7 +832,7 @@ impl crate::Response for ReplaceNamespaceStatusResponse {
 impl Namespace {
     /// watch changes to an object of kind Namespace
     ///
-    /// Use [`WatchNamespaceResponse`](./enum.WatchNamespaceResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespaceResponse`]`>` constructor, or [`WatchNamespaceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -816,7 +846,7 @@ impl Namespace {
     pub fn watch_namespace(
         name: &str,
         optional: WatchNamespaceOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespaceResponse>), crate::RequestError> {
         let WatchNamespaceOptional {
             continue_,
             field_selector,
@@ -861,11 +891,14 @@ impl Namespace {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::watch_namespace`](./struct.Namespace.html#method.watch_namespace)
+/// Optional parameters of [`Namespace::watch_namespace`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespaceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -890,7 +923,7 @@ pub struct WatchNamespaceOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Namespace::watch_namespace`](./struct.Namespace.html#method.watch_namespace)
+/// Use `<WatchNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::watch_namespace`]
 #[derive(Debug)]
 pub enum WatchNamespaceResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -922,7 +955,7 @@ impl crate::Response for WatchNamespaceResponse {
 impl Namespace {
     /// watch individual changes to a list of Namespace
     ///
-    /// Use [`WatchNamespaceListResponse`](./enum.WatchNamespaceListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespaceListResponse`]`>` constructor, or [`WatchNamespaceListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -931,7 +964,7 @@ impl Namespace {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_namespace_list(
         optional: WatchNamespaceListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespaceListResponse>), crate::RequestError> {
         let WatchNamespaceListOptional {
             continue_,
             field_selector,
@@ -976,11 +1009,14 @@ impl Namespace {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Namespace::watch_namespace_list`](./struct.Namespace.html#method.watch_namespace_list)
+/// Optional parameters of [`Namespace::watch_namespace_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespaceListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1005,7 +1041,7 @@ pub struct WatchNamespaceListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`Namespace::watch_namespace_list`](./struct.Namespace.html#method.watch_namespace_list)
+/// Use `<WatchNamespaceListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::watch_namespace_list`]
 #[derive(Debug)]
 pub enum WatchNamespaceListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

@@ -17,7 +17,7 @@ pub struct ExternalAdmissionHookConfiguration {
 impl ExternalAdmissionHookConfiguration {
     /// create an ExternalAdmissionHookConfiguration
     ///
-    /// Use [`CreateExternalAdmissionHookConfigurationResponse`](./enum.CreateExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateExternalAdmissionHookConfigurationResponse`]`>` constructor, or [`CreateExternalAdmissionHookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,7 +29,7 @@ impl ExternalAdmissionHookConfiguration {
     pub fn create_external_admission_hook_configuration(
         body: &crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
         optional: CreateExternalAdmissionHookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let CreateExternalAdmissionHookConfigurationOptional {
             pretty,
         } = optional;
@@ -42,18 +42,21 @@ impl ExternalAdmissionHookConfiguration {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::create_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.create_external_admission_hook_configuration)
+/// Optional parameters of [`ExternalAdmissionHookConfiguration::create_external_admission_hook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateExternalAdmissionHookConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::create_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.create_external_admission_hook_configuration)
+/// Use `<CreateExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::create_external_admission_hook_configuration`]
 #[derive(Debug)]
 pub enum CreateExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
@@ -83,7 +86,7 @@ impl crate::Response for CreateExternalAdmissionHookConfigurationResponse {
 impl ExternalAdmissionHookConfiguration {
     /// delete collection of ExternalAdmissionHookConfiguration
     ///
-    /// Use [`DeleteCollectionExternalAdmissionHookConfigurationResponse`](./enum.DeleteCollectionExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionExternalAdmissionHookConfigurationResponse`]`>` constructor, or [`DeleteCollectionExternalAdmissionHookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -92,7 +95,7 @@ impl ExternalAdmissionHookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_external_admission_hook_configuration(
         optional: DeleteCollectionExternalAdmissionHookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let DeleteCollectionExternalAdmissionHookConfigurationOptional {
             continue_,
             field_selector,
@@ -137,11 +140,14 @@ impl ExternalAdmissionHookConfiguration {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::delete_collection_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.delete_collection_external_admission_hook_configuration)
+/// Optional parameters of [`ExternalAdmissionHookConfiguration::delete_collection_external_admission_hook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionExternalAdmissionHookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -166,7 +172,7 @@ pub struct DeleteCollectionExternalAdmissionHookConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::delete_collection_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.delete_collection_external_admission_hook_configuration)
+/// Use `<DeleteCollectionExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::delete_collection_external_admission_hook_configuration`]
 #[derive(Debug)]
 pub enum DeleteCollectionExternalAdmissionHookConfigurationResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -210,7 +216,7 @@ impl crate::Response for DeleteCollectionExternalAdmissionHookConfigurationRespo
 impl ExternalAdmissionHookConfiguration {
     /// delete an ExternalAdmissionHookConfiguration
     ///
-    /// Use [`DeleteExternalAdmissionHookConfigurationResponse`](./enum.DeleteExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteExternalAdmissionHookConfigurationResponse`]`>` constructor, or [`DeleteExternalAdmissionHookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -224,7 +230,7 @@ impl ExternalAdmissionHookConfiguration {
     pub fn delete_external_admission_hook_configuration(
         name: &str,
         optional: DeleteExternalAdmissionHookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let DeleteExternalAdmissionHookConfigurationOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -249,11 +255,14 @@ impl ExternalAdmissionHookConfiguration {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::delete_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.delete_external_admission_hook_configuration)
+/// Optional parameters of [`ExternalAdmissionHookConfiguration::delete_external_admission_hook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteExternalAdmissionHookConfigurationOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -266,7 +275,7 @@ pub struct DeleteExternalAdmissionHookConfigurationOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::delete_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.delete_external_admission_hook_configuration)
+/// Use `<DeleteExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::delete_external_admission_hook_configuration`]
 #[derive(Debug)]
 pub enum DeleteExternalAdmissionHookConfigurationResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -310,7 +319,7 @@ impl crate::Response for DeleteExternalAdmissionHookConfigurationResponse {
 impl ExternalAdmissionHookConfiguration {
     /// list or watch objects of kind ExternalAdmissionHookConfiguration
     ///
-    /// Use [`ListExternalAdmissionHookConfigurationResponse`](./enum.ListExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListExternalAdmissionHookConfigurationResponse`]`>` constructor, or [`ListExternalAdmissionHookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -319,7 +328,7 @@ impl ExternalAdmissionHookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_external_admission_hook_configuration(
         optional: ListExternalAdmissionHookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let ListExternalAdmissionHookConfigurationOptional {
             continue_,
             field_selector,
@@ -364,11 +373,14 @@ impl ExternalAdmissionHookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::list_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.list_external_admission_hook_configuration)
+/// Optional parameters of [`ExternalAdmissionHookConfiguration::list_external_admission_hook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListExternalAdmissionHookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -393,7 +405,7 @@ pub struct ListExternalAdmissionHookConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::list_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.list_external_admission_hook_configuration)
+/// Use `<ListExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::list_external_admission_hook_configuration`]
 #[derive(Debug)]
 pub enum ListExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfigurationList),
@@ -423,7 +435,7 @@ impl crate::Response for ListExternalAdmissionHookConfigurationResponse {
 impl ExternalAdmissionHookConfiguration {
     /// partially update the specified ExternalAdmissionHookConfiguration
     ///
-    /// Use [`PatchExternalAdmissionHookConfigurationResponse`](./enum.PatchExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchExternalAdmissionHookConfigurationResponse`]`>` constructor, or [`PatchExternalAdmissionHookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -440,7 +452,7 @@ impl ExternalAdmissionHookConfiguration {
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchExternalAdmissionHookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let PatchExternalAdmissionHookConfigurationOptional {
             pretty,
         } = optional;
@@ -453,18 +465,21 @@ impl ExternalAdmissionHookConfiguration {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::patch_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.patch_external_admission_hook_configuration)
+/// Optional parameters of [`ExternalAdmissionHookConfiguration::patch_external_admission_hook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchExternalAdmissionHookConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::patch_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.patch_external_admission_hook_configuration)
+/// Use `<PatchExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::patch_external_admission_hook_configuration`]
 #[derive(Debug)]
 pub enum PatchExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
@@ -494,7 +509,7 @@ impl crate::Response for PatchExternalAdmissionHookConfigurationResponse {
 impl ExternalAdmissionHookConfiguration {
     /// read the specified ExternalAdmissionHookConfiguration
     ///
-    /// Use [`ReadExternalAdmissionHookConfigurationResponse`](./enum.ReadExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadExternalAdmissionHookConfigurationResponse`]`>` constructor, or [`ReadExternalAdmissionHookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -508,7 +523,7 @@ impl ExternalAdmissionHookConfiguration {
     pub fn read_external_admission_hook_configuration(
         name: &str,
         optional: ReadExternalAdmissionHookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let ReadExternalAdmissionHookConfigurationOptional {
             exact,
             export,
@@ -529,11 +544,14 @@ impl ExternalAdmissionHookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::read_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.read_external_admission_hook_configuration)
+/// Optional parameters of [`ExternalAdmissionHookConfiguration::read_external_admission_hook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadExternalAdmissionHookConfigurationOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -544,7 +562,7 @@ pub struct ReadExternalAdmissionHookConfigurationOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::read_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.read_external_admission_hook_configuration)
+/// Use `<ReadExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::read_external_admission_hook_configuration`]
 #[derive(Debug)]
 pub enum ReadExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
@@ -574,7 +592,7 @@ impl crate::Response for ReadExternalAdmissionHookConfigurationResponse {
 impl ExternalAdmissionHookConfiguration {
     /// replace the specified ExternalAdmissionHookConfiguration
     ///
-    /// Use [`ReplaceExternalAdmissionHookConfigurationResponse`](./enum.ReplaceExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceExternalAdmissionHookConfigurationResponse`]`>` constructor, or [`ReplaceExternalAdmissionHookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -591,7 +609,7 @@ impl ExternalAdmissionHookConfiguration {
         name: &str,
         body: &crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration,
         optional: ReplaceExternalAdmissionHookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let ReplaceExternalAdmissionHookConfigurationOptional {
             pretty,
         } = optional;
@@ -604,18 +622,21 @@ impl ExternalAdmissionHookConfiguration {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::replace_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.replace_external_admission_hook_configuration)
+/// Optional parameters of [`ExternalAdmissionHookConfiguration::replace_external_admission_hook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceExternalAdmissionHookConfigurationOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::replace_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.replace_external_admission_hook_configuration)
+/// Use `<ReplaceExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::replace_external_admission_hook_configuration`]
 #[derive(Debug)]
 pub enum ReplaceExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::api::admissionregistration::v1alpha1::ExternalAdmissionHookConfiguration),
@@ -645,7 +666,7 @@ impl crate::Response for ReplaceExternalAdmissionHookConfigurationResponse {
 impl ExternalAdmissionHookConfiguration {
     /// watch changes to an object of kind ExternalAdmissionHookConfiguration
     ///
-    /// Use [`WatchExternalAdmissionHookConfigurationResponse`](./enum.WatchExternalAdmissionHookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchExternalAdmissionHookConfigurationResponse`]`>` constructor, or [`WatchExternalAdmissionHookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -659,7 +680,7 @@ impl ExternalAdmissionHookConfiguration {
     pub fn watch_external_admission_hook_configuration(
         name: &str,
         optional: WatchExternalAdmissionHookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchExternalAdmissionHookConfigurationResponse>), crate::RequestError> {
         let WatchExternalAdmissionHookConfigurationOptional {
             continue_,
             field_selector,
@@ -704,11 +725,14 @@ impl ExternalAdmissionHookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::watch_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.watch_external_admission_hook_configuration)
+/// Optional parameters of [`ExternalAdmissionHookConfiguration::watch_external_admission_hook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchExternalAdmissionHookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -733,7 +757,7 @@ pub struct WatchExternalAdmissionHookConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::watch_external_admission_hook_configuration`](./struct.ExternalAdmissionHookConfiguration.html#method.watch_external_admission_hook_configuration)
+/// Use `<WatchExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::watch_external_admission_hook_configuration`]
 #[derive(Debug)]
 pub enum WatchExternalAdmissionHookConfigurationResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -765,7 +789,7 @@ impl crate::Response for WatchExternalAdmissionHookConfigurationResponse {
 impl ExternalAdmissionHookConfiguration {
     /// watch individual changes to a list of ExternalAdmissionHookConfiguration
     ///
-    /// Use [`WatchExternalAdmissionHookConfigurationListResponse`](./enum.WatchExternalAdmissionHookConfigurationListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchExternalAdmissionHookConfigurationListResponse`]`>` constructor, or [`WatchExternalAdmissionHookConfigurationListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -774,7 +798,7 @@ impl ExternalAdmissionHookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_external_admission_hook_configuration_list(
         optional: WatchExternalAdmissionHookConfigurationListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchExternalAdmissionHookConfigurationListResponse>), crate::RequestError> {
         let WatchExternalAdmissionHookConfigurationListOptional {
             continue_,
             field_selector,
@@ -819,11 +843,14 @@ impl ExternalAdmissionHookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ExternalAdmissionHookConfiguration::watch_external_admission_hook_configuration_list`](./struct.ExternalAdmissionHookConfiguration.html#method.watch_external_admission_hook_configuration_list)
+/// Optional parameters of [`ExternalAdmissionHookConfiguration::watch_external_admission_hook_configuration_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchExternalAdmissionHookConfigurationListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -848,7 +875,7 @@ pub struct WatchExternalAdmissionHookConfigurationListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ExternalAdmissionHookConfiguration::watch_external_admission_hook_configuration_list`](./struct.ExternalAdmissionHookConfiguration.html#method.watch_external_admission_hook_configuration_list)
+/// Use `<WatchExternalAdmissionHookConfigurationListResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::watch_external_admission_hook_configuration_list`]
 #[derive(Debug)]
 pub enum WatchExternalAdmissionHookConfigurationListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),

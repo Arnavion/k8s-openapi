@@ -19,7 +19,7 @@ pub struct PodDisruptionBudget {
 impl PodDisruptionBudget {
     /// create a PodDisruptionBudget
     ///
-    /// Use [`CreateNamespacedPodDisruptionBudgetResponse`](./enum.CreateNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedPodDisruptionBudgetResponse`]`>` constructor, or [`CreateNamespacedPodDisruptionBudgetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -36,7 +36,7 @@ impl PodDisruptionBudget {
         namespace: &str,
         body: &crate::v1_12::api::policy::v1beta1::PodDisruptionBudget,
         optional: CreateNamespacedPodDisruptionBudgetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let CreateNamespacedPodDisruptionBudgetOptional {
             dry_run,
             include_uninitialized,
@@ -57,11 +57,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::create_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.create_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::create_namespaced_pod_disruption_budget`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPodDisruptionBudgetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -72,7 +75,7 @@ pub struct CreateNamespacedPodDisruptionBudgetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::create_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.create_namespaced_pod_disruption_budget)
+/// Use `<CreateNamespacedPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::create_namespaced_pod_disruption_budget`]
 #[derive(Debug)]
 pub enum CreateNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
@@ -120,7 +123,7 @@ impl crate::Response for CreateNamespacedPodDisruptionBudgetResponse {
 impl PodDisruptionBudget {
     /// delete collection of PodDisruptionBudget
     ///
-    /// Use [`DeleteCollectionNamespacedPodDisruptionBudgetResponse`](./enum.DeleteCollectionNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedPodDisruptionBudgetResponse`]`>` constructor, or [`DeleteCollectionNamespacedPodDisruptionBudgetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -134,7 +137,7 @@ impl PodDisruptionBudget {
     pub fn delete_collection_namespaced_pod_disruption_budget(
         namespace: &str,
         optional: DeleteCollectionNamespacedPodDisruptionBudgetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedPodDisruptionBudgetOptional {
             continue_,
             field_selector,
@@ -179,11 +182,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::delete_collection_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_collection_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::delete_collection_namespaced_pod_disruption_budget`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedPodDisruptionBudgetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -210,7 +216,7 @@ pub struct DeleteCollectionNamespacedPodDisruptionBudgetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::delete_collection_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_collection_namespaced_pod_disruption_budget)
+/// Use `<DeleteCollectionNamespacedPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::delete_collection_namespaced_pod_disruption_budget`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedPodDisruptionBudgetResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -254,7 +260,7 @@ impl crate::Response for DeleteCollectionNamespacedPodDisruptionBudgetResponse {
 impl PodDisruptionBudget {
     /// delete a PodDisruptionBudget
     ///
-    /// Use [`DeleteNamespacedPodDisruptionBudgetResponse`](./enum.DeleteNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedPodDisruptionBudgetResponse`]`>` constructor, or [`DeleteNamespacedPodDisruptionBudgetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -273,7 +279,7 @@ impl PodDisruptionBudget {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedPodDisruptionBudgetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let DeleteNamespacedPodDisruptionBudgetOptional {
             dry_run,
             grace_period_seconds,
@@ -302,11 +308,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::delete_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::delete_namespaced_pod_disruption_budget`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedPodDisruptionBudgetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -321,7 +330,7 @@ pub struct DeleteNamespacedPodDisruptionBudgetOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::delete_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.delete_namespaced_pod_disruption_budget)
+/// Use `<DeleteNamespacedPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::delete_namespaced_pod_disruption_budget`]
 #[derive(Debug)]
 pub enum DeleteNamespacedPodDisruptionBudgetResponse {
     OkStatus(crate::v1_12::apimachinery::pkg::apis::meta::v1::Status),
@@ -374,7 +383,7 @@ impl crate::Response for DeleteNamespacedPodDisruptionBudgetResponse {
 impl PodDisruptionBudget {
     /// list or watch objects of kind PodDisruptionBudget
     ///
-    /// Use [`ListNamespacedPodDisruptionBudgetResponse`](./enum.ListNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedPodDisruptionBudgetResponse`]`>` constructor, or [`ListNamespacedPodDisruptionBudgetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -388,7 +397,7 @@ impl PodDisruptionBudget {
     pub fn list_namespaced_pod_disruption_budget(
         namespace: &str,
         optional: ListNamespacedPodDisruptionBudgetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let ListNamespacedPodDisruptionBudgetOptional {
             continue_,
             field_selector,
@@ -433,11 +442,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::list_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.list_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::list_namespaced_pod_disruption_budget`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedPodDisruptionBudgetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -464,7 +476,7 @@ pub struct ListNamespacedPodDisruptionBudgetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::list_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.list_namespaced_pod_disruption_budget)
+/// Use `<ListNamespacedPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::list_namespaced_pod_disruption_budget`]
 #[derive(Debug)]
 pub enum ListNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudgetList),
@@ -494,7 +506,7 @@ impl crate::Response for ListNamespacedPodDisruptionBudgetResponse {
 impl PodDisruptionBudget {
     /// list or watch objects of kind PodDisruptionBudget
     ///
-    /// Use [`ListPodDisruptionBudgetForAllNamespacesResponse`](./enum.ListPodDisruptionBudgetForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListPodDisruptionBudgetForAllNamespacesResponse`]`>` constructor, or [`ListPodDisruptionBudgetForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -503,7 +515,7 @@ impl PodDisruptionBudget {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_pod_disruption_budget_for_all_namespaces(
         optional: ListPodDisruptionBudgetForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodDisruptionBudgetForAllNamespacesResponse>), crate::RequestError> {
         let ListPodDisruptionBudgetForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -548,11 +560,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::list_pod_disruption_budget_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.list_pod_disruption_budget_for_all_namespaces)
+/// Optional parameters of [`PodDisruptionBudget::list_pod_disruption_budget_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListPodDisruptionBudgetForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -579,7 +594,7 @@ pub struct ListPodDisruptionBudgetForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::list_pod_disruption_budget_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.list_pod_disruption_budget_for_all_namespaces)
+/// Use `<ListPodDisruptionBudgetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::list_pod_disruption_budget_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListPodDisruptionBudgetForAllNamespacesResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudgetList),
@@ -609,7 +624,7 @@ impl crate::Response for ListPodDisruptionBudgetForAllNamespacesResponse {
 impl PodDisruptionBudget {
     /// partially update the specified PodDisruptionBudget
     ///
-    /// Use [`PatchNamespacedPodDisruptionBudgetResponse`](./enum.PatchNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedPodDisruptionBudgetResponse`]`>` constructor, or [`PatchNamespacedPodDisruptionBudgetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -631,7 +646,7 @@ impl PodDisruptionBudget {
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedPodDisruptionBudgetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let PatchNamespacedPodDisruptionBudgetOptional {
             dry_run,
             pretty,
@@ -648,11 +663,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.patch_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedPodDisruptionBudgetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -661,7 +679,7 @@ pub struct PatchNamespacedPodDisruptionBudgetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.patch_namespaced_pod_disruption_budget)
+/// Use `<PatchNamespacedPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget`]
 #[derive(Debug)]
 pub enum PatchNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
@@ -691,7 +709,7 @@ impl crate::Response for PatchNamespacedPodDisruptionBudgetResponse {
 impl PodDisruptionBudget {
     /// partially update status of the specified PodDisruptionBudget
     ///
-    /// Use [`PatchNamespacedPodDisruptionBudgetStatusResponse`](./enum.PatchNamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedPodDisruptionBudgetStatusResponse`]`>` constructor, or [`PatchNamespacedPodDisruptionBudgetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -713,7 +731,7 @@ impl PodDisruptionBudget {
         namespace: &str,
         body: &crate::v1_12::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedPodDisruptionBudgetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedPodDisruptionBudgetStatusResponse>), crate::RequestError> {
         let PatchNamespacedPodDisruptionBudgetStatusOptional {
             dry_run,
             pretty,
@@ -730,11 +748,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.patch_namespaced_pod_disruption_budget_status)
+/// Optional parameters of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedPodDisruptionBudgetStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -743,7 +764,7 @@ pub struct PatchNamespacedPodDisruptionBudgetStatusOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.patch_namespaced_pod_disruption_budget_status)
+/// Use `<PatchNamespacedPodDisruptionBudgetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::patch_namespaced_pod_disruption_budget_status`]
 #[derive(Debug)]
 pub enum PatchNamespacedPodDisruptionBudgetStatusResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
@@ -773,7 +794,7 @@ impl crate::Response for PatchNamespacedPodDisruptionBudgetStatusResponse {
 impl PodDisruptionBudget {
     /// read the specified PodDisruptionBudget
     ///
-    /// Use [`ReadNamespacedPodDisruptionBudgetResponse`](./enum.ReadNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodDisruptionBudgetResponse`]`>` constructor, or [`ReadNamespacedPodDisruptionBudgetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -792,7 +813,7 @@ impl PodDisruptionBudget {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedPodDisruptionBudgetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let ReadNamespacedPodDisruptionBudgetOptional {
             exact,
             export,
@@ -813,11 +834,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.read_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedPodDisruptionBudgetOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -828,7 +852,7 @@ pub struct ReadNamespacedPodDisruptionBudgetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.read_namespaced_pod_disruption_budget)
+/// Use `<ReadNamespacedPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget`]
 #[derive(Debug)]
 pub enum ReadNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
@@ -858,7 +882,7 @@ impl crate::Response for ReadNamespacedPodDisruptionBudgetResponse {
 impl PodDisruptionBudget {
     /// read status of the specified PodDisruptionBudget
     ///
-    /// Use [`ReadNamespacedPodDisruptionBudgetStatusResponse`](./enum.ReadNamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedPodDisruptionBudgetStatusResponse`]`>` constructor, or [`ReadNamespacedPodDisruptionBudgetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -877,7 +901,7 @@ impl PodDisruptionBudget {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedPodDisruptionBudgetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedPodDisruptionBudgetStatusResponse>), crate::RequestError> {
         let ReadNamespacedPodDisruptionBudgetStatusOptional {
             pretty,
         } = optional;
@@ -890,18 +914,21 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.read_namespaced_pod_disruption_budget_status)
+/// Optional parameters of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedPodDisruptionBudgetStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.read_namespaced_pod_disruption_budget_status)
+/// Use `<ReadNamespacedPodDisruptionBudgetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::read_namespaced_pod_disruption_budget_status`]
 #[derive(Debug)]
 pub enum ReadNamespacedPodDisruptionBudgetStatusResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
@@ -931,7 +958,7 @@ impl crate::Response for ReadNamespacedPodDisruptionBudgetStatusResponse {
 impl PodDisruptionBudget {
     /// replace the specified PodDisruptionBudget
     ///
-    /// Use [`ReplaceNamespacedPodDisruptionBudgetResponse`](./enum.ReplaceNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedPodDisruptionBudgetResponse`]`>` constructor, or [`ReplaceNamespacedPodDisruptionBudgetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -953,7 +980,7 @@ impl PodDisruptionBudget {
         namespace: &str,
         body: &crate::v1_12::api::policy::v1beta1::PodDisruptionBudget,
         optional: ReplaceNamespacedPodDisruptionBudgetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let ReplaceNamespacedPodDisruptionBudgetOptional {
             dry_run,
             pretty,
@@ -970,11 +997,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.replace_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedPodDisruptionBudgetOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -983,7 +1013,7 @@ pub struct ReplaceNamespacedPodDisruptionBudgetOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.replace_namespaced_pod_disruption_budget)
+/// Use `<ReplaceNamespacedPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
@@ -1022,7 +1052,7 @@ impl crate::Response for ReplaceNamespacedPodDisruptionBudgetResponse {
 impl PodDisruptionBudget {
     /// replace status of the specified PodDisruptionBudget
     ///
-    /// Use [`ReplaceNamespacedPodDisruptionBudgetStatusResponse`](./enum.ReplaceNamespacedPodDisruptionBudgetStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedPodDisruptionBudgetStatusResponse`]`>` constructor, or [`ReplaceNamespacedPodDisruptionBudgetStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1044,7 +1074,7 @@ impl PodDisruptionBudget {
         namespace: &str,
         body: &crate::v1_12::api::policy::v1beta1::PodDisruptionBudget,
         optional: ReplaceNamespacedPodDisruptionBudgetStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedPodDisruptionBudgetStatusResponse>), crate::RequestError> {
         let ReplaceNamespacedPodDisruptionBudgetStatusOptional {
             dry_run,
             pretty,
@@ -1061,11 +1091,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.replace_namespaced_pod_disruption_budget_status)
+/// Optional parameters of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedPodDisruptionBudgetStatusOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -1074,7 +1107,7 @@ pub struct ReplaceNamespacedPodDisruptionBudgetStatusOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget_status`](./struct.PodDisruptionBudget.html#method.replace_namespaced_pod_disruption_budget_status)
+/// Use `<ReplaceNamespacedPodDisruptionBudgetStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::replace_namespaced_pod_disruption_budget_status`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedPodDisruptionBudgetStatusResponse {
     Ok(crate::v1_12::api::policy::v1beta1::PodDisruptionBudget),
@@ -1113,7 +1146,7 @@ impl crate::Response for ReplaceNamespacedPodDisruptionBudgetStatusResponse {
 impl PodDisruptionBudget {
     /// watch changes to an object of kind PodDisruptionBudget. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchNamespacedPodDisruptionBudgetResponse`](./enum.WatchNamespacedPodDisruptionBudgetResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedPodDisruptionBudgetResponse`]`>` constructor, or [`WatchNamespacedPodDisruptionBudgetResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1132,7 +1165,7 @@ impl PodDisruptionBudget {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedPodDisruptionBudgetOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let WatchNamespacedPodDisruptionBudgetOptional {
             continue_,
             field_selector,
@@ -1177,11 +1210,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.watch_namespaced_pod_disruption_budget)
+/// Optional parameters of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedPodDisruptionBudgetOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1208,7 +1244,7 @@ pub struct WatchNamespacedPodDisruptionBudgetOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget`](./struct.PodDisruptionBudget.html#method.watch_namespaced_pod_disruption_budget)
+/// Use `<WatchNamespacedPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget`]
 #[derive(Debug)]
 pub enum WatchNamespacedPodDisruptionBudgetResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1240,7 +1276,7 @@ impl crate::Response for WatchNamespacedPodDisruptionBudgetResponse {
 impl PodDisruptionBudget {
     /// watch individual changes to a list of PodDisruptionBudget. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchNamespacedPodDisruptionBudgetListResponse`](./enum.WatchNamespacedPodDisruptionBudgetListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedPodDisruptionBudgetListResponse`]`>` constructor, or [`WatchNamespacedPodDisruptionBudgetListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1254,7 +1290,7 @@ impl PodDisruptionBudget {
     pub fn watch_namespaced_pod_disruption_budget_list(
         namespace: &str,
         optional: WatchNamespacedPodDisruptionBudgetListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodDisruptionBudgetListResponse>), crate::RequestError> {
         let WatchNamespacedPodDisruptionBudgetListOptional {
             continue_,
             field_selector,
@@ -1299,11 +1335,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget_list`](./struct.PodDisruptionBudget.html#method.watch_namespaced_pod_disruption_budget_list)
+/// Optional parameters of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedPodDisruptionBudgetListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1330,7 +1369,7 @@ pub struct WatchNamespacedPodDisruptionBudgetListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget_list`](./struct.PodDisruptionBudget.html#method.watch_namespaced_pod_disruption_budget_list)
+/// Use `<WatchNamespacedPodDisruptionBudgetListResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedPodDisruptionBudgetListResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1362,7 +1401,7 @@ impl crate::Response for WatchNamespacedPodDisruptionBudgetListResponse {
 impl PodDisruptionBudget {
     /// watch individual changes to a list of PodDisruptionBudget. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchPodDisruptionBudgetListForAllNamespacesResponse`](./enum.WatchPodDisruptionBudgetListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchPodDisruptionBudgetListForAllNamespacesResponse`]`>` constructor, or [`WatchPodDisruptionBudgetListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1371,7 +1410,7 @@ impl PodDisruptionBudget {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_pod_disruption_budget_list_for_all_namespaces(
         optional: WatchPodDisruptionBudgetListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodDisruptionBudgetListForAllNamespacesResponse>), crate::RequestError> {
         let WatchPodDisruptionBudgetListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -1416,11 +1455,14 @@ impl PodDisruptionBudget {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PodDisruptionBudget::watch_pod_disruption_budget_list_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.watch_pod_disruption_budget_list_for_all_namespaces)
+/// Optional parameters of [`PodDisruptionBudget::watch_pod_disruption_budget_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPodDisruptionBudgetListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -1447,7 +1489,7 @@ pub struct WatchPodDisruptionBudgetListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PodDisruptionBudget::watch_pod_disruption_budget_list_for_all_namespaces`](./struct.PodDisruptionBudget.html#method.watch_pod_disruption_budget_list_for_all_namespaces)
+/// Use `<WatchPodDisruptionBudgetListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::watch_pod_disruption_budget_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchPodDisruptionBudgetListForAllNamespacesResponse {
     Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),

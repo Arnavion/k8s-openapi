@@ -17,7 +17,7 @@ pub struct InitializerConfiguration {
 impl InitializerConfiguration {
     /// create an InitializerConfiguration
     ///
-    /// Use [`CreateInitializerConfigurationResponse`](./enum.CreateInitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateInitializerConfigurationResponse`]`>` constructor, or [`CreateInitializerConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,7 +29,7 @@ impl InitializerConfiguration {
     pub fn create_initializer_configuration(
         body: &crate::v1_13::api::admissionregistration::v1alpha1::InitializerConfiguration,
         optional: CreateInitializerConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateInitializerConfigurationResponse>), crate::RequestError> {
         let CreateInitializerConfigurationOptional {
             dry_run,
             include_uninitialized,
@@ -50,11 +50,14 @@ impl InitializerConfiguration {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::create_initializer_configuration`](./struct.InitializerConfiguration.html#method.create_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::create_initializer_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateInitializerConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -65,7 +68,7 @@ pub struct CreateInitializerConfigurationOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::create_initializer_configuration`](./struct.InitializerConfiguration.html#method.create_initializer_configuration)
+/// Use `<CreateInitializerConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`InitializerConfiguration::create_initializer_configuration`]
 #[derive(Debug)]
 pub enum CreateInitializerConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1alpha1::InitializerConfiguration),
@@ -113,7 +116,7 @@ impl crate::Response for CreateInitializerConfigurationResponse {
 impl InitializerConfiguration {
     /// delete collection of InitializerConfiguration
     ///
-    /// Use [`DeleteCollectionInitializerConfigurationResponse`](./enum.DeleteCollectionInitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionInitializerConfigurationResponse`]`>` constructor, or [`DeleteCollectionInitializerConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -122,7 +125,7 @@ impl InitializerConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_initializer_configuration(
         optional: DeleteCollectionInitializerConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionInitializerConfigurationResponse>), crate::RequestError> {
         let DeleteCollectionInitializerConfigurationOptional {
             continue_,
             field_selector,
@@ -167,11 +170,14 @@ impl InitializerConfiguration {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::delete_collection_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_collection_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::delete_collection_initializer_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionInitializerConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -198,7 +204,7 @@ pub struct DeleteCollectionInitializerConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::delete_collection_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_collection_initializer_configuration)
+/// Use `<DeleteCollectionInitializerConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`InitializerConfiguration::delete_collection_initializer_configuration`]
 #[derive(Debug)]
 pub enum DeleteCollectionInitializerConfigurationResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -242,7 +248,7 @@ impl crate::Response for DeleteCollectionInitializerConfigurationResponse {
 impl InitializerConfiguration {
     /// delete an InitializerConfiguration
     ///
-    /// Use [`DeleteInitializerConfigurationResponse`](./enum.DeleteInitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteInitializerConfigurationResponse`]`>` constructor, or [`DeleteInitializerConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -256,7 +262,7 @@ impl InitializerConfiguration {
     pub fn delete_initializer_configuration(
         name: &str,
         optional: DeleteInitializerConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteInitializerConfigurationResponse>), crate::RequestError> {
         let DeleteInitializerConfigurationOptional {
             dry_run,
             grace_period_seconds,
@@ -285,11 +291,14 @@ impl InitializerConfiguration {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::delete_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::delete_initializer_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteInitializerConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -304,7 +313,7 @@ pub struct DeleteInitializerConfigurationOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::delete_initializer_configuration`](./struct.InitializerConfiguration.html#method.delete_initializer_configuration)
+/// Use `<DeleteInitializerConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`InitializerConfiguration::delete_initializer_configuration`]
 #[derive(Debug)]
 pub enum DeleteInitializerConfigurationResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -357,7 +366,7 @@ impl crate::Response for DeleteInitializerConfigurationResponse {
 impl InitializerConfiguration {
     /// list or watch objects of kind InitializerConfiguration
     ///
-    /// Use [`ListInitializerConfigurationResponse`](./enum.ListInitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListInitializerConfigurationResponse`]`>` constructor, or [`ListInitializerConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -366,7 +375,7 @@ impl InitializerConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_initializer_configuration(
         optional: ListInitializerConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListInitializerConfigurationResponse>), crate::RequestError> {
         let ListInitializerConfigurationOptional {
             continue_,
             field_selector,
@@ -411,11 +420,14 @@ impl InitializerConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::list_initializer_configuration`](./struct.InitializerConfiguration.html#method.list_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::list_initializer_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListInitializerConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -442,7 +454,7 @@ pub struct ListInitializerConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::list_initializer_configuration`](./struct.InitializerConfiguration.html#method.list_initializer_configuration)
+/// Use `<ListInitializerConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`InitializerConfiguration::list_initializer_configuration`]
 #[derive(Debug)]
 pub enum ListInitializerConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1alpha1::InitializerConfigurationList),
@@ -472,7 +484,7 @@ impl crate::Response for ListInitializerConfigurationResponse {
 impl InitializerConfiguration {
     /// partially update the specified InitializerConfiguration
     ///
-    /// Use [`PatchInitializerConfigurationResponse`](./enum.PatchInitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchInitializerConfigurationResponse`]`>` constructor, or [`PatchInitializerConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -489,7 +501,7 @@ impl InitializerConfiguration {
         name: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchInitializerConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchInitializerConfigurationResponse>), crate::RequestError> {
         let PatchInitializerConfigurationOptional {
             dry_run,
             pretty,
@@ -506,11 +518,14 @@ impl InitializerConfiguration {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::patch_initializer_configuration`](./struct.InitializerConfiguration.html#method.patch_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::patch_initializer_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchInitializerConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -519,7 +534,7 @@ pub struct PatchInitializerConfigurationOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::patch_initializer_configuration`](./struct.InitializerConfiguration.html#method.patch_initializer_configuration)
+/// Use `<PatchInitializerConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`InitializerConfiguration::patch_initializer_configuration`]
 #[derive(Debug)]
 pub enum PatchInitializerConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1alpha1::InitializerConfiguration),
@@ -549,7 +564,7 @@ impl crate::Response for PatchInitializerConfigurationResponse {
 impl InitializerConfiguration {
     /// read the specified InitializerConfiguration
     ///
-    /// Use [`ReadInitializerConfigurationResponse`](./enum.ReadInitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadInitializerConfigurationResponse`]`>` constructor, or [`ReadInitializerConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -563,7 +578,7 @@ impl InitializerConfiguration {
     pub fn read_initializer_configuration(
         name: &str,
         optional: ReadInitializerConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadInitializerConfigurationResponse>), crate::RequestError> {
         let ReadInitializerConfigurationOptional {
             exact,
             export,
@@ -584,11 +599,14 @@ impl InitializerConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::read_initializer_configuration`](./struct.InitializerConfiguration.html#method.read_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::read_initializer_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadInitializerConfigurationOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -599,7 +617,7 @@ pub struct ReadInitializerConfigurationOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::read_initializer_configuration`](./struct.InitializerConfiguration.html#method.read_initializer_configuration)
+/// Use `<ReadInitializerConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`InitializerConfiguration::read_initializer_configuration`]
 #[derive(Debug)]
 pub enum ReadInitializerConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1alpha1::InitializerConfiguration),
@@ -629,7 +647,7 @@ impl crate::Response for ReadInitializerConfigurationResponse {
 impl InitializerConfiguration {
     /// replace the specified InitializerConfiguration
     ///
-    /// Use [`ReplaceInitializerConfigurationResponse`](./enum.ReplaceInitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceInitializerConfigurationResponse`]`>` constructor, or [`ReplaceInitializerConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -646,7 +664,7 @@ impl InitializerConfiguration {
         name: &str,
         body: &crate::v1_13::api::admissionregistration::v1alpha1::InitializerConfiguration,
         optional: ReplaceInitializerConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceInitializerConfigurationResponse>), crate::RequestError> {
         let ReplaceInitializerConfigurationOptional {
             dry_run,
             pretty,
@@ -663,11 +681,14 @@ impl InitializerConfiguration {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::replace_initializer_configuration`](./struct.InitializerConfiguration.html#method.replace_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::replace_initializer_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceInitializerConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -676,7 +697,7 @@ pub struct ReplaceInitializerConfigurationOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::replace_initializer_configuration`](./struct.InitializerConfiguration.html#method.replace_initializer_configuration)
+/// Use `<ReplaceInitializerConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`InitializerConfiguration::replace_initializer_configuration`]
 #[derive(Debug)]
 pub enum ReplaceInitializerConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1alpha1::InitializerConfiguration),
@@ -715,7 +736,7 @@ impl crate::Response for ReplaceInitializerConfigurationResponse {
 impl InitializerConfiguration {
     /// watch changes to an object of kind InitializerConfiguration. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchInitializerConfigurationResponse`](./enum.WatchInitializerConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchInitializerConfigurationResponse`]`>` constructor, or [`WatchInitializerConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -729,7 +750,7 @@ impl InitializerConfiguration {
     pub fn watch_initializer_configuration(
         name: &str,
         optional: WatchInitializerConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchInitializerConfigurationResponse>), crate::RequestError> {
         let WatchInitializerConfigurationOptional {
             continue_,
             field_selector,
@@ -774,11 +795,14 @@ impl InitializerConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::watch_initializer_configuration`](./struct.InitializerConfiguration.html#method.watch_initializer_configuration)
+/// Optional parameters of [`InitializerConfiguration::watch_initializer_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchInitializerConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -805,7 +829,7 @@ pub struct WatchInitializerConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::watch_initializer_configuration`](./struct.InitializerConfiguration.html#method.watch_initializer_configuration)
+/// Use `<WatchInitializerConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`InitializerConfiguration::watch_initializer_configuration`]
 #[derive(Debug)]
 pub enum WatchInitializerConfigurationResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -837,7 +861,7 @@ impl crate::Response for WatchInitializerConfigurationResponse {
 impl InitializerConfiguration {
     /// watch individual changes to a list of InitializerConfiguration. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchInitializerConfigurationListResponse`](./enum.WatchInitializerConfigurationListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchInitializerConfigurationListResponse`]`>` constructor, or [`WatchInitializerConfigurationListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -846,7 +870,7 @@ impl InitializerConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_initializer_configuration_list(
         optional: WatchInitializerConfigurationListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchInitializerConfigurationListResponse>), crate::RequestError> {
         let WatchInitializerConfigurationListOptional {
             continue_,
             field_selector,
@@ -891,11 +915,14 @@ impl InitializerConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`InitializerConfiguration::watch_initializer_configuration_list`](./struct.InitializerConfiguration.html#method.watch_initializer_configuration_list)
+/// Optional parameters of [`InitializerConfiguration::watch_initializer_configuration_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchInitializerConfigurationListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -922,7 +949,7 @@ pub struct WatchInitializerConfigurationListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`InitializerConfiguration::watch_initializer_configuration_list`](./struct.InitializerConfiguration.html#method.watch_initializer_configuration_list)
+/// Use `<WatchInitializerConfigurationListResponse as Response>::try_from_parts` to parse the HTTP response body of [`InitializerConfiguration::watch_initializer_configuration_list`]
 #[derive(Debug)]
 pub enum WatchInitializerConfigurationListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),

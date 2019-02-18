@@ -5,6 +5,7 @@
     clippy::default_trait_access,
     clippy::doc_markdown,
     clippy::large_enum_variant,
+    clippy::type_complexity,
     clippy::use_self,
 )]
 
@@ -29,7 +30,7 @@
 //! of types from this crate.
 //!
 //! For things that differ between versions, such as the fully-qualified paths of imports, use the `k8s_*` macros to emit different code
-//! depending on which feature eventually gets enabled. See the docs of the macros and the `k8s-openapi-tests` directory in the repository
+//! depending on which feature eventually gets enabled. See the docs of the macros, and the `k8s-openapi-tests` directory in the repository,
 //! for more details.
 //!
 //! Similarly, if your crate does not support some versions of Kubernetes (eg <= 1.10), you can put something like this at the top of your crate root:
@@ -47,6 +48,8 @@
 //!
 //! ## Resources
 //!
+//! This example creates an instance of [`api::core::v1::PodSpec`] with no other properties set, and pretty-prints it.
+//!
 //! ```rust
 //! use k8s_openapi::api::core::v1 as api;
 //!
@@ -57,6 +60,48 @@
 //! ```
 //!
 //! ## Client API
+//!
+//! This example executes the [`api::core::v1::Pod::list_namespaced_pod`] API operation to list all pods inside a namespace.
+//! It demonstrates the common patterns implemented by all API operation functions in this crate:
+//!
+//! 1. The API function has required parameters and optional parameters. All optional parameters are taken as a single struct with optional fields.
+//!
+//!    Specifically for the [`api::core::v1::Pod::list_namespaced_pod`] operation, the `namespace` parameter is required and taken by the function itself,
+//!    while other optional parameters like `field_selector` are fields of the [`api::core::v1::ListNamespacedPodOptional`] struct. An instance of
+//!    this struct is taken as the last parameter of `Pod::list_namespaced_pod`. This struct impls [`Default`] so that you can just pass in `Default::default()`
+//!    if you don't want to specify values for any of the optional parameters.
+//!
+//! 1. The function returns an [`http::Request`] value with the URL path, query string, and request body filled out according to the parameters
+//!    given to the function. The function does *not* execute this request. You can execute this `http::Request` using any HTTP client library you want to use.
+//!    It does not matter whether you use a synchronous client like `reqwest`, or an asynchronous client like `hyper`, or a mock client that returns bytes
+//!    read from a test file.
+//!
+//! 1. For each API operation function, there is a corresponding response type. For `Pod::list_namespaced_pod` this is [`api::core::v1::ListNamespacedPodResponse`].
+//!    This is an enum with variants for each of the possible HTTP status codes that the operation can return, and contains the data that the API server would
+//!    return corresponding to that status code. For example, the list-namespaced-pod operation returns a pod list with HTTP 200 OK, so one of the variants of
+//!    `ListNamespacedPodResponse` is `Ok(`[`api::core::v1::PodList`]`)`
+//!
+//! 1. The response types impl the [`Response`] trait, which contains a single [`Response::try_from_parts`] function. This function takes an [`http::StatusCode`]
+//!    and a `&u8` byte buffer, and tries to parse the byte buffer as the response type. For example, if you executed the request and received an HTTP 200 OK response
+//!    with some bytes, you could call `<ListNamespacedPodResponse as Response>::try_from_parts(status_code, buf)` and expect to get
+//!    `Ok(ListNamespacedPodResponse::Ok(pod_list))` from it.
+//!
+//!    Once again, this design ensures that the crate is not tied to a specific HTTP client library or interface. It does not matter how you execute the HTTP request,
+//!    nor whether your library is synchronous or asynchronous, since every HTTP client library gives you a way to get the HTTP response status code and the bytes
+//!    of the response body.
+//!
+//! 1. The API operation function also returns another value next to the `http::Request`. This value is a function that takes an [`http::StatusCode`] and returns
+//!    a [`ResponseBody`]`<ListNamespacedPodResponse>`. As mentioned above, `Response::try_from_parts` requires you to maintain a byte buffer for the response body.
+//!    `ResponseBody` is a helper that maintains such a buffer internally. It provides an `append_slice()` function to append slices to this internal buffer,
+//!    and a `parse()` function to parse the buffer as the expected type (`ListNamespacedPodResponse` in this case).
+//!
+//!    It is not *necessary* to use the `ResponseBody` returned by the API operation function to parse the response. The `ResponseBody::parse` function is
+//!    only a wrapper around the underlying `Response::try_from_parts` function, and handles growing and shrinking its inner buffer as necessary. It also
+//!    helps ensure that the response body is parsed as the *correct* type for the operation, `ListNamespacedPodResponse` in this case, and not some other type.
+//!    However, you can instead use your own byte buffer instead of the `ResponseBody` value and call `ListNamespacedPodResponse::try_from_parts` yourself.
+//!
+//! Also see the `get_single_value` and `get_multiple_values` functions in the `k8s-openapi-tests/` directory in the repository for an example of how to use
+//! a synchronous client with this style of API.
 //!
 //! ```rust,no_run
 //! // Re-export of the http crate since it's used in the public API
@@ -74,35 +119,35 @@
 //! #     }
 //! # }
 //! #
-//! // `execute` is some function that takes an `http::Request` and executes it
-//! // synchronously or asynchronously to get a response.
-//! // Among other things, it will need to change the URL of the request to an
-//! // absolute URL with the API server's authority.
+//! // Assume `execute` is some function that takes an `http::Request` and
+//! // executes it synchronously or asynchronously to get a response. This is
+//! // provided by your HTTP client library.
+//! //
+//! // Note that the `http::Request` values returned by API operation functions
+//! // only have a URL path, query string and request body filled out. That is,
+//! // they do *not* have a URL host. So the real `execute` implementation
+//! // would first mutate the URL of the request to an absolute URL with
+//! // the API server's authority, add authorization headers, etc before
+//! // actually executing it.
 //! fn execute(req: http::Request<Vec<u8>>) -> Response { unimplemented!(); }
 //!
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     // Create a `http::Request` to list all the pods in the
 //!     // "kube-system" namespace.
-//!     let request = api::Pod::list_namespaced_pod("kube-system", Default::default())?;
+//!     let (request, response_body) =
+//!         api::Pod::list_namespaced_pod("kube-system", Default::default())?;
 //!
 //!     // Execute the request and get a response.
 //!     // If this is an asynchronous operation, you would await
-//!     // or otherwise defer here.
+//!     // or otherwise yield to the event loop here.
 //!     let response = execute(request);
-//! 
+//!
 //!     // Got a status code from executing the request.
 //!     let status_code: http::StatusCode = response.status_code();
 //!
-//!     // Construct a `ResponseBody` to accumulate the bytes received from
-//!     // the HTTP response.
-//!     //
-//!     // It is not *necessary* to use this type. It's only a helper to
-//!     // provide a convenient byte buffer that can be written to at the end
-//!     // and consumed from the front.
-//!     //
-//!     // You can instead use any buffer type that can be converted to
-//!     // a `&[u8]`.
-//!     let mut response_body = k8s_openapi::ResponseBody::new(status_code);
+//!     // Construct the `ResponseBody<ListNamespacedPodResponse>` using the
+//!     // constructor returned by the API function.
+//!     let mut response_body = response_body(status_code);
 //!
 //!     // Buffer used for each read from the HTTP response.
 //!     let mut buf = Box::new([0u8; 4096]);
@@ -110,19 +155,12 @@
 //!     let pod_list = loop {
 //!         // Read some bytes from the HTTP response into the buffer.
 //!         // If this is an asynchronous operation, you would await or
-//!         // otherwise defer here.
+//!         // yield to the event loop here.
 //!         let read = response.read_into(&mut *buf)?;
 //!
 //!         // `buf` now contains some data read from the response. Append it
 //!         // to the `ResponseBody` and try to parse it into
 //!         // the response type.
-//!         //
-//!         // For `Pod::list_namespaced_pod` this is the
-//!         // `ListNamespacedPodResponse` type.
-//!         //
-//!         // `ResponseBody::parse` internally calls
-//!         // `Response::try_from_parts` for the response type. So you would
-//!         // call that function directly if you were not using `ResponseBody`
 //!         response_body.append_slice(&buf[..read]);
 //!         let response = response_body.parse();
 //!         match response {
@@ -155,13 +193,6 @@
 //!     Ok(())
 //! }
 //! ```
-//!
-//! Since `Response::try_from_parts` is implemented in terms of a status code and a byte buffer for the response body, it is independent of the method
-//! of *actually executing* the HTTP request. This means you can use a synchronous client like `reqwest`, an asynchronous client like `hyper`,
-//! a mock client that returns bytes read from a test file, or anything else you want.
-//!
-//! See the `get_single_value` and `get_multiple_values` functions in the `k8s-openapi-tests/` directory in the repository for an example of how to use
-//! a synchronous client with this style of API.
 
 pub use chrono;
 pub use http;
@@ -298,23 +329,46 @@ impl std::error::Error for RequestError {
 /// A trait implemented by all response types corresponding to Kubernetes API functions.
 pub trait Response: Sized {
     /// Tries to parse the response from the given status code and response body.
+    ///
+    /// If an instance of `Self` can be successfully parsed from the given byte buffer, the instance is returned,
+    /// along with the number of bytes used up from the buffer. Remove those bytes from the buffer before calling
+    /// this function again.
+    ///
+    /// If the buffer does not contain enough bytes to be able to parse an instance of `Self`, the function returns
+    /// `Err(ResponseError::NeedMoreData)`. Append more bytes into the buffer, then call this function again.
+    ///
+    /// Also see the [`ResponseBody`] type.
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), ResponseError>;
 }
 
-/// A helper that holds a growable buffer that can be parsed into a Kubernetes API function's response.
-pub struct ResponseBody {
+/// This struct provides an easy way to parse a byte buffer into a Kubernetes API function's response.
+///
+/// All API function responses implement the [`Response`] trait, and are constructed by calling their [`Response::try_from_parts`] function.
+/// If this function returns `Err(ResponseError::NeedMoreData)`, that means more bytes need to be appended to the function. Alternatively,
+/// if the function returns `Ok((value, num_bytes_read))`, then `num_bytes_read` bytes need to be popped off from the front of the buffer.
+///
+/// The `ResponseBody` struct contains an internal dynamic buffer, and provides `append_slice` and `parse` functions to help with this.
+/// `append_slice` appends the slice you give it to its internal buffer, and `parse` uses the [`Response::try_from_parts`] function to parse
+/// the response out of the buffer, and truncates it accordingly.
+///
+/// You do not *have* to use this type to parse the response, say if you want to manage your own byte buffers. You can use
+/// `<T as Response>::try_from_parts` directly instead.
+pub struct ResponseBody<T> {
     /// The HTTP status code of the response.
     pub status_code: http::StatusCode,
 
     buf: bytes::BytesMut,
+
+    _response: std::marker::PhantomData<fn() -> T>,
 }
 
-impl ResponseBody {
+impl<T> ResponseBody<T> where T: Response {
     /// Construct a value for a response that has the specified HTTP status code.
     pub fn new(status_code: http::StatusCode) -> Self {
         ResponseBody {
             status_code,
             buf: Default::default(),
+            _response: Default::default(),
         }
     }
 
@@ -324,7 +378,7 @@ impl ResponseBody {
     }
 
     /// Try to parse all the data buffered so far into a response type.
-    pub fn parse<T>(&mut self) -> Result<T, ResponseError> where T: Response {
+    pub fn parse(&mut self) -> Result<T, ResponseError> {
         match T::try_from_parts(self.status_code, &*self.buf) {
             Ok((result, read)) => {
                 self.buf.advance(read);
@@ -334,18 +388,9 @@ impl ResponseBody {
             Err(err) => Err(err),
         }
     }
-
-    /// Append a slice of data from the HTTP response, and try to parse all the data buffered so far into a response type.
-    #[deprecated(since = "0.4.0", note = "A single `append_slice()` can append data that requires more than one `parse()` to consume.
-    So you should call `append_slice()` and `parse()` individually instead of this function, and you should call `parse()` repeatedly while it returns `Ok`.
-    ")]
-    pub fn append_slice_and_parse<T>(&mut self, buf: &[u8]) -> Result<T, ResponseError> where T: Response {
-        self.append_slice(buf);
-        self.parse()
-    }
 }
 
-impl std::ops::Deref for ResponseBody {
+impl<T> std::ops::Deref for ResponseBody<T> {
     type Target = [u8];
 
     fn deref(&self) -> &Self::Target {

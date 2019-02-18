@@ -10,17 +10,20 @@ pub mod kube_aggregator;
 
 /// get available API versions
 ///
-/// Use [`GetAPIVersionsResponse`](./enum.GetAPIVersionsResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAPIVersionsResponse`]`>` constructor, or [`GetAPIVersionsResponse`] directly, to parse the HTTP response.
 pub fn get_api_versions(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAPIVersionsResponse>), crate::RequestError> {
     let __url = "/apis/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_api_versions`](./fn.get_api_versions.html)
+/// Use `<GetAPIVersionsResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_api_versions`]
 #[derive(Debug)]
 pub enum GetAPIVersionsResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroupList),
@@ -49,17 +52,20 @@ impl crate::Response for GetAPIVersionsResponse {
 
 /// get information of a group
 ///
-/// Use [`GetAdmissionregistrationAPIGroupResponse`](./enum.GetAdmissionregistrationAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAdmissionregistrationAPIGroupResponse`]`>` constructor, or [`GetAdmissionregistrationAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_admissionregistration_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAdmissionregistrationAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/admissionregistration.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_admissionregistration_api_group`](./fn.get_admissionregistration_api_group.html)
+/// Use `<GetAdmissionregistrationAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_admissionregistration_api_group`]
 #[derive(Debug)]
 pub enum GetAdmissionregistrationAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -88,17 +94,20 @@ impl crate::Response for GetAdmissionregistrationAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetAdmissionregistrationV1alpha1APIResourcesResponse`](./enum.GetAdmissionregistrationV1alpha1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAdmissionregistrationV1alpha1APIResourcesResponse`]`>` constructor, or [`GetAdmissionregistrationV1alpha1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_admissionregistration_v1alpha1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAdmissionregistrationV1alpha1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/admissionregistration.k8s.io/v1alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_admissionregistration_v1alpha1_api_resources`](./fn.get_admissionregistration_v1alpha1_api_resources.html)
+/// Use `<GetAdmissionregistrationV1alpha1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_admissionregistration_v1alpha1_api_resources`]
 #[derive(Debug)]
 pub enum GetAdmissionregistrationV1alpha1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -127,17 +136,20 @@ impl crate::Response for GetAdmissionregistrationV1alpha1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetApiextensionsAPIGroupResponse`](./enum.GetApiextensionsAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetApiextensionsAPIGroupResponse`]`>` constructor, or [`GetApiextensionsAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_apiextensions_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetApiextensionsAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/apiextensions.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_apiextensions_api_group`](./fn.get_apiextensions_api_group.html)
+/// Use `<GetApiextensionsAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_apiextensions_api_group`]
 #[derive(Debug)]
 pub enum GetApiextensionsAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -166,17 +178,20 @@ impl crate::Response for GetApiextensionsAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetApiextensionsV1beta1APIResourcesResponse`](./enum.GetApiextensionsV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetApiextensionsV1beta1APIResourcesResponse`]`>` constructor, or [`GetApiextensionsV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_apiextensions_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetApiextensionsV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/apiextensions.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_apiextensions_v1beta1_api_resources`](./fn.get_apiextensions_v1beta1_api_resources.html)
+/// Use `<GetApiextensionsV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_apiextensions_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetApiextensionsV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -205,17 +220,20 @@ impl crate::Response for GetApiextensionsV1beta1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetApiregistrationAPIGroupResponse`](./enum.GetApiregistrationAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetApiregistrationAPIGroupResponse`]`>` constructor, or [`GetApiregistrationAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_apiregistration_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetApiregistrationAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/apiregistration.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_apiregistration_api_group`](./fn.get_apiregistration_api_group.html)
+/// Use `<GetApiregistrationAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_apiregistration_api_group`]
 #[derive(Debug)]
 pub enum GetApiregistrationAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -244,17 +262,20 @@ impl crate::Response for GetApiregistrationAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetApiregistrationV1beta1APIResourcesResponse`](./enum.GetApiregistrationV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetApiregistrationV1beta1APIResourcesResponse`]`>` constructor, or [`GetApiregistrationV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_apiregistration_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetApiregistrationV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/apiregistration.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_apiregistration_v1beta1_api_resources`](./fn.get_apiregistration_v1beta1_api_resources.html)
+/// Use `<GetApiregistrationV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_apiregistration_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetApiregistrationV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -283,17 +304,20 @@ impl crate::Response for GetApiregistrationV1beta1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetAppsAPIGroupResponse`](./enum.GetAppsAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAppsAPIGroupResponse`]`>` constructor, or [`GetAppsAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_apps_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAppsAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/apps/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_apps_api_group`](./fn.get_apps_api_group.html)
+/// Use `<GetAppsAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_apps_api_group`]
 #[derive(Debug)]
 pub enum GetAppsAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -322,17 +346,20 @@ impl crate::Response for GetAppsAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetAppsV1beta1APIResourcesResponse`](./enum.GetAppsV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAppsV1beta1APIResourcesResponse`]`>` constructor, or [`GetAppsV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_apps_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAppsV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/apps/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_apps_v1beta1_api_resources`](./fn.get_apps_v1beta1_api_resources.html)
+/// Use `<GetAppsV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_apps_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetAppsV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -361,17 +388,20 @@ impl crate::Response for GetAppsV1beta1APIResourcesResponse {
 
 /// get available resources
 ///
-/// Use [`GetAppsV1beta2APIResourcesResponse`](./enum.GetAppsV1beta2APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAppsV1beta2APIResourcesResponse`]`>` constructor, or [`GetAppsV1beta2APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_apps_v1beta2_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAppsV1beta2APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/apps/v1beta2/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_apps_v1beta2_api_resources`](./fn.get_apps_v1beta2_api_resources.html)
+/// Use `<GetAppsV1beta2APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_apps_v1beta2_api_resources`]
 #[derive(Debug)]
 pub enum GetAppsV1beta2APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -400,17 +430,20 @@ impl crate::Response for GetAppsV1beta2APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetAuthenticationAPIGroupResponse`](./enum.GetAuthenticationAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAuthenticationAPIGroupResponse`]`>` constructor, or [`GetAuthenticationAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_authentication_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthenticationAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/authentication.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_authentication_api_group`](./fn.get_authentication_api_group.html)
+/// Use `<GetAuthenticationAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_authentication_api_group`]
 #[derive(Debug)]
 pub enum GetAuthenticationAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -439,17 +472,20 @@ impl crate::Response for GetAuthenticationAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetAuthenticationV1APIResourcesResponse`](./enum.GetAuthenticationV1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAuthenticationV1APIResourcesResponse`]`>` constructor, or [`GetAuthenticationV1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_authentication_v1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthenticationV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/authentication.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_authentication_v1_api_resources`](./fn.get_authentication_v1_api_resources.html)
+/// Use `<GetAuthenticationV1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_authentication_v1_api_resources`]
 #[derive(Debug)]
 pub enum GetAuthenticationV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -478,17 +514,20 @@ impl crate::Response for GetAuthenticationV1APIResourcesResponse {
 
 /// get available resources
 ///
-/// Use [`GetAuthenticationV1beta1APIResourcesResponse`](./enum.GetAuthenticationV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAuthenticationV1beta1APIResourcesResponse`]`>` constructor, or [`GetAuthenticationV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_authentication_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthenticationV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/authentication.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_authentication_v1beta1_api_resources`](./fn.get_authentication_v1beta1_api_resources.html)
+/// Use `<GetAuthenticationV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_authentication_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetAuthenticationV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -517,17 +556,20 @@ impl crate::Response for GetAuthenticationV1beta1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetAuthorizationAPIGroupResponse`](./enum.GetAuthorizationAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAuthorizationAPIGroupResponse`]`>` constructor, or [`GetAuthorizationAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_authorization_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthorizationAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/authorization.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_authorization_api_group`](./fn.get_authorization_api_group.html)
+/// Use `<GetAuthorizationAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_authorization_api_group`]
 #[derive(Debug)]
 pub enum GetAuthorizationAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -556,17 +598,20 @@ impl crate::Response for GetAuthorizationAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetAuthorizationV1APIResourcesResponse`](./enum.GetAuthorizationV1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAuthorizationV1APIResourcesResponse`]`>` constructor, or [`GetAuthorizationV1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_authorization_v1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthorizationV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/authorization.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_authorization_v1_api_resources`](./fn.get_authorization_v1_api_resources.html)
+/// Use `<GetAuthorizationV1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_authorization_v1_api_resources`]
 #[derive(Debug)]
 pub enum GetAuthorizationV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -595,17 +640,20 @@ impl crate::Response for GetAuthorizationV1APIResourcesResponse {
 
 /// get available resources
 ///
-/// Use [`GetAuthorizationV1beta1APIResourcesResponse`](./enum.GetAuthorizationV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAuthorizationV1beta1APIResourcesResponse`]`>` constructor, or [`GetAuthorizationV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_authorization_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAuthorizationV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/authorization.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_authorization_v1beta1_api_resources`](./fn.get_authorization_v1beta1_api_resources.html)
+/// Use `<GetAuthorizationV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_authorization_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetAuthorizationV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -634,17 +682,20 @@ impl crate::Response for GetAuthorizationV1beta1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetAutoscalingAPIGroupResponse`](./enum.GetAutoscalingAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAutoscalingAPIGroupResponse`]`>` constructor, or [`GetAutoscalingAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_autoscaling_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAutoscalingAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/autoscaling/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_autoscaling_api_group`](./fn.get_autoscaling_api_group.html)
+/// Use `<GetAutoscalingAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_autoscaling_api_group`]
 #[derive(Debug)]
 pub enum GetAutoscalingAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -673,17 +724,20 @@ impl crate::Response for GetAutoscalingAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetAutoscalingV1APIResourcesResponse`](./enum.GetAutoscalingV1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAutoscalingV1APIResourcesResponse`]`>` constructor, or [`GetAutoscalingV1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_autoscaling_v1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAutoscalingV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/autoscaling/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_autoscaling_v1_api_resources`](./fn.get_autoscaling_v1_api_resources.html)
+/// Use `<GetAutoscalingV1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_autoscaling_v1_api_resources`]
 #[derive(Debug)]
 pub enum GetAutoscalingV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -712,17 +766,20 @@ impl crate::Response for GetAutoscalingV1APIResourcesResponse {
 
 /// get available resources
 ///
-/// Use [`GetAutoscalingV2beta1APIResourcesResponse`](./enum.GetAutoscalingV2beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetAutoscalingV2beta1APIResourcesResponse`]`>` constructor, or [`GetAutoscalingV2beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_autoscaling_v2beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetAutoscalingV2beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/autoscaling/v2beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_autoscaling_v2beta1_api_resources`](./fn.get_autoscaling_v2beta1_api_resources.html)
+/// Use `<GetAutoscalingV2beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_autoscaling_v2beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetAutoscalingV2beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -751,17 +808,20 @@ impl crate::Response for GetAutoscalingV2beta1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetBatchAPIGroupResponse`](./enum.GetBatchAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetBatchAPIGroupResponse`]`>` constructor, or [`GetBatchAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_batch_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetBatchAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/batch/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_batch_api_group`](./fn.get_batch_api_group.html)
+/// Use `<GetBatchAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_batch_api_group`]
 #[derive(Debug)]
 pub enum GetBatchAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -790,17 +850,20 @@ impl crate::Response for GetBatchAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetBatchV1APIResourcesResponse`](./enum.GetBatchV1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetBatchV1APIResourcesResponse`]`>` constructor, or [`GetBatchV1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_batch_v1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetBatchV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/batch/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_batch_v1_api_resources`](./fn.get_batch_v1_api_resources.html)
+/// Use `<GetBatchV1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_batch_v1_api_resources`]
 #[derive(Debug)]
 pub enum GetBatchV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -829,17 +892,20 @@ impl crate::Response for GetBatchV1APIResourcesResponse {
 
 /// get available resources
 ///
-/// Use [`GetBatchV1beta1APIResourcesResponse`](./enum.GetBatchV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetBatchV1beta1APIResourcesResponse`]`>` constructor, or [`GetBatchV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_batch_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetBatchV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/batch/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_batch_v1beta1_api_resources`](./fn.get_batch_v1beta1_api_resources.html)
+/// Use `<GetBatchV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_batch_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetBatchV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -868,17 +934,20 @@ impl crate::Response for GetBatchV1beta1APIResourcesResponse {
 
 /// get available resources
 ///
-/// Use [`GetBatchV2alpha1APIResourcesResponse`](./enum.GetBatchV2alpha1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetBatchV2alpha1APIResourcesResponse`]`>` constructor, or [`GetBatchV2alpha1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_batch_v2alpha1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetBatchV2alpha1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/batch/v2alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_batch_v2alpha1_api_resources`](./fn.get_batch_v2alpha1_api_resources.html)
+/// Use `<GetBatchV2alpha1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_batch_v2alpha1_api_resources`]
 #[derive(Debug)]
 pub enum GetBatchV2alpha1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -907,17 +976,20 @@ impl crate::Response for GetBatchV2alpha1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetCertificatesAPIGroupResponse`](./enum.GetCertificatesAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetCertificatesAPIGroupResponse`]`>` constructor, or [`GetCertificatesAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_certificates_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetCertificatesAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/certificates.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_certificates_api_group`](./fn.get_certificates_api_group.html)
+/// Use `<GetCertificatesAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_certificates_api_group`]
 #[derive(Debug)]
 pub enum GetCertificatesAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -946,17 +1018,20 @@ impl crate::Response for GetCertificatesAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetCertificatesV1beta1APIResourcesResponse`](./enum.GetCertificatesV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetCertificatesV1beta1APIResourcesResponse`]`>` constructor, or [`GetCertificatesV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_certificates_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetCertificatesV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/certificates.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_certificates_v1beta1_api_resources`](./fn.get_certificates_v1beta1_api_resources.html)
+/// Use `<GetCertificatesV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_certificates_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetCertificatesV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -985,17 +1060,20 @@ impl crate::Response for GetCertificatesV1beta1APIResourcesResponse {
 
 /// get the code version
 ///
-/// Use [`GetCodeVersionResponse`](./enum.GetCodeVersionResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetCodeVersionResponse`]`>` constructor, or [`GetCodeVersionResponse`] directly, to parse the HTTP response.
 pub fn get_code_version(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetCodeVersionResponse>), crate::RequestError> {
     let __url = "/version/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_code_version`](./fn.get_code_version.html)
+/// Use `<GetCodeVersionResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_code_version`]
 #[derive(Debug)]
 pub enum GetCodeVersionResponse {
     Ok(crate::v1_8::apimachinery::pkg::version::Info),
@@ -1024,17 +1102,20 @@ impl crate::Response for GetCodeVersionResponse {
 
 /// get available API versions
 ///
-/// Use [`GetCoreAPIVersionsResponse`](./enum.GetCoreAPIVersionsResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetCoreAPIVersionsResponse`]`>` constructor, or [`GetCoreAPIVersionsResponse`] directly, to parse the HTTP response.
 pub fn get_core_api_versions(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetCoreAPIVersionsResponse>), crate::RequestError> {
     let __url = "/api/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_core_api_versions`](./fn.get_core_api_versions.html)
+/// Use `<GetCoreAPIVersionsResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_core_api_versions`]
 #[derive(Debug)]
 pub enum GetCoreAPIVersionsResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIVersions),
@@ -1063,17 +1144,20 @@ impl crate::Response for GetCoreAPIVersionsResponse {
 
 /// get available resources
 ///
-/// Use [`GetCoreV1APIResourcesResponse`](./enum.GetCoreV1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetCoreV1APIResourcesResponse`]`>` constructor, or [`GetCoreV1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_core_v1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetCoreV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/api/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_core_v1_api_resources`](./fn.get_core_v1_api_resources.html)
+/// Use `<GetCoreV1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_core_v1_api_resources`]
 #[derive(Debug)]
 pub enum GetCoreV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1102,17 +1186,20 @@ impl crate::Response for GetCoreV1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetExtensionsAPIGroupResponse`](./enum.GetExtensionsAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetExtensionsAPIGroupResponse`]`>` constructor, or [`GetExtensionsAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_extensions_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetExtensionsAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/extensions/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_extensions_api_group`](./fn.get_extensions_api_group.html)
+/// Use `<GetExtensionsAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_extensions_api_group`]
 #[derive(Debug)]
 pub enum GetExtensionsAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1141,17 +1228,20 @@ impl crate::Response for GetExtensionsAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetExtensionsV1beta1APIResourcesResponse`](./enum.GetExtensionsV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetExtensionsV1beta1APIResourcesResponse`]`>` constructor, or [`GetExtensionsV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_extensions_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetExtensionsV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/extensions/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_extensions_v1beta1_api_resources`](./fn.get_extensions_v1beta1_api_resources.html)
+/// Use `<GetExtensionsV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_extensions_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetExtensionsV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1180,17 +1270,20 @@ impl crate::Response for GetExtensionsV1beta1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetNetworkingAPIGroupResponse`](./enum.GetNetworkingAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetNetworkingAPIGroupResponse`]`>` constructor, or [`GetNetworkingAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_networking_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetNetworkingAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/networking.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_networking_api_group`](./fn.get_networking_api_group.html)
+/// Use `<GetNetworkingAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_networking_api_group`]
 #[derive(Debug)]
 pub enum GetNetworkingAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1219,17 +1312,20 @@ impl crate::Response for GetNetworkingAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetNetworkingV1APIResourcesResponse`](./enum.GetNetworkingV1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetNetworkingV1APIResourcesResponse`]`>` constructor, or [`GetNetworkingV1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_networking_v1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetNetworkingV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/networking.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_networking_v1_api_resources`](./fn.get_networking_v1_api_resources.html)
+/// Use `<GetNetworkingV1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_networking_v1_api_resources`]
 #[derive(Debug)]
 pub enum GetNetworkingV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1258,17 +1354,20 @@ impl crate::Response for GetNetworkingV1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetPolicyAPIGroupResponse`](./enum.GetPolicyAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetPolicyAPIGroupResponse`]`>` constructor, or [`GetPolicyAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_policy_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetPolicyAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/policy/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_policy_api_group`](./fn.get_policy_api_group.html)
+/// Use `<GetPolicyAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_policy_api_group`]
 #[derive(Debug)]
 pub enum GetPolicyAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1297,17 +1396,20 @@ impl crate::Response for GetPolicyAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetPolicyV1beta1APIResourcesResponse`](./enum.GetPolicyV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetPolicyV1beta1APIResourcesResponse`]`>` constructor, or [`GetPolicyV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_policy_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetPolicyV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/policy/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_policy_v1beta1_api_resources`](./fn.get_policy_v1beta1_api_resources.html)
+/// Use `<GetPolicyV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_policy_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetPolicyV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1336,17 +1438,20 @@ impl crate::Response for GetPolicyV1beta1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetRbacAuthorizationAPIGroupResponse`](./enum.GetRbacAuthorizationAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetRbacAuthorizationAPIGroupResponse`]`>` constructor, or [`GetRbacAuthorizationAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_rbac_authorization_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetRbacAuthorizationAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/rbac.authorization.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_rbac_authorization_api_group`](./fn.get_rbac_authorization_api_group.html)
+/// Use `<GetRbacAuthorizationAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_rbac_authorization_api_group`]
 #[derive(Debug)]
 pub enum GetRbacAuthorizationAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1375,17 +1480,20 @@ impl crate::Response for GetRbacAuthorizationAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetRbacAuthorizationV1APIResourcesResponse`](./enum.GetRbacAuthorizationV1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetRbacAuthorizationV1APIResourcesResponse`]`>` constructor, or [`GetRbacAuthorizationV1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_rbac_authorization_v1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetRbacAuthorizationV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/rbac.authorization.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_rbac_authorization_v1_api_resources`](./fn.get_rbac_authorization_v1_api_resources.html)
+/// Use `<GetRbacAuthorizationV1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_rbac_authorization_v1_api_resources`]
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1414,17 +1522,20 @@ impl crate::Response for GetRbacAuthorizationV1APIResourcesResponse {
 
 /// get available resources
 ///
-/// Use [`GetRbacAuthorizationV1alpha1APIResourcesResponse`](./enum.GetRbacAuthorizationV1alpha1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetRbacAuthorizationV1alpha1APIResourcesResponse`]`>` constructor, or [`GetRbacAuthorizationV1alpha1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_rbac_authorization_v1alpha1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetRbacAuthorizationV1alpha1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/rbac.authorization.k8s.io/v1alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_rbac_authorization_v1alpha1_api_resources`](./fn.get_rbac_authorization_v1alpha1_api_resources.html)
+/// Use `<GetRbacAuthorizationV1alpha1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_rbac_authorization_v1alpha1_api_resources`]
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1alpha1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1453,17 +1564,20 @@ impl crate::Response for GetRbacAuthorizationV1alpha1APIResourcesResponse {
 
 /// get available resources
 ///
-/// Use [`GetRbacAuthorizationV1beta1APIResourcesResponse`](./enum.GetRbacAuthorizationV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetRbacAuthorizationV1beta1APIResourcesResponse`]`>` constructor, or [`GetRbacAuthorizationV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_rbac_authorization_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetRbacAuthorizationV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/rbac.authorization.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_rbac_authorization_v1beta1_api_resources`](./fn.get_rbac_authorization_v1beta1_api_resources.html)
+/// Use `<GetRbacAuthorizationV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_rbac_authorization_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetRbacAuthorizationV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1492,17 +1606,20 @@ impl crate::Response for GetRbacAuthorizationV1beta1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetSchedulingAPIGroupResponse`](./enum.GetSchedulingAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetSchedulingAPIGroupResponse`]`>` constructor, or [`GetSchedulingAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_scheduling_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetSchedulingAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/scheduling.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_scheduling_api_group`](./fn.get_scheduling_api_group.html)
+/// Use `<GetSchedulingAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_scheduling_api_group`]
 #[derive(Debug)]
 pub enum GetSchedulingAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1531,17 +1648,20 @@ impl crate::Response for GetSchedulingAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetSchedulingV1alpha1APIResourcesResponse`](./enum.GetSchedulingV1alpha1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetSchedulingV1alpha1APIResourcesResponse`]`>` constructor, or [`GetSchedulingV1alpha1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_scheduling_v1alpha1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetSchedulingV1alpha1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/scheduling.k8s.io/v1alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_scheduling_v1alpha1_api_resources`](./fn.get_scheduling_v1alpha1_api_resources.html)
+/// Use `<GetSchedulingV1alpha1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_scheduling_v1alpha1_api_resources`]
 #[derive(Debug)]
 pub enum GetSchedulingV1alpha1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1570,17 +1690,20 @@ impl crate::Response for GetSchedulingV1alpha1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetSettingsAPIGroupResponse`](./enum.GetSettingsAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetSettingsAPIGroupResponse`]`>` constructor, or [`GetSettingsAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_settings_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetSettingsAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/settings.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_settings_api_group`](./fn.get_settings_api_group.html)
+/// Use `<GetSettingsAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_settings_api_group`]
 #[derive(Debug)]
 pub enum GetSettingsAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1609,17 +1732,20 @@ impl crate::Response for GetSettingsAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetSettingsV1alpha1APIResourcesResponse`](./enum.GetSettingsV1alpha1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetSettingsV1alpha1APIResourcesResponse`]`>` constructor, or [`GetSettingsV1alpha1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_settings_v1alpha1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetSettingsV1alpha1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/settings.k8s.io/v1alpha1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_settings_v1alpha1_api_resources`](./fn.get_settings_v1alpha1_api_resources.html)
+/// Use `<GetSettingsV1alpha1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_settings_v1alpha1_api_resources`]
 #[derive(Debug)]
 pub enum GetSettingsV1alpha1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1648,17 +1774,20 @@ impl crate::Response for GetSettingsV1alpha1APIResourcesResponse {
 
 /// get information of a group
 ///
-/// Use [`GetStorageAPIGroupResponse`](./enum.GetStorageAPIGroupResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetStorageAPIGroupResponse`]`>` constructor, or [`GetStorageAPIGroupResponse`] directly, to parse the HTTP response.
 pub fn get_storage_api_group(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetStorageAPIGroupResponse>), crate::RequestError> {
     let __url = "/apis/storage.k8s.io/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_storage_api_group`](./fn.get_storage_api_group.html)
+/// Use `<GetStorageAPIGroupResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_storage_api_group`]
 #[derive(Debug)]
 pub enum GetStorageAPIGroupResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIGroup),
@@ -1687,17 +1816,20 @@ impl crate::Response for GetStorageAPIGroupResponse {
 
 /// get available resources
 ///
-/// Use [`GetStorageV1APIResourcesResponse`](./enum.GetStorageV1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetStorageV1APIResourcesResponse`]`>` constructor, or [`GetStorageV1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_storage_v1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetStorageV1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/storage.k8s.io/v1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_storage_v1_api_resources`](./fn.get_storage_v1_api_resources.html)
+/// Use `<GetStorageV1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_storage_v1_api_resources`]
 #[derive(Debug)]
 pub enum GetStorageV1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1726,17 +1858,20 @@ impl crate::Response for GetStorageV1APIResourcesResponse {
 
 /// get available resources
 ///
-/// Use [`GetStorageV1beta1APIResourcesResponse`](./enum.GetStorageV1beta1APIResourcesResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`GetStorageV1beta1APIResourcesResponse`]`>` constructor, or [`GetStorageV1beta1APIResourcesResponse`] directly, to parse the HTTP response.
 pub fn get_storage_v1beta1_api_resources(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<GetStorageV1beta1APIResourcesResponse>), crate::RequestError> {
     let __url = "/apis/storage.k8s.io/v1beta1/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`get_storage_v1beta1_api_resources`](./fn.get_storage_v1beta1_api_resources.html)
+/// Use `<GetStorageV1beta1APIResourcesResponse as Response>::try_from_parts` to parse the HTTP response body of [`get_storage_v1beta1_api_resources`]
 #[derive(Debug)]
 pub enum GetStorageV1beta1APIResourcesResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::APIResourceList),
@@ -1763,7 +1898,7 @@ impl crate::Response for GetStorageV1beta1APIResourcesResponse {
 
 // Generated from operation logFileHandler
 
-/// Use [`LogFileHandlerResponse`](./enum.LogFileHandlerResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`LogFileHandlerResponse`]`>` constructor, or [`LogFileHandlerResponse`] directly, to parse the HTTP response.
 ///
 /// # Arguments
 ///
@@ -1772,15 +1907,18 @@ impl crate::Response for GetStorageV1beta1APIResourcesResponse {
 ///     path to the log
 pub fn log_file_handler(
     logpath: &str,
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<LogFileHandlerResponse>), crate::RequestError> {
     let __url = format!("/logs/{logpath}", logpath = logpath);
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`log_file_handler`](./fn.log_file_handler.html)
+/// Use `<LogFileHandlerResponse as Response>::try_from_parts` to parse the HTTP response body of [`log_file_handler`]
 #[derive(Debug)]
 pub enum LogFileHandlerResponse {
     Unauthorized,
@@ -1798,17 +1936,20 @@ impl crate::Response for LogFileHandlerResponse {
 
 // Generated from operation logFileListHandler
 
-/// Use [`LogFileListHandlerResponse`](./enum.LogFileListHandlerResponse.html) to parse the HTTP response.
+/// Use the returned [`crate::ResponseBody`]`<`[`LogFileListHandlerResponse`]`>` constructor, or [`LogFileListHandlerResponse`] directly, to parse the HTTP response.
 pub fn log_file_list_handler(
-) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<LogFileListHandlerResponse>), crate::RequestError> {
     let __url = "/logs/".to_string();
 
     let mut __request = http::Request::get(__url);
     let __body = vec![];
-    __request.body(__body).map_err(crate::RequestError::Http)
+    match __request.body(__body) {
+        Ok(body) => Ok((body, crate::ResponseBody::new)),
+        Err(err) => Err(crate::RequestError::Http(err)),
+    }
 }
 
-/// Parses the HTTP response of [`log_file_list_handler`](./fn.log_file_list_handler.html)
+/// Use `<LogFileListHandlerResponse as Response>::try_from_parts` to parse the HTTP response body of [`log_file_list_handler`]
 #[derive(Debug)]
 pub enum LogFileListHandlerResponse {
     Unauthorized,

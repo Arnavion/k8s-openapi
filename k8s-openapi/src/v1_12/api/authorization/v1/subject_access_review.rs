@@ -19,7 +19,7 @@ pub struct SubjectAccessReview {
 impl SubjectAccessReview {
     /// create a SubjectAccessReview
     ///
-    /// Use [`CreateSubjectAccessReviewResponse`](./enum.CreateSubjectAccessReviewResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateSubjectAccessReviewResponse`]`>` constructor, or [`CreateSubjectAccessReviewResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,7 +31,7 @@ impl SubjectAccessReview {
     pub fn create_subject_access_review(
         body: &crate::v1_12::api::authorization::v1::SubjectAccessReview,
         optional: CreateSubjectAccessReviewOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateSubjectAccessReviewResponse>), crate::RequestError> {
         let CreateSubjectAccessReviewOptional {
             dry_run,
             include_uninitialized,
@@ -52,11 +52,14 @@ impl SubjectAccessReview {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`SubjectAccessReview::create_subject_access_review`](./struct.SubjectAccessReview.html#method.create_subject_access_review)
+/// Optional parameters of [`SubjectAccessReview::create_subject_access_review`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateSubjectAccessReviewOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -67,7 +70,7 @@ pub struct CreateSubjectAccessReviewOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`SubjectAccessReview::create_subject_access_review`](./struct.SubjectAccessReview.html#method.create_subject_access_review)
+/// Use `<CreateSubjectAccessReviewResponse as Response>::try_from_parts` to parse the HTTP response body of [`SubjectAccessReview::create_subject_access_review`]
 #[derive(Debug)]
 pub enum CreateSubjectAccessReviewResponse {
     Ok(crate::v1_12::api::authorization::v1::SubjectAccessReview),

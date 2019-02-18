@@ -19,7 +19,7 @@ pub struct LocalSubjectAccessReview {
 impl LocalSubjectAccessReview {
     /// create a LocalSubjectAccessReview
     ///
-    /// Use [`CreateNamespacedLocalSubjectAccessReviewResponse`](./enum.CreateNamespacedLocalSubjectAccessReviewResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedLocalSubjectAccessReviewResponse`]`>` constructor, or [`CreateNamespacedLocalSubjectAccessReviewResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -36,7 +36,7 @@ impl LocalSubjectAccessReview {
         namespace: &str,
         body: &crate::v1_11::api::authorization::v1beta1::LocalSubjectAccessReview,
         optional: CreateNamespacedLocalSubjectAccessReviewOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedLocalSubjectAccessReviewResponse>), crate::RequestError> {
         let CreateNamespacedLocalSubjectAccessReviewOptional {
             pretty,
         } = optional;
@@ -49,18 +49,21 @@ impl LocalSubjectAccessReview {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`LocalSubjectAccessReview::create_namespaced_local_subject_access_review`](./struct.LocalSubjectAccessReview.html#method.create_namespaced_local_subject_access_review)
+/// Optional parameters of [`LocalSubjectAccessReview::create_namespaced_local_subject_access_review`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedLocalSubjectAccessReviewOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`LocalSubjectAccessReview::create_namespaced_local_subject_access_review`](./struct.LocalSubjectAccessReview.html#method.create_namespaced_local_subject_access_review)
+/// Use `<CreateNamespacedLocalSubjectAccessReviewResponse as Response>::try_from_parts` to parse the HTTP response body of [`LocalSubjectAccessReview::create_namespaced_local_subject_access_review`]
 #[derive(Debug)]
 pub enum CreateNamespacedLocalSubjectAccessReviewResponse {
     Ok(crate::v1_11::api::authorization::v1beta1::LocalSubjectAccessReview),

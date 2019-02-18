@@ -17,7 +17,7 @@ pub struct Binding {
 impl Binding {
     /// create a Binding
     ///
-    /// Use [`CreateNamespacedBindingResponse`](./enum.CreateNamespacedBindingResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedBindingResponse`]`>` constructor, or [`CreateNamespacedBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -34,7 +34,7 @@ impl Binding {
         namespace: &str,
         body: &crate::v1_12::api::core::v1::Binding,
         optional: CreateNamespacedBindingOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedBindingResponse>), crate::RequestError> {
         let CreateNamespacedBindingOptional {
             dry_run,
             include_uninitialized,
@@ -55,11 +55,14 @@ impl Binding {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Binding::create_namespaced_binding`](./struct.Binding.html#method.create_namespaced_binding)
+/// Optional parameters of [`Binding::create_namespaced_binding`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedBindingOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -70,7 +73,7 @@ pub struct CreateNamespacedBindingOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Binding::create_namespaced_binding`](./struct.Binding.html#method.create_namespaced_binding)
+/// Use `<CreateNamespacedBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`Binding::create_namespaced_binding`]
 #[derive(Debug)]
 pub enum CreateNamespacedBindingResponse {
     Ok(crate::v1_12::api::core::v1::Binding),
@@ -118,7 +121,7 @@ impl crate::Response for CreateNamespacedBindingResponse {
 impl Binding {
     /// create binding of a Pod
     ///
-    /// Use [`CreateNamespacedPodBindingResponse`](./enum.CreateNamespacedPodBindingResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedPodBindingResponse`]`>` constructor, or [`CreateNamespacedPodBindingResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -140,7 +143,7 @@ impl Binding {
         namespace: &str,
         body: &crate::v1_12::api::core::v1::Binding,
         optional: CreateNamespacedPodBindingOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedPodBindingResponse>), crate::RequestError> {
         let CreateNamespacedPodBindingOptional {
             dry_run,
             include_uninitialized,
@@ -161,11 +164,14 @@ impl Binding {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`Binding::create_namespaced_pod_binding`](./struct.Binding.html#method.create_namespaced_pod_binding)
+/// Optional parameters of [`Binding::create_namespaced_pod_binding`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedPodBindingOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -176,7 +182,7 @@ pub struct CreateNamespacedPodBindingOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`Binding::create_namespaced_pod_binding`](./struct.Binding.html#method.create_namespaced_pod_binding)
+/// Use `<CreateNamespacedPodBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`Binding::create_namespaced_pod_binding`]
 #[derive(Debug)]
 pub enum CreateNamespacedPodBindingResponse {
     Ok(crate::v1_12::api::core::v1::Binding),

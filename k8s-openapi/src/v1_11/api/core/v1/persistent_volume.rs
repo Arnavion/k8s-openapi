@@ -20,7 +20,7 @@ pub struct PersistentVolume {
 impl PersistentVolume {
     /// create a PersistentVolume
     ///
-    /// Use [`CreatePersistentVolumeResponse`](./enum.CreatePersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreatePersistentVolumeResponse`]`>` constructor, or [`CreatePersistentVolumeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -32,7 +32,7 @@ impl PersistentVolume {
     pub fn create_persistent_volume(
         body: &crate::v1_11::api::core::v1::PersistentVolume,
         optional: CreatePersistentVolumeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreatePersistentVolumeResponse>), crate::RequestError> {
         let CreatePersistentVolumeOptional {
             pretty,
         } = optional;
@@ -45,18 +45,21 @@ impl PersistentVolume {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::create_persistent_volume`](./struct.PersistentVolume.html#method.create_persistent_volume)
+/// Optional parameters of [`PersistentVolume::create_persistent_volume`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreatePersistentVolumeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::create_persistent_volume`](./struct.PersistentVolume.html#method.create_persistent_volume)
+/// Use `<CreatePersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::create_persistent_volume`]
 #[derive(Debug)]
 pub enum CreatePersistentVolumeResponse {
     Ok(crate::v1_11::api::core::v1::PersistentVolume),
@@ -104,7 +107,7 @@ impl crate::Response for CreatePersistentVolumeResponse {
 impl PersistentVolume {
     /// delete collection of PersistentVolume
     ///
-    /// Use [`DeleteCollectionPersistentVolumeResponse`](./enum.DeleteCollectionPersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionPersistentVolumeResponse`]`>` constructor, or [`DeleteCollectionPersistentVolumeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -113,7 +116,7 @@ impl PersistentVolume {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_persistent_volume(
         optional: DeleteCollectionPersistentVolumeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionPersistentVolumeResponse>), crate::RequestError> {
         let DeleteCollectionPersistentVolumeOptional {
             continue_,
             field_selector,
@@ -158,11 +161,14 @@ impl PersistentVolume {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::delete_collection_persistent_volume`](./struct.PersistentVolume.html#method.delete_collection_persistent_volume)
+/// Optional parameters of [`PersistentVolume::delete_collection_persistent_volume`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -187,7 +193,7 @@ pub struct DeleteCollectionPersistentVolumeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::delete_collection_persistent_volume`](./struct.PersistentVolume.html#method.delete_collection_persistent_volume)
+/// Use `<DeleteCollectionPersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::delete_collection_persistent_volume`]
 #[derive(Debug)]
 pub enum DeleteCollectionPersistentVolumeResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -231,7 +237,7 @@ impl crate::Response for DeleteCollectionPersistentVolumeResponse {
 impl PersistentVolume {
     /// delete a PersistentVolume
     ///
-    /// Use [`DeletePersistentVolumeResponse`](./enum.DeletePersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeletePersistentVolumeResponse`]`>` constructor, or [`DeletePersistentVolumeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -245,7 +251,7 @@ impl PersistentVolume {
     pub fn delete_persistent_volume(
         name: &str,
         optional: DeletePersistentVolumeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeletePersistentVolumeResponse>), crate::RequestError> {
         let DeletePersistentVolumeOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -270,11 +276,14 @@ impl PersistentVolume {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::delete_persistent_volume`](./struct.PersistentVolume.html#method.delete_persistent_volume)
+/// Optional parameters of [`PersistentVolume::delete_persistent_volume`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeletePersistentVolumeOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -287,7 +296,7 @@ pub struct DeletePersistentVolumeOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::delete_persistent_volume`](./struct.PersistentVolume.html#method.delete_persistent_volume)
+/// Use `<DeletePersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::delete_persistent_volume`]
 #[derive(Debug)]
 pub enum DeletePersistentVolumeResponse {
     OkStatus(crate::v1_11::apimachinery::pkg::apis::meta::v1::Status),
@@ -331,7 +340,7 @@ impl crate::Response for DeletePersistentVolumeResponse {
 impl PersistentVolume {
     /// list or watch objects of kind PersistentVolume
     ///
-    /// Use [`ListPersistentVolumeResponse`](./enum.ListPersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListPersistentVolumeResponse`]`>` constructor, or [`ListPersistentVolumeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -340,7 +349,7 @@ impl PersistentVolume {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_persistent_volume(
         optional: ListPersistentVolumeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPersistentVolumeResponse>), crate::RequestError> {
         let ListPersistentVolumeOptional {
             continue_,
             field_selector,
@@ -385,11 +394,14 @@ impl PersistentVolume {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::list_persistent_volume`](./struct.PersistentVolume.html#method.list_persistent_volume)
+/// Optional parameters of [`PersistentVolume::list_persistent_volume`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -414,7 +426,7 @@ pub struct ListPersistentVolumeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::list_persistent_volume`](./struct.PersistentVolume.html#method.list_persistent_volume)
+/// Use `<ListPersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::list_persistent_volume`]
 #[derive(Debug)]
 pub enum ListPersistentVolumeResponse {
     Ok(crate::v1_11::api::core::v1::PersistentVolumeList),
@@ -444,7 +456,7 @@ impl crate::Response for ListPersistentVolumeResponse {
 impl PersistentVolume {
     /// partially update the specified PersistentVolume
     ///
-    /// Use [`PatchPersistentVolumeResponse`](./enum.PatchPersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchPersistentVolumeResponse`]`>` constructor, or [`PatchPersistentVolumeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -461,7 +473,7 @@ impl PersistentVolume {
         name: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchPersistentVolumeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchPersistentVolumeResponse>), crate::RequestError> {
         let PatchPersistentVolumeOptional {
             pretty,
         } = optional;
@@ -474,18 +486,21 @@ impl PersistentVolume {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::patch_persistent_volume`](./struct.PersistentVolume.html#method.patch_persistent_volume)
+/// Optional parameters of [`PersistentVolume::patch_persistent_volume`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchPersistentVolumeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::patch_persistent_volume`](./struct.PersistentVolume.html#method.patch_persistent_volume)
+/// Use `<PatchPersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::patch_persistent_volume`]
 #[derive(Debug)]
 pub enum PatchPersistentVolumeResponse {
     Ok(crate::v1_11::api::core::v1::PersistentVolume),
@@ -515,7 +530,7 @@ impl crate::Response for PatchPersistentVolumeResponse {
 impl PersistentVolume {
     /// partially update status of the specified PersistentVolume
     ///
-    /// Use [`PatchPersistentVolumeStatusResponse`](./enum.PatchPersistentVolumeStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchPersistentVolumeStatusResponse`]`>` constructor, or [`PatchPersistentVolumeStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -532,7 +547,7 @@ impl PersistentVolume {
         name: &str,
         body: &crate::v1_11::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchPersistentVolumeStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchPersistentVolumeStatusResponse>), crate::RequestError> {
         let PatchPersistentVolumeStatusOptional {
             pretty,
         } = optional;
@@ -545,18 +560,21 @@ impl PersistentVolume {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::patch_persistent_volume_status`](./struct.PersistentVolume.html#method.patch_persistent_volume_status)
+/// Optional parameters of [`PersistentVolume::patch_persistent_volume_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchPersistentVolumeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::patch_persistent_volume_status`](./struct.PersistentVolume.html#method.patch_persistent_volume_status)
+/// Use `<PatchPersistentVolumeStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::patch_persistent_volume_status`]
 #[derive(Debug)]
 pub enum PatchPersistentVolumeStatusResponse {
     Ok(crate::v1_11::api::core::v1::PersistentVolume),
@@ -586,7 +604,7 @@ impl crate::Response for PatchPersistentVolumeStatusResponse {
 impl PersistentVolume {
     /// read the specified PersistentVolume
     ///
-    /// Use [`ReadPersistentVolumeResponse`](./enum.ReadPersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPersistentVolumeResponse`]`>` constructor, or [`ReadPersistentVolumeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -600,7 +618,7 @@ impl PersistentVolume {
     pub fn read_persistent_volume(
         name: &str,
         optional: ReadPersistentVolumeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadPersistentVolumeResponse>), crate::RequestError> {
         let ReadPersistentVolumeOptional {
             exact,
             export,
@@ -621,11 +639,14 @@ impl PersistentVolume {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::read_persistent_volume`](./struct.PersistentVolume.html#method.read_persistent_volume)
+/// Optional parameters of [`PersistentVolume::read_persistent_volume`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadPersistentVolumeOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -636,7 +657,7 @@ pub struct ReadPersistentVolumeOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::read_persistent_volume`](./struct.PersistentVolume.html#method.read_persistent_volume)
+/// Use `<ReadPersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::read_persistent_volume`]
 #[derive(Debug)]
 pub enum ReadPersistentVolumeResponse {
     Ok(crate::v1_11::api::core::v1::PersistentVolume),
@@ -666,7 +687,7 @@ impl crate::Response for ReadPersistentVolumeResponse {
 impl PersistentVolume {
     /// read status of the specified PersistentVolume
     ///
-    /// Use [`ReadPersistentVolumeStatusResponse`](./enum.ReadPersistentVolumeStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadPersistentVolumeStatusResponse`]`>` constructor, or [`ReadPersistentVolumeStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -680,7 +701,7 @@ impl PersistentVolume {
     pub fn read_persistent_volume_status(
         name: &str,
         optional: ReadPersistentVolumeStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadPersistentVolumeStatusResponse>), crate::RequestError> {
         let ReadPersistentVolumeStatusOptional {
             pretty,
         } = optional;
@@ -693,18 +714,21 @@ impl PersistentVolume {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::read_persistent_volume_status`](./struct.PersistentVolume.html#method.read_persistent_volume_status)
+/// Optional parameters of [`PersistentVolume::read_persistent_volume_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadPersistentVolumeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::read_persistent_volume_status`](./struct.PersistentVolume.html#method.read_persistent_volume_status)
+/// Use `<ReadPersistentVolumeStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::read_persistent_volume_status`]
 #[derive(Debug)]
 pub enum ReadPersistentVolumeStatusResponse {
     Ok(crate::v1_11::api::core::v1::PersistentVolume),
@@ -734,7 +758,7 @@ impl crate::Response for ReadPersistentVolumeStatusResponse {
 impl PersistentVolume {
     /// replace the specified PersistentVolume
     ///
-    /// Use [`ReplacePersistentVolumeResponse`](./enum.ReplacePersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplacePersistentVolumeResponse`]`>` constructor, or [`ReplacePersistentVolumeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -751,7 +775,7 @@ impl PersistentVolume {
         name: &str,
         body: &crate::v1_11::api::core::v1::PersistentVolume,
         optional: ReplacePersistentVolumeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplacePersistentVolumeResponse>), crate::RequestError> {
         let ReplacePersistentVolumeOptional {
             pretty,
         } = optional;
@@ -764,18 +788,21 @@ impl PersistentVolume {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::replace_persistent_volume`](./struct.PersistentVolume.html#method.replace_persistent_volume)
+/// Optional parameters of [`PersistentVolume::replace_persistent_volume`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplacePersistentVolumeOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::replace_persistent_volume`](./struct.PersistentVolume.html#method.replace_persistent_volume)
+/// Use `<ReplacePersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::replace_persistent_volume`]
 #[derive(Debug)]
 pub enum ReplacePersistentVolumeResponse {
     Ok(crate::v1_11::api::core::v1::PersistentVolume),
@@ -814,7 +841,7 @@ impl crate::Response for ReplacePersistentVolumeResponse {
 impl PersistentVolume {
     /// replace status of the specified PersistentVolume
     ///
-    /// Use [`ReplacePersistentVolumeStatusResponse`](./enum.ReplacePersistentVolumeStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplacePersistentVolumeStatusResponse`]`>` constructor, or [`ReplacePersistentVolumeStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -831,7 +858,7 @@ impl PersistentVolume {
         name: &str,
         body: &crate::v1_11::api::core::v1::PersistentVolume,
         optional: ReplacePersistentVolumeStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplacePersistentVolumeStatusResponse>), crate::RequestError> {
         let ReplacePersistentVolumeStatusOptional {
             pretty,
         } = optional;
@@ -844,18 +871,21 @@ impl PersistentVolume {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::replace_persistent_volume_status`](./struct.PersistentVolume.html#method.replace_persistent_volume_status)
+/// Optional parameters of [`PersistentVolume::replace_persistent_volume_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplacePersistentVolumeStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::replace_persistent_volume_status`](./struct.PersistentVolume.html#method.replace_persistent_volume_status)
+/// Use `<ReplacePersistentVolumeStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::replace_persistent_volume_status`]
 #[derive(Debug)]
 pub enum ReplacePersistentVolumeStatusResponse {
     Ok(crate::v1_11::api::core::v1::PersistentVolume),
@@ -894,7 +924,7 @@ impl crate::Response for ReplacePersistentVolumeStatusResponse {
 impl PersistentVolume {
     /// watch changes to an object of kind PersistentVolume
     ///
-    /// Use [`WatchPersistentVolumeResponse`](./enum.WatchPersistentVolumeResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchPersistentVolumeResponse`]`>` constructor, or [`WatchPersistentVolumeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -908,7 +938,7 @@ impl PersistentVolume {
     pub fn watch_persistent_volume(
         name: &str,
         optional: WatchPersistentVolumeOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPersistentVolumeResponse>), crate::RequestError> {
         let WatchPersistentVolumeOptional {
             continue_,
             field_selector,
@@ -953,11 +983,14 @@ impl PersistentVolume {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::watch_persistent_volume`](./struct.PersistentVolume.html#method.watch_persistent_volume)
+/// Optional parameters of [`PersistentVolume::watch_persistent_volume`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -982,7 +1015,7 @@ pub struct WatchPersistentVolumeOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::watch_persistent_volume`](./struct.PersistentVolume.html#method.watch_persistent_volume)
+/// Use `<WatchPersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::watch_persistent_volume`]
 #[derive(Debug)]
 pub enum WatchPersistentVolumeResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1014,7 +1047,7 @@ impl crate::Response for WatchPersistentVolumeResponse {
 impl PersistentVolume {
     /// watch individual changes to a list of PersistentVolume
     ///
-    /// Use [`WatchPersistentVolumeListResponse`](./enum.WatchPersistentVolumeListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchPersistentVolumeListResponse`]`>` constructor, or [`WatchPersistentVolumeListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1023,7 +1056,7 @@ impl PersistentVolume {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_persistent_volume_list(
         optional: WatchPersistentVolumeListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPersistentVolumeListResponse>), crate::RequestError> {
         let WatchPersistentVolumeListOptional {
             continue_,
             field_selector,
@@ -1068,11 +1101,14 @@ impl PersistentVolume {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`PersistentVolume::watch_persistent_volume_list`](./struct.PersistentVolume.html#method.watch_persistent_volume_list)
+/// Optional parameters of [`PersistentVolume::watch_persistent_volume_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPersistentVolumeListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1097,7 +1133,7 @@ pub struct WatchPersistentVolumeListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`PersistentVolume::watch_persistent_volume_list`](./struct.PersistentVolume.html#method.watch_persistent_volume_list)
+/// Use `<WatchPersistentVolumeListResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::watch_persistent_volume_list`]
 #[derive(Debug)]
 pub enum WatchPersistentVolumeListResponse {
     Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),

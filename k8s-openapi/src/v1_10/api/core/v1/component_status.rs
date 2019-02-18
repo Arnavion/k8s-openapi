@@ -17,7 +17,7 @@ pub struct ComponentStatus {
 impl ComponentStatus {
     /// list objects of kind ComponentStatus
     ///
-    /// Use [`ListComponentStatusResponse`](./enum.ListComponentStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListComponentStatusResponse`]`>` constructor, or [`ListComponentStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -26,7 +26,7 @@ impl ComponentStatus {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_component_status(
         optional: ListComponentStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListComponentStatusResponse>), crate::RequestError> {
         let ListComponentStatusOptional {
             continue_,
             field_selector,
@@ -71,11 +71,14 @@ impl ComponentStatus {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ComponentStatus::list_component_status`](./struct.ComponentStatus.html#method.list_component_status)
+/// Optional parameters of [`ComponentStatus::list_component_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListComponentStatusOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -100,7 +103,7 @@ pub struct ListComponentStatusOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ComponentStatus::list_component_status`](./struct.ComponentStatus.html#method.list_component_status)
+/// Use `<ListComponentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ComponentStatus::list_component_status`]
 #[derive(Debug)]
 pub enum ListComponentStatusResponse {
     Ok(crate::v1_10::api::core::v1::ComponentStatusList),
@@ -130,7 +133,7 @@ impl crate::Response for ListComponentStatusResponse {
 impl ComponentStatus {
     /// read the specified ComponentStatus
     ///
-    /// Use [`ReadComponentStatusResponse`](./enum.ReadComponentStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadComponentStatusResponse`]`>` constructor, or [`ReadComponentStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -144,7 +147,7 @@ impl ComponentStatus {
     pub fn read_component_status(
         name: &str,
         optional: ReadComponentStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadComponentStatusResponse>), crate::RequestError> {
         let ReadComponentStatusOptional {
             pretty,
         } = optional;
@@ -157,18 +160,21 @@ impl ComponentStatus {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ComponentStatus::read_component_status`](./struct.ComponentStatus.html#method.read_component_status)
+/// Optional parameters of [`ComponentStatus::read_component_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadComponentStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ComponentStatus::read_component_status`](./struct.ComponentStatus.html#method.read_component_status)
+/// Use `<ReadComponentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ComponentStatus::read_component_status`]
 #[derive(Debug)]
 pub enum ReadComponentStatusResponse {
     Ok(crate::v1_10::api::core::v1::ComponentStatus),

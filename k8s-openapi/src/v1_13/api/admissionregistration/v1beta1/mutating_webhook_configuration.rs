@@ -17,7 +17,7 @@ pub struct MutatingWebhookConfiguration {
 impl MutatingWebhookConfiguration {
     /// create a MutatingWebhookConfiguration
     ///
-    /// Use [`CreateMutatingWebhookConfigurationResponse`](./enum.CreateMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateMutatingWebhookConfigurationResponse`]`>` constructor, or [`CreateMutatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -29,7 +29,7 @@ impl MutatingWebhookConfiguration {
     pub fn create_mutating_webhook_configuration(
         body: &crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration,
         optional: CreateMutatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateMutatingWebhookConfigurationResponse>), crate::RequestError> {
         let CreateMutatingWebhookConfigurationOptional {
             dry_run,
             include_uninitialized,
@@ -50,11 +50,14 @@ impl MutatingWebhookConfiguration {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::create_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.create_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::create_mutating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateMutatingWebhookConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -65,7 +68,7 @@ pub struct CreateMutatingWebhookConfigurationOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::create_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.create_mutating_webhook_configuration)
+/// Use `<CreateMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::create_mutating_webhook_configuration`]
 #[derive(Debug)]
 pub enum CreateMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -113,7 +116,7 @@ impl crate::Response for CreateMutatingWebhookConfigurationResponse {
 impl MutatingWebhookConfiguration {
     /// delete collection of MutatingWebhookConfiguration
     ///
-    /// Use [`DeleteCollectionMutatingWebhookConfigurationResponse`](./enum.DeleteCollectionMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionMutatingWebhookConfigurationResponse`]`>` constructor, or [`DeleteCollectionMutatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -122,7 +125,7 @@ impl MutatingWebhookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_mutating_webhook_configuration(
         optional: DeleteCollectionMutatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionMutatingWebhookConfigurationResponse>), crate::RequestError> {
         let DeleteCollectionMutatingWebhookConfigurationOptional {
             continue_,
             field_selector,
@@ -167,11 +170,14 @@ impl MutatingWebhookConfiguration {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::delete_collection_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_collection_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::delete_collection_mutating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionMutatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -198,7 +204,7 @@ pub struct DeleteCollectionMutatingWebhookConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::delete_collection_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_collection_mutating_webhook_configuration)
+/// Use `<DeleteCollectionMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::delete_collection_mutating_webhook_configuration`]
 #[derive(Debug)]
 pub enum DeleteCollectionMutatingWebhookConfigurationResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -242,7 +248,7 @@ impl crate::Response for DeleteCollectionMutatingWebhookConfigurationResponse {
 impl MutatingWebhookConfiguration {
     /// delete a MutatingWebhookConfiguration
     ///
-    /// Use [`DeleteMutatingWebhookConfigurationResponse`](./enum.DeleteMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteMutatingWebhookConfigurationResponse`]`>` constructor, or [`DeleteMutatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -256,7 +262,7 @@ impl MutatingWebhookConfiguration {
     pub fn delete_mutating_webhook_configuration(
         name: &str,
         optional: DeleteMutatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteMutatingWebhookConfigurationResponse>), crate::RequestError> {
         let DeleteMutatingWebhookConfigurationOptional {
             dry_run,
             grace_period_seconds,
@@ -285,11 +291,14 @@ impl MutatingWebhookConfiguration {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::delete_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::delete_mutating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteMutatingWebhookConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -304,7 +313,7 @@ pub struct DeleteMutatingWebhookConfigurationOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::delete_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.delete_mutating_webhook_configuration)
+/// Use `<DeleteMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::delete_mutating_webhook_configuration`]
 #[derive(Debug)]
 pub enum DeleteMutatingWebhookConfigurationResponse {
     OkStatus(crate::v1_13::apimachinery::pkg::apis::meta::v1::Status),
@@ -357,7 +366,7 @@ impl crate::Response for DeleteMutatingWebhookConfigurationResponse {
 impl MutatingWebhookConfiguration {
     /// list or watch objects of kind MutatingWebhookConfiguration
     ///
-    /// Use [`ListMutatingWebhookConfigurationResponse`](./enum.ListMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListMutatingWebhookConfigurationResponse`]`>` constructor, or [`ListMutatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -366,7 +375,7 @@ impl MutatingWebhookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_mutating_webhook_configuration(
         optional: ListMutatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListMutatingWebhookConfigurationResponse>), crate::RequestError> {
         let ListMutatingWebhookConfigurationOptional {
             continue_,
             field_selector,
@@ -411,11 +420,14 @@ impl MutatingWebhookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::list_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.list_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::list_mutating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListMutatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -442,7 +454,7 @@ pub struct ListMutatingWebhookConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::list_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.list_mutating_webhook_configuration)
+/// Use `<ListMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::list_mutating_webhook_configuration`]
 #[derive(Debug)]
 pub enum ListMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfigurationList),
@@ -472,7 +484,7 @@ impl crate::Response for ListMutatingWebhookConfigurationResponse {
 impl MutatingWebhookConfiguration {
     /// partially update the specified MutatingWebhookConfiguration
     ///
-    /// Use [`PatchMutatingWebhookConfigurationResponse`](./enum.PatchMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchMutatingWebhookConfigurationResponse`]`>` constructor, or [`PatchMutatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -489,7 +501,7 @@ impl MutatingWebhookConfiguration {
         name: &str,
         body: &crate::v1_13::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchMutatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchMutatingWebhookConfigurationResponse>), crate::RequestError> {
         let PatchMutatingWebhookConfigurationOptional {
             dry_run,
             pretty,
@@ -506,11 +518,14 @@ impl MutatingWebhookConfiguration {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::patch_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.patch_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::patch_mutating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchMutatingWebhookConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -519,7 +534,7 @@ pub struct PatchMutatingWebhookConfigurationOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::patch_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.patch_mutating_webhook_configuration)
+/// Use `<PatchMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::patch_mutating_webhook_configuration`]
 #[derive(Debug)]
 pub enum PatchMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -549,7 +564,7 @@ impl crate::Response for PatchMutatingWebhookConfigurationResponse {
 impl MutatingWebhookConfiguration {
     /// read the specified MutatingWebhookConfiguration
     ///
-    /// Use [`ReadMutatingWebhookConfigurationResponse`](./enum.ReadMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadMutatingWebhookConfigurationResponse`]`>` constructor, or [`ReadMutatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -563,7 +578,7 @@ impl MutatingWebhookConfiguration {
     pub fn read_mutating_webhook_configuration(
         name: &str,
         optional: ReadMutatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadMutatingWebhookConfigurationResponse>), crate::RequestError> {
         let ReadMutatingWebhookConfigurationOptional {
             exact,
             export,
@@ -584,11 +599,14 @@ impl MutatingWebhookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::read_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.read_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::read_mutating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadMutatingWebhookConfigurationOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -599,7 +617,7 @@ pub struct ReadMutatingWebhookConfigurationOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::read_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.read_mutating_webhook_configuration)
+/// Use `<ReadMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::read_mutating_webhook_configuration`]
 #[derive(Debug)]
 pub enum ReadMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -629,7 +647,7 @@ impl crate::Response for ReadMutatingWebhookConfigurationResponse {
 impl MutatingWebhookConfiguration {
     /// replace the specified MutatingWebhookConfiguration
     ///
-    /// Use [`ReplaceMutatingWebhookConfigurationResponse`](./enum.ReplaceMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceMutatingWebhookConfigurationResponse`]`>` constructor, or [`ReplaceMutatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -646,7 +664,7 @@ impl MutatingWebhookConfiguration {
         name: &str,
         body: &crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration,
         optional: ReplaceMutatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceMutatingWebhookConfigurationResponse>), crate::RequestError> {
         let ReplaceMutatingWebhookConfigurationOptional {
             dry_run,
             pretty,
@@ -663,11 +681,14 @@ impl MutatingWebhookConfiguration {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::replace_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.replace_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::replace_mutating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceMutatingWebhookConfigurationOptional<'a> {
     /// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
@@ -676,7 +697,7 @@ pub struct ReplaceMutatingWebhookConfigurationOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::replace_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.replace_mutating_webhook_configuration)
+/// Use `<ReplaceMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::replace_mutating_webhook_configuration`]
 #[derive(Debug)]
 pub enum ReplaceMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::api::admissionregistration::v1beta1::MutatingWebhookConfiguration),
@@ -715,7 +736,7 @@ impl crate::Response for ReplaceMutatingWebhookConfigurationResponse {
 impl MutatingWebhookConfiguration {
     /// watch changes to an object of kind MutatingWebhookConfiguration. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
     ///
-    /// Use [`WatchMutatingWebhookConfigurationResponse`](./enum.WatchMutatingWebhookConfigurationResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchMutatingWebhookConfigurationResponse`]`>` constructor, or [`WatchMutatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -729,7 +750,7 @@ impl MutatingWebhookConfiguration {
     pub fn watch_mutating_webhook_configuration(
         name: &str,
         optional: WatchMutatingWebhookConfigurationOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchMutatingWebhookConfigurationResponse>), crate::RequestError> {
         let WatchMutatingWebhookConfigurationOptional {
             continue_,
             field_selector,
@@ -774,11 +795,14 @@ impl MutatingWebhookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.watch_mutating_webhook_configuration)
+/// Optional parameters of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchMutatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -805,7 +829,7 @@ pub struct WatchMutatingWebhookConfigurationOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration`](./struct.MutatingWebhookConfiguration.html#method.watch_mutating_webhook_configuration)
+/// Use `<WatchMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration`]
 #[derive(Debug)]
 pub enum WatchMutatingWebhookConfigurationResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -837,7 +861,7 @@ impl crate::Response for WatchMutatingWebhookConfigurationResponse {
 impl MutatingWebhookConfiguration {
     /// watch individual changes to a list of MutatingWebhookConfiguration. deprecated: use the 'watch' parameter with a list operation instead.
     ///
-    /// Use [`WatchMutatingWebhookConfigurationListResponse`](./enum.WatchMutatingWebhookConfigurationListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchMutatingWebhookConfigurationListResponse`]`>` constructor, or [`WatchMutatingWebhookConfigurationListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -846,7 +870,7 @@ impl MutatingWebhookConfiguration {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_mutating_webhook_configuration_list(
         optional: WatchMutatingWebhookConfigurationListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchMutatingWebhookConfigurationListResponse>), crate::RequestError> {
         let WatchMutatingWebhookConfigurationListOptional {
             continue_,
             field_selector,
@@ -891,11 +915,14 @@ impl MutatingWebhookConfiguration {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration_list`](./struct.MutatingWebhookConfiguration.html#method.watch_mutating_webhook_configuration_list)
+/// Optional parameters of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchMutatingWebhookConfigurationListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
@@ -922,7 +949,7 @@ pub struct WatchMutatingWebhookConfigurationListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration_list`](./struct.MutatingWebhookConfiguration.html#method.watch_mutating_webhook_configuration_list)
+/// Use `<WatchMutatingWebhookConfigurationListResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration_list`]
 #[derive(Debug)]
 pub enum WatchMutatingWebhookConfigurationListResponse {
     Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),

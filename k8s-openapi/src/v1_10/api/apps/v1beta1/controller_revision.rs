@@ -20,7 +20,7 @@ pub struct ControllerRevision {
 impl ControllerRevision {
     /// create a ControllerRevision
     ///
-    /// Use [`CreateNamespacedControllerRevisionResponse`](./enum.CreateNamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateNamespacedControllerRevisionResponse`]`>` constructor, or [`CreateNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -37,7 +37,7 @@ impl ControllerRevision {
         namespace: &str,
         body: &crate::v1_10::api::apps::v1beta1::ControllerRevision,
         optional: CreateNamespacedControllerRevisionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateNamespacedControllerRevisionResponse>), crate::RequestError> {
         let CreateNamespacedControllerRevisionOptional {
             pretty,
         } = optional;
@@ -50,18 +50,21 @@ impl ControllerRevision {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::create_namespaced_controller_revision`](./struct.ControllerRevision.html#method.create_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::create_namespaced_controller_revision`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateNamespacedControllerRevisionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::create_namespaced_controller_revision`](./struct.ControllerRevision.html#method.create_namespaced_controller_revision)
+/// Use `<CreateNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::create_namespaced_controller_revision`]
 #[derive(Debug)]
 pub enum CreateNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::api::apps::v1beta1::ControllerRevision),
@@ -109,7 +112,7 @@ impl crate::Response for CreateNamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// delete collection of ControllerRevision
     ///
-    /// Use [`DeleteCollectionNamespacedControllerRevisionResponse`](./enum.DeleteCollectionNamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionNamespacedControllerRevisionResponse`]`>` constructor, or [`DeleteCollectionNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -123,7 +126,7 @@ impl ControllerRevision {
     pub fn delete_collection_namespaced_controller_revision(
         namespace: &str,
         optional: DeleteCollectionNamespacedControllerRevisionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionNamespacedControllerRevisionResponse>), crate::RequestError> {
         let DeleteCollectionNamespacedControllerRevisionOptional {
             continue_,
             field_selector,
@@ -168,11 +171,14 @@ impl ControllerRevision {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::delete_collection_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_collection_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::delete_collection_namespaced_controller_revision`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionNamespacedControllerRevisionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -197,7 +203,7 @@ pub struct DeleteCollectionNamespacedControllerRevisionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::delete_collection_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_collection_namespaced_controller_revision)
+/// Use `<DeleteCollectionNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::delete_collection_namespaced_controller_revision`]
 #[derive(Debug)]
 pub enum DeleteCollectionNamespacedControllerRevisionResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -241,7 +247,7 @@ impl crate::Response for DeleteCollectionNamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// delete a ControllerRevision
     ///
-    /// Use [`DeleteNamespacedControllerRevisionResponse`](./enum.DeleteNamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteNamespacedControllerRevisionResponse`]`>` constructor, or [`DeleteNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -260,7 +266,7 @@ impl ControllerRevision {
         name: &str,
         namespace: &str,
         optional: DeleteNamespacedControllerRevisionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteNamespacedControllerRevisionResponse>), crate::RequestError> {
         let DeleteNamespacedControllerRevisionOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -285,11 +291,14 @@ impl ControllerRevision {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::delete_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::delete_namespaced_controller_revision`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteNamespacedControllerRevisionOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -302,7 +311,7 @@ pub struct DeleteNamespacedControllerRevisionOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::delete_namespaced_controller_revision`](./struct.ControllerRevision.html#method.delete_namespaced_controller_revision)
+/// Use `<DeleteNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::delete_namespaced_controller_revision`]
 #[derive(Debug)]
 pub enum DeleteNamespacedControllerRevisionResponse {
     OkStatus(crate::v1_10::apimachinery::pkg::apis::meta::v1::Status),
@@ -346,7 +355,7 @@ impl crate::Response for DeleteNamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// list or watch objects of kind ControllerRevision
     ///
-    /// Use [`ListControllerRevisionForAllNamespacesResponse`](./enum.ListControllerRevisionForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListControllerRevisionForAllNamespacesResponse`]`>` constructor, or [`ListControllerRevisionForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -355,7 +364,7 @@ impl ControllerRevision {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_controller_revision_for_all_namespaces(
         optional: ListControllerRevisionForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListControllerRevisionForAllNamespacesResponse>), crate::RequestError> {
         let ListControllerRevisionForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -400,11 +409,14 @@ impl ControllerRevision {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::list_controller_revision_for_all_namespaces`](./struct.ControllerRevision.html#method.list_controller_revision_for_all_namespaces)
+/// Optional parameters of [`ControllerRevision::list_controller_revision_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListControllerRevisionForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -429,7 +441,7 @@ pub struct ListControllerRevisionForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::list_controller_revision_for_all_namespaces`](./struct.ControllerRevision.html#method.list_controller_revision_for_all_namespaces)
+/// Use `<ListControllerRevisionForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::list_controller_revision_for_all_namespaces`]
 #[derive(Debug)]
 pub enum ListControllerRevisionForAllNamespacesResponse {
     Ok(crate::v1_10::api::apps::v1beta1::ControllerRevisionList),
@@ -459,7 +471,7 @@ impl crate::Response for ListControllerRevisionForAllNamespacesResponse {
 impl ControllerRevision {
     /// list or watch objects of kind ControllerRevision
     ///
-    /// Use [`ListNamespacedControllerRevisionResponse`](./enum.ListNamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedControllerRevisionResponse`]`>` constructor, or [`ListNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -473,7 +485,7 @@ impl ControllerRevision {
     pub fn list_namespaced_controller_revision(
         namespace: &str,
         optional: ListNamespacedControllerRevisionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedControllerRevisionResponse>), crate::RequestError> {
         let ListNamespacedControllerRevisionOptional {
             continue_,
             field_selector,
@@ -518,11 +530,14 @@ impl ControllerRevision {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::list_namespaced_controller_revision`](./struct.ControllerRevision.html#method.list_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::list_namespaced_controller_revision`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListNamespacedControllerRevisionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -547,7 +562,7 @@ pub struct ListNamespacedControllerRevisionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::list_namespaced_controller_revision`](./struct.ControllerRevision.html#method.list_namespaced_controller_revision)
+/// Use `<ListNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::list_namespaced_controller_revision`]
 #[derive(Debug)]
 pub enum ListNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::api::apps::v1beta1::ControllerRevisionList),
@@ -577,7 +592,7 @@ impl crate::Response for ListNamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// partially update the specified ControllerRevision
     ///
-    /// Use [`PatchNamespacedControllerRevisionResponse`](./enum.PatchNamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchNamespacedControllerRevisionResponse`]`>` constructor, or [`PatchNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -599,7 +614,7 @@ impl ControllerRevision {
         namespace: &str,
         body: &crate::v1_10::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchNamespacedControllerRevisionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchNamespacedControllerRevisionResponse>), crate::RequestError> {
         let PatchNamespacedControllerRevisionOptional {
             pretty,
         } = optional;
@@ -612,18 +627,21 @@ impl ControllerRevision {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::patch_namespaced_controller_revision`](./struct.ControllerRevision.html#method.patch_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::patch_namespaced_controller_revision`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchNamespacedControllerRevisionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::patch_namespaced_controller_revision`](./struct.ControllerRevision.html#method.patch_namespaced_controller_revision)
+/// Use `<PatchNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::patch_namespaced_controller_revision`]
 #[derive(Debug)]
 pub enum PatchNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::api::apps::v1beta1::ControllerRevision),
@@ -653,7 +671,7 @@ impl crate::Response for PatchNamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// read the specified ControllerRevision
     ///
-    /// Use [`ReadNamespacedControllerRevisionResponse`](./enum.ReadNamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadNamespacedControllerRevisionResponse`]`>` constructor, or [`ReadNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -672,7 +690,7 @@ impl ControllerRevision {
         name: &str,
         namespace: &str,
         optional: ReadNamespacedControllerRevisionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadNamespacedControllerRevisionResponse>), crate::RequestError> {
         let ReadNamespacedControllerRevisionOptional {
             exact,
             export,
@@ -693,11 +711,14 @@ impl ControllerRevision {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::read_namespaced_controller_revision`](./struct.ControllerRevision.html#method.read_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::read_namespaced_controller_revision`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadNamespacedControllerRevisionOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -708,7 +729,7 @@ pub struct ReadNamespacedControllerRevisionOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::read_namespaced_controller_revision`](./struct.ControllerRevision.html#method.read_namespaced_controller_revision)
+/// Use `<ReadNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::read_namespaced_controller_revision`]
 #[derive(Debug)]
 pub enum ReadNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::api::apps::v1beta1::ControllerRevision),
@@ -738,7 +759,7 @@ impl crate::Response for ReadNamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// replace the specified ControllerRevision
     ///
-    /// Use [`ReplaceNamespacedControllerRevisionResponse`](./enum.ReplaceNamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceNamespacedControllerRevisionResponse`]`>` constructor, or [`ReplaceNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -760,7 +781,7 @@ impl ControllerRevision {
         namespace: &str,
         body: &crate::v1_10::api::apps::v1beta1::ControllerRevision,
         optional: ReplaceNamespacedControllerRevisionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceNamespacedControllerRevisionResponse>), crate::RequestError> {
         let ReplaceNamespacedControllerRevisionOptional {
             pretty,
         } = optional;
@@ -773,18 +794,21 @@ impl ControllerRevision {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::replace_namespaced_controller_revision`](./struct.ControllerRevision.html#method.replace_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::replace_namespaced_controller_revision`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceNamespacedControllerRevisionOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::replace_namespaced_controller_revision`](./struct.ControllerRevision.html#method.replace_namespaced_controller_revision)
+/// Use `<ReplaceNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::replace_namespaced_controller_revision`]
 #[derive(Debug)]
 pub enum ReplaceNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::api::apps::v1beta1::ControllerRevision),
@@ -823,7 +847,7 @@ impl crate::Response for ReplaceNamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// watch individual changes to a list of ControllerRevision
     ///
-    /// Use [`WatchControllerRevisionListForAllNamespacesResponse`](./enum.WatchControllerRevisionListForAllNamespacesResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchControllerRevisionListForAllNamespacesResponse`]`>` constructor, or [`WatchControllerRevisionListForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -832,7 +856,7 @@ impl ControllerRevision {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_controller_revision_list_for_all_namespaces(
         optional: WatchControllerRevisionListForAllNamespacesOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchControllerRevisionListForAllNamespacesResponse>), crate::RequestError> {
         let WatchControllerRevisionListForAllNamespacesOptional {
             continue_,
             field_selector,
@@ -877,11 +901,14 @@ impl ControllerRevision {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::watch_controller_revision_list_for_all_namespaces`](./struct.ControllerRevision.html#method.watch_controller_revision_list_for_all_namespaces)
+/// Optional parameters of [`ControllerRevision::watch_controller_revision_list_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchControllerRevisionListForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -906,7 +933,7 @@ pub struct WatchControllerRevisionListForAllNamespacesOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::watch_controller_revision_list_for_all_namespaces`](./struct.ControllerRevision.html#method.watch_controller_revision_list_for_all_namespaces)
+/// Use `<WatchControllerRevisionListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::watch_controller_revision_list_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchControllerRevisionListForAllNamespacesResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -938,7 +965,7 @@ impl crate::Response for WatchControllerRevisionListForAllNamespacesResponse {
 impl ControllerRevision {
     /// watch changes to an object of kind ControllerRevision
     ///
-    /// Use [`WatchNamespacedControllerRevisionResponse`](./enum.WatchNamespacedControllerRevisionResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedControllerRevisionResponse`]`>` constructor, or [`WatchNamespacedControllerRevisionResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -957,7 +984,7 @@ impl ControllerRevision {
         name: &str,
         namespace: &str,
         optional: WatchNamespacedControllerRevisionOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedControllerRevisionResponse>), crate::RequestError> {
         let WatchNamespacedControllerRevisionOptional {
             continue_,
             field_selector,
@@ -1002,11 +1029,14 @@ impl ControllerRevision {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::watch_namespaced_controller_revision`](./struct.ControllerRevision.html#method.watch_namespaced_controller_revision)
+/// Optional parameters of [`ControllerRevision::watch_namespaced_controller_revision`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedControllerRevisionOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1031,7 +1061,7 @@ pub struct WatchNamespacedControllerRevisionOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::watch_namespaced_controller_revision`](./struct.ControllerRevision.html#method.watch_namespaced_controller_revision)
+/// Use `<WatchNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::watch_namespaced_controller_revision`]
 #[derive(Debug)]
 pub enum WatchNamespacedControllerRevisionResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -1063,7 +1093,7 @@ impl crate::Response for WatchNamespacedControllerRevisionResponse {
 impl ControllerRevision {
     /// watch individual changes to a list of ControllerRevision
     ///
-    /// Use [`WatchNamespacedControllerRevisionListResponse`](./enum.WatchNamespacedControllerRevisionListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedControllerRevisionListResponse`]`>` constructor, or [`WatchNamespacedControllerRevisionListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -1077,7 +1107,7 @@ impl ControllerRevision {
     pub fn watch_namespaced_controller_revision_list(
         namespace: &str,
         optional: WatchNamespacedControllerRevisionListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedControllerRevisionListResponse>), crate::RequestError> {
         let WatchNamespacedControllerRevisionListOptional {
             continue_,
             field_selector,
@@ -1122,11 +1152,14 @@ impl ControllerRevision {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`ControllerRevision::watch_namespaced_controller_revision_list`](./struct.ControllerRevision.html#method.watch_namespaced_controller_revision_list)
+/// Optional parameters of [`ControllerRevision::watch_namespaced_controller_revision_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedControllerRevisionListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -1151,7 +1184,7 @@ pub struct WatchNamespacedControllerRevisionListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`ControllerRevision::watch_namespaced_controller_revision_list`](./struct.ControllerRevision.html#method.watch_namespaced_controller_revision_list)
+/// Use `<WatchNamespacedControllerRevisionListResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::watch_namespaced_controller_revision_list`]
 #[derive(Debug)]
 pub enum WatchNamespacedControllerRevisionListResponse {
     Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),

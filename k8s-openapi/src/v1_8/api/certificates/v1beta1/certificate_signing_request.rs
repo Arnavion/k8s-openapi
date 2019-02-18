@@ -19,7 +19,7 @@ pub struct CertificateSigningRequest {
 impl CertificateSigningRequest {
     /// create a CertificateSigningRequest
     ///
-    /// Use [`CreateCertificateSigningRequestResponse`](./enum.CreateCertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`CreateCertificateSigningRequestResponse`]`>` constructor, or [`CreateCertificateSigningRequestResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -31,7 +31,7 @@ impl CertificateSigningRequest {
     pub fn create_certificate_signing_request(
         body: &crate::v1_8::api::certificates::v1beta1::CertificateSigningRequest,
         optional: CreateCertificateSigningRequestOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<CreateCertificateSigningRequestResponse>), crate::RequestError> {
         let CreateCertificateSigningRequestOptional {
             pretty,
         } = optional;
@@ -44,18 +44,21 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::post(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::create_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.create_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::create_certificate_signing_request`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CreateCertificateSigningRequestOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::create_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.create_certificate_signing_request)
+/// Use `<CreateCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::create_certificate_signing_request`]
 #[derive(Debug)]
 pub enum CreateCertificateSigningRequestResponse {
     Ok(crate::v1_8::api::certificates::v1beta1::CertificateSigningRequest),
@@ -85,7 +88,7 @@ impl crate::Response for CreateCertificateSigningRequestResponse {
 impl CertificateSigningRequest {
     /// delete a CertificateSigningRequest
     ///
-    /// Use [`DeleteCertificateSigningRequestResponse`](./enum.DeleteCertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCertificateSigningRequestResponse`]`>` constructor, or [`DeleteCertificateSigningRequestResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -99,7 +102,7 @@ impl CertificateSigningRequest {
     pub fn delete_certificate_signing_request(
         name: &str,
         optional: DeleteCertificateSigningRequestOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCertificateSigningRequestResponse>), crate::RequestError> {
         let DeleteCertificateSigningRequestOptional {
             grace_period_seconds,
             orphan_dependents,
@@ -124,11 +127,14 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::delete_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::delete_certificate_signing_request`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCertificateSigningRequestOptional<'a> {
     /// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
@@ -141,7 +147,7 @@ pub struct DeleteCertificateSigningRequestOptional<'a> {
     pub propagation_policy: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::delete_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_certificate_signing_request)
+/// Use `<DeleteCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::delete_certificate_signing_request`]
 #[derive(Debug)]
 pub enum DeleteCertificateSigningRequestResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -185,7 +191,7 @@ impl crate::Response for DeleteCertificateSigningRequestResponse {
 impl CertificateSigningRequest {
     /// delete collection of CertificateSigningRequest
     ///
-    /// Use [`DeleteCollectionCertificateSigningRequestResponse`](./enum.DeleteCollectionCertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`DeleteCollectionCertificateSigningRequestResponse`]`>` constructor, or [`DeleteCollectionCertificateSigningRequestResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -194,7 +200,7 @@ impl CertificateSigningRequest {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn delete_collection_certificate_signing_request(
         optional: DeleteCollectionCertificateSigningRequestOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<DeleteCollectionCertificateSigningRequestResponse>), crate::RequestError> {
         let DeleteCollectionCertificateSigningRequestOptional {
             continue_,
             field_selector,
@@ -239,11 +245,14 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::delete(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::delete_collection_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_collection_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::delete_collection_certificate_signing_request`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct DeleteCollectionCertificateSigningRequestOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -268,7 +277,7 @@ pub struct DeleteCollectionCertificateSigningRequestOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::delete_collection_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.delete_collection_certificate_signing_request)
+/// Use `<DeleteCollectionCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::delete_collection_certificate_signing_request`]
 #[derive(Debug)]
 pub enum DeleteCollectionCertificateSigningRequestResponse {
     OkStatus(crate::v1_8::apimachinery::pkg::apis::meta::v1::Status),
@@ -312,7 +321,7 @@ impl crate::Response for DeleteCollectionCertificateSigningRequestResponse {
 impl CertificateSigningRequest {
     /// list or watch objects of kind CertificateSigningRequest
     ///
-    /// Use [`ListCertificateSigningRequestResponse`](./enum.ListCertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ListCertificateSigningRequestResponse`]`>` constructor, or [`ListCertificateSigningRequestResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -321,7 +330,7 @@ impl CertificateSigningRequest {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn list_certificate_signing_request(
         optional: ListCertificateSigningRequestOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListCertificateSigningRequestResponse>), crate::RequestError> {
         let ListCertificateSigningRequestOptional {
             continue_,
             field_selector,
@@ -366,11 +375,14 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::list_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.list_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::list_certificate_signing_request`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ListCertificateSigningRequestOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -395,7 +407,7 @@ pub struct ListCertificateSigningRequestOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::list_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.list_certificate_signing_request)
+/// Use `<ListCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::list_certificate_signing_request`]
 #[derive(Debug)]
 pub enum ListCertificateSigningRequestResponse {
     Ok(crate::v1_8::api::certificates::v1beta1::CertificateSigningRequestList),
@@ -425,7 +437,7 @@ impl crate::Response for ListCertificateSigningRequestResponse {
 impl CertificateSigningRequest {
     /// partially update the specified CertificateSigningRequest
     ///
-    /// Use [`PatchCertificateSigningRequestResponse`](./enum.PatchCertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`PatchCertificateSigningRequestResponse`]`>` constructor, or [`PatchCertificateSigningRequestResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -442,7 +454,7 @@ impl CertificateSigningRequest {
         name: &str,
         body: &crate::v1_8::apimachinery::pkg::apis::meta::v1::Patch,
         optional: PatchCertificateSigningRequestOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<PatchCertificateSigningRequestResponse>), crate::RequestError> {
         let PatchCertificateSigningRequestOptional {
             pretty,
         } = optional;
@@ -455,18 +467,21 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::patch(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::patch_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.patch_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::patch_certificate_signing_request`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct PatchCertificateSigningRequestOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::patch_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.patch_certificate_signing_request)
+/// Use `<PatchCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::patch_certificate_signing_request`]
 #[derive(Debug)]
 pub enum PatchCertificateSigningRequestResponse {
     Ok(crate::v1_8::api::certificates::v1beta1::CertificateSigningRequest),
@@ -496,7 +511,7 @@ impl crate::Response for PatchCertificateSigningRequestResponse {
 impl CertificateSigningRequest {
     /// read the specified CertificateSigningRequest
     ///
-    /// Use [`ReadCertificateSigningRequestResponse`](./enum.ReadCertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReadCertificateSigningRequestResponse`]`>` constructor, or [`ReadCertificateSigningRequestResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -510,7 +525,7 @@ impl CertificateSigningRequest {
     pub fn read_certificate_signing_request(
         name: &str,
         optional: ReadCertificateSigningRequestOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReadCertificateSigningRequestResponse>), crate::RequestError> {
         let ReadCertificateSigningRequestOptional {
             exact,
             export,
@@ -531,11 +546,14 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::read_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.read_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::read_certificate_signing_request`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReadCertificateSigningRequestOptional<'a> {
     /// Should the export be exact.  Exact export maintains cluster-specific fields like 'Namespace'.
@@ -546,7 +564,7 @@ pub struct ReadCertificateSigningRequestOptional<'a> {
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::read_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.read_certificate_signing_request)
+/// Use `<ReadCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::read_certificate_signing_request`]
 #[derive(Debug)]
 pub enum ReadCertificateSigningRequestResponse {
     Ok(crate::v1_8::api::certificates::v1beta1::CertificateSigningRequest),
@@ -576,7 +594,7 @@ impl crate::Response for ReadCertificateSigningRequestResponse {
 impl CertificateSigningRequest {
     /// replace the specified CertificateSigningRequest
     ///
-    /// Use [`ReplaceCertificateSigningRequestResponse`](./enum.ReplaceCertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceCertificateSigningRequestResponse`]`>` constructor, or [`ReplaceCertificateSigningRequestResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -593,7 +611,7 @@ impl CertificateSigningRequest {
         name: &str,
         body: &crate::v1_8::api::certificates::v1beta1::CertificateSigningRequest,
         optional: ReplaceCertificateSigningRequestOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCertificateSigningRequestResponse>), crate::RequestError> {
         let ReplaceCertificateSigningRequestOptional {
             pretty,
         } = optional;
@@ -606,18 +624,21 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCertificateSigningRequestOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request)
+/// Use `<ReplaceCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::replace_certificate_signing_request`]
 #[derive(Debug)]
 pub enum ReplaceCertificateSigningRequestResponse {
     Ok(crate::v1_8::api::certificates::v1beta1::CertificateSigningRequest),
@@ -647,7 +668,7 @@ impl crate::Response for ReplaceCertificateSigningRequestResponse {
 impl CertificateSigningRequest {
     /// replace approval of the specified CertificateSigningRequest
     ///
-    /// Use [`ReplaceCertificateSigningRequestApprovalResponse`](./enum.ReplaceCertificateSigningRequestApprovalResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceCertificateSigningRequestApprovalResponse`]`>` constructor, or [`ReplaceCertificateSigningRequestApprovalResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -664,7 +685,7 @@ impl CertificateSigningRequest {
         name: &str,
         body: &crate::v1_8::api::certificates::v1beta1::CertificateSigningRequest,
         optional: ReplaceCertificateSigningRequestApprovalOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCertificateSigningRequestApprovalResponse>), crate::RequestError> {
         let ReplaceCertificateSigningRequestApprovalOptional {
             pretty,
         } = optional;
@@ -677,18 +698,21 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request_approval`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request_approval)
+/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request_approval`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCertificateSigningRequestApprovalOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificate_signing_request_approval`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request_approval)
+/// Use `<ReplaceCertificateSigningRequestApprovalResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::replace_certificate_signing_request_approval`]
 #[derive(Debug)]
 pub enum ReplaceCertificateSigningRequestApprovalResponse {
     Ok(crate::v1_8::api::certificates::v1beta1::CertificateSigningRequest),
@@ -718,7 +742,7 @@ impl crate::Response for ReplaceCertificateSigningRequestApprovalResponse {
 impl CertificateSigningRequest {
     /// replace status of the specified CertificateSigningRequest
     ///
-    /// Use [`ReplaceCertificateSigningRequestStatusResponse`](./enum.ReplaceCertificateSigningRequestStatusResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`ReplaceCertificateSigningRequestStatusResponse`]`>` constructor, or [`ReplaceCertificateSigningRequestStatusResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -735,7 +759,7 @@ impl CertificateSigningRequest {
         name: &str,
         body: &crate::v1_8::api::certificates::v1beta1::CertificateSigningRequest,
         optional: ReplaceCertificateSigningRequestStatusOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ReplaceCertificateSigningRequestStatusResponse>), crate::RequestError> {
         let ReplaceCertificateSigningRequestStatusOptional {
             pretty,
         } = optional;
@@ -748,18 +772,21 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::put(__url);
         let __body = serde_json::to_vec(&body).map_err(crate::RequestError::Json)?;
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request_status`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request_status)
+/// Optional parameters of [`CertificateSigningRequest::replace_certificate_signing_request_status`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ReplaceCertificateSigningRequestStatusOptional<'a> {
     /// If 'true', then the output is pretty printed.
     pub pretty: Option<&'a str>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::replace_certificate_signing_request_status`](./struct.CertificateSigningRequest.html#method.replace_certificate_signing_request_status)
+/// Use `<ReplaceCertificateSigningRequestStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::replace_certificate_signing_request_status`]
 #[derive(Debug)]
 pub enum ReplaceCertificateSigningRequestStatusResponse {
     Ok(crate::v1_8::api::certificates::v1beta1::CertificateSigningRequest),
@@ -789,7 +816,7 @@ impl crate::Response for ReplaceCertificateSigningRequestStatusResponse {
 impl CertificateSigningRequest {
     /// watch changes to an object of kind CertificateSigningRequest
     ///
-    /// Use [`WatchCertificateSigningRequestResponse`](./enum.WatchCertificateSigningRequestResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchCertificateSigningRequestResponse`]`>` constructor, or [`WatchCertificateSigningRequestResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -803,7 +830,7 @@ impl CertificateSigningRequest {
     pub fn watch_certificate_signing_request(
         name: &str,
         optional: WatchCertificateSigningRequestOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCertificateSigningRequestResponse>), crate::RequestError> {
         let WatchCertificateSigningRequestOptional {
             continue_,
             field_selector,
@@ -848,11 +875,14 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::watch_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.watch_certificate_signing_request)
+/// Optional parameters of [`CertificateSigningRequest::watch_certificate_signing_request`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchCertificateSigningRequestOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -877,7 +907,7 @@ pub struct WatchCertificateSigningRequestOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::watch_certificate_signing_request`](./struct.CertificateSigningRequest.html#method.watch_certificate_signing_request)
+/// Use `<WatchCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::watch_certificate_signing_request`]
 #[derive(Debug)]
 pub enum WatchCertificateSigningRequestResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
@@ -909,7 +939,7 @@ impl crate::Response for WatchCertificateSigningRequestResponse {
 impl CertificateSigningRequest {
     /// watch individual changes to a list of CertificateSigningRequest
     ///
-    /// Use [`WatchCertificateSigningRequestListResponse`](./enum.WatchCertificateSigningRequestListResponse.html) to parse the HTTP response.
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchCertificateSigningRequestListResponse`]`>` constructor, or [`WatchCertificateSigningRequestListResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
@@ -918,7 +948,7 @@ impl CertificateSigningRequest {
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_certificate_signing_request_list(
         optional: WatchCertificateSigningRequestListOptional<'_>,
-    ) -> Result<http::Request<Vec<u8>>, crate::RequestError> {
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchCertificateSigningRequestListResponse>), crate::RequestError> {
         let WatchCertificateSigningRequestListOptional {
             continue_,
             field_selector,
@@ -963,11 +993,14 @@ impl CertificateSigningRequest {
 
         let mut __request = http::Request::get(__url);
         let __body = vec![];
-        __request.body(__body).map_err(crate::RequestError::Http)
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
     }
 }
 
-/// Optional parameters of [`CertificateSigningRequest::watch_certificate_signing_request_list`](./struct.CertificateSigningRequest.html#method.watch_certificate_signing_request_list)
+/// Optional parameters of [`CertificateSigningRequest::watch_certificate_signing_request_list`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchCertificateSigningRequestListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
@@ -992,7 +1025,7 @@ pub struct WatchCertificateSigningRequestListOptional<'a> {
     pub watch: Option<bool>,
 }
 
-/// Parses the HTTP response of [`CertificateSigningRequest::watch_certificate_signing_request_list`](./struct.CertificateSigningRequest.html#method.watch_certificate_signing_request_list)
+/// Use `<WatchCertificateSigningRequestListResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::watch_certificate_signing_request_list`]
 #[derive(Debug)]
 pub enum WatchCertificateSigningRequestListResponse {
     Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
