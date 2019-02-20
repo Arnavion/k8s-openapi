@@ -1,4 +1,4 @@
-#![deny(rust_2018_idioms)]
+#![warn(rust_2018_idioms)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(
     clippy::cyclomatic_complexity,

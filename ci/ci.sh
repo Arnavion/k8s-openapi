@@ -38,5 +38,5 @@ cargo doc --verbose --no-deps --features "$FEATURE"
 popd
 
 pushd k8s-openapi
-cargo clippy --verbose --features "$FEATURE"
+cargo clippy --verbose --features "$FEATURE" -- -D warnings
 popd
