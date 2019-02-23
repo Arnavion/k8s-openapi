@@ -13,7 +13,7 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-tests/`: Use `cargo test --features 'test_v1_<>' --no-run` to build the lib crate and test crate with the new version's feature enabled.
 
-1. Create a minikube cluster, and run the tests against it in record mode. Details in `/k8s-openapi-tests/test-replays/README.md`
+1. Create a minikube cluster, and run the tests against it in record mode. Details in `/k8s-openapi-tests/test-replays/README.md`. Make sure to use the same version of minikube listed in the table there. The latest version of minikube may not support deploying a cluster of an old release.
 
 1. `/k8s-openapi-tests/test-replays/README.md`: Update the row corresponding to the Kubernetes version with the new Kubernetes version.
 
@@ -48,7 +48,7 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-tests/`: Use `cargo test --features 'test_v1_<>' --no-run` to build the lib crate and test crate with the new version's feature enabled.
 
-1. Create a minikube cluster, and run the tests against it in record mode. Details in `/k8s-openapi-tests/test-replays/README.md`. Make sure to use the same version of minikube listed in the table there. The latest version of minikube may not support deploying a cluster of an old release.
+1. Create a minikube cluster, and run the tests against it in record mode. Details in `/k8s-openapi-tests/test-replays/README.md`.
 
 1. `/k8s-openapi-tests/test-replays/README.md`: Add a row to the versions table with the Kubernetes and minikube versions.
 
