@@ -46,6 +46,8 @@ pub use self::pod_disruption_budget::{
     ReplaceNamespacedPodDisruptionBudgetStatusOptional, ReplaceNamespacedPodDisruptionBudgetStatusResponse,
     WatchNamespacedPodDisruptionBudgetOptional, WatchNamespacedPodDisruptionBudgetResponse,
     WatchNamespacedPodDisruptionBudgetListOptional, WatchNamespacedPodDisruptionBudgetListResponse,
+    WatchPodDisruptionBudgetForAllNamespacesOptional, WatchPodDisruptionBudgetForAllNamespacesResponse,
+    WatchPodDisruptionBudgetForAllNamespacesListOptional, WatchPodDisruptionBudgetForAllNamespacesListResponse,
     WatchPodDisruptionBudgetListForAllNamespacesOptional, WatchPodDisruptionBudgetListForAllNamespacesResponse,
 };
 

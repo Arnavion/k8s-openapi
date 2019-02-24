@@ -13,6 +13,8 @@ pub use self::job::{
     ReadNamespacedJobStatusOptional, ReadNamespacedJobStatusResponse,
     ReplaceNamespacedJobOptional, ReplaceNamespacedJobResponse,
     ReplaceNamespacedJobStatusOptional, ReplaceNamespacedJobStatusResponse,
+    WatchJobForAllNamespacesOptional, WatchJobForAllNamespacesResponse,
+    WatchJobForAllNamespacesListOptional, WatchJobForAllNamespacesListResponse,
     WatchJobListForAllNamespacesOptional, WatchJobListForAllNamespacesResponse,
     WatchNamespacedJobOptional, WatchNamespacedJobResponse,
     WatchNamespacedJobListOptional, WatchNamespacedJobListResponse,

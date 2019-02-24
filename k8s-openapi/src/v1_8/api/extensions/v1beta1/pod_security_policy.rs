@@ -319,6 +319,8 @@ impl crate::Response for DeletePodSecurityPolicyResponse {
 impl PodSecurityPolicy {
     /// list or watch objects of kind PodSecurityPolicy
     ///
+    /// This operation only supports listing all items of this type.
+    ///
     /// Use the returned [`crate::ResponseBody`]`<`[`ListPodSecurityPolicyResponse`]`>` constructor, or [`ListPodSecurityPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
@@ -331,22 +333,17 @@ impl PodSecurityPolicy {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPodSecurityPolicyResponse>), crate::RequestError> {
         let ListPodSecurityPolicyOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
         let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -366,9 +363,6 @@ impl PodSecurityPolicy {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -385,8 +379,6 @@ impl PodSecurityPolicy {
 pub struct ListPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -401,8 +393,6 @@ pub struct ListPodSecurityPolicyOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<ListPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::list_pod_security_policy`]
@@ -664,42 +654,40 @@ impl crate::Response for ReplacePodSecurityPolicyResponse {
 // Generated from operation watchExtensionsV1beta1PodSecurityPolicy
 
 impl PodSecurityPolicy {
-    /// watch changes to an object of kind PodSecurityPolicy
+    /// list or watch objects of kind PodSecurityPolicy
+    ///
+    /// This operation only supports watching a single item for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchPodSecurityPolicyResponse`]`>` constructor, or [`WatchPodSecurityPolicyResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
-    /// * `name`
+    /// * `field_selector`
     ///
-    ///     name of the PodSecurityPolicy
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_pod_security_policy(
-        name: &str,
+        field_selector: &str,
         optional: WatchPodSecurityPolicyOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodSecurityPolicyResponse>), crate::RequestError> {
         let WatchPodSecurityPolicyOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = format!("/apis/extensions/v1beta1/watch/podsecuritypolicies/{name}?", name = name);
+        let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
+        __query_pairs.append_pair("fieldSelector", &field_selector);
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
@@ -718,9 +706,7 @@ impl PodSecurityPolicy {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -737,8 +723,6 @@ impl PodSecurityPolicy {
 pub struct WatchPodSecurityPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -753,8 +737,6 @@ pub struct WatchPodSecurityPolicyOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::watch_pod_security_policy`]
@@ -787,7 +769,9 @@ impl crate::Response for WatchPodSecurityPolicyResponse {
 // Generated from operation watchExtensionsV1beta1PodSecurityPolicyList
 
 impl PodSecurityPolicy {
-    /// watch individual changes to a list of PodSecurityPolicy
+    /// list or watch objects of kind PodSecurityPolicy
+    ///
+    /// This operation only supports watching a list of items for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchPodSecurityPolicyListResponse`]`>` constructor, or [`WatchPodSecurityPolicyListResponse`] directly, to parse the HTTP response.
     ///
@@ -801,22 +785,17 @@ impl PodSecurityPolicy {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodSecurityPolicyListResponse>), crate::RequestError> {
         let WatchPodSecurityPolicyListOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = "/apis/extensions/v1beta1/watch/podsecuritypolicies?".to_string();
+        let __url = "/apis/extensions/v1beta1/podsecuritypolicies?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -836,9 +815,7 @@ impl PodSecurityPolicy {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -855,8 +832,6 @@ impl PodSecurityPolicy {
 pub struct WatchPodSecurityPolicyListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -871,8 +846,6 @@ pub struct WatchPodSecurityPolicyListOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchPodSecurityPolicyListResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::watch_pod_security_policy_list`]

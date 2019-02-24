@@ -340,6 +340,8 @@ impl crate::Response for DeletePersistentVolumeResponse {
 impl PersistentVolume {
     /// list or watch objects of kind PersistentVolume
     ///
+    /// This operation only supports listing all items of this type.
+    ///
     /// Use the returned [`crate::ResponseBody`]`<`[`ListPersistentVolumeResponse`]`>` constructor, or [`ListPersistentVolumeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
@@ -352,22 +354,17 @@ impl PersistentVolume {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListPersistentVolumeResponse>), crate::RequestError> {
         let ListPersistentVolumeOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
         let __url = "/api/v1/persistentvolumes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -387,9 +384,6 @@ impl PersistentVolume {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -406,8 +400,6 @@ impl PersistentVolume {
 pub struct ListPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -422,8 +414,6 @@ pub struct ListPersistentVolumeOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<ListPersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::list_persistent_volume`]
@@ -922,42 +912,40 @@ impl crate::Response for ReplacePersistentVolumeStatusResponse {
 // Generated from operation watchCoreV1PersistentVolume
 
 impl PersistentVolume {
-    /// watch changes to an object of kind PersistentVolume
+    /// list or watch objects of kind PersistentVolume
+    ///
+    /// This operation only supports watching a single item for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchPersistentVolumeResponse`]`>` constructor, or [`WatchPersistentVolumeResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
-    /// * `name`
+    /// * `field_selector`
     ///
-    ///     name of the PersistentVolume
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_persistent_volume(
-        name: &str,
+        field_selector: &str,
         optional: WatchPersistentVolumeOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPersistentVolumeResponse>), crate::RequestError> {
         let WatchPersistentVolumeOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = format!("/api/v1/watch/persistentvolumes/{name}?", name = name);
+        let __url = "/api/v1/persistentvolumes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
+        __query_pairs.append_pair("fieldSelector", &field_selector);
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
@@ -976,9 +964,7 @@ impl PersistentVolume {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -995,8 +981,6 @@ impl PersistentVolume {
 pub struct WatchPersistentVolumeOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -1011,8 +995,6 @@ pub struct WatchPersistentVolumeOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchPersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::watch_persistent_volume`]
@@ -1045,7 +1027,9 @@ impl crate::Response for WatchPersistentVolumeResponse {
 // Generated from operation watchCoreV1PersistentVolumeList
 
 impl PersistentVolume {
-    /// watch individual changes to a list of PersistentVolume
+    /// list or watch objects of kind PersistentVolume
+    ///
+    /// This operation only supports watching a list of items for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchPersistentVolumeListResponse`]`>` constructor, or [`WatchPersistentVolumeListResponse`] directly, to parse the HTTP response.
     ///
@@ -1059,22 +1043,17 @@ impl PersistentVolume {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPersistentVolumeListResponse>), crate::RequestError> {
         let WatchPersistentVolumeListOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = "/api/v1/watch/persistentvolumes?".to_string();
+        let __url = "/api/v1/persistentvolumes?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -1094,9 +1073,7 @@ impl PersistentVolume {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -1113,8 +1090,6 @@ impl PersistentVolume {
 pub struct WatchPersistentVolumeListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -1129,8 +1104,6 @@ pub struct WatchPersistentVolumeListOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchPersistentVolumeListResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::watch_persistent_volume_list`]

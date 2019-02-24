@@ -368,6 +368,8 @@ impl crate::Response for DeleteCollectionAPIServiceResponse {
 impl APIService {
     /// list or watch objects of kind APIService
     ///
+    /// This operation only supports listing all items of this type.
+    ///
     /// Use the returned [`crate::ResponseBody`]`<`[`ListAPIServiceResponse`]`>` constructor, or [`ListAPIServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
@@ -380,22 +382,17 @@ impl APIService {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListAPIServiceResponse>), crate::RequestError> {
         let ListAPIServiceOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
         let __url = "/apis/apiregistration.k8s.io/v1beta1/apiservices?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -415,9 +412,6 @@ impl APIService {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -436,8 +430,6 @@ pub struct ListAPIServiceOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -452,8 +444,6 @@ pub struct ListAPIServiceOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<ListAPIServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`APIService::list_api_service`]
@@ -976,42 +966,40 @@ impl crate::Response for ReplaceAPIServiceStatusResponse {
 // Generated from operation watchApiregistrationV1beta1APIService
 
 impl APIService {
-    /// watch changes to an object of kind APIService. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
+    /// list or watch objects of kind APIService
+    ///
+    /// This operation only supports watching a single item for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchAPIServiceResponse`]`>` constructor, or [`WatchAPIServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
-    /// * `name`
+    /// * `field_selector`
     ///
-    ///     name of the APIService
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_api_service(
-        name: &str,
+        field_selector: &str,
         optional: WatchAPIServiceOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchAPIServiceResponse>), crate::RequestError> {
         let WatchAPIServiceOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = format!("/apis/apiregistration.k8s.io/v1beta1/watch/apiservices/{name}?", name = name);
+        let __url = "/apis/apiregistration.k8s.io/v1beta1/apiservices?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
+        __query_pairs.append_pair("fieldSelector", &field_selector);
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
@@ -1030,9 +1018,7 @@ impl APIService {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -1051,8 +1037,6 @@ pub struct WatchAPIServiceOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -1067,8 +1051,6 @@ pub struct WatchAPIServiceOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchAPIServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`APIService::watch_api_service`]
@@ -1101,7 +1083,9 @@ impl crate::Response for WatchAPIServiceResponse {
 // Generated from operation watchApiregistrationV1beta1APIServiceList
 
 impl APIService {
-    /// watch individual changes to a list of APIService. deprecated: use the 'watch' parameter with a list operation instead.
+    /// list or watch objects of kind APIService
+    ///
+    /// This operation only supports watching a list of items for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchAPIServiceListResponse`]`>` constructor, or [`WatchAPIServiceListResponse`] directly, to parse the HTTP response.
     ///
@@ -1115,22 +1099,17 @@ impl APIService {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchAPIServiceListResponse>), crate::RequestError> {
         let WatchAPIServiceListOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = "/apis/apiregistration.k8s.io/v1beta1/watch/apiservices?".to_string();
+        let __url = "/apis/apiregistration.k8s.io/v1beta1/apiservices?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -1150,9 +1129,7 @@ impl APIService {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -1171,8 +1148,6 @@ pub struct WatchAPIServiceListOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -1187,8 +1162,6 @@ pub struct WatchAPIServiceListOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchAPIServiceListResponse as Response>::try_from_parts` to parse the HTTP response body of [`APIService::watch_api_service_list`]

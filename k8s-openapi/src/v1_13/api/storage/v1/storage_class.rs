@@ -386,6 +386,8 @@ impl crate::Response for DeleteStorageClassResponse {
 impl StorageClass {
     /// list or watch objects of kind StorageClass
     ///
+    /// This operation only supports listing all items of this type.
+    ///
     /// Use the returned [`crate::ResponseBody`]`<`[`ListStorageClassResponse`]`>` constructor, or [`ListStorageClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
@@ -398,22 +400,17 @@ impl StorageClass {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListStorageClassResponse>), crate::RequestError> {
         let ListStorageClassOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
         let __url = "/apis/storage.k8s.io/v1/storageclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -433,9 +430,6 @@ impl StorageClass {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -454,8 +448,6 @@ pub struct ListStorageClassOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -470,8 +462,6 @@ pub struct ListStorageClassOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<ListStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::list_storage_class`]
@@ -754,42 +744,40 @@ impl crate::Response for ReplaceStorageClassResponse {
 // Generated from operation watchStorageV1StorageClass
 
 impl StorageClass {
-    /// watch changes to an object of kind StorageClass. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
+    /// list or watch objects of kind StorageClass
+    ///
+    /// This operation only supports watching a single item for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchStorageClassResponse`]`>` constructor, or [`WatchStorageClassResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
-    /// * `name`
+    /// * `field_selector`
     ///
-    ///     name of the StorageClass
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_storage_class(
-        name: &str,
+        field_selector: &str,
         optional: WatchStorageClassOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchStorageClassResponse>), crate::RequestError> {
         let WatchStorageClassOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = format!("/apis/storage.k8s.io/v1/watch/storageclasses/{name}?", name = name);
+        let __url = "/apis/storage.k8s.io/v1/storageclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
+        __query_pairs.append_pair("fieldSelector", &field_selector);
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
@@ -808,9 +796,7 @@ impl StorageClass {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -829,8 +815,6 @@ pub struct WatchStorageClassOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -845,8 +829,6 @@ pub struct WatchStorageClassOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::watch_storage_class`]
@@ -879,7 +861,9 @@ impl crate::Response for WatchStorageClassResponse {
 // Generated from operation watchStorageV1StorageClassList
 
 impl StorageClass {
-    /// watch individual changes to a list of StorageClass. deprecated: use the 'watch' parameter with a list operation instead.
+    /// list or watch objects of kind StorageClass
+    ///
+    /// This operation only supports watching a list of items for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchStorageClassListResponse`]`>` constructor, or [`WatchStorageClassListResponse`] directly, to parse the HTTP response.
     ///
@@ -893,22 +877,17 @@ impl StorageClass {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchStorageClassListResponse>), crate::RequestError> {
         let WatchStorageClassListOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = "/apis/storage.k8s.io/v1/watch/storageclasses?".to_string();
+        let __url = "/apis/storage.k8s.io/v1/storageclasses?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -928,9 +907,7 @@ impl StorageClass {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -949,8 +926,6 @@ pub struct WatchStorageClassListOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -965,8 +940,6 @@ pub struct WatchStorageClassListOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchStorageClassListResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::watch_storage_class_list`]

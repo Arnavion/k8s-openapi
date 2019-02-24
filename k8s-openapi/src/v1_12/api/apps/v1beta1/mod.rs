@@ -10,6 +10,8 @@ pub use self::controller_revision::{
     PatchNamespacedControllerRevisionOptional, PatchNamespacedControllerRevisionResponse,
     ReadNamespacedControllerRevisionOptional, ReadNamespacedControllerRevisionResponse,
     ReplaceNamespacedControllerRevisionOptional, ReplaceNamespacedControllerRevisionResponse,
+    WatchControllerRevisionForAllNamespacesOptional, WatchControllerRevisionForAllNamespacesResponse,
+    WatchControllerRevisionForAllNamespacesListOptional, WatchControllerRevisionForAllNamespacesListResponse,
     WatchControllerRevisionListForAllNamespacesOptional, WatchControllerRevisionListForAllNamespacesResponse,
     WatchNamespacedControllerRevisionOptional, WatchNamespacedControllerRevisionResponse,
     WatchNamespacedControllerRevisionListOptional, WatchNamespacedControllerRevisionListResponse,
@@ -34,6 +36,8 @@ pub use self::deployment::{
     ReadNamespacedDeploymentStatusOptional, ReadNamespacedDeploymentStatusResponse,
     ReplaceNamespacedDeploymentOptional, ReplaceNamespacedDeploymentResponse,
     ReplaceNamespacedDeploymentStatusOptional, ReplaceNamespacedDeploymentStatusResponse,
+    WatchDeploymentForAllNamespacesOptional, WatchDeploymentForAllNamespacesResponse,
+    WatchDeploymentForAllNamespacesListOptional, WatchDeploymentForAllNamespacesListResponse,
     WatchDeploymentListForAllNamespacesOptional, WatchDeploymentListForAllNamespacesResponse,
     WatchNamespacedDeploymentOptional, WatchNamespacedDeploymentResponse,
     WatchNamespacedDeploymentListOptional, WatchNamespacedDeploymentListResponse,
@@ -122,6 +126,8 @@ pub use self::stateful_set::{
     ReplaceNamespacedStatefulSetStatusOptional, ReplaceNamespacedStatefulSetStatusResponse,
     WatchNamespacedStatefulSetOptional, WatchNamespacedStatefulSetResponse,
     WatchNamespacedStatefulSetListOptional, WatchNamespacedStatefulSetListResponse,
+    WatchStatefulSetForAllNamespacesOptional, WatchStatefulSetForAllNamespacesResponse,
+    WatchStatefulSetForAllNamespacesListOptional, WatchStatefulSetForAllNamespacesListResponse,
     WatchStatefulSetListForAllNamespacesOptional, WatchStatefulSetListForAllNamespacesResponse,
 };
 

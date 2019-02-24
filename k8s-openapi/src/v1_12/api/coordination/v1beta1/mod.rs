@@ -10,6 +10,8 @@ pub use self::lease::{
     PatchNamespacedLeaseOptional, PatchNamespacedLeaseResponse,
     ReadNamespacedLeaseOptional, ReadNamespacedLeaseResponse,
     ReplaceNamespacedLeaseOptional, ReplaceNamespacedLeaseResponse,
+    WatchLeaseForAllNamespacesOptional, WatchLeaseForAllNamespacesResponse,
+    WatchLeaseForAllNamespacesListOptional, WatchLeaseForAllNamespacesListResponse,
     WatchLeaseListForAllNamespacesOptional, WatchLeaseListForAllNamespacesResponse,
     WatchNamespacedLeaseOptional, WatchNamespacedLeaseResponse,
     WatchNamespacedLeaseListOptional, WatchNamespacedLeaseListResponse,

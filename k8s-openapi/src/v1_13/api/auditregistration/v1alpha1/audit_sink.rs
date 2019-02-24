@@ -365,6 +365,8 @@ impl crate::Response for DeleteCollectionAuditSinkResponse {
 impl AuditSink {
     /// list or watch objects of kind AuditSink
     ///
+    /// This operation only supports listing all items of this type.
+    ///
     /// Use the returned [`crate::ResponseBody`]`<`[`ListAuditSinkResponse`]`>` constructor, or [`ListAuditSinkResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
@@ -377,22 +379,17 @@ impl AuditSink {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListAuditSinkResponse>), crate::RequestError> {
         let ListAuditSinkOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
         let __url = "/apis/auditregistration.k8s.io/v1alpha1/auditsinks?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -412,9 +409,6 @@ impl AuditSink {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -433,8 +427,6 @@ pub struct ListAuditSinkOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -449,8 +441,6 @@ pub struct ListAuditSinkOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<ListAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::list_audit_sink`]
@@ -733,42 +723,40 @@ impl crate::Response for ReplaceAuditSinkResponse {
 // Generated from operation watchAuditregistrationV1alpha1AuditSink
 
 impl AuditSink {
-    /// watch changes to an object of kind AuditSink. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
+    /// list or watch objects of kind AuditSink
+    ///
+    /// This operation only supports watching a single item for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchAuditSinkResponse`]`>` constructor, or [`WatchAuditSinkResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
-    /// * `name`
+    /// * `field_selector`
     ///
-    ///     name of the AuditSink
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_audit_sink(
-        name: &str,
+        field_selector: &str,
         optional: WatchAuditSinkOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchAuditSinkResponse>), crate::RequestError> {
         let WatchAuditSinkOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = format!("/apis/auditregistration.k8s.io/v1alpha1/watch/auditsinks/{name}?", name = name);
+        let __url = "/apis/auditregistration.k8s.io/v1alpha1/auditsinks?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
+        __query_pairs.append_pair("fieldSelector", &field_selector);
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
@@ -787,9 +775,7 @@ impl AuditSink {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -808,8 +794,6 @@ pub struct WatchAuditSinkOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -824,8 +808,6 @@ pub struct WatchAuditSinkOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::watch_audit_sink`]
@@ -858,7 +840,9 @@ impl crate::Response for WatchAuditSinkResponse {
 // Generated from operation watchAuditregistrationV1alpha1AuditSinkList
 
 impl AuditSink {
-    /// watch individual changes to a list of AuditSink. deprecated: use the 'watch' parameter with a list operation instead.
+    /// list or watch objects of kind AuditSink
+    ///
+    /// This operation only supports watching a list of items for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchAuditSinkListResponse`]`>` constructor, or [`WatchAuditSinkListResponse`] directly, to parse the HTTP response.
     ///
@@ -872,22 +856,17 @@ impl AuditSink {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchAuditSinkListResponse>), crate::RequestError> {
         let WatchAuditSinkListOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = "/apis/auditregistration.k8s.io/v1alpha1/watch/auditsinks?".to_string();
+        let __url = "/apis/auditregistration.k8s.io/v1alpha1/auditsinks?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -907,9 +886,7 @@ impl AuditSink {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -928,8 +905,6 @@ pub struct WatchAuditSinkListOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -944,8 +919,6 @@ pub struct WatchAuditSinkListOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchAuditSinkListResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::watch_audit_sink_list`]

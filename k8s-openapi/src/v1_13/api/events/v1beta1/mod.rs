@@ -10,6 +10,8 @@ pub use self::event::{
     PatchNamespacedEventOptional, PatchNamespacedEventResponse,
     ReadNamespacedEventOptional, ReadNamespacedEventResponse,
     ReplaceNamespacedEventOptional, ReplaceNamespacedEventResponse,
+    WatchEventForAllNamespacesOptional, WatchEventForAllNamespacesResponse,
+    WatchEventForAllNamespacesListOptional, WatchEventForAllNamespacesListResponse,
     WatchEventListForAllNamespacesOptional, WatchEventListForAllNamespacesResponse,
     WatchNamespacedEventOptional, WatchNamespacedEventResponse,
     WatchNamespacedEventListOptional, WatchNamespacedEventListResponse,

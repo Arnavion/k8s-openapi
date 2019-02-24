@@ -7,6 +7,7 @@
 	clippy::too_many_arguments,
 	clippy::type_complexity,
 	clippy::unseparated_literal_suffix,
+	clippy::use_self,
 )]
 
 mod fixups;
@@ -83,25 +84,22 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	supported_version.fixup(&mut spec)?;
 
 	let expected_num_generated_types: usize = spec.definitions.len();
-	let expected_num_generated_apis: usize = spec.paths.iter().map(|(_, path_item)| path_item.operations.len()).sum();
+	let expected_num_generated_apis: usize = spec.operations.len();
 
 	log::info!(
-		"OK. Spec has {} definitions and {} paths containing {} operations",
+		"OK. Spec has {} definitions and {} operations",
 		spec.definitions.len(),
-		spec.paths.len(),
-		expected_num_generated_apis);
+		spec.operations.len());
 
-	let mut operations: std::collections::BTreeMap<_, Vec<_>> = Default::default();
-	for (path, path_item) in &spec.paths {
-		for operation in &path_item.operations {
-			operations
-			.entry(operation.kubernetes_group_kind_version.as_ref())
-			.or_insert_with(Default::default)
-			.push((path, path_item, operation));
-		}
+	let mut operations_by_gkv: std::collections::BTreeMap<_, Vec<_>> = Default::default();
+	for operation in &spec.operations {
+		operations_by_gkv
+		.entry(operation.kubernetes_group_kind_version.as_ref())
+		.or_default()
+		.push(operation);
 	}
-	for operations in operations.values_mut() {
-		operations.sort_by_key(|(_, _, operation)| &operation.id);
+	for operations in operations_by_gkv.values_mut() {
+		operations.sort_by_key(|operation| &operation.id);
 	}
 
 	loop {
@@ -285,20 +283,18 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 						let mut kubernetes_group_kind_versions: Vec<_> = kubernetes_group_kind_versions.iter().collect();
 						kubernetes_group_kind_versions.sort();
 						for kubernetes_group_kind_version in kubernetes_group_kind_versions {
-							if let Some(operations) = operations.remove(&Some(kubernetes_group_kind_version)) {
+							if let Some(operations) = operations_by_gkv.remove(&Some(kubernetes_group_kind_version)) {
 								writeln!(file)?;
 								writeln!(file, "// Begin {}/{}/{}",
 									kubernetes_group_kind_version.group, kubernetes_group_kind_version.version, kubernetes_group_kind_version.kind)?;
 
-								for (path, path_item, operation) in operations {
+								for operation in operations {
 									write_operation(
 										&mut file,
 										operation,
 										&replace_namespaces,
 										mod_root,
-										Some((&type_name, &type_ref_path, parent_mod_rs)),
-										path,
-										path_item,
+										&mut Some((&type_name, &type_ref_path, parent_mod_rs)),
 									)?;
 									num_generated_apis += 1;
 								}
@@ -734,6 +730,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 					num_generated_type_aliases += 1;
 				},
+
+				swagger20::SchemaKind::Watch => unreachable!(),
 			}
 
 			log::trace!("OK");
@@ -745,8 +743,8 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 	{
 		let mut mod_root_file = std::io::BufWriter::new(std::fs::OpenOptions::new().append(true).open(out_dir.join("mod.rs"))?);
 
-		for (kubernetes_group_kind_version, operations) in operations {
-			for (path, path_item, operation) in operations {
+		for (kubernetes_group_kind_version, operations) in operations_by_gkv {
+			for operation in operations {
 				if let Some(swagger20::KubernetesGroupKindVersion { group, kind, version }) = kubernetes_group_kind_version {
 					return Err(format!(
 						"Operation {} is associated with {}/{}/{} but did not get emitted with that definition",
@@ -758,9 +756,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					operation,
 					&replace_namespaces,
 					mod_root,
-					None,
-					path,
-					path_item,
+					&mut None,
 				)?;
 				num_generated_apis += 1;
 			}
@@ -813,6 +809,8 @@ fn can_be_default(kind: &swagger20::SchemaKind, spec: &swagger20::Spec) -> Resul
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
 
 		swagger20::SchemaKind::Ty(_) => Ok(true),
+
+		swagger20::SchemaKind::Watch => unreachable!(),
 	}
 }
 
@@ -1003,6 +1001,8 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
+
+		swagger20::SchemaKind::Watch => Ok("".into()), // Value is unused since this parameter is implicit
 	}
 }
 
@@ -1039,6 +1039,8 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrArray) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
+
+		swagger20::SchemaKind::Watch => unreachable!(),
 	}
 }
 
@@ -1066,9 +1068,7 @@ fn write_operation(
 	operation: &swagger20::Operation,
 	replace_namespaces: &[(&[std::borrow::Cow<'static, str>], &[std::borrow::Cow<'static, str>])],
 	mod_root: &str,
-	mut type_name_and_ref_path_and_parent_mod_rs: Option<(&str, &swagger20::RefPath, &mut std::io::BufWriter<std::fs::File>)>,
-	path: &str,
-	path_item: &swagger20::PathItem,
+	type_name_and_ref_path_and_parent_mod_rs: &mut Option<(&str, &swagger20::RefPath, &mut std::io::BufWriter<std::fs::File>)>,
 ) -> Result<(), Error> {
 	use std::io::Write;
 
@@ -1076,41 +1076,8 @@ fn write_operation(
 
 	writeln!(file, "// Generated from operation {}", operation.id)?;
 
-	let operation_id =
-		if type_name_and_ref_path_and_parent_mod_rs.is_some() {
-			// For functions associatd with types (eg `Pod::list_core_v1_namespaced_pod`), the API version contained in the operation name
-			// is already obvious from the type's path (`core::v1::Pod`), so it can be stripped (`list_namespaced_pod`).
-			let tag: String =
-				operation.tag.split('_')
-				.map(|part| {
-					let mut chars = part.chars();
-					if let Some(first_char) = chars.next() {
-						let rest_chars = chars.as_str();
-						std::borrow::Cow::Owned(format!("{}{}", first_char.to_uppercase(), rest_chars))
-					}
-					else {
-						std::borrow::Cow::Borrowed("")
-					}
-				})
-				.collect();
-
-			std::borrow::Cow::Owned(operation.id.replace(&tag, ""))
-		}
-		else {
-			// Functions not associated with types (eg `::get_core_v1_api_resources`) get emitted at the mod root,
-			// so their ID should be used as-is.
-			std::borrow::Cow::Borrowed(&operation.id)
-		};
-
-	let (operation_result_name, operation_optional_parameters_name) = {
-		let mut chars = operation_id.chars();
-		let first_char = chars.next().ok_or_else(|| format!("operation has empty ID: {:?}", operation))?.to_uppercase();
-		let rest_chars = chars.as_str();
-		(
-			format!("{}{}Response", first_char, rest_chars),
-			format!("{}{}Optional", first_char, rest_chars),
-		)
-	};
+	let (operation_fn_name, operation_result_name, operation_optional_parameters_name) =
+		get_operation_names(operation, type_name_and_ref_path_and_parent_mod_rs.is_some())?;
 
 	let operation_responses: Result<Vec<_>, _> =
 		operation.responses.iter()
@@ -1156,21 +1123,11 @@ fn write_operation(
 
 	writeln!(file)?;
 
-	if let Some((type_name, _, _)) = &type_name_and_ref_path_and_parent_mod_rs {
+	if let Some((type_name, _, _)) = type_name_and_ref_path_and_parent_mod_rs {
 		writeln!(file, "impl {} {{", type_name)?;
 	}
 
-	let operation_fn_name = get_rust_ident(&operation_id);
-
-	let mut parameters: Vec<_> = path_item.parameters.iter().collect();
-	for parameter in &operation.parameters {
-		if let Some(p) = parameters.iter_mut().find(|p| p.name == parameter.name) {
-			std::mem::replace(p, parameter);
-			continue;
-		}
-
-		parameters.push(parameter);
-	}
+	let parameters: Vec<_> = operation.parameters.iter().map(std::ops::Deref::deref).collect();
 	let mut previous_parameters: std::collections::HashSet<_> = Default::default();
 	let parameters: Result<Vec<_>, Error> =
 		parameters.into_iter()
@@ -1198,6 +1155,13 @@ fn write_operation(
 		})
 		.collect();
 	let mut parameters = parameters?;
+	let watch_parameter =
+		if let Some(index) = parameters.iter().position(|(_, _, p)| if let swagger20::SchemaKind::Watch = p.schema.kind { true } else { false }) {
+			Some(parameters.swap_remove(index))
+		}
+		else {
+			None
+		};
 	parameters.sort_by(|(_, _, parameter1), (_, _, parameter2)| {
 		(match (parameter1.location, parameter2.location) {
 			(location1, location2) if location1 == location2 => std::cmp::Ordering::Equal,
@@ -1222,6 +1186,7 @@ fn write_operation(
 	if wrote_description {
 		writeln!(file, "{}///", indent)?;
 	}
+
 	writeln!(file,
 		"{}/// Use the returned [`crate::ResponseBody`]`<`[`{}`]`>` constructor, or [`{}`] directly, to parse the HTTP response.",
 		indent, operation_result_name, operation_result_name)?;
@@ -1261,7 +1226,7 @@ fn write_operation(
 	writeln!(file, "{}) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<{}>), crate::RequestError> {{", indent, operation_result_name)?;
 
 	let have_path_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Path);
-	let have_query_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Query);
+	let have_query_parameters = parameters.iter().any(|(_, _, parameter)| parameter.location == swagger20::ParameterLocation::Query) || watch_parameter.is_some();
 
 	if !optional_parameters.is_empty() {
 		writeln!(file, "{}    let {} {{", indent, operation_optional_parameters_name)?;
@@ -1273,7 +1238,7 @@ fn write_operation(
 	}
 
 	if have_path_parameters {
-		write!(file, r#"{}    let __url = format!("{}"#, indent, path)?;
+		write!(file, r#"{}    let __url = format!("{}"#, indent, operation.path)?;
 		if have_query_parameters {
 			write!(file, "?")?;
 		}
@@ -1286,7 +1251,7 @@ fn write_operation(
 		writeln!(file, ");")?;
 	}
 	else {
-		write!(file, r#"{}    let __url = "{}"#, indent, path)?;
+		write!(file, r#"{}    let __url = "{}"#, indent, operation.path)?;
 		if have_query_parameters {
 			write!(file, "?")?;
 		}
@@ -1295,7 +1260,7 @@ fn write_operation(
 
 	if have_query_parameters {
 		writeln!(file, "{}    let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);", indent)?;
-		for (parameter_name, parameter_type, parameter) in &parameters {
+		for (parameter_name, parameter_type, parameter) in parameters.iter().chain(&watch_parameter) {
 			if parameter.location == swagger20::ParameterLocation::Query {
 				if parameter.required {
 					match parameter.schema.kind {
@@ -1306,6 +1271,9 @@ fn write_operation(
 
 						swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
 							writeln!(file, r#"{}    __query_pairs.append_pair("{}", &{});"#, indent, parameter.name, parameter_name)?,
+
+						swagger20::SchemaKind::Watch =>
+							writeln!(file, r#"{}    __query_pairs.append_pair("{}", "true");"#, indent, parameter.name)?,
 
 						_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter_name, parameter_type).into()),
 					}
@@ -1367,7 +1335,7 @@ fn write_operation(
 		writeln!(file, "}}")?;
 	}
 
-	if let Some((_, _, parent_mod_rs)) = &mut type_name_and_ref_path_and_parent_mod_rs {
+	if let Some((_, _, parent_mod_rs)) = type_name_and_ref_path_and_parent_mod_rs {
 		if optional_parameters.is_empty() {
 			writeln!(parent_mod_rs, "    {},", operation_result_name)?;
 		}
@@ -1379,7 +1347,7 @@ fn write_operation(
 	if !optional_parameters.is_empty() {
 		writeln!(file)?;
 
-		if let Some((type_name, _, _)) = &type_name_and_ref_path_and_parent_mod_rs {
+		if let Some((type_name, _, _)) = type_name_and_ref_path_and_parent_mod_rs {
 			writeln!(file, "/// Optional parameters of [`{}::{}`]", type_name, operation_fn_name)?;
 		}
 		else {
@@ -1412,7 +1380,7 @@ fn write_operation(
 
 	writeln!(file)?;
 
-	if let Some((type_name, _, _)) = &type_name_and_ref_path_and_parent_mod_rs {
+	if let Some((type_name, _, _)) = type_name_and_ref_path_and_parent_mod_rs {
 		writeln!(file, "/// Use `<{} as Response>::try_from_parts` to parse the HTTP response body of [`{}::{}`]", operation_result_name, type_name, operation_fn_name)?;
 	}
 	else {
@@ -1540,4 +1508,45 @@ fn write_operation(
 	writeln!(file, "}}")?;
 
 	Ok(())
+}
+
+fn get_operation_names(
+	operation: &swagger20::Operation,
+	strip_tag: bool,
+) -> Result<(std::borrow::Cow<'static, str>, String, String), Error> {
+	let operation_id =
+		if strip_tag {
+			// For functions associatd with types (eg `Pod::list_core_v1_namespaced_pod`), the API version contained in the operation name
+			// is already obvious from the type's path (`core::v1::Pod`), so it can be stripped (`list_namespaced_pod`).
+			let tag: String =
+				operation.tag.split('_')
+				.map(|part| {
+					let mut chars = part.chars();
+					if let Some(first_char) = chars.next() {
+						let rest_chars = chars.as_str();
+						std::borrow::Cow::Owned(format!("{}{}", first_char.to_uppercase(), rest_chars))
+					}
+					else {
+						std::borrow::Cow::Borrowed("")
+					}
+				})
+				.collect();
+
+			std::borrow::Cow::Owned(operation.id.replace(&tag, ""))
+		}
+		else {
+			// Functions not associated with types (eg `::get_core_v1_api_resources`) get emitted at the mod root,
+			// so their ID should be used as-is.
+			std::borrow::Cow::Borrowed(&*operation.id)
+		};
+
+	let operation_fn_name = get_rust_ident(&operation_id);
+
+	let mut chars = operation_id.chars();
+	let first_char = chars.next().ok_or_else(|| format!("operation has empty ID: {:?}", operation))?.to_uppercase();
+	let rest_chars = chars.as_str();
+	let operation_result_name = format!("{}{}Response", first_char, rest_chars);
+	let operation_optional_parameters_name = format!("{}{}Optional", first_char, rest_chars);
+
+	Ok((operation_fn_name, operation_result_name, operation_optional_parameters_name))
 }

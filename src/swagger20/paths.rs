@@ -1,4 +1,4 @@
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum KubernetesAction {
 	Connect,
 	Delete,
@@ -84,19 +84,20 @@ impl<'de> serde::Deserialize<'de> for Method {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Operation {
 	pub description: Option<String>,
-	pub method: Method,
 	pub id: String,
+	pub method: Method,
 	pub kubernetes_action: Option<KubernetesAction>,
 	pub kubernetes_group_kind_version: Option<super::KubernetesGroupKindVersion>,
-	pub parameters: Vec<Parameter>,
+	pub parameters: Vec<std::sync::Arc<Parameter>>,
+	pub path: Path,
 	pub responses: std::collections::BTreeMap<reqwest::StatusCode, Option<super::Schema>>,
 	pub tag: String,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Parameter {
 	pub location: ParameterLocation,
 	pub name: String,
@@ -173,7 +174,7 @@ pub enum ParameterLocation {
 	Query,
 }
 
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd, serde_derive::Deserialize)]
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd, serde_derive::Deserialize)]
 pub struct Path(pub String);
 
 impl std::ops::Deref for Path {
@@ -187,98 +188,5 @@ impl std::ops::Deref for Path {
 impl std::fmt::Display for Path {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		self.0.fmt(f)
-	}
-}
-
-#[derive(Debug)]
-pub struct PathItem {
-	pub operations: Vec<Operation>,
-	pub parameters: Vec<Parameter>,
-}
-
-#[allow(clippy::use_self)]
-impl<'de> serde::Deserialize<'de> for PathItem {
-	fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {
-		#[derive(Debug, serde_derive::Deserialize)]
-		struct InnerPathItem {
-			delete: Option<InnerOperation>,
-			get: Option<InnerOperation>,
-			patch: Option<InnerOperation>,
-			post: Option<InnerOperation>,
-			put: Option<InnerOperation>,
-			#[serde(default)]
-			parameters: Vec<Parameter>,
-		}
-
-		#[derive(Debug, serde_derive::Deserialize)]
-		struct InnerOperation {
-			description: Option<String>,
-			#[serde(rename = "operationId")]
-			id: String,
-			#[serde(rename = "x-kubernetes-action")]
-			kubernetes_action: Option<KubernetesAction>,
-			#[serde(rename = "x-kubernetes-group-version-kind")]
-			kubernetes_group_kind_version: Option<super::KubernetesGroupKindVersion>,
-			#[serde(default)]
-			parameters: Vec<Parameter>,
-			responses: std::collections::BTreeMap<String, InnerResponse>,
-			tags: (String,),
-		}
-
-		#[derive(Debug, serde_derive::Deserialize)]
-		struct InnerResponse {
-			schema: Option<super::Schema>,
-		}
-
-		fn parse_operation<'de, D>(value: InnerOperation, method: Method) -> Result<Operation, D::Error> where D: serde::Deserializer<'de> {
-			let responses: Result<_, _> =
-				value.responses.into_iter()
-				.map(|(status_code_str, response)| {
-					let status_code = status_code_str.parse().map_err(|_|
-						serde::de::Error::invalid_value(serde::de::Unexpected::Str(&status_code_str), &"string representation of an HTTP status code"))?;
-					Ok((status_code, response.schema))
-				})
-				.collect();
-
-			Ok(Operation {
-				description: value.description,
-				id: value.id,
-				kubernetes_action: value.kubernetes_action,
-				kubernetes_group_kind_version: value.kubernetes_group_kind_version,
-				method,
-				parameters: value.parameters,
-				responses: responses?,
-				tag: value.tags.0,
-			})
-		}
-
-		let value: InnerPathItem = serde::Deserialize::deserialize(deserializer)?;
-
-		let mut operations = vec![];
-
-		if let Some(delete) = value.delete {
-			operations.push(parse_operation::<D>(delete, Method::Delete)?);
-		}
-
-		if let Some(get) = value.get {
-			operations.push(parse_operation::<D>(get, Method::Get)?);
-		}
-
-		if let Some(patch) = value.patch {
-			operations.push(parse_operation::<D>(patch, Method::Patch)?);
-		}
-
-		if let Some(post) = value.post {
-			operations.push(parse_operation::<D>(post, Method::Post)?);
-		}
-
-		if let Some(put) = value.put {
-			operations.push(parse_operation::<D>(put, Method::Put)?);
-		}
-
-		Ok(PathItem {
-			operations,
-			parameters: value.parameters,
-		})
 	}
 }

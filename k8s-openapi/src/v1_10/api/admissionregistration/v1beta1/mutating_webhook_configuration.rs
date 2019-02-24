@@ -337,6 +337,8 @@ impl crate::Response for DeleteMutatingWebhookConfigurationResponse {
 impl MutatingWebhookConfiguration {
     /// list or watch objects of kind MutatingWebhookConfiguration
     ///
+    /// This operation only supports listing all items of this type.
+    ///
     /// Use the returned [`crate::ResponseBody`]`<`[`ListMutatingWebhookConfigurationResponse`]`>` constructor, or [`ListMutatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
@@ -349,22 +351,17 @@ impl MutatingWebhookConfiguration {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListMutatingWebhookConfigurationResponse>), crate::RequestError> {
         let ListMutatingWebhookConfigurationOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
         let __url = "/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -384,9 +381,6 @@ impl MutatingWebhookConfiguration {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -403,8 +397,6 @@ impl MutatingWebhookConfiguration {
 pub struct ListMutatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -419,8 +411,6 @@ pub struct ListMutatingWebhookConfigurationOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<ListMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::list_mutating_webhook_configuration`]
@@ -691,42 +681,40 @@ impl crate::Response for ReplaceMutatingWebhookConfigurationResponse {
 // Generated from operation watchAdmissionregistrationV1beta1MutatingWebhookConfiguration
 
 impl MutatingWebhookConfiguration {
-    /// watch changes to an object of kind MutatingWebhookConfiguration
+    /// list or watch objects of kind MutatingWebhookConfiguration
+    ///
+    /// This operation only supports watching a single item for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchMutatingWebhookConfigurationResponse`]`>` constructor, or [`WatchMutatingWebhookConfigurationResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
-    /// * `name`
+    /// * `field_selector`
     ///
-    ///     name of the MutatingWebhookConfiguration
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_mutating_webhook_configuration(
-        name: &str,
+        field_selector: &str,
         optional: WatchMutatingWebhookConfigurationOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchMutatingWebhookConfigurationResponse>), crate::RequestError> {
         let WatchMutatingWebhookConfigurationOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = format!("/apis/admissionregistration.k8s.io/v1beta1/watch/mutatingwebhookconfigurations/{name}?", name = name);
+        let __url = "/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
+        __query_pairs.append_pair("fieldSelector", &field_selector);
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
@@ -745,9 +733,7 @@ impl MutatingWebhookConfiguration {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -764,8 +750,6 @@ impl MutatingWebhookConfiguration {
 pub struct WatchMutatingWebhookConfigurationOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -780,8 +764,6 @@ pub struct WatchMutatingWebhookConfigurationOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration`]
@@ -814,7 +796,9 @@ impl crate::Response for WatchMutatingWebhookConfigurationResponse {
 // Generated from operation watchAdmissionregistrationV1beta1MutatingWebhookConfigurationList
 
 impl MutatingWebhookConfiguration {
-    /// watch individual changes to a list of MutatingWebhookConfiguration
+    /// list or watch objects of kind MutatingWebhookConfiguration
+    ///
+    /// This operation only supports watching a list of items for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchMutatingWebhookConfigurationListResponse`]`>` constructor, or [`WatchMutatingWebhookConfigurationListResponse`] directly, to parse the HTTP response.
     ///
@@ -828,22 +812,17 @@ impl MutatingWebhookConfiguration {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchMutatingWebhookConfigurationListResponse>), crate::RequestError> {
         let WatchMutatingWebhookConfigurationListOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = "/apis/admissionregistration.k8s.io/v1beta1/watch/mutatingwebhookconfigurations?".to_string();
+        let __url = "/apis/admissionregistration.k8s.io/v1beta1/mutatingwebhookconfigurations?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -863,9 +842,7 @@ impl MutatingWebhookConfiguration {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -882,8 +859,6 @@ impl MutatingWebhookConfiguration {
 pub struct WatchMutatingWebhookConfigurationListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -898,8 +873,6 @@ pub struct WatchMutatingWebhookConfigurationListOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchMutatingWebhookConfigurationListResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration_list`]

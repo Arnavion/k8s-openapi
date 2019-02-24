@@ -58,6 +58,7 @@ impl SupportedVersion {
 				crate::fixups::optional_properties::poddisruptionbudgetstatus,
 				crate::fixups::raw_extension_ty,
 				crate::fixups::remove_compat_refs,
+				crate::fixups::separate_watch_from_list_operations,
 			],
 
 			SupportedVersion::V1_9 => &[
@@ -75,6 +76,7 @@ impl SupportedVersion {
 				crate::fixups::optional_properties::poddisruptionbudgetstatus,
 				crate::fixups::raw_extension_ty,
 				crate::fixups::remove_compat_refs,
+				crate::fixups::separate_watch_from_list_operations,
 			],
 
 			SupportedVersion::V1_10 => &[
@@ -94,6 +96,7 @@ impl SupportedVersion {
 				crate::fixups::optional_properties::poddisruptionbudgetstatus,
 				crate::fixups::raw_extension_ty,
 				crate::fixups::remove_compat_refs,
+				crate::fixups::separate_watch_from_list_operations,
 			],
 
 			SupportedVersion::V1_11 => &[
@@ -106,6 +109,7 @@ impl SupportedVersion {
 				crate::fixups::optional_properties::poddisruptionbudgetstatus,
 				crate::fixups::raw_extension_ty,
 				crate::fixups::remove_compat_refs,
+				crate::fixups::separate_watch_from_list_operations,
 			],
 
 			SupportedVersion::V1_12 => &[
@@ -117,6 +121,7 @@ impl SupportedVersion {
 				crate::fixups::optional_properties::crdstatus,
 				crate::fixups::raw_extension_ty,
 				crate::fixups::remove_compat_refs,
+				crate::fixups::separate_watch_from_list_operations,
 			],
 
 			SupportedVersion::V1_13 => &[
@@ -128,6 +133,7 @@ impl SupportedVersion {
 				crate::fixups::optional_properties::crdstatus,
 				crate::fixups::raw_extension_ty,
 				crate::fixups::remove_compat_refs,
+				crate::fixups::separate_watch_from_list_operations,
 			],
 		};
 

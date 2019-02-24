@@ -76,6 +76,8 @@ pub use self::component_status::{
     ComponentStatus,
     ListComponentStatusOptional, ListComponentStatusResponse,
     ReadComponentStatusOptional, ReadComponentStatusResponse,
+    WatchComponentStatusOptional, WatchComponentStatusResponse,
+    WatchComponentStatusListOptional, WatchComponentStatusListResponse,
 };
 
 mod component_status_list;
@@ -94,6 +96,8 @@ pub use self::config_map::{
     PatchNamespacedConfigMapOptional, PatchNamespacedConfigMapResponse,
     ReadNamespacedConfigMapOptional, ReadNamespacedConfigMapResponse,
     ReplaceNamespacedConfigMapOptional, ReplaceNamespacedConfigMapResponse,
+    WatchConfigMapForAllNamespacesOptional, WatchConfigMapForAllNamespacesResponse,
+    WatchConfigMapForAllNamespacesListOptional, WatchConfigMapForAllNamespacesListResponse,
     WatchConfigMapListForAllNamespacesOptional, WatchConfigMapListForAllNamespacesResponse,
     WatchNamespacedConfigMapOptional, WatchNamespacedConfigMapResponse,
     WatchNamespacedConfigMapListOptional, WatchNamespacedConfigMapListResponse,
@@ -215,6 +219,8 @@ pub use self::endpoints::{
     PatchNamespacedEndpointsOptional, PatchNamespacedEndpointsResponse,
     ReadNamespacedEndpointsOptional, ReadNamespacedEndpointsResponse,
     ReplaceNamespacedEndpointsOptional, ReplaceNamespacedEndpointsResponse,
+    WatchEndpointsForAllNamespacesOptional, WatchEndpointsForAllNamespacesResponse,
+    WatchEndpointsForAllNamespacesListOptional, WatchEndpointsForAllNamespacesListResponse,
     WatchEndpointsListForAllNamespacesOptional, WatchEndpointsListForAllNamespacesResponse,
     WatchNamespacedEndpointsOptional, WatchNamespacedEndpointsResponse,
     WatchNamespacedEndpointsListOptional, WatchNamespacedEndpointsListResponse,
@@ -251,6 +257,8 @@ pub use self::event::{
     PatchNamespacedEventOptional, PatchNamespacedEventResponse,
     ReadNamespacedEventOptional, ReadNamespacedEventResponse,
     ReplaceNamespacedEventOptional, ReplaceNamespacedEventResponse,
+    WatchEventForAllNamespacesOptional, WatchEventForAllNamespacesResponse,
+    WatchEventForAllNamespacesListOptional, WatchEventForAllNamespacesListResponse,
     WatchEventListForAllNamespacesOptional, WatchEventListForAllNamespacesResponse,
     WatchNamespacedEventOptional, WatchNamespacedEventResponse,
     WatchNamespacedEventListOptional, WatchNamespacedEventListResponse,
@@ -362,6 +370,8 @@ pub use self::limit_range::{
     PatchNamespacedLimitRangeOptional, PatchNamespacedLimitRangeResponse,
     ReadNamespacedLimitRangeOptional, ReadNamespacedLimitRangeResponse,
     ReplaceNamespacedLimitRangeOptional, ReplaceNamespacedLimitRangeResponse,
+    WatchLimitRangeForAllNamespacesOptional, WatchLimitRangeForAllNamespacesResponse,
+    WatchLimitRangeForAllNamespacesListOptional, WatchLimitRangeForAllNamespacesListResponse,
     WatchLimitRangeListForAllNamespacesOptional, WatchLimitRangeListForAllNamespacesResponse,
     WatchNamespacedLimitRangeOptional, WatchNamespacedLimitRangeResponse,
     WatchNamespacedLimitRangeListOptional, WatchNamespacedLimitRangeListResponse,
@@ -579,6 +589,8 @@ pub use self::persistent_volume_claim::{
     ReplaceNamespacedPersistentVolumeClaimStatusOptional, ReplaceNamespacedPersistentVolumeClaimStatusResponse,
     WatchNamespacedPersistentVolumeClaimOptional, WatchNamespacedPersistentVolumeClaimResponse,
     WatchNamespacedPersistentVolumeClaimListOptional, WatchNamespacedPersistentVolumeClaimListResponse,
+    WatchPersistentVolumeClaimForAllNamespacesOptional, WatchPersistentVolumeClaimForAllNamespacesResponse,
+    WatchPersistentVolumeClaimForAllNamespacesListOptional, WatchPersistentVolumeClaimForAllNamespacesListResponse,
     WatchPersistentVolumeClaimListForAllNamespacesOptional, WatchPersistentVolumeClaimListForAllNamespacesResponse,
 };
 
@@ -670,6 +682,8 @@ pub use self::pod::{
     ReplaceNamespacedPodStatusOptional, ReplaceNamespacedPodStatusResponse,
     WatchNamespacedPodOptional, WatchNamespacedPodResponse,
     WatchNamespacedPodListOptional, WatchNamespacedPodListResponse,
+    WatchPodForAllNamespacesOptional, WatchPodForAllNamespacesResponse,
+    WatchPodForAllNamespacesListOptional, WatchPodForAllNamespacesListResponse,
     WatchPodListForAllNamespacesOptional, WatchPodListForAllNamespacesResponse,
 };
 
@@ -736,6 +750,8 @@ pub use self::pod_template::{
     ReplaceNamespacedPodTemplateOptional, ReplaceNamespacedPodTemplateResponse,
     WatchNamespacedPodTemplateOptional, WatchNamespacedPodTemplateResponse,
     WatchNamespacedPodTemplateListOptional, WatchNamespacedPodTemplateListResponse,
+    WatchPodTemplateForAllNamespacesOptional, WatchPodTemplateForAllNamespacesResponse,
+    WatchPodTemplateForAllNamespacesListOptional, WatchPodTemplateForAllNamespacesListResponse,
     WatchPodTemplateListForAllNamespacesOptional, WatchPodTemplateListForAllNamespacesResponse,
 };
 
@@ -800,6 +816,8 @@ pub use self::replication_controller::{
     ReplaceNamespacedReplicationControllerStatusOptional, ReplaceNamespacedReplicationControllerStatusResponse,
     WatchNamespacedReplicationControllerOptional, WatchNamespacedReplicationControllerResponse,
     WatchNamespacedReplicationControllerListOptional, WatchNamespacedReplicationControllerListResponse,
+    WatchReplicationControllerForAllNamespacesOptional, WatchReplicationControllerForAllNamespacesResponse,
+    WatchReplicationControllerForAllNamespacesListOptional, WatchReplicationControllerForAllNamespacesListResponse,
     WatchReplicationControllerListForAllNamespacesOptional, WatchReplicationControllerListForAllNamespacesResponse,
 };
 
@@ -844,6 +862,8 @@ pub use self::resource_quota::{
     ReplaceNamespacedResourceQuotaStatusOptional, ReplaceNamespacedResourceQuotaStatusResponse,
     WatchNamespacedResourceQuotaOptional, WatchNamespacedResourceQuotaResponse,
     WatchNamespacedResourceQuotaListOptional, WatchNamespacedResourceQuotaListResponse,
+    WatchResourceQuotaForAllNamespacesOptional, WatchResourceQuotaForAllNamespacesResponse,
+    WatchResourceQuotaForAllNamespacesListOptional, WatchResourceQuotaForAllNamespacesListResponse,
     WatchResourceQuotaListForAllNamespacesOptional, WatchResourceQuotaListForAllNamespacesResponse,
 };
 
@@ -895,6 +915,8 @@ pub use self::secret::{
     ReplaceNamespacedSecretOptional, ReplaceNamespacedSecretResponse,
     WatchNamespacedSecretOptional, WatchNamespacedSecretResponse,
     WatchNamespacedSecretListOptional, WatchNamespacedSecretListResponse,
+    WatchSecretForAllNamespacesOptional, WatchSecretForAllNamespacesResponse,
+    WatchSecretForAllNamespacesListOptional, WatchSecretForAllNamespacesListResponse,
     WatchSecretListForAllNamespacesOptional, WatchSecretListForAllNamespacesResponse,
 };
 
@@ -968,6 +990,8 @@ pub use self::service::{
     ReplaceNamespacedServiceStatusOptional, ReplaceNamespacedServiceStatusResponse,
     WatchNamespacedServiceOptional, WatchNamespacedServiceResponse,
     WatchNamespacedServiceListOptional, WatchNamespacedServiceListResponse,
+    WatchServiceForAllNamespacesOptional, WatchServiceForAllNamespacesResponse,
+    WatchServiceForAllNamespacesListOptional, WatchServiceForAllNamespacesListResponse,
     WatchServiceListForAllNamespacesOptional, WatchServiceListForAllNamespacesResponse,
 };
 
@@ -984,6 +1008,8 @@ pub use self::service_account::{
     ReplaceNamespacedServiceAccountOptional, ReplaceNamespacedServiceAccountResponse,
     WatchNamespacedServiceAccountOptional, WatchNamespacedServiceAccountResponse,
     WatchNamespacedServiceAccountListOptional, WatchNamespacedServiceAccountListResponse,
+    WatchServiceAccountForAllNamespacesOptional, WatchServiceAccountForAllNamespacesResponse,
+    WatchServiceAccountForAllNamespacesListOptional, WatchServiceAccountForAllNamespacesListResponse,
     WatchServiceAccountListForAllNamespacesOptional, WatchServiceAccountListForAllNamespacesResponse,
 };
 

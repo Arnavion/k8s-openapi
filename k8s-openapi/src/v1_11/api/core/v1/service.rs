@@ -1055,6 +1055,8 @@ impl crate::Response for DeleteNamespacedServiceResponse {
 impl Service {
     /// list or watch objects of kind Service
     ///
+    /// This operation only supports listing all items of this type.
+    ///
     /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedServiceResponse`]`>` constructor, or [`ListNamespacedServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
@@ -1072,22 +1074,17 @@ impl Service {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedServiceResponse>), crate::RequestError> {
         let ListNamespacedServiceOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
         let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -1107,9 +1104,6 @@ impl Service {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -1126,8 +1120,6 @@ impl Service {
 pub struct ListNamespacedServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -1142,8 +1134,6 @@ pub struct ListNamespacedServiceOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<ListNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::list_namespaced_service`]
@@ -1176,6 +1166,8 @@ impl crate::Response for ListNamespacedServiceResponse {
 impl Service {
     /// list or watch objects of kind Service
     ///
+    /// This operation only supports listing all items of this type.
+    ///
     /// Use the returned [`crate::ResponseBody`]`<`[`ListServiceForAllNamespacesResponse`]`>` constructor, or [`ListServiceForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
@@ -1188,22 +1180,17 @@ impl Service {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListServiceForAllNamespacesResponse>), crate::RequestError> {
         let ListServiceForAllNamespacesOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
         let __url = "/api/v1/services?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -1223,9 +1210,6 @@ impl Service {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -1242,8 +1226,6 @@ impl Service {
 pub struct ListServiceForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -1258,8 +1240,6 @@ pub struct ListServiceForAllNamespacesOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<ListServiceForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::list_service_for_all_namespaces`]
@@ -1788,47 +1768,45 @@ impl crate::Response for ReplaceNamespacedServiceStatusResponse {
 // Generated from operation watchCoreV1NamespacedService
 
 impl Service {
-    /// watch changes to an object of kind Service
+    /// list or watch objects of kind Service
+    ///
+    /// This operation only supports watching a single item for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedServiceResponse`]`>` constructor, or [`WatchNamespacedServiceResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
-    /// * `name`
-    ///
-    ///     name of the Service
-    ///
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_namespaced_service(
-        name: &str,
         namespace: &str,
+        field_selector: &str,
         optional: WatchNamespacedServiceOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedServiceResponse>), crate::RequestError> {
         let WatchNamespacedServiceOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = format!("/api/v1/watch/namespaces/{namespace}/services/{name}?", name = name, namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
+        __query_pairs.append_pair("fieldSelector", &field_selector);
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
@@ -1847,9 +1825,7 @@ impl Service {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -1866,8 +1842,6 @@ impl Service {
 pub struct WatchNamespacedServiceOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -1882,8 +1856,6 @@ pub struct WatchNamespacedServiceOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_namespaced_service`]
@@ -1916,7 +1888,9 @@ impl crate::Response for WatchNamespacedServiceResponse {
 // Generated from operation watchCoreV1NamespacedServiceList
 
 impl Service {
-    /// watch individual changes to a list of Service
+    /// list or watch objects of kind Service
+    ///
+    /// This operation only supports watching a list of items for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedServiceListResponse`]`>` constructor, or [`WatchNamespacedServiceListResponse`] directly, to parse the HTTP response.
     ///
@@ -1935,22 +1909,17 @@ impl Service {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedServiceListResponse>), crate::RequestError> {
         let WatchNamespacedServiceListOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = format!("/api/v1/watch/namespaces/{namespace}/services?", namespace = namespace);
+        let __url = format!("/api/v1/namespaces/{namespace}/services?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -1970,9 +1939,7 @@ impl Service {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -1989,8 +1956,6 @@ impl Service {
 pub struct WatchNamespacedServiceListOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -2005,8 +1970,6 @@ pub struct WatchNamespacedServiceListOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchNamespacedServiceListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_namespaced_service_list`]
@@ -2032,6 +1995,230 @@ impl crate::Response for WatchNamespacedServiceListResponse {
             },
             http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedServiceListResponse::Unauthorized, 0)),
             _ => Ok((WatchNamespacedServiceListResponse::Other, 0)),
+        }
+    }
+}
+
+// Generated from operation watchCoreV1ServiceForAllNamespaces
+
+impl Service {
+    /// list or watch objects of kind Service
+    ///
+    /// This operation only supports watching a single item for changes.
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchServiceForAllNamespacesResponse`]`>` constructor, or [`WatchServiceForAllNamespacesResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn watch_service_for_all_namespaces(
+        field_selector: &str,
+        optional: WatchServiceForAllNamespacesOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchServiceForAllNamespacesResponse>), crate::RequestError> {
+        let WatchServiceForAllNamespacesOptional {
+            continue_,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+        } = optional;
+        let __url = "/api/v1/services?".to_string();
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", continue_);
+        }
+        __query_pairs.append_pair("fieldSelector", &field_selector);
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        __query_pairs.append_pair("watch", "true");
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::get(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`Service::watch_service_for_all_namespaces`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct WatchServiceForAllNamespacesOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+}
+
+/// Use `<WatchServiceForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_service_for_all_namespaces`]
+#[derive(Debug)]
+pub enum WatchServiceForAllNamespacesResponse {
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl crate::Response for WatchServiceForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
+                };
+                Ok((WatchServiceForAllNamespacesResponse::Ok(result), byte_offset))
+            },
+            http::StatusCode::UNAUTHORIZED => Ok((WatchServiceForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchServiceForAllNamespacesResponse::Other, 0)),
+        }
+    }
+}
+
+// Generated from operation watchCoreV1ServiceForAllNamespacesList
+
+impl Service {
+    /// list or watch objects of kind Service
+    ///
+    /// This operation only supports watching a list of items for changes.
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchServiceForAllNamespacesListResponse`]`>` constructor, or [`WatchServiceForAllNamespacesListResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn watch_service_for_all_namespaces_list(
+        optional: WatchServiceForAllNamespacesListOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchServiceForAllNamespacesListResponse>), crate::RequestError> {
+        let WatchServiceForAllNamespacesListOptional {
+            continue_,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+        } = optional;
+        let __url = "/api/v1/services?".to_string();
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", continue_);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        __query_pairs.append_pair("watch", "true");
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::get(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`Service::watch_service_for_all_namespaces_list`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct WatchServiceForAllNamespacesListOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+}
+
+/// Use `<WatchServiceForAllNamespacesListResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_service_for_all_namespaces_list`]
+#[derive(Debug)]
+pub enum WatchServiceForAllNamespacesListResponse {
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl crate::Response for WatchServiceForAllNamespacesListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
+                };
+                Ok((WatchServiceForAllNamespacesListResponse::Ok(result), byte_offset))
+            },
+            http::StatusCode::UNAUTHORIZED => Ok((WatchServiceForAllNamespacesListResponse::Unauthorized, 0)),
+            _ => Ok((WatchServiceForAllNamespacesListResponse::Other, 0)),
         }
     }
 }

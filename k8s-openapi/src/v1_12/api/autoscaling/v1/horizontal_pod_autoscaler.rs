@@ -384,6 +384,8 @@ impl crate::Response for DeleteNamespacedHorizontalPodAutoscalerResponse {
 impl HorizontalPodAutoscaler {
     /// list or watch objects of kind HorizontalPodAutoscaler
     ///
+    /// This operation only supports listing all items of this type.
+    ///
     /// Use the returned [`crate::ResponseBody`]`<`[`ListHorizontalPodAutoscalerForAllNamespacesResponse`]`>` constructor, or [`ListHorizontalPodAutoscalerForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
@@ -396,22 +398,17 @@ impl HorizontalPodAutoscaler {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListHorizontalPodAutoscalerForAllNamespacesResponse>), crate::RequestError> {
         let ListHorizontalPodAutoscalerForAllNamespacesOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
         let __url = "/apis/autoscaling/v1/horizontalpodautoscalers?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -431,9 +428,6 @@ impl HorizontalPodAutoscaler {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -452,8 +446,6 @@ pub struct ListHorizontalPodAutoscalerForAllNamespacesOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -468,8 +460,6 @@ pub struct ListHorizontalPodAutoscalerForAllNamespacesOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<ListHorizontalPodAutoscalerForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::list_horizontal_pod_autoscaler_for_all_namespaces`]
@@ -502,6 +492,8 @@ impl crate::Response for ListHorizontalPodAutoscalerForAllNamespacesResponse {
 impl HorizontalPodAutoscaler {
     /// list or watch objects of kind HorizontalPodAutoscaler
     ///
+    /// This operation only supports listing all items of this type.
+    ///
     /// Use the returned [`crate::ResponseBody`]`<`[`ListNamespacedHorizontalPodAutoscalerResponse`]`>` constructor, or [`ListNamespacedHorizontalPodAutoscalerResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
@@ -519,22 +511,17 @@ impl HorizontalPodAutoscaler {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedHorizontalPodAutoscalerResponse>), crate::RequestError> {
         let ListNamespacedHorizontalPodAutoscalerOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
         let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -554,9 +541,6 @@ impl HorizontalPodAutoscaler {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -575,8 +559,6 @@ pub struct ListNamespacedHorizontalPodAutoscalerOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -591,8 +573,6 @@ pub struct ListNamespacedHorizontalPodAutoscalerOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<ListNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::list_namespaced_horizontal_pod_autoscaler`]
@@ -1142,6 +1122,234 @@ impl crate::Response for ReplaceNamespacedHorizontalPodAutoscalerStatusResponse 
     }
 }
 
+// Generated from operation watchAutoscalingV1HorizontalPodAutoscalerForAllNamespaces
+
+impl HorizontalPodAutoscaler {
+    /// list or watch objects of kind HorizontalPodAutoscaler
+    ///
+    /// This operation only supports watching a single item for changes.
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchHorizontalPodAutoscalerForAllNamespacesResponse`]`>` constructor, or [`WatchHorizontalPodAutoscalerForAllNamespacesResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn watch_horizontal_pod_autoscaler_for_all_namespaces(
+        field_selector: &str,
+        optional: WatchHorizontalPodAutoscalerForAllNamespacesOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchHorizontalPodAutoscalerForAllNamespacesResponse>), crate::RequestError> {
+        let WatchHorizontalPodAutoscalerForAllNamespacesOptional {
+            continue_,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+        } = optional;
+        let __url = "/apis/autoscaling/v1/horizontalpodautoscalers?".to_string();
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", continue_);
+        }
+        __query_pairs.append_pair("fieldSelector", &field_selector);
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        __query_pairs.append_pair("watch", "true");
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::get(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`HorizontalPodAutoscaler::watch_horizontal_pod_autoscaler_for_all_namespaces`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct WatchHorizontalPodAutoscalerForAllNamespacesOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
+    ///
+    /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+}
+
+/// Use `<WatchHorizontalPodAutoscalerForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::watch_horizontal_pod_autoscaler_for_all_namespaces`]
+#[derive(Debug)]
+pub enum WatchHorizontalPodAutoscalerForAllNamespacesResponse {
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl crate::Response for WatchHorizontalPodAutoscalerForAllNamespacesResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
+                };
+                Ok((WatchHorizontalPodAutoscalerForAllNamespacesResponse::Ok(result), byte_offset))
+            },
+            http::StatusCode::UNAUTHORIZED => Ok((WatchHorizontalPodAutoscalerForAllNamespacesResponse::Unauthorized, 0)),
+            _ => Ok((WatchHorizontalPodAutoscalerForAllNamespacesResponse::Other, 0)),
+        }
+    }
+}
+
+// Generated from operation watchAutoscalingV1HorizontalPodAutoscalerForAllNamespacesList
+
+impl HorizontalPodAutoscaler {
+    /// list or watch objects of kind HorizontalPodAutoscaler
+    ///
+    /// This operation only supports watching a list of items for changes.
+    ///
+    /// Use the returned [`crate::ResponseBody`]`<`[`WatchHorizontalPodAutoscalerForAllNamespacesListResponse`]`>` constructor, or [`WatchHorizontalPodAutoscalerForAllNamespacesListResponse`] directly, to parse the HTTP response.
+    ///
+    /// # Arguments
+    ///
+    /// * `optional`
+    ///
+    ///     Optional parameters. Use `Default::default()` to not pass any.
+    pub fn watch_horizontal_pod_autoscaler_for_all_namespaces_list(
+        optional: WatchHorizontalPodAutoscalerForAllNamespacesListOptional<'_>,
+    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchHorizontalPodAutoscalerForAllNamespacesListResponse>), crate::RequestError> {
+        let WatchHorizontalPodAutoscalerForAllNamespacesListOptional {
+            continue_,
+            include_uninitialized,
+            label_selector,
+            limit,
+            pretty,
+            resource_version,
+            timeout_seconds,
+        } = optional;
+        let __url = "/apis/autoscaling/v1/horizontalpodautoscalers?".to_string();
+        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
+        if let Some(continue_) = continue_ {
+            __query_pairs.append_pair("continue", continue_);
+        }
+        if let Some(include_uninitialized) = include_uninitialized {
+            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
+        }
+        if let Some(label_selector) = label_selector {
+            __query_pairs.append_pair("labelSelector", label_selector);
+        }
+        if let Some(limit) = limit {
+            __query_pairs.append_pair("limit", &limit.to_string());
+        }
+        if let Some(pretty) = pretty {
+            __query_pairs.append_pair("pretty", pretty);
+        }
+        if let Some(resource_version) = resource_version {
+            __query_pairs.append_pair("resourceVersion", resource_version);
+        }
+        if let Some(timeout_seconds) = timeout_seconds {
+            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
+        }
+        __query_pairs.append_pair("watch", "true");
+        let __url = __query_pairs.finish();
+
+        let mut __request = http::Request::get(__url);
+        let __body = vec![];
+        match __request.body(__body) {
+            Ok(body) => Ok((body, crate::ResponseBody::new)),
+            Err(err) => Err(crate::RequestError::Http(err)),
+        }
+    }
+}
+
+/// Optional parameters of [`HorizontalPodAutoscaler::watch_horizontal_pod_autoscaler_for_all_namespaces_list`]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct WatchHorizontalPodAutoscalerForAllNamespacesListOptional<'a> {
+    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server, the server will respond with a 410 ResourceExpired error together with a continue token. If the client needs a consistent list, it must restart their list without the continue field. Otherwise, the client may send another list request with the token received with the 410 error, the server will respond with a list starting from the next key, but from the latest snapshot, which is inconsistent from the previous list results - objects that are created, modified, or deleted after the first list request will be included in the response, as long as their keys are after the "next key".
+    ///
+    /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
+    pub continue_: Option<&'a str>,
+    /// If true, partially initialized resources are included in the response.
+    pub include_uninitialized: Option<bool>,
+    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
+    pub label_selector: Option<&'a str>,
+    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
+    ///
+    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
+    pub limit: Option<i64>,
+    /// If 'true', then the output is pretty printed.
+    pub pretty: Option<&'a str>,
+    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
+    pub resource_version: Option<&'a str>,
+    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
+    pub timeout_seconds: Option<i64>,
+}
+
+/// Use `<WatchHorizontalPodAutoscalerForAllNamespacesListResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::watch_horizontal_pod_autoscaler_for_all_namespaces_list`]
+#[derive(Debug)]
+pub enum WatchHorizontalPodAutoscalerForAllNamespacesListResponse {
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Unauthorized,
+    Other,
+}
+
+impl crate::Response for WatchHorizontalPodAutoscalerForAllNamespacesListResponse {
+    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
+        match status_code {
+            http::StatusCode::OK => {
+                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
+                let (result, byte_offset) = match deserializer.next() {
+                    Some(Ok(value)) => (value, deserializer.byte_offset()),
+                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
+                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
+                    None => return Err(crate::ResponseError::NeedMoreData),
+                };
+                Ok((WatchHorizontalPodAutoscalerForAllNamespacesListResponse::Ok(result), byte_offset))
+            },
+            http::StatusCode::UNAUTHORIZED => Ok((WatchHorizontalPodAutoscalerForAllNamespacesListResponse::Unauthorized, 0)),
+            _ => Ok((WatchHorizontalPodAutoscalerForAllNamespacesListResponse::Other, 0)),
+        }
+    }
+}
+
 // Generated from operation watchAutoscalingV1HorizontalPodAutoscalerListForAllNamespaces
 
 impl HorizontalPodAutoscaler {
@@ -1265,47 +1473,45 @@ impl crate::Response for WatchHorizontalPodAutoscalerListForAllNamespacesRespons
 // Generated from operation watchAutoscalingV1NamespacedHorizontalPodAutoscaler
 
 impl HorizontalPodAutoscaler {
-    /// watch changes to an object of kind HorizontalPodAutoscaler. deprecated: use the 'watch' parameter with a list operation instead, filtered to a single item with the 'fieldSelector' parameter.
+    /// list or watch objects of kind HorizontalPodAutoscaler
+    ///
+    /// This operation only supports watching a single item for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedHorizontalPodAutoscalerResponse`]`>` constructor, or [`WatchNamespacedHorizontalPodAutoscalerResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
-    /// * `name`
-    ///
-    ///     name of the HorizontalPodAutoscaler
-    ///
     /// * `namespace`
     ///
     ///     object name and auth scope, such as for teams and projects
+    ///
+    /// * `field_selector`
+    ///
+    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
     ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_namespaced_horizontal_pod_autoscaler(
-        name: &str,
         namespace: &str,
+        field_selector: &str,
         optional: WatchNamespacedHorizontalPodAutoscalerOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedHorizontalPodAutoscalerResponse>), crate::RequestError> {
         let WatchNamespacedHorizontalPodAutoscalerOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = format!("/apis/autoscaling/v1/watch/namespaces/{namespace}/horizontalpodautoscalers/{name}?", name = name, namespace = namespace);
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
-        }
+        __query_pairs.append_pair("fieldSelector", &field_selector);
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
@@ -1324,9 +1530,7 @@ impl HorizontalPodAutoscaler {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -1345,8 +1549,6 @@ pub struct WatchNamespacedHorizontalPodAutoscalerOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -1361,8 +1563,6 @@ pub struct WatchNamespacedHorizontalPodAutoscalerOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::watch_namespaced_horizontal_pod_autoscaler`]
@@ -1395,7 +1595,9 @@ impl crate::Response for WatchNamespacedHorizontalPodAutoscalerResponse {
 // Generated from operation watchAutoscalingV1NamespacedHorizontalPodAutoscalerList
 
 impl HorizontalPodAutoscaler {
-    /// watch individual changes to a list of HorizontalPodAutoscaler. deprecated: use the 'watch' parameter with a list operation instead.
+    /// list or watch objects of kind HorizontalPodAutoscaler
+    ///
+    /// This operation only supports watching a list of items for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedHorizontalPodAutoscalerListResponse`]`>` constructor, or [`WatchNamespacedHorizontalPodAutoscalerListResponse`] directly, to parse the HTTP response.
     ///
@@ -1414,22 +1616,17 @@ impl HorizontalPodAutoscaler {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedHorizontalPodAutoscalerListResponse>), crate::RequestError> {
         let WatchNamespacedHorizontalPodAutoscalerListOptional {
             continue_,
-            field_selector,
             include_uninitialized,
             label_selector,
             limit,
             pretty,
             resource_version,
             timeout_seconds,
-            watch,
         } = optional;
-        let __url = format!("/apis/autoscaling/v1/watch/namespaces/{namespace}/horizontalpodautoscalers?", namespace = namespace);
+        let __url = format!("/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(field_selector) = field_selector {
-            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -1449,9 +1646,7 @@ impl HorizontalPodAutoscaler {
         if let Some(timeout_seconds) = timeout_seconds {
             __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
         }
-        if let Some(watch) = watch {
-            __query_pairs.append_pair("watch", &watch.to_string());
-        }
+        __query_pairs.append_pair("watch", "true");
         let __url = __query_pairs.finish();
 
         let mut __request = http::Request::get(__url);
@@ -1470,8 +1665,6 @@ pub struct WatchNamespacedHorizontalPodAutoscalerListOptional<'a> {
     ///
     /// This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
-    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -1486,8 +1679,6 @@ pub struct WatchNamespacedHorizontalPodAutoscalerListOptional<'a> {
     pub resource_version: Option<&'a str>,
     /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
     pub timeout_seconds: Option<i64>,
-    /// Watch for changes to the described resources and return them as a stream of add, update, and remove notifications. Specify resourceVersion.
-    pub watch: Option<bool>,
 }
 
 /// Use `<WatchNamespacedHorizontalPodAutoscalerListResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::watch_namespaced_horizontal_pod_autoscaler_list`]

@@ -13,6 +13,8 @@ pub use self::cron_job::{
     ReadNamespacedCronJobStatusOptional, ReadNamespacedCronJobStatusResponse,
     ReplaceNamespacedCronJobOptional, ReplaceNamespacedCronJobResponse,
     ReplaceNamespacedCronJobStatusOptional, ReplaceNamespacedCronJobStatusResponse,
+    WatchCronJobForAllNamespacesOptional, WatchCronJobForAllNamespacesResponse,
+    WatchCronJobForAllNamespacesListOptional, WatchCronJobForAllNamespacesListResponse,
     WatchCronJobListForAllNamespacesOptional, WatchCronJobListForAllNamespacesResponse,
     WatchNamespacedCronJobOptional, WatchNamespacedCronJobResponse,
     WatchNamespacedCronJobListOptional, WatchNamespacedCronJobListResponse,

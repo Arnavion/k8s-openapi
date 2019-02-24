@@ -23,6 +23,8 @@ pub use self::daemon_set::{
     ReadNamespacedDaemonSetStatusOptional, ReadNamespacedDaemonSetStatusResponse,
     ReplaceNamespacedDaemonSetOptional, ReplaceNamespacedDaemonSetResponse,
     ReplaceNamespacedDaemonSetStatusOptional, ReplaceNamespacedDaemonSetStatusResponse,
+    WatchDaemonSetForAllNamespacesOptional, WatchDaemonSetForAllNamespacesResponse,
+    WatchDaemonSetForAllNamespacesListOptional, WatchDaemonSetForAllNamespacesListResponse,
     WatchDaemonSetListForAllNamespacesOptional, WatchDaemonSetListForAllNamespacesResponse,
     WatchNamespacedDaemonSetOptional, WatchNamespacedDaemonSetResponse,
     WatchNamespacedDaemonSetListOptional, WatchNamespacedDaemonSetListResponse,
@@ -67,6 +69,8 @@ pub use self::deployment::{
     ReadNamespacedDeploymentStatusOptional, ReadNamespacedDeploymentStatusResponse,
     ReplaceNamespacedDeploymentOptional, ReplaceNamespacedDeploymentResponse,
     ReplaceNamespacedDeploymentStatusOptional, ReplaceNamespacedDeploymentStatusResponse,
+    WatchDeploymentForAllNamespacesOptional, WatchDeploymentForAllNamespacesResponse,
+    WatchDeploymentForAllNamespacesListOptional, WatchDeploymentForAllNamespacesListResponse,
     WatchDeploymentListForAllNamespacesOptional, WatchDeploymentListForAllNamespacesResponse,
     WatchNamespacedDeploymentOptional, WatchNamespacedDeploymentResponse,
     WatchNamespacedDeploymentListOptional, WatchNamespacedDeploymentListResponse,
@@ -147,6 +151,8 @@ pub use self::ingress::{
     ReadNamespacedIngressStatusOptional, ReadNamespacedIngressStatusResponse,
     ReplaceNamespacedIngressOptional, ReplaceNamespacedIngressResponse,
     ReplaceNamespacedIngressStatusOptional, ReplaceNamespacedIngressStatusResponse,
+    WatchIngressForAllNamespacesOptional, WatchIngressForAllNamespacesResponse,
+    WatchIngressForAllNamespacesListOptional, WatchIngressForAllNamespacesListResponse,
     WatchIngressListForAllNamespacesOptional, WatchIngressListForAllNamespacesResponse,
     WatchNamespacedIngressOptional, WatchNamespacedIngressResponse,
     WatchNamespacedIngressListOptional, WatchNamespacedIngressListResponse,
@@ -195,6 +201,8 @@ pub use self::network_policy::{
     ReplaceNamespacedNetworkPolicyOptional, ReplaceNamespacedNetworkPolicyResponse,
     WatchNamespacedNetworkPolicyOptional, WatchNamespacedNetworkPolicyResponse,
     WatchNamespacedNetworkPolicyListOptional, WatchNamespacedNetworkPolicyListResponse,
+    WatchNetworkPolicyForAllNamespacesOptional, WatchNetworkPolicyForAllNamespacesResponse,
+    WatchNetworkPolicyForAllNamespacesListOptional, WatchNetworkPolicyForAllNamespacesListResponse,
     WatchNetworkPolicyListForAllNamespacesOptional, WatchNetworkPolicyListForAllNamespacesResponse,
 };
 
@@ -268,6 +276,8 @@ pub use self::replica_set::{
     ReplaceNamespacedReplicaSetStatusOptional, ReplaceNamespacedReplicaSetStatusResponse,
     WatchNamespacedReplicaSetOptional, WatchNamespacedReplicaSetResponse,
     WatchNamespacedReplicaSetListOptional, WatchNamespacedReplicaSetListResponse,
+    WatchReplicaSetForAllNamespacesOptional, WatchReplicaSetForAllNamespacesResponse,
+    WatchReplicaSetForAllNamespacesListOptional, WatchReplicaSetForAllNamespacesListResponse,
     WatchReplicaSetListForAllNamespacesOptional, WatchReplicaSetListForAllNamespacesResponse,
 };
 

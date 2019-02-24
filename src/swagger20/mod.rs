@@ -7,7 +7,7 @@ pub use self::info::*;
 mod paths;
 pub use self::paths::*;
 
-#[derive(Debug, Eq, PartialEq, serde_derive::Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde_derive::Deserialize)]
 pub struct KubernetesGroupKindVersion {
 	pub group: String,
 	pub kind: String,
@@ -32,7 +32,7 @@ impl std::cmp::PartialOrd for KubernetesGroupKindVersion {
 pub struct Spec {
 	pub info: Info,
 	pub definitions: std::collections::BTreeMap<DefinitionPath, Schema>,
-	pub paths: std::collections::BTreeMap<Path, PathItem>,
+	pub operations: Vec<Operation>,
 }
 
 #[allow(clippy::use_self)]
@@ -43,7 +43,83 @@ impl<'de> serde::Deserialize<'de> for Spec {
 			swagger: String,
 			info: Info,
 			definitions: std::collections::BTreeMap<DefinitionPath, Schema>,
-			paths: std::collections::BTreeMap<Path, PathItem>,
+			paths: std::collections::BTreeMap<Path, InnerPathItem>,
+		}
+
+		#[derive(Debug, serde_derive::Deserialize)]
+		struct InnerPathItem {
+			delete: Option<InnerOperation>,
+			get: Option<InnerOperation>,
+			patch: Option<InnerOperation>,
+			post: Option<InnerOperation>,
+			put: Option<InnerOperation>,
+			#[serde(default)]
+			parameters: Vec<std::sync::Arc<Parameter>>,
+		}
+
+		#[derive(Debug, serde_derive::Deserialize)]
+		struct InnerOperation {
+			description: Option<String>,
+			#[serde(rename = "operationId")]
+			id: String,
+			#[serde(rename = "x-kubernetes-action")]
+			kubernetes_action: Option<KubernetesAction>,
+			#[serde(rename = "x-kubernetes-group-version-kind")]
+			kubernetes_group_kind_version: Option<KubernetesGroupKindVersion>,
+			#[serde(default)]
+			parameters: Vec<std::sync::Arc<Parameter>>,
+			responses: std::collections::BTreeMap<String, InnerResponse>,
+			tags: (String,),
+		}
+
+		#[derive(Debug, serde_derive::Deserialize)]
+		struct InnerResponse {
+			schema: Option<Schema>,
+		}
+
+		fn parse_operation<'de, D>(
+			value: InnerOperation,
+			method: Method,
+			path: Path,
+			mut parameters: Vec<std::sync::Arc<Parameter>>,
+		) -> Result<Operation, D::Error> where D: serde::Deserializer<'de> {
+			let responses: Result<_, _> =
+				value.responses.into_iter()
+				.map(|(status_code_str, response)| {
+					let status_code = status_code_str.parse().map_err(|_|
+						serde::de::Error::invalid_value(serde::de::Unexpected::Str(&status_code_str), &"string representation of an HTTP status code"))?;
+					Ok((status_code, response.schema))
+				})
+				.collect();
+
+			for parameter in value.parameters {
+				if let Some(p) = parameters.iter_mut().find(|p| p.name == parameter.name) {
+					std::mem::replace(p, parameter);
+				}
+				else {
+					parameters.push(parameter);
+				}
+			}
+
+			if method == Method::Get {
+				for parameter in &parameters {
+					if parameter.location == ParameterLocation::Body {
+						return Err(serde::de::Error::custom(format!("Operation {} has method GET but has a body parameter {}", value.id, parameter.name)));
+					}
+				}
+			}
+
+			Ok(Operation {
+				description: value.description,
+				id: value.id,
+				path,
+				kubernetes_action: value.kubernetes_action,
+				kubernetes_group_kind_version: value.kubernetes_group_kind_version,
+				method,
+				parameters,
+				responses: responses?,
+				tag: value.tags.0,
+			})
 		}
 
 		let result: InnerSpec = serde::Deserialize::deserialize(deserializer)?;
@@ -52,10 +128,39 @@ impl<'de> serde::Deserialize<'de> for Spec {
 			return Err(serde::de::Error::invalid_value(serde::de::Unexpected::Str(&result.swagger), &"2.0"));
 		}
 
+		let mut operations = vec![];
+
+		for (path, path_item) in result.paths {
+			if let Some(delete) = path_item.delete {
+				operations.push(parse_operation::<D>(delete, Method::Delete, path.clone(), path_item.parameters.clone())?);
+			}
+
+			if let Some(get) = path_item.get {
+				operations.push(parse_operation::<D>(get, Method::Get, path.clone(), path_item.parameters.clone())?);
+			}
+
+			if let Some(patch) = path_item.patch {
+				operations.push(parse_operation::<D>(patch, Method::Patch, path.clone(), path_item.parameters.clone())?);
+			}
+
+			if let Some(post) = path_item.post {
+				operations.push(parse_operation::<D>(post, Method::Post, path.clone(), path_item.parameters.clone())?);
+			}
+
+			if let Some(put) = path_item.put {
+				operations.push(parse_operation::<D>(put, Method::Put, path, path_item.parameters)?);
+			}
+		}
+
+		let mut operation_ids: std::collections::BTreeSet<_> = Default::default();
+		for operation in &operations {
+			assert!(operation_ids.insert(&operation.id));
+		}
+
 		Ok(Spec {
 			info: result.info,
 			definitions: result.definitions,
-			paths: result.paths,
+			operations,
 		})
 	}
 }

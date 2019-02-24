@@ -7,33 +7,31 @@
 pub(crate) fn connect_options_gvk(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 	let mut found = false;
 
-	for path_item in spec.paths.values_mut() {
-		for operation in &mut path_item.operations {
-			if let Some(kubernetes_group_kind_version) = &mut operation.kubernetes_group_kind_version {
-				if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "NodeProxyOptions" && kubernetes_group_kind_version.version == "v1" {
-					kubernetes_group_kind_version.kind = "Node".to_string();
-					found = true;
-				}
-				else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodAttachOptions" && kubernetes_group_kind_version.version == "v1" {
-					kubernetes_group_kind_version.kind = "Pod".to_string();
-					found = true;
-				}
-				else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodExecOptions" && kubernetes_group_kind_version.version == "v1" {
-					kubernetes_group_kind_version.kind = "Pod".to_string();
-					found = true;
-				}
-				else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodPortForwardOptions" && kubernetes_group_kind_version.version == "v1" {
-					kubernetes_group_kind_version.kind = "Pod".to_string();
-					found = true;
-				}
-				else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodProxyOptions" && kubernetes_group_kind_version.version == "v1" {
-					kubernetes_group_kind_version.kind = "Pod".to_string();
-					found = true;
-				}
-				else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "ServiceProxyOptions" && kubernetes_group_kind_version.version == "v1" {
-					kubernetes_group_kind_version.kind = "Service".to_string();
-					found = true;
-				}
+	for operation in &mut spec.operations {
+		if let Some(kubernetes_group_kind_version) = &mut operation.kubernetes_group_kind_version {
+			if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "NodeProxyOptions" && kubernetes_group_kind_version.version == "v1" {
+				kubernetes_group_kind_version.kind = "Node".to_string();
+				found = true;
+			}
+			else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodAttachOptions" && kubernetes_group_kind_version.version == "v1" {
+				kubernetes_group_kind_version.kind = "Pod".to_string();
+				found = true;
+			}
+			else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodExecOptions" && kubernetes_group_kind_version.version == "v1" {
+				kubernetes_group_kind_version.kind = "Pod".to_string();
+				found = true;
+			}
+			else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodPortForwardOptions" && kubernetes_group_kind_version.version == "v1" {
+				kubernetes_group_kind_version.kind = "Pod".to_string();
+				found = true;
+			}
+			else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "PodProxyOptions" && kubernetes_group_kind_version.version == "v1" {
+				kubernetes_group_kind_version.kind = "Pod".to_string();
+				found = true;
+			}
+			else if kubernetes_group_kind_version.group == "" && kubernetes_group_kind_version.kind == "ServiceProxyOptions" && kubernetes_group_kind_version.version == "v1" {
+				kubernetes_group_kind_version.kind = "Service".to_string();
+				found = true;
 			}
 		}
 	}
@@ -52,16 +50,12 @@ pub(crate) fn connect_options_gvk(spec: &mut crate::swagger20::Spec) -> Result<(
 pub(crate) fn deployment_rollback_create_response_type(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 	let mut found = false;
 
-	if let Some(path_item) = spec.paths.get_mut(&crate::swagger20::Path("/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/rollback".to_string())) {
-		for operation in &mut path_item.operations {
-			if operation.id == "createAppsV1beta1NamespacedDeploymentRollback" {
-				for response in operation.responses.values_mut() {
-					if let Some(crate::swagger20::Schema { kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath(ref_path)), .. }) = response {
-						if ref_path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
-							std::mem::replace(ref_path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_string());
-							found = true;
-						}
-					}
+	if let Some(operation) = spec.operations.iter_mut().find(|o| o.id == "createAppsV1beta1NamespacedDeploymentRollback") {
+		for response in operation.responses.values_mut() {
+			if let Some(crate::swagger20::Schema { kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath(ref_path)), .. }) = response {
+				if ref_path == "io.k8s.api.apps.v1beta1.DeploymentRollback" {
+					std::mem::replace(ref_path, "io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_string());
+					found = true;
 				}
 			}
 		}
@@ -358,6 +352,135 @@ pub(crate) fn remove_compat_refs(spec: &mut crate::swagger20::Spec) -> Result<()
 
 	for to_remove in to_remove {
 		spec.definitions.remove(&to_remove);
+	}
+
+	Ok(())
+}
+
+/// Some watch and watchlist operations (eg `watchCoreV1NamespacedPod` and `watchCoreV1NamespacedPodList`) are deprecated in favor of the corresponding list operation
+/// (eg `listCoreV1NamespacedPod`). The watch operation is equivalent to using the list operation with `watch=true` and `field_selector=...`, and the watchlist operation
+/// to using the list operation with just `watch=true`.
+///
+/// This fixup removes such watch and watchlist operations from the parsed spec entirely. It then synthesizes three functions - a list operation with neither
+/// `watch` nor `field_selector` parameters, a watch operation with a required `field_selector` parameter and an implicit `watch=true`, and a watchlist operation
+/// with only an implicit `watch=true` - all using the list operation's URI and parameters as a base.
+///
+/// This also helps solve the problem that the default list operation's response type is a list type, which would be incorrect if the user called the function
+/// with the `watch` parameter set. Thus it's applied even to those list operations which don't have corresponding deprecated watch or watchlist operations.
+pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	use std::fmt::Write;
+
+	let mut triplets = vec![];
+
+	for operation in &spec.operations {
+		if operation.kubernetes_action != Some(crate::swagger20::KubernetesAction::List) {
+			continue;
+		}
+
+		if !operation.id.starts_with("list") {
+			continue;
+		}
+
+		let watch_index = match operation.parameters.iter().position(|p| p.name == "watch") {
+			Some(watch_index) => watch_index,
+			None => continue,
+		};
+
+		let field_selector_index = match operation.parameters.iter().position(|p| p.name == "fieldSelector") {
+			Some(field_selector_index) => field_selector_index,
+			None => return Err(format!("operation {} is a list operation with a watch parameter but doesn't have a fieldSelector parameter", operation.id).into()),
+		};
+
+		let watch_operation_id = operation.id.replacen("list", "watch", 1);
+		let watch_list_operation_id = watch_operation_id.clone() + "List";
+
+		triplets.push((operation.id.to_owned(), watch_operation_id, watch_list_operation_id, watch_index, field_selector_index));
+	}
+
+	if triplets.is_empty() {
+		return Err("never found any list-watch operations".into());
+	}
+
+	for (list_operation_id, watch_operation_id, watch_list_operation_id, watch_index, field_selector_index) in triplets {
+		if let Some(watch_operation_index) = spec.operations.iter().position(|o| o.id == watch_operation_id) {
+			spec.operations.swap_remove(watch_operation_index);
+		}
+		if let Some(watch_list_operation_index) = spec.operations.iter().position(|o| o.id == watch_list_operation_id) {
+			spec.operations.swap_remove(watch_list_operation_index);
+		}
+
+		let watch_parameter = std::sync::Arc::new(crate::swagger20::Parameter {
+			location: crate::swagger20::ParameterLocation::Query,
+			name: "watch".to_string(),
+			required: true,
+			schema: crate::swagger20::Schema {
+				description: None,
+				kind: crate::swagger20::SchemaKind::Watch,
+				kubernetes_group_kind_versions: None,
+			},
+		});
+
+		let (original_list_operation_index, original_list_operation) = spec.operations.iter().enumerate().find(|(_, o)| o.id == list_operation_id).unwrap();
+
+		let mut base_description = original_list_operation.description.as_ref().map_or("", std::ops::Deref::deref).to_owned();
+		if !base_description.is_empty() {
+			writeln!(base_description)?;
+			writeln!(base_description)?;
+		}
+
+		let mut list_operation = crate::swagger20::Operation {
+			description: Some({
+				let mut description = base_description.clone();
+				writeln!(description, "This operation only supports listing all items of this type.")?;
+				description
+			}),
+			..original_list_operation.clone()
+		};
+		list_operation.parameters.swap_remove(std::cmp::max(watch_index, field_selector_index));
+		list_operation.parameters.swap_remove(std::cmp::min(watch_index, field_selector_index));
+
+		let mut watch_operation = crate::swagger20::Operation {
+			description: Some({
+				let mut description = base_description.clone();
+				writeln!(description, "This operation only supports watching a single item for changes.")?;
+				description
+			}),
+			id: watch_operation_id,
+			kubernetes_action: Some(crate::swagger20::KubernetesAction::Watch),
+			..original_list_operation.clone()
+		};
+		let mut field_selector_parameter = (*watch_operation.parameters[field_selector_index]).clone();
+		field_selector_parameter.required = true;
+		watch_operation.parameters[field_selector_index] = std::sync::Arc::new(field_selector_parameter);
+		watch_operation.parameters[watch_index] = watch_parameter.clone();
+		watch_operation.responses.insert(reqwest::StatusCode::OK, Some(crate::swagger20::Schema {
+			description: None,
+			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath("io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned())),
+			kubernetes_group_kind_versions: None,
+		}));
+
+		let mut watch_list_operation = crate::swagger20::Operation {
+			description: Some({
+				let mut description = base_description.clone();
+				writeln!(description, "This operation only supports watching a list of items for changes.")?;
+				description
+			}),
+			id: watch_list_operation_id,
+			kubernetes_action: Some(crate::swagger20::KubernetesAction::WatchList),
+			..original_list_operation.clone()
+		};
+		watch_list_operation.parameters.swap_remove(std::cmp::max(watch_index, field_selector_index));
+		watch_list_operation.parameters.swap_remove(std::cmp::min(watch_index, field_selector_index));
+		watch_list_operation.parameters.push(watch_parameter.clone());
+		watch_list_operation.responses.insert(reqwest::StatusCode::OK, Some(crate::swagger20::Schema {
+			description: None,
+			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath("io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned())),
+			kubernetes_group_kind_versions: None,
+		}));
+
+		spec.operations[original_list_operation_index] = list_operation;
+		spec.operations.push(watch_operation);
+		spec.operations.push(watch_list_operation);
 	}
 
 	Ok(())

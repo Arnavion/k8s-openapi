@@ -26,7 +26,7 @@ pub enum NumberFormat {
 	Double,
 }
 
-#[derive(Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde_derive::Deserialize)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde_derive::Deserialize)]
 pub struct PropertyName(pub String);
 
 impl std::ops::Deref for PropertyName {
@@ -43,7 +43,7 @@ impl std::fmt::Display for PropertyName {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct RefPath(pub String);
 
 impl std::ops::Deref for RefPath {
@@ -88,7 +88,7 @@ impl<'de> serde::Deserialize<'de> for RefPath {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Schema {
 	pub description: Option<String>,
 	pub kind: SchemaKind,
@@ -155,11 +155,14 @@ impl<'de> serde::Deserialize<'de> for Schema {
 	}
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum SchemaKind {
 	Properties(std::collections::BTreeMap<PropertyName, (Schema, bool)>),
 	Ref(RefPath),
 	Ty(Type),
+
+	/// Special type for implicit watch parameter of a watch operation
+	Watch,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -168,7 +171,7 @@ pub enum StringFormat {
 	DateTime,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum Type {
 	Any,
 	Array { items: Box<Schema> },

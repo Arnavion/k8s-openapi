@@ -17,6 +17,8 @@ pub use self::network_policy::{
     ReplaceNamespacedNetworkPolicyOptional, ReplaceNamespacedNetworkPolicyResponse,
     WatchNamespacedNetworkPolicyOptional, WatchNamespacedNetworkPolicyResponse,
     WatchNamespacedNetworkPolicyListOptional, WatchNamespacedNetworkPolicyListResponse,
+    WatchNetworkPolicyForAllNamespacesOptional, WatchNetworkPolicyForAllNamespacesResponse,
+    WatchNetworkPolicyForAllNamespacesListOptional, WatchNetworkPolicyForAllNamespacesListResponse,
     WatchNetworkPolicyListForAllNamespacesOptional, WatchNetworkPolicyListForAllNamespacesResponse,
 };
 

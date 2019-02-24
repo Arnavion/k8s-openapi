@@ -10,5 +10,5 @@ backtrace = "0.3.x"
 env_logger = "0.6.x"
 log = "0.4.x"
 reqwest = "0.9.x"
-serde = "1.0.x"
+serde = { version = "1.0.x", features = ["rc"] }
 serde_derive = "1.0.x"
