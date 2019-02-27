@@ -1131,15 +1131,7 @@ fn write_operation(
 	let mut previous_parameters: std::collections::HashSet<_> = Default::default();
 	let parameters: Result<Vec<_>, Error> =
 		parameters.into_iter()
-		.filter_map(|parameter| {
-			match (operation.method, parameter.location) {
-				// GET and DELETE appear to duplicate the parameters in the body and querystring, so just ignore the body
-				(swagger20::Method::Delete, swagger20::ParameterLocation::Body) |
-				(swagger20::Method::Get, swagger20::ParameterLocation::Body) => return None,
-
-				_ => (),
-			}
-
+		.map(|parameter| {
 			let mut parameter_name = get_rust_ident(&parameter.name);
 			while previous_parameters.contains(&parameter_name) {
 				parameter_name = format!("{}_", parameter_name).into();
@@ -1148,10 +1140,10 @@ fn write_operation(
 
 			let parameter_type = match get_rust_borrow_type(&parameter.schema.kind, replace_namespaces, mod_root) {
 				Ok(parameter_type) => parameter_type,
-				Err(err) => return Some(Err(err)),
+				Err(err) => return Err(err),
 			};
 
-			Some(Ok((parameter_name, parameter_type, parameter)))
+			Ok((parameter_name, parameter_type, parameter))
 		})
 		.collect();
 	let mut parameters = parameters?;

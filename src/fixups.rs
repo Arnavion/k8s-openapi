@@ -357,6 +357,32 @@ pub(crate) fn remove_compat_refs(spec: &mut crate::swagger20::Spec) -> Result<()
 	Ok(())
 }
 
+// DELETE operations duplicate all their path=query parameters with a path=body DeleteOptions parameter.
+// Remove the path=body parameter.
+pub(crate) fn remove_delete_options_body_parameter(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	let mut found = false;
+
+	for operation in &mut spec.operations {
+		if operation.method == crate::swagger20::Method::Delete {
+			if let Some((index, body_parameter)) = operation.parameters.iter().enumerate().find(|(_, p)| p.location == crate::swagger20::ParameterLocation::Body) {
+				if let crate::swagger20::SchemaKind::Ref(ref_path) = &body_parameter.schema.kind {
+					if &**ref_path == "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions" {
+						operation.parameters.remove(index);
+						found = true;
+					}
+				}
+			}
+		}
+	}
+
+	if found {
+		Ok(())
+	}
+	else {
+		Err("never applied remove-body-parameters-for-get-and-delete fixup".into())
+	}
+}
+
 /// Some watch and watchlist operations (eg `watchCoreV1NamespacedPod` and `watchCoreV1NamespacedPodList`) are deprecated in favor of the corresponding list operation
 /// (eg `listCoreV1NamespacedPod`). The watch operation is equivalent to using the list operation with `watch=true` and `field_selector=...`, and the watchlist operation
 /// to using the list operation with just `watch=true`.
