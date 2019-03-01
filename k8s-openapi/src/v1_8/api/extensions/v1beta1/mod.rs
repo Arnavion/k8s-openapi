@@ -19,7 +19,6 @@ pub use self::daemon_set::{
     ReplaceNamespacedDaemonSetOptional, ReplaceNamespacedDaemonSetResponse,
     ReplaceNamespacedDaemonSetStatusOptional, ReplaceNamespacedDaemonSetStatusResponse,
     WatchDaemonSetForAllNamespacesOptional, WatchDaemonSetForAllNamespacesResponse,
-    WatchDaemonSetForAllNamespacesListOptional, WatchDaemonSetForAllNamespacesListResponse,
     WatchDaemonSetListForAllNamespacesOptional, WatchDaemonSetListForAllNamespacesResponse,
     WatchNamespacedDaemonSetOptional, WatchNamespacedDaemonSetResponse,
     WatchNamespacedDaemonSetListOptional, WatchNamespacedDaemonSetListResponse,
@@ -60,7 +59,6 @@ pub use self::deployment::{
     ReplaceNamespacedDeploymentOptional, ReplaceNamespacedDeploymentResponse,
     ReplaceNamespacedDeploymentStatusOptional, ReplaceNamespacedDeploymentStatusResponse,
     WatchDeploymentForAllNamespacesOptional, WatchDeploymentForAllNamespacesResponse,
-    WatchDeploymentForAllNamespacesListOptional, WatchDeploymentForAllNamespacesListResponse,
     WatchDeploymentListForAllNamespacesOptional, WatchDeploymentListForAllNamespacesResponse,
     WatchNamespacedDeploymentOptional, WatchNamespacedDeploymentResponse,
     WatchNamespacedDeploymentListOptional, WatchNamespacedDeploymentListResponse,
@@ -142,7 +140,6 @@ pub use self::ingress::{
     ReplaceNamespacedIngressOptional, ReplaceNamespacedIngressResponse,
     ReplaceNamespacedIngressStatusOptional, ReplaceNamespacedIngressStatusResponse,
     WatchIngressForAllNamespacesOptional, WatchIngressForAllNamespacesResponse,
-    WatchIngressForAllNamespacesListOptional, WatchIngressForAllNamespacesListResponse,
     WatchIngressListForAllNamespacesOptional, WatchIngressListForAllNamespacesResponse,
     WatchNamespacedIngressOptional, WatchNamespacedIngressResponse,
     WatchNamespacedIngressListOptional, WatchNamespacedIngressListResponse,
@@ -192,7 +189,6 @@ pub use self::network_policy::{
     WatchNamespacedNetworkPolicyOptional, WatchNamespacedNetworkPolicyResponse,
     WatchNamespacedNetworkPolicyListOptional, WatchNamespacedNetworkPolicyListResponse,
     WatchNetworkPolicyForAllNamespacesOptional, WatchNetworkPolicyForAllNamespacesResponse,
-    WatchNetworkPolicyForAllNamespacesListOptional, WatchNetworkPolicyForAllNamespacesListResponse,
     WatchNetworkPolicyListForAllNamespacesOptional, WatchNetworkPolicyListForAllNamespacesResponse,
 };
 
@@ -267,7 +263,6 @@ pub use self::replica_set::{
     WatchNamespacedReplicaSetOptional, WatchNamespacedReplicaSetResponse,
     WatchNamespacedReplicaSetListOptional, WatchNamespacedReplicaSetListResponse,
     WatchReplicaSetForAllNamespacesOptional, WatchReplicaSetForAllNamespacesResponse,
-    WatchReplicaSetForAllNamespacesListOptional, WatchReplicaSetForAllNamespacesListResponse,
     WatchReplicaSetListForAllNamespacesOptional, WatchReplicaSetListForAllNamespacesResponse,
 };
 

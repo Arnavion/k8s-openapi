@@ -56,7 +56,6 @@ pub use self::role::{
     WatchNamespacedRoleOptional, WatchNamespacedRoleResponse,
     WatchNamespacedRoleListOptional, WatchNamespacedRoleListResponse,
     WatchRoleForAllNamespacesOptional, WatchRoleForAllNamespacesResponse,
-    WatchRoleForAllNamespacesListOptional, WatchRoleForAllNamespacesListResponse,
     WatchRoleListForAllNamespacesOptional, WatchRoleListForAllNamespacesResponse,
 };
 
@@ -74,7 +73,6 @@ pub use self::role_binding::{
     WatchNamespacedRoleBindingOptional, WatchNamespacedRoleBindingResponse,
     WatchNamespacedRoleBindingListOptional, WatchNamespacedRoleBindingListResponse,
     WatchRoleBindingForAllNamespacesOptional, WatchRoleBindingForAllNamespacesResponse,
-    WatchRoleBindingForAllNamespacesListOptional, WatchRoleBindingForAllNamespacesListResponse,
     WatchRoleBindingListForAllNamespacesOptional, WatchRoleBindingListForAllNamespacesResponse,
 };
 

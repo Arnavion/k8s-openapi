@@ -22,7 +22,6 @@ pub use self::pod_disruption_budget::{
     WatchNamespacedPodDisruptionBudgetOptional, WatchNamespacedPodDisruptionBudgetResponse,
     WatchNamespacedPodDisruptionBudgetListOptional, WatchNamespacedPodDisruptionBudgetListResponse,
     WatchPodDisruptionBudgetForAllNamespacesOptional, WatchPodDisruptionBudgetForAllNamespacesResponse,
-    WatchPodDisruptionBudgetForAllNamespacesListOptional, WatchPodDisruptionBudgetForAllNamespacesListResponse,
     WatchPodDisruptionBudgetListForAllNamespacesOptional, WatchPodDisruptionBudgetListForAllNamespacesResponse,
 };
 

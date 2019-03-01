@@ -396,7 +396,7 @@ pub(crate) fn remove_delete_options_body_parameter(spec: &mut crate::swagger20::
 pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 	use std::fmt::Write;
 
-	let mut triplets = vec![];
+	let mut list_operations = vec![];
 
 	for operation in &spec.operations {
 		if operation.kubernetes_action != Some(crate::swagger20::KubernetesAction::List) {
@@ -417,17 +417,23 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			None => return Err(format!("operation {} is a list operation with a watch parameter but doesn't have a fieldSelector parameter", operation.id).into()),
 		};
 
-		let watch_operation_id = operation.id.replacen("list", "watch", 1);
-		let watch_list_operation_id = watch_operation_id.clone() + "List";
-
-		triplets.push((operation.id.to_owned(), watch_operation_id, watch_list_operation_id, watch_index, field_selector_index));
+		list_operations.push((operation.id.to_owned(), watch_index, field_selector_index));
 	}
 
-	if triplets.is_empty() {
+	if list_operations.is_empty() {
 		return Err("never found any list-watch operations".into());
 	}
 
-	for (list_operation_id, watch_operation_id, watch_list_operation_id, watch_index, field_selector_index) in triplets {
+	for (list_operation_id, watch_index, field_selector_index) in list_operations {
+		let watch_operation_id = list_operation_id.replacen("list", "watch", 1);
+		let watch_list_operation_id =
+			if watch_operation_id.ends_with("ForAllNamespaces") {
+				watch_operation_id[..(watch_operation_id.len() - "ForAllNamespaces".len())].to_owned() + "ListForAllNamespaces"
+			}
+			else {
+				watch_operation_id.clone() + "List"
+			};
+
 		if let Some(watch_operation_index) = spec.operations.iter().position(|o| o.id == watch_operation_id) {
 			spec.operations.swap_remove(watch_operation_index);
 		}

@@ -13,7 +13,6 @@ pub use self::pod_preset::{
     WatchNamespacedPodPresetOptional, WatchNamespacedPodPresetResponse,
     WatchNamespacedPodPresetListOptional, WatchNamespacedPodPresetListResponse,
     WatchPodPresetForAllNamespacesOptional, WatchPodPresetForAllNamespacesResponse,
-    WatchPodPresetForAllNamespacesListOptional, WatchPodPresetForAllNamespacesListResponse,
     WatchPodPresetListForAllNamespacesOptional, WatchPodPresetListForAllNamespacesResponse,
 };
 

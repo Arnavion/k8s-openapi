@@ -11,7 +11,6 @@ pub use self::event::{
     ReadNamespacedEventOptional, ReadNamespacedEventResponse,
     ReplaceNamespacedEventOptional, ReplaceNamespacedEventResponse,
     WatchEventForAllNamespacesOptional, WatchEventForAllNamespacesResponse,
-    WatchEventForAllNamespacesListOptional, WatchEventForAllNamespacesListResponse,
     WatchEventListForAllNamespacesOptional, WatchEventListForAllNamespacesResponse,
     WatchNamespacedEventOptional, WatchNamespacedEventResponse,
     WatchNamespacedEventListOptional, WatchNamespacedEventListResponse,

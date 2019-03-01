@@ -11,7 +11,6 @@ pub use self::lease::{
     ReadNamespacedLeaseOptional, ReadNamespacedLeaseResponse,
     ReplaceNamespacedLeaseOptional, ReplaceNamespacedLeaseResponse,
     WatchLeaseForAllNamespacesOptional, WatchLeaseForAllNamespacesResponse,
-    WatchLeaseForAllNamespacesListOptional, WatchLeaseForAllNamespacesListResponse,
     WatchLeaseListForAllNamespacesOptional, WatchLeaseListForAllNamespacesResponse,
     WatchNamespacedLeaseOptional, WatchNamespacedLeaseResponse,
     WatchNamespacedLeaseListOptional, WatchNamespacedLeaseListResponse,
