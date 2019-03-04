@@ -82,7 +82,7 @@ impl crate::Response for ConnectDeleteNamespacedPodProxyResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -168,7 +168,7 @@ impl crate::Response for ConnectDeleteNamespacedPodProxyWithPathResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -273,7 +273,7 @@ impl crate::Response for ConnectGetNamespacedPodAttachResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -384,7 +384,7 @@ impl crate::Response for ConnectGetNamespacedPodExecResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -465,7 +465,7 @@ impl crate::Response for ConnectGetNamespacedPodPortforwardResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -546,7 +546,7 @@ impl crate::Response for ConnectGetNamespacedPodProxyResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -632,7 +632,7 @@ impl crate::Response for ConnectGetNamespacedPodProxyWithPathResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -713,7 +713,7 @@ impl crate::Response for ConnectPatchNamespacedPodProxyResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -799,7 +799,7 @@ impl crate::Response for ConnectPatchNamespacedPodProxyWithPathResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -904,7 +904,7 @@ impl crate::Response for ConnectPostNamespacedPodAttachResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -1015,7 +1015,7 @@ impl crate::Response for ConnectPostNamespacedPodExecResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -1096,7 +1096,7 @@ impl crate::Response for ConnectPostNamespacedPodPortforwardResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -1177,7 +1177,7 @@ impl crate::Response for ConnectPostNamespacedPodProxyResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -1263,7 +1263,7 @@ impl crate::Response for ConnectPostNamespacedPodProxyWithPathResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -1344,7 +1344,7 @@ impl crate::Response for ConnectPutNamespacedPodProxyResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -1430,7 +1430,7 @@ impl crate::Response for ConnectPutNamespacedPodProxyWithPathResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -2351,7 +2351,7 @@ impl crate::Response for ReadNamespacedPodLogResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };

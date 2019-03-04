@@ -1436,7 +1436,7 @@ fn write_operation(
 					writeln!(file, "                    Ok(s) => s,")?;
 					writeln!(file, "                    Err(err) if err.error_len().is_none() => {{")?;
 					writeln!(file, "                        let valid_up_to = err.valid_up_to();")?;
-					writeln!(file, "                        unsafe {{ std::str::from_utf8_unchecked(&buf[..valid_up_to]) }}")?;
+					writeln!(file, "                        unsafe {{ std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }}")?;
 					writeln!(file, "                    }},")?;
 					writeln!(file, "                    Err(err) => return Err(crate::ResponseError::Utf8(err)),")?;
 					writeln!(file, "                }};")?;

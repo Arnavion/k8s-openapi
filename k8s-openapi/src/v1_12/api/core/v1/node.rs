@@ -77,7 +77,7 @@ impl crate::Response for ConnectDeleteNodeProxyResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -158,7 +158,7 @@ impl crate::Response for ConnectDeleteNodeProxyWithPathResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -234,7 +234,7 @@ impl crate::Response for ConnectGetNodeProxyResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -315,7 +315,7 @@ impl crate::Response for ConnectGetNodeProxyWithPathResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -391,7 +391,7 @@ impl crate::Response for ConnectPatchNodeProxyResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -472,7 +472,7 @@ impl crate::Response for ConnectPatchNodeProxyWithPathResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -548,7 +548,7 @@ impl crate::Response for ConnectPostNodeProxyResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -629,7 +629,7 @@ impl crate::Response for ConnectPostNodeProxyWithPathResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -705,7 +705,7 @@ impl crate::Response for ConnectPutNodeProxyResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
@@ -786,7 +786,7 @@ impl crate::Response for ConnectPutNodeProxyWithPathResponse {
                     Ok(s) => s,
                     Err(err) if err.error_len().is_none() => {
                         let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(&buf[..valid_up_to]) }
+                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
                     },
                     Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
