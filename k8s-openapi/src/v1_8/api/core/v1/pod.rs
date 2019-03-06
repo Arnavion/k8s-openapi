@@ -78,17 +78,22 @@ impl crate::Response for ConnectDeleteNamespacedPodProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectDeleteNamespacedPodProxyResponse::Ok(result), len))
+                Ok((ConnectDeleteNamespacedPodProxyResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNamespacedPodProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectDeleteNamespacedPodProxyResponse::Other, 0)),
@@ -164,17 +169,22 @@ impl crate::Response for ConnectDeleteNamespacedPodProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectDeleteNamespacedPodProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectDeleteNamespacedPodProxyWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectDeleteNamespacedPodProxyWithPathResponse::Other, 0)),
@@ -269,17 +279,22 @@ impl crate::Response for ConnectGetNamespacedPodAttachResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectGetNamespacedPodAttachResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedPodAttachResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedPodAttachResponse::Unauthorized, 0)),
             _ => Ok((ConnectGetNamespacedPodAttachResponse::Other, 0)),
@@ -380,17 +395,22 @@ impl crate::Response for ConnectGetNamespacedPodExecResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectGetNamespacedPodExecResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedPodExecResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedPodExecResponse::Unauthorized, 0)),
             _ => Ok((ConnectGetNamespacedPodExecResponse::Other, 0)),
@@ -461,17 +481,22 @@ impl crate::Response for ConnectGetNamespacedPodPortforwardResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectGetNamespacedPodPortforwardResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedPodPortforwardResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedPodPortforwardResponse::Unauthorized, 0)),
             _ => Ok((ConnectGetNamespacedPodPortforwardResponse::Other, 0)),
@@ -542,17 +567,22 @@ impl crate::Response for ConnectGetNamespacedPodProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectGetNamespacedPodProxyResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedPodProxyResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedPodProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectGetNamespacedPodProxyResponse::Other, 0)),
@@ -628,17 +658,22 @@ impl crate::Response for ConnectGetNamespacedPodProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectGetNamespacedPodProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectGetNamespacedPodProxyWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectGetNamespacedPodProxyWithPathResponse::Other, 0)),
@@ -709,17 +744,22 @@ impl crate::Response for ConnectPatchNamespacedPodProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPatchNamespacedPodProxyResponse::Ok(result), len))
+                Ok((ConnectPatchNamespacedPodProxyResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNamespacedPodProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectPatchNamespacedPodProxyResponse::Other, 0)),
@@ -795,17 +835,22 @@ impl crate::Response for ConnectPatchNamespacedPodProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPatchNamespacedPodProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPatchNamespacedPodProxyWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectPatchNamespacedPodProxyWithPathResponse::Other, 0)),
@@ -900,17 +945,22 @@ impl crate::Response for ConnectPostNamespacedPodAttachResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPostNamespacedPodAttachResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedPodAttachResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedPodAttachResponse::Unauthorized, 0)),
             _ => Ok((ConnectPostNamespacedPodAttachResponse::Other, 0)),
@@ -1011,17 +1061,22 @@ impl crate::Response for ConnectPostNamespacedPodExecResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPostNamespacedPodExecResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedPodExecResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedPodExecResponse::Unauthorized, 0)),
             _ => Ok((ConnectPostNamespacedPodExecResponse::Other, 0)),
@@ -1092,17 +1147,22 @@ impl crate::Response for ConnectPostNamespacedPodPortforwardResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPostNamespacedPodPortforwardResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedPodPortforwardResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedPodPortforwardResponse::Unauthorized, 0)),
             _ => Ok((ConnectPostNamespacedPodPortforwardResponse::Other, 0)),
@@ -1173,17 +1233,22 @@ impl crate::Response for ConnectPostNamespacedPodProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPostNamespacedPodProxyResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedPodProxyResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedPodProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectPostNamespacedPodProxyResponse::Other, 0)),
@@ -1259,17 +1324,22 @@ impl crate::Response for ConnectPostNamespacedPodProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPostNamespacedPodProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPostNamespacedPodProxyWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectPostNamespacedPodProxyWithPathResponse::Other, 0)),
@@ -1340,17 +1410,22 @@ impl crate::Response for ConnectPutNamespacedPodProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPutNamespacedPodProxyResponse::Ok(result), len))
+                Ok((ConnectPutNamespacedPodProxyResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNamespacedPodProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectPutNamespacedPodProxyResponse::Other, 0)),
@@ -1426,17 +1501,22 @@ impl crate::Response for ConnectPutNamespacedPodProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPutNamespacedPodProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPutNamespacedPodProxyWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNamespacedPodProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectPutNamespacedPodProxyWithPathResponse::Other, 0)),
@@ -2179,17 +2259,22 @@ impl crate::Response for ProxyDELETENamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyDELETENamespacedPodResponse::Ok(result), len))
+                Ok((ProxyDELETENamespacedPodResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyDELETENamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ProxyDELETENamespacedPodResponse::Other, 0)),
@@ -2245,17 +2330,22 @@ impl crate::Response for ProxyDELETENamespacedPodWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyDELETENamespacedPodWithPathResponse::Ok(result), len))
+                Ok((ProxyDELETENamespacedPodWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyDELETENamespacedPodWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyDELETENamespacedPodWithPathResponse::Other, 0)),
@@ -2306,17 +2396,22 @@ impl crate::Response for ProxyGETNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyGETNamespacedPodResponse::Ok(result), len))
+                Ok((ProxyGETNamespacedPodResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyGETNamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ProxyGETNamespacedPodResponse::Other, 0)),
@@ -2372,17 +2467,22 @@ impl crate::Response for ProxyGETNamespacedPodWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyGETNamespacedPodWithPathResponse::Ok(result), len))
+                Ok((ProxyGETNamespacedPodWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyGETNamespacedPodWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyGETNamespacedPodWithPathResponse::Other, 0)),
@@ -2433,17 +2533,22 @@ impl crate::Response for ProxyPATCHNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPATCHNamespacedPodResponse::Ok(result), len))
+                Ok((ProxyPATCHNamespacedPodResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPATCHNamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ProxyPATCHNamespacedPodResponse::Other, 0)),
@@ -2499,17 +2604,22 @@ impl crate::Response for ProxyPATCHNamespacedPodWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPATCHNamespacedPodWithPathResponse::Ok(result), len))
+                Ok((ProxyPATCHNamespacedPodWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPATCHNamespacedPodWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyPATCHNamespacedPodWithPathResponse::Other, 0)),
@@ -2560,17 +2670,22 @@ impl crate::Response for ProxyPOSTNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPOSTNamespacedPodResponse::Ok(result), len))
+                Ok((ProxyPOSTNamespacedPodResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPOSTNamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ProxyPOSTNamespacedPodResponse::Other, 0)),
@@ -2626,17 +2741,22 @@ impl crate::Response for ProxyPOSTNamespacedPodWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPOSTNamespacedPodWithPathResponse::Ok(result), len))
+                Ok((ProxyPOSTNamespacedPodWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPOSTNamespacedPodWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyPOSTNamespacedPodWithPathResponse::Other, 0)),
@@ -2687,17 +2807,22 @@ impl crate::Response for ProxyPUTNamespacedPodResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPUTNamespacedPodResponse::Ok(result), len))
+                Ok((ProxyPUTNamespacedPodResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPUTNamespacedPodResponse::Unauthorized, 0)),
             _ => Ok((ProxyPUTNamespacedPodResponse::Other, 0)),
@@ -2753,17 +2878,22 @@ impl crate::Response for ProxyPUTNamespacedPodWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPUTNamespacedPodWithPathResponse::Ok(result), len))
+                Ok((ProxyPUTNamespacedPodWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPUTNamespacedPodWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyPUTNamespacedPodWithPathResponse::Other, 0)),
@@ -2964,17 +3094,22 @@ impl crate::Response for ReadNamespacedPodLogResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ReadNamespacedPodLogResponse::Ok(result), len))
+                Ok((ReadNamespacedPodLogResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ReadNamespacedPodLogResponse::Unauthorized, 0)),
             _ => Ok((ReadNamespacedPodLogResponse::Other, 0)),

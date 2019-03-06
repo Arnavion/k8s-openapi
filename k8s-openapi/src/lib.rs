@@ -388,6 +388,18 @@ impl<T> ResponseBody<T> where T: Response {
             Err(err) => Err(err),
         }
     }
+
+    /// Drop the first `cnt` bytes of this buffer.
+    ///
+    /// This is useful for skipping over malformed bytes, such as invalid utf-8 sequences when parsing streaming `String` responses
+    /// like from [`api::core::v1::Pod::read_namespaced_pod_log`].
+    ///
+    /// # Panics
+    ///
+    /// This function panics if `cnt > self.len()`
+    pub fn advance(&mut self, cnt: usize) {
+        self.buf.advance(cnt)
+    }
 }
 
 impl<T> std::ops::Deref for ResponseBody<T> {

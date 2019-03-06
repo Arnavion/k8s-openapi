@@ -1432,17 +1432,22 @@ fn write_operation(
 
 			match &schema.kind {
 				swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) => {
-					writeln!(file, "                let result = match std::str::from_utf8(buf) {{")?;
-					writeln!(file, "                    Ok(s) => s,")?;
-					writeln!(file, "                    Err(err) if err.error_len().is_none() => {{")?;
-					writeln!(file, "                        let valid_up_to = err.valid_up_to();")?;
-					writeln!(file, "                        unsafe {{ std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }}")?;
+					writeln!(file, "                if buf.is_empty() {{")?;
+					writeln!(file, "                    return Err(crate::ResponseError::NeedMoreData);")?;
+					writeln!(file, "                }}")?;
+					writeln!(file)?;
+					writeln!(file, "                let (result, len) = match std::str::from_utf8(buf) {{")?;
+					writeln!(file, "                    Ok(s) => (s, buf.len()),")?;
+					writeln!(file, "                    Err(err) => match (err.valid_up_to(), err.error_len()) {{")?;
+					writeln!(file, "                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),")?;
+					writeln!(file, "                        (0, None) => return Err(crate::ResponseError::NeedMoreData),")?;
+					writeln!(file, "                        (valid_up_to, _) => (")?;
+					writeln!(file, "                            unsafe {{ std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }},")?;
+					writeln!(file, "                            valid_up_to,")?;
+					writeln!(file, "                        ),")?;
 					writeln!(file, "                    }},")?;
-					writeln!(file, "                    Err(err) => return Err(crate::ResponseError::Utf8(err)),")?;
 					writeln!(file, "                }};")?;
-					writeln!(file, "                let result = result.to_string();")?;
-					writeln!(file, "                let len = result.len();")?;
-					writeln!(file, "                Ok(({}::{}(result), len))", operation_result_name, variant_name)?;
+					writeln!(file, "                Ok(({}::{}(result.to_string()), len))", operation_result_name, variant_name)?;
 				},
 
 				swagger20::SchemaKind::Ref(_) => if is_watch {

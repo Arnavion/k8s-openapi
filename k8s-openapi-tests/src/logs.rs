@@ -57,3 +57,113 @@ fn get() {
 		}
 	});
 }
+
+#[test]
+fn partial_and_invalid_utf8_sequences() {
+	use k8s_openapi::api::core::v1 as api;
+
+	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
+		k8s_openapi::ResponseBody::new(reqwest::StatusCode::OK);
+
+	// Empty buffer
+	match response_body.parse() {
+		Err(k8s_openapi::ResponseError::NeedMoreData) => (),
+		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
+	}
+
+	response_body.append_slice(b"a");
+
+	// Entire buffer is valid
+	match response_body.parse() {
+		Ok(api::ReadNamespacedPodLogResponse::Ok(ref s)) if s == "a" => (),
+		result => panic!(r#"expected empty buffer to return Ok("a"), but it returned {:?}"#, result),
+	}
+
+	// Entire buffer must have been consumed, and it should now be empty
+	assert_eq!(&*response_body, b"");
+
+	// First byte of buffer is invalid
+	response_body.append_slice(b"\xff");
+
+	match response_body.parse() {
+		Err(k8s_openapi::ResponseError::Utf8(ref err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
+		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
+	}
+
+	// First byte of buffer must not have been consumed, so it's still invalid
+	match response_body.parse() {
+		Err(k8s_openapi::ResponseError::Utf8(ref err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
+		result => panic!("expected empty buffer to return Err(Utf8(0, Some(1))), but it returned {:?}", result),
+	}
+
+	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
+		k8s_openapi::ResponseBody::new(reqwest::StatusCode::OK);
+
+	response_body.append_slice(b"\xe4");
+
+	// First byte of buffer is partial
+	match response_body.parse() {
+		Err(k8s_openapi::ResponseError::NeedMoreData) => (),
+		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
+	}
+
+	response_body.append_slice(b"\xb8");
+
+	// First two bytes of buffer are partial
+	match response_body.parse() {
+		Err(k8s_openapi::ResponseError::NeedMoreData) => (),
+		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
+	}
+
+	// Entire buffer is valid
+	response_body.append_slice(b"\x96");
+
+	match response_body.parse() {
+		Ok(api::ReadNamespacedPodLogResponse::Ok(ref s)) if s == "\u{4e16}" => (),
+		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {:?}"#, result),
+	}
+
+	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
+		k8s_openapi::ResponseBody::new(reqwest::StatusCode::OK);
+
+	response_body.append_slice(b"\xe4\xb8\x96\xe7");
+
+	// First three bytes are valid. Fourth byte is partial.
+	match response_body.parse() {
+		Ok(api::ReadNamespacedPodLogResponse::Ok(ref s)) if s == "\u{4e16}" => (),
+		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {:?}"#, result),
+	}
+
+	// First three bytes must have been consumed. Remaining byte is partial.
+	assert_eq!(&*response_body, b"\xe7");
+	match response_body.parse() {
+		Err(k8s_openapi::ResponseError::NeedMoreData) => (),
+		result => panic!("expected empty buffer to return Err(NeedMoreData), but it returned {:?}", result),
+	}
+
+	response_body.append_slice(b"\x95\x8c");
+
+	// Entire buffer is valid
+	match response_body.parse() {
+		Ok(api::ReadNamespacedPodLogResponse::Ok(ref s)) if s == "\u{754c}" => (),
+		result => panic!(r#"expected empty buffer to return Ok("\u{{754c}}"), but it returned {:?}"#, result),
+	}
+
+	let mut response_body: k8s_openapi::ResponseBody<api::ReadNamespacedPodLogResponse> =
+		k8s_openapi::ResponseBody::new(reqwest::StatusCode::OK);
+
+	response_body.append_slice(b"\xe4\xb8\x96\xff");
+
+	// First three bytes are valid. Fourth byte is invalid.
+	match response_body.parse() {
+		Ok(api::ReadNamespacedPodLogResponse::Ok(ref s)) if s == "\u{4e16}" => (),
+		result => panic!(r#"expected empty buffer to return Ok("\u{{4e16}}"), but it returned {:?}"#, result),
+	}
+
+	// First three bytes must have been consumed. Remaining byte is invalid.
+	assert_eq!(&*response_body, b"\xff");
+	match response_body.parse() {
+		Err(k8s_openapi::ResponseError::Utf8(ref err)) if err.valid_up_to() == 0 && err.error_len() == Some(1) => (),
+		result => panic!("expected empty buffer to return Err(Utf8(0, Some(1))), but it returned {:?}", result),
+	}
+}

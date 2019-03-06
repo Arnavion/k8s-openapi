@@ -73,17 +73,22 @@ impl crate::Response for ConnectDeleteNodeProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectDeleteNodeProxyResponse::Ok(result), len))
+                Ok((ConnectDeleteNodeProxyResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNodeProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectDeleteNodeProxyResponse::Other, 0)),
@@ -154,17 +159,22 @@ impl crate::Response for ConnectDeleteNodeProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectDeleteNodeProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectDeleteNodeProxyWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectDeleteNodeProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectDeleteNodeProxyWithPathResponse::Other, 0)),
@@ -230,17 +240,22 @@ impl crate::Response for ConnectGetNodeProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectGetNodeProxyResponse::Ok(result), len))
+                Ok((ConnectGetNodeProxyResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNodeProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectGetNodeProxyResponse::Other, 0)),
@@ -311,17 +326,22 @@ impl crate::Response for ConnectGetNodeProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectGetNodeProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectGetNodeProxyWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectGetNodeProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectGetNodeProxyWithPathResponse::Other, 0)),
@@ -387,17 +407,22 @@ impl crate::Response for ConnectPatchNodeProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPatchNodeProxyResponse::Ok(result), len))
+                Ok((ConnectPatchNodeProxyResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNodeProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectPatchNodeProxyResponse::Other, 0)),
@@ -468,17 +493,22 @@ impl crate::Response for ConnectPatchNodeProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPatchNodeProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPatchNodeProxyWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPatchNodeProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectPatchNodeProxyWithPathResponse::Other, 0)),
@@ -544,17 +574,22 @@ impl crate::Response for ConnectPostNodeProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPostNodeProxyResponse::Ok(result), len))
+                Ok((ConnectPostNodeProxyResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNodeProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectPostNodeProxyResponse::Other, 0)),
@@ -625,17 +660,22 @@ impl crate::Response for ConnectPostNodeProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPostNodeProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPostNodeProxyWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPostNodeProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectPostNodeProxyWithPathResponse::Other, 0)),
@@ -701,17 +741,22 @@ impl crate::Response for ConnectPutNodeProxyResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPutNodeProxyResponse::Ok(result), len))
+                Ok((ConnectPutNodeProxyResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNodeProxyResponse::Unauthorized, 0)),
             _ => Ok((ConnectPutNodeProxyResponse::Other, 0)),
@@ -782,17 +827,22 @@ impl crate::Response for ConnectPutNodeProxyWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ConnectPutNodeProxyWithPathResponse::Ok(result), len))
+                Ok((ConnectPutNodeProxyWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ConnectPutNodeProxyWithPathResponse::Unauthorized, 0)),
             _ => Ok((ConnectPutNodeProxyWithPathResponse::Other, 0)),
@@ -1412,17 +1462,22 @@ impl crate::Response for ProxyDELETENodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyDELETENodeResponse::Ok(result), len))
+                Ok((ProxyDELETENodeResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyDELETENodeResponse::Unauthorized, 0)),
             _ => Ok((ProxyDELETENodeResponse::Other, 0)),
@@ -1473,17 +1528,22 @@ impl crate::Response for ProxyDELETENodeWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyDELETENodeWithPathResponse::Ok(result), len))
+                Ok((ProxyDELETENodeWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyDELETENodeWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyDELETENodeWithPathResponse::Other, 0)),
@@ -1529,17 +1589,22 @@ impl crate::Response for ProxyGETNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyGETNodeResponse::Ok(result), len))
+                Ok((ProxyGETNodeResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyGETNodeResponse::Unauthorized, 0)),
             _ => Ok((ProxyGETNodeResponse::Other, 0)),
@@ -1590,17 +1655,22 @@ impl crate::Response for ProxyGETNodeWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyGETNodeWithPathResponse::Ok(result), len))
+                Ok((ProxyGETNodeWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyGETNodeWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyGETNodeWithPathResponse::Other, 0)),
@@ -1646,17 +1716,22 @@ impl crate::Response for ProxyPATCHNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPATCHNodeResponse::Ok(result), len))
+                Ok((ProxyPATCHNodeResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPATCHNodeResponse::Unauthorized, 0)),
             _ => Ok((ProxyPATCHNodeResponse::Other, 0)),
@@ -1707,17 +1782,22 @@ impl crate::Response for ProxyPATCHNodeWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPATCHNodeWithPathResponse::Ok(result), len))
+                Ok((ProxyPATCHNodeWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPATCHNodeWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyPATCHNodeWithPathResponse::Other, 0)),
@@ -1763,17 +1843,22 @@ impl crate::Response for ProxyPOSTNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPOSTNodeResponse::Ok(result), len))
+                Ok((ProxyPOSTNodeResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPOSTNodeResponse::Unauthorized, 0)),
             _ => Ok((ProxyPOSTNodeResponse::Other, 0)),
@@ -1824,17 +1909,22 @@ impl crate::Response for ProxyPOSTNodeWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPOSTNodeWithPathResponse::Ok(result), len))
+                Ok((ProxyPOSTNodeWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPOSTNodeWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyPOSTNodeWithPathResponse::Other, 0)),
@@ -1880,17 +1970,22 @@ impl crate::Response for ProxyPUTNodeResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPUTNodeResponse::Ok(result), len))
+                Ok((ProxyPUTNodeResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPUTNodeResponse::Unauthorized, 0)),
             _ => Ok((ProxyPUTNodeResponse::Other, 0)),
@@ -1941,17 +2036,22 @@ impl crate::Response for ProxyPUTNodeWithPathResponse {
     fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
         match status_code {
             http::StatusCode::OK => {
-                let result = match std::str::from_utf8(buf) {
-                    Ok(s) => s,
-                    Err(err) if err.error_len().is_none() => {
-                        let valid_up_to = err.valid_up_to();
-                        unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) }
+                if buf.is_empty() {
+                    return Err(crate::ResponseError::NeedMoreData);
+                }
+
+                let (result, len) = match std::str::from_utf8(buf) {
+                    Ok(s) => (s, buf.len()),
+                    Err(err) => match (err.valid_up_to(), err.error_len()) {
+                        (0, Some(_)) => return Err(crate::ResponseError::Utf8(err)),
+                        (0, None) => return Err(crate::ResponseError::NeedMoreData),
+                        (valid_up_to, _) => (
+                            unsafe { std::str::from_utf8_unchecked(buf.get_unchecked(..valid_up_to)) },
+                            valid_up_to,
+                        ),
                     },
-                    Err(err) => return Err(crate::ResponseError::Utf8(err)),
                 };
-                let result = result.to_string();
-                let len = result.len();
-                Ok((ProxyPUTNodeWithPathResponse::Ok(result), len))
+                Ok((ProxyPUTNodeWithPathResponse::Ok(result.to_string()), len))
             },
             http::StatusCode::UNAUTHORIZED => Ok((ProxyPUTNodeWithPathResponse::Unauthorized, 0)),
             _ => Ok((ProxyPUTNodeWithPathResponse::Other, 0)),
