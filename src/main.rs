@@ -38,7 +38,7 @@ fn main() -> Result<(), Error> {
 			writeln!(buf, "{} {}:{} {}", record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
 		});
 		let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
-		builder.parse(&rust_log);
+		builder.parse_filters(&rust_log);
 		builder.init();
 	}
 
