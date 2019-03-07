@@ -15,7 +15,6 @@ pub use self::initializer_configuration::{
     ReadInitializerConfigurationOptional, ReadInitializerConfigurationResponse,
     ReplaceInitializerConfigurationOptional, ReplaceInitializerConfigurationResponse,
     WatchInitializerConfigurationOptional, WatchInitializerConfigurationResponse,
-    WatchInitializerConfigurationListOptional, WatchInitializerConfigurationListResponse,
 };
 
 mod initializer_configuration_list;

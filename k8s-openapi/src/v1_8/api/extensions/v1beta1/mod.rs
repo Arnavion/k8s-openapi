@@ -19,9 +19,7 @@ pub use self::daemon_set::{
     ReplaceNamespacedDaemonSetOptional, ReplaceNamespacedDaemonSetResponse,
     ReplaceNamespacedDaemonSetStatusOptional, ReplaceNamespacedDaemonSetStatusResponse,
     WatchDaemonSetForAllNamespacesOptional, WatchDaemonSetForAllNamespacesResponse,
-    WatchDaemonSetListForAllNamespacesOptional, WatchDaemonSetListForAllNamespacesResponse,
     WatchNamespacedDaemonSetOptional, WatchNamespacedDaemonSetResponse,
-    WatchNamespacedDaemonSetListOptional, WatchNamespacedDaemonSetListResponse,
 };
 
 mod daemon_set_list;
@@ -59,9 +57,7 @@ pub use self::deployment::{
     ReplaceNamespacedDeploymentOptional, ReplaceNamespacedDeploymentResponse,
     ReplaceNamespacedDeploymentStatusOptional, ReplaceNamespacedDeploymentStatusResponse,
     WatchDeploymentForAllNamespacesOptional, WatchDeploymentForAllNamespacesResponse,
-    WatchDeploymentListForAllNamespacesOptional, WatchDeploymentListForAllNamespacesResponse,
     WatchNamespacedDeploymentOptional, WatchNamespacedDeploymentResponse,
-    WatchNamespacedDeploymentListOptional, WatchNamespacedDeploymentListResponse,
 };
 
 mod deployment_condition;
@@ -140,9 +136,7 @@ pub use self::ingress::{
     ReplaceNamespacedIngressOptional, ReplaceNamespacedIngressResponse,
     ReplaceNamespacedIngressStatusOptional, ReplaceNamespacedIngressStatusResponse,
     WatchIngressForAllNamespacesOptional, WatchIngressForAllNamespacesResponse,
-    WatchIngressListForAllNamespacesOptional, WatchIngressListForAllNamespacesResponse,
     WatchNamespacedIngressOptional, WatchNamespacedIngressResponse,
-    WatchNamespacedIngressListOptional, WatchNamespacedIngressListResponse,
 };
 
 mod ingress_backend;
@@ -187,9 +181,7 @@ pub use self::network_policy::{
     ReadNamespacedNetworkPolicyOptional, ReadNamespacedNetworkPolicyResponse,
     ReplaceNamespacedNetworkPolicyOptional, ReplaceNamespacedNetworkPolicyResponse,
     WatchNamespacedNetworkPolicyOptional, WatchNamespacedNetworkPolicyResponse,
-    WatchNamespacedNetworkPolicyListOptional, WatchNamespacedNetworkPolicyListResponse,
     WatchNetworkPolicyForAllNamespacesOptional, WatchNetworkPolicyForAllNamespacesResponse,
-    WatchNetworkPolicyListForAllNamespacesOptional, WatchNetworkPolicyListForAllNamespacesResponse,
 };
 
 mod network_policy_egress_rule;
@@ -233,7 +225,6 @@ pub use self::pod_security_policy::{
     ReadPodSecurityPolicyOptional, ReadPodSecurityPolicyResponse,
     ReplacePodSecurityPolicyOptional, ReplacePodSecurityPolicyResponse,
     WatchPodSecurityPolicyOptional, WatchPodSecurityPolicyResponse,
-    WatchPodSecurityPolicyListOptional, WatchPodSecurityPolicyListResponse,
 };
 
 mod pod_security_policy_list;
@@ -261,9 +252,7 @@ pub use self::replica_set::{
     ReplaceNamespacedReplicaSetOptional, ReplaceNamespacedReplicaSetResponse,
     ReplaceNamespacedReplicaSetStatusOptional, ReplaceNamespacedReplicaSetStatusResponse,
     WatchNamespacedReplicaSetOptional, WatchNamespacedReplicaSetResponse,
-    WatchNamespacedReplicaSetListOptional, WatchNamespacedReplicaSetListResponse,
     WatchReplicaSetForAllNamespacesOptional, WatchReplicaSetForAllNamespacesResponse,
-    WatchReplicaSetListForAllNamespacesOptional, WatchReplicaSetListForAllNamespacesResponse,
 };
 
 mod replica_set_condition;

@@ -16,9 +16,7 @@ pub use self::network_policy::{
     ReadNamespacedNetworkPolicyOptional, ReadNamespacedNetworkPolicyResponse,
     ReplaceNamespacedNetworkPolicyOptional, ReplaceNamespacedNetworkPolicyResponse,
     WatchNamespacedNetworkPolicyOptional, WatchNamespacedNetworkPolicyResponse,
-    WatchNamespacedNetworkPolicyListOptional, WatchNamespacedNetworkPolicyListResponse,
     WatchNetworkPolicyForAllNamespacesOptional, WatchNetworkPolicyForAllNamespacesResponse,
-    WatchNetworkPolicyListForAllNamespacesOptional, WatchNetworkPolicyListForAllNamespacesResponse,
 };
 
 mod network_policy_egress_rule;

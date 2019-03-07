@@ -371,6 +371,7 @@ impl NetworkPolicy {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let ListNamespacedNetworkPolicyOptional {
             continue_,
+            field_selector,
             include_uninitialized,
             label_selector,
             limit,
@@ -382,6 +383,9 @@ impl NetworkPolicy {
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
+        }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -417,6 +421,8 @@ impl NetworkPolicy {
 pub struct ListNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -477,6 +483,7 @@ impl NetworkPolicy {
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<ListNetworkPolicyForAllNamespacesResponse>), crate::RequestError> {
         let ListNetworkPolicyForAllNamespacesOptional {
             continue_,
+            field_selector,
             include_uninitialized,
             label_selector,
             limit,
@@ -488,6 +495,9 @@ impl NetworkPolicy {
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
+        }
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", field_selector);
         }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
@@ -523,6 +533,8 @@ impl NetworkPolicy {
 pub struct ListNetworkPolicyForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -824,7 +836,7 @@ impl crate::Response for ReplaceNamespacedNetworkPolicyResponse {
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
     ///
-    /// This operation only supports watching a single item for changes.
+    /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedNetworkPolicyResponse`]`>` constructor, or [`WatchNamespacedNetworkPolicyResponse`] directly, to parse the HTTP response.
     ///
@@ -834,20 +846,16 @@ impl NetworkPolicy {
     ///
     ///     object name and auth scope, such as for teams and projects
     ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_namespaced_network_policy(
         namespace: &str,
-        field_selector: &str,
         optional: WatchNamespacedNetworkPolicyOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedNetworkPolicyResponse>), crate::RequestError> {
         let WatchNamespacedNetworkPolicyOptional {
             continue_,
+            field_selector,
             include_uninitialized,
             label_selector,
             limit,
@@ -860,7 +868,9 @@ impl NetworkPolicy {
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
-        __query_pairs.append_pair("fieldSelector", &field_selector);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", field_selector);
+        }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
@@ -896,6 +906,8 @@ impl NetworkPolicy {
 pub struct WatchNamespacedNetworkPolicyOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -939,144 +951,26 @@ impl crate::Response for WatchNamespacedNetworkPolicyResponse {
     }
 }
 
-// Generated from operation watchNetworkingV1NamespacedNetworkPolicyList
-
-impl NetworkPolicy {
-    /// list or watch objects of kind NetworkPolicy
-    ///
-    /// This operation only supports watching a list of items for changes.
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNamespacedNetworkPolicyListResponse`]`>` constructor, or [`WatchNamespacedNetworkPolicyListResponse`] directly, to parse the HTTP response.
-    ///
-    /// # Arguments
-    ///
-    /// * `namespace`
-    ///
-    ///     object name and auth scope, such as for teams and projects
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_namespaced_network_policy_list(
-        namespace: &str,
-        optional: WatchNamespacedNetworkPolicyListOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedNetworkPolicyListResponse>), crate::RequestError> {
-        let WatchNamespacedNetworkPolicyListOptional {
-            continue_,
-            include_uninitialized,
-            label_selector,
-            limit,
-            pretty,
-            resource_version,
-            timeout_seconds,
-        } = optional;
-        let __url = format!("/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies?", namespace = namespace);
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
-        if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(include_uninitialized) = include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-        }
-        if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", label_selector);
-        }
-        if let Some(limit) = limit {
-            __query_pairs.append_pair("limit", &limit.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", resource_version);
-        }
-        if let Some(timeout_seconds) = timeout_seconds {
-            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-        }
-        __query_pairs.append_pair("watch", "true");
-        let __url = __query_pairs.finish();
-
-        let mut __request = http::Request::get(__url);
-        let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`NetworkPolicy::watch_namespaced_network_policy_list`]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct WatchNamespacedNetworkPolicyListOptional<'a> {
-    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    pub continue_: Option<&'a str>,
-    /// If true, partially initialized resources are included in the response.
-    pub include_uninitialized: Option<bool>,
-    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    pub label_selector: Option<&'a str>,
-    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    pub limit: Option<i64>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    pub resource_version: Option<&'a str>,
-    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
-    pub timeout_seconds: Option<i64>,
-}
-
-/// Use `<WatchNamespacedNetworkPolicyListResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::watch_namespaced_network_policy_list`]
-#[derive(Debug)]
-pub enum WatchNamespacedNetworkPolicyListResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
-    Unauthorized,
-    Other,
-}
-
-impl crate::Response for WatchNamespacedNetworkPolicyListResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchNamespacedNetworkPolicyListResponse::Ok(result), byte_offset))
-            },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNamespacedNetworkPolicyListResponse::Unauthorized, 0)),
-            _ => Ok((WatchNamespacedNetworkPolicyListResponse::Other, 0)),
-        }
-    }
-}
-
 // Generated from operation watchNetworkingV1NetworkPolicyForAllNamespaces
 
 impl NetworkPolicy {
     /// list or watch objects of kind NetworkPolicy
     ///
-    /// This operation only supports watching a single item for changes.
+    /// This operation only supports watching one item, or a list of items, of this type for changes.
     ///
     /// Use the returned [`crate::ResponseBody`]`<`[`WatchNetworkPolicyForAllNamespacesResponse`]`>` constructor, or [`WatchNetworkPolicyForAllNamespacesResponse`] directly, to parse the HTTP response.
     ///
     /// # Arguments
     ///
-    /// * `field_selector`
-    ///
-    ///     A selector to restrict the list of returned objects by their fields. Defaults to everything.
-    ///
     /// * `optional`
     ///
     ///     Optional parameters. Use `Default::default()` to not pass any.
     pub fn watch_network_policy_for_all_namespaces(
-        field_selector: &str,
         optional: WatchNetworkPolicyForAllNamespacesOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNetworkPolicyForAllNamespacesResponse>), crate::RequestError> {
         let WatchNetworkPolicyForAllNamespacesOptional {
             continue_,
+            field_selector,
             include_uninitialized,
             label_selector,
             limit,
@@ -1089,7 +983,9 @@ impl NetworkPolicy {
         if let Some(continue_) = continue_ {
             __query_pairs.append_pair("continue", continue_);
         }
-        __query_pairs.append_pair("fieldSelector", &field_selector);
+        if let Some(field_selector) = field_selector {
+            __query_pairs.append_pair("fieldSelector", field_selector);
+        }
         if let Some(include_uninitialized) = include_uninitialized {
             __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
         }
@@ -1125,6 +1021,8 @@ impl NetworkPolicy {
 pub struct WatchNetworkPolicyForAllNamespacesOptional<'a> {
     /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
     pub continue_: Option<&'a str>,
+    /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
+    pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
     pub include_uninitialized: Option<bool>,
     /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
@@ -1164,115 +1062,6 @@ impl crate::Response for WatchNetworkPolicyForAllNamespacesResponse {
             },
             http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkPolicyForAllNamespacesResponse::Unauthorized, 0)),
             _ => Ok((WatchNetworkPolicyForAllNamespacesResponse::Other, 0)),
-        }
-    }
-}
-
-// Generated from operation watchNetworkingV1NetworkPolicyListForAllNamespaces
-
-impl NetworkPolicy {
-    /// list or watch objects of kind NetworkPolicy
-    ///
-    /// This operation only supports watching a list of items for changes.
-    ///
-    /// Use the returned [`crate::ResponseBody`]`<`[`WatchNetworkPolicyListForAllNamespacesResponse`]`>` constructor, or [`WatchNetworkPolicyListForAllNamespacesResponse`] directly, to parse the HTTP response.
-    ///
-    /// # Arguments
-    ///
-    /// * `optional`
-    ///
-    ///     Optional parameters. Use `Default::default()` to not pass any.
-    pub fn watch_network_policy_list_for_all_namespaces(
-        optional: WatchNetworkPolicyListForAllNamespacesOptional<'_>,
-    ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNetworkPolicyListForAllNamespacesResponse>), crate::RequestError> {
-        let WatchNetworkPolicyListForAllNamespacesOptional {
-            continue_,
-            include_uninitialized,
-            label_selector,
-            limit,
-            pretty,
-            resource_version,
-            timeout_seconds,
-        } = optional;
-        let __url = "/apis/networking.k8s.io/v1/networkpolicies?".to_string();
-        let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
-        if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", continue_);
-        }
-        if let Some(include_uninitialized) = include_uninitialized {
-            __query_pairs.append_pair("includeUninitialized", &include_uninitialized.to_string());
-        }
-        if let Some(label_selector) = label_selector {
-            __query_pairs.append_pair("labelSelector", label_selector);
-        }
-        if let Some(limit) = limit {
-            __query_pairs.append_pair("limit", &limit.to_string());
-        }
-        if let Some(pretty) = pretty {
-            __query_pairs.append_pair("pretty", pretty);
-        }
-        if let Some(resource_version) = resource_version {
-            __query_pairs.append_pair("resourceVersion", resource_version);
-        }
-        if let Some(timeout_seconds) = timeout_seconds {
-            __query_pairs.append_pair("timeoutSeconds", &timeout_seconds.to_string());
-        }
-        __query_pairs.append_pair("watch", "true");
-        let __url = __query_pairs.finish();
-
-        let mut __request = http::Request::get(__url);
-        let __body = vec![];
-        match __request.body(__body) {
-            Ok(body) => Ok((body, crate::ResponseBody::new)),
-            Err(err) => Err(crate::RequestError::Http(err)),
-        }
-    }
-}
-
-/// Optional parameters of [`NetworkPolicy::watch_network_policy_list_for_all_namespaces`]
-#[derive(Clone, Copy, Debug, Default)]
-pub struct WatchNetworkPolicyListForAllNamespacesOptional<'a> {
-    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    pub continue_: Option<&'a str>,
-    /// If true, partially initialized resources are included in the response.
-    pub include_uninitialized: Option<bool>,
-    /// A selector to restrict the list of returned objects by their labels. Defaults to everything.
-    pub label_selector: Option<&'a str>,
-    /// limit is a maximum number of responses to return for a list call. If more items exist, the server will set the `continue` field on the list metadata to a value that can be used with the same initial query to retrieve the next set of results. Setting a limit may return fewer than the requested amount of items (up to zero items) in the event all requested objects are filtered out and clients should only use the presence of the continue field to determine whether more results are available. Servers may choose not to support the limit argument and will return all of the available results. If limit is specified and the continue field is empty, clients may assume that no more results are available. This field is not supported if watch is true.
-    ///
-    /// The server guarantees that the objects returned when using continue will be identical to issuing a single list call without a limit - that is, no objects created, modified, or deleted after the first request is issued will be included in any subsequent continued requests. This is sometimes referred to as a consistent snapshot, and ensures that a client that is using limit to receive smaller chunks of a very large result can ensure they see all possible objects. If objects are updated during a chunked list the version of the object that was present at the time the first list result was calculated is returned.
-    pub limit: Option<i64>,
-    /// If 'true', then the output is pretty printed.
-    pub pretty: Option<&'a str>,
-    /// When specified with a watch call, shows changes that occur after that particular version of a resource. Defaults to changes from the beginning of history. When specified for list: - if unset, then the result is returned from remote storage based on quorum-read flag; - if it's 0, then we simply return what we currently have in cache, no guarantee; - if set to non zero, then the result is at least as fresh as given rv.
-    pub resource_version: Option<&'a str>,
-    /// Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.
-    pub timeout_seconds: Option<i64>,
-}
-
-/// Use `<WatchNetworkPolicyListForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::watch_network_policy_list_for_all_namespaces`]
-#[derive(Debug)]
-pub enum WatchNetworkPolicyListForAllNamespacesResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
-    Unauthorized,
-    Other,
-}
-
-impl crate::Response for WatchNetworkPolicyListForAllNamespacesResponse {
-    fn try_from_parts(status_code: http::StatusCode, buf: &[u8]) -> Result<(Self, usize), crate::ResponseError> {
-        match status_code {
-            http::StatusCode::OK => {
-                let mut deserializer = serde_json::Deserializer::from_slice(buf).into_iter();
-                let (result, byte_offset) = match deserializer.next() {
-                    Some(Ok(value)) => (value, deserializer.byte_offset()),
-                    Some(Err(ref err)) if err.is_eof() => return Err(crate::ResponseError::NeedMoreData),
-                    Some(Err(err)) => return Err(crate::ResponseError::Json(err)),
-                    None => return Err(crate::ResponseError::NeedMoreData),
-                };
-                Ok((WatchNetworkPolicyListForAllNamespacesResponse::Ok(result), byte_offset))
-            },
-            http::StatusCode::UNAUTHORIZED => Ok((WatchNetworkPolicyListForAllNamespacesResponse::Unauthorized, 0)),
-            _ => Ok((WatchNetworkPolicyListForAllNamespacesResponse::Other, 0)),
         }
     }
 }

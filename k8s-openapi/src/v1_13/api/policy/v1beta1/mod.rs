@@ -45,9 +45,7 @@ pub use self::pod_disruption_budget::{
     ReplaceNamespacedPodDisruptionBudgetOptional, ReplaceNamespacedPodDisruptionBudgetResponse,
     ReplaceNamespacedPodDisruptionBudgetStatusOptional, ReplaceNamespacedPodDisruptionBudgetStatusResponse,
     WatchNamespacedPodDisruptionBudgetOptional, WatchNamespacedPodDisruptionBudgetResponse,
-    WatchNamespacedPodDisruptionBudgetListOptional, WatchNamespacedPodDisruptionBudgetListResponse,
     WatchPodDisruptionBudgetForAllNamespacesOptional, WatchPodDisruptionBudgetForAllNamespacesResponse,
-    WatchPodDisruptionBudgetListForAllNamespacesOptional, WatchPodDisruptionBudgetListForAllNamespacesResponse,
 };
 
 mod pod_disruption_budget_list;
@@ -76,7 +74,6 @@ pub use self::pod_security_policy::{
     ReadPodSecurityPolicyOptional, ReadPodSecurityPolicyResponse,
     ReplacePodSecurityPolicyOptional, ReplacePodSecurityPolicyResponse,
     WatchPodSecurityPolicyOptional, WatchPodSecurityPolicyResponse,
-    WatchPodSecurityPolicyListOptional, WatchPodSecurityPolicyListResponse,
 };
 
 mod pod_security_policy_list;

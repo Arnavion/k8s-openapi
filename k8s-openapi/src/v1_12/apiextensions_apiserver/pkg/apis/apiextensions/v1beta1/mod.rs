@@ -18,7 +18,6 @@ pub use self::custom_resource_definition::{
     ReplaceCustomResourceDefinitionOptional, ReplaceCustomResourceDefinitionResponse,
     ReplaceCustomResourceDefinitionStatusOptional, ReplaceCustomResourceDefinitionStatusResponse,
     WatchCustomResourceDefinitionOptional, WatchCustomResourceDefinitionResponse,
-    WatchCustomResourceDefinitionListOptional, WatchCustomResourceDefinitionListResponse,
 };
 
 mod custom_resource_definition_condition;

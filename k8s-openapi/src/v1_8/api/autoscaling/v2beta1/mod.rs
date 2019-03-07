@@ -19,9 +19,7 @@ pub use self::horizontal_pod_autoscaler::{
     ReplaceNamespacedHorizontalPodAutoscalerOptional, ReplaceNamespacedHorizontalPodAutoscalerResponse,
     ReplaceNamespacedHorizontalPodAutoscalerStatusOptional, ReplaceNamespacedHorizontalPodAutoscalerStatusResponse,
     WatchHorizontalPodAutoscalerForAllNamespacesOptional, WatchHorizontalPodAutoscalerForAllNamespacesResponse,
-    WatchHorizontalPodAutoscalerListForAllNamespacesOptional, WatchHorizontalPodAutoscalerListForAllNamespacesResponse,
     WatchNamespacedHorizontalPodAutoscalerOptional, WatchNamespacedHorizontalPodAutoscalerResponse,
-    WatchNamespacedHorizontalPodAutoscalerListOptional, WatchNamespacedHorizontalPodAutoscalerListResponse,
 };
 
 mod horizontal_pod_autoscaler_condition;

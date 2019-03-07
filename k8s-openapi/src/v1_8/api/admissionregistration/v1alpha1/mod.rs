@@ -20,7 +20,6 @@ pub use self::external_admission_hook_configuration::{
     ReadExternalAdmissionHookConfigurationOptional, ReadExternalAdmissionHookConfigurationResponse,
     ReplaceExternalAdmissionHookConfigurationOptional, ReplaceExternalAdmissionHookConfigurationResponse,
     WatchExternalAdmissionHookConfigurationOptional, WatchExternalAdmissionHookConfigurationResponse,
-    WatchExternalAdmissionHookConfigurationListOptional, WatchExternalAdmissionHookConfigurationListResponse,
 };
 
 mod external_admission_hook_configuration_list;
@@ -44,7 +43,6 @@ pub use self::initializer_configuration::{
     ReadInitializerConfigurationOptional, ReadInitializerConfigurationResponse,
     ReplaceInitializerConfigurationOptional, ReplaceInitializerConfigurationResponse,
     WatchInitializerConfigurationOptional, WatchInitializerConfigurationResponse,
-    WatchInitializerConfigurationListOptional, WatchInitializerConfigurationListResponse,
 };
 
 mod initializer_configuration_list;

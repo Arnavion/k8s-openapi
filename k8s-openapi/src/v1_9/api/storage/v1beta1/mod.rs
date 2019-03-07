@@ -10,7 +10,6 @@ pub use self::storage_class::{
     ReadStorageClassOptional, ReadStorageClassResponse,
     ReplaceStorageClassOptional, ReplaceStorageClassResponse,
     WatchStorageClassOptional, WatchStorageClassResponse,
-    WatchStorageClassListOptional, WatchStorageClassListResponse,
 };
 
 mod storage_class_list;

@@ -12,7 +12,6 @@ pub use self::certificate_signing_request::{
     ReplaceCertificateSigningRequestApprovalOptional, ReplaceCertificateSigningRequestApprovalResponse,
     ReplaceCertificateSigningRequestStatusOptional, ReplaceCertificateSigningRequestStatusResponse,
     WatchCertificateSigningRequestOptional, WatchCertificateSigningRequestResponse,
-    WatchCertificateSigningRequestListOptional, WatchCertificateSigningRequestListResponse,
 };
 
 mod certificate_signing_request_condition;

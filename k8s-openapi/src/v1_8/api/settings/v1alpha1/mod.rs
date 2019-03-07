@@ -11,9 +11,7 @@ pub use self::pod_preset::{
     ReadNamespacedPodPresetOptional, ReadNamespacedPodPresetResponse,
     ReplaceNamespacedPodPresetOptional, ReplaceNamespacedPodPresetResponse,
     WatchNamespacedPodPresetOptional, WatchNamespacedPodPresetResponse,
-    WatchNamespacedPodPresetListOptional, WatchNamespacedPodPresetListResponse,
     WatchPodPresetForAllNamespacesOptional, WatchPodPresetForAllNamespacesResponse,
-    WatchPodPresetListForAllNamespacesOptional, WatchPodPresetListForAllNamespacesResponse,
 };
 
 mod pod_preset_list;

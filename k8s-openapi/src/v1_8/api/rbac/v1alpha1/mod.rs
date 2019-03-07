@@ -10,7 +10,6 @@ pub use self::cluster_role::{
     ReadClusterRoleOptional, ReadClusterRoleResponse,
     ReplaceClusterRoleOptional, ReplaceClusterRoleResponse,
     WatchClusterRoleOptional, WatchClusterRoleResponse,
-    WatchClusterRoleListOptional, WatchClusterRoleListResponse,
 };
 
 mod cluster_role_binding;
@@ -24,7 +23,6 @@ pub use self::cluster_role_binding::{
     ReadClusterRoleBindingOptional, ReadClusterRoleBindingResponse,
     ReplaceClusterRoleBindingOptional, ReplaceClusterRoleBindingResponse,
     WatchClusterRoleBindingOptional, WatchClusterRoleBindingResponse,
-    WatchClusterRoleBindingListOptional, WatchClusterRoleBindingListResponse,
 };
 
 mod cluster_role_binding_list;
@@ -54,9 +52,7 @@ pub use self::role::{
     ReadNamespacedRoleOptional, ReadNamespacedRoleResponse,
     ReplaceNamespacedRoleOptional, ReplaceNamespacedRoleResponse,
     WatchNamespacedRoleOptional, WatchNamespacedRoleResponse,
-    WatchNamespacedRoleListOptional, WatchNamespacedRoleListResponse,
     WatchRoleForAllNamespacesOptional, WatchRoleForAllNamespacesResponse,
-    WatchRoleListForAllNamespacesOptional, WatchRoleListForAllNamespacesResponse,
 };
 
 mod role_binding;
@@ -71,9 +67,7 @@ pub use self::role_binding::{
     ReadNamespacedRoleBindingOptional, ReadNamespacedRoleBindingResponse,
     ReplaceNamespacedRoleBindingOptional, ReplaceNamespacedRoleBindingResponse,
     WatchNamespacedRoleBindingOptional, WatchNamespacedRoleBindingResponse,
-    WatchNamespacedRoleBindingListOptional, WatchNamespacedRoleBindingListResponse,
     WatchRoleBindingForAllNamespacesOptional, WatchRoleBindingForAllNamespacesResponse,
-    WatchRoleBindingListForAllNamespacesOptional, WatchRoleBindingListForAllNamespacesResponse,
 };
 
 mod role_binding_list;

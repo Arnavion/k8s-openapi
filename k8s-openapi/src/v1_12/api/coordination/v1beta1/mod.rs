@@ -11,9 +11,7 @@ pub use self::lease::{
     ReadNamespacedLeaseOptional, ReadNamespacedLeaseResponse,
     ReplaceNamespacedLeaseOptional, ReplaceNamespacedLeaseResponse,
     WatchLeaseForAllNamespacesOptional, WatchLeaseForAllNamespacesResponse,
-    WatchLeaseListForAllNamespacesOptional, WatchLeaseListForAllNamespacesResponse,
     WatchNamespacedLeaseOptional, WatchNamespacedLeaseResponse,
-    WatchNamespacedLeaseListOptional, WatchNamespacedLeaseListResponse,
 };
 
 mod lease_list;

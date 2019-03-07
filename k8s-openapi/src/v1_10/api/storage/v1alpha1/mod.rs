@@ -10,7 +10,6 @@ pub use self::volume_attachment::{
     ReadVolumeAttachmentOptional, ReadVolumeAttachmentResponse,
     ReplaceVolumeAttachmentOptional, ReplaceVolumeAttachmentResponse,
     WatchVolumeAttachmentOptional, WatchVolumeAttachmentResponse,
-    WatchVolumeAttachmentListOptional, WatchVolumeAttachmentListResponse,
 };
 
 mod volume_attachment_list;

@@ -11,9 +11,7 @@ pub use self::controller_revision::{
     ReadNamespacedControllerRevisionOptional, ReadNamespacedControllerRevisionResponse,
     ReplaceNamespacedControllerRevisionOptional, ReplaceNamespacedControllerRevisionResponse,
     WatchControllerRevisionForAllNamespacesOptional, WatchControllerRevisionForAllNamespacesResponse,
-    WatchControllerRevisionListForAllNamespacesOptional, WatchControllerRevisionListForAllNamespacesResponse,
     WatchNamespacedControllerRevisionOptional, WatchNamespacedControllerRevisionResponse,
-    WatchNamespacedControllerRevisionListOptional, WatchNamespacedControllerRevisionListResponse,
 };
 
 mod controller_revision_list;
@@ -36,9 +34,7 @@ pub use self::daemon_set::{
     ReplaceNamespacedDaemonSetOptional, ReplaceNamespacedDaemonSetResponse,
     ReplaceNamespacedDaemonSetStatusOptional, ReplaceNamespacedDaemonSetStatusResponse,
     WatchDaemonSetForAllNamespacesOptional, WatchDaemonSetForAllNamespacesResponse,
-    WatchDaemonSetListForAllNamespacesOptional, WatchDaemonSetListForAllNamespacesResponse,
     WatchNamespacedDaemonSetOptional, WatchNamespacedDaemonSetResponse,
-    WatchNamespacedDaemonSetListOptional, WatchNamespacedDaemonSetListResponse,
 };
 
 mod daemon_set_list;
@@ -76,9 +72,7 @@ pub use self::deployment::{
     ReplaceNamespacedDeploymentOptional, ReplaceNamespacedDeploymentResponse,
     ReplaceNamespacedDeploymentStatusOptional, ReplaceNamespacedDeploymentStatusResponse,
     WatchDeploymentForAllNamespacesOptional, WatchDeploymentForAllNamespacesResponse,
-    WatchDeploymentListForAllNamespacesOptional, WatchDeploymentListForAllNamespacesResponse,
     WatchNamespacedDeploymentOptional, WatchNamespacedDeploymentResponse,
-    WatchNamespacedDeploymentListOptional, WatchNamespacedDeploymentListResponse,
 };
 
 mod deployment_condition;
@@ -121,9 +115,7 @@ pub use self::replica_set::{
     ReplaceNamespacedReplicaSetOptional, ReplaceNamespacedReplicaSetResponse,
     ReplaceNamespacedReplicaSetStatusOptional, ReplaceNamespacedReplicaSetStatusResponse,
     WatchNamespacedReplicaSetOptional, WatchNamespacedReplicaSetResponse,
-    WatchNamespacedReplicaSetListOptional, WatchNamespacedReplicaSetListResponse,
     WatchReplicaSetForAllNamespacesOptional, WatchReplicaSetForAllNamespacesResponse,
-    WatchReplicaSetListForAllNamespacesOptional, WatchReplicaSetListForAllNamespacesResponse,
 };
 
 mod replica_set_condition;
@@ -200,9 +192,7 @@ pub use self::stateful_set::{
     ReplaceNamespacedStatefulSetOptional, ReplaceNamespacedStatefulSetResponse,
     ReplaceNamespacedStatefulSetStatusOptional, ReplaceNamespacedStatefulSetStatusResponse,
     WatchNamespacedStatefulSetOptional, WatchNamespacedStatefulSetResponse,
-    WatchNamespacedStatefulSetListOptional, WatchNamespacedStatefulSetListResponse,
     WatchStatefulSetForAllNamespacesOptional, WatchStatefulSetForAllNamespacesResponse,
-    WatchStatefulSetListForAllNamespacesOptional, WatchStatefulSetListForAllNamespacesResponse,
 };
 
 mod stateful_set_list;

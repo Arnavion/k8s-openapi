@@ -10,7 +10,6 @@ pub use self::mutating_webhook_configuration::{
     ReadMutatingWebhookConfigurationOptional, ReadMutatingWebhookConfigurationResponse,
     ReplaceMutatingWebhookConfigurationOptional, ReplaceMutatingWebhookConfigurationResponse,
     WatchMutatingWebhookConfigurationOptional, WatchMutatingWebhookConfigurationResponse,
-    WatchMutatingWebhookConfigurationListOptional, WatchMutatingWebhookConfigurationListResponse,
 };
 
 mod mutating_webhook_configuration_list;
@@ -39,7 +38,6 @@ pub use self::validating_webhook_configuration::{
     ReadValidatingWebhookConfigurationOptional, ReadValidatingWebhookConfigurationResponse,
     ReplaceValidatingWebhookConfigurationOptional, ReplaceValidatingWebhookConfigurationResponse,
     WatchValidatingWebhookConfigurationOptional, WatchValidatingWebhookConfigurationResponse,
-    WatchValidatingWebhookConfigurationListOptional, WatchValidatingWebhookConfigurationListResponse,
 };
 
 mod validating_webhook_configuration_list;

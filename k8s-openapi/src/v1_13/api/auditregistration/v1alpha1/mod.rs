@@ -10,7 +10,6 @@ pub use self::audit_sink::{
     ReadAuditSinkOptional, ReadAuditSinkResponse,
     ReplaceAuditSinkOptional, ReplaceAuditSinkResponse,
     WatchAuditSinkOptional, WatchAuditSinkResponse,
-    WatchAuditSinkListOptional, WatchAuditSinkListResponse,
 };
 
 mod audit_sink_list;

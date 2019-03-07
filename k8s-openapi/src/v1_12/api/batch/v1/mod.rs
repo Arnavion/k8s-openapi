@@ -14,9 +14,7 @@ pub use self::job::{
     ReplaceNamespacedJobOptional, ReplaceNamespacedJobResponse,
     ReplaceNamespacedJobStatusOptional, ReplaceNamespacedJobStatusResponse,
     WatchJobForAllNamespacesOptional, WatchJobForAllNamespacesResponse,
-    WatchJobListForAllNamespacesOptional, WatchJobListForAllNamespacesResponse,
     WatchNamespacedJobOptional, WatchNamespacedJobResponse,
-    WatchNamespacedJobListOptional, WatchNamespacedJobListResponse,
 };
 
 mod job_condition;

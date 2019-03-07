@@ -11,7 +11,6 @@ pub use self::api_service::{
     ReplaceAPIServiceOptional, ReplaceAPIServiceResponse,
     ReplaceAPIServiceStatusOptional, ReplaceAPIServiceStatusResponse,
     WatchAPIServiceOptional, WatchAPIServiceResponse,
-    WatchAPIServiceListOptional, WatchAPIServiceListResponse,
 };
 
 mod api_service_condition;

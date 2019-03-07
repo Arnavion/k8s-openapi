@@ -6,11 +6,11 @@ fn watch_pods() {
 
 	crate::Client::with("watch_event-watch_pods", |client| {
 		let (request, response_body) =
-			api::Pod::watch_namespaced_pod_list("kube-system", Default::default()).expect("couldn't watch pods");
+			api::Pod::watch_namespaced_pod("kube-system", Default::default()).expect("couldn't watch pods");
 		let response = client.execute(request).expect("couldn't watch pods");
 		let pod_watch_events =
 			crate::get_multiple_values(response, response_body, |response, status_code, _| match response {
-				api::WatchNamespacedPodListResponse::Ok(pod_watch_event) =>
+				api::WatchNamespacedPodResponse::Ok(pod_watch_event) =>
 					Ok(crate::ValueResult::GotValue(pod_watch_event)),
 				other => Err(format!("{:?} {}", other, status_code).into()),
 			}).expect("couldn't watch pods");

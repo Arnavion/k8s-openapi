@@ -11,9 +11,7 @@ pub use self::event::{
     ReadNamespacedEventOptional, ReadNamespacedEventResponse,
     ReplaceNamespacedEventOptional, ReplaceNamespacedEventResponse,
     WatchEventForAllNamespacesOptional, WatchEventForAllNamespacesResponse,
-    WatchEventListForAllNamespacesOptional, WatchEventListForAllNamespacesResponse,
     WatchNamespacedEventOptional, WatchNamespacedEventResponse,
-    WatchNamespacedEventListOptional, WatchNamespacedEventListResponse,
 };
 
 mod event_list;

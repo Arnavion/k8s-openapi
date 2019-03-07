@@ -10,7 +10,6 @@ pub use self::storage_class::{
     ReadStorageClassOptional, ReadStorageClassResponse,
     ReplaceStorageClassOptional, ReplaceStorageClassResponse,
     WatchStorageClassOptional, WatchStorageClassResponse,
-    WatchStorageClassListOptional, WatchStorageClassListResponse,
 };
 
 mod storage_class_list;
@@ -32,7 +31,6 @@ pub use self::volume_attachment::{
     ReplaceVolumeAttachmentOptional, ReplaceVolumeAttachmentResponse,
     ReplaceVolumeAttachmentStatusOptional, ReplaceVolumeAttachmentStatusResponse,
     WatchVolumeAttachmentOptional, WatchVolumeAttachmentResponse,
-    WatchVolumeAttachmentListOptional, WatchVolumeAttachmentListResponse,
 };
 
 mod volume_attachment_list;

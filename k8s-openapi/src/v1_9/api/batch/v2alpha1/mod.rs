@@ -14,9 +14,7 @@ pub use self::cron_job::{
     ReplaceNamespacedCronJobOptional, ReplaceNamespacedCronJobResponse,
     ReplaceNamespacedCronJobStatusOptional, ReplaceNamespacedCronJobStatusResponse,
     WatchCronJobForAllNamespacesOptional, WatchCronJobForAllNamespacesResponse,
-    WatchCronJobListForAllNamespacesOptional, WatchCronJobListForAllNamespacesResponse,
     WatchNamespacedCronJobOptional, WatchNamespacedCronJobResponse,
-    WatchNamespacedCronJobListOptional, WatchNamespacedCronJobListResponse,
 };
 
 mod cron_job_list;

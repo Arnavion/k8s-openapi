@@ -10,7 +10,6 @@ pub use self::priority_class::{
     ReadPriorityClassOptional, ReadPriorityClassResponse,
     ReplacePriorityClassOptional, ReplacePriorityClassResponse,
     WatchPriorityClassOptional, WatchPriorityClassResponse,
-    WatchPriorityClassListOptional, WatchPriorityClassListResponse,
 };
 
 mod priority_class_list;
