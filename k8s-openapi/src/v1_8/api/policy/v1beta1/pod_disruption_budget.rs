@@ -1063,7 +1063,6 @@ impl PodDisruptionBudget {
         optional: WatchNamespacedPodDisruptionBudgetOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchNamespacedPodDisruptionBudgetResponse>), crate::RequestError> {
         let WatchNamespacedPodDisruptionBudgetOptional {
-            continue_,
             field_selector,
             include_uninitialized,
             label_selector,
@@ -1074,9 +1073,6 @@ impl PodDisruptionBudget {
         } = optional;
         let __url = format!("/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets?", namespace = namespace);
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
-        if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", continue_);
-        }
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -1113,8 +1109,6 @@ impl PodDisruptionBudget {
 /// Optional parameters of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchNamespacedPodDisruptionBudgetOptional<'a> {
-    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
     pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.
@@ -1178,7 +1172,6 @@ impl PodDisruptionBudget {
         optional: WatchPodDisruptionBudgetForAllNamespacesOptional<'_>,
     ) -> Result<(http::Request<Vec<u8>>, fn(http::StatusCode) -> crate::ResponseBody<WatchPodDisruptionBudgetForAllNamespacesResponse>), crate::RequestError> {
         let WatchPodDisruptionBudgetForAllNamespacesOptional {
-            continue_,
             field_selector,
             include_uninitialized,
             label_selector,
@@ -1189,9 +1182,6 @@ impl PodDisruptionBudget {
         } = optional;
         let __url = "/apis/policy/v1beta1/poddisruptionbudgets?".to_string();
         let mut __query_pairs = url::form_urlencoded::Serializer::new(__url);
-        if let Some(continue_) = continue_ {
-            __query_pairs.append_pair("continue", continue_);
-        }
         if let Some(field_selector) = field_selector {
             __query_pairs.append_pair("fieldSelector", field_selector);
         }
@@ -1228,8 +1218,6 @@ impl PodDisruptionBudget {
 /// Optional parameters of [`PodDisruptionBudget::watch_pod_disruption_budget_for_all_namespaces`]
 #[derive(Clone, Copy, Debug, Default)]
 pub struct WatchPodDisruptionBudgetForAllNamespacesOptional<'a> {
-    /// The continue option should be set when retrieving more results from the server. Since this value is server defined, clients may only use the continue value from a previous query result with identical query parameters (except for the value of continue) and the server may reject a continue value it does not recognize. If the specified continue value is no longer valid whether due to expiration (generally five to fifteen minutes) or a configuration change on the server the server will respond with a 410 ResourceExpired error indicating the client must restart their list without the continue field. This field is not supported when watch is true. Clients may start a watch from the last resourceVersion value returned by the server and not miss any modifications.
-    pub continue_: Option<&'a str>,
     /// A selector to restrict the list of returned objects by their fields. Defaults to everything.
     pub field_selector: Option<&'a str>,
     /// If true, partially initialized resources are included in the response.

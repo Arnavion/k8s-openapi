@@ -412,14 +412,19 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			None => continue,
 		};
 
-		list_operations.push((operation.id.to_owned(), watch_index));
+		let continue_index = match operation.parameters.iter().position(|p| p.name == "continue") {
+			Some(continue_index) => continue_index,
+			None => return Err(format!("operation {} is a list operation with a watch parameter but doesn't have a continue parameter", operation.id).into()),
+		};
+
+		list_operations.push((operation.id.to_owned(), watch_index, continue_index));
 	}
 
 	if list_operations.is_empty() {
 		return Err("never found any list-watch operations".into());
 	}
 
-	for (list_operation_id, watch_index) in list_operations {
+	for (list_operation_id, watch_index, continue_index) in list_operations {
 		let watch_operation_id = list_operation_id.replacen("list", "watch", 1);
 		let watch_list_operation_id =
 			if watch_operation_id.ends_with("ForAllNamespaces") {
@@ -476,6 +481,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 			..original_list_operation.clone()
 		};
 		watch_operation.parameters[watch_index] = watch_parameter.clone();
+		watch_operation.parameters.swap_remove(continue_index);
 		watch_operation.responses.insert(reqwest::StatusCode::OK, Some(crate::swagger20::Schema {
 			description: None,
 			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath("io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned())),
