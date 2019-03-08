@@ -17,26 +17,18 @@ rustup component add clippy
 # Saves a few seconds for large crates
 export CARGO_INCREMENTAL=0
 
-pushd k8s-openapi
 cargo test --verbose --no-run --features "$FEATURE"
-popd
 
 pushd k8s-openapi-tests
 cargo test --verbose --no-run --features "test_$FEATURE"
 popd
 
-pushd k8s-openapi
 RUST_BACKTRACE=full timeout 120 cargo test --verbose --features "$FEATURE"
-popd
 
 pushd k8s-openapi-tests
 RUST_BACKTRACE=full timeout 120 cargo test --verbose --features "test_$FEATURE"
 popd
 
-pushd k8s-openapi
 cargo doc --verbose --no-deps --features "$FEATURE"
-popd
 
-pushd k8s-openapi
 cargo clippy --verbose --features "$FEATURE" -- -D warnings
-popd

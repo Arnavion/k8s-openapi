@@ -45,7 +45,7 @@ fn main() -> Result<(), Error> {
 	let client = reqwest::Client::new();
 
 	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
-	let out_dir_base = out_dir_base.join("k8s-openapi").join("src");
+	let out_dir_base = out_dir_base.parent().ok_or("path does not have a parent")?.join("src");
 
 	for &supported_version in supported_version::ALL {
 		run(supported_version, &out_dir_base, &client)?;

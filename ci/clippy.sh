@@ -14,4 +14,6 @@ rustup default stable
 
 rustup component add clippy
 
+pushd k8s-openapi-codegen
 cargo clippy
+popd
