@@ -2,6 +2,8 @@
 
 - A new `Resource` trait is implemented on all resource types to get their API version, group, kind and version properties. See docs for details.
 
+  Since the API version and kind of resource types is statically associated with their Rust types, the `api_version` and `kind` fields have been removed from these types. The fields are serialized and deserialized automatically without needing to be set.
+
 - A new `Metadata` trait is implemented on all resource types that have metadata (`ObjectMeta` or `ListMeta`), and can be used to get access to this metadata.
 
 - Fixed string responses like `ReadNamespacedPodLogResponse` to return `ResponseError::NeedMoreData` when given an empty slice, instead of returning an empty string.
