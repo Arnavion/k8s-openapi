@@ -11,12 +11,13 @@
 )]
 
 mod fixups;
+mod logger;
 mod supported_version;
 mod swagger20;
 
-struct Error(Box<dyn std::error::Error>, backtrace::Backtrace);
+struct Error(Box<dyn std::error::Error + Send + Sync>, backtrace::Backtrace);
 
-impl<E> From<E> for Error where E: Into<Box<dyn std::error::Error>> {
+impl<E> From<E> for Error where E: Into<Box<dyn std::error::Error + Send + Sync>> {
 	fn from(value: E) -> Self {
 		Error(value.into(), backtrace::Backtrace::new())
 	}
@@ -32,26 +33,58 @@ impl std::fmt::Debug for Error {
 
 fn main() -> Result<(), Error> {
 	{
+		let logger = logger::Logger;
+		log::set_boxed_logger(Box::new(logger))?;
+
 		let mut builder = env_logger::Builder::new();
-		builder.format(|buf, record| {
-			use std::io::Write;
-			writeln!(buf, "{} {}:{} {}", record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
-		});
 		let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
 		builder.parse_filters(&rust_log);
-		builder.init();
+		let logger = builder.build();
+		log::set_max_level(logger.filter());
 	}
 
-	let client = reqwest::Client::new();
+	let client = std::sync::Arc::new(reqwest::Client::new());
 
 	let out_dir_base: &std::path::Path = env!("CARGO_MANIFEST_DIR").as_ref();
-	let out_dir_base = out_dir_base.parent().ok_or("path does not have a parent")?.join("src");
+	let out_dir_base = std::sync::Arc::new(out_dir_base.parent().ok_or("path does not have a parent")?.join("src"));
 
-	for &supported_version in supported_version::ALL {
-		run(supported_version, &out_dir_base, &client)?;
+	let threads: Vec<_> =
+		supported_version::ALL.iter()
+		.map(|&supported_version| {
+			let client = client.clone();
+			let out_dir_base = out_dir_base.clone();
+
+			let mod_root = supported_version.mod_root().to_owned();
+
+			std::thread::Builder::new().name(mod_root.clone()).spawn(move || -> Result<(), Error> {
+				{
+					let mut builder = env_logger::Builder::new();
+					builder.format(move |buf, record| {
+						use std::io::Write;
+						writeln!(buf, "[{}] {} {}:{} {}", mod_root, record.level(), record.file().unwrap_or("?"), record.line().unwrap_or(0), record.args())
+					});
+					let rust_log = std::env::var("RUST_LOG").unwrap_or_else(|_| "info".to_string());
+					builder.parse_filters(&rust_log);
+					logger::register_thread_local_logger(builder.build());
+				}
+
+				run(supported_version, &out_dir_base, &client)?;
+
+				Ok(())
+			}).unwrap()
+		})
+		.collect();
+
+	let mut result = Ok(());
+	for thread in threads {
+		let thread_name = thread.thread().name().unwrap().to_owned();
+		if let Err(err) = thread.join().unwrap() {
+			eprintln!("[{}] {:?}", thread_name, err);
+			result = Err("one or more runs failed".into());
+		}
 	}
 
-	Ok(())
+	result
 }
 
 fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &std::path::Path, client: &reqwest::Client) -> Result<(), Error> {
@@ -72,7 +105,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 
 	let mut spec: swagger20::Spec = {
 		let spec_url = supported_version.spec_url();
-		log::info!(target: "", "Parsing spec file at {} ...", spec_url);
+		log::info!("Parsing spec file at {} ...", spec_url);
 		let mut response = client.get(spec_url).send()?;
 		let status = response.status();
 		if status != reqwest::StatusCode::OK {
@@ -81,6 +114,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 		response.json()?
 	};
 
+	log::info!("Applying fixups...");
 	supported_version.fixup(&mut spec)?;
 
 	let expected_num_generated_types: usize = spec.definitions.len();
