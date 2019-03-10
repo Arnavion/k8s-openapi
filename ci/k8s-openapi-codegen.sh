@@ -15,5 +15,11 @@ rustup default stable
 rustup component add clippy
 
 pushd k8s-openapi-codegen
+cargo run
+popd
+
+[ -z "$(git status --porcelain)" ]
+
+pushd k8s-openapi-codegen
 cargo clippy
 popd
