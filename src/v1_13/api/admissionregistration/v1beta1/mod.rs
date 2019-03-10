@@ -5,11 +5,11 @@ pub use self::mutating_webhook_configuration::{
     CreateMutatingWebhookConfigurationOptional, CreateMutatingWebhookConfigurationResponse,
     DeleteCollectionMutatingWebhookConfigurationOptional, DeleteCollectionMutatingWebhookConfigurationResponse,
     DeleteMutatingWebhookConfigurationOptional, DeleteMutatingWebhookConfigurationResponse,
-    ListMutatingWebhookConfigurationOptional, ListMutatingWebhookConfigurationResponse,
+    ListMutatingWebhookConfigurationResponse,
     PatchMutatingWebhookConfigurationOptional, PatchMutatingWebhookConfigurationResponse,
     ReadMutatingWebhookConfigurationOptional, ReadMutatingWebhookConfigurationResponse,
     ReplaceMutatingWebhookConfigurationOptional, ReplaceMutatingWebhookConfigurationResponse,
-    WatchMutatingWebhookConfigurationOptional, WatchMutatingWebhookConfigurationResponse,
+    WatchMutatingWebhookConfigurationResponse,
 };
 
 mod mutating_webhook_configuration_list;
@@ -33,11 +33,11 @@ pub use self::validating_webhook_configuration::{
     CreateValidatingWebhookConfigurationOptional, CreateValidatingWebhookConfigurationResponse,
     DeleteCollectionValidatingWebhookConfigurationOptional, DeleteCollectionValidatingWebhookConfigurationResponse,
     DeleteValidatingWebhookConfigurationOptional, DeleteValidatingWebhookConfigurationResponse,
-    ListValidatingWebhookConfigurationOptional, ListValidatingWebhookConfigurationResponse,
+    ListValidatingWebhookConfigurationResponse,
     PatchValidatingWebhookConfigurationOptional, PatchValidatingWebhookConfigurationResponse,
     ReadValidatingWebhookConfigurationOptional, ReadValidatingWebhookConfigurationResponse,
     ReplaceValidatingWebhookConfigurationOptional, ReplaceValidatingWebhookConfigurationResponse,
-    WatchValidatingWebhookConfigurationOptional, WatchValidatingWebhookConfigurationResponse,
+    WatchValidatingWebhookConfigurationResponse,
 };
 
 mod validating_webhook_configuration_list;

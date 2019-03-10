@@ -36,16 +36,16 @@ pub use self::pod_disruption_budget::{
     CreateNamespacedPodDisruptionBudgetOptional, CreateNamespacedPodDisruptionBudgetResponse,
     DeleteCollectionNamespacedPodDisruptionBudgetOptional, DeleteCollectionNamespacedPodDisruptionBudgetResponse,
     DeleteNamespacedPodDisruptionBudgetOptional, DeleteNamespacedPodDisruptionBudgetResponse,
-    ListNamespacedPodDisruptionBudgetOptional, ListNamespacedPodDisruptionBudgetResponse,
-    ListPodDisruptionBudgetForAllNamespacesOptional, ListPodDisruptionBudgetForAllNamespacesResponse,
+    ListNamespacedPodDisruptionBudgetResponse,
+    ListPodDisruptionBudgetForAllNamespacesResponse,
     PatchNamespacedPodDisruptionBudgetOptional, PatchNamespacedPodDisruptionBudgetResponse,
     PatchNamespacedPodDisruptionBudgetStatusOptional, PatchNamespacedPodDisruptionBudgetStatusResponse,
     ReadNamespacedPodDisruptionBudgetOptional, ReadNamespacedPodDisruptionBudgetResponse,
     ReadNamespacedPodDisruptionBudgetStatusOptional, ReadNamespacedPodDisruptionBudgetStatusResponse,
     ReplaceNamespacedPodDisruptionBudgetOptional, ReplaceNamespacedPodDisruptionBudgetResponse,
     ReplaceNamespacedPodDisruptionBudgetStatusOptional, ReplaceNamespacedPodDisruptionBudgetStatusResponse,
-    WatchNamespacedPodDisruptionBudgetOptional, WatchNamespacedPodDisruptionBudgetResponse,
-    WatchPodDisruptionBudgetForAllNamespacesOptional, WatchPodDisruptionBudgetForAllNamespacesResponse,
+    WatchNamespacedPodDisruptionBudgetResponse,
+    WatchPodDisruptionBudgetForAllNamespacesResponse,
 };
 
 mod pod_disruption_budget_list;
@@ -69,11 +69,11 @@ pub use self::pod_security_policy::{
     CreatePodSecurityPolicyOptional, CreatePodSecurityPolicyResponse,
     DeleteCollectionPodSecurityPolicyOptional, DeleteCollectionPodSecurityPolicyResponse,
     DeletePodSecurityPolicyOptional, DeletePodSecurityPolicyResponse,
-    ListPodSecurityPolicyOptional, ListPodSecurityPolicyResponse,
+    ListPodSecurityPolicyResponse,
     PatchPodSecurityPolicyOptional, PatchPodSecurityPolicyResponse,
     ReadPodSecurityPolicyOptional, ReadPodSecurityPolicyResponse,
     ReplacePodSecurityPolicyOptional, ReplacePodSecurityPolicyResponse,
-    WatchPodSecurityPolicyOptional, WatchPodSecurityPolicyResponse,
+    WatchPodSecurityPolicyResponse,
 };
 
 mod pod_security_policy_list;

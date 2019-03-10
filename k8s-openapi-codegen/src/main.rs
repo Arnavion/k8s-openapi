@@ -731,6 +731,65 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					num_generated_type_aliases += 1;
 				},
 
+				swagger20::SchemaKind::ListOptional(properties) |
+				swagger20::SchemaKind::WatchOptional(properties) => {
+					struct Property<'a> {
+						schema: &'a swagger20::Schema,
+						field_name: std::borrow::Cow<'static, str>,
+						field_type_name: String,
+					}
+
+					let properties = {
+						let mut result = Vec::with_capacity(properties.len());
+
+						for (name, schema) in properties {
+							let field_name = get_rust_ident(&name);
+
+							let type_name = get_rust_borrow_type(&schema.kind, &replace_namespaces, mod_root)?;
+
+							let field_type_name =
+								if type_name.starts_with('&') {
+									format!("Option<&'a {}>", &type_name[1..])
+								}
+								else {
+									format!("Option<{}>", type_name)
+								};
+
+							result.push(Property {
+								schema,
+								field_name,
+								field_type_name,
+							});
+						}
+
+						result
+					};
+
+					writeln!(file, "#[derive(Clone, Copy, Debug, Default, PartialEq)]")?;
+					writeln!(file, "pub struct {}<'a> {{", type_name)?;
+
+					for (i, Property { schema, field_name, field_type_name, .. }) in properties.iter().enumerate() {
+						if i > 0 {
+							writeln!(file)?;
+						}
+
+						if let Some(ref description) = schema.description {
+							for line in get_comment_text(description, "") {
+								writeln!(file, "    ///{}", line)?;
+							}
+						}
+
+						write!(file, "    pub {}: ", field_name)?;
+
+						write!(file, "{}", field_type_name)?;
+
+						writeln!(file, ",")?;
+					}
+					writeln!(file, "}}")?;
+
+					num_generated_structs += 1;
+				},
+
 				swagger20::SchemaKind::Watch => unreachable!(),
 			}
 
@@ -782,6 +841,7 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 }
 
 fn can_be_default(kind: &swagger20::SchemaKind, spec: &swagger20::Spec) -> Result<bool, Error> {
+	#[allow(clippy::match_same_arms)]
 	match kind {
 		swagger20::SchemaKind::Properties(properties) => {
 			for (schema, required) in properties.values() {
@@ -809,6 +869,9 @@ fn can_be_default(kind: &swagger20::SchemaKind, spec: &swagger20::Spec) -> Resul
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
 
 		swagger20::SchemaKind::Ty(_) => Ok(true),
+
+		swagger20::SchemaKind::ListOptional(_) |
+		swagger20::SchemaKind::WatchOptional(_) => Ok(true),
 
 		swagger20::SchemaKind::Watch => unreachable!(),
 	}
@@ -1002,6 +1065,9 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
 
+		swagger20::SchemaKind::ListOptional(_) => Err("ListOptional type not supported".into()),
+		swagger20::SchemaKind::WatchOptional(_) => Err("WatchOptional type not supported".into()),
+
 		swagger20::SchemaKind::Watch => Ok("".into()), // Value is unused since this parameter is implicit
 	}
 }
@@ -1040,6 +1106,9 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
 
+		swagger20::SchemaKind::ListOptional(_) => Err("ListOptional type not supported".into()),
+		swagger20::SchemaKind::WatchOptional(_) => Err("WatchOptional type not supported".into()),
+
 		swagger20::SchemaKind::Watch => unreachable!(),
 	}
 }
@@ -1077,7 +1146,7 @@ fn write_operation(
 	writeln!(file, "// Generated from operation {}", operation.id)?;
 
 	let (operation_fn_name, operation_result_name, operation_optional_parameters_name) =
-		get_operation_names(operation, type_name_and_ref_path_and_parent_mod_rs.is_some())?;
+		get_operation_names(operation, type_name_and_ref_path_and_parent_mod_rs.is_some(), mod_root)?;
 
 	let operation_responses: Result<Vec<_>, _> =
 		operation.responses.iter()
@@ -1328,7 +1397,11 @@ fn write_operation(
 	}
 
 	if let Some((_, _, parent_mod_rs)) = type_name_and_ref_path_and_parent_mod_rs {
-		if optional_parameters.is_empty() {
+		if
+			optional_parameters.is_empty() ||
+			operation.kubernetes_action == Some(swagger20::KubernetesAction::List) ||
+			operation.kubernetes_action == Some(swagger20::KubernetesAction::Watch)
+		{
 			writeln!(parent_mod_rs, "    {},", operation_result_name)?;
 		}
 		else {
@@ -1336,7 +1409,11 @@ fn write_operation(
 		}
 	}
 
-	if !optional_parameters.is_empty() {
+	if
+		!optional_parameters.is_empty() &&
+		operation.kubernetes_action != Some(swagger20::KubernetesAction::List) &&
+		operation.kubernetes_action != Some(swagger20::KubernetesAction::Watch)
+	{
 		writeln!(file)?;
 
 		if let Some((type_name, _, _)) = type_name_and_ref_path_and_parent_mod_rs {
@@ -1510,6 +1587,7 @@ fn write_operation(
 fn get_operation_names(
 	operation: &swagger20::Operation,
 	strip_tag: bool,
+	mod_root: &str,
 ) -> Result<(std::borrow::Cow<'static, str>, String, String), Error> {
 	let operation_id =
 		if strip_tag {
@@ -1543,7 +1621,11 @@ fn get_operation_names(
 	let first_char = chars.next().ok_or_else(|| format!("operation has empty ID: {:?}", operation))?.to_uppercase();
 	let rest_chars = chars.as_str();
 	let operation_result_name = format!("{}{}Response", first_char, rest_chars);
-	let operation_optional_parameters_name = format!("{}{}Optional", first_char, rest_chars);
+	let operation_optional_parameters_name = match operation.kubernetes_action {
+		Some(swagger20::KubernetesAction::List) => format!("crate::{}::ListOptional", mod_root),
+		Some(swagger20::KubernetesAction::Watch) => format!("crate::{}::WatchOptional", mod_root),
+		_ => format!("{}{}Optional", first_char, rest_chars),
+	};
 
 	Ok((operation_fn_name, operation_result_name, operation_optional_parameters_name))
 }

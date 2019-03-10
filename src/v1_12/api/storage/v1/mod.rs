@@ -5,11 +5,11 @@ pub use self::storage_class::{
     CreateStorageClassOptional, CreateStorageClassResponse,
     DeleteCollectionStorageClassOptional, DeleteCollectionStorageClassResponse,
     DeleteStorageClassOptional, DeleteStorageClassResponse,
-    ListStorageClassOptional, ListStorageClassResponse,
+    ListStorageClassResponse,
     PatchStorageClassOptional, PatchStorageClassResponse,
     ReadStorageClassOptional, ReadStorageClassResponse,
     ReplaceStorageClassOptional, ReplaceStorageClassResponse,
-    WatchStorageClassOptional, WatchStorageClassResponse,
+    WatchStorageClassResponse,
 };
 
 mod storage_class_list;

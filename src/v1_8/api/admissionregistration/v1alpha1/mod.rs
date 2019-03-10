@@ -15,11 +15,11 @@ pub use self::external_admission_hook_configuration::{
     CreateExternalAdmissionHookConfigurationOptional, CreateExternalAdmissionHookConfigurationResponse,
     DeleteCollectionExternalAdmissionHookConfigurationOptional, DeleteCollectionExternalAdmissionHookConfigurationResponse,
     DeleteExternalAdmissionHookConfigurationOptional, DeleteExternalAdmissionHookConfigurationResponse,
-    ListExternalAdmissionHookConfigurationOptional, ListExternalAdmissionHookConfigurationResponse,
+    ListExternalAdmissionHookConfigurationResponse,
     PatchExternalAdmissionHookConfigurationOptional, PatchExternalAdmissionHookConfigurationResponse,
     ReadExternalAdmissionHookConfigurationOptional, ReadExternalAdmissionHookConfigurationResponse,
     ReplaceExternalAdmissionHookConfigurationOptional, ReplaceExternalAdmissionHookConfigurationResponse,
-    WatchExternalAdmissionHookConfigurationOptional, WatchExternalAdmissionHookConfigurationResponse,
+    WatchExternalAdmissionHookConfigurationResponse,
 };
 
 mod external_admission_hook_configuration_list;
@@ -38,11 +38,11 @@ pub use self::initializer_configuration::{
     CreateInitializerConfigurationOptional, CreateInitializerConfigurationResponse,
     DeleteCollectionInitializerConfigurationOptional, DeleteCollectionInitializerConfigurationResponse,
     DeleteInitializerConfigurationOptional, DeleteInitializerConfigurationResponse,
-    ListInitializerConfigurationOptional, ListInitializerConfigurationResponse,
+    ListInitializerConfigurationResponse,
     PatchInitializerConfigurationOptional, PatchInitializerConfigurationResponse,
     ReadInitializerConfigurationOptional, ReadInitializerConfigurationResponse,
     ReplaceInitializerConfigurationOptional, ReplaceInitializerConfigurationResponse,
-    WatchInitializerConfigurationOptional, WatchInitializerConfigurationResponse,
+    WatchInitializerConfigurationResponse,
 };
 
 mod initializer_configuration_list;

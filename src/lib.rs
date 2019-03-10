@@ -67,9 +67,13 @@
 //! 1. The API function has required parameters and optional parameters. All optional parameters are taken as a single struct with optional fields.
 //!
 //!    Specifically for the [`api::core::v1::Pod::list_namespaced_pod`] operation, the `namespace` parameter is required and taken by the function itself,
-//!    while other optional parameters like `field_selector` are fields of the [`api::core::v1::ListNamespacedPodOptional`] struct. An instance of
+//!    while other optional parameters like `field_selector` are fields of the [`ListOptional`] struct. An instance of
 //!    this struct is taken as the last parameter of `Pod::list_namespaced_pod`. This struct impls [`Default`] so that you can just pass in `Default::default()`
 //!    if you don't want to specify values for any of the optional parameters.
+//!
+//!    All list API that take optional parameters do so using the [`ListOptional`] struct. Similarly, all watch API that take optional parameters do so using
+//!    the [`WatchOptional`] struct. Other API functions with unique parameters have their own `Optional` structs, such as [`api::core::v1::DeleteNamespacedPodOptional`]
+//!    for [`api::core::v1::Pod::delete_namespaced_pod`]
 //!
 //! 1. The function returns an [`http::Request`] value with the URL path, query string, and request body filled out according to the parameters
 //!    given to the function. The function does *not* execute this request. You can execute this `http::Request` using any HTTP client library you want to use.

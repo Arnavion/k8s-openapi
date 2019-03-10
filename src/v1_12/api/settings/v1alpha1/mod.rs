@@ -5,13 +5,13 @@ pub use self::pod_preset::{
     CreateNamespacedPodPresetOptional, CreateNamespacedPodPresetResponse,
     DeleteCollectionNamespacedPodPresetOptional, DeleteCollectionNamespacedPodPresetResponse,
     DeleteNamespacedPodPresetOptional, DeleteNamespacedPodPresetResponse,
-    ListNamespacedPodPresetOptional, ListNamespacedPodPresetResponse,
-    ListPodPresetForAllNamespacesOptional, ListPodPresetForAllNamespacesResponse,
+    ListNamespacedPodPresetResponse,
+    ListPodPresetForAllNamespacesResponse,
     PatchNamespacedPodPresetOptional, PatchNamespacedPodPresetResponse,
     ReadNamespacedPodPresetOptional, ReadNamespacedPodPresetResponse,
     ReplaceNamespacedPodPresetOptional, ReplaceNamespacedPodPresetResponse,
-    WatchNamespacedPodPresetOptional, WatchNamespacedPodPresetResponse,
-    WatchPodPresetForAllNamespacesOptional, WatchPodPresetForAllNamespacesResponse,
+    WatchNamespacedPodPresetResponse,
+    WatchPodPresetForAllNamespacesResponse,
 };
 
 mod pod_preset_list;

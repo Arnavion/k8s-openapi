@@ -10,11 +10,11 @@ pub use self::initializer_configuration::{
     CreateInitializerConfigurationOptional, CreateInitializerConfigurationResponse,
     DeleteCollectionInitializerConfigurationOptional, DeleteCollectionInitializerConfigurationResponse,
     DeleteInitializerConfigurationOptional, DeleteInitializerConfigurationResponse,
-    ListInitializerConfigurationOptional, ListInitializerConfigurationResponse,
+    ListInitializerConfigurationResponse,
     PatchInitializerConfigurationOptional, PatchInitializerConfigurationResponse,
     ReadInitializerConfigurationOptional, ReadInitializerConfigurationResponse,
     ReplaceInitializerConfigurationOptional, ReplaceInitializerConfigurationResponse,
-    WatchInitializerConfigurationOptional, WatchInitializerConfigurationResponse,
+    WatchInitializerConfigurationResponse,
 };
 
 mod initializer_configuration_list;

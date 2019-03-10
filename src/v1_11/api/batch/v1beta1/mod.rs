@@ -5,16 +5,16 @@ pub use self::cron_job::{
     CreateNamespacedCronJobOptional, CreateNamespacedCronJobResponse,
     DeleteCollectionNamespacedCronJobOptional, DeleteCollectionNamespacedCronJobResponse,
     DeleteNamespacedCronJobOptional, DeleteNamespacedCronJobResponse,
-    ListCronJobForAllNamespacesOptional, ListCronJobForAllNamespacesResponse,
-    ListNamespacedCronJobOptional, ListNamespacedCronJobResponse,
+    ListCronJobForAllNamespacesResponse,
+    ListNamespacedCronJobResponse,
     PatchNamespacedCronJobOptional, PatchNamespacedCronJobResponse,
     PatchNamespacedCronJobStatusOptional, PatchNamespacedCronJobStatusResponse,
     ReadNamespacedCronJobOptional, ReadNamespacedCronJobResponse,
     ReadNamespacedCronJobStatusOptional, ReadNamespacedCronJobStatusResponse,
     ReplaceNamespacedCronJobOptional, ReplaceNamespacedCronJobResponse,
     ReplaceNamespacedCronJobStatusOptional, ReplaceNamespacedCronJobStatusResponse,
-    WatchCronJobForAllNamespacesOptional, WatchCronJobForAllNamespacesResponse,
-    WatchNamespacedCronJobOptional, WatchNamespacedCronJobResponse,
+    WatchCronJobForAllNamespacesResponse,
+    WatchNamespacedCronJobResponse,
 };
 
 mod cron_job_list;

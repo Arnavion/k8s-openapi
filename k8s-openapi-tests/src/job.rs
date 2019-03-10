@@ -153,7 +153,7 @@ fn create() {
 
 		// Delete all pods of the job using label selector
 		let (request, response_body) =
-			api::Pod::list_namespaced_pod("default", api::ListNamespacedPodOptional {
+			api::Pod::list_namespaced_pod("default", k8s_openapi::ListOptional {
 				label_selector: Some("job-name=k8s-openapi-tests-create-job"),
 				..Default::default()
 			})

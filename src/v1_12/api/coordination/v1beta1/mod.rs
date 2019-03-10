@@ -5,13 +5,13 @@ pub use self::lease::{
     CreateNamespacedLeaseOptional, CreateNamespacedLeaseResponse,
     DeleteCollectionNamespacedLeaseOptional, DeleteCollectionNamespacedLeaseResponse,
     DeleteNamespacedLeaseOptional, DeleteNamespacedLeaseResponse,
-    ListLeaseForAllNamespacesOptional, ListLeaseForAllNamespacesResponse,
-    ListNamespacedLeaseOptional, ListNamespacedLeaseResponse,
+    ListLeaseForAllNamespacesResponse,
+    ListNamespacedLeaseResponse,
     PatchNamespacedLeaseOptional, PatchNamespacedLeaseResponse,
     ReadNamespacedLeaseOptional, ReadNamespacedLeaseResponse,
     ReplaceNamespacedLeaseOptional, ReplaceNamespacedLeaseResponse,
-    WatchLeaseForAllNamespacesOptional, WatchLeaseForAllNamespacesResponse,
-    WatchNamespacedLeaseOptional, WatchNamespacedLeaseResponse,
+    WatchLeaseForAllNamespacesResponse,
+    WatchNamespacedLeaseResponse,
 };
 
 mod lease_list;

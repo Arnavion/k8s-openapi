@@ -393,9 +393,14 @@ pub(crate) fn remove_delete_options_body_parameter(spec: &mut crate::swagger20::
 ///
 /// This also helps solve the problem that the default list operation's response type is a list type, which would be incorrect if the user called the function
 /// with the `watch` parameter set. Thus it's applied even to those list operations which don't have corresponding deprecated watch or watchlist operations.
+///
+/// This fixup also synthesizes mod-root-level `ListOptional` and `WatchOptional` types which have the common parameters of all list and watch operations respectively.
 pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 	use std::fmt::Write;
 
+	let mut list_optional_parameters: Option<std::collections::HashSet<String>> = None;
+	let mut list_optional_definition: std::collections::BTreeMap<crate::swagger20::PropertyName, crate::swagger20::Schema> = Default::default();
+	let mut watch_optional_definition: std::collections::BTreeMap<crate::swagger20::PropertyName, crate::swagger20::Schema> = Default::default();
 	let mut list_operations = vec![];
 
 	for operation in &spec.operations {
@@ -404,27 +409,77 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 		}
 
 		if !operation.id.starts_with("list") {
-			continue;
+			return Err(format!(r#"operation {} is a list operation but doesn't start with "list""#, operation.id).into());
 		}
 
-		let watch_index = match operation.parameters.iter().position(|p| p.name == "watch") {
-			Some(watch_index) => watch_index,
-			None => continue,
-		};
+		let list_optional_parameters =
+			&*list_optional_parameters.get_or_insert_with(|| operation.parameters.iter().map(|p| p.name.clone()).collect());
 
-		let continue_index = match operation.parameters.iter().position(|p| p.name == "continue") {
-			Some(continue_index) => continue_index,
-			None => return Err(format!("operation {} is a list operation with a watch parameter but doesn't have a continue parameter", operation.id).into()),
-		};
+		for expected_parameter_name in list_optional_parameters {
+			let expected_parameter =
+				if let Some(expected_parameter) = operation.parameters.iter().find(|p| p.name == *expected_parameter_name && !p.required) {
+					&**expected_parameter
+				}
+				else {
+					return Err(format!("operation {} is a list operation but doesn't have a {} parameter", operation.id, expected_parameter_name).into());
+				};
 
-		list_operations.push((operation.id.to_owned(), watch_index, continue_index));
+			if expected_parameter_name != "watch" {
+				list_optional_definition
+					.entry(crate::swagger20::PropertyName(expected_parameter_name.to_owned()))
+					.or_insert_with(|| expected_parameter.clone().schema);
+			}
+
+			if expected_parameter_name != "continue" && expected_parameter_name != "limit" && expected_parameter_name != "watch" {
+				watch_optional_definition
+					.entry(crate::swagger20::PropertyName(expected_parameter_name.to_owned()))
+					.or_insert_with(|| expected_parameter.clone().schema);
+			}
+		}
+
+		for parameter in &operation.parameters {
+			if !parameter.required && !list_optional_parameters.contains(&*parameter.name) {
+				return Err(format!("operation {} contains unexpected optional parameter {}", operation.id, parameter.name).into());
+			}
+		}
+
+		let continue_index = operation.parameters.iter().position(|p| p.name == "continue").unwrap();
+		let limit_index = operation.parameters.iter().position(|p| p.name == "limit").unwrap();
+		let watch_index = operation.parameters.iter().position(|p| p.name == "watch").unwrap();
+
+		list_operations.push((operation.id.to_owned(), continue_index, limit_index, watch_index));
 	}
 
 	if list_operations.is_empty() {
 		return Err("never found any list-watch operations".into());
 	}
 
-	for (list_operation_id, watch_index, continue_index) in list_operations {
+	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.ListOptional".to_string()), crate::swagger20::Schema {
+		description: Some("Common parameters for all list operations.".to_string()),
+		kind: crate::swagger20::SchemaKind::ListOptional(list_optional_definition),
+		kubernetes_group_kind_versions: None,
+	});
+
+	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.WatchOptional".to_string()), crate::swagger20::Schema {
+		description: Some("Common parameters for all watch operations.".to_string()),
+		kind: crate::swagger20::SchemaKind::WatchOptional(watch_optional_definition),
+		kubernetes_group_kind_versions: None,
+	});
+
+	let watch_parameter = std::sync::Arc::new(crate::swagger20::Parameter {
+		location: crate::swagger20::ParameterLocation::Query,
+		name: "watch".to_string(),
+		required: true,
+		schema: crate::swagger20::Schema {
+			description: None,
+			kind: crate::swagger20::SchemaKind::Watch,
+			kubernetes_group_kind_versions: None,
+		},
+	});
+
+	let mut converted_watch_operations: std::collections::HashSet<_> = Default::default();
+
+	for (list_operation_id, continue_index, limit_index, watch_index) in list_operations {
 		let watch_operation_id = list_operation_id.replacen("list", "watch", 1);
 		let watch_list_operation_id =
 			if watch_operation_id.ends_with("ForAllNamespaces") {
@@ -440,17 +495,6 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 		if let Some(watch_list_operation_index) = spec.operations.iter().position(|o| o.id == watch_list_operation_id) {
 			spec.operations.swap_remove(watch_list_operation_index);
 		}
-
-		let watch_parameter = std::sync::Arc::new(crate::swagger20::Parameter {
-			location: crate::swagger20::ParameterLocation::Query,
-			name: "watch".to_string(),
-			required: true,
-			schema: crate::swagger20::Schema {
-				description: None,
-				kind: crate::swagger20::SchemaKind::Watch,
-				kubernetes_group_kind_versions: None,
-			},
-		});
 
 		let (original_list_operation_index, original_list_operation) = spec.operations.iter().enumerate().find(|(_, o)| o.id == list_operation_id).unwrap();
 
@@ -476,12 +520,13 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 				writeln!(description, "This operation only supports watching one item, or a list of items, of this type for changes.")?;
 				description
 			}),
-			id: watch_operation_id,
-			kubernetes_action: Some(crate::swagger20::KubernetesAction::WatchList),
+			id: watch_operation_id.clone(),
+			kubernetes_action: Some(crate::swagger20::KubernetesAction::Watch),
 			..original_list_operation.clone()
 		};
 		watch_operation.parameters[watch_index] = watch_parameter.clone();
-		watch_operation.parameters.swap_remove(continue_index);
+		watch_operation.parameters.swap_remove(std::cmp::max(continue_index, limit_index));
+		watch_operation.parameters.swap_remove(std::cmp::min(continue_index, limit_index));
 		watch_operation.responses.insert(reqwest::StatusCode::OK, Some(crate::swagger20::Schema {
 			description: None,
 			kind: crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath("io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned())),
@@ -490,6 +535,19 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 
 		spec.operations[original_list_operation_index] = list_operation;
 		spec.operations.push(watch_operation);
+		converted_watch_operations.insert(watch_operation_id);
+	}
+
+	for operation in &spec.operations {
+		match operation.kubernetes_action {
+			Some(crate::swagger20::KubernetesAction::Watch) |
+			Some(crate::swagger20::KubernetesAction::WatchList) =>
+				if !converted_watch_operations.contains(&operation.id) {
+					return Err(format!("found a watch operation that wasn't synthesized from a list operation: {:?}", operation).into());
+				},
+
+			_ => (),
+		}
 	}
 
 	Ok(())

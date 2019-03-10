@@ -10,13 +10,13 @@ pub use self::network_policy::{
     CreateNamespacedNetworkPolicyOptional, CreateNamespacedNetworkPolicyResponse,
     DeleteCollectionNamespacedNetworkPolicyOptional, DeleteCollectionNamespacedNetworkPolicyResponse,
     DeleteNamespacedNetworkPolicyOptional, DeleteNamespacedNetworkPolicyResponse,
-    ListNamespacedNetworkPolicyOptional, ListNamespacedNetworkPolicyResponse,
-    ListNetworkPolicyForAllNamespacesOptional, ListNetworkPolicyForAllNamespacesResponse,
+    ListNamespacedNetworkPolicyResponse,
+    ListNetworkPolicyForAllNamespacesResponse,
     PatchNamespacedNetworkPolicyOptional, PatchNamespacedNetworkPolicyResponse,
     ReadNamespacedNetworkPolicyOptional, ReadNamespacedNetworkPolicyResponse,
     ReplaceNamespacedNetworkPolicyOptional, ReplaceNamespacedNetworkPolicyResponse,
-    WatchNamespacedNetworkPolicyOptional, WatchNamespacedNetworkPolicyResponse,
-    WatchNetworkPolicyForAllNamespacesOptional, WatchNetworkPolicyForAllNamespacesResponse,
+    WatchNamespacedNetworkPolicyResponse,
+    WatchNetworkPolicyForAllNamespacesResponse,
 };
 
 mod network_policy_egress_rule;

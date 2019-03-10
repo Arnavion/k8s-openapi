@@ -5,12 +5,12 @@ pub use self::custom_resource_definition::{
     CreateCustomResourceDefinitionOptional, CreateCustomResourceDefinitionResponse,
     DeleteCollectionCustomResourceDefinitionOptional, DeleteCollectionCustomResourceDefinitionResponse,
     DeleteCustomResourceDefinitionOptional, DeleteCustomResourceDefinitionResponse,
-    ListCustomResourceDefinitionOptional, ListCustomResourceDefinitionResponse,
+    ListCustomResourceDefinitionResponse,
     PatchCustomResourceDefinitionOptional, PatchCustomResourceDefinitionResponse,
     ReadCustomResourceDefinitionOptional, ReadCustomResourceDefinitionResponse,
     ReplaceCustomResourceDefinitionOptional, ReplaceCustomResourceDefinitionResponse,
     ReplaceCustomResourceDefinitionStatusOptional, ReplaceCustomResourceDefinitionStatusResponse,
-    WatchCustomResourceDefinitionOptional, WatchCustomResourceDefinitionResponse,
+    WatchCustomResourceDefinitionResponse,
 };
 
 mod custom_resource_definition_condition;

@@ -5,11 +5,11 @@ pub use self::audit_sink::{
     CreateAuditSinkOptional, CreateAuditSinkResponse,
     DeleteAuditSinkOptional, DeleteAuditSinkResponse,
     DeleteCollectionAuditSinkOptional, DeleteCollectionAuditSinkResponse,
-    ListAuditSinkOptional, ListAuditSinkResponse,
+    ListAuditSinkResponse,
     PatchAuditSinkOptional, PatchAuditSinkResponse,
     ReadAuditSinkOptional, ReadAuditSinkResponse,
     ReplaceAuditSinkOptional, ReplaceAuditSinkResponse,
-    WatchAuditSinkOptional, WatchAuditSinkResponse,
+    WatchAuditSinkResponse,
 };
 
 mod audit_sink_list;

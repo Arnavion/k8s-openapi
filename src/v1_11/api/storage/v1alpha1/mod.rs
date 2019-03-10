@@ -5,11 +5,11 @@ pub use self::volume_attachment::{
     CreateVolumeAttachmentOptional, CreateVolumeAttachmentResponse,
     DeleteCollectionVolumeAttachmentOptional, DeleteCollectionVolumeAttachmentResponse,
     DeleteVolumeAttachmentOptional, DeleteVolumeAttachmentResponse,
-    ListVolumeAttachmentOptional, ListVolumeAttachmentResponse,
+    ListVolumeAttachmentResponse,
     PatchVolumeAttachmentOptional, PatchVolumeAttachmentResponse,
     ReadVolumeAttachmentOptional, ReadVolumeAttachmentResponse,
     ReplaceVolumeAttachmentOptional, ReplaceVolumeAttachmentResponse,
-    WatchVolumeAttachmentOptional, WatchVolumeAttachmentResponse,
+    WatchVolumeAttachmentResponse,
 };
 
 mod volume_attachment_list;

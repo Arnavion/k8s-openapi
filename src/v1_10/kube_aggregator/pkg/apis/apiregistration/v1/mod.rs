@@ -5,12 +5,12 @@ pub use self::api_service::{
     CreateAPIServiceOptional, CreateAPIServiceResponse,
     DeleteAPIServiceOptional, DeleteAPIServiceResponse,
     DeleteCollectionAPIServiceOptional, DeleteCollectionAPIServiceResponse,
-    ListAPIServiceOptional, ListAPIServiceResponse,
+    ListAPIServiceResponse,
     PatchAPIServiceOptional, PatchAPIServiceResponse,
     ReadAPIServiceOptional, ReadAPIServiceResponse,
     ReplaceAPIServiceOptional, ReplaceAPIServiceResponse,
     ReplaceAPIServiceStatusOptional, ReplaceAPIServiceStatusResponse,
-    WatchAPIServiceOptional, WatchAPIServiceResponse,
+    WatchAPIServiceResponse,
 };
 
 mod api_service_condition;

@@ -53,7 +53,7 @@ This crate moves all optional parameters to separate structs, one for each API. 
 list_namespaced_pod("kube-system", Default::default());
 
 // List all pods in the kube-system namespace with label foo=bar
-list_namespaced_pod("kube-system", ListNamespacedPodOptional { label_selector: Some("foo=bar"), ..Default::default());
+list_namespaced_pod("kube-system", ListOptional { label_selector: Some("foo=bar"), ..Default::default());
 ```
 
 The second example uses struct update syntax to explicitly set one field of the struct and `Default` the rest.

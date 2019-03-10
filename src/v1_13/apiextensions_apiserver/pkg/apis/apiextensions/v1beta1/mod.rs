@@ -15,14 +15,14 @@ pub use self::custom_resource_definition::{
     CreateCustomResourceDefinitionOptional, CreateCustomResourceDefinitionResponse,
     DeleteCollectionCustomResourceDefinitionOptional, DeleteCollectionCustomResourceDefinitionResponse,
     DeleteCustomResourceDefinitionOptional, DeleteCustomResourceDefinitionResponse,
-    ListCustomResourceDefinitionOptional, ListCustomResourceDefinitionResponse,
+    ListCustomResourceDefinitionResponse,
     PatchCustomResourceDefinitionOptional, PatchCustomResourceDefinitionResponse,
     PatchCustomResourceDefinitionStatusOptional, PatchCustomResourceDefinitionStatusResponse,
     ReadCustomResourceDefinitionOptional, ReadCustomResourceDefinitionResponse,
     ReadCustomResourceDefinitionStatusOptional, ReadCustomResourceDefinitionStatusResponse,
     ReplaceCustomResourceDefinitionOptional, ReplaceCustomResourceDefinitionResponse,
     ReplaceCustomResourceDefinitionStatusOptional, ReplaceCustomResourceDefinitionStatusResponse,
-    WatchCustomResourceDefinitionOptional, WatchCustomResourceDefinitionResponse,
+    WatchCustomResourceDefinitionResponse,
 };
 
 mod custom_resource_definition_condition;

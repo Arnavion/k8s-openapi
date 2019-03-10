@@ -5,11 +5,11 @@ pub use self::priority_class::{
     CreatePriorityClassOptional, CreatePriorityClassResponse,
     DeleteCollectionPriorityClassOptional, DeleteCollectionPriorityClassResponse,
     DeletePriorityClassOptional, DeletePriorityClassResponse,
-    ListPriorityClassOptional, ListPriorityClassResponse,
+    ListPriorityClassResponse,
     PatchPriorityClassOptional, PatchPriorityClassResponse,
     ReadPriorityClassOptional, ReadPriorityClassResponse,
     ReplacePriorityClassOptional, ReplacePriorityClassResponse,
-    WatchPriorityClassOptional, WatchPriorityClassResponse,
+    WatchPriorityClassResponse,
 };
 
 mod priority_class_list;

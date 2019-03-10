@@ -161,6 +161,10 @@ pub enum SchemaKind {
 	Ref(RefPath),
 	Ty(Type),
 
+	/// Special types for common parameters of list and watch operations
+	ListOptional(std::collections::BTreeMap<PropertyName, Schema>),
+	WatchOptional(std::collections::BTreeMap<PropertyName, Schema>),
+
 	/// Special type for implicit watch parameter of a watch operation
 	Watch,
 }

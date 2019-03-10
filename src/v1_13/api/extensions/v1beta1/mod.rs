@@ -15,16 +15,16 @@ pub use self::daemon_set::{
     CreateNamespacedDaemonSetOptional, CreateNamespacedDaemonSetResponse,
     DeleteCollectionNamespacedDaemonSetOptional, DeleteCollectionNamespacedDaemonSetResponse,
     DeleteNamespacedDaemonSetOptional, DeleteNamespacedDaemonSetResponse,
-    ListDaemonSetForAllNamespacesOptional, ListDaemonSetForAllNamespacesResponse,
-    ListNamespacedDaemonSetOptional, ListNamespacedDaemonSetResponse,
+    ListDaemonSetForAllNamespacesResponse,
+    ListNamespacedDaemonSetResponse,
     PatchNamespacedDaemonSetOptional, PatchNamespacedDaemonSetResponse,
     PatchNamespacedDaemonSetStatusOptional, PatchNamespacedDaemonSetStatusResponse,
     ReadNamespacedDaemonSetOptional, ReadNamespacedDaemonSetResponse,
     ReadNamespacedDaemonSetStatusOptional, ReadNamespacedDaemonSetStatusResponse,
     ReplaceNamespacedDaemonSetOptional, ReplaceNamespacedDaemonSetResponse,
     ReplaceNamespacedDaemonSetStatusOptional, ReplaceNamespacedDaemonSetStatusResponse,
-    WatchDaemonSetForAllNamespacesOptional, WatchDaemonSetForAllNamespacesResponse,
-    WatchNamespacedDaemonSetOptional, WatchNamespacedDaemonSetResponse,
+    WatchDaemonSetForAllNamespacesResponse,
+    WatchNamespacedDaemonSetResponse,
 };
 
 mod daemon_set_condition;
@@ -58,16 +58,16 @@ pub use self::deployment::{
     CreateNamespacedDeploymentOptional, CreateNamespacedDeploymentResponse,
     DeleteCollectionNamespacedDeploymentOptional, DeleteCollectionNamespacedDeploymentResponse,
     DeleteNamespacedDeploymentOptional, DeleteNamespacedDeploymentResponse,
-    ListDeploymentForAllNamespacesOptional, ListDeploymentForAllNamespacesResponse,
-    ListNamespacedDeploymentOptional, ListNamespacedDeploymentResponse,
+    ListDeploymentForAllNamespacesResponse,
+    ListNamespacedDeploymentResponse,
     PatchNamespacedDeploymentOptional, PatchNamespacedDeploymentResponse,
     PatchNamespacedDeploymentStatusOptional, PatchNamespacedDeploymentStatusResponse,
     ReadNamespacedDeploymentOptional, ReadNamespacedDeploymentResponse,
     ReadNamespacedDeploymentStatusOptional, ReadNamespacedDeploymentStatusResponse,
     ReplaceNamespacedDeploymentOptional, ReplaceNamespacedDeploymentResponse,
     ReplaceNamespacedDeploymentStatusOptional, ReplaceNamespacedDeploymentStatusResponse,
-    WatchDeploymentForAllNamespacesOptional, WatchDeploymentForAllNamespacesResponse,
-    WatchNamespacedDeploymentOptional, WatchNamespacedDeploymentResponse,
+    WatchDeploymentForAllNamespacesResponse,
+    WatchNamespacedDeploymentResponse,
 };
 
 mod deployment_condition;
@@ -137,16 +137,16 @@ pub use self::ingress::{
     CreateNamespacedIngressOptional, CreateNamespacedIngressResponse,
     DeleteCollectionNamespacedIngressOptional, DeleteCollectionNamespacedIngressResponse,
     DeleteNamespacedIngressOptional, DeleteNamespacedIngressResponse,
-    ListIngressForAllNamespacesOptional, ListIngressForAllNamespacesResponse,
-    ListNamespacedIngressOptional, ListNamespacedIngressResponse,
+    ListIngressForAllNamespacesResponse,
+    ListNamespacedIngressResponse,
     PatchNamespacedIngressOptional, PatchNamespacedIngressResponse,
     PatchNamespacedIngressStatusOptional, PatchNamespacedIngressStatusResponse,
     ReadNamespacedIngressOptional, ReadNamespacedIngressResponse,
     ReadNamespacedIngressStatusOptional, ReadNamespacedIngressStatusResponse,
     ReplaceNamespacedIngressOptional, ReplaceNamespacedIngressResponse,
     ReplaceNamespacedIngressStatusOptional, ReplaceNamespacedIngressStatusResponse,
-    WatchIngressForAllNamespacesOptional, WatchIngressForAllNamespacesResponse,
-    WatchNamespacedIngressOptional, WatchNamespacedIngressResponse,
+    WatchIngressForAllNamespacesResponse,
+    WatchNamespacedIngressResponse,
 };
 
 mod ingress_backend;
@@ -185,13 +185,13 @@ pub use self::network_policy::{
     CreateNamespacedNetworkPolicyOptional, CreateNamespacedNetworkPolicyResponse,
     DeleteCollectionNamespacedNetworkPolicyOptional, DeleteCollectionNamespacedNetworkPolicyResponse,
     DeleteNamespacedNetworkPolicyOptional, DeleteNamespacedNetworkPolicyResponse,
-    ListNamespacedNetworkPolicyOptional, ListNamespacedNetworkPolicyResponse,
-    ListNetworkPolicyForAllNamespacesOptional, ListNetworkPolicyForAllNamespacesResponse,
+    ListNamespacedNetworkPolicyResponse,
+    ListNetworkPolicyForAllNamespacesResponse,
     PatchNamespacedNetworkPolicyOptional, PatchNamespacedNetworkPolicyResponse,
     ReadNamespacedNetworkPolicyOptional, ReadNamespacedNetworkPolicyResponse,
     ReplaceNamespacedNetworkPolicyOptional, ReplaceNamespacedNetworkPolicyResponse,
-    WatchNamespacedNetworkPolicyOptional, WatchNamespacedNetworkPolicyResponse,
-    WatchNetworkPolicyForAllNamespacesOptional, WatchNetworkPolicyForAllNamespacesResponse,
+    WatchNamespacedNetworkPolicyResponse,
+    WatchNetworkPolicyForAllNamespacesResponse,
 };
 
 mod network_policy_egress_rule;
@@ -230,11 +230,11 @@ pub use self::pod_security_policy::{
     CreatePodSecurityPolicyOptional, CreatePodSecurityPolicyResponse,
     DeleteCollectionPodSecurityPolicyOptional, DeleteCollectionPodSecurityPolicyResponse,
     DeletePodSecurityPolicyOptional, DeletePodSecurityPolicyResponse,
-    ListPodSecurityPolicyOptional, ListPodSecurityPolicyResponse,
+    ListPodSecurityPolicyResponse,
     PatchPodSecurityPolicyOptional, PatchPodSecurityPolicyResponse,
     ReadPodSecurityPolicyOptional, ReadPodSecurityPolicyResponse,
     ReplacePodSecurityPolicyOptional, ReplacePodSecurityPolicyResponse,
-    WatchPodSecurityPolicyOptional, WatchPodSecurityPolicyResponse,
+    WatchPodSecurityPolicyResponse,
 };
 
 mod pod_security_policy_list;
@@ -253,16 +253,16 @@ pub use self::replica_set::{
     CreateNamespacedReplicaSetOptional, CreateNamespacedReplicaSetResponse,
     DeleteCollectionNamespacedReplicaSetOptional, DeleteCollectionNamespacedReplicaSetResponse,
     DeleteNamespacedReplicaSetOptional, DeleteNamespacedReplicaSetResponse,
-    ListNamespacedReplicaSetOptional, ListNamespacedReplicaSetResponse,
-    ListReplicaSetForAllNamespacesOptional, ListReplicaSetForAllNamespacesResponse,
+    ListNamespacedReplicaSetResponse,
+    ListReplicaSetForAllNamespacesResponse,
     PatchNamespacedReplicaSetOptional, PatchNamespacedReplicaSetResponse,
     PatchNamespacedReplicaSetStatusOptional, PatchNamespacedReplicaSetStatusResponse,
     ReadNamespacedReplicaSetOptional, ReadNamespacedReplicaSetResponse,
     ReadNamespacedReplicaSetStatusOptional, ReadNamespacedReplicaSetStatusResponse,
     ReplaceNamespacedReplicaSetOptional, ReplaceNamespacedReplicaSetResponse,
     ReplaceNamespacedReplicaSetStatusOptional, ReplaceNamespacedReplicaSetStatusResponse,
-    WatchNamespacedReplicaSetOptional, WatchNamespacedReplicaSetResponse,
-    WatchReplicaSetForAllNamespacesOptional, WatchReplicaSetForAllNamespacesResponse,
+    WatchNamespacedReplicaSetResponse,
+    WatchReplicaSetForAllNamespacesResponse,
 };
 
 mod replica_set_condition;

@@ -5,13 +5,13 @@ pub use self::event::{
     CreateNamespacedEventOptional, CreateNamespacedEventResponse,
     DeleteCollectionNamespacedEventOptional, DeleteCollectionNamespacedEventResponse,
     DeleteNamespacedEventOptional, DeleteNamespacedEventResponse,
-    ListEventForAllNamespacesOptional, ListEventForAllNamespacesResponse,
-    ListNamespacedEventOptional, ListNamespacedEventResponse,
+    ListEventForAllNamespacesResponse,
+    ListNamespacedEventResponse,
     PatchNamespacedEventOptional, PatchNamespacedEventResponse,
     ReadNamespacedEventOptional, ReadNamespacedEventResponse,
     ReplaceNamespacedEventOptional, ReplaceNamespacedEventResponse,
-    WatchEventForAllNamespacesOptional, WatchEventForAllNamespacesResponse,
-    WatchNamespacedEventOptional, WatchNamespacedEventResponse,
+    WatchEventForAllNamespacesResponse,
+    WatchNamespacedEventResponse,
 };
 
 mod event_list;

@@ -10,16 +10,16 @@ pub use self::horizontal_pod_autoscaler::{
     CreateNamespacedHorizontalPodAutoscalerOptional, CreateNamespacedHorizontalPodAutoscalerResponse,
     DeleteCollectionNamespacedHorizontalPodAutoscalerOptional, DeleteCollectionNamespacedHorizontalPodAutoscalerResponse,
     DeleteNamespacedHorizontalPodAutoscalerOptional, DeleteNamespacedHorizontalPodAutoscalerResponse,
-    ListHorizontalPodAutoscalerForAllNamespacesOptional, ListHorizontalPodAutoscalerForAllNamespacesResponse,
-    ListNamespacedHorizontalPodAutoscalerOptional, ListNamespacedHorizontalPodAutoscalerResponse,
+    ListHorizontalPodAutoscalerForAllNamespacesResponse,
+    ListNamespacedHorizontalPodAutoscalerResponse,
     PatchNamespacedHorizontalPodAutoscalerOptional, PatchNamespacedHorizontalPodAutoscalerResponse,
     PatchNamespacedHorizontalPodAutoscalerStatusOptional, PatchNamespacedHorizontalPodAutoscalerStatusResponse,
     ReadNamespacedHorizontalPodAutoscalerOptional, ReadNamespacedHorizontalPodAutoscalerResponse,
     ReadNamespacedHorizontalPodAutoscalerStatusOptional, ReadNamespacedHorizontalPodAutoscalerStatusResponse,
     ReplaceNamespacedHorizontalPodAutoscalerOptional, ReplaceNamespacedHorizontalPodAutoscalerResponse,
     ReplaceNamespacedHorizontalPodAutoscalerStatusOptional, ReplaceNamespacedHorizontalPodAutoscalerStatusResponse,
-    WatchHorizontalPodAutoscalerForAllNamespacesOptional, WatchHorizontalPodAutoscalerForAllNamespacesResponse,
-    WatchNamespacedHorizontalPodAutoscalerOptional, WatchNamespacedHorizontalPodAutoscalerResponse,
+    WatchHorizontalPodAutoscalerForAllNamespacesResponse,
+    WatchNamespacedHorizontalPodAutoscalerResponse,
 };
 
 mod horizontal_pod_autoscaler_condition;

@@ -5,16 +5,16 @@ pub use self::job::{
     CreateNamespacedJobOptional, CreateNamespacedJobResponse,
     DeleteCollectionNamespacedJobOptional, DeleteCollectionNamespacedJobResponse,
     DeleteNamespacedJobOptional, DeleteNamespacedJobResponse,
-    ListJobForAllNamespacesOptional, ListJobForAllNamespacesResponse,
-    ListNamespacedJobOptional, ListNamespacedJobResponse,
+    ListJobForAllNamespacesResponse,
+    ListNamespacedJobResponse,
     PatchNamespacedJobOptional, PatchNamespacedJobResponse,
     PatchNamespacedJobStatusOptional, PatchNamespacedJobStatusResponse,
     ReadNamespacedJobOptional, ReadNamespacedJobResponse,
     ReadNamespacedJobStatusOptional, ReadNamespacedJobStatusResponse,
     ReplaceNamespacedJobOptional, ReplaceNamespacedJobResponse,
     ReplaceNamespacedJobStatusOptional, ReplaceNamespacedJobStatusResponse,
-    WatchJobForAllNamespacesOptional, WatchJobForAllNamespacesResponse,
-    WatchNamespacedJobOptional, WatchNamespacedJobResponse,
+    WatchJobForAllNamespacesResponse,
+    WatchNamespacedJobResponse,
 };
 
 mod job_condition;

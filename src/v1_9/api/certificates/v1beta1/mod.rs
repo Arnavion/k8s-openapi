@@ -5,13 +5,13 @@ pub use self::certificate_signing_request::{
     CreateCertificateSigningRequestOptional, CreateCertificateSigningRequestResponse,
     DeleteCertificateSigningRequestOptional, DeleteCertificateSigningRequestResponse,
     DeleteCollectionCertificateSigningRequestOptional, DeleteCollectionCertificateSigningRequestResponse,
-    ListCertificateSigningRequestOptional, ListCertificateSigningRequestResponse,
+    ListCertificateSigningRequestResponse,
     PatchCertificateSigningRequestOptional, PatchCertificateSigningRequestResponse,
     ReadCertificateSigningRequestOptional, ReadCertificateSigningRequestResponse,
     ReplaceCertificateSigningRequestOptional, ReplaceCertificateSigningRequestResponse,
     ReplaceCertificateSigningRequestApprovalOptional, ReplaceCertificateSigningRequestApprovalResponse,
     ReplaceCertificateSigningRequestStatusOptional, ReplaceCertificateSigningRequestStatusResponse,
-    WatchCertificateSigningRequestOptional, WatchCertificateSigningRequestResponse,
+    WatchCertificateSigningRequestResponse,
 };
 
 mod certificate_signing_request_condition;
