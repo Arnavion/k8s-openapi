@@ -112,8 +112,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			#[serde(rename = "x-kubernetes-group-version-kind")]
 			kubernetes_group_kind_versions: Option<Vec<super::KubernetesGroupKindVersion>>,
 
-			#[serde(default)]
-			properties: std::collections::BTreeMap<PropertyName, Schema>,
+			properties: Option<std::collections::BTreeMap<PropertyName, Schema>>,
 
 			#[serde(rename = "$ref")]
 			ref_path: Option<RefPath>,
@@ -125,11 +124,26 @@ impl<'de> serde::Deserialize<'de> for Schema {
 			ty: Option<String>,
 		}
 
-		let value: InnerSchema = serde::Deserialize::deserialize(deserializer)?;
+		let mut value: InnerSchema = serde::Deserialize::deserialize(deserializer)?;
 
 		let kind =
 			if let Some(ref_path) = value.ref_path {
 				SchemaKind::Ref(ref_path)
+			}
+			else if let Some(properties) = value.properties.take() {
+				// Starting from 1.14, the spec sets type=object for all types with properties.
+				// Earlier specs did not set it at all.
+				if let Some(ty) = value.ty.take() {
+					if ty != "object" {
+						return Err(serde::de::Error::custom(format!("schema has properties but not type=object {:?}", value)));
+					}
+				}
+
+				let required: std::collections::HashSet<_> = value.required.into_iter().collect();
+				SchemaKind::Properties(properties.into_iter().map(|(name, schema)| {
+					let required = required.contains(&name);
+					(name, (schema, required))
+				}).collect())
 			}
 			else if let Some(ty) = value.ty {
 				SchemaKind::Ty(Type::parse::<D>(
@@ -140,11 +154,7 @@ impl<'de> serde::Deserialize<'de> for Schema {
 				)?)
 			}
 			else {
-				let required: std::collections::HashSet<_> = value.required.into_iter().collect();
-				SchemaKind::Properties(value.properties.into_iter().map(|(name, schema)| {
-					let required = required.contains(&name);
-					(name, (schema, required))
-				}).collect())
+				SchemaKind::Ty(Type::Any)
 			};
 
 		Ok(Schema {

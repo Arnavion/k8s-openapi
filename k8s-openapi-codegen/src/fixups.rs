@@ -194,7 +194,7 @@ pub(crate) mod json_ty {
 	pub(crate) fn json_schema_props_or_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		for (definition_path, definition) in &mut spec.definitions {
 			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray" {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any) = definition.kind {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray) = definition.kind {
 				}
 				else {
 					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray);
@@ -211,7 +211,7 @@ pub(crate) mod json_ty {
 	pub(crate) fn json_schema_props_or_bool(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		for (definition_path, definition) in &mut spec.definitions {
 			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool" {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any) = definition.kind {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool) = definition.kind {
 				}
 				else {
 					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool);
@@ -228,7 +228,7 @@ pub(crate) mod json_ty {
 	pub(crate) fn json_schema_props_or_string_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
 		for (definition_path, definition) in &mut spec.definitions {
 			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray" {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any) = definition.kind {
+				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray) = definition.kind {
 				}
 				else {
 					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray);

@@ -104,7 +104,6 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_11 => &[
 				crate::fixups::deployment_rollback_create_response_type,
-				crate::fixups::json_ty::json,
 				crate::fixups::json_ty::json_schema_props_or_array,
 				crate::fixups::json_ty::json_schema_props_or_bool,
 				crate::fixups::json_ty::json_schema_props_or_string_array,
@@ -118,7 +117,6 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_12 => &[
 				crate::fixups::connect_options_gvk,
-				crate::fixups::json_ty::json,
 				crate::fixups::json_ty::json_schema_props_or_array,
 				crate::fixups::json_ty::json_schema_props_or_bool,
 				crate::fixups::json_ty::json_schema_props_or_string_array,
@@ -131,7 +129,6 @@ impl SupportedVersion {
 
 			SupportedVersion::V1_13 => &[
 				crate::fixups::connect_options_gvk,
-				crate::fixups::json_ty::json,
 				crate::fixups::json_ty::json_schema_props_or_array,
 				crate::fixups::json_ty::json_schema_props_or_bool,
 				crate::fixups::json_ty::json_schema_props_or_string_array,
