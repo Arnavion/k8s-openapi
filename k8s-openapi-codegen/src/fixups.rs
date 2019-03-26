@@ -75,8 +75,9 @@ pub(crate) fn deployment_rollback_create_response_type(spec: &mut crate::swagger
 // Ref: https://github.com/kubernetes/kubernetes/pull/64174
 pub(crate) mod gvk {
 	pub(crate) fn api_service_list_v1(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIServiceList" {
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIServiceList".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if definition.kubernetes_group_kind_versions.is_none() {
 				definition.kubernetes_group_kind_versions = Some(vec![crate::swagger20::KubernetesGroupKindVersion {
 					group: "apiregistration.k8s.io".to_string(),
 					kind: "APIServiceList".to_string(),
@@ -90,8 +91,9 @@ pub(crate) mod gvk {
 	}
 
 	pub(crate) fn api_service_list_v1beta1(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIServiceList" {
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIServiceList".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if definition.kubernetes_group_kind_versions.is_none() {
 				definition.kubernetes_group_kind_versions = Some(vec![crate::swagger20::KubernetesGroupKindVersion {
 					group: "apiregistration.k8s.io".to_string(),
 					kind: "APIServiceList".to_string(),
@@ -105,8 +107,9 @@ pub(crate) mod gvk {
 	}
 
 	pub(crate) fn api_service_v1(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService" {
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if definition.kubernetes_group_kind_versions.is_none() {
 				definition.kubernetes_group_kind_versions = Some(vec![crate::swagger20::KubernetesGroupKindVersion {
 					group: "apiregistration.k8s.io".to_string(),
 					kind: "APIService".to_string(),
@@ -120,8 +123,9 @@ pub(crate) mod gvk {
 	}
 
 	pub(crate) fn api_service_v1beta1(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIService" {
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.kube-aggregator.pkg.apis.apiregistration.v1beta1.APIService".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if definition.kubernetes_group_kind_versions.is_none() {
 				definition.kubernetes_group_kind_versions = Some(vec![crate::swagger20::KubernetesGroupKindVersion {
 					group: "apiregistration.k8s.io".to_string(),
 					kind: "APIService".to_string(),
@@ -134,9 +138,10 @@ pub(crate) mod gvk {
 		Err("never applied APIService v1beta1 kubernetes_group_kind_version override".into())
 	}
 
-	pub(crate) fn crd(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinition" {
+	pub(crate) fn crd_v1beta1(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinition".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if definition.kubernetes_group_kind_versions.is_none() {
 				definition.kubernetes_group_kind_versions = Some(vec![crate::swagger20::KubernetesGroupKindVersion {
 					group: "apiextensions.k8s.io".to_string(),
 					kind: "CustomResourceDefinition".to_string(),
@@ -150,8 +155,9 @@ pub(crate) mod gvk {
 	}
 
 	pub(crate) fn crd_list_v1beta1(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if definition.kubernetes_group_kind_versions.is_none() && &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionList" {
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionList".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if definition.kubernetes_group_kind_versions.is_none() {
 				definition.kubernetes_group_kind_versions = Some(vec![crate::swagger20::KubernetesGroupKindVersion {
 					group: "apiextensions.k8s.io".to_string(),
 					kind: "CustomResourceDefinitionList".to_string(),
@@ -175,14 +181,13 @@ pub(crate) mod json_ty {
 	//
 	// Thus `JSON` is really an arbitrary JSON value, and should be represented by `serde_json::Value`
 	pub(crate) fn json(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON" {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any) = definition.kind {
-				}
-				else {
-					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any);
-					return Ok(());
-				}
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSON".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any) = definition.kind {
+			}
+			else {
+				definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any);
+				return Ok(());
 			}
 		}
 
@@ -192,14 +197,13 @@ pub(crate) mod json_ty {
 	// The spec says that `JSONSchemaPropsOrArray` is an object with properties `JSONSchemas` and `Schema`.
 	// In fact this type is either a `JSONSchemaProps` or an array of `JSONSchemaProps`.
 	pub(crate) fn json_schema_props_or_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray" {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray) = definition.kind {
-				}
-				else {
-					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray);
-					return Ok(());
-				}
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray) = definition.kind {
+			}
+			else {
+				definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrArray);
+				return Ok(());
 			}
 		}
 
@@ -209,14 +213,13 @@ pub(crate) mod json_ty {
 	// The spec says that `JSONSchemaPropsOrBool` is an object with properties `Allows` and `Schema`.
 	// In fact this type is either a `bool` or a `JSONSchemaProps`.
 	pub(crate) fn json_schema_props_or_bool(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool" {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool) = definition.kind {
-				}
-				else {
-					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool);
-					return Ok(());
-				}
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool) = definition.kind {
+			}
+			else {
+				definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrBool);
+				return Ok(());
 			}
 		}
 
@@ -226,14 +229,13 @@ pub(crate) mod json_ty {
 	// The spec says that `JSONSchemaPropsOrStringArray` is an object with properties `Property` and `Schema`.
 	// In fact this type is either a `bool` or a `JSONSchemaProps`.
 	pub(crate) fn json_schema_props_or_string_array(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray" {
-				if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray) = definition.kind {
-				}
-				else {
-					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray);
-					return Ok(());
-				}
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray) = definition.kind {
+			}
+			else {
+				definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::JSONSchemaPropsOrStringArray);
+				return Ok(());
 			}
 		}
 
@@ -244,21 +246,18 @@ pub(crate) mod json_ty {
 // The spec says that this property is an array, but it can be null.
 //
 // Override it to be optional to achieve the same effect.
-//
-// Ref: https://github.com/kubernetes/kubernetes/pull/61963
-// Ref: https://github.com/kubernetes/kubernetes/pull/64996
-// Ref: https://github.com/kubernetes/kubernetes/pull/65041
 pub(crate) mod optional_properties {
 	// `APIGroup::serverAddressByClientCIDRs`
+	//
+	// Ref: https://github.com/kubernetes/kubernetes/pull/61963
 	pub(crate) fn apigroup(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup" {
-				if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-					if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("serverAddressByClientCIDRs".to_string())) {
-						if property.1 {
-							property.1 = false;
-							return Ok(());
-						}
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.APIGroup".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("serverAddressByClientCIDRs".to_string())) {
+					if property.1 {
+						property.1 = false;
+						return Ok(());
 					}
 				}
 			}
@@ -268,15 +267,16 @@ pub(crate) mod optional_properties {
 	}
 
 	// `CustomResourceDefinitionStatus::conditions`
+	//
+	// Ref: https://github.com/kubernetes/kubernetes/pull/64996
 	pub(crate) fn crdstatus(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionStatus" {
-				if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-					if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("conditions".to_string())) {
-						if property.1 {
-							property.1 = false;
-							return Ok(());
-						}
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionStatus".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("conditions".to_string())) {
+					if property.1 {
+						property.1 = false;
+						return Ok(());
 					}
 				}
 			}
@@ -286,15 +286,16 @@ pub(crate) mod optional_properties {
 	}
 
 	// `PodDisruptionBudgetStatus::disruptedPods`
+	//
+	// Ref: https://github.com/kubernetes/kubernetes/pull/65041
 	pub(crate) fn poddisruptionbudgetstatus(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-		for (definition_path, definition) in &mut spec.definitions {
-			if &**definition_path == "io.k8s.api.policy.v1beta1.PodDisruptionBudgetStatus" {
-				if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
-					if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("disruptedPods".to_string())) {
-						if property.1 {
-							property.1 = false;
-							return Ok(());
-						}
+		let definition_path = crate::swagger20::DefinitionPath("io.k8s.api.policy.v1beta1.PodDisruptionBudgetStatus".to_owned());
+		if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+			if let crate::swagger20::SchemaKind::Properties(properties) = &mut definition.kind {
+				if let Some(property) = properties.get_mut(&crate::swagger20::PropertyName("disruptedPods".to_string())) {
+					if property.1 {
+						property.1 = false;
+						return Ok(());
 					}
 				}
 			}
@@ -316,14 +317,13 @@ pub(crate) mod optional_properties {
 // https://github.com/kubernetes/kubernetes/pull/56434 will remove RawExtension and replace it with `{ type: "object" }`,
 // which would've already been mapped to `Ty(Any)` by `Ty::parse`, so just replicate that for `RawExtension` here.
 pub(crate) fn raw_extension_ty(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
-	for (definition_path, definition) in &mut spec.definitions {
-		if &**definition_path == "io.k8s.apimachinery.pkg.runtime.RawExtension" {
-			if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any) = definition.kind {
-			}
-			else {
-				definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any);
-				return Ok(());
-			}
+	let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.runtime.RawExtension".to_owned());
+	if let Some(definition) = spec.definitions.get_mut(&definition_path) {
+		if let crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any) = definition.kind {
+		}
+		else {
+			definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::Any);
+			return Ok(());
 		}
 	}
 
