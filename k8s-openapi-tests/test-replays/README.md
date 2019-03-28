@@ -33,7 +33,7 @@ To generate these test files:
 		<tr><td>1.8.15</td><td>0.28.0</td></tr>
 		<tr><td>1.9.11</td><td>0.28.0</td></tr>
 		<tr><td>1.10.13</td><td>0.28.2</td></tr>
-		<tr><td>1.11.8</td><td>0.28.2</td></tr>
+		<tr><td>1.11.9</td><td>0.28.2</td></tr>
 		<tr><td>1.12.7</td><td>0.30.0</td></tr>
 		<tr><td>1.13.5</td><td>0.35.0</td></tr>
 	</tbody>
