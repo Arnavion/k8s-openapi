@@ -46,7 +46,11 @@ The repository supports the latest patch versions of each of the separate 1.x re
 
 1. `/k8s-openapi-tests/Cargo.toml`: Add a new feature for the new version. It should enable the corresponding feature of the `k8s-openapi` crate.
 
+1. `/k8s-openapi-tests/src/lib.rs`: Add a new `replays_directory` in `Client::with`
+
 1. `/k8s-openapi-tests/`: Use `cargo test --features 'test_v1_<>' --no-run` to build the lib crate and test crate with the new version's feature enabled.
+
+1. `/k8s-openapi-tests/test-replays/`: Create an empty directory for the new version.
 
 1. Create a minikube cluster, and run the tests against it in record mode. Details in `/k8s-openapi-tests/test-replays/README.md`.
 
