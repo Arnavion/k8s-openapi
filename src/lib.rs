@@ -457,24 +457,22 @@ impl std::error::Error for ResponseError {
 }
 
 macro_rules! mods {
-    () => {};
-
-    ($name:ident $name_str:expr, $($rest:tt)*) => {
-        #[cfg(feature = $name_str)] mod $name;
-        #[cfg(feature = $name_str)] pub use self::$name::*;
-
-        mods! { $($rest)* }
+    ($($name:ident $name_str:literal)*) => {
+        $(
+            #[cfg(feature = $name_str)] mod $name;
+            #[cfg(feature = $name_str)] pub use self::$name::*;
+        )*
     };
 }
 
 mods! {
-    v1_8 "v1_8",
-    v1_9 "v1_9",
-    v1_10 "v1_10",
-    v1_11 "v1_11",
-    v1_12 "v1_12",
-    v1_13 "v1_13",
-    v1_14 "v1_14",
+    v1_8 "v1_8"
+    v1_9 "v1_9"
+    v1_10 "v1_10"
+    v1_11 "v1_11"
+    v1_12 "v1_12"
+    v1_13 "v1_13"
+    v1_14 "v1_14"
 }
 
 include!(concat!(env!("OUT_DIR"), "/conditional_compilation_macros.rs"));
