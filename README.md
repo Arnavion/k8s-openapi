@@ -25,8 +25,6 @@ This crate instead associates these functions with the corresponding resource ty
 
 Since all types are under the `io.k8s` namespace, this crate also removes those two components from the module path. The end result is that the path to `Pod` is `k8s_openapi::api::core::v1::Pod`, similar to the Go path `k8s.io/api/core/v1.Pod`.
 
-Furthermore, the OpenAPI spec contains many redundant type aliases under the `io.k8s.kubernetes.pkg` namespace, for backwards-compatibility with v1.7. Swagger-generated clients usually emit these in some form, whereas this crate just ignores them. This reduces compilation time greatly.
-
 
 ### Better handling of optional parameters, for a more Rust-like and ergonomic API
 
