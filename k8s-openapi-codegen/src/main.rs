@@ -5,6 +5,7 @@
 	clippy::default_trait_access,
 	clippy::similar_names,
 	clippy::too_many_arguments,
+	clippy::too_many_lines,
 	clippy::type_complexity,
 	clippy::unseparated_literal_suffix,
 	clippy::use_self,
