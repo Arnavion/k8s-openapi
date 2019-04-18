@@ -741,7 +741,7 @@ impl StorageClass {
 /// Use `<WatchStorageClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`StorageClass::watch_storage_class`]
 #[derive(Debug)]
 pub enum WatchStorageClassResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<StorageClass>),
     Unauthorized,
     Other,
 }

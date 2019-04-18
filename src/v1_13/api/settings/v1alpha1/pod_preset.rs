@@ -889,7 +889,7 @@ impl PodPreset {
 /// Use `<WatchNamespacedPodPresetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::watch_namespaced_pod_preset`]
 #[derive(Debug)]
 pub enum WatchNamespacedPodPresetResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<PodPreset>),
     Unauthorized,
     Other,
 }
@@ -973,7 +973,7 @@ impl PodPreset {
 /// Use `<WatchPodPresetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodPreset::watch_pod_preset_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchPodPresetForAllNamespacesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<PodPreset>),
     Unauthorized,
     Other,
 }

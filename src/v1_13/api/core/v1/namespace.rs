@@ -962,7 +962,7 @@ impl Namespace {
 /// Use `<WatchNamespaceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Namespace::watch_namespace`]
 #[derive(Debug)]
 pub enum WatchNamespaceResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<Namespace>),
     Unauthorized,
     Other,
 }

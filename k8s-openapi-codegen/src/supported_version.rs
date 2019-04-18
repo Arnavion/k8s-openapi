@@ -64,6 +64,7 @@ impl SupportedVersion {
 				crate::fixups::remove_compat_refs,
 				crate::fixups::remove_delete_options_body_parameter,
 				crate::fixups::separate_watch_from_list_operations,
+				crate::fixups::watch_event,
 			],
 
 			SupportedVersion::V1_9 => &[
@@ -83,6 +84,7 @@ impl SupportedVersion {
 				crate::fixups::remove_compat_refs,
 				crate::fixups::remove_delete_options_body_parameter,
 				crate::fixups::separate_watch_from_list_operations,
+				crate::fixups::watch_event,
 			],
 
 			SupportedVersion::V1_10 => &[
@@ -104,6 +106,7 @@ impl SupportedVersion {
 				crate::fixups::remove_compat_refs,
 				crate::fixups::remove_delete_options_body_parameter,
 				crate::fixups::separate_watch_from_list_operations,
+				crate::fixups::watch_event,
 			],
 
 			SupportedVersion::V1_11 => &[
@@ -117,6 +120,7 @@ impl SupportedVersion {
 				crate::fixups::remove_compat_refs,
 				crate::fixups::remove_delete_options_body_parameter,
 				crate::fixups::separate_watch_from_list_operations,
+				crate::fixups::watch_event,
 			],
 
 			SupportedVersion::V1_12 => &[
@@ -129,6 +133,7 @@ impl SupportedVersion {
 				crate::fixups::remove_compat_refs,
 				crate::fixups::remove_delete_options_body_parameter,
 				crate::fixups::separate_watch_from_list_operations,
+				crate::fixups::watch_event,
 			],
 
 			SupportedVersion::V1_13 => &[
@@ -141,6 +146,7 @@ impl SupportedVersion {
 				crate::fixups::remove_compat_refs,
 				crate::fixups::remove_delete_options_body_parameter,
 				crate::fixups::separate_watch_from_list_operations,
+				crate::fixups::watch_event,
 			],
 
 			SupportedVersion::V1_14 => &[
@@ -152,6 +158,7 @@ impl SupportedVersion {
 				crate::fixups::raw_extension_ty,
 				crate::fixups::remove_delete_options_body_parameter,
 				crate::fixups::separate_watch_from_list_operations,
+				crate::fixups::watch_event,
 			],
 		};
 

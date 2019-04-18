@@ -762,7 +762,7 @@ impl MutatingWebhookConfiguration {
 /// Use `<WatchMutatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`MutatingWebhookConfiguration::watch_mutating_webhook_configuration`]
 #[derive(Debug)]
 pub enum WatchMutatingWebhookConfigurationResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<MutatingWebhookConfiguration>),
     Unauthorized,
     Other,
 }

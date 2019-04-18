@@ -886,7 +886,7 @@ impl LimitRange {
 /// Use `<WatchLimitRangeForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::watch_limit_range_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchLimitRangeForAllNamespacesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<LimitRange>),
     Unauthorized,
     Other,
 }
@@ -975,7 +975,7 @@ impl LimitRange {
 /// Use `<WatchNamespacedLimitRangeResponse as Response>::try_from_parts` to parse the HTTP response body of [`LimitRange::watch_namespaced_limit_range`]
 #[derive(Debug)]
 pub enum WatchNamespacedLimitRangeResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<LimitRange>),
     Unauthorized,
     Other,
 }

@@ -2386,7 +2386,7 @@ impl Node {
 /// Use `<WatchNodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`Node::watch_node`]
 #[derive(Debug)]
 pub enum WatchNodeResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Node>),
     Unauthorized,
     Other,
 }

@@ -728,46 +728,198 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					num_generated_structs += 1;
 				},
 
-				swagger20::SchemaKind::Ty(_) => {
-					write!(file, "#[derive(Clone, Debug, ")?;
-					if can_be_default {
-						write!(file, "Default, ")?;
-					}
-					writeln!(file, "PartialEq)]")?;
-
-					writeln!(file, "pub struct {}(pub {});", type_name, get_rust_type(&definition.kind, &replace_namespaces, mod_root)?)?;
+				swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(raw_extension_ref_path)) => {
+					writeln!(file, "#[derive(Clone, Debug, PartialEq)]")?;
+					writeln!(file, "pub enum {}<T> {{", type_name)?;
+					writeln!(file, "    Added(T),")?;
+					writeln!(file, "    Deleted(T),")?;
+					writeln!(file, "    Modified(T),")?;
+					writeln!(file, "    ErrorStatus({}),", get_rust_type(
+						&swagger20::SchemaKind::Ref(swagger20::RefPath("io.k8s.apimachinery.pkg.apis.meta.v1.Status".to_owned())),
+						&replace_namespaces,
+						mod_root,
+					)?)?;
+					writeln!(file, "    ErrorOther({}),", get_rust_type(&swagger20::SchemaKind::Ref(raw_extension_ref_path.clone()), &replace_namespaces, mod_root)?)?;
+					writeln!(file, "}}")?;
 					writeln!(file)?;
-					writeln!(file, "impl<'de> serde::Deserialize<'de> for {} {{", type_name)?;
+					writeln!(file, "impl<'de, T> serde::Deserialize<'de> for {}<T> where T: serde::Deserialize<'de> {{", type_name)?;
 					writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
-					writeln!(file, "        struct Visitor;")?;
+					writeln!(file, "        #[allow(non_camel_case_types)]")?;
+					writeln!(file, "        enum Field {{")?;
+					writeln!(file, "            Key_type,")?;
+					writeln!(file, "            Key_object,")?;
+					writeln!(file, "            Other,")?;
+					writeln!(file, "        }}")?;
 					writeln!(file)?;
-					writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
-					writeln!(file, "            type Value = {};", type_name)?;
+					writeln!(file, "        impl<'de> serde::Deserialize<'de> for Field {{")?;
+					writeln!(file, "            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
+					writeln!(file, "                struct Visitor;")?;
 					writeln!(file)?;
-					writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
-					writeln!(file, r#"                write!(f, "{}")"#, type_name)?;
-					writeln!(file, "            }}")?;
+					writeln!(file, "                impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
+					writeln!(file, "                    type Value = Field;")?;
 					writeln!(file)?;
-					writeln!(file, "            fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {{")?;
-					writeln!(file, "                Ok({}(serde::Deserialize::deserialize(deserializer)?))", type_name)?;
+					writeln!(file, "                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
+					writeln!(file, r#"                        write!(f, "field identifier")"#)?;
+					writeln!(file, "                    }}")?;
+					writeln!(file)?;
+					writeln!(file, "                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
+					writeln!(file, "                        Ok(match v {{")?;
+					writeln!(file, r#"                            "type" => Field::Key_type,"#)?;
+					writeln!(file, r#"                            "object" => Field::Key_object,"#)?;
+					writeln!(file, "                            _ => Field::Other,")?;
+					writeln!(file, "                        }})")?;
+					writeln!(file, "                    }}")?;
+					writeln!(file, "                }}")?;
+					writeln!(file)?;
+					writeln!(file, "                deserializer.deserialize_identifier(Visitor)")?;
 					writeln!(file, "            }}")?;
 					writeln!(file, "        }}")?;
 					writeln!(file)?;
-					writeln!(file, r#"        deserializer.deserialize_newtype_struct("{}", Visitor)"#, type_name)?;
+					writeln!(file, "        enum WatchEventType {{")?;
+					writeln!(file, "            Added,")?;
+					writeln!(file, "            Deleted,")?;
+					writeln!(file, "            Modified,")?;
+					writeln!(file, "            Error,")?;
+					writeln!(file, "        }}")?;
+					writeln!(file)?;
+					writeln!(file, "        impl<'de> serde::Deserialize<'de> for WatchEventType {{")?;
+					writeln!(file, "            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
+					writeln!(file, "                struct Visitor;")?;
+					writeln!(file)?;
+					writeln!(file, "                impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
+					writeln!(file, "                    type Value = WatchEventType;")?;
+					writeln!(file)?;
+					writeln!(file, "                    fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
+					writeln!(file, r#"                        write!(f, "field identifier")"#)?;
+					writeln!(file, "                    }}")?;
+					writeln!(file)?;
+					writeln!(file, "                    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: serde::de::Error {{")?;
+					writeln!(file, "                        Ok(match v {{")?;
+					writeln!(file, r#"                            "ADDED" => WatchEventType::Added,"#)?;
+					writeln!(file, r#"                            "DELETED" => WatchEventType::Deleted,"#)?;
+					writeln!(file, r#"                            "MODIFIED" => WatchEventType::Modified,"#)?;
+					writeln!(file, r#"                            "ERROR" => WatchEventType::Error,"#)?;
+					writeln!(file, "                            _ => return Err(serde::de::Error::unknown_variant(")?;
+					writeln!(file, "                                v,")?;
+					writeln!(file, r#"                                &["ADDED", "DELETED", "MODIFIED", "ERROR"],"#)?;
+					writeln!(file, "                            )),")?;
+					writeln!(file, "                        }})")?;
+					writeln!(file, "                    }}")?;
+					writeln!(file, "                }}")?;
+					writeln!(file)?;
+					writeln!(file, "                deserializer.deserialize_identifier(Visitor)")?;
+					writeln!(file, "            }}")?;
+					writeln!(file, "        }}")?;
+					writeln!(file)?;
+					writeln!(file, "        struct Visitor<T>(std::marker::PhantomData<T>);")?;
+					writeln!(file)?;
+					writeln!(file, "        impl<'de, T> serde::de::Visitor<'de> for Visitor<T> where T: serde::Deserialize<'de> {{")?;
+					writeln!(file, "            type Value = {}<T>;", type_name)?;
+					writeln!(file)?;
+					writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
+					writeln!(file, r#"                write!(f, "struct {}")"#, type_name)?;
+					writeln!(file, "            }}")?;
+					writeln!(file)?;
+					writeln!(file, "            fn visit_map<A>(self, mut map: A) -> Result<Self::Value, A::Error> where A: serde::de::MapAccess<'de> {{")?;
+					writeln!(file, "                let mut value_type: Option<WatchEventType> = None;")?;
+					writeln!(file, "                let mut value_object: Option<serde_value::Value> = None;")?;
+					writeln!(file)?;
+					writeln!(file, "                while let Some(key) = serde::de::MapAccess::next_key::<Field>(&mut map)? {{")?;
+					writeln!(file, "                    match key {{")?;
+					writeln!(file, "                        Field::Key_type => value_type = serde::de::MapAccess::next_value(&mut map)?,")?;
+					writeln!(file, "                        Field::Key_object => value_object = serde::de::MapAccess::next_value(&mut map)?,")?;
+					writeln!(file, "                        Field::Other => {{ let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value(&mut map)?; }},")?;
+					writeln!(file, "                    }}")?;
+					writeln!(file, "                }}")?;
+					writeln!(file)?;
+					writeln!(file, r#"                let value_type = value_type.ok_or_else(|| serde::de::Error::missing_field("type"))?;"#)?;
+					writeln!(file, r#"                let value_object = value_object.ok_or_else(|| serde::de::Error::missing_field("object"))?;"#)?;
+					writeln!(file)?;
+					writeln!(file, "                Ok(match value_type {{")?;
+					writeln!(file, "                    WatchEventType::Added => {{")?;
+					writeln!(file, "                        let value_object = serde_value::ValueDeserializer::new(value_object);")?;
+					writeln!(file, "                        {}::Added(serde::Deserialize::deserialize(value_object)?)", type_name)?;
+					writeln!(file, "                    }},")?;
+					writeln!(file, "                    WatchEventType::Deleted => {{")?;
+					writeln!(file, "                        let value_object = serde_value::ValueDeserializer::new(value_object);")?;
+					writeln!(file, "                        {}::Deleted(serde::Deserialize::deserialize(value_object)?)", type_name)?;
+					writeln!(file, "                    }},")?;
+					writeln!(file, "                    WatchEventType::Modified => {{")?;
+					writeln!(file, "                        let value_object = serde_value::ValueDeserializer::new(value_object);")?;
+					writeln!(file, "                        {}::Modified(serde::Deserialize::deserialize(value_object)?)", type_name)?;
+					writeln!(file, "                    }},")?;
+					writeln!(file)?;
+					writeln!(file, "                    WatchEventType::Error => {{")?;
+					writeln!(file, "                        let is_status =")?;
+					writeln!(file, "                            if let serde_value::Value::Map(map) = &value_object {{")?;
+					writeln!(file, r#"                                match map.get(&serde_value::Value::String("kind".to_owned())) {{"#)?;
+					writeln!(file, r#"                                    Some(serde_value::Value::String(s)) if s == "Status" => true,"#)?;
+					writeln!(file, "                                    _ => false,")?;
+					writeln!(file, "                                }}")?;
+					writeln!(file, "                            }}")?;
+					writeln!(file, "                            else {{")?;
+					writeln!(file, "                                false")?;
+					writeln!(file, "                            }};")?;
+					writeln!(file, "                        let value_object = serde_value::ValueDeserializer::new(value_object);")?;
+					writeln!(file, "                        if is_status {{")?;
+					writeln!(file, "                            {}::ErrorStatus(serde::Deserialize::deserialize(value_object)?)", type_name)?;
+					writeln!(file, "                        }}")?;
+					writeln!(file, "                        else {{")?;
+					writeln!(file, "                            {}::ErrorOther(serde::Deserialize::deserialize(value_object)?)", type_name)?;
+					writeln!(file, "                        }}")?;
+					writeln!(file, "                    }},")?;
+					writeln!(file, "                }})")?;
+					writeln!(file, "            }}")?;
+					writeln!(file, "        }}")?;
+					writeln!(file)?;
+					writeln!(file, "        deserializer.deserialize_struct(")?;
+					writeln!(file, r#"            "{}","#, type_name)?;
+					writeln!(file, "            &[")?;
+					writeln!(file, r#"                "type","#)?;
+					writeln!(file, r#"                "object","#)?;
+					writeln!(file, "            ],")?;
+					writeln!(file, "            Visitor(Default::default()),")?;
+					writeln!(file, "        )")?;
 					writeln!(file, "    }}")?;
 					writeln!(file, "}}")?;
 					writeln!(file)?;
-					writeln!(file, "impl serde::Serialize for {} {{", type_name)?;
+					writeln!(file, "impl<T> serde::Serialize for {}<T> where T: serde::Serialize {{", type_name)?;
 					writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
-					writeln!(file, r#"        serializer.serialize_newtype_struct("{}", &self.0)"#, type_name)?;
+					writeln!(file, "        let mut state = serializer.serialize_struct(")?;
+					writeln!(file, r#"            "{}","#, type_name)?;
+					writeln!(file, "            2,")?;
+					writeln!(file, "        )?;")?;
+					writeln!(file, "        match self {{")?;
+					writeln!(file, "            {}::Added(object) => {{", type_name)?;
+					writeln!(file, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "ADDED")?;"#)?;
+					writeln!(file, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;"#)?;
+					writeln!(file, "            }},")?;
+					writeln!(file, "            {}::Deleted(object) => {{", type_name)?;
+					writeln!(file, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "DELETED")?;"#)?;
+					writeln!(file, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;"#)?;
+					writeln!(file, "            }},")?;
+					writeln!(file, "            {}::Modified(object) => {{", type_name)?;
+					writeln!(file, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "MODIFIED")?;"#)?;
+					writeln!(file, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;"#)?;
+					writeln!(file, "            }},")?;
+					writeln!(file, "            {}::ErrorStatus(object) => {{", type_name)?;
+					writeln!(file, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "ERROR")?;"#)?;
+					writeln!(file, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;"#)?;
+					writeln!(file, "            }},")?;
+					writeln!(file, "            {}::ErrorOther(object) => {{", type_name)?;
+					writeln!(file, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "type", "ERROR")?;"#)?;
+					writeln!(file, r#"                serde::ser::SerializeStruct::serialize_field(&mut state, "object", &object)?;"#)?;
+					writeln!(file, "            }},")?;
+					writeln!(file, "        }}")?;
+					writeln!(file, "        serde::ser::SerializeStruct::end(state)")?;
 					writeln!(file, "    }}")?;
 					writeln!(file, "}}")?;
 
-					num_generated_type_aliases += 1;
+					num_generated_structs += 1;
 				},
 
-				swagger20::SchemaKind::ListOptional(properties) |
-				swagger20::SchemaKind::WatchOptional(properties) => {
+				swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(properties)) |
+				swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(properties)) => {
 					struct Property<'a> {
 						schema: &'a swagger20::Schema,
 						field_name: std::borrow::Cow<'static, str>,
@@ -825,7 +977,45 @@ fn run(supported_version: supported_version::SupportedVersion, out_dir_base: &st
 					num_generated_structs += 1;
 				},
 
-				swagger20::SchemaKind::Watch => unreachable!(),
+				swagger20::SchemaKind::Ty(swagger20::Type::WatchParameter) => unreachable!(),
+
+				swagger20::SchemaKind::Ty(_) => {
+					write!(file, "#[derive(Clone, Debug, ")?;
+					if can_be_default {
+						write!(file, "Default, ")?;
+					}
+					writeln!(file, "PartialEq)]")?;
+
+					writeln!(file, "pub struct {}(pub {});", type_name, get_rust_type(&definition.kind, &replace_namespaces, mod_root)?)?;
+					writeln!(file)?;
+					writeln!(file, "impl<'de> serde::Deserialize<'de> for {} {{", type_name)?;
+					writeln!(file, "    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error> where D: serde::Deserializer<'de> {{")?;
+					writeln!(file, "        struct Visitor;")?;
+					writeln!(file)?;
+					writeln!(file, "        impl<'de> serde::de::Visitor<'de> for Visitor {{")?;
+					writeln!(file, "            type Value = {};", type_name)?;
+					writeln!(file)?;
+					writeln!(file, "            fn expecting(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{")?;
+					writeln!(file, r#"                write!(f, "{}")"#, type_name)?;
+					writeln!(file, "            }}")?;
+					writeln!(file)?;
+					writeln!(file, "            fn visit_newtype_struct<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: serde::Deserializer<'de> {{")?;
+					writeln!(file, "                Ok({}(serde::Deserialize::deserialize(deserializer)?))", type_name)?;
+					writeln!(file, "            }}")?;
+					writeln!(file, "        }}")?;
+					writeln!(file)?;
+					writeln!(file, r#"        deserializer.deserialize_newtype_struct("{}", Visitor)"#, type_name)?;
+					writeln!(file, "    }}")?;
+					writeln!(file, "}}")?;
+					writeln!(file)?;
+					writeln!(file, "impl serde::Serialize for {} {{", type_name)?;
+					writeln!(file, "    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: serde::Serializer {{")?;
+					writeln!(file, r#"        serializer.serialize_newtype_struct("{}", &self.0)"#, type_name)?;
+					writeln!(file, "    }}")?;
+					writeln!(file, "}}")?;
+
+					num_generated_type_aliases += 1;
+				},
 			}
 
 			log::trace!("OK");
@@ -903,12 +1093,9 @@ fn can_be_default(kind: &swagger20::SchemaKind, spec: &swagger20::Spec) -> Resul
 		// chrono::DateTime<chrono::Utc> is not Default
 		swagger20::SchemaKind::Ty(swagger20::Type::String { format: Some(swagger20::StringFormat::DateTime) }) => Ok(false),
 
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchParameter) => unreachable!(),
+
 		swagger20::SchemaKind::Ty(_) => Ok(true),
-
-		swagger20::SchemaKind::ListOptional(_) |
-		swagger20::SchemaKind::WatchOptional(_) => Ok(true),
-
-		swagger20::SchemaKind::Watch => unreachable!(),
 	}
 }
 
@@ -1100,10 +1287,11 @@ fn get_rust_borrow_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
 
-		swagger20::SchemaKind::ListOptional(_) => Err("ListOptional type not supported".into()),
-		swagger20::SchemaKind::WatchOptional(_) => Err("WatchOptional type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) => Err("ListOptional type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) => Err("WatchOptional type not supported".into()),
 
-		swagger20::SchemaKind::Watch => Ok("".into()), // Value is unused since this parameter is implicit
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchParameter) => Ok("".into()), // Value is unused since this parameter is implicit
 	}
 }
 
@@ -1141,10 +1329,11 @@ fn get_rust_type(
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrBool) |
 		swagger20::SchemaKind::Ty(swagger20::Type::JSONSchemaPropsOrStringArray) => Err("JSON schema types not supported".into()),
 
-		swagger20::SchemaKind::ListOptional(_) => Err("ListOptional type not supported".into()),
-		swagger20::SchemaKind::WatchOptional(_) => Err("WatchOptional type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchEvent(_)) => Err("WatchEvent type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::ListOptional(_)) => Err("ListOptional type not supported".into()),
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchOptional(_)) => Err("WatchOptional type not supported".into()),
 
-		swagger20::SchemaKind::Watch => unreachable!(),
+		swagger20::SchemaKind::Ty(swagger20::Type::WatchParameter) => unreachable!(),
 	}
 }
 
@@ -1252,7 +1441,10 @@ fn write_operation(
 		.collect();
 	let mut parameters = parameters?;
 	let watch_parameter =
-		if let Some(index) = parameters.iter().position(|(_, _, p)| if let swagger20::SchemaKind::Watch = p.schema.kind { true } else { false }) {
+		if let Some(index) =
+			parameters.iter()
+			.position(|(_, _, p)| if let swagger20::SchemaKind::Ty(swagger20::Type::WatchParameter) = p.schema.kind { true } else { false })
+		{
 			Some(parameters.swap_remove(index))
 		}
 		else {
@@ -1368,7 +1560,7 @@ fn write_operation(
 						swagger20::SchemaKind::Ty(swagger20::Type::String { .. }) =>
 							writeln!(file, r#"{}    __query_pairs.append_pair("{}", &{});"#, indent, parameter.name, parameter_name)?,
 
-						swagger20::SchemaKind::Watch =>
+						swagger20::SchemaKind::Ty(swagger20::Type::WatchParameter) =>
 							writeln!(file, r#"{}    __query_pairs.append_pair("{}", "true");"#, indent, parameter.name)?,
 
 						_ => return Err(format!("parameter {} is in the query string but is a {:?}", parameter_name, parameter_type).into()),
@@ -1509,7 +1701,19 @@ fn write_operation(
 					mod_root)?)?;
 			}
 			else {
-				writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root)?)?;
+				match &schema.kind {
+					crate::swagger20::SchemaKind::Ref(crate::swagger20::RefPath(ref_path)) if ref_path == "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent" =>
+						writeln!(
+							file,
+							"    {}({}<{}>),",
+							variant_name,
+							get_rust_type(&schema.kind, replace_namespaces, mod_root)?,
+							type_name_and_ref_path_and_parent_mod_rs.as_ref()
+								.map(|(type_name, _, _)| type_name)
+								.ok_or_else(|| "WatchEvent operation that isn't associated with a type")?)?,
+
+					_ => writeln!(file, "    {}({}),", variant_name, get_rust_type(&schema.kind, replace_namespaces, mod_root)?)?,
+				}
 			}
 		}
 		else {

@@ -721,7 +721,7 @@ impl PodSecurityPolicy {
 /// Use `<WatchPodSecurityPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodSecurityPolicy::watch_pod_security_policy`]
 #[derive(Debug)]
 pub enum WatchPodSecurityPolicyResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<PodSecurityPolicy>),
     Unauthorized,
     Other,
 }

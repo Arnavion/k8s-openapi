@@ -891,7 +891,7 @@ impl PodTemplate {
 /// Use `<WatchNamespacedPodTemplateResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::watch_namespaced_pod_template`]
 #[derive(Debug)]
 pub enum WatchNamespacedPodTemplateResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<PodTemplate>),
     Unauthorized,
     Other,
 }
@@ -975,7 +975,7 @@ impl PodTemplate {
 /// Use `<WatchPodTemplateForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodTemplate::watch_pod_template_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchPodTemplateForAllNamespacesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<PodTemplate>),
     Unauthorized,
     Other,
 }

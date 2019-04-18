@@ -25,6 +25,7 @@ chrono = { version = "0.4.x", features = ["serde"] }
 http = "0.1.x"
 serde = "1.0.x"
 serde_json = "1.0.x"
+serde-value = "0.6.x"
 url = "1.7.x"
 
 [features]

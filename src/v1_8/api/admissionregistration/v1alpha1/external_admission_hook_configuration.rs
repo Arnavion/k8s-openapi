@@ -694,7 +694,7 @@ impl ExternalAdmissionHookConfiguration {
 /// Use `<WatchExternalAdmissionHookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ExternalAdmissionHookConfiguration::watch_external_admission_hook_configuration`]
 #[derive(Debug)]
 pub enum WatchExternalAdmissionHookConfigurationResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<ExternalAdmissionHookConfiguration>),
     Unauthorized,
     Other,
 }

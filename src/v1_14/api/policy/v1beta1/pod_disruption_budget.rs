@@ -1166,7 +1166,7 @@ impl PodDisruptionBudget {
 /// Use `<WatchNamespacedPodDisruptionBudgetResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::watch_namespaced_pod_disruption_budget`]
 #[derive(Debug)]
 pub enum WatchNamespacedPodDisruptionBudgetResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<PodDisruptionBudget>),
     Unauthorized,
     Other,
 }
@@ -1246,7 +1246,7 @@ impl PodDisruptionBudget {
 /// Use `<WatchPodDisruptionBudgetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PodDisruptionBudget::watch_pod_disruption_budget_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchPodDisruptionBudgetForAllNamespacesResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<PodDisruptionBudget>),
     Unauthorized,
     Other,
 }

@@ -1091,7 +1091,7 @@ impl Job {
 /// Use `<WatchJobForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::watch_job_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchJobForAllNamespacesResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Job>),
     Unauthorized,
     Other,
 }
@@ -1180,7 +1180,7 @@ impl Job {
 /// Use `<WatchNamespacedJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`Job::watch_namespaced_job`]
 #[derive(Debug)]
 pub enum WatchNamespacedJobResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Job>),
     Unauthorized,
     Other,
 }

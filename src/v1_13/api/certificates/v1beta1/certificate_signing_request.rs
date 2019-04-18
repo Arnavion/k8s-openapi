@@ -1093,7 +1093,7 @@ impl CertificateSigningRequest {
 /// Use `<WatchCertificateSigningRequestResponse as Response>::try_from_parts` to parse the HTTP response body of [`CertificateSigningRequest::watch_certificate_signing_request`]
 #[derive(Debug)]
 pub enum WatchCertificateSigningRequestResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<CertificateSigningRequest>),
     Unauthorized,
     Other,
 }

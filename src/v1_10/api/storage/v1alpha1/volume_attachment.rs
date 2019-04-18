@@ -726,7 +726,7 @@ impl VolumeAttachment {
 /// Use `<WatchVolumeAttachmentResponse as Response>::try_from_parts` to parse the HTTP response body of [`VolumeAttachment::watch_volume_attachment`]
 #[derive(Debug)]
 pub enum WatchVolumeAttachmentResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<VolumeAttachment>),
     Unauthorized,
     Other,
 }

@@ -1055,7 +1055,7 @@ impl DaemonSet {
 /// Use `<WatchDaemonSetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::watch_daemon_set_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchDaemonSetForAllNamespacesResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<DaemonSet>),
     Unauthorized,
     Other,
 }
@@ -1144,7 +1144,7 @@ impl DaemonSet {
 /// Use `<WatchNamespacedDaemonSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`DaemonSet::watch_namespaced_daemon_set`]
 #[derive(Debug)]
 pub enum WatchNamespacedDaemonSetResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<DaemonSet>),
     Unauthorized,
     Other,
 }

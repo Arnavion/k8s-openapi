@@ -766,7 +766,7 @@ impl CSIDriver {
 /// Use `<WatchCSIDriverResponse as Response>::try_from_parts` to parse the HTTP response body of [`CSIDriver::watch_csi_driver`]
 #[derive(Debug)]
 pub enum WatchCSIDriverResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<CSIDriver>),
     Unauthorized,
     Other,
 }

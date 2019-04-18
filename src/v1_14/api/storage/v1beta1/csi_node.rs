@@ -766,7 +766,7 @@ impl CSINode {
 /// Use `<WatchCSINodeResponse as Response>::try_from_parts` to parse the HTTP response body of [`CSINode::watch_csi_node`]
 #[derive(Debug)]
 pub enum WatchCSINodeResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<CSINode>),
     Unauthorized,
     Other,
 }

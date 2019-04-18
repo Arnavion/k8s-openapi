@@ -886,7 +886,7 @@ impl Lease {
 /// Use `<WatchLeaseForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::watch_lease_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchLeaseForAllNamespacesResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
     Unauthorized,
     Other,
 }
@@ -971,7 +971,7 @@ impl Lease {
 /// Use `<WatchNamespacedLeaseResponse as Response>::try_from_parts` to parse the HTTP response body of [`Lease::watch_namespaced_lease`]
 #[derive(Debug)]
 pub enum WatchNamespacedLeaseResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<Lease>),
     Unauthorized,
     Other,
 }

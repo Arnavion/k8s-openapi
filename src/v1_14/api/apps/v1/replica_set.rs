@@ -1167,7 +1167,7 @@ impl ReplicaSet {
 /// Use `<WatchNamespacedReplicaSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::watch_namespaced_replica_set`]
 #[derive(Debug)]
 pub enum WatchNamespacedReplicaSetResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicaSet>),
     Unauthorized,
     Other,
 }
@@ -1247,7 +1247,7 @@ impl ReplicaSet {
 /// Use `<WatchReplicaSetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicaSet::watch_replica_set_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchReplicaSetForAllNamespacesResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicaSet>),
     Unauthorized,
     Other,
 }

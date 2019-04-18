@@ -456,13 +456,13 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 
 	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.ListOptional".to_string()), crate::swagger20::Schema {
 		description: Some("Common parameters for all list operations.".to_string()),
-		kind: crate::swagger20::SchemaKind::ListOptional(list_optional_definition),
+		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::ListOptional(list_optional_definition)),
 		kubernetes_group_kind_versions: None,
 	});
 
 	spec.definitions.insert(crate::swagger20::DefinitionPath("io.k8s.WatchOptional".to_string()), crate::swagger20::Schema {
 		description: Some("Common parameters for all watch operations.".to_string()),
-		kind: crate::swagger20::SchemaKind::WatchOptional(watch_optional_definition),
+		kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::WatchOptional(watch_optional_definition)),
 		kubernetes_group_kind_versions: None,
 	});
 
@@ -472,7 +472,7 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 		required: true,
 		schema: crate::swagger20::Schema {
 			description: None,
-			kind: crate::swagger20::SchemaKind::Watch,
+			kind: crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::WatchParameter),
 			kubernetes_group_kind_versions: None,
 		},
 	});
@@ -551,4 +551,32 @@ pub(crate) fn separate_watch_from_list_operations(spec: &mut crate::swagger20::S
 	}
 
 	Ok(())
+}
+
+// Annotate the `WatchEvent` type as `swagger20::Type::WatchEvent` for special codegen.
+pub(crate) fn watch_event(spec: &mut crate::swagger20::Spec) -> Result<(), crate::Error> {
+	use std::fmt::Write;
+
+	let definition_path = crate::swagger20::DefinitionPath("io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent".to_owned());
+	if let Some(mut definition) = spec.definitions.remove(&definition_path) {
+		if let crate::swagger20::SchemaKind::Properties(mut properties) = definition.kind {
+			let object_property_name = crate::swagger20::PropertyName("object".to_owned());
+			if let Some((object_property, true)) = properties.remove(&object_property_name) {
+				if let crate::swagger20::SchemaKind::Ref(raw_extension_ref_path) = object_property.kind {
+					definition.kind = crate::swagger20::SchemaKind::Ty(crate::swagger20::Type::WatchEvent(raw_extension_ref_path));
+					if let Some(type_description) = &mut definition.description {
+						if let Some(property_description) = &object_property.description {
+							writeln!(type_description)?;
+							writeln!(type_description)?;
+							writeln!(type_description, "{}", property_description)?;
+						}
+					}
+					spec.definitions.insert(definition_path, definition);
+					return Ok(());
+				}
+			}
+		}
+	}
+
+	Err("never applied WatchEvent override".into())
 }

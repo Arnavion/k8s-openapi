@@ -882,7 +882,7 @@ impl RoleBinding {
 /// Use `<WatchNamespacedRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::watch_namespaced_role_binding`]
 #[derive(Debug)]
 pub enum WatchNamespacedRoleBindingResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<RoleBinding>),
     Unauthorized,
     Other,
 }
@@ -966,7 +966,7 @@ impl RoleBinding {
 /// Use `<WatchRoleBindingForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`RoleBinding::watch_role_binding_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchRoleBindingForAllNamespacesResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<RoleBinding>),
     Unauthorized,
     Other,
 }

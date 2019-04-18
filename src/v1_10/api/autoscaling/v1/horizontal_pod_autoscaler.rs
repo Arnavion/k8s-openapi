@@ -1091,7 +1091,7 @@ impl HorizontalPodAutoscaler {
 /// Use `<WatchHorizontalPodAutoscalerForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::watch_horizontal_pod_autoscaler_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchHorizontalPodAutoscalerForAllNamespacesResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<HorizontalPodAutoscaler>),
     Unauthorized,
     Other,
 }
@@ -1180,7 +1180,7 @@ impl HorizontalPodAutoscaler {
 /// Use `<WatchNamespacedHorizontalPodAutoscalerResponse as Response>::try_from_parts` to parse the HTTP response body of [`HorizontalPodAutoscaler::watch_namespaced_horizontal_pod_autoscaler`]
 #[derive(Debug)]
 pub enum WatchNamespacedHorizontalPodAutoscalerResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<HorizontalPodAutoscaler>),
     Unauthorized,
     Other,
 }

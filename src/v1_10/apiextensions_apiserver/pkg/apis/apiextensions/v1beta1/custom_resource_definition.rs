@@ -806,7 +806,7 @@ impl CustomResourceDefinition {
 /// Use `<WatchCustomResourceDefinitionResponse as Response>::try_from_parts` to parse the HTTP response body of [`CustomResourceDefinition::watch_custom_resource_definition`]
 #[derive(Debug)]
 pub enum WatchCustomResourceDefinitionResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<CustomResourceDefinition>),
     Unauthorized,
     Other,
 }

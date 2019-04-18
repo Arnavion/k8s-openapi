@@ -848,7 +848,7 @@ impl ControllerRevision {
 /// Use `<WatchControllerRevisionForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::watch_controller_revision_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchControllerRevisionForAllNamespacesResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<ControllerRevision>),
     Unauthorized,
     Other,
 }
@@ -937,7 +937,7 @@ impl ControllerRevision {
 /// Use `<WatchNamespacedControllerRevisionResponse as Response>::try_from_parts` to parse the HTTP response body of [`ControllerRevision::watch_namespaced_controller_revision`]
 #[derive(Debug)]
 pub enum WatchNamespacedControllerRevisionResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<ControllerRevision>),
     Unauthorized,
     Other,
 }

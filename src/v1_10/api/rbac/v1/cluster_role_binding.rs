@@ -712,7 +712,7 @@ impl ClusterRoleBinding {
 /// Use `<WatchClusterRoleBindingResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRoleBinding::watch_cluster_role_binding`]
 #[derive(Debug)]
 pub enum WatchClusterRoleBindingResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRoleBinding>),
     Unauthorized,
     Other,
 }

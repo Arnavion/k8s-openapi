@@ -1162,7 +1162,7 @@ impl Deployment {
 /// Use `<WatchDeploymentForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::watch_deployment_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchDeploymentForAllNamespacesResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<Deployment>),
     Unauthorized,
     Other,
 }
@@ -1247,7 +1247,7 @@ impl Deployment {
 /// Use `<WatchNamespacedDeploymentResponse as Response>::try_from_parts` to parse the HTTP response body of [`Deployment::watch_namespaced_deployment`]
 #[derive(Debug)]
 pub enum WatchNamespacedDeploymentResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<Deployment>),
     Unauthorized,
     Other,
 }

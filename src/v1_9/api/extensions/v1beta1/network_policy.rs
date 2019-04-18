@@ -850,7 +850,7 @@ impl NetworkPolicy {
 /// Use `<WatchNamespacedNetworkPolicyResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::watch_namespaced_network_policy`]
 #[derive(Debug)]
 pub enum WatchNamespacedNetworkPolicyResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<NetworkPolicy>),
     Unauthorized,
     Other,
 }
@@ -934,7 +934,7 @@ impl NetworkPolicy {
 /// Use `<WatchNetworkPolicyForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`NetworkPolicy::watch_network_policy_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchNetworkPolicyForAllNamespacesResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<NetworkPolicy>),
     Unauthorized,
     Other,
 }

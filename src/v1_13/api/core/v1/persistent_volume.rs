@@ -1005,7 +1005,7 @@ impl PersistentVolume {
 /// Use `<WatchPersistentVolumeResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolume::watch_persistent_volume`]
 #[derive(Debug)]
 pub enum WatchPersistentVolumeResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolume>),
     Unauthorized,
     Other,
 }

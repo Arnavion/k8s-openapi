@@ -897,7 +897,7 @@ impl Secret {
 /// Use `<WatchNamespacedSecretResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::watch_namespaced_secret`]
 #[derive(Debug)]
 pub enum WatchNamespacedSecretResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<Secret>),
     Unauthorized,
     Other,
 }
@@ -981,7 +981,7 @@ impl Secret {
 /// Use `<WatchSecretForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Secret::watch_secret_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchSecretForAllNamespacesResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<Secret>),
     Unauthorized,
     Other,
 }

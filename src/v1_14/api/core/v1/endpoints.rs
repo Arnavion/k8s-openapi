@@ -897,7 +897,7 @@ impl Endpoints {
 /// Use `<WatchEndpointsForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::watch_endpoints_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchEndpointsForAllNamespacesResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<Endpoints>),
     Unauthorized,
     Other,
 }
@@ -982,7 +982,7 @@ impl Endpoints {
 /// Use `<WatchNamespacedEndpointsResponse as Response>::try_from_parts` to parse the HTTP response body of [`Endpoints::watch_namespaced_endpoints`]
 #[derive(Debug)]
 pub enum WatchNamespacedEndpointsResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<Endpoints>),
     Unauthorized,
     Other,
 }

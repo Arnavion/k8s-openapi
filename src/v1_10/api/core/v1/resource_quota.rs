@@ -1096,7 +1096,7 @@ impl ResourceQuota {
 /// Use `<WatchNamespacedResourceQuotaResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::watch_namespaced_resource_quota`]
 #[derive(Debug)]
 pub enum WatchNamespacedResourceQuotaResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<ResourceQuota>),
     Unauthorized,
     Other,
 }
@@ -1180,7 +1180,7 @@ impl ResourceQuota {
 /// Use `<WatchResourceQuotaForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ResourceQuota::watch_resource_quota_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchResourceQuotaForAllNamespacesResponse {
-    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_10::apimachinery::pkg::apis::meta::v1::WatchEvent<ResourceQuota>),
     Unauthorized,
     Other,
 }

@@ -845,7 +845,7 @@ impl ConfigMap {
 /// Use `<WatchConfigMapForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::watch_config_map_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchConfigMapForAllNamespacesResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<ConfigMap>),
     Unauthorized,
     Other,
 }
@@ -934,7 +934,7 @@ impl ConfigMap {
 /// Use `<WatchNamespacedConfigMapResponse as Response>::try_from_parts` to parse the HTTP response body of [`ConfigMap::watch_namespaced_config_map`]
 #[derive(Debug)]
 pub enum WatchNamespacedConfigMapResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<ConfigMap>),
     Unauthorized,
     Other,
 }

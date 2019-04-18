@@ -762,7 +762,7 @@ impl ValidatingWebhookConfiguration {
 /// Use `<WatchValidatingWebhookConfigurationResponse as Response>::try_from_parts` to parse the HTTP response body of [`ValidatingWebhookConfiguration::watch_validating_webhook_configuration`]
 #[derive(Debug)]
 pub enum WatchValidatingWebhookConfigurationResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<ValidatingWebhookConfiguration>),
     Unauthorized,
     Other,
 }

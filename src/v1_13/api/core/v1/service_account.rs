@@ -897,7 +897,7 @@ impl ServiceAccount {
 /// Use `<WatchNamespacedServiceAccountResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::watch_namespaced_service_account`]
 #[derive(Debug)]
 pub enum WatchNamespacedServiceAccountResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<ServiceAccount>),
     Unauthorized,
     Other,
 }
@@ -981,7 +981,7 @@ impl ServiceAccount {
 /// Use `<WatchServiceAccountForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ServiceAccount::watch_service_account_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchServiceAccountForAllNamespacesResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<ServiceAccount>),
     Unauthorized,
     Other,
 }

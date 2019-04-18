@@ -2513,7 +2513,7 @@ impl Service {
 /// Use `<WatchNamespacedServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_namespaced_service`]
 #[derive(Debug)]
 pub enum WatchNamespacedServiceResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Service>),
     Unauthorized,
     Other,
 }
@@ -2597,7 +2597,7 @@ impl Service {
 /// Use `<WatchServiceForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Service::watch_service_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchServiceForAllNamespacesResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Service>),
     Unauthorized,
     Other,
 }

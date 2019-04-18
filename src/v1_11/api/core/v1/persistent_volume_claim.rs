@@ -1096,7 +1096,7 @@ impl PersistentVolumeClaim {
 /// Use `<WatchNamespacedPersistentVolumeClaimResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::watch_namespaced_persistent_volume_claim`]
 #[derive(Debug)]
 pub enum WatchNamespacedPersistentVolumeClaimResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolumeClaim>),
     Unauthorized,
     Other,
 }
@@ -1180,7 +1180,7 @@ impl PersistentVolumeClaim {
 /// Use `<WatchPersistentVolumeClaimForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`PersistentVolumeClaim::watch_persistent_volume_claim_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchPersistentVolumeClaimForAllNamespacesResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<PersistentVolumeClaim>),
     Unauthorized,
     Other,
 }

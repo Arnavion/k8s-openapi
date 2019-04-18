@@ -1091,7 +1091,7 @@ impl Ingress {
 /// Use `<WatchIngressForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::watch_ingress_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchIngressForAllNamespacesResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Ingress>),
     Unauthorized,
     Other,
 }
@@ -1180,7 +1180,7 @@ impl Ingress {
 /// Use `<WatchNamespacedIngressResponse as Response>::try_from_parts` to parse the HTTP response body of [`Ingress::watch_namespaced_ingress`]
 #[derive(Debug)]
 pub enum WatchNamespacedIngressResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Ingress>),
     Unauthorized,
     Other,
 }

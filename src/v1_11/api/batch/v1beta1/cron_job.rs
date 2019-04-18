@@ -1091,7 +1091,7 @@ impl CronJob {
 /// Use `<WatchCronJobForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::watch_cron_job_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchCronJobForAllNamespacesResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<CronJob>),
     Unauthorized,
     Other,
 }
@@ -1180,7 +1180,7 @@ impl CronJob {
 /// Use `<WatchNamespacedCronJobResponse as Response>::try_from_parts` to parse the HTTP response body of [`CronJob::watch_namespaced_cron_job`]
 #[derive(Debug)]
 pub enum WatchNamespacedCronJobResponse {
-    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_11::apimachinery::pkg::apis::meta::v1::WatchEvent<CronJob>),
     Unauthorized,
     Other,
 }

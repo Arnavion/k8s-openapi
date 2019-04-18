@@ -753,7 +753,7 @@ impl ClusterRole {
 /// Use `<WatchClusterRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`ClusterRole::watch_cluster_role`]
 #[derive(Debug)]
 pub enum WatchClusterRoleResponse {
-    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_13::apimachinery::pkg::apis::meta::v1::WatchEvent<ClusterRole>),
     Unauthorized,
     Other,
 }

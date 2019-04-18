@@ -1,8 +1,7 @@
-use k8s_openapi::serde_json;
-
 #[test]
 fn watch_pods() {
 	use k8s_openapi::api::core::v1 as api;
+	use k8s_openapi::apimachinery::pkg::apis::meta::v1 as meta;
 
 	crate::Client::with("watch_event-watch_pods", |client| {
 		let (request, response_body) =
@@ -21,11 +20,11 @@ fn watch_pods() {
 			.filter_map(|pod_watch_event| {
 				println!("{:?}", pod_watch_event);
 
-				if pod_watch_event.type_ != "ADDED" {
-					return None;
-				}
+				let pod = match pod_watch_event {
+					meta::WatchEvent::Added(pod) => pod,
+					_ => return None,
+				};
 
-				let pod: api::Pod = serde_json::from_value(pod_watch_event.object.0).expect("couldn't re-deserialize pod watch event object");
 				if pod.metadata.as_ref().and_then(|metadata| metadata.name.as_ref()).map_or(false, |name| name.starts_with("kube-addon-manager-")) {
 					Some(pod)
 				}

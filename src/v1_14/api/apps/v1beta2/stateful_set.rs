@@ -1169,7 +1169,7 @@ impl StatefulSet {
 /// Use `<WatchNamespacedStatefulSetResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::watch_namespaced_stateful_set`]
 #[derive(Debug)]
 pub enum WatchNamespacedStatefulSetResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<StatefulSet>),
     Unauthorized,
     Other,
 }
@@ -1249,7 +1249,7 @@ impl StatefulSet {
 /// Use `<WatchStatefulSetForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`StatefulSet::watch_stateful_set_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchStatefulSetForAllNamespacesResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<StatefulSet>),
     Unauthorized,
     Other,
 }

@@ -1149,7 +1149,7 @@ impl ReplicationController {
 /// Use `<WatchNamespacedReplicationControllerResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::watch_namespaced_replication_controller`]
 #[derive(Debug)]
 pub enum WatchNamespacedReplicationControllerResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicationController>),
     Unauthorized,
     Other,
 }
@@ -1233,7 +1233,7 @@ impl ReplicationController {
 /// Use `<WatchReplicationControllerForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`ReplicationController::watch_replication_controller_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchReplicationControllerForAllNamespacesResponse {
-    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_12::apimachinery::pkg::apis::meta::v1::WatchEvent<ReplicationController>),
     Unauthorized,
     Other,
 }

@@ -3382,7 +3382,7 @@ impl Pod {
 /// Use `<WatchNamespacedPodResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::watch_namespaced_pod`]
 #[derive(Debug)]
 pub enum WatchNamespacedPodResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Pod>),
     Unauthorized,
     Other,
 }
@@ -3466,7 +3466,7 @@ impl Pod {
 /// Use `<WatchPodForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Pod::watch_pod_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchPodForAllNamespacesResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Pod>),
     Unauthorized,
     Other,
 }

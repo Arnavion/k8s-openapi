@@ -811,7 +811,7 @@ impl Role {
 /// Use `<WatchNamespacedRoleResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::watch_namespaced_role`]
 #[derive(Debug)]
 pub enum WatchNamespacedRoleResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Role>),
     Unauthorized,
     Other,
 }
@@ -895,7 +895,7 @@ impl Role {
 /// Use `<WatchRoleForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Role::watch_role_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchRoleForAllNamespacesResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<Role>),
     Unauthorized,
     Other,
 }

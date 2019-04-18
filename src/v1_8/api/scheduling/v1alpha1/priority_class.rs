@@ -700,7 +700,7 @@ impl PriorityClass {
 /// Use `<WatchPriorityClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`PriorityClass::watch_priority_class`]
 #[derive(Debug)]
 pub enum WatchPriorityClassResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<PriorityClass>),
     Unauthorized,
     Other,
 }

@@ -232,7 +232,7 @@ impl ComponentStatus {
 /// Use `<WatchComponentStatusResponse as Response>::try_from_parts` to parse the HTTP response body of [`ComponentStatus::watch_component_status`]
 #[derive(Debug)]
 pub enum WatchComponentStatusResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<ComponentStatus>),
     Unauthorized,
     Other,
 }

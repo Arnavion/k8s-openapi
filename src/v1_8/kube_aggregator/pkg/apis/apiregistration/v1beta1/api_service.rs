@@ -770,7 +770,7 @@ impl APIService {
 /// Use `<WatchAPIServiceResponse as Response>::try_from_parts` to parse the HTTP response body of [`APIService::watch_api_service`]
 #[derive(Debug)]
 pub enum WatchAPIServiceResponse {
-    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_8::apimachinery::pkg::apis::meta::v1::WatchEvent<APIService>),
     Unauthorized,
     Other,
 }

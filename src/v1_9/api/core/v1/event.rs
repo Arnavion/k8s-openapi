@@ -884,7 +884,7 @@ impl Event {
 /// Use `<WatchEventForAllNamespacesResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::watch_event_for_all_namespaces`]
 #[derive(Debug)]
 pub enum WatchEventForAllNamespacesResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Event>),
     Unauthorized,
     Other,
 }
@@ -973,7 +973,7 @@ impl Event {
 /// Use `<WatchNamespacedEventResponse as Response>::try_from_parts` to parse the HTTP response body of [`Event::watch_namespaced_event`]
 #[derive(Debug)]
 pub enum WatchNamespacedEventResponse {
-    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_9::apimachinery::pkg::apis::meta::v1::WatchEvent<Event>),
     Unauthorized,
     Other,
 }

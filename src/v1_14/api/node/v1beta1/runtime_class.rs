@@ -766,7 +766,7 @@ impl RuntimeClass {
 /// Use `<WatchRuntimeClassResponse as Response>::try_from_parts` to parse the HTTP response body of [`RuntimeClass::watch_runtime_class`]
 #[derive(Debug)]
 pub enum WatchRuntimeClassResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<RuntimeClass>),
     Unauthorized,
     Other,
 }

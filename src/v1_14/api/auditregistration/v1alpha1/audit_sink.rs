@@ -765,7 +765,7 @@ impl AuditSink {
 /// Use `<WatchAuditSinkResponse as Response>::try_from_parts` to parse the HTTP response body of [`AuditSink::watch_audit_sink`]
 #[derive(Debug)]
 pub enum WatchAuditSinkResponse {
-    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent),
+    Ok(crate::v1_14::apimachinery::pkg::apis::meta::v1::WatchEvent<AuditSink>),
     Unauthorized,
     Other,
 }
